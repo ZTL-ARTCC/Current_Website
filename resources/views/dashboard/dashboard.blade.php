@@ -1,0 +1,198 @@
+@extends('layouts.dashboard')
+
+@section('title')
+Dashboard
+@endsection
+
+@section('content')
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Controller Dashboard</h2>
+    &nbsp;
+</div>
+<br>
+
+<div class="container-fluid">
+    @if($announcement->body != null)
+        <div class="alert alert-success">
+            {!! $announcement->body !!}
+            <hr>
+            <p class="small"><i>Last updated by {{ $announcement->staff_name }} on {{ $announcement->update_time }}</i></p>
+        </div>
+        <hr>
+    @endif
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card card-body" style="background-color:lightgrey">
+                <center><h5>Pacific Time Now:</h5></center>
+                <center><iframe style="pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/n770/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card card-body" style="background-color:lightgrey">
+                <center><h5>Central Time Now:</h5></center>
+                <center><iframe style="pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/n407/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card card-body" style="background-color:lightgrey">
+                <center><h5>Eastern Time Now:</h5></center>
+                <center><iframe style="pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/n25/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card card-body" style="background-color:lightgrey">
+                <center><h5>Zulu/UTC Time Now:</h5></center>
+                <center><iframe style="pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <center><h4><i>Controller Dashboard Quicklinks</i></h4></center>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <a class="btn btn-secondary btn-block" href="/dashboard/controllers/profile">My Profile</a>
+            @if(Auth::user()->can('staff'))
+                <a class="btn btn-secondary btn-block" href="/dashboard/admin/announcement">Edit Announcement</a>
+            @endif
+        </div>
+        <div class="col-sm-3">
+            <script id="setmore_script" type="text/javascript" src="https://my.setmore.com/webapp/js/src/others/setmore_iframe.js"></script><a id="Setmore_button_iframe"  class="btn btn-secondary btn-block" href="https://my.setmore.com/bookingpage/3598990c-a847-4107-81eb-de1794648684">Schedule a Training Session</a>
+            @if(Auth::user()->can('staff'))
+                <a class="btn btn-secondary btn-block" href="http://mail.ztlartcc.org" target="_blank">Email</a>
+            @endif
+        </div>
+        <div class="col-sm-3">
+            <a class="btn btn-secondary btn-block" href="/dashboard/controllers/roster">Controller Roster</a>
+            @if(Auth::user()->can('staff'))
+                <a class="btn btn-secondary btn-block" href="/dashboard/admin/calendar">Manage Calendar/News</a>
+            @endif
+        </div>
+        <div class="col-sm-3">
+            <a class="btn btn-secondary btn-block" href="/">Return to Main Website</a>
+            @if(Auth::user()->can('staff'))
+                <a class="btn btn-secondary btn-block" href="/dashboard/admin/airports">Manage Airports</a>
+            @endif
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-4">
+            <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
+            @if(count($news) > 0)
+                @foreach($news as $c)
+                    <p>{{ $c->date }} - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
+                @endforeach
+            @else
+                <center><i><p>No news to show.</p></i></center>
+            @endif
+        </div>
+        <div class="col-sm-4">
+            <center><h4><i class="fas fa-calendar-alt"></i> Calendar</h4></center>
+            @if(count($calendar) > 0)
+                @foreach($calendar as $c)
+                    <p>{{ $c->date }} ({{ $c->time }}z) - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
+                @endforeach
+            @else
+                <center><i><p>No calendar events to show.</p></i></center>
+            @endif
+        </div>
+        <div class="col-sm-4">
+            <center><h4><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4></center>
+            @if($events->count() > 0)
+                @foreach($events as $e)
+                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}"></a>
+                    <p></p>
+                @endforeach
+            @else
+                <center><i><p>No events to show.</p></i></center>
+            @endif
+        </div>
+    </div>
+    <hr>
+    <center><h4><i class="fa fa-broadcast-tower"></i> Online Controllers</h4></center>
+    <div class="table">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <th scope="col"><center>Position</center></th>
+                <th scope="col"><center>Frequency</center></th>
+                <th scope="col"><center>Controller</center></th>
+                <th scope="col"><center>Rating</center></th>
+                <th scope="col"><center>Logon Time</center></th>
+                <th scope="col"><center>Time Online</center></th>
+            </thead>
+            <tbody>
+                @if($controllers->count() > 0)
+                    @foreach($controllers as $c)
+                        <tr>
+                            <td><center>{{ $c->position }}</center></td>
+                            <td><center>{{ $c->freq }}</center></td>
+                            <td><center>{{ $c->name }}</center></td>
+                            @if(App\User::find($c->cid) != null)
+                                <td><center>{{ App\User::find($c->cid)->rating_long }}</center></td>
+                            @else
+                                <td><center><i>Rating Not Available</i></center></td>
+                            @endif
+                            <td><center>{{ $c->logon_time }}</center></td>
+                            <td><center>{{ $c->time_online }}</center></td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6"><center><i>No Controllers Online</i></center></td>
+                    </tr>
+                @endif
+                <tr>
+                    <td colspan="6"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $controllers_update }}Z</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <center><h2><i class="fa fa-microphone" style="color:#C9AE5D"></i> Bronze Mic Award <i class="fa fa-microphone" style="color:#C9AE5D"></i></h2></center>
+	<div class="row">
+		<div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8">
+        			<center><h4>Winner for {{ $pmonth_words }}</h4></center>
+        			<div class="card card-body" style="background-color:#C9AE5D">
+        				@if($pwinner != null)
+        					<center><h4><b>{{ $pwinner->name }}</b></h4></center>
+        					<center><h5>With {{ $pwinner->month_hours }} hours!</h5></center>
+        				@else
+        					<center><h4>No Winner Was Chosen</h4></center>
+        					<center><h5>Check back for updates!</h5></center>
+        				@endif
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-8">
+        			<center><h4>Most Recent Winner ({{ $month_words }})</h4></center>
+        			<div class="card card-body" style="background-color:#C9AE5D">
+        				@if($winner != null)
+        					<center><h4><b>{{ $winner->name }}</b></h4></center>
+        					<center><h5>With {{ $winner->month_hours }} hours!</h5></center>
+        				@else
+        					<center><h4>No Winner Has Been Chosen</h4></center>
+        					<center><h5>Check back for updates!</h5></center>
+        				@endif
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+			</div>
+		</div>
+    </div>
+
+</div>
+@endsection

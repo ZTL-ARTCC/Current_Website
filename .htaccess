@@ -1,0 +1,5 @@
+AuthUserFile /home2/iccowan/secure/dev.ztlartcc.org/.htpasswd
+    AuthType Basic
+    AuthName "ZTL ARTCC Development Website"
+    Require valid-user
+    Require %{HTTPS}!=on

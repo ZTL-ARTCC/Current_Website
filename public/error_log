@@ -1,0 +1,148 @@
+[17-Oct-2018 13:54:36 America/Chicago] PHP Parse error:  syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /home2/iccowan/ztlv2.team-stringer.com/public/index.php on line 52
+[17-Oct-2018 13:58:42 America/Chicago] PHP Parse error:  syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /home2/iccowan/ztlv2.team-stringer.com/public/index.php on line 52
+[17-Oct-2018 14:01:29 America/Chicago] PHP Parse error:  syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /home2/iccowan/ztlv2.team-stringer.com/public/index.php on line 52
+[18-Oct-2018 09:31:21 America/Chicago] PHP Parse error:  syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /home2/iccowan/ztlv2.team-stringer.com/public/index.php on line 52
+[03-Nov-2018 02:23:52 UTC] PHP Fatal error:  Can't use method return value in write context in /home2/iccowan/ztlv2.team-stringer.com/storage/framework/views/73e0eab395abf83be35baa15e4c12acc312e2045.php on line 73
+[03-Nov-2018 03:14:50 UTC] PHP Fatal error:  Cannot redeclare App\EventRegistration::getControllerNameAttribute() in /home2/iccowan/ztlv2.team-stringer.com/app/EventRegistration.php on line 19
+[13-Nov-2018 17:14:23 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:14:23 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:14:26 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:14:26 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:15:07 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:15:07 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[13-Nov-2018 17:18:42 UTC] PHP Fatal error:  Uncaught Error: Class 'App\Exceptions\Config' not found in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Symfony\Component\Debug\Exception\FatalThrowableError))
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalThrowableError))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalThrowableError))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 49
+[13-Nov-2018 17:18:42 UTC] PHP Fatal error:  Uncaught Error: Class 'App\Exceptions\Config' not found in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 49
+[13-Nov-2018 17:21:53 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:21:53 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:21:53 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:21:53 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:22:06 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:22:06 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:22:06 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:22:06 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:22:37 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:22:37 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:22:37 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:22:37 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:23:34 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:23:34 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:23:34 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:23:34 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:24:36 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:24:36 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 17:24:36 UTC] PHP Parse error:  syntax error, unexpected '', [], 500);' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php on line 54
+[13-Nov-2018 17:24:36 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[13-Nov-2018 20:55:06 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: View [errors.maintenance] not found. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php:137
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php(79): Illuminate\View\FileViewFinder->findInPaths('errors.maintena...', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/Factory.php(128): Illuminate\View\FileViewFinder->find('errors.maintena...')
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(1001): Illuminate\View\Factory->make('errors.maintena...', Array, Array)
+#3 /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php(56): view('errors.maintena...')
+#4 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(InvalidArgumentException))
+#5 /home2/iccowa in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php on line 137
+[13-Nov-2018 20:55:06 UTC] PHP Fatal error:  Uncaught InvalidArgumentException: View [errors.maintenance] not found. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php:137
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php(79): Illuminate\View\FileViewFinder->findInPaths('errors.maintena...', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/Factory.php(128): Illuminate\View\FileViewFinder->find('errors.maintena...')
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(1001): Illuminate\View\Factory->make('errors.maintena...', Array, Array)
+#3 /home2/iccowan/dev.ztlartcc.org/app/Exceptions/Handler.php(56): view('errors.maintena...')
+#4 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Symfony\Component\Debug\Exception\FatalErro in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/FileViewFinder.php on line 137
+[14-Nov-2018 23:24:23 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[14-Nov-2018 23:24:23 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[14-Nov-2018 23:24:27 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[14-Nov-2018 23:24:27 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[14-Nov-2018 23:26:58 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(BadMethodCallException))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(BadMethodCallException))
+#3 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[14-Nov-2018 23:26:58 UTC] PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\View\View::send does not exist. in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php:408
+Stack trace:
+#0 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): Illuminate\View\View->__call('send', Array)
+#1 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#2 /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#4 {main}
+  thrown in /home2/iccowan/dev.ztlartcc.org/vendor/laravel/framework/src/Illuminate/View/View.php on line 408
+[15-Nov-2018 16:28:43 UTC] PHP Fatal error:  Cannot use Request as Request because the name is already in use in /home2/iccowan/dev.ztlartcc.org/app/Http/Controllers/ControllerDash.php on line 27
+[16-Nov-2018 01:28:35 UTC] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home2/iccowan/dev.ztlartcc.org/app/Airport.php on line 83

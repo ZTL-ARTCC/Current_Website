@@ -1,0 +1,34 @@
+<?php
+
+namespace App;
+
+use App\User;
+use Illuminate\Database\Eloquent\Model;
+
+class Feedback extends Model
+{
+    protected $table = 'feedback';
+    protected $fillable = ['id', 'controller_id', 'position', 'service_level', 'callsign', 'pilot_name', 'pilot_email', 'pilot_cid', 'comments', 'created_at', 'updated_at', 'status'];
+
+    public function getServiceLevelTextAttribute() {
+        $level = $this->service_level;
+        if($level == 0) {
+            return 'Excellent';
+        } elseif($level == 1) {
+            return 'Good';
+        } elseif($level == 2) {
+            return 'Fair';
+        } elseif($level == 3) {
+            return 'Poor';
+        } elseif($level == 4) {
+            return 'Unsatisfactory';
+        } else {
+            return 'Value not Found';
+        }
+    }
+
+    public function getControllerNameAttribute() {
+        $name = User::find($this->controller_id)->full_name;
+        return $name;
+    }
+}
