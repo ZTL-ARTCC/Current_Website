@@ -590,7 +590,7 @@ class AdminDash extends Controller
             'files', $request->title.'_'.$time.'.'.$ext
         );
 
-        $public_url = '/home2/iccowan/dev.ztlartcc.org/storage/app/'.$path;
+        $public_url = Config::get('app.app_storage').$path;
 
         $file = new File;
         $file->name = Input::get('title');
