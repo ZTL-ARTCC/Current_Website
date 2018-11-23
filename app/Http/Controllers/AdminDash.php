@@ -21,6 +21,7 @@ use App\Visitor;
 use Artisan;
 use Auth;
 use Carbon\Carbon;
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Mail;
