@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
 		AirportSeeder::class,
 		LaratrustSeeder::class,
 		PositionPresetSeeder::class,
-		ControllerUpdateSeeder::class
+		ControllerUpdateSeeder::class,
+        AnnouncementSeeder::class
 		]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,19 @@ class AnnouncementSeeder extends Seeder
      */
     public function run()
     {
-        $time = Carbon::now();
+        $client = new Client();
+        $res = $client->request('GET', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility'));
+        $result = json_decode($res->getBody())->role;
+        foreach($result as $r) {
+            if($r->role == 'ATM') {
+                $atm = $r->cid;
+            }
+        }
+
         DB::table('announcement')->insert([
-             'body' => null
+             'id' => 1,
+             'body' => null,
+             'staff_member' => $atm
          ]);
     }
 }

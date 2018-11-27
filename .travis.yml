@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.2
+
+services:
+  - mysql
+
+before_script:
+  - cp .env.travis .env
+  - mysql -u root -e "create database testing";
+  - composer self-update
+  - composer install --no-interaction
+  - npm install -g npm@latest
+  - npm install
+  - php artisan key:generate
+  - php artisan storage:link
+  - php artisan migrate
+  - php artisan db:seed
+
+script:
+  - phpunit
