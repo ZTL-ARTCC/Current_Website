@@ -12,3 +12,6 @@ npm-debug.log
 yarn-error.log
 .env
 .htaccess
+favicon.ico
+favicon.gif
+/public/favicon.gif
