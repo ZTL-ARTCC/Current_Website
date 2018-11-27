@@ -35,7 +35,7 @@ class Roster extends Migration
             $table->integer('monitor_pwr')->nullable();
             $table->integer('opt')->nullable();
             $table->string('remember_token')->nullable();
-            $table->string('json_token')->nullable();
+            $table->string('json_token', 2000)->nullable();
             $table->timestamps();
         });
     }
