@@ -16,8 +16,12 @@ before_script:
   - npm install
   - php artisan key:generate
   - php artisan storage:link
+  - php artisan config:cache
   - php artisan migrate
   - php artisan db:seed
+  - php artisan RosterUpdate:UpdateRoster
+  - php artisan Weather:UpdateWeather
+  - php artisan OnlineControllers:GetControllers
   - if find . -name "*.php" ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
 
 script:
