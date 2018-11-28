@@ -12,7 +12,12 @@ Visit Requests
 </div>
 <br>
 <div class="container">
-    <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="form-group inline">
+        <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+        <span data-toggle="modal" data-target="#manualAdd">
+            <button type="button" class="btn btn-warning">Manual Add Controller</button>
+        </span>
+    </div>
     <br><br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
@@ -143,6 +148,36 @@ Visit Requests
                     @endif
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="manualAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Manually Add Controller</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {!! Form::open(['action' => 'AdminDash@manualAddVisitor']) !!}
+                @csrf
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <div class="row">
+                                {!! Form::label('cid', 'Controller CID') !!}
+                                {!! Form::text('cid', null, ['placeholder' => 'Controller CID', 'class' => 'form-control']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button action="submit" class="btn btn-success">Search CID</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
 </div>

@@ -12,26 +12,27 @@ New Visitor
 </div>
 <br>
 <div class="container">
-    {!! Form::open(['action' => ['AdminDash@storeVisitor', $visitor->cid]]) !!}
+    {!! Form::open(['action' => 'AdminDash@storeVisitor']) !!}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     {!! Form::label('cid', 'CID') !!}
                     {!! Form::text('cid', $visitor->cid, ['class' => 'form-control', 'disabled']) !!}
+                    {!! Form::hidden('cid', $visitor->cid) !!}
                 </div>
                 <div class="col-sm-6">
                     {!! Form::label('rating_id', 'Rating') !!}
                     {!! Form::select('rating_id', [
                         0 => 'Pilot',
                         1 => 'Observer (OBS)',
-                        2 => 'Student 1 (S1)', 
+                        2 => 'Student 1 (S1)',
                         3 => 'Student 2 (S2)',
-                        4 => 'Senior Student (S3)', 
+                        4 => 'Senior Student (S3)',
                         5 => 'Controller (C1)',
-                        7 => 'Senior Controller (C3)', 
+                        7 => 'Senior Controller (C3)',
                         8 => 'Instructor (I1)',
-                        10 => 'Senior Instructor (I3)', 
+                        10 => 'Senior Instructor (I3)',
                         11 => 'Supervisor (SUP)',
                         12 => 'Admin (ADM)',
                     ], $visitor->rating, ['class' => 'form-control']) !!}
