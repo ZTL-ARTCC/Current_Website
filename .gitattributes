@@ -3,4 +3,5 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 resources/views/* linguist-vendored
+public/vendor/unisharp/* linguist-vendored
 CHANGELOG.md export-ignore
