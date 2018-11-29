@@ -18,7 +18,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     {!! Form::label('from', 'From') !!}
-                    {!! Form::text('from', 'info@ztlartcc.org', ['disabled', 'class' => 'form-control']) !!}
+                    {!! Form::text('from', 'info@notams.ztlartcc.org', ['disabled', 'class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-sm-6">

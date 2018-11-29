@@ -249,7 +249,7 @@ class FrontController extends Controller
         $visit->save();
 
         Mail::send('emails.visit.new', ['visit' => $visit], function($message) use ($visit){
-            $message->from('visitors@ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
+            $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
             $message->to($visit->email)->cc('datm@ztlartcc.org');
         });
 
@@ -351,7 +351,7 @@ class FrontController extends Controller
         $exp = $request->additional_information;
 
         Mail::send('emails.request_staff', ['name' => $name, 'email' => $email, 'org' => $org, 'date' => $date, 'time' => $time, 'exp' => $exp], function($message) use ($email, $name, $date) {
-            $message->from('info@ztlartcc.org', 'vZTL ARTCC Staffing Requests')->subject('New Staffing Request for '.$date);
+            $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staffing Requests')->subject('New Staffing Request for '.$date);
             $message->to('ec@ztlartcc.org')->replyTo($email, $name);
         });
 

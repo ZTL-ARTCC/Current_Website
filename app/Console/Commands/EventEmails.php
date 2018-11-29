@@ -71,7 +71,7 @@ class EventEmails extends Command
                     }
 
                     Mail::send('emails.event_reminder', ['user' => $user, 'event' => $event, 'positions' => $positions], function($message) use ($user){
-                        $message->from('events@ztlartcc.org', 'vZTL ARTCC Events Department')->subject('Upcoming Event Reminder');
+                        $message->from('events@notams.ztlartcc.org', 'vZTL ARTCC Events Department')->subject('Upcoming Event Reminder');
                         $message->to($user->email);
                     });
                 }

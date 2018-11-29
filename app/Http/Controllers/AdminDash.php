@@ -311,7 +311,7 @@ class AdminDash extends Controller
         $visitor->save();
 
         Mail::send('emails.visit.accept', ['visitor' => $visitor], function($message) use ($visitor){
-            $message->from('visitors@ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Accepted');
+            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Accepted');
             $message->to($visitor->email)->cc('datm@ztlartcc.org');
         });
 
@@ -617,7 +617,7 @@ class AdminDash extends Controller
         $visitor->save();
 
         Mail::send(['html' => 'emails.visit.reject'], ['visitor' => $visitor], function($message) use ($visitor) {
-            $message->from('visitors@ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Rejected');
+            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Rejected');
             $message->to($visitor->email)->cc('datm@ztlartcc.org');
         });
 
@@ -796,7 +796,7 @@ class AdminDash extends Controller
         $controller = User::find($feedback->controller_id);
 
         Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function($m) use ($feedback, $controller) {
-            $m->from('feedback@ztlartcc.org', 'vZTL ARTCC Feedback Department');
+            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
             $m->subject('You Have New Feedback!');
             $m->to($controller->email);
         });
@@ -873,7 +873,7 @@ class AdminDash extends Controller
 
         foreach($emails as $e){
             Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $sender) {
-                $m->from('info@ztlartcc.org', $name);
+                $m->from('info@notams.ztlartcc.org', $name);
                 $m->subject('[vZTL ARTCC] '.$subject);
                 $m->to($e)->bcc($sender->email);
             });
