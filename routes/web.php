@@ -220,10 +220,10 @@ Route::get('/update-training-tickets', 'AdminDash@updateTrainingTickets');
 *	Use this to grant yourself webmaster privelages. Should be disabled for security reasons.
 */
 
-Route::get('/laratrust', function() {
-	$user = App\User::find(1364926);
-	$user->attachRole('wm');
-});
+//Route::get('/laratrust', function() {
+//	$user = App\User::find(1364926);
+//	$user->attachRole('wm');
+//});
 
 /*
 *	End Webmaster Permission Grant
