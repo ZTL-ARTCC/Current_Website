@@ -178,6 +178,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/visit/accept/save', 'AdminDash@storeVisitor');
             Route::post('/visit/reject/{id}', 'AdminDash@rejectVisitRequest');
             Route::get('/visit/requests/view/{id}', 'AdminDash@viewVisitRequest');
+			Route::get('/visit/remove/{id}', 'AdminDash@removeVisitor');
             Route::get('/purge-assistant/{year?}/{month?}', 'AdminDash@showRosterPurge');
         });
         Route::prefix('roster')->middleware('permission:roster|train')->group(function() {
