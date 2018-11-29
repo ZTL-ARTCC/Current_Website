@@ -214,3 +214,17 @@ Route::get('/update-training-tickets', 'AdminDash@updateTrainingTickets');
 /*
 *   End Cron Job
 */
+
+/*
+*	Webmaster Permission Grant
+*	Use this to grant yourself webmaster privelages. Should be disabled for security reasons.
+*/
+
+Route::get('/laratrust', function() {
+	$user = App\User::find(1364926);
+	$user->attachRole('wm');
+});
+
+/*
+*	End Webmaster Permission Grant
+*/

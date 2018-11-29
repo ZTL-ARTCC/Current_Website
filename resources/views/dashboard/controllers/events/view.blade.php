@@ -404,120 +404,122 @@ View Event
         <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
         <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
     @endif
-
-    <div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Position Preset Name</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {!! Form::open(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) !!}
-                @csrf
-                <div class="modal-body">
-                    {!! Form::label('name', 'Name') !!}
-                    {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button action="submit" class="btn btn-success">Save Position Preset</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="loadPreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Load Position Preset</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {!! Form::open(['action' => ['AdminDash@retrievePositionPreset', $event->id]]) !!}
-                @csrf
-                <div class="modal-body">
-                    {!! Form::label('p_id', 'Position Preset') !!}
-                    {!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button action="submit" class="btn btn-success">Load Position Preset</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="removePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Remove Position Preset</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {!! Form::open(['action' => ['AdminDash@deletePositionPreset', $event->id]]) !!}
-                @csrf
-                <div class="modal-body">
-                    {!! Form::label('p_id', 'Position Preset') !!}
-                    {!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button action="submit" class="btn btn-success">Remove Position Preset</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="manualAssign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Manual Assign Position</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {!! Form::open(['action' => ['AdminDash@manualAssign', $event->id]]) !!}
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                {!! Form::label('controller', 'Controller Name') !!}
-                                {!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
-                            </div>
-                            <div class="col-sm-6">
-                                {!! Form::label('position', 'Position') !!}
-                                {!! Form::select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                {!! Form::label('start_time', 'Start Time (Zulu)') !!}
-                                {!! Form::text('start_time', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                            </div>
-                            <div class="col-sm-6">
-                                {!! Form::label('end_time', 'End Time (Zulu)') !!}
-                                {!! Form::text('end_time', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button action="submit" class="btn btn-success">Assign Position</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
+	
+	@if(Auth::user()->can('events'))
+		<div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Position Preset Name</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('name', 'Name') !!}
+						{!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Save Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="loadPreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Load Position Preset</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@retrievePositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('p_id', 'Position Preset') !!}
+						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Load Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="removePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Remove Position Preset</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@deletePositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('p_id', 'Position Preset') !!}
+						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Remove Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="manualAssign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Manual Assign Position</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@manualAssign', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									{!! Form::label('controller', 'Controller Name') !!}
+									{!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+								</div>
+								<div class="col-sm-6">
+									{!! Form::label('position', 'Position') !!}
+									{!! Form::select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									{!! Form::label('start_time', 'Start Time (Zulu)') !!}
+									{!! Form::text('start_time', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+								</div>
+								<div class="col-sm-6">
+									{!! Form::label('end_time', 'End Time (Zulu)') !!}
+									{!! Form::text('end_time', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Assign Position</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+	@endif
 </div>
 @endsection
