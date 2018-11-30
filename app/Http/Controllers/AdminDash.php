@@ -839,6 +839,12 @@ class AdminDash extends Controller
     }
 
     public function sendEmail(Request $request) {
+        $validator = $request->validate([
+            'name' => 'required',
+            'reply_to' => 'required',
+            'subject' => 'required',
+            'message' => 'required'
+        ]);
         $controllers = User::where('status', 1)->where('opt', 1)->orderBy('lname', 'ASC')->get()->pluck('email');
         $hcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->orderBy('lname', 'ASC')->get()->pluck('email');
         $vcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 1)->orderBy('lname', 'ASC')->get()->pluck('email');
@@ -853,6 +859,7 @@ class AdminDash extends Controller
         })->get()->pluck('email');
         $sender = Auth::user();
         $name = $request->name;
+        $reply_to = $request->reply_to;
         $bulk = $request->bulk;
         $subject = $request->subject;
         $body = $request->message;
@@ -877,8 +884,8 @@ class AdminDash extends Controller
         }
 
         foreach($emails as $e){
-            Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $sender) {
-                $m->from('info@notams.ztlartcc.org', $name);
+            Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $sender, $reply_to) {
+                $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
                 $m->subject('[vZTL ARTCC] '.$subject);
                 $m->to($e)->bcc($sender->email);
             });

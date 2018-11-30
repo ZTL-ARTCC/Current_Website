@@ -15,17 +15,21 @@
     {!! Form::open(['action' => 'AdminDash@sendEmail']) !!}
         @csrf
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="form-group">
                     {!! Form::label('from', 'From') !!}
                     {!! Form::text('from', 'info@notams.ztlartcc.org', ['disabled', 'class' => 'form-control']) !!}
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="form-group">
                     {!! Form::label('name', 'Name') !!}
                     {!! Form::text('name', null, ['placeholder' => 'Name (Required)', 'class' => 'form-control']) !!}
                 </div>
+            </div>
+            <div class="col-sm-4">
+                {!! Form::label('reply_to', 'Reply to Email') !!}
+                {!! Form::text('reply_to', null, ['placeholder' => 'ex. youremail@ztlartcc.org (Required)', 'class' => 'form-control']) !!}
             </div>
         </div>
         <div class="row">
