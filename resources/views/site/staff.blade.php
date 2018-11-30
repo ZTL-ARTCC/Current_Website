@@ -48,7 +48,7 @@ Staff
     <div class="block-heading-two">
         <h4>
             Training Administrator - 
-            @if($atm == '[]')
+            @if($ta == '[]')
                 <i>Vacant</i>
             @else
                 @foreach($ta as $s)
