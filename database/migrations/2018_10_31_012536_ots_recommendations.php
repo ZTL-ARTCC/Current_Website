@@ -20,7 +20,7 @@ class OtsRecommendations extends Migration
             $table->integer('position');
             $table->integer('ins_id')->nullable();
             $table->integer('status');
-            $table->string('report');
+            $table->string('report')->nullable();
             $table->timestamps();
         });
     }

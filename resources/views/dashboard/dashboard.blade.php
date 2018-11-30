@@ -47,6 +47,7 @@ Dashboard
             </div>
         </div>
     </div>
+    @include('inc.notifications')
     <hr>
     <center><h4><i>Controller Dashboard Quicklinks</i></h4></center>
     <br>
