@@ -387,6 +387,15 @@ Update Controller
                             {!! Form::checkbox('visitor', 1) !!}
                         @endif
                     </div>
+                    <div class="col-sm-10">
+                        @if($user->canEvents == 1)
+                            {!! Form::label('canEvents', 'Allow Signing up for Events?') !!}
+                            {!! Form::checkbox('canEvents', 1, true) !!}
+                        @else
+                            {!! Form::label('canEvents', 'Allow Signing up for Events?') !!}
+                            {!! Form::checkbox('canEvents', 1) !!}
+                        @endif
+                    </div>
                 </div>
             </div>
         @else
@@ -408,6 +417,15 @@ Update Controller
                         @else
                             {!! Form::label('visitor', 'Visitor?') !!}
                             {!! Form::checkbox('visitor', 1, null, ['disabled']) !!}
+                        @endif
+                    </div>
+                    <div class="col-sm-10">
+                        @if($user->canEvents == 1)
+                            {!! Form::label('canEvents', 'Allow Signing up for Events?') !!}
+                            {!! Form::checkbox('canEvents', 1, true, ['disabled']) !!}
+                        @else
+                            {!! Form::label('canEvents', 'Allow Signing up for Events?') !!}
+                            {!! Form::checkbox('canEvents', 1, null, ['disabled']) !!}
                         @endif
                     </div>
                 </div>

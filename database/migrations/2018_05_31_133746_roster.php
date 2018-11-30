@@ -22,6 +22,7 @@ class Roster extends Migration
             $table->string('email');
             $table->integer('rating_id');
             $table->integer('canTrain')->default(1);
+            $table->integer('canEvents')->default(1);
             $table->integer('visitor');
             $table->string('visitor_from')->nullable();
             $table->integer('status');

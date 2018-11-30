@@ -209,6 +209,11 @@ class AdminDash extends Controller
             } elseif(Input::get('canTrain') == 1) {
                 $user->canTrain = 1;
             }
+            if(Input::get('canEvents') == null) {
+                $user->canEvents = 0;
+            } elseif(Input::get('canEvents') == 1) {
+                $user->canEvents = 1;
+            }
             $user->status = Input::get('status');
             $user->visitor_from = Input::get('visitor_from');
             $user->save();
@@ -652,8 +657,8 @@ class AdminDash extends Controller
     }
 
     public function viewCalendar() {
-        $calendar = Calendar::where('type', '1')->orderBy('date', 'ASC')->orderBy('time', 'ASC')->get();
-        $news = Calendar::where('type', '2')->orderBy('date', 'ASC')->orderBy('time', 'ASC')->get();
+        $calendar = Calendar::where('type', '1')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
+        $news = Calendar::where('type', '2')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
 
         return view('dashboard.admin.calendar.index')->with('calendar', $calendar)->with('news', $news);
     }

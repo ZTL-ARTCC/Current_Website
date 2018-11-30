@@ -115,7 +115,7 @@ View Event
                     @if($positions->count() > 0)
                         {!! Form::open(['action' => 'ControllerDash@signupForEvent']) !!}
                             @csrf
-                            @if($event->reg == 1)
+                            @if($event->reg == 1 && Auth::user()->canEvents == 1)
                                 {!! Form::hidden('event_id', $event->id) !!}
                                 <div class="form-group">
                                     @if($your_registration1 != null)
@@ -260,7 +260,11 @@ View Event
                                 </div>
                                 <button type="submit" class="btn btn-success">Submit</button>
                             @else
-                                Registration is currently closed.
+                                @if(Auth::user()->canEvents != 1)
+                                    You are not permitted to signup for events.
+                                @else
+                                    Event registration is currently closed.
+                                @endif
                             @endif
                         {!! Form::close() !!}
                     @else
@@ -404,7 +408,7 @@ View Event
         <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
         <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
     @endif
-	
+
 	@if(Auth::user()->can('events'))
 		<div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
