@@ -77,7 +77,7 @@ class RosterController extends Controller
             $url = "https://login.vatusa.net/uls/v2/info?token={$parts[1]}";
             $result = $client->get($url);
             $res = json_decode($result->getBody()->__toString(), true);
-
+			
             $userstatuscheck = User::find($res['cid']);
             if($userstatuscheck) {
                 if($userstatuscheck->status == 0) {
@@ -92,6 +92,32 @@ class RosterController extends Controller
                         $facility = $res['facility'];
                         $userstatuscheck->visitor_from = $facility['id'];
                     }
+					if($userstatuscheck->opt == 1) {
+						$client = new Client();
+						$response = $client->request('GET', 'https://api.vatusa.net/v2/user/1364926?apikey='.Config::get('vatusa.api_key'));
+						$resu = json_decode($response->getBody());
+						if($resu->flag_broadcastOptedIn == 1) {
+							if($userstatuscheck->opt != 1) {
+								$opt = new Opt;
+								$opt->controller_id = $res['cid'];
+								$opt->ip = '0.0.0.0';
+								$opt->means = 'VATUSA API';
+								$opt->option = 1;
+								$opt->save();
+								$userstatuscheck->opt = 1;
+							}
+						} else {
+							if($userstatuscheck->opt != 0) {
+								$opt = new Opt;
+								$opt->controller_id = $res['cid'];
+								$opt->ip = '0.0.0.0';
+								$opt->means = 'VATUSA API';
+								$opt->option = 0;
+								$opt->save();
+								$userstatuscheck->opt = 0;
+							}
+						}
+					}
                     $userstatuscheck->save();
                     Auth::loginUsingId($res['cid'], true);
                 } else {
