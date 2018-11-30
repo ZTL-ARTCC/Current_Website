@@ -92,30 +92,28 @@ class RosterController extends Controller
                         $facility = $res['facility'];
                         $userstatuscheck->visitor_from = $facility['id'];
                     }
-					if($userstatuscheck->opt == 1) {
-						$client = new Client();
-						$response = $client->request('GET', 'https://api.vatusa.net/v2/user/1364926?apikey='.Config::get('vatusa.api_key'));
-						$resu = json_decode($response->getBody());
-						if($resu->flag_broadcastOptedIn == 1) {
-							if($userstatuscheck->opt != 1) {
-								$opt = new Opt;
-								$opt->controller_id = $res['cid'];
-								$opt->ip = '0.0.0.0';
-								$opt->means = 'VATUSA API';
-								$opt->option = 1;
-								$opt->save();
-								$userstatuscheck->opt = 1;
-							}
-						} else {
-							if($userstatuscheck->opt != 0) {
-								$opt = new Opt;
-								$opt->controller_id = $res['cid'];
-								$opt->ip = '0.0.0.0';
-								$opt->means = 'VATUSA API';
-								$opt->option = 0;
-								$opt->save();
-								$userstatuscheck->opt = 0;
-							}
+					$client = new Client();
+					$response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$res['cid'].'?apikey='.Config::get('vatusa.api_key'));
+					$resu = json_decode($response->getBody());
+					if($resu->flag_broadcastOptedIn == 1) {
+						if($userstatuscheck->opt != 1) {
+							$opt = new Opt;
+							$opt->controller_id = $res['cid'];
+							$opt->ip = '0.0.0.0';
+							$opt->means = 'VATUSA API';
+							$opt->option = 1;
+							$opt->save();
+							$userstatuscheck->opt = 1;
+						}
+					} else {
+						if($userstatuscheck->opt != 0) {
+							$opt = new Opt;
+							$opt->controller_id = $res['cid'];
+							$opt->ip = '0.0.0.0';
+							$opt->means = 'VATUSA API';
+							$opt->option = 0;
+							$opt->save();
+							$userstatuscheck->opt = 0;
 						}
 					}
                     $userstatuscheck->save();
