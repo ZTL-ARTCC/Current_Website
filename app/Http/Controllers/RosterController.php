@@ -100,7 +100,7 @@ class RosterController extends Controller
 						if($userstatuscheck->opt != 1) {
 							$opt = new Opt;
 							$opt->controller_id = $res['cid'];
-							$opt->ip = '0.0.0.0';
+							$opt->ip_address = '0.0.0.0';
 							$opt->means = 'VATUSA API';
 							$opt->option = 1;
 							$opt->save();
@@ -110,7 +110,7 @@ class RosterController extends Controller
 						if($userstatuscheck->opt != 0) {
 							$opt = new Opt;
 							$opt->controller_id = $res['cid'];
-							$opt->ip = '0.0.0.0';
+							$opt->ip_address = '0.0.0.0';
 							$opt->means = 'VATUSA API';
 							$opt->option = 0;
 							$opt->save();
