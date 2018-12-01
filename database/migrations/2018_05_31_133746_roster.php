@@ -24,6 +24,7 @@ class Roster extends Migration
             $table->integer('canTrain')->default(1);
             $table->integer('canEvents')->default(1);
             $table->integer('visitor');
+            $table->integer('api_exempt')->default(0);
             $table->string('visitor_from')->nullable();
             $table->integer('status');
             $table->integer('loa')->default(0);

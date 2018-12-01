@@ -396,6 +396,17 @@ Update Controller
                             {!! Form::checkbox('canEvents', 1) !!}
                         @endif
                     </div>
+                    @if($user->visitor != 1)
+                        <div class="col-sm-10">
+                            @if($user->api_exempt == 1)
+                                {!! Form::label('api_exempt', 'Exempt from VATUSA API Roster Update?') !!}
+                                {!! Form::checkbox('api_exempt', 1, true) !!}
+                            @else
+                                {!! Form::label('api_exempt', 'Exempt from VATUSA API Roster Update?') !!}
+                                {!! Form::checkbox('api_exempt', 1) !!}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         @else
@@ -428,6 +439,17 @@ Update Controller
                             {!! Form::checkbox('canEvents', 1, null, ['disabled']) !!}
                         @endif
                     </div>
+                    @if($user->visitor != 1)
+                        <div class="col-sm-10">
+                            @if($user->api_exempt == 1)
+                                {!! Form::label('api_exempt', 'Exempt from VATUSA API Roster Update?') !!}
+                                {!! Form::checkbox('api_exempt', 1, true, ['disabled']) !!}
+                            @else
+                                {!! Form::label('api_exempt', 'Exempt from VATUSA API Roster Update?') !!}
+                                {!! Form::checkbox('api_exempt', 1, null, ['disabled']) !!}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         @endif

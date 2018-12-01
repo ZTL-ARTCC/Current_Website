@@ -230,6 +230,11 @@ class AdminDash extends Controller
             } elseif(Input::get('canEvents') == 1) {
                 $user->canEvents = 1;
             }
+            if(Input::get('api_exempt') == null) {
+                $user->api_exempt = 0;
+            } elseif(Input::get('api_exempt') == 1) {
+                $user->api_exempt = 1;
+            }
             $user->status = Input::get('status');
             $user->visitor_from = Input::get('visitor_from');
             $user->save();

@@ -232,7 +232,7 @@ class RosterUpdate extends Command
             }
             if($delete == '0') {
                 $use = User::find($u);
-                if($use->visitor == 0) {
+                if($use->visitor == 0 && $use->api_exempt == 0) {
                     $use->delete();
                 }
             }
