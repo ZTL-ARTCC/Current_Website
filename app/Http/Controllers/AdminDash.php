@@ -1161,7 +1161,7 @@ class AdminDash extends Controller
     }
 
     public function setEventPositionPreset(Request $request, $id) {
-        $positions = EventPosition::where('event_id', $id)->get();
+        $positions = EventPosition::where('event_id', $id)->orderBy('id', 'ASC')->get();
         $last_preset_position = PresetPosition::orderBy('id', 'DSC')->first()->id;
         $last = $last_preset_position + 1;
         $preset_positions = $positions->count() + $last_preset_position;
