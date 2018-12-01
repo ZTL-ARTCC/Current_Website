@@ -13,6 +13,7 @@ use App\EventPosition;
 use App\EventRegistration;
 use App\Feedback;
 use App\File;
+use App\Incident;
 use App\Opt;
 use App\PositionPreset;
 use App\Scenery;
@@ -445,5 +446,32 @@ class ControllerDash extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'You have been opted out successfully and will no longer receive broadcast emails from the vZTL ARTCC.');
+    }
+
+    public function incidentReport() {
+        $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        return view('dashboard.controllers.incident_report')->with('controllers', $controllers);
+    }
+
+    public function submitIncidentReport(Request $request) {
+        $validator = $request->validate([
+            'controller_id' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+            'description' => 'required'
+        ]);
+
+        $date = new Carbon($request->date);
+
+        $incident = new Incident;
+        $incident->controller_id = $request->controller_id;
+        $incident->reporter_id = Auth::id();
+        $incident->time = $request->time;
+        $incident->date = $date->format('m/d/Y');
+        $incident->description = $request->description;
+        $incident->status = 0;
+        $incident->save();
+
+        return redirect('/dashboard')->with('success', 'Your report has been submitted successfully.');
     }
 }

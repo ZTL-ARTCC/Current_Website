@@ -36,14 +36,6 @@ Route::get('/controllers/files/download/{id}', 'FrontController@downloadFile');
 */
 
 /*
-* GDPR Email Opt
-*/
-
-/*
-* End GDPR Email Opt
-*/
-
-/*
 *   Roster, Login/Logout
 */
 Route::get('/controllers/roster', 'RosterController@index');
@@ -82,6 +74,10 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/scenery/view/{id}', 'ControllerDash@showScenery');
         Route::post('/search-airport', 'ControllerDash@searchAirport');
         Route::get('/search-airport/search', 'ControllerDash@searchAirportResult');
+        Route::prefix('incident')->group(function() {
+            Route::get('/report', 'ControllerDash@incidentReport');
+            Route::post('/report', 'ControllerDash@submitIncidentReport');
+        });
     });
 
     Route::prefix('opt')->group(function() {
@@ -201,6 +197,12 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::prefix('email')->middleware('permission:email')->group(function() {
             Route::get('/send', 'AdminDash@sendNewEmail');
             Route::post('/send', 'AdminDash@sendEmail');
+        });
+        Route::prefix('incident')->middleware('permission:snrStaff')->group(function() {
+            Route::get('/', 'AdminDash@incidentReportIndex');
+            Route::get('/view/{id}', 'AdminDash@viewIncidentReport');
+            Route::get('/archive/{id}', 'AdminDash@archiveIncident');
+            Route::get('/delete/{id}', 'AdminDash@deleteIncident');
         });
     });
 });

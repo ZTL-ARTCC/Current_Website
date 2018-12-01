@@ -12,6 +12,7 @@ use App\EventPosition;
 use App\EventRegistration;
 use App\Feedback;
 use App\File;
+use App\Incident;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -1265,5 +1266,35 @@ class AdminDash extends Controller
                 $ticket->save();
             }
         }
+    }
+
+    public function incidentReportIndex() {
+        $new_reports = Incident::where('status', 0)->orderBy('created_at', 'DSC')->get();
+        $archive_reports = Incident::where('status', 1)->orderBy('created_at', 'DSC')->paginate(20);
+
+        return view('dashboard.admin.incident_reports.index')->with('new_reports', $new_reports)->with('archive_reports', $archive_reports);
+    }
+
+    public function viewIncidentReport($id) {
+        $incident = Incident::find($id);
+
+        return view('dashboard.admin.incident_reports.view')->with('incident', $incident);
+    }
+
+    public function archiveIncident($id) {
+        $incident = Incident::find($id);
+        $incident->controller_id = null;
+        $incident->reporter_id = null;
+        $incident->status = 1;
+        $incident->save();
+
+        return redirect()->back()->with('success', 'The incident has been reported successfully.');
+    }
+
+    public function deleteIncident($id) {
+        $incident = Incident::find($id);
+        $incident->delete();
+
+        return redirect()->back()->with('success', 'The incident has been deleted successfully.');
     }
 }
