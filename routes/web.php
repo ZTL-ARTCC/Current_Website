@@ -74,6 +74,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/scenery/view/{id}', 'ControllerDash@showScenery');
         Route::post('/search-airport', 'ControllerDash@searchAirport');
         Route::get('/search-airport/search', 'ControllerDash@searchAirportResult');
+        Route::post('/report-bug', 'ControllerDash@reportBug');
         Route::prefix('incident')->group(function() {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');

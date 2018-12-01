@@ -65,7 +65,7 @@ Dashboard
             @endif
         </div>
         <div class="col-sm-3">
-            <a class="btn btn-secondary btn-block" href="/dashboard/controllers/roster">Controller Roster</a>
+            <button data-toggle="modal" data-target="#reportBug" class="btn btn-secondary btn-block">Report a Bug</button>
             @if(Auth::user()->can('staff'))
                 <a class="btn btn-secondary btn-block" href="/dashboard/admin/calendar">Manage Calendar/News</a>
             @endif
@@ -195,5 +195,42 @@ Dashboard
 		</div>
     </div>
 
+    <div class="modal fade" id="reportBug" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Report a Bug</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {!! Form::open(['action' => 'ControllerDash@reportBug']) !!}
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                {!! Form::label('url', 'Intended URL') !!}
+                                {!! Form::text('url', null, ['placeholder' => 'Paste the Intended URL Here', 'class' => 'form-control']) !!}
+                            </div>
+                            <div class="col-sm-6">
+                                {!! Form::label('error', 'Error Received (If Applicable)') !!}
+                                {!! Form::text('error', null, ['placeholder' => 'Paste Error Here, If Applicable', 'class' => 'form-control']) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('desc', 'Brief Description of Bug') !!}
+                        {!! Form::textArea('desc', null, ['placeholder' => 'Please be brief but specific with details regarding the bug.', 'class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button action="submit" class="btn btn-success">Send</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

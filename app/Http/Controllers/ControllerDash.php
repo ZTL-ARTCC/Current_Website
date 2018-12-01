@@ -23,6 +23,7 @@ use Auth;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Mail;
 use SimpleXMLElement;
 use Response;
 
@@ -473,5 +474,23 @@ class ControllerDash extends Controller
         $incident->save();
 
         return redirect('/dashboard')->with('success', 'Your report has been submitted successfully.');
+    }
+
+    public function reportBug(Request $request) {
+        $validator = $request->validate([
+            'desc' => 'required'
+        ]);
+        $reporter = User::find(Auth::id());
+        $url = $request->url;
+        $error = $request->error;
+        $desc = $request->desc;
+
+        Mail::send('emails.bug', ['reporter' => $reporter, 'url' => $url, 'error' => $error, 'desc' => $desc], function ($m) use ($reporter){
+            $m->from('bugs@notams.ztlartcc.org', 'vZTL ARTCC Bugs')->replyTo($reporter->email, $reporter->full_name);
+            $m->subject('New Bug Report');
+            $m->to('wm@ztlartcc.org');
+        });
+
+        return redirect()->back()->with('success', 'Your bug has been reported successfully.');
     }
 }
