@@ -21,6 +21,9 @@ Scenery Management
         <li class="nav-item">
             <a class="nav-link" href="#xp" role="tab" data-toggle="tab" style="color:black">X-Plane</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#afcad" role="tab" data-toggle="tab" style="color:black">AFCAD</a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -126,6 +129,51 @@ Scenery Management
                 </table>
             @else
                 <p>No scenery for X-Plane.</p>
+            @endif
+        </div>
+        <div role="tabpanel" class="tab-pane" id="afcad">
+            @if($afcad != '[]')
+                <table class="table table-outline">
+                    <thead>
+                        <tr>
+                            <th scope="col">Scenery Airport</th>
+                            <th scope="col">Developer</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        @foreach($afcad as $s)
+                            <tr>
+                                <td>{{ $s->airport }}</td>
+                                <td>
+                                    <a href="{{ $s->link }}" target="_blank">{{ $s->developer }}</a>
+                                </td>
+                                <td>
+                                    @if($s->price == 0)
+                                        Free
+                                    @else
+                                        {{ $s->price }} {{ $s->currency }}
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            {!! Form::open(['action' => ['AdminDash@deleteScenery', $s->id]]) !!}
+                                                @csrf
+                                                {!! Form::hidden('_method', 'DELETE') !!}
+                                                <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </thead>
+                </table>
+            @else
+                <p>No AFCADs found.</p>
             @endif
         </div>
     </div>

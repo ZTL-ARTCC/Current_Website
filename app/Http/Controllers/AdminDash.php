@@ -37,8 +37,9 @@ class AdminDash extends Controller
 
         $fsx = $scenery->where('sim', 0);
         $xp = $scenery->where('sim', 1);
+        $afcad = $scenery->where('sim', 2);
 
-        return view('dashboard.admin.scenery.index')->with('fsx', $fsx)->with('xp', $xp);
+        return view('dashboard.admin.scenery.index')->with('fsx', $fsx)->with('xp', $xp)->with('afcad', $afcad);
     }
 
     public function viewScenery($id) {

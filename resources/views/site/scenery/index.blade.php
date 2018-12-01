@@ -21,6 +21,9 @@ Scenery
         <li class="nav-item">
             <a class="nav-link" href="#xp" role="tab" data-toggle="tab" style="color:black">X-Plane</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#afcad" role="tab" data-toggle="tab" style="color:black">AFCADs</a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -98,6 +101,36 @@ Scenery
                 </table>
             @else
                 <p>No scenery for X-Plane.</p>
+            @endif
+        </div>
+        <div role="tabpanel" class="tab-pane" id="afcad">
+            @if($afcad != '[]')
+                <table class="table table-outline">
+                    <thead>
+                        <tr>
+                            <th scope="col">Scenery Airport</th>
+                            <th scope="col">Developer</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                        @foreach($afcad as $s)
+                            <tr>
+                                <td>{{ $s->airport }}</td>
+                                <td>
+                                    <a href="{{ $s->link }}" target="_blank">{{ $s->developer }}</a>
+                                </td>
+                                <td>
+                                    @if($s->price == 0)
+                                        Free
+                                    @else
+                                        {{ $s->price }} {{ $s->currency }}
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </thead>
+                </table>
+            @else
+                <p>No AFCADs found.</p>
             @endif
         </div>
     </div>

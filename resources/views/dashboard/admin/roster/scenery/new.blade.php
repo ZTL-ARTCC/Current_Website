@@ -21,10 +21,11 @@ New Scenery
                     {!! Form::text('apt', null, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('sim', 'Simulator') !!}
+                    {!! Form::label('sim', 'Simulator/AFCAD') !!}
                     {!! Form::select('sim', [
                         0 => 'FSX/P3D',
-                        1 => 'X-Plane'
+                        1 => 'X-Plane',
+                        2 => 'AFCAD'
                     ], null, ['class' => 'form-control', 'placeholder' => 'Choose Simulator (Required)']) !!}
                 </div>
             </div>

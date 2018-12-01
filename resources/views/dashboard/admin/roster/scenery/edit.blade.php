@@ -21,10 +21,11 @@ Edit Scenery
                     {!! Form::text('apt', $scenery->airport, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('sim', 'Simulator') !!}
+                    {!! Form::label('sim', 'Simulator/AFCAD') !!}
                     {!! Form::select('sim', [
                         0 => 'FSX/P3D',
-                        1 => 'X-Plane'
+                        1 => 'X-Plane',
+                        2 => 'AFCAD'
                     ], $scenery->sim, ['class' => 'form-control']) !!}
                 </div>
             </div>
