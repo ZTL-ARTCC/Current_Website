@@ -87,32 +87,24 @@ Home
                         <th scope="col"><center>Altimeter</center></th>
                     </thead>
                     <tbody>
-                        @if($atl != null)
-                            <tr>
-                                <td><a href="/pilots/airports/view/1"><center>{{ $atl->icao}}</center></a></td>
-                                <td><center>{{ $atl->visual_conditions }}</center></td>
-                                <td><center>{{ $atl->wind }}</center></td>
-                                <td><center>{{ $atl->altimeter }}</center></td>
-                            </tr>
-                        @endif
-                        @if($clt != null)
-                            <tr>
-                                <td><a href="/pilots/airports/view/2"><center>{{ $clt->icao }}</center></a></td>
-                                <td><center>{{ $clt->visual_conditions }}</center></td>
-                                <td><center>{{ $clt->wind }}</center></td>
-                                <td><center>{{ $clt->altimeter }}</center></td>
-                            </tr>
-                        @endif
-                        @if($bhm != null)
-                            <tr>
-                                <td><a href="/pilots/airports/view/3"><center>{{ $bhm->icao }}</center></a></td>
-                                <td><center>{{ $bhm->visual_conditions }}</center></td>
-                                <td><center>{{ $bhm->wind }}</center></td>
-                                <td><center>{{ $bhm->altimeter }}</center></td>
-                            </tr>
+                        @if($airports->count() > 0)
+                            @foreach($airports as $a)
+                                <tr>
+                                    <td><a href="/pilots/airports/view/{{ $a->id }}"><center>{{ $a->ltr_4 }}</center></a></td>
+                                    <td><center>{{ $a->visual_conditions }}</center></td>
+                                    <td><center>{{ $a->wind }}</center></td>
+                                    <td><center>{{ $a->altimeter }}</center></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <td colspan="4"><div align="center"><i>No Airports to Show</i></div></td>
                         @endif
                         <tr>
-                            <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div></td>
+                            @if($metar_last_updated != null)
+                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div></td>
+                            @else
+                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated N/A</div></td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>

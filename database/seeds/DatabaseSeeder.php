@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 		$this->call([
-		AirportSeeder::class,
 		LaratrustSeeder::class,
 		PositionPresetSeeder::class,
 		ControllerUpdateSeeder::class,

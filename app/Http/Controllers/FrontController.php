@@ -57,20 +57,13 @@ class FrontController extends Controller
             }
         }
 
-        $a1 = Airport::find(1);
-        $a2 = Airport::find(2);
-        $a3 = Airport::find(3);
-        $atl = Metar::where('icao', $a1->ltr_4)->first();
-        $clt = Metar::where('icao', $a2->ltr_4)->first();
-        $bhm = Metar::where('icao', $a3->ltr_4)->first();
-        if($bhm->updated_at > $atl->updated_at && $bhm->updated_at > $clt->updated_at) {
-            $metar_update = $bhm->updated_at;
-        } elseif($clt->updated_at > $atl->updated_at) {
-            $metar_update = $clt->updated_at;
+        $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
+        $metar_update = Metar::first();
+        if($metar_update != null) {
+            $metar_last_updated = substr($metar_update, -10, 5);
         } else {
-            $metar_update = $atl->updated_at;
+            $metar_last_updated = null;
         }
-        $metar_last_updated = substr($metar_update, -8, 5);
 
         $controllers = ATC::get();
         $last_update = ControllerLogUpdate::first();
@@ -81,7 +74,7 @@ class FrontController extends Controller
         $events = Event::where('status', 1)->orderBy('date', 'ASC')->get();
 
         return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
-                                ->with('bhm', $bhm)->with('atl', $atl)->with('clt', $clt)->with('metar_last_updated', $metar_last_updated)
+                                ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events);
     }

@@ -16,6 +16,7 @@ class Airports extends Migration
         Schema::create('airports', function(Blueprint $table){
             $table->integer('id')->autoIncrement();
             $table->string('name');
+            $table->integer('front_pg')->default(0);
             $table->string('ltr_4');
             $table->string('ltr_3');
         });

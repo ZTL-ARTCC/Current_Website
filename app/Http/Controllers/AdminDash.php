@@ -142,6 +142,22 @@ class AdminDash extends Controller
         return redirect('/dashboard/admin/airports')->with('success', 'The airport was added successfully.');
     }
 
+    public function addAirportToHome($id) {
+        $airport = Airport::find($id);
+        $airport->front_pg = 1;
+        $airport->save();
+
+        return redirect()->back()->with('success', 'You have successfully added this airport to the home page.');
+    }
+
+    public function removeAirportFromHome($id) {
+        $airport = Airport::find($id);
+        $airport->front_pg = 0;
+        $airport->save();
+
+        return redirect()->back()->with('success', 'You have successfully removed this airport from the home page.');
+    }
+
     public function deleteAirport($id) {
         $airport = Airport::find($id);
         $airport->delete();

@@ -150,6 +150,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/', 'AdminDash@showAirports');
             Route::get('/new', 'AdminDash@newAirport');
             Route::post('/new', 'AdminDash@storeAirport');
+            Route::get('/add-to-home/{id}', 'AdminDash@addAirportToHome');
+            Route::get('/del-from-home/{id}', 'AdminDash@removeAirportFromHome');
             Route::delete('/delete/{id}', 'AdminDash@deleteAirport');
         });
         Route::prefix('events')->middleware('permission:events')->group(function() {
