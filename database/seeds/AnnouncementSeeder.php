@@ -22,19 +22,19 @@ class AnnouncementSeeder extends Seeder
                 $atm = $r->cid;
             }
         }
-        if($atm == null) {
+        if(isset($atm) == false) {
             foreach($result as $r) {
                 if($r->role == 'DATM') {
                     $atm = $r->cid;
                 }
             }
-            if($atm == null) {
+            if(isset($atm) == false) {
                 foreach($result as $r) {
                     if($r->role == 'TA') {
                         $atm = $r->cid;
                     }
                 }
-                if($atm == null) {
+                if(isset($atm) == false) {
                     foreach($result as $r) {
                         if($r->role == 'WM') {
                             $atm = $r->cid;
