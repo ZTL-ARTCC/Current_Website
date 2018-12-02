@@ -331,14 +331,22 @@ class ControllerDash extends Controller
         return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully.');
     }
 
-    public function sceneryIndex() {
-        $scenery = Scenery::orderBy('airport', 'ASC')->get();
+    public function sceneryIndex(Request $request) {
+        if($request->search == null) {
+            $scenery = Scenery::orderBy('airport', 'ASC')->get();
+        } else {
+            $scenery = Scenery::where('airport', $request->search)->orWhere('developer', $request->search)->orderBy('airport', 'ASC')->get();
+        }
 
         $fsx = $scenery->where('sim', 0);
         $xp = $scenery->where('sim', 1);
         $afcad = $scenery->where('sim', 2);
 
         return view('dashboard.controllers.scenery.index')->with('fsx', $fsx)->with('xp', $xp)->with('afcad', $afcad);
+    }
+
+    public function searchScenery(Request $request) {
+        return redirect('/dashboard/controllers/scenery?search='.$request->search);
     }
 
     public function showScenery($id) {

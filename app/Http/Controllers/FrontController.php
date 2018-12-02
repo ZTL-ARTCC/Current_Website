@@ -162,14 +162,22 @@ class FrontController extends Controller
         return view('site.airports.view')->with('airport', $airport);
     }
 
-    public function sceneryIndex() {
-        $scenery = Scenery::orderBy('airport', 'ASC')->get();
+    public function sceneryIndex(Request $request) {
+        if($request->search == null) {
+            $scenery = Scenery::orderBy('airport', 'ASC')->get();
+        } else {
+            $scenery = Scenery::where('airport', $request->search)->orWhere('developer', $request->search)->orderBy('airport', 'ASC')->get();
+        }
 
         $fsx = $scenery->where('sim', 0);
         $xp = $scenery->where('sim', 1);
         $afcad = $scenery->where('sim', 2);
 
         return view('site.scenery.index')->with('fsx', $fsx)->with('xp', $xp)->with('afcad', $afcad);
+    }
+
+    public function searchScenery(Request $request) {
+        return redirect('/pilots/scenery?search='.$request->search);
     }
 
     public function showScenery($id) {

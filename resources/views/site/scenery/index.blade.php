@@ -14,6 +14,26 @@ Scenery
 </span>
 <br>
 <div class="container">
+    {!! Form::open(['url' => '/pilots/scenery/search']) !!}
+        <div class="form-group inline">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            {!! Form::text('search', null, ['placeholder' => 'Search for Airport/Developer', 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-sm-3">
+                            <button action="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+        </div>
+    {!! Form::close() !!}
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" href="#fsx" role="tab" data-toggle="tab" style="color:black">FSX/P3D</a>

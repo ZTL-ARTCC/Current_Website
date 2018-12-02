@@ -81,6 +81,7 @@ Incident Report Management
                     @endif
                 </tbody>
             </table>
+            {!! $archive_reports->links() !!}
         </div>
     </div>
 </div>

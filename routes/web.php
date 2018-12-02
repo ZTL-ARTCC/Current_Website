@@ -25,6 +25,7 @@ Route::get('/pilots/airports/search', 'FrontController@searchAirportResult');
 Route::get('/pilots/airports/view/{id}', 'FrontController@showAirport');
 Route::get('/pilots/scenery', 'FrontController@sceneryIndex');
 Route::get('/pilots/scenery/view/{id}', 'FrontController@showScenery');
+Route::post('/pilots/scenery/search', 'FrontController@searchScenery');
 Route::get('/pilots/request-staffing', 'FrontController@showStaffRequest');
 Route::post('/pilots/request-staffing', 'FrontController@staffRequest');
 Route::get('/feedback/new', 'FrontController@newFeedback');
@@ -72,6 +73,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/events/view/{id}/un-signup', 'ControllerDash@unsignupForEvent');
         Route::get('/scenery', 'ControllerDash@sceneryIndex');
         Route::get('/scenery/view/{id}', 'ControllerDash@showScenery');
+        Route::post('/scenery/search', 'ControllerDash@searchScenery');
         Route::post('/search-airport', 'ControllerDash@searchAirport');
         Route::get('/search-airport/search', 'ControllerDash@searchAirportResult');
         Route::post('/report-bug', 'ControllerDash@reportBug');
