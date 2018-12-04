@@ -157,12 +157,18 @@ Feedback Management
                             <td data-toggle="tooltip" title="{{ $f->staff_comments }}">{{ str_limit($f->staff_comments, 40, '...') }}</td>
                             <td>{{ $f->created_at }}</td>
                             <td>
-                                <span data-toggle="modal" data-target="#updateFeedback{{ $f->id }}">
-                                    <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
-                                </span>
-                                @if($f->pilot_email != null)
-                                    <a href="mailto:{{ $f->pilot_email }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></a>
-                                @endif
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <span data-toggle="modal" data-target="#updateFeedback{{ $f->id }}">
+                                            <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @if($f->pilot_email != null)
+                                            <a href="mailto:{{ $f->pilot_email }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></a>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <div class="modal fade" id="updateFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -213,6 +219,7 @@ Feedback Management
             @else
                 <p>No processed feedback.</p>
             @endif
+            {!! $feedback_p->links() !!}
         </div>
     </div>
 </div>

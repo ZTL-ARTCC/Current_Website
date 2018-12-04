@@ -808,7 +808,7 @@ class AdminDash extends Controller
     public function showFeedback() {
         $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         $feedback = Feedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
-        $feedback_p = Feedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'ASC')->get();
+        $feedback_p = Feedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DSC')->paginate(25);
         return view('dashboard.admin.feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('controllers', $controllers);
     }
 
