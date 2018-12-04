@@ -23,7 +23,10 @@ View Incident Report
         </div>
         <div class="card-body">
             <p><b>Controller:</b> <i>{{ $incident->controller_name }}</i></p>
+            <p><b>Controller Callsign:</b> <i>{{ $incident->controller_callsign }}</i></p>
             <p><b>Reporter:</b> <i>{{ $incident->reporter_name }}</i></p>
+            <p><b>Reporter Callsign:</b> <i>{{ $incident->reporter_callsign }}</i></p>
+            <p><b>Aircraft Callsign (If Applicable):</b> <i>{{ $incident->aircraft_callsign }}</i></p>
             <p><b>Description:</b></p>
             <p>{!! nl2br($incident->description) !!}</p>
         </div>

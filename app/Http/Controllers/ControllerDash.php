@@ -465,6 +465,8 @@ class ControllerDash extends Controller
     public function submitIncidentReport(Request $request) {
         $validator = $request->validate([
             'controller_id' => 'required',
+            'controller_callsign' => 'required',
+            'reporter_callsign' => 'required',
             'date' => 'required',
             'time' => 'required',
             'description' => 'required'
@@ -474,7 +476,10 @@ class ControllerDash extends Controller
 
         $incident = new Incident;
         $incident->controller_id = $request->controller_id;
+        $incident->controller_callsign = $request->controller_callsign;
         $incident->reporter_id = Auth::id();
+        $incident->reporter_callsign = $request->reporter_callsign;
+        $incident->aircraft_callsign = $request->aircraft_callsign;
         $incident->time = $request->time;
         $incident->date = $date->format('m/d/Y');
         $incident->description = $request->description;

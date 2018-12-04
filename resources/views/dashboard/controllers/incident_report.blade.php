@@ -33,6 +33,22 @@ New Incident Report
             </div>
         </div>
         <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
+                    {!! Form::label('controller_callsign', 'Controller Callsign', ['class' => 'form-label']) !!}
+                    {!! Form::text('controller_callsign', null, ['placeholder' => 'Callsign of the Controller', 'class' => 'form-control']) !!}
+                </div>
+                <div class="col-sm-4">
+                    {!! Form::label('reporter_callsign', 'Your Callsign', ['class' => 'form-label']) !!}
+                    {!! Form::text('reporter_callsign', null, ['placeholder' => 'Your Callsign', 'class' => 'form-control']) !!}
+                </div>
+                <div class="col-sm-4">
+                    {!! Form::label('aircraft_callsign', 'Aircraft Callsign (If Applicable)', ['class' => 'form-label']) !!}
+                    {!! Form::text('aircraft_callsign', null, ['placeholder' => 'Aircraft Involved (Optional)', 'class' => 'form-control']) !!}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             {!! Form::label('description', 'Description of Incident', ['class' => 'form-label']) !!}
             {!! Form::textArea('description', null, ['placeholder' => 'Please describe the incident as descriptively as possible.', 'class' => 'form-control']) !!}
         </div>
