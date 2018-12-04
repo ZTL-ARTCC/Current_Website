@@ -1274,30 +1274,33 @@ class AdminDash extends Controller
         $response = json_decode($request->getBody());
 
         foreach($response as $r) {
-            $feedback = new Feedback;
-            $feedback->controller_id = $r->controller_id;
-            $feedback->position = $r->position;
-            if($r->level == 0) {
-                $feedback->service_level = 4;
-            } elseif($r->level = 1) {
-                $feedback->service_level = 3;
-            } elseif($r->level = 2) {
-                $feedback->service_level = 2;
-            } elseif($r->level = 3) {
-                $feedback->service_level = 1;
-            } elseif($r->level == 4) {
-                $feedback->service_level = 0;
+            $f = Feedback::where('pilot_callsign', $r->pilot_callsign)->where('controller_id', $r->controller_id)->where('created_at', $r->created_at)->first();
+            if(isset($f)) {
+                $feedback = new Feedback;
+                $feedback->controller_id = $r->controller_id;
+                $feedback->position = $r->position;
+                if($r->level == 0) {
+                    $feedback->service_level = 4;
+                } elseif($r->level = 1) {
+                    $feedback->service_level = 3;
+                } elseif($r->level = 2) {
+                    $feedback->service_level = 2;
+                } elseif($r->level = 3) {
+                    $feedback->service_level = 1;
+                } elseif($r->level == 4) {
+                    $feedback->service_level = 0;
+                }
+                $feedback->callsign = $r->flight_callsign;
+                $feedback->pilot_name = $r->pilot_name;
+                $feedback->pilot_email = $r->pilot_email;
+                $feedback->pilot_cid = $r->pilot_id;
+                $feedback->comments = $r->comments;
+                $feedback->staff_comments = $r->staff_comments;
+                $feedback->created_at = $r->created_at;
+                $feedback->updated_at = $r->updated_at;
+                $feedback->status = $r->status;
+                $feedback->save();
             }
-            $feedback->callsign = $r->flight_callsign;
-            $feedback->pilot_name = $r->pilot_name;
-            $feedback->pilot_email = $r->pilot_email;
-            $feedback->pilot_cid = $r->pilot_id;
-            $feedback->comments = $r->comments;
-            $feedback->staff_comments = $r->staff_comments;
-            $feedback->created_at = $r->created_at;
-            $feedback->updated_at = $r->updated_at;
-            $feedback->status = $r->status;
-            $feedback->save();
         }
 
         return 'success';
