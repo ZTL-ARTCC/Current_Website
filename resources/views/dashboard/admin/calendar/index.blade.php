@@ -42,7 +42,7 @@ Calendar/News
                                 @if($c->time == null)
                                     <td>{{ $c->date }}</td>
                                 @else
-                                    <td>{{ $c->date }} {{ $c->time }}z</td>
+                                    <td>{{ $c->date }} {{ $c->time }}</td>
                                 @endif
                                 <td><center><a href="/dashboard/admin/calendar/view/{{ $c->id }}">{{ $c->title }}</a></center></td>
                                 <td><center>{!! str_limit($c->body, 50, '...') !!}</center></td>
@@ -88,7 +88,7 @@ Calendar/News
                                 @if($c->time == null)
                                     <td>{{ $c->date }}</td>
                                 @else
-                                    <td>{{ $c->date }} {{ $c->time }}z</td>
+                                    <td>{{ $c->date }} {{ $c->time }}</td>
                                 @endif
                                 <td><center><a href="/dashboard/admin/calendar/view/{{ $c->id }}">{{ $c->title }}</a></center></td>
                                 <td><center>{!! str_limit($c->body, 50, '...') !!}</center></td>

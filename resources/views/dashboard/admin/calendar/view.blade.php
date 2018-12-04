@@ -27,7 +27,7 @@ View Calendar Event/News
         </div>
         <div class="card-body">
             <p><b>Date:</b> {{ $calendar->date }}</p>
-            <p><b>Time:</b> @if($calendar->time != null) {{ $calendar->time }}z @else No time listed. @endif</p>
+            <p><b>Time:</b> @if($calendar->time != null) {{ $calendar->time }} @else No time listed. @endif</p>
             <p><b>Additional Information:</b></p>
             <p>{!! $calendar->body !!}</p>
             <hr>

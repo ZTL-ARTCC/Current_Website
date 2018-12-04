@@ -25,7 +25,7 @@ Edit Calendar Event/News
                 {!! Form::text('date', $calendar->date, ['class' => 'form-control', 'placeholder' => 'MM/DD/YYYY (Required)']) !!}
             </div>
             <div class="col-sm-6">
-                {!! Form::label('time', 'Time (Zulu)') !!}
+                {!! Form::label('time', 'Time') !!}
                 {!! Form::text('time', $calendar->time, ['class' => 'form-control', 'placeholder' => 'HH:MM (Optional)']) !!}
             </div>
         </div>

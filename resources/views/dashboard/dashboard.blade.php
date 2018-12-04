@@ -93,7 +93,7 @@ Dashboard
             <center><h4><i class="fas fa-calendar-alt"></i> Calendar</h4></center>
             @if(count($calendar) > 0)
                 @foreach($calendar as $c)
-                    <p>{{ $c->date }} ({{ $c->time }}z) - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
+                    <p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
                 @endforeach
             @else
                 <center><i><p>No calendar events to show.</p></i></center>
