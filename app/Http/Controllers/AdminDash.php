@@ -1274,7 +1274,7 @@ class AdminDash extends Controller
         $response = json_decode($request->getBody());
 
         foreach($response as $r) {
-            $f = Feedback::where('callsign', $r->pilot_callsign)->where('controller_id', $r->controller_id)->where('created_at', $r->created_at)->first();
+            $f = Feedback::where('callsign', $r->flight_callsign)->where('controller_id', $r->controller_id)->where('created_at', $r->created_at)->first();
             if(isset($f)) {
                 $feedback = new Feedback;
                 $feedback->controller_id = $r->controller_id;
