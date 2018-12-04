@@ -158,7 +158,7 @@ Feedback Management
                             <td>{{ $f->created_at }}</td>
                             <td>
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <span data-toggle="modal" data-target="#updateFeedback{{ $f->id }}">
                                             <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
                                         </span>
