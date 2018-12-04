@@ -18,14 +18,13 @@ class Roster extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->string('initials')->nullable();
-            $table->timestamp('added_to_facility')->nullable();
             $table->string('email');
             $table->integer('rating_id');
             $table->integer('canTrain')->default(1);
             $table->integer('canEvents')->default(1);
             $table->integer('visitor');
-            $table->integer('api_exempt')->default(0);
             $table->string('visitor_from')->nullable();
+            $table->integer('api_exempt')->default(0);
             $table->integer('status');
             $table->integer('loa')->default(0);
             $table->integer('del')->default(0);
@@ -39,6 +38,7 @@ class Roster extends Migration
             $table->string('remember_token')->nullable();
             $table->string('json_token', 2000)->nullable();
             $table->timestamps();
+            $table->timestamp('added_to_facility')->nullable();
         });
     }
 
