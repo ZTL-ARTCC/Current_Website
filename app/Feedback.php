@@ -28,7 +28,7 @@ class Feedback extends Model
     }
 
     public function getControllerNameAttribute() {
-        $controller = User::find($this->controller_id)
+        $controller = User::find($this->controller_id);
         if(isset($controller_id)) {
             $name = $controller->full_name;
         } else {
