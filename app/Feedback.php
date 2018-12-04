@@ -31,10 +31,13 @@ class Feedback extends Model
 
     public function getControllerNameAttribute() {
         $controller = User::find($this->controller_id);
-        if(isset($controller_id)) {
+        if(isset($controller)) {
             $name = $controller->full_name;
         } else {
-            $name = '[This controller is no longer a member]';
+            $client = new Client();
+            $response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$this->controller_id);
+            $r = new SimpleXMLElement($response->getBody());
+            $name = $r->user->name_first.' '.$r->user->name_last;
         }
         return $name;
     }
