@@ -1268,7 +1268,7 @@ class AdminDash extends Controller
         }
     }
 
-    public function updateFeedback() {
+    public function updateFeedbackImport() {
         $client = new Client();
         $request = $client->request('GET', 'https://www.ztlartcc.org/feedback-transfer?t=1364926');
         $response = json_decode($request->getBody());

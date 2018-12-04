@@ -219,7 +219,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
 */
 Route::get('/cron-job/run', 'CronController@index');
 Route::get('/update-training-tickets', 'AdminDash@updateTrainingTickets');
-Route::get('/update-feedback', 'AdminDash@updateFeedback');
+Route::get('/update-feedback', 'AdminDash@updateFeedbackImport');
 /*
 *   End Cron Job
 */
