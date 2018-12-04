@@ -16,7 +16,10 @@ class IncidentReports extends Migration
         Schema::create('incident_reports', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('controller_id')->nullable();
+            $table->string('controller_callsign');
             $table->integer('reporter_id')->nullable();
+            $table->string('reporter_callsign');
+            $table->string('aircraft_callsign')->nullable();
             $table->string('time');
             $table->string('date');
             $table->text('description');
