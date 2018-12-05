@@ -4,6 +4,7 @@
     </head>
     <body>
         @yield('content')
+        <br>
         ----------
         @yield('footer')
         <p><i>For entertainment purposes only. Do not use for real world purposes. Part of the VATSIM Network.</i></p>
