@@ -80,7 +80,7 @@ class TrainingDash extends Controller
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
-        $controllers = User::where('visitor', '0')->where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('full_name', 'id');
+        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('full_name', 'id');
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
     }
 
