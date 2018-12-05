@@ -415,6 +415,7 @@ class VisitAgreement extends Command
 
         $users_zjx = $users = User::where('visitor', '1')->where('status', '1')->where('visitor_from', 'ZJX')->get()->pluck('id');
         $users_zhu = $users = User::where('visitor', '1')->where('status', '1')->where('visitor_from', 'ZHU')->get()->pluck('id');
+        dd($users_zjx);
 
         foreach($users_zjx as $u) {
             $delete = 0;
@@ -424,7 +425,7 @@ class VisitAgreement extends Command
                     $delete = 1;
                 }
             }
-            if($delete == 0) {
+            if($delete == '0') {
                 $use = User::find($u);
                 $use->delete();
             }
@@ -438,7 +439,7 @@ class VisitAgreement extends Command
                     $delete = 1;
                 }
             }
-            if($delete == 0) {
+            if($delete == '0') {
                 $use = User::find($u);
                 $use->delete();
             }
