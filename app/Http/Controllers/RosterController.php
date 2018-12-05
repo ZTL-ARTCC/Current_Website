@@ -20,9 +20,10 @@ class RosterController extends Controller
 {
     public function index() {
         $hcontrollers = User::where('visitor', '0')->where('status', '1')->orderBy('lname', 'ASC')->get();
-        $vcontrollers = User::where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
+        $vcontrollers = User::where('visitor', '1')->where('status', '1')->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
+        $visagreecontrollers = User::where('visitor', '1')->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->orderBy('visitor_from', 'ASC')->orderBy('lname', 'ASC')->get();
 
-        return view('site.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
+        return view('site.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers)->with('visagreecontrollers', $visagreecontrollers);
     }
 
     public function login() {
@@ -78,7 +79,7 @@ class RosterController extends Controller
             $url = "https://login.vatusa.net/uls/v2/info?token={$parts[1]}";
             $result = $client->get($url);
             $res = json_decode($result->getBody()->__toString(), true);
-			
+
             $userstatuscheck = User::find($res['cid']);
             if($userstatuscheck) {
                 if($userstatuscheck->status == 0) {
