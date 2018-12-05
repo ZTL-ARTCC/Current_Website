@@ -863,14 +863,14 @@ class AdminDash extends Controller
             'subject' => 'required',
             'body' => 'required'
         ]);
-        
+
         $feedback = Feedback::find($id);
         $replyTo = $request->email;
         $replyToName = $request->name;
         $subject = $request->subject;
         $body = $request->body;
 
-        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body], function($m) use ($feedback, $subject) {
+        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body], function($m) use ($feedback, $subject, $replyTo, $replyToName) {
             $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
             $m->subject($subject);
             $m->to($feedback->pilot_email);
