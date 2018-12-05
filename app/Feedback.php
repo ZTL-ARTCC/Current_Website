@@ -24,6 +24,8 @@ class Feedback extends Model
             return 'Poor';
         } elseif($level == 4) {
             return 'Unsatisfactory';
+        } elseif($level == 5) {
+            return 'N/A';
         } else {
             return 'Value not Found';
         }
