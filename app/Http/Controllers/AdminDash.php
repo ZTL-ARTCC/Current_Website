@@ -856,6 +856,29 @@ class AdminDash extends Controller
         return redirect()->back()->with('success', 'The feedback has been updated.');
     }
 
+    public function emailFeedback(Request $request, $id) {
+        $validator = $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'subject' => 'required',
+            'body' => 'required'
+        ]);
+        
+        $feedback = Feedback::find($id);
+        $replyTo = $request->email;
+        $replyToName = $request->name;
+        $subject = $request->subject;
+        $body = $request->body;
+
+        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body], function($m) use ($feedback, $subject) {
+            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
+            $m->subject($subject);
+            $m->to($feedback->pilot_email);
+        });
+
+        return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
+    }
+
     public function sendNewEmail() {
         $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         return view('dashboard.admin.email.send')->with('controllers', $controllers);

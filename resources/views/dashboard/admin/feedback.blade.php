@@ -49,7 +49,9 @@ Feedback Management
                                         <button type="button" class="btn btn-danger simple-tooltip" data-placement="top" data-toggle="tooltip" title="Hide Feedback"><i class="fas fa-times"></i></button>
                                     </span>
                                     @if($f->pilot_email != null)
-                                        <a href="mailto:{{ $f->pilot_email }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></a>
+                                        <span data-toggle="modal" data-target="#emailFeedback{{ $f->id }}">
+                                            <button type="button" class="btn btn-warning simple-tooltip" data-placement="top" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></button>
+                                        </span>
                                     @endif
                                 </td>
                             </tr>
@@ -128,6 +130,44 @@ Feedback Management
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="emailFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Email Pilot, {{ $f->pilot_name }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {!! Form::open(['action' => ['AdminDash@emailFeedback', $f->id]]) !!}
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    {!! Form::label('name', 'Your Name') !!}
+                                                    {!! Form::text('name', 'vZTL ARTCC Staff', ['class' => 'form-control']) !!}
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {!! Form::label('email', 'Your Email') !!}
+                                                    {!! Form::email('email', 'feedback@notams.ztlartcc.org', ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+                                            <br>
+                                            {!! Form::label('subject', 'Subject') !!}
+                                            {!! Form::text('subject', 'An email regarding your recent feedback', ['class' => 'form-control']) !!}
+                                            <br>
+                                            {!! Form::label('body', 'Message') !!}
+                                            {!! Form::textArea('body', null, ['placeholder' => 'Gander Center, Pass your message...', 'class' => 'form-control']) !!}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button action="submit" class="btn btn-success">Send Email</button>
+                                        </div>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -165,7 +205,9 @@ Feedback Management
                                     </div>
                                     <div class="col-sm-2">
                                         @if($f->pilot_email != null)
-                                            <a href="mailto:{{ $f->pilot_email }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></a>
+                                            <span data-toggle="modal" data-target="#emailFeedback{{ $f->id }}">
+                                                <button type="button" class="btn btn-warning simple-tooltip" data-placement="top" data-toggle="tooltip" title="Email Pilot"><i class="fas fa-envelope"></i></button>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -208,6 +250,44 @@ Feedback Management
                                         ], $f->status, ['class' => 'form-control']) !!}
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Update Feedback</button>
+                                    </div>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="emailFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Email Pilot, {{ $f->pilot_name }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    {!! Form::open(['action' => ['AdminDash@emailFeedback', $f->id]]) !!}
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                {!! Form::label('name', 'Your Name') !!}
+                                                {!! Form::text('name', 'vZTL ARTCC Staff', ['class' => 'form-control']) !!}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                {!! Form::label('email', 'Your Email') !!}
+                                                {!! Form::email('email', 'feedback@notams.ztlartcc.org', ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        {!! Form::label('subject', 'Subject') !!}
+                                        {!! Form::text('subject', 'An email regarding your recent feedback', ['class' => 'form-control']) !!}
+                                        <br>
+                                        {!! Form::label('body', 'Message') !!}
+                                        {!! Form::textArea('body', null, ['placeholder' => 'Gander Center, Pass your message...', 'class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button action="submit" class="btn btn-success">Send Email</button>
                                     </div>
                                     {!! Form::close() !!}
                                 </div>

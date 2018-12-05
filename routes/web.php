@@ -196,6 +196,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/save/{id}', 'AdminDash@saveFeedback');
             Route::post('/hide/{id}', 'AdminDash@hideFeedback');
             Route::post('/update/{id}', 'AdminDash@updateFeedback');
+            Route::post('/email/{id}', 'AdminDash@emailFeedback');
         });
         Route::prefix('email')->middleware('permission:email')->group(function() {
             Route::get('/send', 'AdminDash@sendNewEmail');
