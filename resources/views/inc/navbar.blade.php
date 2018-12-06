@@ -1,6 +1,10 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
+        @if(Carbon\Carbon::now()->month == 12)
+            <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
+        @else
+            <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
+        @endif
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

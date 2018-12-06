@@ -1,6 +1,10 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
+        @if(Carbon\Carbon::now()->month == 12)
+            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/xmas_logo.png"></a>
+        @else
+            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/logo.png"></a>
+        @endif
             <ul class="navbar-nav">
                 {!! Form::open(['action' => 'ControllerDash@searchAirport']) !!}
                     <div class="form-inline">
