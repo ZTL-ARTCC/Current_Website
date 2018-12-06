@@ -115,7 +115,9 @@ class RosterController extends Controller
 						}
                     }
                     if($userstatuscheck->visitor == '1') {
-                        $userstatuscheck->visitor_from = $resu->facility;
+                        if($resu->facility != 'ZZN'){
+                            $userstatuscheck->visitor_from = $resu->facility;
+                        }
                     } else {
                         $userstatuscheck->visitor_from = null;
                     }
