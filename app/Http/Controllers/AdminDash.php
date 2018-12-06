@@ -190,7 +190,7 @@ class AdminDash extends Controller
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $homec = User::where('visitor', 0)->where('status', 1)->orderBy('lname', 'ASC')->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->orderBy('lname', 'ASC')->get();
+        $visitc = User::where('visitor', 1)->where('status', 1)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
         $trainc = User::orderBy('lname', 'ASC')->get()->filter(function($user){
             return $user->hasRole('mtr') || $user->hasRole('ins');
         });

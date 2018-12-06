@@ -89,7 +89,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 <tbody>
                     @foreach($visitc as $c)
                         <tr>
-                            <td>{{ $c->backwards_name }} ({{ $c->id }})</td>
+                            <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} ({{ $c->id }})</a></td>
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 2)
                                 <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$c->id]->total_hrs }}</b></td>
