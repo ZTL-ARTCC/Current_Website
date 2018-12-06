@@ -90,10 +90,6 @@ class RosterController extends Controller
                     $userstatuscheck->email = $res['email'];
                     $userstatuscheck->rating_id = $res['intRating'];
                     $userstatuscheck->json_token = encrypt($json_token);
-                    if($userstatuscheck->visitor == 1) {
-                        $facility = $res['facility'];
-                        $userstatuscheck->visitor_from = $facility['id'];
-                    }
 					$client = new Client();
 					$response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$res['cid'].'?apikey='.Config::get('vatusa.api_key'));
 					$resu = json_decode($response->getBody());
@@ -117,7 +113,12 @@ class RosterController extends Controller
 							$opt->save();
 							$userstatuscheck->opt = 0;
 						}
-					}
+                    }
+                    if($userstatuscheck->visitor == '1') {
+                        $userstatuscheck->visitor_from = $resu->facility;
+                    } else {
+                        $userstatuscheck->visitor_from = null;
+                    }
                     $userstatuscheck->save();
                     Auth::loginUsingId($res['cid'], true);
                 } else {
