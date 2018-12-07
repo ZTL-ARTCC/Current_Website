@@ -24,19 +24,11 @@ class User extends Authenticatable
     }
 
     public function getBackwardsNameAttribute() {
-        if(isset($this)) {
-            return $this->lname.', '.$this->fname;
-        } else {
-            return '[Controller no longer exists]';
-        }
+        return $this->lname.', '.$this->fname;
     }
 
     public function getFullNameAttribute() {
-        if(isset($this)) {
-            return $this->fname.' '.$this->lname;
-        } else {
-            return '[Controller no longer exists]';
-        }
+        return $this->fname.' '.$this->lname;
     }
 
     public static $RatingShort = [
@@ -49,31 +41,23 @@ class User extends Authenticatable
     ];
 
     public function getRatingShortAttribute() {
-        if(isset($this)) {
-            foreach (User::$RatingShort as $id => $Short) {
-                if ($this->rating_id == $id) {
-                    return $Short;
-                }
+        foreach (User::$RatingShort as $id => $Short) {
+            if ($this->rating_id == $id) {
+                return $Short;
             }
-
-            return "";
-        } else {
-            return 'N/A';
         }
+
+        return "";
     }
 
     public function getRatingLongAttribute() {
-        if(isset($this)) {
-            foreach (User::$RatingLong as $id => $Short) {
-                if ($this->rating_id == $id) {
-                    return $Short;
-                }
+        foreach (User::$RatingLong as $id => $Short) {
+            if ($this->rating_id == $id) {
+                return $Short;
             }
-
-            return "";
-        } else {
-            return 'N/A';
         }
+
+        return "";
     }
 
     public static $RatingLong = [
@@ -91,17 +75,13 @@ class User extends Authenticatable
     ];
 
     public function getStatusTextAttribute() {
-        if(isset($this)) {
-            foreach (User::$StatusText as $id => $Status) {
-                if ($this->status == $id) {
-                    return $Status;
-                }
+        foreach (User::$StatusText as $id => $Status) {
+            if ($this->status == $id) {
+                return $Status;
             }
-
-            return "";
-        } else {
-            return 'N/A';
         }
+
+        return "";
     }
 
     public function getStaffPositionAttribute() {

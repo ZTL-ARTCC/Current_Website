@@ -674,6 +674,10 @@ class AdminDash extends Controller
         if($user->visitor == 0) {
             return redirect()->back()->with('error', 'You can only remove visitors this way. If you are trying to remove a home controller, please do this from the VATUSA website.');
         } else {
+            $event_requests = EventRegistration::where('controller_id', $user->id)->get();
+            foreach($event_requests as $e) {
+                $e->delete();
+            }
             $user->delete();
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }

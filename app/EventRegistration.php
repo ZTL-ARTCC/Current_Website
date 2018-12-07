@@ -12,8 +12,13 @@ class EventRegistration extends Model
     protected $fillable = ['id', 'event_id', 'controller_id', 'position_id', 'start_time', 'end_time', 'status', 'choice_number', 'comments', 'created_at', 'updated_at', 'reminder'];
 
     public function getControllerNameAttribute() {
-        $name = User::find($this->controller_id)->full_name;
-        return $name;
+        $controller = User::find($this->controller_id);
+        if(isset($controller)){
+            $name = User::find($this->controller_id)->full_name;
+            return $name;
+        } else {
+            return '[Controller no longer exists]';
+        }
     }
 
     public function getPositionNameAttribute() {

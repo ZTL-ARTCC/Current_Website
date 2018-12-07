@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\EventRegistration;
 use App\User;
 use Config;
 use Eloquent\Collection;
@@ -233,6 +234,10 @@ class RosterUpdate extends Command
             if($delete == '0') {
                 $use = User::find($u);
                 if($use->visitor == 0 && $use->api_exempt == 0) {
+                    $event_requests = EventRegistration::where('controller_id', $use->id)->get();
+                    foreach($event_requests as $e) {
+                        $e->delete();
+                    }
                     $use->delete();
                 }
             }
