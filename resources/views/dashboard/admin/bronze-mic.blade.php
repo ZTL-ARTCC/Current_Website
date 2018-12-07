@@ -54,7 +54,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                         @if($winner == null)
                             {!! Form::open(['url' => '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id]) !!}
                                 @csrf
-                                <button action="submit" class="btn btn-success btn-simple-tooltip" data-toggle="Set as Winner for <?=$mname?>"><i class="fas fa-check"></i></button>
+                                <button action="submit" class="btn btn-success btn-simple-tooltip" data-toggle="tooltip" title="Set as Winner for <?=$mname?>"><i class="fas fa-check"></i></button>
                             {!! Form::close() !!}
                         @elseif($winner->controller_id == $h->id)
                             <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove Winner"><i class="fas fa-times"></i></a>

@@ -473,8 +473,6 @@ class ControllerDash extends Controller
             'description' => 'required'
         ]);
 
-        $date = new Carbon($request->date);
-
         $incident = new Incident;
         $incident->controller_id = $request->controller_id;
         $incident->controller_callsign = $request->controller_callsign;
@@ -482,7 +480,7 @@ class ControllerDash extends Controller
         $incident->reporter_callsign = $request->reporter_callsign;
         $incident->aircraft_callsign = $request->aircraft_callsign;
         $incident->time = $request->time;
-        $incident->date = $date->format('m/d/Y');
+        $incident->date = $request->date;
         $incident->description = $request->description;
         $incident->status = 0;
         $incident->save();

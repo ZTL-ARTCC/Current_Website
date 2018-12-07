@@ -347,8 +347,7 @@ class FrontController extends Controller
         $name = $request->name;
         $email = $request->email;
         $org = $request->org;
-        $date = new Carbon($request->date);
-        $date = $date->format('m/d/Y');
+        $date = $request->date;
         $time = $request->time;
         $exp = $request->additional_information;
 

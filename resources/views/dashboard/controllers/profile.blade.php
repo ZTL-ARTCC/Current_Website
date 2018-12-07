@@ -76,6 +76,14 @@ Profile
     <hr>
     <div class="row">
         <div class="col-sm-4">
+            <h4>My Information</h4>
+            <br>
+            <p><b>CID:</b> {{ Auth::id() }}</p>
+            <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
+            <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
+            <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+        </div>
+        <div class="col-sm-2">
         </div>
         <div class="col-sm-4">
             <center>
@@ -118,8 +126,6 @@ Profile
                     </ul>
                 </div>
             </center>
-        </div>
-        <div class="col-sm-4">
         </div>
     </div>
 </div>

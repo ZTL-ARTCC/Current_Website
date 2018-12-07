@@ -65,26 +65,37 @@ Edit Training Ticket
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('date', 'Date (MM/DD/YYYY)', ['class' => 'form-label']) !!}
-                    {!! Form::date('date', $ticket->date_edit, ['class' => 'form-control']) !!}
+                    {!! Form::label('date', 'Date', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        {!! Form::text('date', $ticket->date, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('start', 'Start Time in Zulu (HH:MM)', ['class' => 'form-label']) !!}
-                    {!! Form::time('start', $ticket->start_time, ['class' => 'form-control']) !!}
+                    {!! Form::label('start', 'Start Time in Zulu', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        {!! Form::text('start', $ticket->start_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('end', 'End Time in Zulu (HH:MM)', ['class' => 'form-label']) !!}
-                    {!! Form::time('end', $ticket->end_time, ['class' => 'form-control']) !!}
+                    {!! Form::label('end', 'End Time in Zulu', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                        {!! Form::text('end', $ticket->end_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('duration', 'Duration (HH:MM)', ['class' => 'form-label']) !!}
-                    {!! Form::text('duration', $ticket->duration, ['placeholder' => 'Duration Format: 00:00', 'class' => 'form-control']) !!}
+                    {!! Form::label('duration', 'Duration (HH:mm)', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        {!! Form::text('duration', $ticket->duration, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,4 +119,36 @@ Edit Training Ticket
     {!! Form::close() !!}
 </div>
 
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        format: 'L'
+    });
+});
+
+$(function () {
+    $('#datetimepicker2').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+
+$(function () {
+    $('#datetimepicker3').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+
+$(function () {
+    $('#datetimepicker4').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+</script>
+<script>
+    $(document).ready(function ($) {
+        $('#timepicker').datetimepicker({
+            format: 'hh:mm a'
+        });
+    });
+</script>
 @endsection

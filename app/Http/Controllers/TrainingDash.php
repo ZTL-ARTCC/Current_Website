@@ -95,14 +95,12 @@ class TrainingDash extends Controller
             'duration' => 'required'
         ]);
 
-        $date = new Carbon($request->date);
-
         $ticket = new TrainingTicket;
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
         $ticket->position = $request->position;
         $ticket->type = $request->type;
-        $ticket->date = $date->format('m/d/Y');
+        $ticket->date = $request->date;
         $ticket->start_time = $request->start;
         $ticket->end_time = $request->end;
         $ticket->duration = $request->duration;
@@ -161,12 +159,10 @@ class TrainingDash extends Controller
                 'duration' => 'required'
             ]);
 
-            $date = new Carbon($request->date);
-
             $ticket->controller_id = $request->controller;
             $ticket->position = $request->position;
             $ticket->type = $request->type;
-            $ticket->date = $date->format('m/d/Y');
+            $ticket->date = $request->date;
             $ticket->start_time = $request->start;
             $ticket->end_time = $request->end;
             $ticket->duration = $request->duration;

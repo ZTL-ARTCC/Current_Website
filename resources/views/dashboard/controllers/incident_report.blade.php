@@ -24,11 +24,18 @@ New Incident Report
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('time', 'Time of Incident (Zulu)', ['class' => 'form-label']) !!}
-                    {!! Form::time('time', null, ['class' => 'form-control']) !!}
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        {!! Form::text('time', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                    </div>
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('date', 'Date of Incident', ['class' => 'form-label']) !!}
-                    {!! Form::date('date', null, ['class' => 'form-control']) !!}
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,4 +62,17 @@ New Incident Report
         <button action="submit" class="btn btn-success">Submit</button>
     {!! Form::close() !!}
 </div>
+
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        format: 'L'
+    });
+});
+$(function () {
+    $('#datetimepicker2').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+</script>
 @endsection

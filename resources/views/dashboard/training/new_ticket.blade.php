@@ -70,25 +70,36 @@ New Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('date', 'Date', ['class' => 'form-label']) !!}
-                    {!! Form::date('date', null, ['class' => 'form-control']) !!}
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('start', 'Start Time in Zulu', ['class' => 'form-label']) !!}
-                    {!! Form::time('start', null, ['class' => 'form-control']) !!}
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        {!! Form::text('start', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('end', 'End Time in Zulu', ['class' => 'form-label']) !!}
-                    {!! Form::time('end', null, ['class' => 'form-control']) !!}
+                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                        {!! Form::text('end', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('duration', 'Duration (HH:MM)', ['class' => 'form-label']) !!}
-                    {!! Form::time('duration', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('duration', 'Duration (HH:mm)', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        {!! Form::text('duration', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,4 +125,36 @@ New Training Ticket
     {!! Form::close() !!}
 </div>
 
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        format: 'L'
+    });
+});
+
+$(function () {
+    $('#datetimepicker2').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+
+$(function () {
+    $('#datetimepicker3').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+
+$(function () {
+    $('#datetimepicker4').datetimepicker({
+        format: 'HH:mm'
+    });
+});
+</script>
+<script>
+    $(document).ready(function ($) {
+        $('#timepicker').datetimepicker({
+            format: 'hh:mm a'
+        });
+    });
+</script>
 @endsection
