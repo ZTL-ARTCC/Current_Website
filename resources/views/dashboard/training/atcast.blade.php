@@ -33,6 +33,7 @@ ATCast
             <hr>
             <h5><i>S2 Training</i></h5>
             <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC13.mp4" target="_blank">Episode 13 - Air Traffic Patterns</a></p>
+            <p><a href="https://youtu.be/8BjiVKMiKRI?t=300" target="_blank">Example Class D Traffic Pattern Procedures - KPDK</a></p>
             <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC12.mp4" target="_blank">Episode 12 - Overhead Maneuvering</a></p>
 			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC02.mp4" target="_blank">Episode 2 - Wake Turbulence</a></p>
             <hr>
