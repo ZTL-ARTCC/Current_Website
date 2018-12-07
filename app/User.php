@@ -24,11 +24,19 @@ class User extends Authenticatable
     }
 
     public function getBackwardsNameAttribute() {
-        return $this->lname.', '.$this->fname;
+        if(isset($this)) {
+            return $this->lname.', '.$this->fname;
+        } else {
+            return '[Controller no longer exists]';
+        }
     }
 
     public function getFullNameAttribute() {
-        return $this->fname.' '.$this->lname;
+        if(isset($this)) {
+            return $this->fname.' '.$this->lname;
+        } else {
+            return '[Controller no longer exists]';
+        }
     }
 
     public static $RatingShort = [
