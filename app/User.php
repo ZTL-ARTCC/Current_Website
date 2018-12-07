@@ -49,23 +49,31 @@ class User extends Authenticatable
     ];
 
     public function getRatingShortAttribute() {
-        foreach (User::$RatingShort as $id => $Short) {
-            if ($this->rating_id == $id) {
-                return $Short;
+        if(isset($this)) {
+            foreach (User::$RatingShort as $id => $Short) {
+                if ($this->rating_id == $id) {
+                    return $Short;
+                }
             }
-        }
 
-        return "";
+            return "";
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getRatingLongAttribute() {
-        foreach (User::$RatingLong as $id => $Short) {
-            if ($this->rating_id == $id) {
-                return $Short;
+        if(isset($this)) {
+            foreach (User::$RatingLong as $id => $Short) {
+                if ($this->rating_id == $id) {
+                    return $Short;
+                }
             }
-        }
 
-        return "";
+            return "";
+        } else {
+            return 'N/A';
+        }
     }
 
     public static $RatingLong = [
@@ -83,13 +91,17 @@ class User extends Authenticatable
     ];
 
     public function getStatusTextAttribute() {
-        foreach (User::$StatusText as $id => $Status) {
-            if ($this->status == $id) {
-                return $Status;
+        if(isset($this)) {
+            foreach (User::$StatusText as $id => $Status) {
+                if ($this->status == $id) {
+                    return $Status;
+                }
             }
-        }
 
-        return "";
+            return "";
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getStaffPositionAttribute() {
