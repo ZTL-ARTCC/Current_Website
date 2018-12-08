@@ -228,9 +228,9 @@ class ControllerDash extends Controller
 
     public function showEvents() {
         if(Auth::user()->can('events')) {
-            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DSC')->get();
+            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'ASC')->get();
         } else {
-            $events = Event::where('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DSC')->get();
+            $events = Event::where('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'ASC')->get();
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }
