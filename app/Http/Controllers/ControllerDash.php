@@ -31,8 +31,12 @@ use Response;
 class ControllerDash extends Controller
 {
     public function dash() {
-        $calendar = Calendar::where('type', '1')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
-        $news = Calendar::where('type', '2')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
+        $calendar = Calendar::where('type', '1')->get()->sortBy(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
+        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
         $announcement = Announcement::find(1);
 
         $now = Carbon::now();
@@ -111,7 +115,9 @@ class ControllerDash extends Controller
         $controllers = ATC::get();
         $last_update = ControllerLogUpdate::first();
         $controllers_update = substr($last_update->created_at, -8, 5);
-        $events = Event::where('status', 1)->orderBy('date', 'DSC')->get();
+        $events = Event::where('status', 1)->get()->sortBy(function($e) {
+            return strtotime($e->date);
+        });
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
@@ -228,9 +234,13 @@ class ControllerDash extends Controller
 
     public function showEvents() {
         if(Auth::user()->can('events')) {
-            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'ASC')->get();
+            $events = Event::where('status', 0)->orWhere('status', 1)->get()->sortByDesc(function($e) {
+                return strtotime($e->date);
+            });
         } else {
-            $events = Event::where('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'ASC')->get();
+            $events = Event::where('status', 1)->get()->sortByDesc(function($e) {
+                return strtotime($e->date);
+            });
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }

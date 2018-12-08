@@ -69,9 +69,15 @@ class FrontController extends Controller
         $last_update = ControllerLogUpdate::first();
         $controllers_update = substr($last_update->created_at, -8, 5);
 
-        $calendar = Calendar::where('type', '1')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
-        $news = Calendar::where('type', '2')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
-        $events = Event::where('status', 1)->orderBy('date', 'DSC')->get();
+        $calendar = Calendar::where('type', '1')->get()->sortBy(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
+        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
+        $events = Event::where('status', 1)->get()->sortBy(function($e) {
+            return strtotime($e->date);
+        });
 
         return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)

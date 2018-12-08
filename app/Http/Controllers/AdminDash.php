@@ -684,8 +684,12 @@ class AdminDash extends Controller
     }
 
     public function viewCalendar() {
-        $calendar = Calendar::where('type', '1')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
-        $news = Calendar::where('type', '2')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
+        $calendar = Calendar::where('type', '1')->get()->sortByDesc(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
+        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+            return strtotime($news->date.' '.$news->time);
+        });
 
         return view('dashboard.admin.calendar.index')->with('calendar', $calendar)->with('news', $news);
     }
