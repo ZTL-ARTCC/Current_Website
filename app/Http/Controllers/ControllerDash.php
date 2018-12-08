@@ -21,6 +21,7 @@ use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
@@ -227,9 +228,9 @@ class ControllerDash extends Controller
 
     public function showEvents() {
         if(Auth::user()->can('events')) {
-            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy('date', 'ASC')->get();
+            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DSC')->get();
         } else {
-            $events = Event::where('status', 1)->orderBy('date', 'ASC')->get();
+            $events = Event::where('status', 1)->orderBy(DB::raw("DATE_FORMAT(date,'%d-%M-%Y')"), 'DSC')->get();
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }
