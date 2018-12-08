@@ -91,4 +91,9 @@ class TrainingTicket extends Model
         $date = $date->format('Y-m-d');
         return $date;
     }
+
+    public function getDateSortAttribute() {
+        $date = strtodate($this->date.' '.$this->time);
+        return $date;
+    }
 }

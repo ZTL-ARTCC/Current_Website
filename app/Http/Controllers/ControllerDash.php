@@ -136,10 +136,23 @@ class ControllerDash extends Controller
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->get();
         $personal_stats = $stats[$user_id];
-        $tickets = TrainingTicket::where('controller_id', Auth::id())->orderBy('date', 'DSC')->orderBy('start_time', 'DSC')->paginate('10');
+        $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function($t) {
+            return strtotime($t->date.' '.$t->start_time);
+        })->pluck('id');
+        $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
+        $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(10);
 
-        $last_training = TrainingTicket::where('controller_id', Auth::id())->orderBy('date', 'DSC')->orderBy('start_time', 'DSC')->first();
-        $last_training_given = TrainingTicket::where('trainer_id', Auth::id())->orderBy('date', 'DSC')->orderBy('start_time', 'DSC')->first();
+        if(Auth::user()->hasRole('mtr')){
+            $tickets_sort_t = TrainingTicket::where('trainer_id', Auth::id())->get()->sortByDesc(function($t) {
+                return strtotime($t->date.' '.$t->start_time);
+            })->pluck('id');
+            $tickets_order_t = implode(',',array_fill(0, count($tickets_sort_t), '?'));
+            $last_training_given = TrainingTicket::whereIn('id', $tickets_sort_t)->orderByRaw("field(id,{$tickets_order_t})", $tickets_sort_t)->first();
+        } else {
+            $last_training_given = TrainingTicket::where('trainer_id', Auth::id())->orderBy('date', 'ASC')->first();
+        }
+
+        $last_training = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
 
         return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given);
     }
