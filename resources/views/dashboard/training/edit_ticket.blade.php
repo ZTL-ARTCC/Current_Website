@@ -144,11 +144,4 @@ $(function () {
     });
 });
 </script>
-<script>
-    $(document).ready(function ($) {
-        $('#timepicker').datetimepicker({
-            format: 'hh:mm a'
-        });
-    });
-</script>
 @endsection

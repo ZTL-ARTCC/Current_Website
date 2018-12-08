@@ -1027,13 +1027,12 @@ class AdminDash extends Controller
         } else {
             $public_url = null;
         }
-        $date = new Carbon($request->date);
 
         $event = new Event;
         $event->name = $request->name;
         $event->host = $request->host;
         $event->description = $request->description;
-        $event->date = $date->format('m/d/Y');
+        $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->banner_path = $public_url;
@@ -1070,12 +1069,11 @@ class AdminDash extends Controller
         } else {
             $public_url = $event->banner_path;
         }
-        $date = new Carbon($request->date);
 
         $event->name = $request->name;
         $event->host = $request->host;
         $event->description = $request->description;
-        $event->date = $date->format('m/d/Y');
+        $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->banner_path = $public_url;
