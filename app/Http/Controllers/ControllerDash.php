@@ -110,7 +110,7 @@ class ControllerDash extends Controller
         $controllers = ATC::get();
         $last_update = ControllerLogUpdate::first();
         $controllers_update = substr($last_update->created_at, -8, 5);
-        $events = Event::where('status', 1)->orderBy('date', 'ASC')->get();
+        $events = Event::where('status', 1)->orderBy('date', 'DSC')->get();
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
@@ -227,9 +227,9 @@ class ControllerDash extends Controller
 
     public function showEvents() {
         if(Auth::user()->can('events')) {
-            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy('date', 'DSC')->get();
+            $events = Event::where('status', 0)->orWhere('status', 1)->orderBy('date', 'ASC')->get();
         } else {
-            $events = Event::where('status', 1)->get();
+            $events = Event::where('status', 1)->orderBy('date', 'ASC')->get();
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }

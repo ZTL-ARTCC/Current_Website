@@ -71,7 +71,7 @@ class FrontController extends Controller
 
         $calendar = Calendar::where('type', '1')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
         $news = Calendar::where('type', '2')->orderBy('date', 'DSC')->orderBy('time', 'DSC')->get();
-        $events = Event::where('status', 1)->orderBy('date', 'ASC')->get();
+        $events = Event::where('status', 1)->orderBy('date', 'DSC')->get();
 
         return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
