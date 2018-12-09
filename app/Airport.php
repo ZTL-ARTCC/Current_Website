@@ -22,31 +22,51 @@ class Airport extends Model
     public function getTafAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->taf;
+        if(isset($airport)) {
+            return $airport->taf;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getVisualConditionsAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->visual_conditions;
+        if(isset($airport)) {
+            return $airport->visual_conditions;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getWindAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->wind;
+        if(isset($airport)) {
+            return $airport->wind;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getAltimeterAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->altimeter;
+        if(isset($airport)) {
+            return $airport->altimeter;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getTemperatureDewpointAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->temp.'/'.$airport->dp;
+        if(isset($airport)) {
+            return $airport->temp.'/'.$airport->dp;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getInboundTrafficAttribute() {
