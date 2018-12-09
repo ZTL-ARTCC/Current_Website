@@ -16,7 +16,11 @@ class Airport extends Model
     public function getMetarAttribute() {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
-        return $airport->metar;
+        if(isset($airport)) {
+            return $airport->metar;
+        } else {
+            return 'N/A';
+        }
     }
 
     public function getTafAttribute() {
