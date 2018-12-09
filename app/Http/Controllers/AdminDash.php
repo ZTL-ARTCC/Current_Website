@@ -900,18 +900,7 @@ class AdminDash extends Controller
             'subject' => 'required',
             'message' => 'required'
         ]);
-        $controllers = User::where('status', 1)->where('opt', 1)->orderBy('lname', 'ASC')->get()->pluck('email');
-        $hcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->orderBy('lname', 'ASC')->get()->pluck('email');
-        $vcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 1)->orderBy('lname', 'ASC')->get()->pluck('email');
-        $mentors = User::where('opt', 1)->whereHas('roles', function ($query) {
-            $query->where('name', 'mtr');
-        })->get()->pluck('email');
-        $ins = User::where('opt', 1)->whereHas('roles', function ($query) {
-            $query->where('name', 'ins');
-        })->get()->pluck('email');
-        $train_staff = User::where('opt', 1)->whereHas('roles', function ($query) {
-            $query->where('name', 'mtr')->orWhere('name', 'ins');
-        })->get()->pluck('email');
+
         $sender = Auth::user();
         $name = $request->name;
         $reply_to = $request->reply_to;
@@ -919,32 +908,52 @@ class AdminDash extends Controller
         $subject = $request->subject;
         $body = $request->message;
 
+        $controllers = User::where('status', 1)->where('opt', 1)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $hcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $vcontrollers = User::where('status', 1)->where('opt', 1)->where('visitor', 1)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $mentors = User::where('opt', 1)->whereHas('roles', function ($query) {
+            $query->where('name', 'mtr');
+        })->where('email', '!=', $sender->email)->get()->pluck('email');
+        $ins = User::where('opt', 1)->whereHas('roles', function ($query) {
+            $query->where('name', 'ins');
+        })->where('email', '!=', $sender->email)->get()->pluck('email');
+        $train_staff = User::where('opt', 1)->whereHas('roles', function ($query) {
+            $query->where('name', 'mtr')->orWhere('name', 'ins');
+        })->where('email', '!=', $sender->email)->get()->pluck('email');
+
         if($bulk == null) {
             $to = User::find($request->to)->email;
             $emails = [$to];
-        } elseif($bulk == 1) {
+        } elseif($bulk == 0) {
             $emails = $controllers;
-        } elseif($bulk == 2) {
+        } elseif($bulk == 1) {
             $emails = $hcontrollers;
-        } elseif($bulk == 3) {
+        } elseif($bulk == 2) {
             $emails = $vcontrollers;
-        } elseif($bulk == 4) {
+        } elseif($bulk == 3) {
             $emails = $mentors;
-        } elseif($bulk == 5) {
+        } elseif($bulk == 4) {
             $emails = $ins;
-        } elseif($bulk == 6) {
+        } elseif($bulk == 5) {
             $emails = $train_staff;
         } else {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
 
+        //Sends to all recipients
         foreach($emails as $e){
-            Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $sender, $reply_to) {
+            Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
                 $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
                 $m->subject('[vZTL ARTCC] '.$subject);
-                $m->to($e)->bcc($sender->email);
+                $m->to($e);
             });
         }
+        //Copies to the sender
+        Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $sender, $reply_to) {
+            $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
+            $m->subject('[vZTL ARTCC] '.$subject);
+            $m->to($sender->email);
+        });
 
         return redirect('/dashboard/admin/email/send')->with('success', 'The email has been sent successfully and a copy has been sent to you as well.');
     }
