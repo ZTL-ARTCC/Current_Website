@@ -104,7 +104,8 @@ class RosterController extends Controller
 							$userstatuscheck->opt = 1;
 						}
 					} else {
-						if($userstatuscheck->opt != 0) {
+                        $user_opt = Opt::where('controller_id', $userstatuscheck->id)->where('means', '!=', 'VATUSA API')->where('option', 1)->first();
+						if($userstatuscheck->opt != 0 && !isset($user_opt)) {
 							$opt = new Opt;
 							$opt->controller_id = $res['cid'];
 							$opt->ip_address = '0.0.0.0';
