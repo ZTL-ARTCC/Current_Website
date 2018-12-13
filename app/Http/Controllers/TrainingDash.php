@@ -49,6 +49,11 @@ class TrainingDash extends Controller
 
     public function deleteInfo($id) {
         $info = TrainingInfo::find($id);
+        $other_info = TrainingInfo::where('number', '>', $info->number)->get();
+        foreach($other_info as $o) {
+            $o->number = $o->number - 1;
+            $o->save();
+        }
         $info->delete();
         return redirect()->back()->with('success', 'The information has been removed successfully.');
     }
