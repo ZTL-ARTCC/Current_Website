@@ -69,10 +69,16 @@ class FrontController extends Controller
         $last_update = ControllerLogUpdate::first();
         $controllers_update = substr($last_update->created_at, -8, 5);
 
-        $calendar = Calendar::where('type', '1')->get()->sortBy(function($news) {
+        $now = Carbon::now();
+
+        $calendar = Calendar::where('type', '1')->get()->filter(function($news) use ($now) {
+            return strtotime($news->date.' '.$news->time) > strtotime($now);
+        })->sortBy(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
-        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+        $news = Calendar::where('type', '2')->get()->filter(function($news) use ($now) {
+            return strtotime($news->date.' '.$news->time) < strtotime($now);
+        })->sortByDesc(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
         $events = Event::where('status', 1)->get()->sortBy(function($e) {

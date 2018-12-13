@@ -54,7 +54,11 @@ class TrainingDash extends Controller
     }
 
     public function ticketsIndex(Request $request) {
-        $controllers = User::where('visitor', '0')->where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->filter(function($user) {
+            if(TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
+                return $user;
+            }
+        })->pluck('backwards_name', 'id');
         if($request->id != null) {
             $search_result = User::find($request->id);
         } else {
@@ -84,7 +88,7 @@ class TrainingDash extends Controller
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
-        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('full_name', 'id');
+        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
     }
 
@@ -227,7 +231,17 @@ class TrainingDash extends Controller
             $ots->status = 1;
             $ots->ins_id = $request->ins;
             $ots->save();
-            return redirect()->back()->with('success', 'The OTS has been assigned successfully.');
+
+            $ins = User::find($ots->ins_id);
+            $controller = User::find($ots->controller_id);
+
+            Mail::send('emails.ots_assignment', ['ots' => $ots, 'controller' => $controller, 'ins' => $ins], function ($m) use ($ins, $controller) {
+                $m->from('ots-center@notams.ztlartcc.org', 'vZTL ARTCC OTS Center')->replyTo($controller->email, $controller->full_name);
+                $m->subject('You Have Been Assigned an OTS for '.$controller->full_name);
+                $m->to($ins->email)->cc('ta@ztlartcc.org');
+            });
+
+            return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');
         }
     }
 

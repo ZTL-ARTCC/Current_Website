@@ -31,10 +31,16 @@ use Response;
 class ControllerDash extends Controller
 {
     public function dash() {
-        $calendar = Calendar::where('type', '1')->get()->sortBy(function($news) {
+        $now = Carbon::now();
+
+        $calendar = Calendar::where('type', '1')->get()->filter(function($news) use ($now) {
+            return strtotime($news->date.' '.$news->time) > strtotime($now);
+        })->sortBy(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
-        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+        $news = Calendar::where('type', '2')->get()->filter(function($news) use ($now) {
+            return strtotime($news->date.' '.$news->time) < strtotime($now);
+        })->sortByDesc(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
         $announcement = Announcement::find(1);
