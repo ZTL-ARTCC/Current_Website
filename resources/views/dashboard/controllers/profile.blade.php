@@ -109,7 +109,7 @@ Profile
                                 @if($last_training != null)
                                     {{ $last_training->last_training }}
                                 @else
-                                    <i>No Training Since 12/25/2018</i>
+                                    <i>No Training Since 12/04/2018</i>
                                 @endif
                             </b></p>
                         </li>
@@ -120,7 +120,7 @@ Profile
                                     @if(isset($last_training))
                                         {{ $last_training_given->last_training }}
                                     @else
-                                        <i>No Training Given Since 12/25/2018</i>
+                                        <i>No Training Given Since 12/04/2018</i>
                                     @endif
                                 </b></p>
                             </li>
