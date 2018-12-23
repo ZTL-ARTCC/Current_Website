@@ -55,7 +55,7 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        @if($tickets->count() > 0)
+                        @if(isset($tickets))
                             @foreach($tickets as $t)
                                 <tr>
                                     <td><center><a href="/dashboard/controllers/ticket/{{ $t->id }}">{{ $t->date }}</a></center></td>
@@ -66,11 +66,13 @@ Profile
                         @endif
                     </tbody>
                 </table>
-                @if($tickets->count() == 0)
+                @if(!isset($tickets))
                     <p>No training tickets found.</p>
                 @endif
             </div>
-            {!! $tickets->links() !!}
+            @if(isset($tickets))
+                {!! $tickets->links() !!}
+            @endif
         </div>
     </div>
     <hr>
@@ -115,7 +117,7 @@ Profile
                             <li class="list-group-item" style="background-color:lightgray">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
-                                    @if($last_training != null)
+                                    @if(isset($last_training))
                                         {{ $last_training_given->last_training }}
                                     @else
                                         <i>No Training Given Since 12/25/2018</i>
