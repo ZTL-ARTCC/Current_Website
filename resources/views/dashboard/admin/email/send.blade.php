@@ -45,6 +45,11 @@
                     {!! Form::select('bulk', [
                         0 => 'All Controllers',
                         1 => 'Home Controllers',
+                        6 => 'Home Observers',
+                        7 => 'Home S1s',
+                        8 => 'Home S2s',
+                        9 => 'Home S3s',
+                        10 => 'Home C1/C3s',
                         2 => 'Visiting Controllers',
                         3 => 'Mentors',
                         4 => 'Instructors',

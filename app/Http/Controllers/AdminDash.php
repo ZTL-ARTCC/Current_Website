@@ -920,6 +920,11 @@ class AdminDash extends Controller
         $train_staff = User::where('opt', 1)->whereHas('roles', function ($query) {
             $query->where('name', 'mtr')->orWhere('name', 'ins');
         })->where('email', '!=', $sender->email)->get()->pluck('email');
+        $obs = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('rating_id', 1)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $s1 = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('rating_id', 2)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $s2 = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('rating_id', 3)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $s3 = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('rating_id', 4)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
+        $c1 = User::where('rating_id', 5)->orWhere('rating_id', 7)->orWhere('rating_id', 8)->orWhere('rating_id', 10)->where('status', 1)->where('opt', 1)->where('visitor', 0)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
 
         if($bulk == null) {
             $to = User::find($request->to)->email;
@@ -936,6 +941,16 @@ class AdminDash extends Controller
             $emails = $ins;
         } elseif($bulk == 5) {
             $emails = $train_staff;
+        } elseif($bulk == 6) {
+            $emails = $obs;
+        } elseif($bulk == 7) {
+            $emails = $s1;
+        } elseif($bulk == 8) {
+            $emails = $s2;
+        } elseif($bulk == 9) {
+            $emails = $s3;
+        } elseif($bulk == 10) {
+            $emails = $c1;
         } else {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
