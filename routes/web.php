@@ -189,7 +189,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function() {
             Route::get('/{year?}/{month?}', 'AdminDash@showBronzeMic');
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setBronzeWinner');
-            Route::get('/remove/{id}', 'AdminDash@removeBronzeWinner');
+            Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeBronzeWinner');
         });
         Route::prefix('feedback')->middleware('permission:snrStaff')->group(function() {
             Route::get('/', 'AdminDash@showFeedback');

@@ -98,21 +98,31 @@ class ControllerDash extends Controller
             $pmonth_words = 'September';
         } elseif($pmonth == 10) {
             $pmonth_words = 'October';
-        } elseif($pmonth == 11 || $month == -1) {
+        } elseif($pmonth == 11 || $pmonth == -1) {
             $pmonth_words = 'November';
-        } elseif($pmonth == 12 || $month == 0) {
+        } elseif($pmonth == 12 || $pmonth == 0) {
             $pmonth_words = 'December';
         }
 
         if($month < 1) {
             $year = substr($now->year, -2) - '1';
+            if($month == -1) {
+                $month = 11;
+            } elseif($month == 0) {
+                $month = 12;
+            }
         } else {
             $year = substr($now->year, -2);
         }
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
-
+        
         if($pmonth < 1) {
             $pyear = substr($now->year, -2) - '1';
+            if($pmonth == -1) {
+                $pmonth = 11;
+            } elseif($pmonth == 0) {
+                $pmonth = 12;
+            }
         } else {
             $pyear = substr($now->year, -2);
         }
