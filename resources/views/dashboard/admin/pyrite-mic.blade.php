@@ -27,7 +27,7 @@ $nyr = $year + 1;
                 <th scope="col">Name</th>
                 <th scope="col">CID</th>
                 <th scope="col">Rating</th>
-                <th scope="col">Eligible Monthly Hours to Date</th>
+                <th scope="col">Eligible Yearly Hours to Date</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>

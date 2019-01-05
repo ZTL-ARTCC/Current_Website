@@ -202,8 +202,8 @@ Dashboard
         <div class="col-sm-4">
             <div class="card card-body" style="background-color:#FFDF00">
                 @if($pyrite != null)
-                    <center><h4><b>{{ $pwinner->name }}</b></h4></center>
-                    <center><h5>With {{ $pwinner->month_hours }} hours!</h5></center>
+                    <center><h4><b>{{ $pyrite->name }}</b></h4></center>
+                    <center><h5>With {{ $pyrite->year_hours }} hours!</h5></center>
                 @else
                     <center><h4>No Winner Was Chosen</h4></center>
                     <center><h5>Check back for updates!</h5></center>
