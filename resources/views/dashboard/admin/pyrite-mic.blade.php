@@ -28,7 +28,6 @@ $nyr = $year + 1;
                 <th scope="col">CID</th>
                 <th scope="col">Rating</th>
                 <th scope="col">Eligible Monthly Hours to Date</th>
-                <th scope="col">Eligible Yearly Hours to Date</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -38,7 +37,6 @@ $nyr = $year + 1;
                     <td>{{ $h->full_name }}</td>
                     <td>{{ $h->id }}</td>
                     <td>{{ $h->rating_short }}</td>
-                    <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td>
                         @if($winner == null)
