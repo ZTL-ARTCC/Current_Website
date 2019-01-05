@@ -115,7 +115,7 @@ class ControllerDash extends Controller
             $year = substr($now->year, -2);
         }
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
-        
+
         if($pmonth < 1) {
             $pyear = substr($now->year, -2) - '1';
             if($pmonth == -1) {
@@ -131,7 +131,9 @@ class ControllerDash extends Controller
         $controllers = ATC::get();
         $last_update = ControllerLogUpdate::first();
         $controllers_update = substr($last_update->created_at, -8, 5);
-        $events = Event::where('status', 1)->get()->sortBy(function($e) {
+        $events = Event::where('status', 1)->get()->filter(function($e) use ($now) {
+            return strtotime($e->date.' '.$e->start_time) > strtotime($now);
+        })->sortBy(function($e) {
             return strtotime($e->date);
         });
 
