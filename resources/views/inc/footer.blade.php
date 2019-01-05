@@ -9,7 +9,7 @@
     </div>
     <div class="container">
         <p class="footer-copyright">
-            © 2018 vZTL ARTCC
+            © 2018-2019 vZTL ARTCC
         </p>
     </div>
 </footer>

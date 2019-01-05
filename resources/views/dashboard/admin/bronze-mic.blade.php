@@ -19,6 +19,10 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
 ?>
 
 <div class="container">
+    @if($month == 1)
+        <center><a class="btn btn-warning" href="/dashboard/admin/pyrite-mic/<?=$pyr?>">View Pyrite Mic</a></center>
+        <br>
+    @endif
     <div class="row">
         <div class="col-sm-2">
             <a class="btn btn-primary" href="/dashboard/admin/bronze-mic/<?=$pyr?>/<?=$pm?>"><i class="fa fa-arrow-left"></i> Previous Month</a></li>

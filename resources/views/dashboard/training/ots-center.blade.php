@@ -105,7 +105,7 @@ OTS Center
                                 <td>{{ $o->ins_name }}</td>
                                 <td>{{ $o->position_name }}</td>
                                 <td>
-                                    @if($o->ins_id == Auth::id())
+                                    @if($o->ins_id == Auth::id() || Auth::user()->can('snrStaff'))
                                         <span data-toggle="modal" data-target="#completeOTS{{ $o->id }}">
                                             <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Set OTS as Complete"><i class="fas fa-check"></i></button>
                                         </span>
@@ -158,7 +158,7 @@ OTS Center
                         <th scope="col">Date of Recommendation</th>
                         <th scope="col">Controller Name</th>
                         <th scope="col">Recommender Name</th>
-                        <th scope="col">Instruction Name</th>
+                        <th scope="col">Instructor Name</th>
                         <th scope="col">Position</th>
                         <th scope="col">Result</th>
                     </tr>

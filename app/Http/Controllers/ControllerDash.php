@@ -16,6 +16,7 @@ use App\File;
 use App\Incident;
 use App\Opt;
 use App\PositionPreset;
+use App\Pyrite;
 use App\Scenery;
 use App\TrainingTicket;
 use App\User;
@@ -46,9 +47,11 @@ class ControllerDash extends Controller
         $announcement = Announcement::find(1);
 
         $now = Carbon::now();
+        $last = Carbon::now()->subYear(1);
 
         $nmonth = $now->month;
         $year = substr($now->year, -2);
+        $lyear = substr($last->year, -2);
         $month = $nmonth - '1';
         $pmonth = $month - '1';
 
@@ -127,6 +130,7 @@ class ControllerDash extends Controller
             $pyear = substr($now->year, -2);
         }
         $pwinner = Bronze::where('month', $pmonth)->where('year', $pyear)->first();
+        $pyrite = Pyrite::where('year', $lyear)->first();
 
         $controllers = ATC::get();
         $last_update = ControllerLogUpdate::first();
@@ -140,7 +144,8 @@ class ControllerDash extends Controller
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
-                                          ->with('events', $events);
+                                          ->with('events', $events)
+                                          ->with('pyrite', $pyrite)->with('lyear', $lyear);
     }
 
     public function showProfile($year = null, $month = null) {

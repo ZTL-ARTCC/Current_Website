@@ -194,6 +194,25 @@ Dashboard
 			</div>
 		</div>
     </div>
+    <hr>
+    <center><h2><i class="fa fa-microphone" style="color:#FFDF00"></i> Pyrite Mic Award for 20{{ $lyear }} <i class="fa fa-microphone" style="color:#FFDF00"></i></h2></center>
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+            <div class="card card-body" style="background-color:#FFDF00">
+                @if($pyrite != null)
+                    <center><h4><b>{{ $pwinner->name }}</b></h4></center>
+                    <center><h5>With {{ $pwinner->month_hours }} hours!</h5></center>
+                @else
+                    <center><h4>No Winner Was Chosen</h4></center>
+                    <center><h5>Check back for updates!</h5></center>
+                @endif
+            </div>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
 
     <div class="modal fade" id="reportBug" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

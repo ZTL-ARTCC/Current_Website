@@ -16,6 +16,7 @@ use App\Incident;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
+use App\Pyrite;
 use App\Scenery;
 use App\User;
 use App\Visitor;
@@ -1026,6 +1027,42 @@ class AdminDash extends Controller
         $bronze->delete();
 
         return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The winner has been removed successfully.');
+    }
+
+    public function showPyriteMic($year = null) {
+        if ($year == null)
+            $year = date('y');
+
+        $year_stats = ControllerLog::aggregateAllControllersByPosAndYear($year);
+        $all_stats = ControllerLog::getAllControllerStats();
+
+        $homec = User::where('visitor', 0)->where('status', 1)->get();
+        $visitc = User::where('visitor', 1)->where('status', 1)->get();
+        $winner = Pyrite::where('year', $year)->first();
+
+        $home = $homec->sortByDesc(function($user) use($year_stats) {
+            return $year_stats[$user->id]->bronze_hrs;
+        });
+        return view('dashboard.admin.pyrite-mic')->with('all_stats', $all_stats)->with('year', $year)
+                                                  ->with('year_stats', $year_stats)
+                                                  ->with('home', $home)->with('winner', $winner);
+    }
+
+    public function setPyriteWinner(Request $request, $year, $hours, $id) {
+        $bronze = new Pyrite;
+        $bronze->controller_id = $id;
+        $bronze->year = $year;
+        $bronze->year_hours = $hours;
+        $bronze->save();
+
+        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The controller has been set as the pyrite mic winner successfully.');
+    }
+
+    public function removePyriteWinner($id, $year) {
+        $bronze = Pyrite::find($id);
+        $bronze->delete();
+
+        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The winner has been removed successfully.');
     }
 
     public function newEvent() {

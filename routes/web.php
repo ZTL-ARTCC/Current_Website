@@ -191,6 +191,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setBronzeWinner');
             Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeBronzeWinner');
         });
+        Route::prefix('pyrite-mic')->middleware('permission:snrStaff')->group(function() {
+            Route::get('/{year?}', 'AdminDash@showPyriteMic');
+            Route::post('/{year}/{hours}/{id}', 'AdminDash@setPyriteWinner');
+            Route::get('/remove/{id}/{year}', 'AdminDash@removePyriteWinner');
+        });
         Route::prefix('feedback')->middleware('permission:snrStaff')->group(function() {
             Route::get('/', 'AdminDash@showFeedback');
             Route::post('/save/{id}', 'AdminDash@saveFeedback');
