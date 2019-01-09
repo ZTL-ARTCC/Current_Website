@@ -21,6 +21,7 @@ before_script:
   - php artisan db:seed
   - php artisan RosterUpdate:UpdateRoster
   - php artisan OnlineControllers:GetControllers
+  - php artisan Overflights:GetOverflights
   - if find . -name "*.php" ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
 
 script:
