@@ -25,8 +25,7 @@ Dashboard
         <div class="col-sm-3">
             <div class="card card-body" style="background-color:lightgrey">
                 <center><h5>Pacific Time Now:</h5></center>
-                <center><iframe style='pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/n137/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
-
+                <center><iframe style="pointer-events: none" src="https://freesecure.timeanddate.com/clock/i6hnccu7/n137/fs16/tct/pct/bas6/bat6/bac777/pa8/tt0/tm2/th1/ta1/tb4" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
             </div>
         </div>
         <div class="col-sm-3">
