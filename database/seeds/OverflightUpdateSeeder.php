@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class OverflightSeeder extends Seeder
+class OverflightUpdateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
