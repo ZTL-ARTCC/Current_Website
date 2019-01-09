@@ -15,6 +15,8 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\Opt;
+use App\Overflight;
+use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
@@ -141,11 +143,15 @@ class ControllerDash extends Controller
             return strtotime($e->date);
         });
 
+        $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
+        $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
-                                          ->with('pyrite', $pyrite)->with('lyear', $lyear);
+                                          ->with('pyrite', $pyrite)->with('lyear', $lyear)
+                                          ->with('flights', $flights)->with('flights_update', $flights_update);
     }
 
     public function showProfile($year = null, $month = null) {
