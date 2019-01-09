@@ -42,6 +42,9 @@ Roster
     @if(Auth::user()->can('roster'))
         <a href="/dashboard/admin/roster/visit/requests" class="btn btn-warning">Visit Requests</a>
         <a href="/dashboard/admin/roster/purge-assistant" class="btn btn-danger">Roster Purge Assistant</a>
+        <span data-toggle="modal" data-target="#allowVisitor">
+            <button type="button" class="btn btn-warning">Allow Rejected Visitor</button>
+        </span>
         <br><br>
     @endif
     <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -299,6 +302,36 @@ Roster
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="allowVisitor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Allow Rejected Visitor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {!! Form::open(['action' => 'AdminDash@allowVisitReq']) !!}
+                @csrf
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <div class="row">
+                                {!! Form::label('cid', 'Controller CID') !!}
+                                {!! Form::text('cid', null, ['placeholder' => 'Controller CID', 'class' => 'form-control']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button action="submit" class="btn btn-success">Allow Visitor</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
 </div>

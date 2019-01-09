@@ -20,6 +20,7 @@ use App\Pyrite;
 use App\Scenery;
 use App\User;
 use App\Visitor;
+use App\VisitRej;
 use Artisan;
 use Auth;
 use Carbon\Carbon;
@@ -322,7 +323,25 @@ class AdminDash extends Controller
         }
 
         return redirect('/dashboard/controllers/roster')->with('success', 'Controller updated successfully.');
+    }
 
+    public function disallowVisitReq($id) {
+        $user = User::find($id);
+        $visitrej = new VisitRej;
+        $visitrej->cid = $id;
+        $visitrej->staff_cid = Auth::id();
+        $visitrej->save();
+        $user->delete();
+
+        return redirect('/dashboard/controllers/roster')->with('success', 'Controller removed from the visitor agreement.');
+    }
+
+    public function allowVisitReq(Request $request) {
+        $id = $request->cid;
+        $visitrej = VisitRej::where('cid', $id)->first();
+        $visitrej->delete();
+
+        return redirect('/dashboard/controllers/roster')->with('success', 'Controller allowed to visit.');
     }
 
     public function showVisitRequests() {
