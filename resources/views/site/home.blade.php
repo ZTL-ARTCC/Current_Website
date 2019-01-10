@@ -169,7 +169,7 @@ Home
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="4"><center><i>No Pilots in ZTL Airspace</i></center></td>
+                        <td colspan="6"><center><i>No Pilots in ZTL Airspace</i></center></td>
                     </tr>
                 @endif
                 <tr>
