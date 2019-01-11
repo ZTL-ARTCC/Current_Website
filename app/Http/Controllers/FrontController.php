@@ -52,7 +52,7 @@ class FrontController extends Controller
                         $atl_ctr = 1;
                     }
                 } elseif($field == 'CLT') {
-                    if($position == 'TWR' || $position == 'GND') {
+                    if($position == 'TWR' || $position == 'GND' || $position == 'APP' || $position == 'DEP') {
                         $clt_twr = 1;
                     }
                 }
