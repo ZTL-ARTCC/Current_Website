@@ -141,7 +141,11 @@ class TrainingDash extends Controller
             $m->to($controller->email)->cc('ta@ztlartcc.org');
         });
 
-        return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+        if($ticket->type >= 4) {
+            return redirect('/dashboard/training/ots-center')->with('success', 'The OTS training ticket has been submitted successfully. Please make sure to also set the OTS as complete and upload the necessary documents in the OTS center as well.');
+        } else {
+            return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+        }
     }
 
     public function viewTicket($id) {

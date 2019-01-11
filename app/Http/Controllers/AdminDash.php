@@ -25,13 +25,11 @@ use Artisan;
 use Auth;
 use Carbon\Carbon;
 use Config;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Mail;
 use Storage;
-
-use GuzzleHttp\Client;
-use App\TrainingTicket;
 
 class AdminDash extends Controller
 {
