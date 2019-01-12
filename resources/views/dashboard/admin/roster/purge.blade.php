@@ -113,7 +113,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                 </b></td>
                             @else
                                 <td bgcolor="#E6B0AA" class="black"><b>
-                                    @if($last_stats[$c->id] <= 2)
+                                    @if($last_stats[$c->id]->total_hrs <= 2)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
                                         {{ $stats[$c->id]->total_hrs }}
