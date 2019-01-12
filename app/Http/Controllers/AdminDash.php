@@ -805,12 +805,13 @@ class AdminDash extends Controller
         $time = Carbon::now()->timestamp;
 
         $ext = $request->file('file')->getClientOriginalExtension();
+        $name = $request->title.'_'.$time.'.'.$ext;
 
         $path = $request->file('file')->storeAs(
-            'files', $request->title.'_'.$time.'.'.$ext
+            '/public/files', $name
         );
 
-        $public_url = Config::get('app.app_storage').$path;
+        $public_url = '/storage/files/'.$name;
 
         $file = new File;
         $file->name = Input::get('title');
