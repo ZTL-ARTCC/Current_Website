@@ -195,7 +195,21 @@ class AdminDash extends Controller
             return $user->hasRole('mtr') || $user->hasRole('ins');
         });
 
-        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('homec', $homec)->with('visitc', $visitc)
+        if($month == 1) {
+            $last_year = $year - 1;
+        } else {
+            $last_year = $year;
+        }
+
+        if($month == 1) {
+            $last_month = 12;
+        } else {
+            $last_month = $month - 1;
+        }
+
+        $last_stats = ControllerLog::aggregateAllControllersByPosAndMonth($last_year, $last_month);
+
+        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('last_stats', $last_stats)->with('homec', $homec)->with('visitc', $visitc)
                                                    ->with('trainc', $trainc)->with('month', $month)->with('year', $year);
     }
 
