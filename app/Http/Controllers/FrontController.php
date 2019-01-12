@@ -334,7 +334,7 @@ class FrontController extends Controller
         $file = File::find($id);
         $file_path = $file->path;
 
-        return Response::download($file_path);
+        return redirect($file_path);
     }
 
     public function showStaffRequest() {
