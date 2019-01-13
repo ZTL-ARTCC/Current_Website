@@ -330,13 +330,6 @@ class FrontController extends Controller
         return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
 
-    public function downloadFile($id) {
-        $file = File::find($id);
-        $file_path = $file->path;
-
-        return redirect($file_path);
-    }
-
     public function showStaffRequest() {
         return view('site.request_staffing');
     }

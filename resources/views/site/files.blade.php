@@ -55,7 +55,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -81,7 +81,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -107,7 +107,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -133,7 +133,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -159,7 +159,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -185,7 +185,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="/controllers/files/download/{{ $f->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
                         @endforeach

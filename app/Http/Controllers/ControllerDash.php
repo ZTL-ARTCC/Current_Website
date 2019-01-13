@@ -227,13 +227,6 @@ class ControllerDash extends Controller
         return view('dashboard.controllers.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff);
     }
 
-    public function downloadFile($id) {
-        $file = File::find($id);
-        $file_path = $file->path;
-
-        return redirect($file_path);
-    }
-
     public function showTickets() {
         return view('dashboard.controllers.tickets');
     }
