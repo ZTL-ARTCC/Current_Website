@@ -1563,10 +1563,9 @@ class AdminDash extends Controller
 
         return redirect()->back()->with('success', 'The incident has been deleted successfully.');
     }
-}
 
-public function showAudits() {
-    $audits = Audit::orderBy('created_at', 'DSC')->get()->paginate(50);
-
-    return view('dashboard.admin.audits')->with('audits', $audits);
+    public function showAudits() {
+        $audits = Audit::orderBy('created_at', 'DSC')->get()->paginate(50);
+        return view('dashboard.admin.audits')->with('audits', $audits);
+    }
 }
