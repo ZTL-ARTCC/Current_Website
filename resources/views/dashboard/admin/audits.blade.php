@@ -32,6 +32,7 @@ Website Activity
             @endforeach
         </tbody>
     </table>
+    {!! $audits->links() !!}
 </div>
 
 @endsection

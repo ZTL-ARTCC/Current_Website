@@ -1565,7 +1565,7 @@ class AdminDash extends Controller
     }
 
     public function showAudits() {
-        $audits = Audit::orderBy('created_at', 'DSC')->get()->paginate(50);
+        $audits = Audit::orderBy('created_at', 'DSC')->paginate(50);
         return view('dashboard.admin.audits')->with('audits', $audits);
     }
 }
