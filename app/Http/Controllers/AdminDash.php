@@ -1345,6 +1345,7 @@ class AdminDash extends Controller
 
     public function deleteEvent($id) {
         $event = Event::find($id);
+        $name = $event->name
         $positions = EventPosition::where('event_id', $event->id)->get();
         $reg = EventRegistration::where('event_id', $event->id)->get();
 
@@ -1356,6 +1357,13 @@ class AdminDash extends Controller
         }
 
         $event->delete();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' deleted the event '.$name.'.';
+        $audit->save();
+
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
     }
 
