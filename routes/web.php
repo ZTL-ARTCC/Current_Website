@@ -118,6 +118,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/', 'AdminDash@setAnnouncement');
             Route::post('/', 'AdminDash@saveAnnouncement');
         });
+        Route::prefix('audits')->middleware('permission:snrStaff')->group(function() {
+            Route::get('/', 'AdminDash@showAudits');
+        });
         Route::prefix('calendar')->middleware('permission:staff')->group(function() {
             Route::get('/', 'AdminDash@viewCalendar');
             Route::get('/view/{id}', 'AdminDash@viewCalendarEvent');

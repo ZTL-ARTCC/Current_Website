@@ -69,6 +69,9 @@
                 @if(Auth::user()->can('roster'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Bronze Mic Management</a>
                 @endif
+                @if(Auth::user()->can('snrStaff'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
+                @endif
             </div>
         @endif
         <div class="dropdown-divider"></div>
