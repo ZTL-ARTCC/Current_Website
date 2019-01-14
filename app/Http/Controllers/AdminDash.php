@@ -1345,7 +1345,7 @@ class AdminDash extends Controller
 
     public function deleteEvent($id) {
         $event = Event::find($id);
-        $name = $event->name
+        $name = $event->name;
         $positions = EventPosition::where('event_id', $event->id)->get();
         $reg = EventRegistration::where('event_id', $event->id)->get();
 
