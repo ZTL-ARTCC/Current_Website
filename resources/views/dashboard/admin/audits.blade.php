@@ -25,7 +25,7 @@ Website Activity
         <tbody>
             @foreach($audits as $a)
                 <tr>
-                    <td>{{ $a->date_time }}</td>
+                    <td>{{ $a->time_date }}</td>
                     <td>{{ $a->what }}</td>
                     <td>{{ $a->ip }}</td>
                 </tr>
