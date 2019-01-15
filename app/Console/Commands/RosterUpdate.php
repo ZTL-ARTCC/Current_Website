@@ -62,7 +62,7 @@ class RosterUpdate extends Command
                 $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
                 $user->save();
 
-                //Assigns role in moodle database
+                //Assigns role in moodle database and adds the user to moodle
                 if($rating_old != $r->rating) {
                     $old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
                     $old_role->delete();
@@ -115,6 +115,17 @@ class RosterUpdate extends Command
                 $user->status = '1';
                 $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
                 $user->save();
+
+                //Adds user to moodle database
+                DB::table('mdl_user')->insert([
+                     'id' => $user->id,
+                     'confirmed' => 1,
+                     'mnethostid' => 1,
+                     'username' => $user->id,
+                     'firstname' => $user->fname,
+                     'lastname' => $user->lname,
+                     'email' => $user->email
+                 ]);
 
                 //Assigns role in moodle database
                 if($user->rating_id == 1) {
@@ -295,6 +306,12 @@ class RosterUpdate extends Command
                     foreach($event_requests as $e) {
                         $e->delete();
                     }
+                    
+                    //Sets user as deleted in moodle
+                    $moodle = DB::table('mdl_user')->find($use->id);
+                    $moodle->deleted = 1;
+                    $moodle->save();
+
                     $use->delete();
                 }
             }
