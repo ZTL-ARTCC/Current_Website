@@ -44,6 +44,7 @@ class Moodle extends Command
             DB::table('mdl_user')->insert([
                  'id' => $u->id,
                  'confirmed' => 1,
+                 'mnethostid' => 1,
                  'username' => $u->id,
                  'firstname' => $u->fname,
                  'lastname' => $u->lname,
