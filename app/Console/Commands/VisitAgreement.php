@@ -6,6 +6,7 @@ use App\EventRegistration;
 use App\User;
 use App\VisitRej;
 use Config;
+use DB;
 use Eloquent\Collection;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
