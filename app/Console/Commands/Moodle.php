@@ -43,6 +43,7 @@ class Moodle extends Command
         foreach($users as $u) {
             DB::table('mdl_user')->insert([
                  'id' => $u->id,
+                 'confirmed' => 1,
                  'username' => $u->id,
                  'firstname' => $u->fname,
                  'lastname' => $u->lname,
