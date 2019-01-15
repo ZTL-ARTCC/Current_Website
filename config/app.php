@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'app_storage' => env('APP_STORAGE_PATH'),
+    'moodle' => env('APP_MOODLE_ACTIVE'),
 
     /*
     |--------------------------------------------------------------------------
