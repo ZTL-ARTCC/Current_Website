@@ -64,8 +64,8 @@ class RosterUpdate extends Command
 
                 //Assigns role in moodle database
                 //if($rating_old != $r->rating) {
-                    $old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
-                    $old_role->delete();
+                    //$old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
+                    //$old_role->delete();
 
                     if($user->rating_id == 1) {
                         $mdl_rating = 18;
