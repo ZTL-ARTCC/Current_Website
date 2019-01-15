@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\EventRegistration;
 use App\User;
 use Config;
+use DB;
 use Eloquent\Collection;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
