@@ -8,7 +8,7 @@ services:
 
 before_script:
   - cp .env.travis .env
-  - mysql -u root -e "CREATE DATABASE IF NOT EXISTS testing
+  - mysql -u root -e "CREATE DATABASE IF NOT EXISTS testing;
                       USE testing;
                       CREATE TABLE IF NOT EXISTS mdl_role_assignments (
                         id INT AUTO_INCREMENT PRIMARY KEY,
