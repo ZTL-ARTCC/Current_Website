@@ -9,11 +9,11 @@ services:
 before_script:
   - cp .env.travis .env
   - mysql -u root -e "create database testing";
-  - mysql -u root -e "CREATE TABLE IF NOT EXISTS `mdl_role_assignments` (
-                        `id` INT AUTO_INCREMENT,
-                        `roleid` INT,
-                        `contextid` INT,
-                        `userid` INT
+  - mysql -u root -e "CREATE TABLE IF NOT EXISTS mdl_role_assignments (
+                        id INT AUTO_INCREMENT,
+                        roleid INT,
+                        contextid INT,
+                        userid INT
                     )  ENGINE=InnoDB;"
   - composer self-update
   - composer install --no-interaction
