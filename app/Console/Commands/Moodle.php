@@ -42,6 +42,7 @@ class Moodle extends Command
         $users = User::get();
         foreach($users as $u) {
             DB::table('mdl_user')->insert([
+                 'id' => $u->id,
                  'username' => $u->id,
                  'firstname' => $u->fname,
                  'lastname' => $u->lname,
