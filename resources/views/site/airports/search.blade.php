@@ -42,12 +42,12 @@
                     <b>All Charts</b>
                 </div>
                 <div class="card-body">
-                    @if($charts != null)
-                        @if($charts->General != null)
+                    @if($charts != '[]')
+                        @if($apd != '[]' || $min != '[]' || $hot != '[]' || $lah != '[]')
                             <div class="card">
                                 <div class="collapsible">
                                     <div class="card-header">
-                                        General ({{ count($charts->General) }})
+                                        General
                                     </div>
                                 </div>
                                 <div class="content">
@@ -58,11 +58,73 @@
                                                     <th scope="col">Chart Name</th>
                                                     <th scope="col">Download</th>
                                                 </tr>
-                                                @foreach($charts->General as $c)
+                                                @if($apd != '[]')
+                                                    @foreach($apd as $c)
+                                                        <tr>
+                                                            <td>{{ $c->chart_name }}</td>
+                                                            <td>
+                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                @if($min != '[]')
+                                                    @foreach($min as $c)
+                                                        <tr>
+                                                            <td>{{ $c->chart_name }}</td>
+                                                            <td>
+                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                @if($hot != '[]')
+                                                    @foreach($hot as $c)
+                                                        <tr>
+                                                            <td>{{ $c->chart_name }}</td>
+                                                            <td>
+                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                                @if($lah != '[]')
+                                                    @foreach($lah as $c)
+                                                        <tr>
+                                                            <td>{{ $c->chart_name }}</td>
+                                                            <td>
+                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        @endif
+                        @if($dp != '[]')
+                            <div class="card">
+                                <div class="collapsible">
+                                    <div class="card-header">
+                                        Departures
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="card-body" style="max-height:400px;overflow-y:auto;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Chart Name</th>
+                                                    <th scope="col">Download</th>
+                                                </tr>
+                                                @foreach($dp as $c)
                                                     <tr>
-                                                        <td>{{ $c->chartname }}</td>
+                                                        <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chartname }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -73,11 +135,11 @@
                             </div>
                             <br>
                         @endif
-                        @if(isset($charts->SID))
+                        @if($star != '[]')
                             <div class="card">
                                 <div class="collapsible">
                                     <div class="card-header">
-                                        Departures ({{ count($charts->SID) }})
+                                        Arrivals
                                     </div>
                                 </div>
                                 <div class="content">
@@ -88,11 +150,11 @@
                                                     <th scope="col">Chart Name</th>
                                                     <th scope="col">Download</th>
                                                 </tr>
-                                                @foreach($charts->SID as $c)
+                                                @foreach($star as $c)
                                                     <tr>
-                                                        <td>{{ $c->chartname }}</td>
+                                                        <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chartname }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -103,11 +165,11 @@
                             </div>
                             <br>
                         @endif
-                        @if(isset($charts->STAR))
+                        @if($iap != '[]')
                             <div class="card">
                                 <div class="collapsible">
                                     <div class="card-header">
-                                        Arrivals ({{ count($charts->STAR) }})
+                                        Approaches
                                     </div>
                                 </div>
                                 <div class="content">
@@ -118,41 +180,11 @@
                                                     <th scope="col">Chart Name</th>
                                                     <th scope="col">Download</th>
                                                 </tr>
-                                                @foreach($charts->STAR as $c)
+                                                @foreach($iap as $c)
                                                     <tr>
-                                                        <td>{{ $c->chartname }}</td>
+                                                        <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chartname }}" target="_blank"><i class="fas fa-download"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                        @endif
-                        @if(isset($charts->Approach))
-                            <div class="card">
-                                <div class="collapsible">
-                                    <div class="card-header">
-                                        Approaches ({{ count($charts->Approach) }})
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="card-body" style="max-height:400px;overflow-y:auto;">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Chart Name</th>
-                                                    <th scope="col">Download</th>
-                                                </tr>
-                                                @foreach($charts->Approach as $c)
-                                                    <tr>
-                                                        <td>{{ $c->chartname }}</td>
-                                                        <td>
-                                                            <a href="{{ $c->url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chartname }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

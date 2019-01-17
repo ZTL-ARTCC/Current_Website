@@ -465,17 +465,26 @@ class ControllerDash extends Controller
         }
 
         $client = new Client(['http_errors' => false]);
-        $res = $client->request('GET', 'https://api.aircharts.org/v2/Airport/'.$apt_r);
+        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$apt_r);
         $status = $res->getStatusCode();
         if($status == 404) {
             $charts = null;
-        } elseif(isset(json_decode($res->getBody())->$apt_r->charts) == true) {
-            $charts = json_decode($res->getBody())->$apt_r->charts;
+        } elseif(json_decode($res->getBody()) != '[]') {
+            $charts = collect(json_decode($res->getBody()));
+            $min = $charts->where('chart_code', 'MIN');
+            $hot = $charts->where('chart_code', 'HOT');
+            $lah = $charts->where('chart_code', 'LAH');
+            $apd = $charts->where('chart_code', 'APD');
+            $iap = $charts->where('chart_code', 'IAP');
+            $dp = $charts->where('chart_code', 'DP');
+            $star = $charts->where('chart_code', 'STAR');
+            $cvfp = $charts->where('chart_code', 'CVFP');
         } else {
             $charts = null;
         }
 
-        return view('dashboard.controllers.airport')->with('apt_r', $apt_r)->with('metar', $metar)->with('taf', $taf)->with('visual_conditions', $visual_conditions)->with('pilots_a', $pilots_a)->with('pilots_d', $pilots_d)->with('charts', $charts);
+        return view('dashboard.controllers.airport')->with('apt_r', $apt_r)->with('metar', $metar)->with('taf', $taf)->with('visual_conditions', $visual_conditions)->with('pilots_a', $pilots_a)->with('pilots_d', $pilots_d)
+                                                    ->with('charts', $charts)->with('min', $min)->with('hot', $hot)->with('lah', $lah)->with('apd', $apd)->with('iap', $iap)->with('dp', $dp)->with('star', $star)->with('cvfp', $cvfp);
     }
 
     public function optIn(Request $request) {
