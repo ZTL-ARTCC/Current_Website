@@ -42,7 +42,7 @@ View Airport ({{ $airport->ltr_4 }})
                     <b>All Charts</b>
                 </div>
                 <div class="card-body">
-                    @if($charts != '[]')
+                    @if($charts != null)
                         @if($apd != '[]' || $min != '[]' || $hot != '[]' || $lah != '[]')
                             <div class="card">
                                 <div class="collapsible">
