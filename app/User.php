@@ -131,7 +131,7 @@ class User extends Authenticatable
             $last_training = null;
         }
 
-        return $last_training
+        return $last_training;
     }
 
     public function getLastTrainingGivenAttribute() {
