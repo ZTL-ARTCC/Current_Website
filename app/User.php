@@ -145,6 +145,6 @@ class User extends Authenticatable
             $last_training_given = null;
         }
 
-        return $last_training_given
+        return $last_training_given;
     }
 }
