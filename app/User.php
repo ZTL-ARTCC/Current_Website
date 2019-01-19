@@ -127,11 +127,12 @@ class User extends Authenticatable
         if($tickets_sort->count() != 0) {
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $last_training = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
+            $last_training = $last_training->date;
         } else {
             $last_training = null;
         }
 
-        return $last_training->date;
+        return $last_training;
     }
 
     public function getLastTrainingGivenAttribute() {
@@ -141,10 +142,11 @@ class User extends Authenticatable
         if($tickets_sort->count() != 0) {
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $last_training_given = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
+            $last_training_given = $last_training_given->date;
         } else {
             $last_training_given = null;
         }
 
-        return $last_training_given->date;
+        return $last_training_given;
     }
 }
