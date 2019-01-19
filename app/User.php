@@ -124,7 +124,7 @@ class User extends Authenticatable
         $tickets_sort = TrainingTicket::where('controller_id', $this->id)->get()->sortByDesc(function($t) {
             return strtotime($t->date.' '.$t->start_time);
         })->pluck('id');
-        if(count($tickets_sort) != 0) {
+        if($tickets_sort->count() != 0) {
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $last_training = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
         } else {
@@ -142,10 +142,10 @@ class User extends Authenticatable
         $tickets_sort = TrainingTicket::where('trainer_id', $this->id)->get()->sortByDesc(function($t) {
             return strtotime($t->date.' '.$t->start_time);
         })->pluck('id');
-        if(count($tickets_sort) != 0) {
+        if($tickets_sort->count() != 0) {
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $last_training_given = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
-            $last_training_given = $last_training_given->date;
+            $last_training_given = $last_training_given;
         } else {
             $last_training_given = null;
         }
