@@ -96,19 +96,4 @@ class Airport extends Model
             return null;
         }
     }
-
-    public function getChartsAttribute() {
-        $apt = $this->ltr_4;
-        $client = new Client(['http_errors' => false]);
-        $res = $client->request('GET', 'https://api.aircharts.org/v2/Airport/'.$apt);
-        $status = $res->getStatusCode();
-
-        if($status == 404) {
-            return null;
-        } elseif(isset(json_decode($res->getBody())->$apt->charts) == true) {
-            return json_decode($res->getBody())->$apt->charts;
-        } else {
-            return null;
-        }
-    }
 }

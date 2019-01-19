@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Audit;
 use App\Ots;
 use App\TrainingInfo;
 use App\TrainingTicket;
@@ -141,7 +142,17 @@ class TrainingDash extends Controller
             $m->to($controller->email)->cc('ta@ztlartcc.org');
         });
 
-        return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' added a training ticket for '.User::find($ticket->controller_id)->full_name.'.';
+        $audit->save();
+
+        if($ticket->type >= 4) {
+            return redirect('/dashboard/training/ots-center')->with('success', 'The OTS training ticket has been submitted successfully. Please make sure to also set the OTS as complete and upload the necessary documents in the OTS center as well.');
+        } else {
+            return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+        }
     }
 
     public function viewTicket($id) {
@@ -183,6 +194,12 @@ class TrainingDash extends Controller
             $ticket->ins_comments = $request->trainer_comments;
             $ticket->save();
 
+            $audit = new Audit;
+            $audit->cid = Auth::id();
+            $audit->ip = $_SERVER['REMOTE_ADDR'];
+            $audit->what = Auth::user()->full_name.' edited a training ticket for '.User::find($request->controller)->full_name.'.';
+            $audit->save();
+
             return redirect('/dashboard/training/tickets/view/'.$ticket->id)->with('success', 'The ticket has been updated successfully.');
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
@@ -194,6 +211,13 @@ class TrainingDash extends Controller
         if(Auth::user()->can('snrStaff')) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
+
+            $audit = new Audit;
+            $audit->cid = Auth::id();
+            $audit->ip = $_SERVER['REMOTE_ADDR'];
+            $audit->what = Auth::user()->full_name.' deleted a training ticket for '.User::find($controller_id)->full_name.'.';
+            $audit->save();
+
             return redirect('/dashboard/training/tickets?id='.$controller_id)->with('success', 'The ticket has been deleted successfully.');
         } else {
             return redirect()->back()->with('error', 'Only the TA can delete training tickets.');
@@ -215,6 +239,13 @@ class TrainingDash extends Controller
         $ots->status = 1;
         $ots->ins_id = Auth::id();
         $ots->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' accepted an OTS for '.User::find($ots->controller_id)->full_name.'.';
+        $audit->save();
+
         return redirect()->back()->with('success', 'You have sucessfully accepted this OTS. Please email the controller at '.User::find($ots->controller_id)->email.' in order to schedule the OTS.');
     }
 
@@ -223,7 +254,8 @@ class TrainingDash extends Controller
             return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
         } else {
             $ots = Ots::find($id);
-            $ots->delete();;
+            $ots->delete();
+
             return redirect()->back()->with('success', 'The OTS recommendation has been rejected successfully.');
         }
     }
@@ -245,6 +277,12 @@ class TrainingDash extends Controller
                 $m->subject('You Have Been Assigned an OTS for '.$controller->full_name);
                 $m->to($ins->email)->cc('ta@ztlartcc.org');
             });
+
+            $audit = new Audit;
+            $audit->cid = Auth::id();
+            $audit->ip = $_SERVER['REMOTE_ADDR'];
+            $audit->what = Auth::user()->full_name.' assigned an OTS for '.User::find($ots->controller_id)->full_name.' to '.User::find($ots->ins_id).'.';
+            $audit->save();
 
             return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');
         }
@@ -270,6 +308,12 @@ class TrainingDash extends Controller
             $ots->report = $public_url;
             $ots->save();
 
+            $audit = new Audit;
+            $audit->cid = Auth::id();
+            $audit->ip = $_SERVER['REMOTE_ADDR'];
+            $audit->what = Auth::user()->full_name.' updated an OTS for '.User::find($ots->controller_id)->full_name.'.';
+            $audit->save();
+
             return redirect()->back()->with('success', 'The OTS has been updated successfully!');
         } else {
             return redirect()->back()->with('error', 'This OTS has not been assigned to you.');
@@ -281,6 +325,12 @@ class TrainingDash extends Controller
         $ots->ins_id = null;
         $ots->status = 0;
         $ots->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' cancelled an OTS for '.User::find($ots->controller_id)->full_name.'.';
+        $audit->save();
 
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }

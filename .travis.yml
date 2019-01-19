@@ -8,7 +8,14 @@ services:
 
 before_script:
   - cp .env.travis .env
-  - mysql -u root -e "create database testing";
+  - mysql -u root -e "CREATE DATABASE IF NOT EXISTS testing;
+                      USE testing;
+                      CREATE TABLE IF NOT EXISTS mdl_role_assignments (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        roleid INT,
+                        contextid INT,
+                        userid INT
+                      )  ENGINE=InnoDB;"
   - composer self-update
   - composer install --no-interaction
   - npm install -g npm@latest

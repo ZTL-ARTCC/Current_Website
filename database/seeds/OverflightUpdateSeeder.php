@@ -15,8 +15,8 @@ class OverflightUpdateSeeder extends Seeder
     public function run()
     {
         DB::table('flights_within_artcc_updates')->insert([
-             'created_at' => null,
-             'updated_at' => null
+             'created_at' => Carbon::now(),
+             'updated_at' => Carbon::now()
          ]);
     }
 }

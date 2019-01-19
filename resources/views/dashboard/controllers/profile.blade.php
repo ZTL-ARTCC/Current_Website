@@ -117,7 +117,7 @@ Profile
                             <li class="list-group-item" style="background-color:lightgray">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
-                                    @if(isset($last_training))
+                                    @if(isset($last_training_given))
                                         {{ $last_training_given->last_training }}
                                     @else
                                         <i>No Training Given Since 12/04/2018</i>

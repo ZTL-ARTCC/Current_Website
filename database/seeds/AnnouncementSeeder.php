@@ -47,7 +47,9 @@ class AnnouncementSeeder extends Seeder
         DB::table('announcement')->insert([
              'id' => 1,
              'body' => null,
-             'staff_member' => $atm
+             'staff_member' => $atm,
+             'created_at' => Carbon::now(),
+             'updated_at' => Carbon::now()
          ]);
     }
 }
