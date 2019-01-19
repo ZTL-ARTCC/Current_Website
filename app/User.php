@@ -131,7 +131,7 @@ class User extends Authenticatable
             $last_training = null;
         }
 
-        return $last_training;
+        return $last_training->date;
     }
 
     public function getLastTrainingGivenAttribute() {
@@ -145,6 +145,6 @@ class User extends Authenticatable
             $last_training_given = null;
         }
 
-        return $last_training_given;
+        return $last_training_given->date;
     }
 }
