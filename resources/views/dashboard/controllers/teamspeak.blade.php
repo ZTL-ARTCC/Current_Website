@@ -13,7 +13,8 @@ Teamspeak Info
 <br>
 
 <div class="container">
-    <center><h1>vZTL ARTCC Teamspeak Information</h1></center>
+    <center><h1><a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a> vZTL ARTCC Teamspeak Information <a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a></h1></center>
+    <center><p><i>Thank you to TeamSpeak for providing us with our TeamSpeak license. Check them out at <a href="https://www.teamspeak.com/?tour=yes" target="_blank">https://www.teamspeak.com</a> for more information!</i></p></center>
     <hr>
     <center><h3>Teamspeak is used for all training and all controller communications, but all members are welcome to join us in the teamspeak. You can connect to the teamspeak server, without a password, using the IP:</h3></center>
     <center><h2><a href="ts3server://ts.ztlartcc.org?port=9987">ts.ztlartcc.org</a></h2></center>
