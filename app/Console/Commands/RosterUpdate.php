@@ -117,14 +117,15 @@ class RosterUpdate extends Command
                 $user->status = '1';
                 $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
                 $user->save();
+                $user = User::find($r->cid);
 
                 if(Config::get('app.moodle') == 1) {
                     //Adds user to moodle database
                     DB::table('mdl_user')->insert([
-                         'id' => $user->id,
+                         'id' => $r->cid,
                          'confirmed' => 1,
                          'mnethostid' => 1,
-                         'username' => $user->id,
+                         'username' => $r->cid,
                          'firstname' => $user->fname,
                          'lastname' => $user->lname,
                          'email' => $user->email
