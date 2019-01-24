@@ -131,10 +131,10 @@ class VisitAgreement extends Command
                     if(Config::get('app.moodle') == 1) {
                         //Adds user to moodle database
                         DB::table('mdl_user')->insert([
-                             'id' => $user->id,
+                             'id' => $r->cid,
                              'confirmed' => 1,
                              'mnethostid' => 1,
-                             'username' => $user->id,
+                             'username' => $r->cid,
                              'firstname' => $user->fname,
                              'lastname' => $user->lname,
                              'email' => $user->email
@@ -389,10 +389,10 @@ class VisitAgreement extends Command
                     if(Config::get('app.moodle') == 1) {
                         //Adds user to moodle database
                         DB::table('mdl_user')->insert([
-                             'id' => $user->id,
+                             'id' => $r->cid,
                              'confirmed' => 1,
                              'mnethostid' => 1,
-                             'username' => $user->id,
+                             'username' => $r->cid,
                              'firstname' => $user->fname,
                              'lastname' => $user->lname,
                              'email' => $user->email
