@@ -53,6 +53,8 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                         <th scope="col">Rating</th>
                         <th scope="col">Hours This Month</th>
                         <th scope="col">Last Training Session</th>
+                        <th scope="col">Last Activity Date</th>
+                        <th scope="col">Join Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,9 +83,11 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                 @if($c->last_training)
                                     <p>{{ $c->last_training }}</p>
                                 @else
-                                    <p><i>No Training Since 12/4/2018</i></p>
+                                    <p><i>No Recent Training</i></p>
                                 @endif
                             </td>
+                            <td>{{ $c->last_logon }}</td>
+                            <td>{{ $c->text_date_join }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -96,6 +100,8 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                         <th scope="col">Name (CID)</th>
                         <th scope="col">Rating</th>
                         <th scope="col">Hours This Month</th>
+                        <th scope="col">Last Activity Date</th>
+                        <th scope="col">Join Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,7 +111,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 2)
                                 <td bgcolor="#A9DFBF" class="black"><b>
-                                    @if($last_stats[$c->id]->total_hrs <= 2)
+                                    @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
                                         {{ $stats[$c->id]->total_hrs }}
@@ -113,13 +119,15 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                 </b></td>
                             @else
                                 <td bgcolor="#E6B0AA" class="black"><b>
-                                    @if($last_stats[$c->id]->total_hrs <= 2)
+                                    @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
                                         {{ $stats[$c->id]->total_hrs }}
                                     @endif
                                 </b></td>
                             @endif
+                            <td>{{ $c->last_logon }}</td>
+                            <td>{{ $c->text_date_create }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -150,7 +158,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                 @if($c->last_training_given)
                                     <p>{{ $c->last_training_given }}</p>
                                 @else
-                                    <p><i>No Training Given Since 12/4/2018</i></p>
+                                    <p><i>No Recent Training Given</i></p>
                                 @endif
                             </td>
                         </tr>
