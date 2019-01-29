@@ -158,7 +158,7 @@ class User extends Authenticatable
     }
 
     public function getLastLogonAttribute() {
-        $last = ControllerLog::where('cid', $this->cid)->orderBy('created_at', 'DSC')->first();
+        $last = ControllerLog::where('cid', $this->id)->orderBy('created_at', 'DSC')->first();
         if($last != null) {
             $date = Carbon::parse($last->created_at)->format('m/d/Y');
         } else {
