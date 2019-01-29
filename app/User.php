@@ -160,7 +160,7 @@ class User extends Authenticatable
     public function getLastLogonAttribute() {
         $last = ControllerLog::where('cid', $this->cid)->orderBy('created_at', 'DSC')->first();
         if($last != null) {
-            $date = $last->created_at->format('m/d/Y');
+            $date = Carbon::parse($last->created_at)->format('m/d/Y');
         } else {
             $date = 'Never';
         }
@@ -169,13 +169,13 @@ class User extends Authenticatable
     }
 
     public function getTextDateJoinAttribute() {
-        $date = $this->added_to_facility->format('m/d/Y');
+        $date = Carbon::parse($this->added_to_facility)->format('m/d/Y');
 
         return $date;
     }
 
     public function getTextDateCreateAttribute() {
-        $date = $this->created_at->format('m/d/Y');
+        $date = Carbon::parse($this->created_at)->format('m/d/Y');
 
         return $date;
     }
