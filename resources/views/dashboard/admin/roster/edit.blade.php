@@ -464,7 +464,7 @@ Update Controller
             </div>
     {!! Form::close() !!}
             <div class="col-sm-1">
-                <a href="/dashboard/controllers/roster" class="btn btn-danger">Cancel</a>
+                <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
             </div>
         </div>
 </div>
