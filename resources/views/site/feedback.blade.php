@@ -36,11 +36,11 @@ New Feedback
                     <div class="row">
                         <div class="col-sm-6">
                             {!! Form::label('pilot_name', 'Pilot Name:', ['class' => 'control-label']) !!}
-                            {!! Form::text('pilot_name', null, ['placeholder' => 'Your Name (Optional)', 'class' => 'form-control']) !!}
+                            {!! Form::text('pilot_name', null, ['placeholder' => 'Your Name', 'class' => 'form-control']) !!}
                         </div>
                         <div class="col-sm-6">
                             {!! Form::label('pilot_email', 'Pilot Email:', ['class' => 'control-label']) !!}
-                            {!! Form::email('pilot_email', null, ['placeholder' => 'Your Email (Optional)', 'class' => 'form-control']) !!}
+                            {!! Form::email('pilot_email', null, ['placeholder' => 'Your Email', 'class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
@@ -56,13 +56,13 @@ New Feedback
                 </div>
                 <div class="form-group">
                     {!! Form::label('pilot_cid', 'Pilot VATSIM CID:', ['class' => 'control-label']) !!}
-                    {!! Form::text('pilot_cid', null, ['placeholder' => 'Your VATSIM CID (Optional)', 'class' => 'form-control']) !!}
+                    {!! Form::text('pilot_cid', null, ['placeholder' => 'Your VATSIM CID', 'class' => 'form-control']) !!}
                 </div>
             </div>
         </div>
         <div class="form-group">
             {!! Form::label('comments', 'Additional Comments:', ['class' => 'control-label']) !!}
-            {!! Form::textArea('comments', null, ['placeholder' => 'Additional Comments (Optional)', 'class' => 'form-control']) !!}
+            {!! Form::textArea('comments', null, ['placeholder' => 'Additional Comments', 'class' => 'form-control']) !!}
         </div>
         <div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
         <br>

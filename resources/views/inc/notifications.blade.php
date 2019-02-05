@@ -33,4 +33,16 @@
             There is a <b>new incident report</b>. Visit <a href="/dashboard/admin/incident">incident reports</a> to view more information.
         </div>
     @endif
+    @if(count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff'))
+        <br>
+        <div class="alert alert-success">
+            There is <b>new feedback awaiting review</b>. Visit <a href="/dashboard/admin/feedback">feedback</a> to view more information.
+        </div>
+    @endif
+    @if(count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff'))
+        <br>
+        <div class="alert alert-success">
+            There is a <b>new visitor application</b>. Visit <a href="/dashboard/admin/roster/visit/requests">visitor requests</a> to view more information.
+        </div>
+    @endif
 @endif
