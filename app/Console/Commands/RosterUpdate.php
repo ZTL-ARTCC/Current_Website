@@ -163,6 +163,8 @@ class RosterUpdate extends Command
                 $users_inc_v = User::get();
                 $fn_initial = substr($user->fname, 0, 1);
                 $ln_initial = substr($user->lname, 0, 1);
+                $f_initial = $fn_initial;
+                $l_initial = $ln_initial;
 
                 a:
                 $initials = $fn_initial.$ln_initial;
@@ -170,13 +172,21 @@ class RosterUpdate extends Command
                 foreach($users_inc_v as $u) {
                     if($u->initials == $initials) {
                         $yes = 0;
-                        break;
                     } else {
-                        $yes = 1;
+                        //Check the first initial with the randomly selected last initial
+                        if($ln_initial != $l_initial) {
+                            $fn_initial = $f_initial;
+                            $ln_initial = $ln_initial;
+                            goto a;
+                        } elseif($fn_initial != $f_initial) {
+                            $fn_initial = $fn_initial;
+                            $ln_initial = $l_initial;
+                            goto a;
+                        }
                     }
                 }
 
-                if($yes === 1) {
+                if($yes == 1) {
                     $user->initials = $initials;
                     $user->save();
                 } else {
