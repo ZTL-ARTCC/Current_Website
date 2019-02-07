@@ -584,7 +584,7 @@ class VisitAgreement extends Command
 
                 if(Config::get('app.moodle') == 1) {
                     //Sets user as deleted in moodle
-                    $moodle = DB::table('mdl_user')->find($use->id)->update(['deleted' => 1]);
+                    $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                 }
 
                 $use->delete();
@@ -608,7 +608,7 @@ class VisitAgreement extends Command
 
                 if(Config::get('app.moodle') == 1) {
                     //Sets user as deleted in moodle
-                    $moodle = DB::table('mdl_user')->find($use->id)->update(['deleted' => 1]);
+                    $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                 }
 
                 $use->delete();
