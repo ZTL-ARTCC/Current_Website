@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Ots;
+use App\PublicTrainingInfo;
+use App\PublicTrainingInfoPdf;
 use App\TrainingInfo;
 use App\TrainingTicket;
 use App\User;
@@ -26,9 +28,12 @@ class TrainingDash extends Controller
         $info_major_lcl = TrainingInfo::where('section', 4)->orderBy('number', 'ASC')->get();
         $info_major_app = TrainingInfo::where('section', 5)->orderBy('number', 'ASC')->get();
         $info_ctr = TrainingInfo::where('section', 6)->orderBy('number', 'ASC')->get();
+
+        $public_sections = PublicTrainingInfo::get();
+
         return view('dashboard.training.info')->with('info_minor_gnd', $info_minor_gnd)->with('info_minor_lcl', $info_minor_lcl)->with('info_minor_app', $info_minor_app)
                                               ->with('info_major_gnd', $info_major_gnd)->with('info_major_lcl', $info_major_lcl)->with('info_major_app', $info_major_app)
-                                              ->with('info_ctr', $info_ctr);
+                                              ->with('info_ctr', $info_ctr)->with('public_sections', $public_sections);
     }
 
     public function addInfo(Request $request, $section) {
@@ -57,6 +62,28 @@ class TrainingDash extends Controller
         }
         $info->delete();
         return redirect()->back()->with('success', 'The information has been removed successfully.');
+    }
+
+    public function newPublicInfoSection(Request $request) {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $info = new PublicTrainingInfo;
+        $info->name = $request->name;
+
+    }
+
+    public function removePublicInfoSection() {
+        //
+    }
+
+    public function addPublicPdf(Request $request) {
+        //
+    }
+
+    public function removePublicPdf($id) {
+        //
     }
 
     public function ticketsIndex(Request $request) {
