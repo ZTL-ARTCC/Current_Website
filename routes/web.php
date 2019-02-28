@@ -115,7 +115,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/delete/{id}', 'TrainingDash@deleteInfo')->middleware('permission:snrStaff');
             Route::prefix('public')->middleware('permission:snrStaff')->group(function() {
                 Route::post('/new-section', 'TrainingDash@newPublicInfoSection');
-                Route::get('remove-section', 'TrainingDash@removePublicInfoSection');
+                Route::get('/remove-section/{id}', 'TrainingDash@removePublicInfoSection');
                 Route::post('/add-pdf', 'TrainingDash@addPublicPdf');
                 Route::get('/remove-pdf/{id}', 'TrainingDash@removePublicPdf');
             });

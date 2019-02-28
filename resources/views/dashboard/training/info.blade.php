@@ -354,7 +354,7 @@ Training Information
         <span data-toggle="modal" data-target="#newSection">
             <button type="button" class="btn btn-info">Add New Section</button>
         </span>
-        <br>
+        <br><br>
         <div class="modal fade" id="newSection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -386,10 +386,16 @@ Training Information
         <div class="card">
             <div class="collapsible">
                 <div class="card-header">
-                    <h3>{{ $p->name }}</h3>
-                    @if(Auth::user()->can('snrStaff'))
-                        <a href="/dahsboard/training/info/public/remove-section" class="btn btn-danger simple-tooltip" title="Remove Section"><i class="fas fa-times"></i></a>
-                    @endif
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <h3>{{ $p->name }}</h3>
+                        </div>
+                        <div class="col-sm-1">
+                            @if(Auth::user()->can('snrStaff'))
+                                <a href="/dashboard/training/info/public/remove-section/{{ $p->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Remove Section"><i class="fas fa-times"></i></a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="content">
@@ -434,6 +440,7 @@ Training Information
                 </div>
             </div>
         </div>
+        <br>
     @endforeach
 </div>
 
