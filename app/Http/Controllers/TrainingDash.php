@@ -75,7 +75,8 @@ class TrainingDash extends Controller
 
     public function newPublicInfoSection(Request $request) {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'order' => 'required'
         ]);
 
         if($request->order < count(PublicTrainingInfo::get())) {
@@ -109,12 +110,31 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
     }
 
-    public function addPublicPdf(Request $request) {
-        //
+    public function addPublicPdf(Request $request, $section_id) {
+        $request->validate([
+            'pdf' => 'required'
+        ]);
+
+        $ext = $request->file('pdf')->getClientOriginalExtension();
+        $time = Carbon::now()->timestamp;
+        $path = $request->file('pdf')->storeAs(
+            'public/training_info', $time.'.'.$ext
+        );
+        $public_url = '/storage/training_info/'.$time.'.'.$ext;
+
+        $pdf = new PublicTrainingInfoPdf;
+        $pdf->section_id = $section_id;
+        $pdf->pdf_path = $public_url;
+        $pdf->save();
+
+        return redirect('/dashboard/training/info')->with('success', 'The PDF was added successfully.');
     }
 
     public function removePublicPdf($id) {
-        //
+        $pdf = PublicTrainingInfoPdf::find($id);
+        $pdf->delete();
+
+        return redirect('/dashboard/training/info')->with('success', 'The PDF was removed successfully.');
     }
 
     public function ticketsIndex(Request $request) {

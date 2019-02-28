@@ -405,7 +405,7 @@ Training Information
                             <button type="button" class="btn btn-info">Add New PDF</button>
                         </span>
                         <br>
-                        <div class="modal fade" id="newSection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="newPDF{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -414,7 +414,7 @@ Training Information
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {!! Form::open(['action' => ['TrainingDash@addPublicPdf']]) !!}
+                                    {!! Form::open(['action' => ['TrainingDash@addPublicPdf', $p->id], 'files' => true]) !!}
                                     @csrf
                                     <div class="modal-body">
                                         {!! Form::label('pdf', 'Select a PDF to Upload') !!}
@@ -428,9 +428,10 @@ Training Information
                                 </div>
                             </div>
                         </div>
+                        <br>
                     @endif
                     @foreach($p->pdf as $pdf)
-                        <embed src="{{ $pdf->pdf_path }}" width="500" height="750" type="application\pdf">
+                        <center><embed src="{{ $pdf->pdf_path }}" width="700px" height="910px" /></center>
                         @if(Auth::user()->can('snrStaff'))
                             <br>
                             <a href="/dashboard/training/info/public/remove-pdf/{{ $pdf->id }}" class="btn btn-danger">^ Remove PDF ^</a>
