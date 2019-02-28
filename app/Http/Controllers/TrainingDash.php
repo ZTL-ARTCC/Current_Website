@@ -107,6 +107,11 @@ class TrainingDash extends Controller
             $o->save();
         }
 
+        $pdfs = PublicTrainingInfoPdf::where('section_id', $id)->get();
+        foreach($pdfs as $p) {
+            $p->delete();
+        }
+
         return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
     }
 
