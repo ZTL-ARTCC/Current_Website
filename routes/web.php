@@ -109,10 +109,16 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/cancel/{id}', 'TrainingDash@otsCancel');
             Route::post('/complete/{id}', 'TrainingDash@completeOTS');
         });
-        Route::prefix('info')->middleware('permission:train')->group(function() {
+        Route::prefix('info')->group(function() {
             Route::get('/', 'TrainingDash@trainingInfo');
             Route::post('/add/{section}', 'TrainingDash@addInfo')->middleware('permission:snrStaff');
             Route::get('/delete/{id}', 'TrainingDash@deleteInfo')->middleware('permission:snrStaff');
+            Route::prefix('public')->middleware('permission:snrStaff')->group(function() {
+                Route::post('/new-section', 'TrainingDash@newPublicInfoSection');
+                Route::get('/remove-section/{id}', 'TrainingDash@removePublicInfoSection');
+                Route::post('/add-pdf/{id}', 'TrainingDash@addPublicPdf');
+                Route::get('/remove-pdf/{id}', 'TrainingDash@removePublicPdf');
+            });
         });
     });
 
