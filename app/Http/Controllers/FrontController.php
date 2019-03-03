@@ -168,7 +168,7 @@ class FrontController extends Controller
         if($status == 404) {
             $charts = null;
         } elseif(json_decode($res->getBody()) != '[]') {
-            $charts = collect(json_decode($res->getBody()));
+            $charts = collect(json_decode($res->getBody())->$apt_r);
             $min = $charts->where('chart_code', 'MIN');
             $hot = $charts->where('chart_code', 'HOT');
             $lah = $charts->where('chart_code', 'LAH');
@@ -194,7 +194,7 @@ class FrontController extends Controller
         if($status == 404) {
             $charts = null;
         } elseif(json_decode($res->getBody()) != '[]') {
-            $charts = collect(json_decode($res->getBody()));
+            $charts = collect(json_decode($res->getBody())->$airport->ltr_4);
             $min = $charts->where('chart_code', 'MIN');
             $hot = $charts->where('chart_code', 'HOT');
             $lah = $charts->where('chart_code', 'LAH');
