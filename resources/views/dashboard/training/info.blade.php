@@ -387,10 +387,38 @@ Training Information
             <div class="collapsible">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-11">
+                        <div class="col-sm-10">
                             <h3>{{ $p->name }}</h3>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
+                            @if(Auth::user()->can('snrStaff'))
+                                <span data-toggle="modal" data-target="#editSection{{ $p->id }}">
+                                    <button type="button" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Section"><i class="fas fa-pencil-alt"></i></button>
+                                </span>
+                                <div class="modal fade" id="editSection{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit {{ $p->name }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            {!! Form::open(['action' => ['TrainingDash@editPublicSection', $p->id]]) !!}
+                                            @csrf
+                                            <div class="modal-body">
+                                                {!! Form::label('name', 'Section Name') !!}
+                                                {!! Form::text('name', $p->name, ['placeholder' => 'Section Name', 'class' => 'form-control']) !!}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button action="submit" class="btn btn-success">Save Section</button>
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             @if(Auth::user()->can('snrStaff'))
                                 <a href="/dashboard/training/info/public/remove-section/{{ $p->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Remove Section"><i class="fas fa-times"></i></a>
                             @endif

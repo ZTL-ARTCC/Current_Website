@@ -93,7 +93,18 @@ class TrainingDash extends Controller
         $info->save();
 
         return redirect('/dashboard/training/info')->with('success', 'The section was added successfully.');
+    }
 
+    public function editPublicSection(Request $request, $id) {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $section = PublicTrainingInfo::find($id);
+        $section->name = $request->name;
+        $section->save();
+
+        return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
     }
 
     public function removePublicInfoSection($id) {
