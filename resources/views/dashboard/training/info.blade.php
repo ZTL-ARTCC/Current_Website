@@ -459,7 +459,7 @@ Training Information
                         <br>
                     @endif
                     @foreach($p->pdf as $pdf)
-                        <center><embed src="{{ $pdf->pdf_path }}" width="700px" height="910px" /></center>
+                        <center><embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={{ \Config::get('app.url') }}{{ $pdf->pdf_path }}" width="500px" height="755px"></center>
                         @if(Auth::user()->can('snrStaff'))
                             <br>
                             <a href="/dashboard/training/info/public/remove-pdf/{{ $pdf->id }}" class="btn btn-danger">^ Remove PDF ^</a>
