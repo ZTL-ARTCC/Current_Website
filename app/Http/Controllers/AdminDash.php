@@ -736,6 +736,19 @@ class AdminDash extends Controller
         $user->email = Input::get('email');
         $user->initials = Input::get('initials');
         $user->rating_id = Input::get('rating_id');
+        if(Input::get('rating_id') == 2) {
+            $user->del = 1;
+            $user->gnd = 1;
+        } elseif(Input::get('rating_id') == 3) {
+            $user->del = 1;
+            $user->gnd = 1;
+            $user->twr = 1;
+        } elseif(Input::get('rating_id') == 4 || Input::get('rating_id') == 5 || Input::get('rating_id') == 7 || Input::get('rating_id') == 8 || Input::get('rating_id') == 10) {
+            $user->del = 1;
+            $user->gnd = 1;
+            $user->twr = 1;
+            $user->app = 1;
+        }
         $user->visitor = '1';
         $user->visitor_from = Input::get('visitor_from');
         $user->status = '1';
