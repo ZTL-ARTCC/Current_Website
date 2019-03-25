@@ -19,6 +19,7 @@ use App\PositionPreset;
 use App\PresetPosition;
 use App\Pyrite;
 use App\Scenery;
+use App\SoloCert;
 use App\User;
 use App\Visitor;
 use App\VisitRej;
