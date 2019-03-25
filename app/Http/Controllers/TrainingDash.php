@@ -390,7 +390,7 @@ class TrainingDash extends Controller
 
         $ots = Ots::find($id);
 
-        if($ots->ins_id == Auth::id()) {
+        if($ots->ins_id == Auth::id() || Auth::user()->can('snrStaff')) {
             $ext = $request->file('ots_report')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('ots_report')->storeAs(
