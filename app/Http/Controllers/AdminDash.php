@@ -246,7 +246,7 @@ class AdminDash extends Controller
             $user->del = Input::get('del');
             $user->gnd = Input::get('gnd');
             if($user->twr == 99) {
-                if(Input::get('twr') != null) {
+                if(Input::get('twr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
@@ -257,7 +257,7 @@ class AdminDash extends Controller
                 }
             }
             if($user->app == 99) {
-                if(Input::get('app') != null) {
+                if(Input::get('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
@@ -268,7 +268,7 @@ class AdminDash extends Controller
                 }
             }
             if($user->ctr == 99) {
-                if(Input::get('ctr') != null) {
+                if(Input::get('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
