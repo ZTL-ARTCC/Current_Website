@@ -250,33 +250,51 @@ class AdminDash extends Controller
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
+                        $solo->save();
                     }
                     $user->twr = Input::get('twr');
                 } else {
                     $user->twr = 99;
                 }
+            } elseif(Input::get('twr') == 99) {
+                $expire = Carbon::now()->addMonth()->format('Y-m-d');
+                $user->twr = Input::get('twr');
+                $cert = new SoloCert;
+                $cert->cid = $user->id;
+                $cert->pos = 0;
+                $cert->expiration = $expire;
+                $cert->status = 0;
+                $cert->save();
+            } else {
+                $user->twr = Input::get('twr');
             }
             if($user->app == 99) {
                 if(Input::get('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
+                        $solo->save();
                     }
                     $user->app = Input::get('app');
                 } else {
                     $user->app = 99;
                 }
+            } else {
+                $user->app = Input::get('app');
             }
             if($user->ctr == 99) {
                 if(Input::get('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
+                        $solo->save();
                     }
                     $user->ctr = Input::get('ctr');
                 } else {
                     $user->ctr = 99;
                 }
+            } else {
+                $user->ctr = Input::get('ctr');
             }
             $user->initials = Input::get('initials');
             $user->train_pwr = Input::get('train_pwr');

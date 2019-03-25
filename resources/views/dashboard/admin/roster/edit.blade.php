@@ -68,6 +68,7 @@ Update Controller
                     {!! Form::label('twr', 'Tower Certification') !!}
                     {!! Form::select('twr', [
                         0 => 'None',
+                        99 => 'Solo Certification',
                         1 => 'Minor Certified',
                         2 => 'Major Certified'
                     ], $user->twr, ['class' => 'form-control']) !!}
