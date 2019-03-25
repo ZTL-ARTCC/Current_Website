@@ -244,9 +244,39 @@ class AdminDash extends Controller
         if(Auth::user()->can('roster')) {
             $user->del = Input::get('del');
             $user->gnd = Input::get('gnd');
-            $user->twr = Input::get('twr');
-            $user->app = Input::get('app');
-            $user->ctr = Input::get('ctr');
+            if($user->twr == 99) {
+                if(Input::get('twr') != null) {
+                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+                    if($solo) {
+                        $solo->status = 1;
+                    }
+                    $user->twr = Input::get('twr');
+                } else {
+                    $user->twr = 99;
+                }
+            }
+            if($user->app == 99) {
+                if(Input::get('app') != null) {
+                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+                    if($solo) {
+                        $solo->status = 1;
+                    }
+                    $user->app = Input::get('app');
+                } else {
+                    $user->app = 99;
+                }
+            }
+            if($user->ctr == 99) {
+                if(Input::get('ctr') != null) {
+                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+                    if($solo) {
+                        $solo->status = 1;
+                    }
+                    $user->ctr = Input::get('ctr');
+                } else {
+                    $user->ctr = 99;
+                }
+            }
             $user->initials = Input::get('initials');
             $user->train_pwr = Input::get('train_pwr');
             $user->monitor_pwr = Input::get('monitor_pwr');
