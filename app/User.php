@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use App\CotrollerLog;
+use App\SoloCert;
 use App\TrainingTicket;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -176,6 +177,13 @@ class User extends Authenticatable
 
     public function getTextDateCreateAttribute() {
         $date = Carbon::parse($this->created_at)->format('m/d/Y');
+
+        return $date;
+    }
+
+    public function getSoloAttribute() {
+        $cert = SoloCert::where('cid', $this->id)->where('status', 0)->first();
+        $date = Carbon::parse($cert->expiration)->format('m/d/Y');
 
         return $date;
     }

@@ -121,6 +121,8 @@ Roster
                                 <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
                             @elseif($c->twr == 2)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                            @elseif($c->twr == 99)
+                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
                             @if($c->app == 0)
                                 <td><center><i class="fas fa-times" style="color:red"></i></center></td>
@@ -128,11 +130,15 @@ Roster
                                 <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
                             @elseif($c->app == 2)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                            @elseif($c->app == 99)
+                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
                             @if($c->ctr == 0)
                                 <td><center><i class="fas fa-times" style="color:red"></i></center></td>
                             @elseif($c->ctr == 1)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                            @elseif($c->ctr == 99)
+                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
                         </tr>
                     @endforeach

@@ -30,11 +30,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('RosterUpdate:VisitAgreement')->daily();
+        $schedule->command('SoloCerts:UpdateSoloCerts')->daily();
         $schedule->command('RosterUpdate:UpdateRoster')->hourly();
         $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
         $schedule->command('OnlineControllers:GetControllers')->everyMinute();
+        $schedule->command('RosterUpdate:VisitAgreement')->dailyAt('00:30');
         $schedule->command('Event:SendEventReminder')->dailyAt('00:30')->timezone('America/New_York');
         $schedule->command('RosterRemoval:Warning')->monthlyOn('5', '00:30');
     }
