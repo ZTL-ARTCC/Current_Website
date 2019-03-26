@@ -21,7 +21,13 @@ View Airport ({{ $airport->ltr_4 }})
                     <b>Airport Diagram</b> <div class="float-right"></div>
                 </div>
                 <div class="card-body">
-                    <img src="http://flightaware.com/resources/airport/{{ $airport->ltr_3 }}/APD/AIRPORT+DIAGRAM/png" width="100%">
+                    @if($apd != '[]')
+                        @foreach($apd as $c)
+                            <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={{ $c->pdf_path }}" width="100%" height="755px">
+                        @endforeach
+                    @else
+                        <p>No airport diagram found</p>
+                    @endif
                 </div>
             </div>
         </div>

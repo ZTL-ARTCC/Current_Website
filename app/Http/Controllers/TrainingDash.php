@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Ots;
+use App\PublicTrainingInfo;
+use App\PublicTrainingInfoPdf;
 use App\TrainingInfo;
 use App\TrainingTicket;
 use App\User;
@@ -26,9 +28,21 @@ class TrainingDash extends Controller
         $info_major_lcl = TrainingInfo::where('section', 4)->orderBy('number', 'ASC')->get();
         $info_major_app = TrainingInfo::where('section', 5)->orderBy('number', 'ASC')->get();
         $info_ctr = TrainingInfo::where('section', 6)->orderBy('number', 'ASC')->get();
+
+        $public_sections = PublicTrainingInfo::orderBy('order', 'ASC')->get();
+        $public_sections_count = count(PublicTrainingInfo::get());
+        $public_sections_order = array();
+        $i = 0;
+        foreach(range(0, $public_sections_count) as $p) {
+            $public_sections_order[$i] = $p + 1;
+            $i++;
+        }
+        $public_section_next = $i - 1;
+
         return view('dashboard.training.info')->with('info_minor_gnd', $info_minor_gnd)->with('info_minor_lcl', $info_minor_lcl)->with('info_minor_app', $info_minor_app)
                                               ->with('info_major_gnd', $info_major_gnd)->with('info_major_lcl', $info_major_lcl)->with('info_major_app', $info_major_app)
-                                              ->with('info_ctr', $info_ctr);
+                                              ->with('info_ctr', $info_ctr)->with('public_sections', $public_sections)->with('public_section_order', $public_sections_order)
+                                              ->with('public_section_next', $public_section_next);
     }
 
     public function addInfo(Request $request, $section) {
@@ -57,6 +71,86 @@ class TrainingDash extends Controller
         }
         $info->delete();
         return redirect()->back()->with('success', 'The information has been removed successfully.');
+    }
+
+    public function newPublicInfoSection(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'order' => 'required'
+        ]);
+
+        if($request->order < count(PublicTrainingInfo::get())) {
+            $change_order = PublicTrainingInfo::where('order', '>=', $request->order)->get();
+            foreach($change_order as $c) {
+                $c->order = $c->order + 1;
+                $c->save();
+            }
+        }
+
+        $info = new PublicTrainingInfo;
+        $info->name = $request->name;
+        $info->order = $request->order;
+        $info->save();
+
+        return redirect('/dashboard/training/info')->with('success', 'The section was added successfully.');
+    }
+
+    public function editPublicSection(Request $request, $id) {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $section = PublicTrainingInfo::find($id);
+        $section->name = $request->name;
+        $section->save();
+
+        return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
+    }
+
+    public function removePublicInfoSection($id) {
+        $section = PublicTrainingInfo::find($id);
+        $order = $section->order;
+        $section->delete();
+
+        $order_updates = PublicTrainingInfo::where('order', '>', $order)->get();
+        foreach($order_updates as $o) {
+            $o->order = $o->order - 1;
+            $o->save();
+        }
+
+        $pdfs = PublicTrainingInfoPdf::where('section_id', $id)->get();
+        foreach($pdfs as $p) {
+            $p->delete();
+        }
+
+        return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
+    }
+
+    public function addPublicPdf(Request $request, $section_id) {
+        $request->validate([
+            'pdf' => 'required'
+        ]);
+
+        $ext = $request->file('pdf')->getClientOriginalExtension();
+        $time = Carbon::now()->timestamp;
+        $path = $request->file('pdf')->storeAs(
+            'public/training_info', $time.'.'.$ext
+        );
+        $public_url = '/storage/training_info/'.$time.'.'.$ext;
+
+        $pdf = new PublicTrainingInfoPdf;
+        $pdf->section_id = $section_id;
+        $pdf->pdf_path = $public_url;
+        $pdf->save();
+
+        return redirect('/dashboard/training/info')->with('success', 'The PDF was added successfully.');
+    }
+
+    public function removePublicPdf($id) {
+        $pdf = PublicTrainingInfoPdf::find($id);
+        $pdf->delete();
+
+        return redirect('/dashboard/training/info')->with('success', 'The PDF was removed successfully.');
     }
 
     public function ticketsIndex(Request $request) {
