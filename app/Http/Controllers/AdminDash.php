@@ -596,8 +596,8 @@ class AdminDash extends Controller
 
         //Assigns controller initials
         $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
-        $fn_initial = strtoupper(substr($visitor->fname, 0, 1));
-        $ln_initial = strtoupper(substr($visitor->lname, 0, 1));
+        $fn_initial = strtoupper(substr($fname, 0, 1));
+        $ln_initial = strtoupper(substr($lname, 0, 1));
         $f_initial = $fn_initial;
         $l_initial = $ln_initial;
 
