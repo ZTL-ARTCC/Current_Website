@@ -265,7 +265,7 @@ class VisitAgreement extends Command
                              'username' => $r->cid,
                              'firstname' => $user->fname,
                              'lastname' => $user->lname,
-                             'email' => $user->email
+                             'email' => 'null@null.com'
                          ]);
 
                         //Assigns role in moodle database
@@ -433,7 +433,7 @@ class VisitAgreement extends Command
                              'username' => $r->cid,
                              'firstname' => $user->fname,
                              'lastname' => $user->lname,
-                             'email' => $user->email
+                             'email' => 'null@null.com'
                          ]);
 
                         //Assigns role in moodle database
