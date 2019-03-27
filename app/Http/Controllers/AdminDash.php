@@ -614,8 +614,7 @@ class AdminDash extends Controller
         }
 
         if($yes == 1) {
-            $visitor->initials = $initials;
-            $visitor->save();
+            $initials = $initials;
         } else {
             // Check first initial with all letters
             if($trys <= 26) {
