@@ -110,7 +110,7 @@ Visit Requests
                                 <td><center>{{ $v->email }}</center></td>
                                 <td><center>{{ $v->home }}</center></td>
                                 <td><center>{{ $v->updated_at }}</center></td>
-                                <td><center>{{ Auth::user($v->updated_by)->full_name }}</center></td>
+                                <td><center>{{ App\User::find($v->updated_by)->full_name }}</center></td>
                             </tr>
                         @endforeach
                     @else
@@ -140,7 +140,7 @@ Visit Requests
                                 <td><center>{{ $v->email }}</center></td>
                                 <td><center>{{ $v->home }}</center></td>
                                 <td><center>{{ $v->updated_at }}</center></td>
-                                <td><center>{{ Auth::user($v->updated_by)->full_name }}</center></td>
+                                <td><center>{{ App\User::find($v->updated_by)->full_name }}</center></td>
                             </tr>
                         @endforeach
                     @else
