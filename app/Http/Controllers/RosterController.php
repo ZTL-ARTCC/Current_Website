@@ -82,45 +82,49 @@ class RosterController extends Controller
 
             $userstatuscheck = User::find($res['cid']);
             if($userstatuscheck) {
-                $userstatuscheck->fname = $res['firstname'];
-                $userstatuscheck->lname = $res['lastname'];
-                $userstatuscheck->email = $res['email'];
-                $userstatuscheck->rating_id = $res['intRating'];
-                $userstatuscheck->json_token = encrypt($json_token);
-				$client = new Client();
-				$response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$res['cid'].'?apikey='.Config::get('vatusa.api_key'));
-				$resu = json_decode($response->getBody());
-				if($resu->flag_broadcastOptedIn == 1) {
-					if($userstatuscheck->opt != 1) {
-						$opt = new Opt;
-						$opt->controller_id = $res['cid'];
-						$opt->ip_address = '0.0.0.0';
-						$opt->means = 'VATUSA API';
-						$opt->option = 1;
-						$opt->save();
-						$userstatuscheck->opt = 1;
-					}
-				} else {
-                    $user_opt = Opt::where('controller_id', $userstatuscheck->id)->where('means', '!=', 'VATUSA API')->where('option', 1)->first();
-					if($userstatuscheck->opt != 0 && !isset($user_opt)) {
-						$opt = new Opt;
-						$opt->controller_id = $res['cid'];
-						$opt->ip_address = '0.0.0.0';
-						$opt->means = 'VATUSA API';
-						$opt->option = 0;
-						$opt->save();
-						$userstatuscheck->opt = 0;
-					}
-                }
-                if($userstatuscheck->visitor == '1') {
-                    if($resu->facility != 'ZZN'){
-                        $userstatuscheck->visitor_from = $resu->facility;
+                if($userstatuscheck->status == 2) {
+                    $userstatuscheck->fname = $res['firstname'];
+                    $userstatuscheck->lname = $res['lastname'];
+                    $userstatuscheck->email = $res['email'];
+                    $userstatuscheck->rating_id = $res['intRating'];
+                    $userstatuscheck->json_token = encrypt($json_token);
+    				$client = new Client();
+    				$response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$res['cid'].'?apikey='.Config::get('vatusa.api_key'));
+    				$resu = json_decode($response->getBody());
+    				if($resu->flag_broadcastOptedIn == 1) {
+    					if($userstatuscheck->opt != 1) {
+    						$opt = new Opt;
+    						$opt->controller_id = $res['cid'];
+    						$opt->ip_address = '0.0.0.0';
+    						$opt->means = 'VATUSA API';
+    						$opt->option = 1;
+    						$opt->save();
+    						$userstatuscheck->opt = 1;
+    					}
+    				} else {
+                        $user_opt = Opt::where('controller_id', $userstatuscheck->id)->where('means', '!=', 'VATUSA API')->where('option', 1)->first();
+    					if($userstatuscheck->opt != 0 && !isset($user_opt)) {
+    						$opt = new Opt;
+    						$opt->controller_id = $res['cid'];
+    						$opt->ip_address = '0.0.0.0';
+    						$opt->means = 'VATUSA API';
+    						$opt->option = 0;
+    						$opt->save();
+    						$userstatuscheck->opt = 0;
+    					}
                     }
+                    if($userstatuscheck->visitor == '1') {
+                        if($resu->facility != 'ZZN'){
+                            $userstatuscheck->visitor_from = $resu->facility;
+                        }
+                    } else {
+                        $userstatuscheck->visitor_from = null;
+                    }
+                    $userstatuscheck->save();
+                    Auth::loginUsingId($res['cid'], true);
                 } else {
-                    $userstatuscheck->visitor_from = null;
+                    return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
                 }
-                $userstatuscheck->save();
-                Auth::loginUsingId($res['cid'], true);
             } else {
                 return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
             }

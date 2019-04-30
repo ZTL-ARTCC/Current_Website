@@ -418,7 +418,8 @@ class AdminDash extends Controller
         $visitrej->cid = $id;
         $visitrej->staff_cid = Auth::id();
         $visitrej->save();
-        $user->delete();
+        $user->status = 2;
+        $user->save();
 
         $audit = new Audit;
         $audit->cid = Auth::id();
@@ -773,7 +774,8 @@ class AdminDash extends Controller
             foreach($event_requests as $e) {
                 $e->delete();
             }
-            $user->delete();
+            $user->status = 2;
+            $user->save();
 
             $audit = new Audit;
             $audit->cid = Auth::id();

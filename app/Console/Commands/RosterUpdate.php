@@ -187,6 +187,9 @@ class RosterUpdate extends Command
                 $user->email = $r->email;
                 $user->rating_id = $r->rating;
                 $user->visitor = '0';
+                if($user->status == 2) {
+                    $user->status = 1;
+                }
                 $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
                 $user->save();
 
@@ -288,7 +291,7 @@ class RosterUpdate extends Command
                 //Assigns controller initials
                 $user = User::find($r->cid);
 
-                $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
                 $fn_initial = strtoupper(substr($user->fname, 0, 1));
                 $ln_initial = strtoupper(substr($user->lname, 0, 1));
                 $f_initial = $fn_initial;
@@ -355,7 +358,8 @@ class RosterUpdate extends Command
                         $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                     }
 
-                    $use->delete();
+                    $use->status = 2;
+                    $use->save();
                 }
             }
         }

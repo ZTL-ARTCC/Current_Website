@@ -190,9 +190,19 @@ class VisitAgreement extends Command
                 $rating_old = $user->rating_id;
                 $user->fname = $r->fname;
                 $user->lname = $r->lname;
-                $user->email = $r->email;
+                if($r->email != null) {
+                    $user->email = $r->email;
+                } else {
+                    $user->email = 'No email';
+                }
                 $user->rating_id = $r->rating;
                 $user->visitor = '1';
+                $visitrej = VisitRej::where('cid', $r->cid)->first();
+                if($visitrej == null) {
+                    if($user->status == 2) {
+                        $user->status = 1;
+                    }
+                }
                 $user->visitor_from = 'ZHU';
                 $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
                 $user->save();
@@ -234,7 +244,11 @@ class VisitAgreement extends Command
                     $user->id = $r->cid;
                     $user->fname = $r->fname;
                     $user->lname = $r->lname;
-                    $user->email = $r->email;
+                    if($r->email != null) {
+                        $user->email = $r->email;
+                    } else {
+                        $user->email = 'No email';
+                    }
                     $user->rating_id = $r->rating;
                     if($r->rating == 2) {
                         $user->del = 1;
@@ -296,7 +310,7 @@ class VisitAgreement extends Command
                     //Assigns controller initials
                     $user = User::find($r->cid);
 
-                    $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                    $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
                     $fn_initial = strtoupper(substr($user->fname, 0, 1));
                     $ln_initial = strtoupper(substr($user->lname, 0, 1));
                     $f_initial = $fn_initial;
@@ -349,9 +363,19 @@ class VisitAgreement extends Command
                 $user = User::find($r->cid);
                 $user->fname = $r->fname;
                 $user->lname = $r->lname;
-                $user->email = $r->email;
+                if($r->email != null) {
+                    $user->email = $r->email;
+                } else {
+                    $user->email = 'No email';
+                }
                 $user->rating_id = $r->rating;
                 $user->visitor = '1';
+                $visitrej = VisitRej::where('cid', $r->cid)->first();
+                if($visitrej == null) {
+                    if($user->status == 2) {
+                        $user->status = 1;
+                    }
+                }
                 $user->visitor_from = 'ZJX';
                 if($r->facility_join == '1900-01-01T00:00:01+00:00'){
                     $user->added_to_facility = substr($r->created_at, 0, 10).' '.substr($r->created_at, 11, 8);
@@ -397,7 +421,11 @@ class VisitAgreement extends Command
                     $user->id = $r->cid;
                     $user->fname = $r->fname;
                     $user->lname = $r->lname;
-                    $user->email = $r->email;
+                    if($r->email != null) {
+                        $user->email = $r->email;
+                    } else {
+                        $user->email = 'No email';
+                    }
                     $user->rating_id = $r->rating;
                     if($r->rating == 2) {
                         $user->del = 1;
@@ -463,7 +491,7 @@ class VisitAgreement extends Command
                     //Assigns controller initials
                     $user = User::find($r->cid);
 
-                    $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                    $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
                     $fn_initial = strtoupper(substr($user->fname, 0, 1));
                     $ln_initial = strtoupper(substr($user->lname, 0, 1));
                     $f_initial = $fn_initial;
@@ -533,7 +561,8 @@ class VisitAgreement extends Command
                     $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                 }
 
-                $use->delete();
+                $use->status = 2;
+                $use->save();
             }
         }
 
@@ -557,7 +586,8 @@ class VisitAgreement extends Command
                     $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                 }
 
-                $use->delete();
+                $use->status = 2;
+                $use->save();
             }
         }
     }
