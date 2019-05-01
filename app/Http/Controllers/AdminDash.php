@@ -1123,11 +1123,13 @@ class AdminDash extends Controller
 
         //Sends to all recipients
         foreach($emails as $e){
-            Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
-                $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-                $m->subject('[vZTL ARTCC] '.$subject);
-                $m->to($e);
-            });
+            if($e != '[No email]') {
+                Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
+                    $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
+                    $m->subject('[vZTL ARTCC] '.$subject);
+                    $m->to($e);
+                });
+            }
         }
         //Copies to the sender
         Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $sender, $reply_to) {
