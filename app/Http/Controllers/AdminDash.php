@@ -1123,7 +1123,7 @@ class AdminDash extends Controller
 
         //Sends to all recipients
         foreach($emails as $e){
-            if($e != 'No email') {
+            if($e != 'No email' && $e != null) {
                 Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
                     $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
                     $m->subject('[vZTL ARTCC] '.$subject);
