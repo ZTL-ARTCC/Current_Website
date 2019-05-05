@@ -1124,11 +1124,18 @@ class AdminDash extends Controller
         //Sends to all recipients
         foreach($emails as $e){
             if($e != 'No email' && $e != null) {
-                Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
-                    $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-                    $m->subject('[vZTL ARTCC] '.$subject);
-                    $m->to($e);
-                });
+                try {
+                    Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
+                        $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
+                        $m->subject('[vZTL ARTCC] '.$subject);
+                        $m->to($e);
+                    });
+                } catch(\Exception $except) {
+                    // If they have a bad email, change it to no email
+                    $bad = User::where('email', $e)->first();
+                    $bad->email = 'No email';
+                    $bad->save();
+                }
             }
         }
         //Copies to the sender
