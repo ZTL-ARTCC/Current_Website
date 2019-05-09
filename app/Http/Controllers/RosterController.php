@@ -82,7 +82,7 @@ class RosterController extends Controller
 
             $userstatuscheck = User::find($res['cid']);
             if($userstatuscheck) {
-                if($userstatuscheck->status == 2) {
+                if($userstatuscheck->status != 2) {
                     $userstatuscheck->fname = $res['firstname'];
                     $userstatuscheck->lname = $res['lastname'];
                     $userstatuscheck->email = $res['email'];
