@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
+        '\App\Console\Commands\UpdateDiscordUsers',
     ];
 
     /**
@@ -32,6 +33,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('SoloCerts:UpdateSoloCerts')->daily();
         $schedule->command('RosterUpdate:UpdateRoster')->hourly();
+        $schedule->command('Update:DiscordUsers')->hourly();
         $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
         $schedule->command('OnlineControllers:GetControllers')->everyMinute();

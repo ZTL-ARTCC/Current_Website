@@ -233,6 +233,16 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
 */
 
 /*
+*   Discord API
+*/
+Route::get('/discord-api', 'DiscordController@returnDiscordInfo');
+Route::get('/discord/login', 'DiscordController@loginToDiscord');
+Route::get('/discord/login/verify', 'DiscordController@completeDiscordLogin');
+/*
+*   End Discord API
+*/
+
+/*
 *   Cron Jobs
 *   URL: https://ztlv2.team-stringer.com/cron-job/run?j=[Cron Job]&t=[Token]
 */
