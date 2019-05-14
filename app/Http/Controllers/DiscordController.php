@@ -43,7 +43,7 @@ class DiscordController extends Controller
                 'client_secret' => Config::get('discord.secret'),
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => 'http://localhost:8000/discord/login/verify',
+                'redirect_uri' => Config::get('app.url') . '/discord/login/verify',
                 'scope' => 'identify'
             ]
         ]);
