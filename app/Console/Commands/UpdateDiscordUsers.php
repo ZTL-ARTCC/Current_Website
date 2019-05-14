@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\ControllerLog;
 use App\DiscordUser;
 use App\User;
 use Illuminate\Console\Command;
@@ -41,12 +42,18 @@ class UpdateDiscordUsers extends Command
     {
         $all_users = DiscordUser::get();
 
+        // Get controller stats
+        $year = date('y');
+        $month = date('n');
+        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+
         foreach($all_users as $u) {
             $user = User::find($u->cid);
             if($user->status == 2) {
                 $u->delete();
             } else {
                 $u->rating_id = $user->rating_id;
+                $u->online_time_month = $stats[$user->id]->total_hrs;
                 $u->save();
             }
         }

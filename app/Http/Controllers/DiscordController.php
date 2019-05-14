@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DiscordUser;
+use App\ControllerLog;
 use App\User;
 use Auth;
 use Config;
@@ -22,9 +23,9 @@ class DiscordController extends Controller
     }
 
     public function loginToDiscord() {
-        $discordUser = DiscordUser::fine(Auth::id());
+        $discordUser = DiscordUser::where('cid', Auth::id())->first();
         if($discordUser)
-            return redirect()->back()->with('error', 'Your account is already linked.');
+            return redirect()->back()->with('error', 'Your discord account is already linked.');
 
         return redirect('https://discordapp.com/api/oauth2/authorize' . '?response_type=code&scope=identify&client_id=' . Config::get('discord.client_id'));
     }
@@ -57,6 +58,12 @@ class DiscordController extends Controller
 
         $res = json_decode($response->getBody());
 
+        // Get controller stats
+        $year = date('y');
+        $month = date('n');
+
+        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+
         // Add the user to the database
         $user = User::find(Auth::id());
         $discordUser = new DiscordUser();
@@ -65,8 +72,19 @@ class DiscordController extends Controller
         $discordUser->rating_id = $user->rating_id;
         $discordUser->discord_id = $res->id;
         $discordUser->discord_username = $res->username . "#" . $res->discriminator;
+        $discordUser->online_time_month = $stats[$user->id]->total_hrs;
         $discordUser->save();
 
         return redirect('/dashboard/controllers/profile')->with('success', 'Discord profile linked successfully.');
+    }
+
+    public function logoutOfDiscord() {
+        $discord = DiscordUser::where('cid', Auth::id())->first();
+        if(!$discord)
+            return redirect()->back()->with('error', 'You are not logged into discord');
+
+        $discord->delete();
+
+        return redirect('/dashboard/controllers/profile')->with('success', 'You have been logged out of Discord successfully.');
     }
 }

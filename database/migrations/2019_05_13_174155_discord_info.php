@@ -20,6 +20,7 @@ class DiscordInfo extends Migration
             $table->integer('rating_id');
             $table->bigInteger('discord_id');
             $table->string('discord_username');
+            $table->string('online_time_month');
             $table->timestamps();
         });
     }

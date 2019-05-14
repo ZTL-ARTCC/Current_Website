@@ -238,6 +238,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
 Route::get('/discord-api', 'DiscordController@returnDiscordInfo');
 Route::get('/discord/login', 'DiscordController@loginToDiscord');
 Route::get('/discord/login/verify', 'DiscordController@completeDiscordLogin');
+Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 /*
 *   End Discord API
 */

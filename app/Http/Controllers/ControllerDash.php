@@ -8,6 +8,7 @@ use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
 use App\ControllerLogUpdate;
+use App\DiscordUser;
 use App\Event;
 use App\EventPosition;
 use App\EventRegistration;
@@ -191,7 +192,9 @@ class ControllerDash extends Controller
             $last_training_given = null;
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given);
+        $discord = DiscordUser::where('cid', Auth::id())->first();
+
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('discord', $discord);
     }
 
     public function showTicket($id) {

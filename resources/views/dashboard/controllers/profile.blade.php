@@ -84,6 +84,12 @@ Profile
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
             <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            @if(!$discord)
+                <a href="/discord/login" class="btn btn-success"><i class="fab fa-discord"></i>&nbsp;Login To Discord</a>
+            @else
+                <p><b>Discord Username:</b> {{ $discord->discord_username  }} <a style="color:inherit" href="/discord/logout" data-toggle="tooltip" title="Click Here to Logout of Discord"><i class="fas fa-info-circle"></i></a></p>
+                <a class="btn btn-danger disabled"><i class="fab fa-discord"></i>&nbsp;Already Logged Into Discord</a>
+            @endif
         </div>
         <div class="col-sm-2">
         </div>
