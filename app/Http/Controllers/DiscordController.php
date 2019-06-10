@@ -15,6 +15,11 @@ class DiscordController extends Controller
     public function returnDiscordInfo(Request $request) {
         if($request->key == Config::get('discord.bot_api_key')) {
             $data = DiscordUser::get();
+
+            foreach($data as $d) {
+                $d->discord_id = sprintf('%.0f', $d->discord_id);
+            }
+
             return json_encode($data);
         } else {
             $data = ['error' => 'Wrong API Key'];
