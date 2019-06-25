@@ -37,7 +37,7 @@ Dashboard
         <div class="col-sm-3">
             <div class="card card-body" style="background-color:lightgrey">
                 <center><h5>Eastern Time Now:</h5></center>
-                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=EST&color=black&size=120&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=EST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
             </div>
         </div>
         <div class="col-sm-3">
