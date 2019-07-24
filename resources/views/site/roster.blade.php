@@ -80,8 +80,6 @@ Roster
                                     <span class="badge badge-danger">TA</span> {{ $c->backwards_name }}
                                 @elseif($c->hasRole('wm'))
                                     <span class="badge badge-primary">WM</span> {{ $c->backwards_name }}
-                                @elseif($c->hasRole('awm'))
-                                    <span class="badge badge-primary">AWM</span> {{ $c->backwards_name }}
                                 @elseif($c->hasRole('ec'))
                                     <span class="badge badge-primary">EC</span> {{ $c->backwards_name }}
                                 @elseif($c->hasRole('aec'))
