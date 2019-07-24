@@ -90,6 +90,7 @@ Staff
         <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, Teamspeak and Email services and any other tasking as directed.</p>
     </div>
     <hr>
+<<<<<<< HEAD
     @if($awm != '[]')
         <div class="block-heading-two">
             <h4>
@@ -105,6 +106,8 @@ Staff
         </div>
         <hr>
     @endif
+=======
+>>>>>>> 636d5769a108258b191374d82fef052cbc3e2f3c
     <div class="block-heading-two">
         <h4>
             Events Coordinator -
