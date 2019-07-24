@@ -97,6 +97,7 @@ class UpdateSoloCerts extends Command
                 $c->save();
 
                 $user = User::find($c->cid);
+
                 if($c->pos == 0) {
                     $user->twr = 0;
                 } elseif($c->pos == 1) {

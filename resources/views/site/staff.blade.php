@@ -17,7 +17,7 @@ Staff
 <div class="container">
     <div class="block-heading-two">
         <h4>
-            Air Traffic Manager - 
+            Air Traffic Manager -
             @if($atm == '[]')
                 <i>Vacant</i>
             @else
@@ -32,7 +32,7 @@ Staff
     <hr>
     <div class="block-heading-two">
         <h4>
-            Deputy Air Traffic Manager - 
+            Deputy Air Traffic Manager -
             @if($datm == '[]')
                 <i>Vacant</i>
             @else
@@ -47,7 +47,7 @@ Staff
     <hr>
     <div class="block-heading-two">
         <h4>
-            Training Administrator - 
+            Training Administrator -
             @if($ta == '[]')
                 <i>Vacant</i>
             @else
@@ -63,7 +63,7 @@ Staff
     @if($ata != '[]')
         <div class="block-heading-two">
             <h4>
-                Assistant Training Administrator - 
+                Assistant Training Administrator -
                 @if($ata == '[]')
                     <i>Vacant</i>
                 @else
@@ -77,7 +77,7 @@ Staff
     @endif
     <div class="block-heading-two">
         <h4>
-            Webmaster - 
+            Webmaster -
             @if($wm == '[]')
                 <i>Vacant</i>
             @else
@@ -93,7 +93,7 @@ Staff
     @if($awm != '[]')
         <div class="block-heading-two">
             <h4>
-                Assistant Webmaster - 
+                Assistant Webmaster -
                 @if($awm == '[]')
                     <i>Vacant</i>
                 @else
@@ -107,7 +107,7 @@ Staff
     @endif
     <div class="block-heading-two">
         <h4>
-            Events Coordinator - 
+            Events Coordinator -
             @if($ec == '[]')
                 <i>Vacant</i>
             @else
@@ -123,7 +123,7 @@ Staff
     @if($aec != '[]')
         <div class="block-heading-two">
             <h4>
-                Assistant Events Coordinator - 
+                Assistant Events Coordinator -
                 @if($aec == '[]')
                     <i>Vacant</i>
                 @else
@@ -137,7 +137,7 @@ Staff
     @endif
     <div class="block-heading-two">
         <h4>
-            Facility Engineer - 
+            Facility Engineer -
             @if($fe == '[]')
                 <i>Vacant</i>
             @else
@@ -153,7 +153,7 @@ Staff
     @if($afe != '[]')
         <div class="block-heading-two">
             <h4>
-                Assistant Facility Engineer - 
+                Assistant Facility Engineer -
                 @if($afe == '[]')
                     <i>Vacant</i>
                 @else
