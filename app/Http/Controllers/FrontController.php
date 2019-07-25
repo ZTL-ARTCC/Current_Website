@@ -248,8 +248,9 @@ class FrontController extends Controller
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
-
+        $visitc = User::where('visitor', 1)->where('status', 1)->get();
+        $agreevisitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
+       
         $home = $homec->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->total_hrs;
         });
@@ -258,9 +259,13 @@ class FrontController extends Controller
             return $stats[$user->id]->total_hrs;
         });
 
+        $agreevisitc = $agreevisitc->sortByDesc(function($user) use($stats) {
+            return $stats[$user->id]->total_hrs;
+        });
+
         return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
                                  ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit);
+                                 ->with('home', $home)->with('visit', $visit)->with('agreevisitc', $agreevisitc);
     }
 
     public function visit() {
