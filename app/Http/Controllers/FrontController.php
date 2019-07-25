@@ -259,13 +259,13 @@ class FrontController extends Controller
             return $stats[$user->id]->total_hrs;
         });
 
-        $agreevisitc = $agreevisitc->sortByDesc(function($user) use($stats) {
+        $agreevisit = $agreevisitc->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->total_hrs;
         });
 
         return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
                                  ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisitc', $agreevisitc);
+                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
     }
 
     public function visit() {
