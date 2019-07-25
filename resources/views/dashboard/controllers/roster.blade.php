@@ -258,7 +258,7 @@ Roster
                 </thead>
                 <tbody>
                     @foreach($visagreecontrollers as $c)
-                        @if($h->rating_short != "OBS")
+                        @if($c->rating_short != "OBS")
                         <tr>
                             @if(Auth::user()->can('roster') || Auth::user()->can('train'))
                                 <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} - {{ $c->visitor_from }}</a></td>
