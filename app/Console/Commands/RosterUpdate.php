@@ -179,9 +179,6 @@ class RosterUpdate extends Command
         $users = User::where('visitor', '0')->where('status', '1')->get()->pluck('id');
 
         foreach($roster as $r) {
-            // Last result will be false
-            if($r == true || $r == false)
-                break;
 
             if(User::find($r->cid) !== null) {
                 $user = User::find($r->cid);
@@ -302,6 +299,7 @@ class RosterUpdate extends Command
                 $l_initial = $ln_initial;
 
                 $trys = 0;
+
                 a:
                 $trys++;
                 $initials = $fn_initial.$ln_initial;
@@ -344,19 +342,17 @@ class RosterUpdate extends Command
         foreach($users as $u) {
             $delete = 0;
             foreach($roster as $r) {
-                // Last result will be false
-                if($r == true || $r == false)
-                    break;
-
                 $id = $r->cid;
                 if($u == $id) {
                     $delete = 1;
                 }
             }
+
             if($delete == '0') {
                 $use = User::find($u);
                 if($use->visitor == 0 && $use->api_exempt == 0) {
                     $event_requests = EventRegistration::where('controller_id', $use->id)->get();
+
                     foreach($event_requests as $e) {
                         $e->delete();
                     }
