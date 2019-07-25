@@ -13,7 +13,6 @@ class Announcement extends Model
 
     public function getStaffNameAttribute() {
         $name = User::find($this->staff_member)->full_name;
-
         return $name;
     }
 

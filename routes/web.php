@@ -251,7 +251,7 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 
 /*
 *	Webmaster Permission Grant
-*	Use this to grant yourself webmaster privelages. Should be disabled for security reasons.
+*	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
 */
 
 //Route::get('/laratrust', function() {
