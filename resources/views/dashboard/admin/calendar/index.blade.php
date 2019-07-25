@@ -111,9 +111,9 @@ Calendar/News
                                     {!! Form::open(['action' => ['AdminDash@toggleCalenderEventVisibilty', $c->id]]) !!}
                                     @csrf
                                     @if($c->visible == 1)
-                                        <button class="btn btn-warning" data-toggle="tooltip" title="Show News"><i class="fas fa-ban"></i></button>
+                                        <button class="btn btn-warning" data-toggle="tooltip" title="Show News"><i class="fas fa-check"></i></button>
                                     @elseif($c->visible == 0)
-                                        <button class="btn btn-success" data-toggle="tooltip" title="Hide News"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-success" data-toggle="tooltip" title="Hide News"><i class="fas fa-ban"></i></button>
                                     @endif
                                     {!! Form::close() !!}
                                 </td>
