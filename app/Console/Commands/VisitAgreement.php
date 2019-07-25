@@ -185,7 +185,7 @@ class VisitAgreement extends Command
         //Runs for ZHU
         foreach($roster_zhu as $r) {
             // Last result will be false
-            if($r == false)
+            if($r == true || $r == false)
                 break;
 
             $user = User::find($r->cid);
@@ -364,7 +364,7 @@ class VisitAgreement extends Command
         //Runs for ZJX
         foreach($roster_zjx as $r) {
             // Last result will be false
-            if($r == false)
+            if($r == true || $r == false)
                 break;
 
             if(User::find($r->cid) !== null) {
@@ -553,7 +553,7 @@ class VisitAgreement extends Command
             $delete = 0;
             foreach($roster_zjx as $r) {
                 // Last result will be false
-                if($r == false)
+                if($r == true || $r == false)
                     break;
 
                 $id = $r->cid;
@@ -582,7 +582,7 @@ class VisitAgreement extends Command
             $delete = 0;
             foreach($roster_zhu as $r) {
                 // Last result will be false
-                if($r == false)
+                if($r == true || $r == false)
                     break;
 
                 $id = $r->cid;

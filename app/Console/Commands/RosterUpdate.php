@@ -180,7 +180,7 @@ class RosterUpdate extends Command
 
         foreach($roster as $r) {
             // Last result will be false
-            if($r == false)
+            if($r == true || $r == false)
                 break;
 
             if(User::find($r->cid) !== null) {
@@ -345,7 +345,7 @@ class RosterUpdate extends Command
             $delete = 0;
             foreach($roster as $r) {
                 // Last result will be false
-                if($r == false)
+                if($r == true || $r == false)
                     break;
 
                 $id = $r->cid;
