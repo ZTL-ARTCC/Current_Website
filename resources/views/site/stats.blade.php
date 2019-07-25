@@ -122,8 +122,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 </thead>
                 <tbody>
                     @foreach($visit as $h)
-                        @if($h->zhu != 1)
-                        @if($h->zjx != 2)
+                        @if($h->visitor_from != "ZHU" || $h->visitor_from != "ZJX")
                             <tr>
                                 <td>{{ $h->full_name }}</td>
                                 <td>{{ $h->rating_short }}</td>
@@ -157,7 +156,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 </thead>
                 <tbody>
                     @foreach($agreevisit as $h)
-                        @if($h->zhu == 1)
+                        @if($h->visitor_from == "ZHU" || $h->visitor_from == "ZHU")
                             <tr>
                                 <td>{{ $h->full_name }}</td>
                                 <td>{{ $h->rating_short }}</td>
@@ -170,22 +169,6 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                     <td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                                 @endif
                             </tr>
-                        @endif
-                    @endforeach
-                    @foreach($agreevisit as $h)
-                       @if($h->zjx == 1)
-                           <tr>
-                               <td>{{ $h->full_name }}</td>
-                               <td>{{ $h->rating_short }}</td>
-                               <td>{{ $stats[$h->id]->local_hrs }}</td>
-                               <td>{{ $stats[$h->id]->approach_hrs }}</td>
-                               <td>{{ $stats[$h->id]->enroute_hrs }}</td>
-                               @if($stats[$h->id]->total_hrs >= 1)
-                                   <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                               @else
-                                    td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                               @endif
-                           </tr>
                         @endif
                     @endforeach
                 </tbody>
