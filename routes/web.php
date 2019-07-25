@@ -136,6 +136,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'AdminDash@editCalendarEvent');
             Route::post('/edit/{id}/save', 'AdminDash@saveCalendarEvent');
             Route::delete('/delete/{id}', 'AdminDash@deleteCalendarEvent');
+            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalenderEventVisibilty');
         });
         Route::prefix('scenery')->middleware('permission:scenery')->group(function() {
             Route::get('/', 'AdminDash@showScenery');
