@@ -885,12 +885,12 @@ class AdminDash extends Controller
           $calendar = Calendar::find($id);
           $type = '';
 
-          if($calendar->visible == 0){
-              $calendar->visible = 1;
-              $type = 'visible';
-          }else {
+          if($calendar->visible == 1){
               $calendar->visible = 0;
               $type = 'invisible';
+          }else {
+              $calendar->visible = 1;
+              $type = 'visible';
           }
 
           $calendar->save();
