@@ -179,13 +179,10 @@ class RosterUpdate extends Command
         $users = User::where('visitor', '0')->where('status', '1')->get()->pluck('id');
 
         foreach($roster as $r) {
-<<<<<<< HEAD
-=======
             // Last result will be false
             if($r == true || $r == false)
                 break;
 
->>>>>>> 4b313bd... Fix roster update again
             if(User::find($r->cid) !== null) {
                 $user = User::find($r->cid);
                 $rating_old = $user->rating_id;
@@ -347,13 +344,10 @@ class RosterUpdate extends Command
         foreach($users as $u) {
             $delete = 0;
             foreach($roster as $r) {
-<<<<<<< HEAD
-=======
                 // Last result will be false
                 if($r == true || $r == false)
                     break;
 
->>>>>>> 4b313bd... Fix roster update again
                 $id = $r->cid;
                 if($u == $id) {
                     $delete = 1;
