@@ -78,6 +78,7 @@ class FrontController extends Controller
         })->sortBy(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
+
         $news = Calendar::where('type', '2')->where('visible', '0')->get()->filter(function($news) use ($now) {
             return strtotime($news->date.' '.$news->time) < strtotime($now);
         })->sortByDesc(function($news) {

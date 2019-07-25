@@ -14,6 +14,7 @@ class CalendarUpdate extends Migration
     public function up()
     {
         Schema::table('calendar', function ($table) {
+            // Set to 1 for not visible, set to 0 for visible.
             $table->integer('visible')->default(0);
         });
     }
