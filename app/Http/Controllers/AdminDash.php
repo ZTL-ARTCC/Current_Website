@@ -897,7 +897,7 @@ class AdminDash extends Controller
 
           $audit = new Audit;
           $audit->cid = Auth::id();
-          $audit->ip = $_SERVER['RMOTE_ADDR'];
+          $audit->ip = $_SERVER['REMOTE_ADDR'];
           $audit->what = Auth::user()->full_name . ' made \"' . $calendar->title . '\" ' . $type . '.';
           $audit->save();
 
