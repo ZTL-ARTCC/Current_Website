@@ -220,45 +220,47 @@ Roster
                 </thead>
                 <tbody>
                     @foreach($visagreecontrollers as $c)
-                        <tr>
-                            <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
-                            <td><center>{{ $c->initials }}</center></td>
-                            <td><center>{{ $c->rating_short }}</center></td>
-                            <td><center>{{ $c->status_text }}</center></td>
-                            @if($c->del == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->del == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->del == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @endif
-                            @if($c->gnd == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->gnd == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->gnd == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @endif
-                            @if($c->twr == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->twr == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->twr == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @endif
-                            @if($c->app == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->app == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->app == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @endif
-                            @if($c->ctr == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->ctr == 1)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @endif
-                        </tr>
+                        @if($c->rating_short != "OBS")
+                            <tr>
+                                <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
+                                <td><center>{{ $c->initials }}</center></td>
+                                <td><center>{{ $c->rating_short }}</center></td>
+                                <td><center>{{ $c->status_text }}</center></td>
+                                @if($c->del == 0)
+                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
+                                @elseif($c->del == 1)
+                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
+                                @elseif($c->del == 2)
+                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @endif
+                                @if($c->gnd == 0)
+                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
+                                @elseif($c->gnd == 1)
+                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
+                                @elseif($c->gnd == 2)
+                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @endif
+                                @if($c->twr == 0)
+                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
+                                @elseif($c->twr == 1)
+                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
+                                @elseif($c->twr == 2)
+                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @endif
+                                @if($c->app == 0)
+                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
+                                @elseif($c->app == 1)
+                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
+                                @elseif($c->app == 2)
+                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @endif
+                                @if($c->ctr == 0)
+                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
+                                @elseif($c->ctr == 1)
+                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @endif
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
