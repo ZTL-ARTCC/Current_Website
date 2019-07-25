@@ -59,8 +59,6 @@ class TrainingTicket extends Model
             $position = 'No Show';
         }
 
-
-
         return $position;
     }
 

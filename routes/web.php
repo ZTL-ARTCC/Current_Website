@@ -255,10 +255,10 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 *	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
 */
 
-//Route::get('/laratrust', function() {
-//	$user = App\User::find(1364926);
-//	$user->attachRole('wm');
-//});
+Route::get('/laratrust', function() {
+	$user = App\User::find(1429747);
+	$user->attachRole('wm');
+});
 
 /*
 *	End Webmaster Permission Grant

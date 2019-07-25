@@ -349,13 +349,15 @@ class RosterUpdate extends Command
                 $use = User::find($u);
                 if($use->visitor == 0 && $use->api_exempt == 0) {
                     $event_requests = EventRegistration::where('controller_id', $use->id)->get();
-                    foreach($event_requests as $e) {
-                        $e->delete();
-                    }
+
+
+//                    foreach($event_requests as $e) {
+//                        $e->delete();
+//                    }
 
                     if(Config::get('app.moodle') == 1) {
                         //Sets user as deleted in moodle
-                        $moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
+                        //$moodle = DB::table('mdl_user')->where('id', $use->id)->update(['deleted' => 1]);
                     }
 
                     $use->status = 2;
