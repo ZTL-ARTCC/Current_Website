@@ -375,7 +375,7 @@ class TrainingDash extends Controller
             $audit = new Audit;
             $audit->cid = Auth::id();
             $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name.' assigned an OTS for '.User::find($ots->controller_id)->full_name.' to '.User::find($ots->ins_id).'.';
+            $audit->what = Auth::user()->full_name.' assigned an OTS for '.User::find($ots->controller_id)->full_name.' to '.User::find($ots->ins_id)->full_name .'.';
             $audit->save();
 
             return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');

@@ -357,6 +357,7 @@ class RosterUpdate extends Command
                 $use = User::find($u);
                 if($use->visitor == 0 && $use->api_exempt == 0) {
                     $event_requests = EventRegistration::where('controller_id', $use->id)->get();
+
                     foreach($event_requests as $e) {
                         $e->delete();
                     }

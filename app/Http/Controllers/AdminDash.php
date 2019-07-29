@@ -888,7 +888,7 @@ class AdminDash extends Controller
           if($calendar->visible == 1){
               $calendar->visible = 0;
               $type = 'invisible';
-          }else {
+          }elseif($calendar->visible == 0) {
               $calendar->visible = 1;
               $type = 'visible';
           }
