@@ -898,7 +898,7 @@ class AdminDash extends Controller
           $audit = new Audit;
           $audit->cid = Auth::id();
           $audit->ip = $_SERVER['REMOTE_ADDR'];
-          $audit->what = Auth::user()->full_name . ' made \"' . $calendar->title . '\" ' . $type . '.';
+          $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
           $audit->save();
 
             return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
