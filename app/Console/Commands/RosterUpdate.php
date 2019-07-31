@@ -175,10 +175,21 @@ class RosterUpdate extends Command
     {
         $client = new Client();
         $res = $client->get('https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster?apikey='.Config::get('vatusa.api_key'));
-        $roster = json_decode($res->getBody());
         $users = User::where('visitor', '0')->where('status', '1')->get()->pluck('id');
+        if ($res->getStatusCode() == "200") {
+            $roster = json_decode($res->getBody());
+        } else {
+            exit(1);
+        }
+        $i = 0
+        foreach($rosrer as $sett) {
+            $i++
+        }
+        $j = 0;
 
         foreach($roster as $r) {
+            $j++;
+            if($j != $i) {
             // Last result will be false
             if($r == true || $r == false)
                 break;
@@ -337,9 +348,11 @@ class RosterUpdate extends Command
                     }
 
                     goto a;
+                    }
                 }
             }
         }
+    
 
         foreach($users as $u) {
             $delete = 0;
