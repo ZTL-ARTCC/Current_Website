@@ -179,11 +179,12 @@ class RosterUpdate extends Command
         if ($res->getStatusCode() == "200") {
             $roster = json_decode($res->getBody());
         } else {
+
             exit(1);
         }
-        $i = 0
-        foreach($rosrer as $sett) {
-            $i++
+        $i = 0;
+        foreach($roster as $sett) {
+            $i++;
         }
         $j = 0;
 
