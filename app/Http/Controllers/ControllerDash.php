@@ -268,7 +268,7 @@ class ControllerDash extends Controller
             return $stats[$user->id]->total_hrs;
         });
 
-        return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
+        return view('dashboard.controllers.stats')->with('all_stats', $all_stats)->with('year', $year)
                                  ->with('month', $month)->with('stats', $stats)
                                  ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
     
