@@ -185,177 +185,179 @@ class VisitAgreement extends Command
         //Runs for ZHU
         foreach($roster_zhu as $r) {
             // Last result will be false
-            if($r == true || $r == false)
-                break;
-
-            $user = User::find($r->cid);
-            if($user !== null) {
+            if(! ($r === true || $r === false)) {
                 $user = User::find($r->cid);
-                $rating_old = $user->rating_id;
-                $user->fname = $r->fname;
-                $user->lname = $r->lname;
-                if($r->email != null) {
-                    $user->email = $r->email;
-                } else {
-                    $user->email = 'No email';
-                }
-                $user->rating_id = $r->rating;
-                $user->visitor = '1';
-                $visitrej = VisitRej::where('cid', $r->cid)->first();
-                if($visitrej == null) {
-                    if($user->status == 2) {
-                        $user->status = 1;
-                    }
-                }
-                $user->visitor_from = 'ZHU';
-                $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
-                $user->save();
-
-                if(Config::get('app.moodle') == 1) {
-                    //Assigns role in moodle database
-                    if($rating_old != $r->rating) {
-                        DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->delete();
-
-                        if($user->rating_id == 1) {
-                            $mdl_rating = 18;
-                        } elseif($user->rating_id == 2) {
-                            $mdl_rating = 9;
-                        } elseif($user->rating_id == 3) {
-                            $mdl_rating = 10;
-                        } elseif($user->rating_id == 4) {
-                            $mdl_rating = 11;
-                        } elseif($user->rating_id == 5) {
-                            $mdl_rating = 12;
-                        } elseif($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
-                            $mdl_rating = 13;
-                        } elseif($user->rating_id == 8 || $user->rating_id == 10) {
-                            $mdl_rating = 14;
-                        } else {
-                            $mdl_rating = 0;
-                        }
-
-                        DB::table('mdl_role_assignments')->insert([
-                            'roleid' => $mdl_rating,
-                            'contextid' => 26,
-                            'userid' => $user->id
-                        ]);
-                    }
-                }
-            } else {
-                $visitrej = VisitRej::where('cid', $r->cid)->first();
-                if($visitrej == null) {
-                    $user = new User;
-                    $user->id = $r->cid;
+                if ($user !== null) {
+                    $user = User::find($r->cid);
+                    $rating_old = $user->rating_id;
                     $user->fname = $r->fname;
                     $user->lname = $r->lname;
-                    if($r->email != null) {
+                    if ($r->email != null) {
                         $user->email = $r->email;
                     } else {
                         $user->email = 'No email';
                     }
                     $user->rating_id = $r->rating;
-                    if($r->rating == 2) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                    } elseif($r->rating == 3) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                        $user->twr = 1;
-                    } elseif($r->rating == 4 || $r->rating == 5 || $r->rating == 7 || $r->rating == 8 || $r->rating == 10) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                        $user->twr = 1;
-                        $user->app = 1;
-                    }
                     $user->visitor = '1';
+                    $visitrej = VisitRej::where('cid', $r->cid)->first();
+                    if ($visitrej == null) {
+                        if ($user->status == 2) {
+                            $user->status = 1;
+                        }
+                    }
                     $user->visitor_from = 'ZHU';
-                    $user->status = '1';
-                    $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
+                    $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
                     $user->save();
 
-                    if(Config::get('app.moodle') == 1) {
-                        //Adds user to moodle database
-                        DB::table('mdl_user')->insert([
-                             'id' => $r->cid,
-                             'confirmed' => 1,
-                             'mnethostid' => 1,
-                             'username' => $r->cid,
-                             'firstname' => $user->fname,
-                             'lastname' => $user->lname,
-                             'email' => 'null@null.com'
-                         ]);
+                    if (Config::get('app.moodle') == 1) {
+                        // Makes sure the user isn't deleted in moodle
+                        DB::table('mdl_user')->where('id', $user->id)->update(['deleted' => 0]);
 
                         //Assigns role in moodle database
-                        if($user->rating_id == 1) {
-                            $mdl_rating = 18;
-                        } elseif($user->rating_id == 2) {
-                            $mdl_rating = 9;
-                        } elseif($user->rating_id == 3) {
-                            $mdl_rating = 10;
-                        } elseif($user->rating_id == 4) {
-                            $mdl_rating = 11;
-                        } elseif($user->rating_id == 5) {
-                            $mdl_rating = 12;
-                        } elseif($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
-                            $mdl_rating = 13;
-                        } elseif($user->rating_id == 8 || $user->rating_id == 10) {
-                            $mdl_rating = 14;
+                        if ($rating_old != $r->rating) {
+                            DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->delete();
+
+                            if ($user->rating_id == 1) {
+                                $mdl_rating = 18;
+                            } elseif ($user->rating_id == 2) {
+                                $mdl_rating = 9;
+                            } elseif ($user->rating_id == 3) {
+                                $mdl_rating = 10;
+                            } elseif ($user->rating_id == 4) {
+                                $mdl_rating = 11;
+                            } elseif ($user->rating_id == 5) {
+                                $mdl_rating = 12;
+                            } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
+                                $mdl_rating = 13;
+                            } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
+                                $mdl_rating = 14;
+                            } else {
+                                $mdl_rating = 0;
+                            }
+
+                            DB::table('mdl_role_assignments')->insert([
+                                'roleid' => $mdl_rating,
+                                'contextid' => 26,
+                                'userid' => $user->id
+                            ]);
+                        }
+                    }
+                } else {
+                    $visitrej = VisitRej::where('cid', $r->cid)->first();
+                    if ($visitrej == null) {
+                        $user = new User;
+                        $user->id = $r->cid;
+                        $user->fname = $r->fname;
+                        $user->lname = $r->lname;
+                        if ($r->email != null) {
+                            $user->email = $r->email;
                         } else {
-                            $mdl_rating = 0;
+                            $user->email = 'No email';
                         }
-
-                        DB::table('mdl_role_assignments')->insert([
-                            'roleid' => $mdl_rating,
-                            'contextid' => 26,
-                            'userid' => $user->id
-                        ]);
-                    }
-
-                    //Assigns controller initials
-                    $user = User::find($r->cid);
-
-                    $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
-                    $fn_initial = strtoupper(substr($user->fname, 0, 1));
-                    $ln_initial = strtoupper(substr($user->lname, 0, 1));
-                    $f_initial = $fn_initial;
-                    $l_initial = $ln_initial;
-
-                    $trys = 0;
-                    a:
-                    $trys++;
-                    $initials = $fn_initial.$ln_initial;
-
-                    $yes = 1;
-                    foreach($users_inc_v as $u) {
-                        if($u->initials == $initials) {
-                            $yes = 0;
+                        $user->rating_id = $r->rating;
+                        if ($r->rating == 2) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                        } elseif ($r->rating == 3) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                            $user->twr = 1;
+                        } elseif ($r->rating == 4 || $r->rating == 5 || $r->rating == 7 || $r->rating == 8 || $r->rating == 10) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                            $user->twr = 1;
+                            $user->app = 1;
                         }
-                    }
-
-                    if($yes == 1) {
-                        $user->initials = $initials;
+                        $user->visitor = '1';
+                        $user->visitor_from = 'ZHU';
+                        $user->status = '1';
+                        $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
                         $user->save();
-                    } else {
-                        // Check first initial with all letters
-                        if($trys <= 26) {
-                            $fn_initial = $f_initial;
-                            $ln_initial = $this->letterFromNum($trys);
 
-                            goto a;
-                        } else {
-                            $ln_initial = $this->genRandLetter();
+                        if (Config::get('app.moodle') == 1) {
+                            //Adds user to moodle database
+                            DB::table('mdl_user')->insert([
+                                'id' => $r->cid,
+                                'confirmed' => 1,
+                                'mnethostid' => 1,
+                                'username' => $r->cid,
+                                'firstname' => $user->fname,
+                                'lastname' => $user->lname,
+                                'email' => 'null@null.com'
+                            ]);
+
+                            //Assigns role in moodle database
+                            if ($user->rating_id == 1) {
+                                $mdl_rating = 18;
+                            } elseif ($user->rating_id == 2) {
+                                $mdl_rating = 9;
+                            } elseif ($user->rating_id == 3) {
+                                $mdl_rating = 10;
+                            } elseif ($user->rating_id == 4) {
+                                $mdl_rating = 11;
+                            } elseif ($user->rating_id == 5) {
+                                $mdl_rating = 12;
+                            } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
+                                $mdl_rating = 13;
+                            } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
+                                $mdl_rating = 14;
+                            } else {
+                                $mdl_rating = 0;
+                            }
+
+                            DB::table('mdl_role_assignments')->insert([
+                                'roleid' => $mdl_rating,
+                                'contextid' => 26,
+                                'userid' => $user->id
+                            ]);
                         }
 
-                        if($trys >= 27 && $trys <= 52) {
-                            $ln_initial = $l_initial;
-                            $fn_initial = $this->letterFromNum($trys - 26);
+                        //Assigns controller initials
+                        $user = User::find($r->cid);
 
-                            goto a;
-                        } else {
-                            $fn_initial = $this->genRandLetter();
+                        $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                        $fn_initial = strtoupper(substr($user->fname, 0, 1));
+                        $ln_initial = strtoupper(substr($user->lname, 0, 1));
+                        $f_initial = $fn_initial;
+                        $l_initial = $ln_initial;
+
+                        $trys = 0;
+                        a:
+                        $trys++;
+                        $initials = $fn_initial . $ln_initial;
+
+                        $yes = 1;
+                        foreach ($users_inc_v as $u) {
+                            if ($u->initials == $initials) {
+                                $yes = 0;
+                            }
                         }
 
-                        goto a;
+                        if ($yes == 1) {
+                            $user->initials = $initials;
+                            $user->save();
+                        } else {
+                            // Check first initial with all letters
+                            if ($trys <= 26) {
+                                $fn_initial = $f_initial;
+                                $ln_initial = $this->letterFromNum($trys);
+
+                                goto a;
+                            } else {
+                                $ln_initial = $this->genRandLetter();
+                            }
+
+                            if ($trys >= 27 && $trys <= 52) {
+                                $ln_initial = $l_initial;
+                                $fn_initial = $this->letterFromNum($trys - 26);
+
+                                goto a;
+                            } else {
+                                $fn_initial = $this->genRandLetter();
+                            }
+
+                            goto a;
+                        }
                     }
                 }
             }
@@ -364,183 +366,185 @@ class VisitAgreement extends Command
         //Runs for ZJX
         foreach($roster_zjx as $r) {
             // Last result will be false
-            if($r == true || $r == false)
-                break;
-
-            if(User::find($r->cid) !== null) {
-                $user = User::find($r->cid);
-                $user->fname = $r->fname;
-                $user->lname = $r->lname;
-                if($r->email != null) {
-                    $user->email = $r->email;
-                } else {
-                    $user->email = 'No email';
-                }
-                $user->rating_id = $r->rating;
-                $user->visitor = '1';
-                $visitrej = VisitRej::where('cid', $r->cid)->first();
-                if($visitrej == null) {
-                    if($user->status == 2) {
-                        $user->status = 1;
-                    }
-                }
-                $user->visitor_from = 'ZJX';
-                if($r->facility_join == '1900-01-01T00:00:01+00:00'){
-                    $user->added_to_facility = substr($r->created_at, 0, 10).' '.substr($r->created_at, 11, 8);
-                } else{
-                    $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
-                }
-                $user->save();
-
-                if(Config::get('app.moodle') == 1) {
-                    //Assigns role in moodle database
-                    if($rating_old != $r->rating) {
-                        DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->delete();
-
-                        if($user->rating_id == 1) {
-                            $mdl_rating = 18;
-                        } elseif($user->rating_id == 2) {
-                            $mdl_rating = 9;
-                        } elseif($user->rating_id == 3) {
-                            $mdl_rating = 10;
-                        } elseif($user->rating_id == 4) {
-                            $mdl_rating = 11;
-                        } elseif($user->rating_id == 5) {
-                            $mdl_rating = 12;
-                        } elseif($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
-                            $mdl_rating = 13;
-                        } elseif($user->rating_id == 8 || $user->rating_id == 10) {
-                            $mdl_rating = 14;
-                        } else {
-                            $mdl_rating = 0;
-                        }
-
-                        DB::table('mdl_role_assignments')->insert([
-                            'roleid' => $mdl_rating,
-                            'contextid' => 26,
-                            'userid' => $user->id
-                        ]);
-                    }
-                }
-            } else {
-                $visitrej = VisitRej::where('cid', $r->cid)->first();
-                if($visitrej == null) {
-                    $user = new User;
-                    $user->id = $r->cid;
+            if(! ($r === true || $r === false)) {
+                if (User::find($r->cid) !== null) {
+                    $user = User::find($r->cid);
                     $user->fname = $r->fname;
                     $user->lname = $r->lname;
-                    if($r->email != null) {
+                    if ($r->email != null) {
                         $user->email = $r->email;
                     } else {
                         $user->email = 'No email';
                     }
                     $user->rating_id = $r->rating;
-                    if($r->rating == 2) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                    } elseif($r->rating == 3) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                        $user->twr = 1;
-                    } elseif($r->rating == 4 || $r->rating == 5 || $r->rating == 7 || $r->rating == 8 || $r->rating == 10) {
-                        $user->del = 1;
-                        $user->gnd = 1;
-                        $user->twr = 1;
-                        $user->app = 1;
-                    }
                     $user->visitor = '1';
+                    $visitrej = VisitRej::where('cid', $r->cid)->first();
+                    if ($visitrej == null) {
+                        if ($user->status == 2) {
+                            $user->status = 1;
+                        }
+                    }
                     $user->visitor_from = 'ZJX';
-                    $user->status = '1';
-                    if($r->facility_join == '1900-01-01T00:00:01+00:00'){
-                        $user->added_to_facility = substr($r->created_at, 0, 10).' '.substr($r->created_at, 11, 8);
-                    } else{
-                        $user->added_to_facility = substr($r->facility_join, 0, 10).' '.substr($r->facility_join, 11, 8);
+                    if ($r->facility_join == '1900-01-01T00:00:01+00:00') {
+                        $user->added_to_facility = substr($r->created_at, 0, 10) . ' ' . substr($r->created_at, 11, 8);
+                    } else {
+                        $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
                     }
                     $user->save();
 
-                    if(Config::get('app.moodle') == 1) {
-                        //Adds user to moodle database
-                        DB::table('mdl_user')->insert([
-                             'id' => $r->cid,
-                             'confirmed' => 1,
-                             'mnethostid' => 1,
-                             'username' => $r->cid,
-                             'firstname' => $user->fname,
-                             'lastname' => $user->lname,
-                             'email' => 'null@null.com'
-                         ]);
+                    if (Config::get('app.moodle') == 1) {
+                        // Makes sure the user isn't deleted in moodle
+                        DB::table('mdl_user')->where('id', $user->id)->update(['deleted' => 0]);
 
                         //Assigns role in moodle database
-                        if($user->rating_id == 1) {
-                            $mdl_rating = 18;
-                        } elseif($user->rating_id == 2) {
-                            $mdl_rating = 9;
-                        } elseif($user->rating_id == 3) {
-                            $mdl_rating = 10;
-                        } elseif($user->rating_id == 4) {
-                            $mdl_rating = 11;
-                        } elseif($user->rating_id == 5) {
-                            $mdl_rating = 12;
-                        } elseif($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
-                            $mdl_rating = 13;
-                        } elseif($user->rating_id == 8 || $user->rating_id == 10) {
-                            $mdl_rating = 14;
+                        if ($rating_old != $r->rating) {
+                            DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->delete();
+
+                            if ($user->rating_id == 1) {
+                                $mdl_rating = 18;
+                            } elseif ($user->rating_id == 2) {
+                                $mdl_rating = 9;
+                            } elseif ($user->rating_id == 3) {
+                                $mdl_rating = 10;
+                            } elseif ($user->rating_id == 4) {
+                                $mdl_rating = 11;
+                            } elseif ($user->rating_id == 5) {
+                                $mdl_rating = 12;
+                            } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
+                                $mdl_rating = 13;
+                            } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
+                                $mdl_rating = 14;
+                            } else {
+                                $mdl_rating = 0;
+                            }
+
+                            DB::table('mdl_role_assignments')->insert([
+                                'roleid' => $mdl_rating,
+                                'contextid' => 26,
+                                'userid' => $user->id
+                            ]);
+                        }
+                    }
+                } else {
+                    $visitrej = VisitRej::where('cid', $r->cid)->first();
+                    if ($visitrej == null) {
+                        $user = new User;
+                        $user->id = $r->cid;
+                        $user->fname = $r->fname;
+                        $user->lname = $r->lname;
+                        if ($r->email != null) {
+                            $user->email = $r->email;
                         } else {
-                            $mdl_rating = 0;
+                            $user->email = 'No email';
                         }
-
-                        DB::table('mdl_role_assignments')->insert([
-                            'roleid' => $mdl_rating,
-                            'contextid' => 26,
-                            'userid' => $user->id
-                        ]);
-                    }
-
-                    //Assigns controller initials
-                    $user = User::find($r->cid);
-
-                    $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
-                    $fn_initial = strtoupper(substr($user->fname, 0, 1));
-                    $ln_initial = strtoupper(substr($user->lname, 0, 1));
-                    $f_initial = $fn_initial;
-                    $l_initial = $ln_initial;
-
-                    $trys = 0;
-                    b:
-                    $trys++;
-                    $initials = $fn_initial.$ln_initial;
-
-                    $yes = 1;
-                    foreach($users_inc_v as $u) {
-                        if($u->initials == $initials) {
-                            $yes = 0;
+                        $user->rating_id = $r->rating;
+                        if ($r->rating == 2) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                        } elseif ($r->rating == 3) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                            $user->twr = 1;
+                        } elseif ($r->rating == 4 || $r->rating == 5 || $r->rating == 7 || $r->rating == 8 || $r->rating == 10) {
+                            $user->del = 1;
+                            $user->gnd = 1;
+                            $user->twr = 1;
+                            $user->app = 1;
                         }
-                    }
-
-                    if($yes == 1) {
-                        $user->initials = $initials;
+                        $user->visitor = '1';
+                        $user->visitor_from = 'ZJX';
+                        $user->status = '1';
+                        if ($r->facility_join == '1900-01-01T00:00:01+00:00') {
+                            $user->added_to_facility = substr($r->created_at, 0, 10) . ' ' . substr($r->created_at, 11, 8);
+                        } else {
+                            $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
+                        }
                         $user->save();
-                    } else {
-                        // Check first initial with all letters
-                        if($trys <= 26) {
-                            $fn_initial = $f_initial;
-                            $ln_initial = $this->letterFromNum($trys);
 
-                            goto b;
-                        } else {
-                            $ln_initial = $this->genRandLetter();
+                        if (Config::get('app.moodle') == 1) {
+                            //Adds user to moodle database
+                            DB::table('mdl_user')->insert([
+                                'id' => $r->cid,
+                                'confirmed' => 1,
+                                'mnethostid' => 1,
+                                'username' => $r->cid,
+                                'firstname' => $user->fname,
+                                'lastname' => $user->lname,
+                                'email' => 'null@null.com'
+                            ]);
+
+                            //Assigns role in moodle database
+                            if ($user->rating_id == 1) {
+                                $mdl_rating = 18;
+                            } elseif ($user->rating_id == 2) {
+                                $mdl_rating = 9;
+                            } elseif ($user->rating_id == 3) {
+                                $mdl_rating = 10;
+                            } elseif ($user->rating_id == 4) {
+                                $mdl_rating = 11;
+                            } elseif ($user->rating_id == 5) {
+                                $mdl_rating = 12;
+                            } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
+                                $mdl_rating = 13;
+                            } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
+                                $mdl_rating = 14;
+                            } else {
+                                $mdl_rating = 0;
+                            }
+
+                            DB::table('mdl_role_assignments')->insert([
+                                'roleid' => $mdl_rating,
+                                'contextid' => 26,
+                                'userid' => $user->id
+                            ]);
                         }
 
-                        if($trys >= 27 && $trys <= 52) {
-                            $ln_initial = $l_initial;
-                            $fn_initial = $this->letterFromNum($trys - 26);
+                        //Assigns controller initials
+                        $user = User::find($r->cid);
 
-                            goto b;
-                        } else {
-                            $fn_initial = $this->genRandLetter();
+                        $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                        $fn_initial = strtoupper(substr($user->fname, 0, 1));
+                        $ln_initial = strtoupper(substr($user->lname, 0, 1));
+                        $f_initial = $fn_initial;
+                        $l_initial = $ln_initial;
+
+                        $trys = 0;
+                        b:
+                        $trys++;
+                        $initials = $fn_initial . $ln_initial;
+
+                        $yes = 1;
+                        foreach ($users_inc_v as $u) {
+                            if ($u->initials == $initials) {
+                                $yes = 0;
+                            }
                         }
 
-                        goto b;
+                        if ($yes == 1) {
+                            $user->initials = $initials;
+                            $user->save();
+                        } else {
+                            // Check first initial with all letters
+                            if ($trys <= 26) {
+                                $fn_initial = $f_initial;
+                                $ln_initial = $this->letterFromNum($trys);
+
+                                goto b;
+                            } else {
+                                $ln_initial = $this->genRandLetter();
+                            }
+
+                            if ($trys >= 27 && $trys <= 52) {
+                                $ln_initial = $l_initial;
+                                $fn_initial = $this->letterFromNum($trys - 26);
+
+                                goto b;
+                            } else {
+                                $fn_initial = $this->genRandLetter();
+                            }
+
+                            goto b;
+                        }
                     }
                 }
             }
@@ -553,12 +557,11 @@ class VisitAgreement extends Command
             $delete = 0;
             foreach($roster_zjx as $r) {
                 // Last result will be false
-                if($r == true || $r == false)
-                    break;
-
-                $id = $r->cid;
-                if($u == $id) {
-                    $delete = 1;
+                if(! ($r === true || $r === false)) {
+                    $id = $r->cid;
+                    if($u == $id) {
+                        $delete = 1;
+                    }
                 }
             }
             if($delete == '0') {
@@ -582,12 +585,11 @@ class VisitAgreement extends Command
             $delete = 0;
             foreach($roster_zhu as $r) {
                 // Last result will be false
-                if($r == true || $r == false)
-                    break;
-
-                $id = $r->cid;
-                if($u == $id) {
-                    $delete = 1;
+                if(! ($r === true || $r === false)) {
+                    $id = $r->cid;
+                    if($u == $id) {
+                        $delete = 1;
+                    }
                 }
             }
             if($delete == '0') {

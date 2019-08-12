@@ -210,6 +210,7 @@ class RosterUpdate extends Command
                         if (Config::get('app.moodle') == 1) {
                             // Makes sure the user isn't deleted in moodle
                             DB::table('mdl_user')->where('id', $user->id)->update(['deleted' => 0]);
+
                             //Assigns role in moodle database and adds the user to moodle
                             if ($rating_old != $r->rating) {
                                 $old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
