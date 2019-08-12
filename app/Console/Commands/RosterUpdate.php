@@ -190,54 +190,56 @@ class RosterUpdate extends Command
 
         foreach($roster as $r) {
             $j++;
-            if($j != $i) {
-            // Last result will be false or true
-            if(! ($r == true || $r == false)) {
-                if (User::find($r->cid) !== null) {
-                    $user = User::find($r->cid);
-                    $rating_old = $user->rating_id;
-                    $user->fname = $r->fname;
-                    $user->lname = $r->lname;
-                    $user->email = $r->email;
-                    $user->rating_id = $r->rating;
-                    $user->visitor = '0';
-                    if ($user->status == 2) {
-                        $user->status = 1;
-                    }
-                    $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
-                    $user->save();
-
-                    if (Config::get('app.moodle') == 1) {
-                        //Assigns role in moodle database and adds the user to moodle
-                        if ($rating_old != $r->rating) {
-                            $old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
-                            $old_role->delete();
-
-                            if ($user->rating_id == 1) {
-                                $mdl_rating = 18;
-                            } elseif ($user->rating_id == 2) {
-                                $mdl_rating = 9;
-                            } elseif ($user->rating_id == 3) {
-                                $mdl_rating = 10;
-                            } elseif ($user->rating_id == 4) {
-                                $mdl_rating = 11;
-                            } elseif ($user->rating_id == 5) {
-                                $mdl_rating = 12;
-                            } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
-                                $mdl_rating = 13;
-                            } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
-                                $mdl_rating = 14;
-                            } else {
-                                $mdl_rating = 0;
-                            }
-
-                            DB::table('mdl_role_assignments')->insert([
-                                'roleid' => $mdl_rating,
-                                'contextid' => 26,
-                                'userid' => $user->id
-                            ]);
+            if ($j != $i) {
+                // Last result will be false or true
+                if (!($r === true || $r === false)) {
+                    if (User::find($r->cid) !== null) {
+                        $user = User::find($r->cid);
+                        $rating_old = $user->rating_id;
+                        $user->fname = $r->fname;
+                        $user->lname = $r->lname;
+                        $user->email = $r->email;
+                        $user->rating_id = $r->rating;
+                        $user->visitor = '0';
+                        if ($user->status == 2) {
+                            $user->status = 1;
                         }
-                    }
+                        $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
+                        $user->save();
+
+                        if (Config::get('app.moodle') == 1) {
+                            // Makes sure the user isn't deleted in moodle
+                            DB::table('mdl_user')->where('id', $user->id)->update(['deleted' => 0]);
+                            //Assigns role in moodle database and adds the user to moodle
+                            if ($rating_old != $r->rating) {
+                                $old_role = DB::table('mdl_role_assignments')->where('userid', $user->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
+                                $old_role->delete();
+
+                                if ($user->rating_id == 1) {
+                                    $mdl_rating = 18;
+                                } elseif ($user->rating_id == 2) {
+                                    $mdl_rating = 9;
+                                } elseif ($user->rating_id == 3) {
+                                    $mdl_rating = 10;
+                                } elseif ($user->rating_id == 4) {
+                                    $mdl_rating = 11;
+                                } elseif ($user->rating_id == 5) {
+                                    $mdl_rating = 12;
+                                } elseif ($user->rating_id == 7 || $user->rating_id == 11 || $user->rating_id == 12) {
+                                    $mdl_rating = 13;
+                                } elseif ($user->rating_id == 8 || $user->rating_id == 10) {
+                                    $mdl_rating = 14;
+                                } else {
+                                    $mdl_rating = 0;
+                                }
+
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => $mdl_rating,
+                                    'contextid' => 26,
+                                    'userid' => $user->id
+                                ]);
+                            }
+                        }
                     } else {
                         $user = new User;
                         $user->id = $r->cid;
@@ -352,13 +354,12 @@ class RosterUpdate extends Command
                 }
             }
         }
-    
 
         foreach($users as $u) {
             $delete = 0;
             foreach($roster as $r) {
                 // Last result will be false
-                if(! ($r == true || $r == false)) {
+                if(! ($r === true || $r === false)) {
                     $id = $r->cid;
                     if($u == $id) {
                         $delete = 1;
