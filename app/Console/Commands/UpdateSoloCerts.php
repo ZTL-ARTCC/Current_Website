@@ -70,7 +70,7 @@ class UpdateSoloCerts extends Command
                             if (!$current_cert) {
                                 $cert = new SoloCert;
                                 $cert->cid = $s->cid;
-                                $cert->pos = 2;
+                                $cert->pos = 1;
                                 $cert->expiration = $s->expires;
                                 $cert->status = 0;
                                 $cert->save();
