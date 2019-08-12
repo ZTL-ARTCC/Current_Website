@@ -136,6 +136,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'AdminDash@editCalendarEvent');
             Route::post('/edit/{id}/save', 'AdminDash@saveCalendarEvent');
             Route::delete('/delete/{id}', 'AdminDash@deleteCalendarEvent');
+            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalenderEventVisibilty');
         });
         Route::prefix('scenery')->middleware('permission:scenery')->group(function() {
             Route::get('/', 'AdminDash@showScenery');
@@ -251,13 +252,13 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 
 /*
 *	Webmaster Permission Grant
-*	Use this to grant yourself webmaster privelages. Should be disabled for security reasons.
+*	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
 */
 
-//Route::get('/laratrust', function() {
-//	$user = App\User::find(1364926);
-//	$user->attachRole('wm');
-//});
+Route::get('/laratrust', function() {
+	$user = App\User::find(1429747);
+	$user->attachRole('wm');
+});
 
 /*
 *	End Webmaster Permission Grant

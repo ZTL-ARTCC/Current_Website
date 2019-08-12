@@ -52,7 +52,8 @@ New Training Ticket
                             4 => 'Sweatbox OTS (Pass)',
                             5 => 'Live OTS (Pass)',
                             6 => 'Sweatbox OTS (Fail)',
-                            7 => 'Live OTS (Fail)'
+                            7 => 'Live OTS (Fail)',
+                            11 => 'No Show'
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
@@ -60,7 +61,8 @@ New Training Ticket
                             0 => 'Classroom Training',
                             1 => 'Sweatbox Training',
                             2 => 'Live Training',
-                            3 => 'Live Monitoring'
+                            3 => 'Live Monitoring',
+                            11 => 'No Show'
                         ], null, ['placeholder' => 'Select Session Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>

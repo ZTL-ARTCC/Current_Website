@@ -881,6 +881,29 @@ class AdminDash extends Controller
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
 
+    public function toggleCalenderEventVisibilty($id){
+          $calendar = Calendar::find($id);
+          $type = '';
+
+          if($calendar->visible == 1){
+              $calendar->visible = 0;
+              $type = 'invisible';
+          }elseif($calendar->visible == 0) {
+              $calendar->visible = 1;
+              $type = 'visible';
+          }
+
+          $calendar->save();
+
+          $audit = new Audit;
+          $audit->cid = Auth::id();
+          $audit->ip = $_SERVER['REMOTE_ADDR'];
+          $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
+          $audit->save();
+
+            return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
+    }
+
     public function uploadFile() {
         return view('dashboard.admin.files.upload');
     }

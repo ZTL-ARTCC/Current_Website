@@ -55,6 +55,8 @@ class TrainingTicket extends Model
             $position = 'Live OTS';
         } elseif($pos == 9) {
             $position = 'Sweatbox OTS';
+        }elseif($pos == 10){
+            $position = 'No Show';
         }
 
         return $position;

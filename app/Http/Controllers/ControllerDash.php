@@ -37,12 +37,12 @@ class ControllerDash extends Controller
     public function dash() {
         $now = Carbon::now();
 
-        $calendar = Calendar::where('type', '1')->get()->filter(function($news) use ($now) {
+        $calendar = Calendar::where('type', '1')->where('visible', '1')->get()->filter(function($news) use ($now) {
             return strtotime($news->date.' '.$news->time) > strtotime($now);
         })->sortBy(function($news) {
             return strtotime($news->date.' '.$news->time);
         });
-        $news = Calendar::where('type', '2')->get()->filter(function($news) use ($now) {
+        $news = Calendar::where('type', '2')->where('visible', '1')->get()->filter(function($news) use ($now) {
             return strtotime($news->date.' '.$news->time) < strtotime($now);
         })->sortByDesc(function($news) {
             return strtotime($news->date.' '.$news->time);
@@ -254,7 +254,8 @@ class ControllerDash extends Controller
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
         $visitc = User::where('visitor', 1)->where('status', 1)->get();
-
+        $agreevisitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
+       
         $home = $homec->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->total_hrs;
         });
@@ -262,9 +263,15 @@ class ControllerDash extends Controller
         $visit = $visitc->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->total_hrs;
         });
+
+        $agreevisit = $agreevisitc->sortByDesc(function($user) use($stats) {
+            return $stats[$user->id]->total_hrs;
+        });
+
         return view('dashboard.controllers.stats')->with('all_stats', $all_stats)->with('year', $year)
-                                                  ->with('month', $month)->with('stats', $stats)
-                                                  ->with('home', $home)->with('visit', $visit);
+                                 ->with('month', $month)->with('stats', $stats)
+                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+    
     }
 
     public function showCalendarEvent($id) {
