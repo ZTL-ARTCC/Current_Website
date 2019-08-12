@@ -191,7 +191,7 @@ class RosterUpdate extends Command
         foreach($roster as $r) {
             $j++;
             if($j != $i) {
-            // Last result will be false
+            // Last result will be false or true
             if($r == true || $r == false)
                 break;
 
@@ -359,12 +359,11 @@ class RosterUpdate extends Command
             $delete = 0;
             foreach($roster as $r) {
                 // Last result will be false
-                if($r == true || $r == false)
-                    break;
-
-                $id = $r->cid;
-                if($u == $id) {
-                    $delete = 1;
+                if(! ($r == true || $r == false)) {
+                    $id = $r->cid;
+                    if($u == $id) {
+                        $delete = 1;
+                    }
                 }
             }
             if($delete == '0') {
