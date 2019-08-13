@@ -28,8 +28,16 @@ class User extends Authenticatable
         return $this->lname.', '.$this->fname;
     }
 
+    public function getBackwardsNameRatingAttribute() {
+        return $this->backwards_name . ' - ' . $this->rating_short;
+    }
+
     public function getFullNameAttribute() {
         return $this->fname.' '.$this->lname;
+    }
+
+    public function getFullNameRatingAttribute() {
+        return $this->full_name . ' - ' . $this->rating_short;
     }
 
     public static $RatingShort = [
