@@ -35,6 +35,114 @@ View Event
                     <p>{!! $event->description !!}</p>
                 </div>
             </div>
+            @if(Auth::user()->can('events'))
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>
+                            Position Requests
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <i>Assign Positions:</i>
+                            <span class="float-right" data-toggle="modal" data-target="#manualAssign">
+                                    <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
+                                </span>
+                        </p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Controller</th>
+                                <th scope="col">Availability</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if($registrations->count() > 0)
+                                @foreach($registrations as $r)
+                                    <tr>
+                                        <td>{{ $r->position_name }}</td>
+                                        <td>
+                                            {{ $r->controller_name }}
+                                        </td>
+                                        <td>
+                                            @if($r->start_time != null)
+                                                {{ $r->start_time }}
+                                            @else
+                                                {{ $event->start_time }}
+                                            @endif
+                                            -
+                                            @if($r->end_time != null)
+                                                {{ $r->end_time }}z
+                                            @else
+                                                {{ $event->end_time }}z
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
+                                                <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <div class="modal fade" id="addrequest{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Assign Position</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                {!! Form::open(['action' => ['AdminDash@assignPosition', $r->id]]) !!}
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                {!! Form::label('controller_name', 'Controller Name') !!}
+                                                                {!! Form::text('controller_name', $r->controller_name, ['class' => 'form-control', 'disabled']) !!}
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                {!! Form::label('position', 'Position') !!}
+                                                                {!! Form::select('position', $positions->pluck('name', 'id'), $r->position_id, ['class' => 'form-control']) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                {!! Form::label('start_time', 'Start Time (Zulu)') !!}
+                                                                {!! Form::text('start_time', $r->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                {!! Form::label('end_time', 'End Time (Zulu)') !!}
+                                                                {!! Form::text('end_time', $r->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button action="submit" class="btn btn-success">Assign Position</button>
+                                                </div>
+                                                {!! Form::close() !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="3">No positions posted.</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-sm-6">
             <div class="card">
@@ -111,154 +219,59 @@ View Event
                         </tbody>
                     </table>
                     <hr>
-                    <p><i>Select your top three positions and put the time you're available (time in zulu formatted, 00:00; if you are available for the entire event, you can leave the time blank):</i></p>
+                    <p><i>Select your requested position and put the time you're available (time in zulu formatted, 00:00; if you are available for the entire event, you can leave the time blank). Please note that your request may or may not be honored:</i></p>
                     @if($positions->count() > 0)
                         {!! Form::open(['action' => 'ControllerDash@signupForEvent']) !!}
                             @csrf
                             @if($event->reg == 1 && Auth::user()->canEvents == 1)
                                 {!! Form::hidden('event_id', $event->id) !!}
                                 <div class="form-group">
-                                    @if($your_registration1 != null)
+                                    @if($your_registration1)
                                         {!! Form::hidden('yr1', $your_registration1->id) !!}
                                         <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num1', '1.') !!}
-                                            </div>
                                             @if($your_registration1->status == 0)
                                                 <div class="col-sm-5">
-                                                    {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
+                                                    {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['placeholder' => 'Position', 'class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
+                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
+                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
                                                 </div>
                                             @else
                                                 <div class="col-sm-5">
                                                     {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
+                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
+                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
                                                 </div>
                                             @endif
                                         </div>
                                     @else
                                         {!! Form::hidden('yr1', null) !!}
                                         <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num1', '1.') !!}
-                                            </div>
                                             <div class="col-sm-5">
-                                                {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
+                                                {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['placeholder' => 'Position', 'class' => 'form-control']) !!}
                                             </div>
                                             <div class="col-sm-3">
-                                                {!! Form::text('start_time1', null, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
+                                                {!! Form::text('start_time1', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
                                             </div>
                                             <div class="col-sm-3">
-                                                {!! Form::text('end_time1', null, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
+                                                {!! Form::text('end_time1', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
                                             </div>
                                         </div>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    @if($your_registration2 != null)
-                                        {!! Form::hidden('yr2', $your_registration2->id) !!}
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num2', '2.') !!}
-                                            </div>
-                                            @if($your_registration2->status == 0)
-                                                <div class="col-sm-5">
-                                                    {!! Form::select('num2', $positions->pluck('name', 'id'), $your_registration2->position_id, ['placeholder' => 'Choice 2', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('start_time2', $your_registration2->start_time, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('end_time2', $your_registration2->end_time, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                            @else
-                                                <div class="col-sm-5">
-                                                    {!! Form::select('num2', $positions->pluck('name', 'id'), $your_registration2->position_id, ['disabled', 'placeholder' => 'Choice 2', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('start_time2', $your_registration2->start_time, ['disabled', 'placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('end_time2', $your_registration2->end_time, ['disabled', 'placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @else
-                                        {!! Form::hidden('yr2', null) !!}
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num2', '2.') !!}
-                                            </div>
-                                            <div class="col-sm-5">
-                                                {!! Form::select('num2', $positions->pluck('name', 'id'), null, ['placeholder' => 'Choice 2', 'class' => 'form-control']) !!}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                {!! Form::text('start_time2', null, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                {!! Form::text('end_time2', null, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
+                                <div class="form-group inline">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    @if($your_registration1)
+                                        <a href="/dashboard/controllers/events/view/{{ $your_registration1->id }}/un-signup" class="btn btn-danger">Delete your Signup</a>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    @if($your_registration3 != null)
-                                        {!! Form::hidden('yr3', $your_registration3->id) !!}
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num3', '3.') !!}
-                                            </div>
-                                            @if($your_registration3->status == 0)
-                                                <div class="col-sm-5">
-                                                    {!! Form::select('num3', $positions->pluck('name', 'id'), $your_registration3->position_id, ['placeholder' => 'Choice 3', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('start_time3', $your_registration3->start_time, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('end_time3', $your_registration3->end_time, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                            @else
-                                                <div class="col-sm-5">
-                                                    {!! Form::select('num3', $positions->pluck('name', 'id'), $your_registration3->position_id, ['disabled', 'placeholder' => 'Choice 3', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('start_time3', $your_registration3->start_time, ['disabled', 'placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('end_time3', $your_registration3->end_time, ['disabled', 'placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @else
-                                        {!! Form::hidden('yr3', null) !!}
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                {!! Form::label('num3', '3.') !!}
-                                            </div>
-                                            <div class="col-sm-5">
-                                                {!! Form::select('num3', $positions->pluck('name', 'id'), null, ['placeholder' => 'Choice 3', 'class' => 'form-control']) !!}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                {!! Form::text('start_time3', null, ['placeholder' => 'Start Zulu', 'class' => 'form-control']) !!}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                {!! Form::text('end_time3', null, ['placeholder' => 'End Zulu', 'class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                                <button type="submit" class="btn btn-success">Submit</button>
                             @else
                                 @if(Auth::user()->canEvents != 1)
                                     You are not permitted to signup for events.
@@ -293,110 +306,6 @@ View Event
                         <span data-toggle="modal" data-target="#removePreset">
                             <button type="button" class="btn btn-danger btn-sm" data-placement="top">Remove Position Preset</button>
                         </span>
-                        <hr>
-                        <p>
-                            <i>Assign Positions:</i>
-                            <span class="float-right" data-toggle="modal" data-target="#manualAssign">
-                                <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
-                            </span>
-                        </p>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Controller</th>
-                                    <th scope="col">Availability</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($registrations->count() > 0)
-                                    @foreach($registrations as $r)
-                                        <tr>
-                                            <td>{{ $r->position_name }}</td>
-                                            <td>
-                                                {{ $r->controller_name }}
-                                                <small>
-                                                    @if($r->choice_number != 0)
-                                                        (#{{ $r->choice_number }})
-                                                    @else
-                                                        (N/A)
-                                                    @endif
-                                                </small>
-                                            </td>
-                                            <td>
-                                                @if($r->start_time != null)
-                                                    {{ $r->start_time }}
-                                                @else
-                                                    {{ $event->start_time }}
-                                                @endif
-                                                -
-                                                @if($r->end_time != null)
-                                                    {{ $r->end_time }}z
-                                                @else
-                                                    {{ $event->end_time }}z
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
-                                                    <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <div class="modal fade" id="addrequest{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Assign Position</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    {!! Form::open(['action' => ['AdminDash@assignPosition', $r->id]]) !!}
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    {!! Form::label('controller_name', 'Controller Name') !!}
-                                                                    {!! Form::text('controller_name', $r->controller_name, ['class' => 'form-control', 'disabled']) !!}
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    {!! Form::label('position', 'Position') !!}
-                                                                    {!! Form::select('position', $positions->pluck('name', 'id'), $r->position_id, ['class' => 'form-control']) !!}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    {!! Form::label('start_time', 'Start Time (Zulu)') !!}
-                                                                    {!! Form::text('start_time', $r->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    {!! Form::label('end_time', 'End Time (Zulu)') !!}
-                                                                    {!! Form::text('end_time', $r->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button action="submit" class="btn btn-success">Assign Position</button>
-                                                    </div>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="3">No positions posted.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
                     @endif
                 </div>
             </div>
