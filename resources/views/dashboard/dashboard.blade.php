@@ -112,6 +112,10 @@ Dashboard
         </div>
     </div>
     <hr>
+        <center><h4>Controller Chat</h4></center>
+        <br>
+        <div id="tlkio" data-channel="ztlartcc" data-theme="theme--minimal" style="width:100%;height:400px;"></div><script async src="http://tlk.io/embed.js" type="text/javascript"></script>
+    <hr>
     <center><h4><i class="fa fa-broadcast-tower"></i> Online Controllers</h4></center>
     <div class="table">
         <table class="table table-bordered table-sm">
