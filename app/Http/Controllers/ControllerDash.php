@@ -304,7 +304,7 @@ class ControllerDash extends Controller
         if(Auth::user()->can('events')) {
             $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
             $presets = PositionPreset::get()->pluck('name', 'id');
-            $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+            $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name_rating', 'id');
         } else {
             $presets = null;
             $registrations = null;
@@ -417,6 +417,17 @@ class ControllerDash extends Controller
         }
 
         return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully.');
+    }
+
+    public function unsignupForEvent($id) {
+        // Get the position request to be deleted
+        $request = EventRegistration::find($id);
+
+        // Delete the request
+        $request->delete();
+
+        // Go back
+        return redirect()->back()->with('success', 'Your registration has been removed successfully.');
     }
 
     public function sceneryIndex(Request $request) {
