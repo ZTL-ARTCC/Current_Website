@@ -7,6 +7,7 @@ use App\CotrollerLog;
 use App\SoloCert;
 use App\TrainingTicket;
 use App\User;
+use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
