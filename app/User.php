@@ -195,4 +195,16 @@ class User extends Authenticatable
 
         return $date;
     }
+
+    // Reset and get Moodle password to login a user
+    public function getMoodlePassword() {
+        // Generate a very random and unique password
+        $password = md5(uniqid(rand(), true));
+
+        // Change the password in Moodle
+        exec('/usr/local/php72/bin/php ' . Config::get('app.moodle_path') . 'admin/cli/reset_password.php --userame=' . $this->id . '--password=' . $password . '--ignore-password-policy');
+
+        // Return the password
+        return $password;
+    }
 }
