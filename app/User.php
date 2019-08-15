@@ -203,7 +203,7 @@ class User extends Authenticatable
         $password = md5(uniqid(rand(), true));
 
         // Change the password in Moodle
-        exec('/usr/local/php72/bin/php ' . Config::get('app.moodle_path') . 'admin/cli/reset_password.php --userame=' . $this->id . ' --password=' . $password . ' --ignore-password-policy');
+        exec('/usr/local/php72/bin/php ' . Config::get('app.moodle_path') . 'admin/cli/reset_password.php --username=' . $this->id . ' --password=' . $password . ' --ignore-password-policy');
 
         // Return the password
         return $password;
