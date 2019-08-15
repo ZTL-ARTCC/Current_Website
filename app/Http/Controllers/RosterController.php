@@ -7,6 +7,7 @@ use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Config;
+use DB;
 use Eloquent\Collection;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent;
