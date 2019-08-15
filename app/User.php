@@ -7,6 +7,7 @@ use App\CotrollerLog;
 use App\SoloCert;
 use App\TrainingTicket;
 use App\User;
+use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -194,5 +195,17 @@ class User extends Authenticatable
         $date = Carbon::parse($cert->expiration)->format('m/d/Y');
 
         return $date;
+    }
+
+    // Reset and get Moodle password to login a user
+    public function getMoodlePassword() {
+        // Generate a very random and unique password
+        $password = md5(uniqid(rand(), true));
+
+        // Change the password in Moodle
+        exec('/usr/local/php72/bin/php ' . Config::get('app.moodle_path') . 'admin/cli/reset_password.php --username=' . $this->id . ' --password=' . $password . ' --ignore-password-policy');
+
+        // Return the password
+        return $password;
     }
 }

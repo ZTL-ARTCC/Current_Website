@@ -150,6 +150,10 @@ class RosterController extends Controller
             return redirect('/')->with('error', 'You are not logged in.');
         } else {
             Auth::logout();
+
+            if(Config::get('app.moodle') == 1)
+                // Remove the user's Moodle password
+                DB::table('mdl_user')->where('id', Auth::id())->update(['password' => 'LOGGED OUT']);
             return redirect('/')->with('success', 'You have been logged out successfully.');
         }
     }
