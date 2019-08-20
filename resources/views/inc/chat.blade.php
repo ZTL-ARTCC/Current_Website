@@ -44,20 +44,44 @@
         float: left;
         color: #999;
     }
+
+    #delete {
+        color: red;
+        cursor: pointer;
+    }
 </style>
 
 <script>
     $.ajax({
         type: 'GET',
-        url: '/chat/messages',
+        url: '/dashboard/controllers/chat/messages',
         success: function (data) {
             var obj = JSON.parse(data);
             var your_html = "";
             $.each(obj['messages'], function (key, val) {
                 if(val.cid == {{ Auth::id() }}) {
-                    your_html += "<div class=\"container-chat darker\"><small><p>" + val.message + "</p></small><span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span><br><span class=\"time-right\"><small>" + val.format_time + "</small></span> </div>"
+                    your_html += "<div class=\"container-chat darker\">" +
+                        "<small><p>" + val.message + "</p></small>" +
+                        "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                        "<br>" +
+                        "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                        "</div>"
                 } else {
-                    your_html += "<div class=\"container-chat \"><small><p>" + val.message + "</p></small><span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span><br><span class=\"time-right\"><small>" + val.format_time + "</small></span> </div>"
+                    your_html += "@if(Auth::user()->can('snrStaff'))" +
+                        "<div class=\"container-chat\">" +
+                        "<small><p>" + val.message + "</p></small>" +
+                        "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                        "<br>" +
+                        "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                        "</div>" +
+                        "@else" +
+                        "<div class=\"container-chat \">" +
+                        "<small><p>" + val.message + "</p></small>" +
+                        "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                        "<br>" +
+                        "<span class=\"time-right\"><small>" + val.format_time + "</small></span>" +
+                        "</div>" +
+                        "@endif"
                 }
             });
             $("#chat").html(your_html)
@@ -73,20 +97,93 @@
         $('#message').val("");
         $.ajax({
             type: "POST",
-            url: '/chat/messages/new',
+            url: '/dashboard/controllers/chat/messages/new',
             data: {_token: "{{ csrf_token() }}", cid:"{{ Auth::id() }}", message:message},
             success: function() {
                 $.ajax({
                     type: 'GET',
-                    url: '/chat/messages',
+                    url: '/dashboard/controllers/chat/messages',
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        var your_html = "";
+                        var cid = {{ Auth::id() }};
+                        $.each(obj['messages'], function (key, val) {
+                            if(val.cid == {{ Auth::id() }}) {
+                                your_html += "<div class=\"container-chat darker\">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                                    "</div>"
+                            } else {
+                                your_html += "@if(Auth::user()->can('snrStaff'))" +
+                                    "<div class=\"container-chat\">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                                    "</div>" +
+                                    "@else" +
+                                    "<div class=\"container-chat \">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><small>" + val.format_time + "</small></span>" +
+                                    "</div>" +
+                                    "@endif"
+                            }
+                        });
+                        $("#chat").html(your_html)
+                    },
+                    error: function() {
+                        console.log(data);
+                    }
+                });
+            },
+            error: function() {
+                console.log('Error');
+            }
+        });
+    });
+
+    $(document).on('click', '#delete', function(e) {
+        e.preventDefault();
+        var id = $(this).attr("class").substring(12);
+        $.ajax({
+            type: "POST",
+            url: '/dashboard/controllers/chat/messages/delete/' + id,
+            data: {_token: "{{ csrf_token() }}", cid:"{{ Auth::id() }}"},
+            success: function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/dashboard/controllers/chat/messages',
                     success: function (data) {
                         var obj = JSON.parse(data);
                         var your_html = "";
                         $.each(obj['messages'], function (key, val) {
                             if(val.cid == {{ Auth::id() }}) {
-                                your_html += "<div class=\"container-chat darker\"><small><p>" + val.message + "</p></small><span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span><br><span class=\"time-right\"><small>" + val.format_time + "</small></span> </div>"
+                                your_html += "<div class=\"container-chat darker\">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                                    "</div>"
                             } else {
-                                your_html += "<div class=\"container-chat \"><small><p>" + val.message + "</p></small><span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span><br><span class=\"time-right\"><small>" + val.format_time + "</small></span> </div>"
+                                your_html += "@if(Auth::user()->can('snrStaff'))" +
+                                    "<div class=\"container-chat\">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
+                                    "</div>" +
+                                    "@else" +
+                                    "<div class=\"container-chat \">" +
+                                    "<small><p>" + val.message + "</p></small>" +
+                                    "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
+                                    "<br>" +
+                                    "<span class=\"time-right\"><small>" + val.format_time + "</small></span>" +
+                                    "</div>" +
+                                    "@endif"
                             }
                         });
                         $("#chat").html(your_html)

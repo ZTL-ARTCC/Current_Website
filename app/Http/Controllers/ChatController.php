@@ -29,4 +29,16 @@ class ChatController extends Controller
 
         return json_encode(['success' => true]);
     }
+
+    public function deleteMessage(Request $request, $id) {
+        $message = Chat::find($id);
+        $requester = User::find($request->cid);
+
+        if($request->cid == $message->cid || $requester->can('snrStaff'))
+            $message->deleted = 1;
+
+        $message->save();
+
+        return json_encode(['success' => true]);
+    }
 }
