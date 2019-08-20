@@ -50,6 +50,11 @@ Route::get('/logout', 'RosterController@logout');
 /*
 *   Controller Dashboard
 */
+Route::prefix('chat')->group(function() {
+    Route::get('/messages', 'ChatController@getMessages');
+    Route::post('/messages/new', 'ChatController@newMessage');
+});
+
 Route::prefix('dashboard')->middleware('auth')->group(function() {
     Route::get('/', 'ControllerDash@dash');
 
@@ -78,9 +83,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::prefix('incident')->group(function() {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
-        });
-        Route::prefix('chat')->group(function() {
-           Route::get('/messages', 'ChatController@getMessages');
         });
     });
 
