@@ -79,6 +79,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
         });
+        Route::prefix('chat')->group(function() {
+           Route::get('/messages', 'ChatController@getMessages');
+        });
     });
 
     Route::prefix('opt')->group(function() {
