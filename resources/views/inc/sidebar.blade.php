@@ -78,6 +78,8 @@
         <div class="dropdown-divider"></div>
     </div>
 </div>
+<br>
+@include('inc.chat')
 
 <style>
     .collapsible {
