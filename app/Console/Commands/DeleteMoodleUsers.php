@@ -46,7 +46,8 @@ class DeleteMoodleUsers extends Command
             foreach ($moodle_users as $m) {
                 $controller = User::find($m->id);
                 if($controller && $controller->status == 2) {
-                    $m->update(['deleted' => 1]);
+                    $m->deleted = 1;
+                    $m->save();
                 }
             }
         }
