@@ -46,7 +46,7 @@ class MoodleCourses extends Seeder
         DB::table('moodle_course_assignments')->insert([
             'course_name' => 'KATL',
             'course_id' => 6,
-            'rating_id' => 3,
+            'rating_id' => 2,
             'isVisitor' => 1,
             'mdl_enrol_id' => 54
         ]);
@@ -62,7 +62,7 @@ class MoodleCourses extends Seeder
         DB::table('moodle_course_assignments')->insert([
             'course_name' => 'A80',
             'course_id' => 7,
-            'rating_id' => 4,
+            'rating_id' => 3,
             'isVisitor' => 1,
             'mdl_enrol_id' => 56
         ]);
