@@ -12,11 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 		$this->call([
-		LaratrustSeeder::class,
-		PositionPresetSeeder::class,
-		ControllerUpdateSeeder::class,
-        AnnouncementSeeder::class,
-        OverflightUpdateSeeder::class,
+		    //LaratrustSeeder::class,
+		    //PositionPresetSeeder::class,
+		    //ControllerUpdateSeeder::class,
+            //AnnouncementSeeder::class,
+            //OverflightUpdateSeeder::class,
+            MoodleCourses::class,
 		]);
     }
 }
