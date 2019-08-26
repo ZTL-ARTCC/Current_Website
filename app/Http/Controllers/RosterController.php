@@ -142,8 +142,8 @@ class RosterController extends Controller
                         if($moodle) {
                             // Update the moodle user
                             // Makes sure the user isn't deleted in moodle and updates their email
-                            $moodle->update(['deleted' => 0]);
-                            $moodle->update(['email' => $userstatuscheck->email]);
+                            DB::table('mdl_user')->where('id', $moodle->id)->update(['deleted' => 0]);
+                            DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
 
                             //Assigns role in moodle database and adds the user to moodle
                             if ($rating_old != $userstatuscheck->rating_id) {
