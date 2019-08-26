@@ -45,7 +45,23 @@ class EnrolMoodleUsers extends Command
         foreach($controllers as $c) {
             $now = Carbon::now()->timestamp;
 
-            // Visitor
+            // If the user isn't in moodle, add them now...role will be done later
+            $m_user = DB::table('mdl_user')->where('id', $c->id)->first();
+
+            if(! $m_user) {
+                //Adds user to moodle database
+                DB::table('mdl_user')->insert([
+                    'id' => $c->id,
+                    'confirmed' => 1,
+                    'mnethostid' => 1,
+                    'username' => $c->id,
+                    'firstname' => $c->fname,
+                    'lastname' => $c->lname,
+                    'email' => $c->email
+                ]);
+            }
+
+            // Determines which courses should be added for the controller
             if($c->visitor == 1)
                 $courses = DB::table('moodle_course_assignments')->where('isVisitor', 1)->get();
             else
