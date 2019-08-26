@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Artisan;
 use App\EventRegistration;
 use App\User;
 use Config;
