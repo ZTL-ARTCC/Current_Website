@@ -168,10 +168,13 @@ class RosterController extends Controller
                                     $mdl_rating = 0;
                                 }
 
+                                $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => $mdl_rating,
-                                    'contextid' => 26,
-                                    'userid' => $userstatuscheck->id
+                                    'contextid' => 1,
+                                    'userid' => $userstatuscheck->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
                                 ]);
                             }
                         } else {
@@ -205,10 +208,13 @@ class RosterController extends Controller
                                 $mdl_rating = 0;
                             }
 
+                            $now = Carbon::now()->timestamp;
                             DB::table('mdl_role_assignments')->insert([
                                 'roleid' => $mdl_rating,
-                                'contextid' => 26,
-                                'userid' => $userstatuscheck->id
+                                'contextid' => 1,
+                                'userid' => $userstatuscheck->id,
+                                'modifierid' => 1,
+                                'timemodified' => $now
                             ]);
                         }
                     }
