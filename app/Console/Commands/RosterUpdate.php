@@ -234,10 +234,13 @@ class RosterUpdate extends Command
                                     $mdl_rating = 0;
                                 }
 
+                                $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => $mdl_rating,
-                                    'contextid' => 26,
-                                    'userid' => $user->id
+                                    'contextid' => 1,
+                                    'userid' => $user->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
                                 ]);
                             }
                         }
