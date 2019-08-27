@@ -149,12 +149,12 @@ class RosterController extends Controller
                             $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15);
                             if($old_mtr_role)
                                 $old_mtr_role->delete();
-                            if($u->hasRole('mtr')) {
+                            if($userstatuscheck->hasRole('mtr')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 15,
                                     'contextid' => 1,
-                                    'userid' => $u->id,
+                                    'userid' => $userstatuscheck->id,
                                     'modifierid' => 1,
                                     'timemodified' => $now
                                 ]);
@@ -164,21 +164,21 @@ class RosterController extends Controller
                             $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17);
                             if($old_mtr_role)
                                 $old_mtr_role->delete();
-                            if($u->can('snrStaff')) {
+                            if($userstatuscheck->can('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 17,
                                     'contextid' => 1,
-                                    'userid' => $u->id,
+                                    'userid' => $userstatuscheck->id,
                                     'modifierid' => 1,
                                     'timemodified' => $now
                                 ]);
-                            } elseif($u->can('staff')) {
+                            } elseif($userstatuscheck->can('staff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 16,
                                     'contextid' => 1,
-                                    'userid' => $u->id,
+                                    'userid' => $userstatuscheck->id,
                                     'modifierid' => 1,
                                     'timemodified' => $now
                                 ]);
