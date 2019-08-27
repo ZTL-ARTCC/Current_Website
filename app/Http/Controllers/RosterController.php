@@ -228,33 +228,71 @@ class RosterController extends Controller
                                 'email' => $userstatuscheck->email
                             ]);
 
-                            // Assign the user a rating in Moodle
-                            if ($userstatuscheck->rating_id == 1) {
-                                $mdl_rating = 18;
-                            } elseif ($userstatuscheck->rating_id == 2) {
-                                $mdl_rating = 9;
-                            } elseif ($userstatuscheck->rating_id == 3) {
-                                $mdl_rating = 10;
-                            } elseif ($userstatuscheck->rating_id == 4) {
-                                $mdl_rating = 11;
-                            } elseif ($userstatuscheck->rating_id == 5) {
-                                $mdl_rating = 12;
-                            } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
-                                $mdl_rating = 13;
-                            } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
-                                $mdl_rating = 14;
-                            } else {
-                                $mdl_rating = 0;
+                            // Check for mentor
+                            if($userstatuscheck->hasRole('mtr')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 15,
+                                    'contextid' => 1,
+                                    'userid' => $userstatuscheck->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
                             }
 
-                            $now = Carbon::now()->timestamp;
-                            DB::table('mdl_role_assignments')->insert([
-                                'roleid' => $mdl_rating,
-                                'contextid' => 1,
-                                'userid' => $userstatuscheck->id,
-                                'modifierid' => 1,
-                                'timemodified' => $now
-                            ]);
+                            // Check for staff
+                            if($userstatuscheck->can('snrStaff')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 17,
+                                    'contextid' => 1,
+                                    'userid' => $userstatuscheck->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            } elseif($userstatuscheck->can('staff')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 16,
+                                    'contextid' => 1,
+                                    'userid' => $userstatuscheck->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            }
+
+                            //Assigns role in moodle database and adds the user to moodle
+                            if ($rating_old != $userstatuscheck->rating_id) {
+                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17);
+                                $old_role->delete();
+
+                                if ($userstatuscheck->rating_id == 1) {
+                                    $mdl_rating = 18;
+                                } elseif ($userstatuscheck->rating_id == 2) {
+                                    $mdl_rating = 9;
+                                } elseif ($userstatuscheck->rating_id == 3) {
+                                    $mdl_rating = 10;
+                                } elseif ($userstatuscheck->rating_id == 4) {
+                                    $mdl_rating = 11;
+                                } elseif ($userstatuscheck->rating_id == 5) {
+                                    $mdl_rating = 12;
+                                } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
+                                    $mdl_rating = 13;
+                                } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
+                                    $mdl_rating = 14;
+                                } else {
+                                    $mdl_rating = 0;
+                                }
+
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => $mdl_rating,
+                                    'contextid' => 1,
+                                    'userid' => $userstatuscheck->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            }
                         }
                     }
 
