@@ -44,9 +44,7 @@ class FixMoodleRoles extends Command
         $users = User::where('status', '!=', 2)->get();
 
         foreach($users as $u) {
-            if($u->hasRole('mtr')) {
-                $mdl_rating = 15;
-            } elseif ($u->rating_id == 1) {
+            if ($u->rating_id == 1) {
                 $mdl_rating = 18;
             } elseif ($u->rating_id == 2) {
                 $mdl_rating = 9;
@@ -72,6 +70,39 @@ class FixMoodleRoles extends Command
                 'modifierid' => 1,
                 'timemodified' => $now
             ]);
+
+            // Check for mentor
+            if($u->hasRole('mtr')) {
+                $now = Carbon::now()->timestamp;
+                DB::table('mdl_role_assignments')->insert([
+                    'roleid' => 15,
+                    'contextid' => 1,
+                    'userid' => $u->id,
+                    'modifierid' => 1,
+                    'timemodified' => $now
+                ]);
+            }
+
+            // Check for staff
+            if($u->can('snrStaff')) {
+                $now = Carbon::now()->timestamp;
+                DB::table('mdl_role_assignments')->insert([
+                    'roleid' => 17,
+                    'contextid' => 1,
+                    'userid' => $u->id,
+                    'modifierid' => 1,
+                    'timemodified' => $now
+                ]);
+            } elseif($u->can('staff')) {
+                $now = Carbon::now()->timestamp;
+                DB::table('mdl_role_assignments')->insert([
+                    'roleid' => 16,
+                    'contextid' => 1,
+                    'userid' => $u->id,
+                    'modifierid' => 1,
+                    'timemodified' => $now
+                ]);
+            }
         }
     }
 }

@@ -145,9 +145,48 @@ class RosterController extends Controller
                             DB::table('mdl_user')->where('id', $moodle->id)->update(['deleted' => 0]);
                             DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
 
+                            // Check for mentor
+                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15);
+                            if($old_mtr_role)
+                                $old_mtr_role->delete();
+                            if($u->hasRole('mtr')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 15,
+                                    'contextid' => 1,
+                                    'userid' => $u->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            }
+
+                            // Check for staff
+                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17);
+                            if($old_mtr_role)
+                                $old_mtr_role->delete();
+                            if($u->can('snrStaff')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 17,
+                                    'contextid' => 1,
+                                    'userid' => $u->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            } elseif($u->can('staff')) {
+                                $now = Carbon::now()->timestamp;
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => 16,
+                                    'contextid' => 1,
+                                    'userid' => $u->id,
+                                    'modifierid' => 1,
+                                    'timemodified' => $now
+                                ]);
+                            }
+
                             //Assigns role in moodle database and adds the user to moodle
                             if ($rating_old != $userstatuscheck->rating_id) {
-                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
+                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17);
                                 $old_role->delete();
 
                                 if ($userstatuscheck->rating_id == 1) {
