@@ -50,9 +50,16 @@ View Event
                                     <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
                                 </span>
                         </p>
+                        @if($positions->count() > 0)
+                                @foreach($positions as $p)
+                                    <tr>
+                                        <td>{{ $p->name }}</td>
+                                @endforeach
+                        @endif
                         <table class="table">
                             <thead>
                             <tr>
+
                                 <th scope="col">Position</th>
                                 <th scope="col">Controller</th>
                                 <th scope="col">Availability</th>
