@@ -103,6 +103,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::post('/save/{id}', 'TrainingDash@saveTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
+	    Route::get('/req', 'TrainingDash@ShowReq');
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function() {
             Route::get('/', 'TrainingDash@otsCenter');
