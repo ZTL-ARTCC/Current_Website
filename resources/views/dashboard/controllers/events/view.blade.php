@@ -53,6 +53,7 @@ View Event
                         <table class="table">
                             <thead>
                             <tr>
+
                                 <th scope="col">Position</th>
                                 <th scope="col">Controller</th>
                                 <th scope="col">Availability</th>

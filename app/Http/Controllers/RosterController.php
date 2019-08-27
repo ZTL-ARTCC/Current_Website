@@ -90,6 +90,9 @@ class RosterController extends Controller
             $userstatuscheck = User::find($res['cid']);
             if($userstatuscheck) {
                 if($userstatuscheck->status != 2) {
+                    // Save the user's rating for use down the line
+                    $rating_old = $userstatuscheck->rating_id;
+
                     $userstatuscheck->fname = $res['firstname'];
                     $userstatuscheck->lname = $res['lastname'];
                     $userstatuscheck->email = $res['email'];
@@ -128,6 +131,88 @@ class RosterController extends Controller
                         $userstatuscheck->visitor_from = null;
                     }
                     $userstatuscheck->save();
+
+                    // Make sure the user is on Moodle
+                    if(Config::get('app.moodle') == 1) {
+                        $moodle = DB::table('mdl_user')->where('id', $userstatuscheck->id)->first();
+
+                        // Check and see if the user is in Moodle
+                        // If they are, update them
+                        // If they aren't, add them
+                        if($moodle) {
+                            // Update the moodle user
+                            // Makes sure the user isn't deleted in moodle and updates their email
+                            DB::table('mdl_user')->where('id', $moodle->id)->update(['deleted' => 0]);
+                            DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
+
+                            //Assigns role in moodle database and adds the user to moodle
+                            if ($rating_old != $userstatuscheck->rating_id) {
+                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 14)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17)->first();
+                                $old_role->delete();
+
+                                if ($userstatuscheck->rating_id == 1) {
+                                    $mdl_rating = 18;
+                                } elseif ($userstatuscheck->rating_id == 2) {
+                                    $mdl_rating = 9;
+                                } elseif ($userstatuscheck->rating_id == 3) {
+                                    $mdl_rating = 10;
+                                } elseif ($userstatuscheck->rating_id == 4) {
+                                    $mdl_rating = 11;
+                                } elseif ($userstatuscheck->rating_id == 5) {
+                                    $mdl_rating = 12;
+                                } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
+                                    $mdl_rating = 13;
+                                } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
+                                    $mdl_rating = 14;
+                                } else {
+                                    $mdl_rating = 0;
+                                }
+
+                                DB::table('mdl_role_assignments')->insert([
+                                    'roleid' => $mdl_rating,
+                                    'contextid' => 26,
+                                    'userid' => $userstatuscheck->id
+                                ]);
+                            }
+                        } else {
+                            //Adds user to moodle database
+                            DB::table('mdl_user')->insert([
+                                'id' => $userstatuscheck->id,
+                                'confirmed' => 1,
+                                'mnethostid' => 1,
+                                'username' => $userstatuscheck->id,
+                                'firstname' => $userstatuscheck->fname,
+                                'lastname' => $userstatuscheck->lname,
+                                'email' => $userstatuscheck->email
+                            ]);
+
+                            // Assign the user a rating in Moodle
+                            if ($userstatuscheck->rating_id == 1) {
+                                $mdl_rating = 18;
+                            } elseif ($userstatuscheck->rating_id == 2) {
+                                $mdl_rating = 9;
+                            } elseif ($userstatuscheck->rating_id == 3) {
+                                $mdl_rating = 10;
+                            } elseif ($userstatuscheck->rating_id == 4) {
+                                $mdl_rating = 11;
+                            } elseif ($userstatuscheck->rating_id == 5) {
+                                $mdl_rating = 12;
+                            } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
+                                $mdl_rating = 13;
+                            } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
+                                $mdl_rating = 14;
+                            } else {
+                                $mdl_rating = 0;
+                            }
+
+                            DB::table('mdl_role_assignments')->insert([
+                                'roleid' => $mdl_rating,
+                                'contextid' => 26,
+                                'userid' => $userstatuscheck->id
+                            ]);
+                        }
+                    }
+
                     Auth::loginUsingId($res['cid'], true);
                 } else {
                     return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
