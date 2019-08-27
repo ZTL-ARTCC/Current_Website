@@ -44,7 +44,9 @@ class FixMoodleRoles extends Command
         $users = User::where('status', '!=', 2)->get();
 
         foreach($users as $u) {
-            if ($u->rating_id == 1) {
+            if($u->hasRole('mtr')) {
+                $mdl_rating = 15;
+            } elseif ($u->rating_id == 1) {
                 $mdl_rating = 18;
             } elseif ($u->rating_id == 2) {
                 $mdl_rating = 9;
