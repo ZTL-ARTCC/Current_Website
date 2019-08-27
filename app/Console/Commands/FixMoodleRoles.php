@@ -66,7 +66,7 @@ class FixMoodleRoles extends Command
             DB::table('mdl_role_assignments')->insert([
                 'roleid' => $mdl_rating,
                 'contextid' => 1,
-                'userid' => $userstatuscheck->id,
+                'userid' => $u->id,
                 'modifierid' => 1,
                 'timemodified' => $now
             ]);
