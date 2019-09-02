@@ -161,9 +161,9 @@ class RosterController extends Controller
                             }
 
                             // Check for staff
-                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17);
-                            if($old_mtr_role)
-                                $old_mtr_role->delete();
+                            $old_staff_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17);
+                            if($old_staff_role)
+                                $old_staff_role->delete();
                             if($userstatuscheck->can('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
