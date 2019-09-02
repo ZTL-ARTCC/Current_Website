@@ -146,9 +146,9 @@ class RosterController extends Controller
                             DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
 
                             // Check for mentor
-                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15)->first();
+                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15);
                             if($old_mtr_role)
-                                DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15)->delete();
+                                $old_mtr_role->delete();
                             if($userstatuscheck->hasRole('mtr')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
@@ -161,9 +161,17 @@ class RosterController extends Controller
                             }
 
                             // Check for staff
-                            $old_staff_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17)->first();
+                            $all_staff_roles = DB::table('mdl_role_assignments')->where('roleid',  16)->orWhere('roleid', 17)->get();
+
+                            // Go through each staff role and find the one that matches, if any
+                            $old_staff_role = null;
+                            foreach($all_staff_roles as $r) {
+                                if($r->userid = $userstatuscheck->id)
+                                    $old_staff_role = $r;
+                            }
+
                             if($old_staff_role)
-                                DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17)->delete();
+                                $old_staff_role->delete();
                             if($userstatuscheck->can('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
