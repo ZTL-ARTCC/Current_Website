@@ -39,10 +39,9 @@ Training Tickets
             <div class="col-sm-1">
                 <button class="btn btn-primary" action="submit">Search</button>
             </div>
-        </div>
+            <div class="col-sm-1">
     {!! Form::close() !!}
     <center>OR</center>
-    
     {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
             </div>
             <div class="col-sm-3">
@@ -51,10 +50,8 @@ Training Tickets
             <div class="col-sm-1">
                 <button class="btn btn-primary" action="submit">Search</button>
             </div>
-        </div>
+            </div>
     {!! Form::close() !!}
-
-
 
     @if($search_result != null)
         <hr>
