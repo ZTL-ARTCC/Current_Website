@@ -166,7 +166,7 @@ class RosterController extends Controller
                             // Go through each staff role and find the one that matches, if any
                             $old_staff_role = null;
                             foreach($all_staff_roles as $r) {
-                                if($r->userid = $userstatuscheck->id)
+                                if($r->userid == $userstatuscheck->id)
                                     $old_staff_role = $r;
                             }
 
