@@ -146,9 +146,9 @@ class RosterController extends Controller
                             DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
 
                             // Check for mentor
-                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15);
+                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15)->first();
                             if($old_mtr_role)
-                                $old_mtr_role->delete();
+                                DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15)->delete();
                             if($userstatuscheck->hasRole('mtr')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
@@ -161,9 +161,9 @@ class RosterController extends Controller
                             }
 
                             // Check for staff
-                            $old_staff_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17);
+                            $old_staff_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17)->first();
                             if($old_staff_role)
-                                $old_staff_role->delete();
+                                DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  16)->orWhere('roleid', 17)->delete();
                             if($userstatuscheck->can('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
