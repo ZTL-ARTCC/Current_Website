@@ -42,6 +42,7 @@ Training Tickets
         </div>
     {!! Form::close() !!}
 
+
     @if($search_result != null)
         <hr>
         <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
