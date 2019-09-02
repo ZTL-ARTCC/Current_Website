@@ -146,10 +146,10 @@ class RosterController extends Controller
                             DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
 
                             // Check for mentor
-                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', 15);
-                            if ($old_mtr_role)
+                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid',  15);
+                            if($old_mtr_role)
                                 $old_mtr_role->delete();
-                            if ($userstatuscheck->hasRole('mtr')) {
+                            if($userstatuscheck->hasRole('mtr')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 15,
@@ -161,22 +161,18 @@ class RosterController extends Controller
                             }
 
                             // Check for staff
-                            $all_staff_roles = DB::table('mdl_role_assignments')->where('roleid', 16)->orWhere('roleid', 17)->get();
+                            $all_staff_roles = DB::table('mdl_role_assignments')->where('roleid',  16)->orWhere('roleid', 17)->get();
 
                             // Go through each staff role and find the one that matches, if any
                             $old_staff_role = null;
-                            foreach ($all_staff_roles as $r) {
-                                if ($r->userid = $userstatuscheck->id)
+                            foreach($all_staff_roles as $r) {
+                                if($r->userid = $userstatuscheck->id)
                                     $old_staff_role = $r;
                             }
 
-                            if ($old_staff_role) {
-                                // Get rid of the old role
-                                foreach ($all_staff_roles as $r) {
-                                    if ($r->userid = $userstatuscheck->id)
-                                        $r->delete();
-                                }
-                            }
+                            // Delete the old role
+                            if($old_staff_role)
+                                DB::table('mdl_role_assignments')->where('id', $old_staff_role->id)->delete();
 
                             if($userstatuscheck->can('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
