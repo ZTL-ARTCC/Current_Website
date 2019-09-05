@@ -21,6 +21,7 @@ class TrainingDash extends Controller
     }
 
     public function moodleLogin() {
+        Auth::user()->enrolInMoodleCourses();
         return view('dashboard.training.moodle');
     }
 
