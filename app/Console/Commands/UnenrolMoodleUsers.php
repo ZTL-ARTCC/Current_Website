@@ -43,7 +43,7 @@ class UnenrolMoodleUsers extends Command
 
         // Loop through all enrolments. If the user no longer exists, remove their enrolment
         foreach($enrolments as $e) {
-            $user = User::find($e->controller_id);
+            $user = User::where('id', $e->controller_id)->where('status', '!=', '2')->first();
 
             if(! $user)
                 $e->delete();
