@@ -4,7 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use App\CotrollerLog;
-use app\MoodleEnrol;
+use App\MoodleEnrol;
 use App\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;
