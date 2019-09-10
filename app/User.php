@@ -190,7 +190,7 @@ class User extends Authenticatable
 
     public function getSoloAttribute() {
         $cert = SoloCert::where('cid', $this->id)->where('status', 0)->first();
-        $date = Carbon::parse($cert->expiration)->format('m/d/Y');
+       
 
         return $date;
     }
