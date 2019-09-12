@@ -96,7 +96,6 @@ class UpdateSoloCerts extends Command
                     $message->to('ta@ztlartcc.org');
                 });
                 $c->status = 1;
-                $c->save();
 
                 $user = User::find($c->cid);
 
@@ -108,6 +107,7 @@ class UpdateSoloCerts extends Command
                     $user->ctr = 0;
                 }
                 $user->save();
+                $c->save();
             }
         }
     }
