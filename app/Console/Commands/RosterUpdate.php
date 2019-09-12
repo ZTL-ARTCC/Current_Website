@@ -309,7 +309,9 @@ class RosterUpdate extends Command
             }
         }
 
-        if(Config::get('app.moodle') == 1)
+        if(Config::get('app.moodle') == 1) {
             Artisan::call('Enrol:MoodleUsers');
+            Artisan::call('Unenrol:MoodleUsers');
+        }
     }
 }

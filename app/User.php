@@ -4,8 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use App\CotrollerLog;
-use App\SoloCert;
-use App\TrainingTicket;
+use App\MoodleEnrol;
 use App\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;
@@ -155,7 +154,6 @@ class User extends Authenticatable
         if($tickets_sort->count() != 0) {
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $last_training_given = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
-            $last_training_given = $last_training_given;
         } else {
             $last_training_given = null;
         }
@@ -210,5 +208,39 @@ class User extends Authenticatable
 
         // Return the password
         return $password;
+    }
+
+    // Enrols the user in the correct Moodle courses for next Moodle login
+    public function enrolInMoodleCourses()
+    {
+        // Make an array of all the course id's the user should be enroled in
+        if ($this->visitor == 1)
+            $courses = [2, 4, 5, 6, 7, 8, 10, 12];
+        elseif ($this->rating_id == 1)
+            $courses = [2, 12];
+        elseif ($this->rating_id == 2)
+            $courses = [2, 12, 4, 10];
+        elseif ($this->rating_id == 3)
+            $courses = [2, 12, 4, 10, 6, 5];
+        elseif ($this->rating_id == 4)
+            $courses = [2, 12, 4, 10, 6, 5, 7, 8];
+        elseif ($this->rating_id >= 5)
+            $courses = [2, 12, 4, 10, 6, 5, 7, 8, 9];
+
+        if ($this->hasRole('ins') || $this->can('staff'))
+            $courses = $courses + [3, 11];
+
+        // Loop through their courses and add them if they don't exist
+        foreach ($courses as $c) {
+            $enrolment = MoodleEnrol::where('controller_id', $this->id)->where('course_id', $c)->first();
+
+            // If the enrolment doesn't exist, create it
+            if (! $enrolment) {
+                $new_enrol = new MoodleEnrol();
+                $new_enrol->controller_id = $this->id;
+                $new_enrol->course_id = $c;
+                $new_enrol->save();
+            }
+        }
     }
 }
