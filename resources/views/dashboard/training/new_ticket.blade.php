@@ -45,7 +45,7 @@ New Training Ticket
                     @if(Auth::user()->hasRole('ins'))
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
-                            10 => 'No Show'
+                            10 => 'No Show',
                             12 => 'Complete',
                             13 => 'Incompleted',
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
