@@ -71,7 +71,7 @@ New Training Ticket
                         45 => 'C1M2-CTR-4',
                         46 => 'C1M3-CTR-5 (Live Network Monitoring)',
                         47 => 'C1M4-CTR-6',
-                        48 => ''Visting Checkout Major',
+                        48 => 'Visting Checkout Major',
 
 
 
