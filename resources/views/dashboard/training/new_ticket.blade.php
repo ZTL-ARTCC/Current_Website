@@ -62,7 +62,9 @@ New Training Ticket
                             1 => 'Sweatbox Training',
                             2 => 'Live Training',
                             3 => 'Live Monitoring',
-                            10 => 'No Show'
+                            10 => 'No Show',
+                            12 => 'Complete',
+                            13 => 'Incompleted',
                         ], null, ['placeholder' => 'Select Session Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
