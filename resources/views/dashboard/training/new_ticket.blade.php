@@ -28,7 +28,7 @@ New Training Ticket
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    {!! Form::label('position', 'Position', ['class' => 'form-label']) !!}
+                    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
                         0 => 'Minor Delivery/Ground',
                         1 => 'Minor Local',
@@ -37,25 +37,27 @@ New Training Ticket
                         4 => 'Minor Approach',
                         5 => 'Major Approach',
                         6 => 'Center'
-                    ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
+                        7 => 'S1 Training.'
+                        7 => 'S1T1-DEL-1 (Theory)'
+                    ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     @if(Auth::user()->hasRole('ins'))
-                        {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
+                        {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
                             10 => 'No Show',
-                            12 => 'Complete',
+                            12 => 'Completed',
                             13 => 'Incompleted',
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
-                        {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
+                        {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
                             10 => 'No Show',
-                            12 => 'Complete',
+                            12 => 'Completed',
                             13 => 'Incompleted',
-                        ], null, ['placeholder' => 'Select Session Type', 'class' => 'form-control']) !!}
+                        ], null, ['placeholder' => 'Select Progress Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
             </div>
