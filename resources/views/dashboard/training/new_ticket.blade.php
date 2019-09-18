@@ -36,9 +36,9 @@ New Training Ticket
                         3 => 'Major Local',
                         4 => 'Minor Approach',
                         5 => 'Major Approach',
-                        6 => 'Center'
-                        7 => 'S1 Training.'
-                        7 => 'S1T1-DEL-1 (Theory)'
+                        6 => 'Center',
+                        7 => 'S1 Training.',
+                        7 => 'S1T1-DEL-1 (Theory)',
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
