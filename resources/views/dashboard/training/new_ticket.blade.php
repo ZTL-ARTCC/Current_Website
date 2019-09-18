@@ -45,23 +45,13 @@ New Training Ticket
                     @if(Auth::user()->hasRole('ins'))
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
-                            0 => 'Classroom Training',
-                            1 => 'Sweatbox Training',
-                            2 => 'Live Training',
-                            3 => 'Live Monitoring',
-                            4 => 'Sweatbox OTS (Pass)',
-                            5 => 'Live OTS (Pass)',
-                            6 => 'Sweatbox OTS (Fail)',
-                            7 => 'Live OTS (Fail)',
                             10 => 'No Show'
+                            12 => 'Complete',
+                            13 => 'Incompleted',
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
-                            0 => 'Classroom Training',
-                            1 => 'Sweatbox Training',
-                            2 => 'Live Training',
-                            3 => 'Live Monitoring',
                             10 => 'No Show',
                             12 => 'Complete',
                             13 => 'Incompleted',
