@@ -83,7 +83,7 @@ Training Tickets
                     <th scope="col">Start Time</th>
                     <th scope="col">End Time</th>
                 </tr>
-                @if(strpos($position_name, 'S1') !== false) 
+                @if(strpos($tickets->position_name, 'S1') !== false) 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
 
