@@ -85,7 +85,8 @@ Training Tickets
                 </tr>
                
                 @if($tickets->count() > 0)
-                @if(mb_strpos($tickets->position_name, 'S1') !== false) 
+                @if($tickets->position_name > 6)
+                @if($tickets->position_name < 21)
                     @foreach($tickets as $t)
 
                         <tr>
@@ -101,6 +102,7 @@ Training Tickets
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
+                @endif
                 @endif
                 @endif
             </thead>
