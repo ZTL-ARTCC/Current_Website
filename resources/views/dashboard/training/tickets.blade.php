@@ -62,13 +62,16 @@ Training Tickets
             <a class="nav-link active" href="#s1" role="tab" data-toggle="tab" style="color:black">S1</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">S2</a>
+            <a class="nav-link" href="#s2" role="tab" data-toggle="tab" style="color:black">S2</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#visitagree" role="tab" data-toggle="tab" style="color:black">S3</a>
+            <a class="nav-link" href="#s3" role="tab" data-toggle="tab" style="color:black">S3</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#c1" role="tab" data-toggle="tab" style="color:black">C1</a>
         </li>
     </ul>   
-    <div class="tab-content">
+<div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="s1">
         <table class="table">
             <thead>
@@ -129,7 +132,7 @@ Training Tickets
             </thead>
         </table>
     </div>
-    </div>
+</div>
         {!! $tickets->appends(['id' => $search_result->id])->render() !!}
     @endif
 </div>
