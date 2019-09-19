@@ -86,7 +86,7 @@ Training Tickets
                
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if(strpos($t->postion_name, 'S1' !== false)
+                        @if(strpos($t->postion_name, 'S1') !== false)
 
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
