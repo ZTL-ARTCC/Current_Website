@@ -88,7 +88,7 @@ Training Tickets
                
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                      @if(preg_match(''/\bS1\b/', $t->position_name'))
+                      @if($t->position_name < 19)
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -109,7 +109,7 @@ Training Tickets
             </thead>
         </table>
     </div>
-    <div role="tabpanel" class="tab-pane active" id="s2">
+    <div role="tabpanel" class="tab-pane" id="s2">
         <table class="table">
             <thead>
                 <tr>
