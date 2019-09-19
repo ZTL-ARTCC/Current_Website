@@ -44,9 +44,32 @@ Training Tickets
 
 
     @if($search_result != null)
+   
+   
+   
+
+
+
         <hr>
         <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
         <br>
+        
+        
+        
+        
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="#s1" role="tab" data-toggle="tab" style="color:black">S1</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">S2</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#visitagree" role="tab" data-toggle="tab" style="color:black">S3</a>
+        </li>
+    </ul>   
+    <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="s1">
         <table class="table">
             <thead>
                 <tr>
@@ -75,6 +98,38 @@ Training Tickets
                 @endif
             </thead>
         </table>
+    </div>
+    <div role="tabpanel" class="tab-pane active" id="s2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Training Date</th>
+                    <th scope="col">Trainer Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Session Type</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                </tr>
+                @if($tickets->count() > 0)
+                    @foreach($tickets as $t)
+                        <tr>
+                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                            <td>{{ $t->trainer_name }}</td>
+                            <td>{{ $t->position_name }}</td>
+                            <td>{{ $t->type_name }}</td>
+                            <td>{{ $t->start_time }}z</td>
+                            <td>{{ $t->end_time }}z</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6">No training tickets found.</td>
+                    </tr>
+                @endif
+            </thead>
+        </table>
+    </div>
+    </div>
         {!! $tickets->appends(['id' => $search_result->id])->render() !!}
     @endif
 </div>
