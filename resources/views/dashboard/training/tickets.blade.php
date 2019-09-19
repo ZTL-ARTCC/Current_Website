@@ -97,7 +97,7 @@ Training Tickets
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
                         </tr>
-                        @endif
+                        
                     @endforeach
                 @else
                     <tr>
