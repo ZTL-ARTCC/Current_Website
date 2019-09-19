@@ -84,10 +84,11 @@ Training Tickets
                     <th scope="col">End Time</th>
                 </tr>
                
+               
+               
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if(strpos($t->postion_name, 'S1') !== false)
-
+                      @if(preg_match(''/\bS1\b/', $t->position_name'))
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
