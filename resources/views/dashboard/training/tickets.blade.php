@@ -83,8 +83,10 @@ Training Tickets
                     <th scope="col">Start Time</th>
                     <th scope="col">End Time</th>
                 </tr>
+                @if(strpos($position_name, 'S1') !== false) 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
+
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -98,6 +100,7 @@ Training Tickets
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
+                @endif
                 @endif
             </thead>
         </table>
