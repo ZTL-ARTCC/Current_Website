@@ -88,13 +88,13 @@ class TrainingTicket extends Model
         } elseif($pos == 6) {
             $position = 'Center';
         } elseif($pos == 7) {
-            $position = 'S1T1-DEL-1 (Theory)';
+            $position = 'S1 T1-DEL-1 (Theory)';
         } elseif($pos == 8) {
-            $position = 'S1P1-DEL-2';
+            $position = 'S1 P1-DEL-2';
         } elseif($pos == 9) {
-            $position = 'S1P2-DEL-3';
+            $position = 'S1 P2-DEL-3';
         } elseif($pos == 10) {
-            $position = 'S1M1-DEL-4 (Live Network Monitoring - CLT)';
+            $position = 'S1 M1-DEL-4 (Live Network Monitoring - CLT)';
         } elseif($pos == 11) {
             $position = 'S1T2-DEL-5 (Theroy)';
         } elseif($pos == 12) {
