@@ -172,7 +172,13 @@ class TrainingTicket extends Model
         } elseif($pos == 47) {
             $position = 'C1M4-CTR-6';
         }  elseif($pos == 48) {
-            $position = 'Visting Checkout Major';
+            $position = 'S1 Visiting Major Checkout';
+        }  elseif($pos == 49) {
+            $position = 'S2 Visiting Major Checkout';
+        }  elseif($pos == 50) {
+            $position = 'S3 Visiting Major Checkout';
+        } elseif($pos == 51) {
+            $position = 'C1 Visiting Major Checkout';
         }
 
 

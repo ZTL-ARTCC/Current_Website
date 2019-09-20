@@ -82,7 +82,7 @@ Training Tickets
                     <th scope="col">Session Type</th>
                     <th scope="col">Start Time</th>
                     <th scope="col">End Time</th>
-                    <th scope="col">TEST</th>
+                    
                 </tr>
                
                
@@ -98,7 +98,7 @@ Training Tickets
                             <td>{{ $t->type_name }}</td>
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
-                            <td>{{ $t->position }}z</td>
+                            
                         </tr>
                         @endif
                     @endforeach
