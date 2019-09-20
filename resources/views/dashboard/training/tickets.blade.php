@@ -86,7 +86,7 @@ Training Tickets
                 </tr>
                
                
-                @if($tickets->postion < 23)
+                @if($tickets->position < 23)
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
 
