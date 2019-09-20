@@ -28,7 +28,7 @@ New Training Ticket
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    {!! Form::label('position', 'Position', ['class' => 'form-label']) !!}
+                    {!! Form::label('position', 'Lesson', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
                         7 => 'S1T1-DEL-1 (Theory)',
                         8 => 'S1P1-DEL-2',
