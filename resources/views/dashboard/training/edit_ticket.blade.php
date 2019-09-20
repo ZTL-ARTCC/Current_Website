@@ -26,13 +26,51 @@ Edit Training Ticket
                 <div class="form-group">
                     {!! Form::label('position', 'Position', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
-                        0 => 'Minor Delivery/Ground',
-                        1 => 'Minor Local',
-                        2 => 'Major Delivery/Ground',
-                        3 => 'Major Local',
-                        4 => 'Minor Approach',
-                        5 => 'Major Approach',
-                        6 => 'Center'
+                        7 => 'S1T1-DEL-1 (Theory)',
+                        8 => 'S1P1-DEL-2',
+                        9 => 'S1P2-DEL-3',
+                        10 => 'S1M1-DEL-4 (Live Network Monitoring – CLT)',
+                        11 => 'S1T2-DEL-5 (Theory)',
+                        12 => 'S1P3-DEL-6',
+                        13 => 'S1M2-DEL-7 (Live Network Monitoring – ATL)',
+                        14 => 'S1T3-GND-1 (Theory)',
+                        15 => 'S1P4-GND-2',
+                        16 => 'S1P5-GND-3',
+                        17 => 'S1M3-GND-4 (Live Network Monitoring – CLT)',
+                        18 => 'S1T4-GND-5 (Theory)',
+                        19 => 'S1P6-GND-6',
+                        20 => 'S1P7-GND-7',
+                        21 => 'S1M4-GND-8 (Live Network Monitoring – ATL)',
+                        22 => 'S2T1-TWR-1 (Theory)',
+                        23 => 'S2P1-TWR-2',
+                        24 => 'S2P2-TWR-3',
+                        25 => 'S2P3-TWR-4',
+                        26 => 'S2M1-TWR-5 (Live Network Monitoring – CLT)',
+                        27 => 'S2T2-TWR-6 (Theory)',
+                        28 => 'S2P4-TWR-7',
+                        29 => 'S2P5-TWR-8',
+                        30 => 'S2M2-TWR-9 (Live Network Monitoring – ATL)',
+                        31 => 'S3T1-APP-1 (Theory)',
+                        32 => 'S3T2-APP-2 (Theory)',
+                        33 => 'S3P1-APP-3',
+                        34 => 'S3P2-APP-4',
+                        35 => 'S3M1-APP-5 (Live Network Monitoring - BHM/CLT)',
+                        36 => 'S3T3-APP-6 (Theory)',
+                        37 => 'S3P3-APP-7',
+                        38 => 'S3P4-APP-8',
+                        39 => 'S3P5-APP-9',
+                        40 => 'S3P6-APP-10',
+                        41 => 'S3M2-APP-11 (Live Network Monitoring – ATL)',
+                        42 => 'C1T1-CTR-1 (Theory)',
+                        43 => 'C1P1-CTR-2',
+                        44 => 'C1P3-CTR-3',
+                        45 => 'C1M2-CTR-4',
+                        46 => 'C1M3-CTR-5 (Live Network Monitoring)',
+                        47 => 'C1M4-CTR-6',
+                        48 => 'S1 Visiting Major Checkout',
+                        49 => 'S2 Visiting Major Checkout',
+                        50 => 'S3 Visiting Major Checkout',
+                        51 => 'C1 Visiting Major Checkout',
                     ], $ticket->position, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                 </div>
             </div>
@@ -41,22 +79,16 @@ Edit Training Ticket
                     @if(Auth::user()->hasRole('ins') || Auth::user()->can('snrStaff'))
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
-                            0 => 'Classroom Training',
-                            1 => 'Sweatbox Training',
-                            2 => 'Live Training',
-                            3 => 'Live Monitoring',
-                            4 => 'Sweatbox OTS (Pass)',
-                            5 => 'Live OTS (Pass)',
-                            6 => 'Sweatbox OTS (Fail)',
-                            7 => 'Live OTS (Fail)'
+                            10 => 'No Show',
+                            12 => 'Completed',
+                            13 => 'Incompleted',
                         ], $ticket->type, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
-                            0 => 'Classroom Training',
-                            1 => 'Sweatbox Training',
-                            2 => 'Live Training',
-                            3 => 'Live Monitoring'
+                            10 => 'No Show',
+                            12 => 'Completed',
+                            13 => 'Incompleted',
                         ], $ticket->type, ['placeholder' => 'Select Session Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
