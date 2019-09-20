@@ -71,7 +71,12 @@ New Training Ticket
                         45 => 'C1M2-CTR-4',
                         46 => 'C1M3-CTR-5 (Live Network Monitoring)',
                         47 => 'C1M4-CTR-6',
-                        48 => 'Visting Major Checkout',
+                        48 => 'S1 Visiting Major Checkout',
+                        49 => 'S2 Visiting Major Checkout',
+                        50 => 'S3 Visiting Major Checkout',
+                        51 => 'C1 Visiting Major Checkout',
+
+
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
