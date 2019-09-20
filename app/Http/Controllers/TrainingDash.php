@@ -175,12 +175,12 @@ class TrainingDash extends Controller
             })->pluck('id');
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
-            $s1tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25)->where('postion', '7');
+           
         } else {
             $tickets = null;
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('s1tickets', $s1tickets);
+        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets);
     }
 
     public function searchTickets(Request $request) {
