@@ -102,7 +102,7 @@ Training Tickets
                             <td>{{ $t->type_name }}</td>
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
-                            <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                             
                         </tr>
                             @endif
