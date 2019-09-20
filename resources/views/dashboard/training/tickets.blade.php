@@ -89,7 +89,7 @@ Training Tickets
                 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position < 23)
+                        @if($t->position < 22)
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -124,7 +124,8 @@ Training Tickets
                 </tr>
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-
+                    @if($t->position > 21)
+                        @if($t->position < 31)
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -133,6 +134,8 @@ Training Tickets
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
                         </tr>
+                        @endif
+                    @endif
                     @endforeach
                 @else
                     <tr>
