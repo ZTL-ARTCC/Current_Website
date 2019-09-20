@@ -99,7 +99,7 @@ Training Tickets
                             <td>{{ $t->end_time }}z</td>
                             <td>{{ $t->position }}z</td>
                         </tr>
-                     @endif   
+                     
                     @endforeach
                 @else
                     <tr>
