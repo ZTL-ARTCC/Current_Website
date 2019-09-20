@@ -102,8 +102,10 @@ Training Tickets
                             <td>{{ $t->type_name }}</td>
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
+                            @if($t->ins_comments !=null)
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                            
+                            @else
+                            <td>N/A</td>
                         </tr>
                             @endif
                         @endif
