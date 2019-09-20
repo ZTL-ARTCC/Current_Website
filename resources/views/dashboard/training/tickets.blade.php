@@ -86,9 +86,9 @@ Training Tickets
                 </tr>
                
                
-               
-                @if($s1tickets->count() > 0)
-                    @foreach($s1tickets as $t)
+                @if(tickets->postion < 23)
+                @if($tickets->count() > 0)
+                    @foreach($tickets as $t)
 
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
@@ -106,7 +106,7 @@ Training Tickets
                         <td colspan="6">No training tickets found.</td>
                     </tr>
                 @endif
-
+                @endif
                
             </thead>
         </table>
