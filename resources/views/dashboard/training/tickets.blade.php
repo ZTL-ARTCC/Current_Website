@@ -70,6 +70,9 @@ Training Tickets
         <li class="nav-item">
             <a class="nav-link" href="#c1" role="tab" data-toggle="tab" style="color:black">C1</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#other" role="tab" data-toggle="tab" style="color:black">Other</a>
+        </li>
     </ul>   
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="s1">
@@ -89,7 +92,8 @@ Training Tickets
                 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position < 22 || $t->position == 48)
+                        @if($t->position > 6)
+                            @if($t->position < 22 || $t->position == 48)
                             
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
@@ -100,6 +104,7 @@ Training Tickets
                             <td>{{ $t->end_time }}z</td>
                             
                         </tr>
+                            @endif
                         @endif
                     @endforeach
                 @else
@@ -204,6 +209,40 @@ Training Tickets
                             <td>{{ $t->end_time }}z</td>
                         </tr>
                         @endif
+                    @endif
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="6">No training tickets found.</td>
+                    </tr>
+                @endif
+            </thead>
+        </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="other">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Training Date</th>
+                    <th scope="col">Trainer Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Session Type</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                </tr>
+                @if($tickets->count() > 0)
+                    @foreach($tickets as $t)
+                    @if($t->position < 7)
+                        
+                        <tr>
+                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                            <td>{{ $t->trainer_name }}</td>
+                            <td>{{ $t->position_name }}</td>
+                            <td>{{ $t->type_name }}</td>
+                            <td>{{ $t->start_time }}z</td>
+                            <td>{{ $t->end_time }}z</td>
+                        </tr>
+                        
                     @endif
                     @endforeach
                 @else
