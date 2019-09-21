@@ -181,7 +181,6 @@ class TrainingTicket extends Model
             $position = 'C1 Visiting Major Checkout';
         }
 
-
         return $position;
     }
 
