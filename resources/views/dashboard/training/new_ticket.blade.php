@@ -28,7 +28,7 @@ New Training Ticket
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    {!! Form::label('position', 'Lesson', ['class' => 'form-label']) !!}
+                    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
                         7 => 'S1T1-DEL-1 (Theory)',
                         8 => 'S1P1-DEL-2',
@@ -75,25 +75,27 @@ New Training Ticket
                         49 => 'S2 Visiting Major Checkout',
                         50 => 'S3 Visiting Major Checkout',
                         51 => 'C1 Visiting Major Checkout',
-                    ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
+
+
+                    ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     @if(Auth::user()->hasRole('ins'))
-                        {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
+                        {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
                             10 => 'No Show',
                             12 => 'Completed',
                             13 => 'Incompleted',
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
-                        {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
+                        {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
                             10 => 'No Show',
                             12 => 'Completed',
                             13 => 'Incompleted',
-                        ], null, ['placeholder' => 'Select Session Type', 'class' => 'form-control']) !!}
+                        ], null, ['placeholder' => 'Select Progress Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
             </div>
@@ -156,7 +158,6 @@ New Training Ticket
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {!! Form::close() !!}
 </div>
-
 <script type="text/javascript">
 $(function () {
     $('#datetimepicker1').datetimepicker({

@@ -11,7 +11,6 @@ Training Tickets
     &nbsp;
 </div>
 <br>
-
 <div class="container">
     @if($search_result != null)
         <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
@@ -42,14 +41,8 @@ Training Tickets
         </div>
     {!! Form::close() !!}
 
-
     @if($search_result != null)
    
-   
-   
-
-
-
         <hr>
         <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
         <br>
