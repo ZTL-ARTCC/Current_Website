@@ -74,7 +74,7 @@ New Training Ticket
                         48 => 'S1 Visiting Major Checkout',
                         49 => 'S2 Visiting Major Checkout',
                         50 => 'S3 Visiting Major Checkout',
-                        51 => 'C1 Visiting Major Checkout',
+                        51 => 'C1 Visiting Major Checkout'
 
 
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
@@ -87,14 +87,14 @@ New Training Ticket
                         {!! Form::select('type', [
                             10 => 'No Show',
                             12 => 'Completed',
-                            13 => 'Incompleted',
+                            13 => 'Incompleted'
                         ], null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                     @else
                         {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
                         {!! Form::select('type', [
                             10 => 'No Show',
                             12 => 'Completed',
-                            13 => 'Incompleted',
+                            13 => 'Incompleted'
                         ], null, ['placeholder' => 'Select Progress Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
