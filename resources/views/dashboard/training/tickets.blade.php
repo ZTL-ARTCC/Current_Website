@@ -303,7 +303,7 @@ Training Tickets
                         </tr>
                         </tr>
                         @endif
-                    @endif
+                        @endif
                     @endforeach
                 @else
                     <tr>
