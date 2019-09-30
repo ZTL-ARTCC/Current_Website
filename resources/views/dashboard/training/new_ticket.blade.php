@@ -75,8 +75,6 @@ New Training Ticket
                         49 => 'S2 Visiting Major Checkout',
                         50 => 'S3 Visiting Major Checkout',
                         51 => 'C1 Visiting Major Checkout',
-
-
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
@@ -95,6 +93,8 @@ New Training Ticket
                             10 => 'No Show',
                             12 => 'Completed',
                             13 => 'Incompleted',
+
+
                         ], null, ['placeholder' => 'Select Progress Type', 'class' => 'form-control']) !!}
                     @endif
                 </div>
@@ -158,7 +158,6 @@ New Training Ticket
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {!! Form::close() !!}
 </div>
-
 <script type="text/javascript">
 $(function () {
     $('#datetimepicker1').datetimepicker({

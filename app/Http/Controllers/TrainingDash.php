@@ -248,9 +248,11 @@ class TrainingDash extends Controller
         $audit->what = Auth::user()->full_name.' added a training ticket for '.User::find($ticket->controller_id)->full_name.'.';
         $audit->save();
 
+
   
         return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
     
+
     }
 
     public function viewTicket($id) {
