@@ -167,8 +167,7 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
 
-                        @if($t->position > 6)
-                            @if($t->position < 22 || $t->position == 48)
+      
                             
 
                     @if($t->position > 30)
