@@ -189,7 +189,7 @@ Training Tickets
 
                         </tr>
                         </tr>
-                        @endif
+                        
                     @endif
                     @endforeach
                 @else
