@@ -175,6 +175,7 @@ class TrainingDash extends Controller
             })->pluck('id');
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
+           
         } else {
             $tickets = null;
         }
@@ -247,11 +248,11 @@ class TrainingDash extends Controller
         $audit->what = Auth::user()->full_name.' added a training ticket for '.User::find($ticket->controller_id)->full_name.'.';
         $audit->save();
 
-        if($ticket->type >= 4 && !$ticket->type == 11) {
-            return redirect('/dashboard/training/ots-center')->with('success', 'The OTS training ticket has been submitted successfully. Please make sure to also set the OTS as complete and upload the necessary documents in the OTS center as well.');
-        } else {
-            return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
-        }
+
+  
+        return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+    
+
     }
 
     public function viewTicket($id) {
