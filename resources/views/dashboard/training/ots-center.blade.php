@@ -46,7 +46,7 @@ OTS Center
                                 <td>{{ $o->position_name }}</td>
                                 <td>
                                     <a href="/dashboard/training/ots-center/accept/{{ $o->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept Recommendation"><i class="fas fa-check"></i></a>
-                                    <a href="/dashboard/training?id{{ $o->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="View Training Tickets."><i class="fas fa-check"></i></a>
+                                    <a href="/dashboard/training?id{{ $user->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="View Training Tickets."><i class="fas fa-check"></i></a>
                                     @if(Auth::user()->can('snrStaff'))
                                         <a href="/dashboard/training/ots-center/reject/{{ $o->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Reject Recommendation"><i class="fas fa-times"></i></a>
                                         <span data-toggle="modal" data-target="#assign{{ $o->id }}">
