@@ -179,6 +179,12 @@ class TrainingTicket extends Model
             $position = 'S3 Visiting Major Checkout';
         } elseif($pos == 51) {
             $position = 'C1 Visiting Major Checkout';
+        }  elseif($pos == 52) {
+            $position = 'Enroute OTS';
+        } elseif($pos == 53) {
+            $position = 'Approach OTS';
+        } elseif($pos == 54) {
+            $position = 'Local OTS';
         }
 
 
