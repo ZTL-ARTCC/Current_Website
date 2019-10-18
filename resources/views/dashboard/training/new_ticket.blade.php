@@ -75,6 +75,9 @@ New Training Ticket
                         49 => 'S2 Visiting Major Checkout',
                         50 => 'S3 Visiting Major Checkout',
                         51 => 'C1 Visiting Major Checkout',
+                        52 => 'Enroute OTS',
+                        53 => 'Approach OTS',
+                        54 => 'Local OTS',
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
