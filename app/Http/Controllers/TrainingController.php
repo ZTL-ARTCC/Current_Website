@@ -24,21 +24,21 @@ class TrainingController extends Controller {
 	{
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
-		$position_id = Input::get('position');
 		$slot_id = Input::get('slot');
 		$Slot = MentorAvail::find($slot_id);
 
 		$Slot->trainee_id = $id;
-		$Slot->position_id;
+		$Slot->position_id = Input::get('position');
 		$Slot->trainee_comments = Input::get('comments');
+		
+		
 
 		Mail::send(['html' => 'emails.training.new_session'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
             $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
             $m->subject('New Training Session');
             $m->to($nSessions->trainee_id->email)->cc($nSessions->mentor_id->email);
 		});
-		$Slot->save();
-
+		
 		
 	}
 	
