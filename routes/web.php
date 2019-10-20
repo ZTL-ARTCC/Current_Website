@@ -37,6 +37,7 @@ Route::post('/mentoravi', 'TrainingController@saveSession');
 Route::get('/admin/mentor/avail', 'MentorController@showAvail');
 Route::post('/admin/mentor/avail', 'MentorController@postAvail');
 Route::get('/admin/mentor/requests', 'MentorController@showRequests');
+Route::post('/admin/mentor/requests/{id}/cancel', 'MentorController@cancelSession');
 /*
 *   End Front Page Stuff
 */
