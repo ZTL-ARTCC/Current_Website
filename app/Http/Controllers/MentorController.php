@@ -6,7 +6,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 
-class TrainingController extends Controller {
+class MentorController extends Controller {
     public function showAvail()
 	{
 		$availability = MentorAvail::where('mentor_id', '=', Auth::id())->get();
