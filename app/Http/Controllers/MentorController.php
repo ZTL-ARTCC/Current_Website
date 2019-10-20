@@ -14,7 +14,20 @@ class MentorController extends Controller {
 		$availability = MentorAvail::where('mentor_id', '=', Auth::id())->get();
 		return View('dashboard.training.mentors.mentoravail')->with('availability', $availability);
     }
-    
+	
+	public function cancelSession($id)
+	{
+		$request = MentorAvail::find($id);
+		$request->cancel_message = Input::get('cancel');
+		$request->save();
+		$request->sendCancellationEmail();
+		$request->delete();
+
+		ActivityLog::create(['note' => 'Cancelled Session: '.$request->slot, 'user_id' => Auth::id(), 'log_state' => 3, 'log_type' => 6]);
+
+		return Redirect::to('/admin/mentor/requests')->with('message', 'Session canceled. Student has been notified!');
+	}
+	
     public function postAvail()
 	{
 		$mentor_id = Auth::id();
