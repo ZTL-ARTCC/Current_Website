@@ -126,7 +126,7 @@
 
 				var slots = slotsGrouped[date],
 					mentors = slots.map(function(slot){
-						return slot.mentor.first_name + " " + slot.mentor.last_name + " - " + ratingIdToText[slot.mentor.rating_id];
+						return slot.mentor.fname + " " + slot.mentor.lname + " - " + ratingIdToText[slot.mentor.rating_id];
 					});
 
 				$td.attr('title', mentors.join("\n"));

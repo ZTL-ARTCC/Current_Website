@@ -24,9 +24,6 @@ class TrainingController extends Controller {
 	{
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
-
-		
-
 		$position = Input::get('position');
 		$slot_id = Input::get('slot');
 		$Slot = MentorAvail::find($slot_id);
@@ -39,5 +36,34 @@ class TrainingController extends Controller {
 		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
 
 		$Slot->sendNewSessionEmail();	
-    }
+	}
+	
+	public function cancelSession($id)
+	{
+		$session = MentorAvail::find($id);
+		$session->sendCancellationEmail();
+		$session->trainee_id = null;
+		$session->position_id = null;
+		$session->trainee_comments = null;
+		$session->save();
+
+		ActivityLog::create(['note' => 'Cancelled Session: '.$session->slot, 'user_id' => Auth::id(), 'log_state' => 3, 'log_type' => 6]);
+
+		return Redirect::to('/training')->with('message', 'Training sessions canceled!');
+	}
+
+	public function showNotes()
+	{
+		$id = Auth::id();
+		$user = User::find($id);
+		$notes = TrainingNote::where('controller_id', $id)->orderBy('created_at', 'ASC')->get();
+		$exam = Exam::where('controller_id', '=', $id)->orderBy('updated_at', 'ASC')->get();
+		return View('admin.training.notes')->with('notes', $notes)->with('user', $user)->with('exam', $exam);
+	}
+
+	public function showNote($id)
+	{
+		$note = TrainingNote::find($id);
+		return View('admin.training.note')->with('note', $note);
+	}
 }
