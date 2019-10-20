@@ -69,7 +69,91 @@
 	{{ Form::close() }}
 </div>
 
+<script src="/js/moment.min.js"></script>
+<script src="/js/moment-timezone-with-data-2010-2020.js"></script>
+<script>
+	function pad (str, max) {
+		str = str.toString();
+		return str.length < max ? pad("0" + str, max) : str;
+	}
 
+	var ratingIdToText = {!! json_encode(App\User::$RatingShort, JSON_FORCE_OBJECT) !!},
+		currentAvailability = {!! $availability->toJSON() !!},
+		now = moment(),
+		$table = $(".availability"),
+		$headerRow = $table.find('thead tr'),
+		$body = $table.find('tbody');
+
+	now.tz('America/New_York');
+
+	$(".time").text(now.format("HH:mm"));
+
+	$headerRow.append($("<th />").text("Date"));
+
+	for (var i = 0; i < 24; i++) {
+		$headerRow.append($("<th />").text(pad(i, 2) + ":00"));
+	}
+
+	var slotsGrouped = currentAvailability.reduce(function(pv, avail){
+		if (avail.slot in pv) {
+			pv[avail.slot].push(avail);
+		} else {
+			pv[avail.slot] = [avail];
+		}
+
+		return pv;
+	}, {});
+
+	for (var i = 0; i < 14; i++) {
+		var $tr = $("<tr />");
+
+		$tr.append($("<th />").text(now.format('MM/DD')));
+
+		for (var j = 0; j < 24; j++) {
+			var $td = $("<td />"),
+				date = now.format('YYYY-MM-DD') + ' ' + pad(j, 2) + ":00:00";
+
+			if (date in slotsGrouped) {
+				$td.addClass('available');
+				$td.addClass('simple-tooltip');
+				$td.data('toggle', 'tooltip');
+
+				var slots = slotsGrouped[date],
+					mentors = slots.map(function(slot){
+						return slot.mentor.first_name + " " + slot.mentor.last_name + " - " + ratingIdToText[slot.mentor.rating_id];
+					});
+
+				$td.attr('title', mentors.join("\n"));
+
+				$td.on('click', (function(date){
+					return function(){
+						var slots = slotsGrouped[date],
+							$form = $(".session-request-form"),
+							$slot = $form.find('#slot');
+
+
+						$form.show();
+						$form.find('#date').val(date);
+
+						$slot.html('');
+						slots.forEach(function(slot){
+							var $option = $("<option />");
+							$option.val(slot.id);
+							$option.text(slot.mentor.first_name + " " + slot.mentor.last_name + " - " + ratingIdToText[slot.mentor.rating_id]);
+
+							$slot.append($option);
+						});
+					}
+				})(date));
+			}
+
+			$tr.append($td);
+		}
+
+		$body.append($tr);
+		now.add(1, 'd');
+	}
+</script>
 
 @endif
 
