@@ -31,6 +31,8 @@ Route::post('/pilots/request-staffing', 'FrontController@staffRequest');
 Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
+
+Route::get('/mentoravi', 'TrainingController@showMentAvail');
 /*
 *   End Front Page Stuff
 */
