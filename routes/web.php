@@ -34,6 +34,8 @@ Route::get('controllers/files', 'FrontController@showFiles');
 
 Route::get('/mentoravi', 'TrainingController@showMentAvail');
 Route::post('/mentoravi', 'TrainingController@saveSession');
+Route::get('/admin/mentor/avail', 'MentorController@showAvail');
+Route::post('/admin/mentor/avail', 'MentorController@postAvail');
 /*
 *   End Front Page Stuff
 */

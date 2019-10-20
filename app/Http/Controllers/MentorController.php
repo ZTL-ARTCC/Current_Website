@@ -7,6 +7,12 @@ use Auth;
 use Carbon\Carbon;
 
 class TrainingController extends Controller {
+    public function showAvail()
+	{
+		$availability = MentorAvail::where('mentor_id', '=', Auth::id())->get();
+		return View('dashboard.training.mentors.mentoravail')->with('availability', $availability);
+    }
+    
     public function postAvail()
 	{
 		$mentor_id = Auth::id();
