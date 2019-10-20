@@ -13,7 +13,7 @@ class training_mentor_availability extends Migration
      */
     public function up()
     {
-        Schema::create('training_mentor_availability', function(Blueprint $table) {
+        Schema::create('trainingmentoravailability', function(Blueprint $table) {
             $table->integer('id');
             $table->integer('mentor_id');
             $table->datetime('slot');
@@ -34,6 +34,6 @@ class training_mentor_availability extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('training_mentor_availability');
+        Schema::dropIfExists('trainingmentoravailability');
     }
 }
