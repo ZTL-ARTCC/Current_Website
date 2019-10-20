@@ -32,7 +32,7 @@ class MentorAvail extends Model {
 	}
 
 	public function sendNewSessionEmail() {
-		return Mail::send('emails.new_session', ['session' => $this], function($message){
+		return Mail::send('emails.training.new_session', ['session' => $this], function($message){
 			$message->from('training@notams.ztlartcc.org', 'vZTL Training Depatment');
 			$message->to($this->mentor->email)->cc($this->trainee->email);
 			$message->subject('ZTL - New Session');
