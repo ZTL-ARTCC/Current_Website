@@ -33,7 +33,7 @@ class TrainingController extends Controller {
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->save();
 
-		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
+		
 
 		$Slot->sendNewSessionEmail();	
 	}
