@@ -1,9 +1,38 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\MentorAvai;
+use App\User;
+
 class TrainingController extends Controller {
     public function showMentAvail()
 	{
 		return View('dashboard.training.sch.mtr_avail');
+    }
+
+
+    public function saveSession()
+	{
+		$id = Auth::id();
+		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
+
+		if ($nSessions >= 5) {
+			return Redirect::action('TrainingController@showRequests')->with('message', 'A student is only allowed a maximum of 5 slots assigned at once.');
+		}
+
+		$position = Input::get('position');
+		$slot_id = Input::get('slot');
+		$Slot = MentorAvail::find($slot_id);
+
+		$Slot->trainee_id = $id;
+		$Slot->position_id = $position;
+		$Slot->trainee_comments = Input::get('comments');
+		$Slot->save();
+
+		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
+
+		$Slot->sendNewSessionEmail();
+
+		
     }
 }
