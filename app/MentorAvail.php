@@ -8,7 +8,7 @@ use Mail;
 
 class MentorAvail extends Model {
 
-	protected $table = 'training_mentor_availability';
+	protected $table = 'mentor_training_times';
 
 	protected $fillable = array('mentor_id', 'slot', 'trainee_id', 'position_id', 'trainee_comments');
 
