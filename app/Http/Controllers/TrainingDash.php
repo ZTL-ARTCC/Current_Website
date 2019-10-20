@@ -117,9 +117,7 @@ class TrainingDash extends Controller
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
 
-		if ($nSessions >= 5) {
-			return Redirect::action('TrainingController@showRequests')->with('message', 'A student is only allowed a maximum of 5 slots assigned at once.');
-		}
+		
 
 		$position = Input::get('position');
 		$slot_id = Input::get('slot');
