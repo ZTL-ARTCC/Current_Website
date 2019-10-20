@@ -29,7 +29,7 @@ class TrainingController extends Controller {
 		$Slot = MentorAvail::find($slot_id);
 
 		$Slot->trainee_id = $id;
-		$Slot->position_id = $position;
+		$Slot->position_id;
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->save();
 
