@@ -1,22 +1,32 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Training
-@endsection
+@parent
+| Training
+@stop
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    <h2>Training - Request Session</h2>
-    &nbsp;
-</div>
-<br>
-<div class="container">
-    <legend>
-        Selcet an available time slot for training. Current time: <span class="time"></span> EST
-    </legend>
 
-    <div class="table-responsive">
+<div class="page-heading-two">
+	<div class="container">
+		<h2>Training - Request Session</h2>
+	</div>
+</div>
+
+@if(Auth::user()->canTrain == 0)
+<div class="container">
+<div class="row">
+	<div class="col-sm-12">
+		<center><p>Your Training Has Been Disabled By The Instructors</p></center>
+	</div>
+</div>
+@else
+<div class="container">
+	<legend>
+		Select an available time slot for training. Current Time: <span class="time"></span> EST
+	</legend>
+
+	<div class="table-responsive">
 		<table class="availability table table-bordered table-condensed">
 			<thead>
 				<tr></tr>
@@ -26,7 +36,7 @@
 		</table>
 	</div>
 
-    {{ Form::open(['action' => 'TrainingController@saveSession', 'class' => 'session-request-form']) }}
+	{{ Form::open(['action' => 'TrainingController@saveSession', 'class' => 'session-request-form']) }}
 		<div class="row">
 			<div class="col-sm-12">
 				{{Form::label('slot', 'Mentor:', ['class'=>'control-label'])}}
@@ -151,5 +161,6 @@
 	}
 </script>
 
+@endif
 
 @stop
