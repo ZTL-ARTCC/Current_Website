@@ -26,7 +26,7 @@
 		</table>
 	</div>
 
-    {{ Form::open(['action' => 'TrainingDash@saveSession', 'class' => 'session-request-form']) }}
+    {{ Form::open(['action' => 'TrainingController@saveSession', 'class' => 'session-request-form']) }}
 		<div class="row">
 			<div class="col-sm-12">
 				{{Form::label('slot', 'Mentor:', ['class'=>'control-label'])}}
