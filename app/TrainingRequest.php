@@ -74,7 +74,7 @@ class TrainingRequest extends Model {
 
 	protected $table = 'training_controller_requests';
 
-	protected $fillable = array('controller_id', 'position', 'date', 'request_begin', 'request_end', 'comments', 
+	protected $fillable = array('controller_id', 'position_id', 'date', 'request_begin', 'request_end', 'comments', 
 								'accepted', 'mentor', 'session_begin', 'session_end', 'complete');
 
 
