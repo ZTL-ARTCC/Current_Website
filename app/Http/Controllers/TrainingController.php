@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\MentorAvail;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 
 class TrainingController extends Controller {
     public function showMentAvail()
