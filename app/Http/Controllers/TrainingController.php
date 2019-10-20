@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\MentorAvai;
 use App\User;
+use Auth;
 
 class TrainingController extends Controller {
     public function showMentAvail()
