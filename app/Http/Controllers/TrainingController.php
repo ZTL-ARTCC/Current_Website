@@ -24,7 +24,7 @@ class TrainingController extends Controller {
 	{
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
-		$position = Input::get('position');
+		$position_id = Input::get('position');
 		$slot_id = Input::get('slot');
 		$Slot = MentorAvail::find($slot_id);
 
