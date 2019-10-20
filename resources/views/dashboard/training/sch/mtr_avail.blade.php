@@ -37,6 +37,12 @@
 	</div>
 
 	{{ Form::open(['action' => 'TrainingController@saveSession', 'class' => 'session-request-form']) }}
+	<div class="row">
+			<div class="col-sm-12">
+				{{Form::label('slot', 'Mentor:', ['class'=>'control-label'])}}
+				{{Form::select('slot', [], 0, ['class'=>'form-control'])}}
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group">
