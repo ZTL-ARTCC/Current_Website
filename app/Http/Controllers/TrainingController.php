@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\MentorAvai;
+use App\MentorAvail;
 use App\User;
 use Auth;
 
