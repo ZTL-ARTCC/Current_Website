@@ -36,8 +36,8 @@
 	{{ Form::close() }}
 </div>
 
-<script src="js/moment.min.js"></script>
-<script src="js/moment-timezone-with-data-2010-2020.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/moment-timezone-with-data-2010-2020.js"></script>
 <script>
 	function pad (str, max) {
 		str = str.toString();
