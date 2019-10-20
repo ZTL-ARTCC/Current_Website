@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use Mail;
 use App\MentorAvail;
 use App\User;
 use Auth;
