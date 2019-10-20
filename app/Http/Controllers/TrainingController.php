@@ -7,7 +7,7 @@ use App\User;
 class TrainingController extends Controller {
     public function showMentAvail()
 	{
-		return View('admin.training.mentoravail')->with('availability', $availability);
+		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability);
     }
 	
 	public function saveSession()
