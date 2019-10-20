@@ -151,6 +151,5 @@
 	}
 </script>
 
-@endif
 
 @stop
