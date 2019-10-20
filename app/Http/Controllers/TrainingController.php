@@ -5,6 +5,8 @@ use App\MentorAvail;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class TrainingController extends Controller {
     public function showMentAvail()
