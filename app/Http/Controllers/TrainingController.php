@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use Mail;
+
 use App\MentorAvail;
 use App\User;
 use Auth;
@@ -30,16 +30,10 @@ class TrainingController extends Controller {
 		$Slot->trainee_id = $id;
 		$Slot->position_id = Input::get('position');
 		$Slot->trainee_comments = Input::get('comments');
-		
-		
 
-		Mail::send(['html' => 'emails.training.new_session'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
-            $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
-            $m->subject('New Training Session');
-            $m->to($nSessions->trainee_id->email)->cc($nSessions->mentor_id->email);
-		});
-		
-		
+
+
+		$Slot->save();
 	}
 	
 	public function cancelSession($id)
