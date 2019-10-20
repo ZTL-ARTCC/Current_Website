@@ -33,6 +33,7 @@ Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 
 Route::get('/mentoravi', 'TrainingController@showMentAvail');
+Route::post('/mentoravi', 'TrainingController@saveSession');
 /*
 *   End Front Page Stuff
 */
