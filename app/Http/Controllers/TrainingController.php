@@ -7,6 +7,12 @@ use App\User;
 class TrainingController extends Controller {
     public function showMentAvail()
 	{
+		$id = Auth::id();
+
+		$availability = MentorAvail::with('mentor')
+			->whereNull('trainee_id')
+			->where('slot', '>', Carbon::now('America/New_York'))
+			->get();
 		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability);
     }
 	
