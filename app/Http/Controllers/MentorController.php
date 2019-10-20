@@ -39,8 +39,13 @@ class MentorController extends Controller {
 		}
 
 		MentorAvail::where('mentor_id', '=', $mentor_id)->whereIn('slot', $old_slots)->delete();
-		
-
-		
+		return Redirect::action('MentorController@showAvail')->with('message', 'Availability has been updated');
+	
     }
+   
+    public function showRequests()
+	{
+		$sessions = MentorAvail::where('trainee_id', '!=', 0)->where('slot', '>', new Carbon('midnight today', 'America/New_York'))->orderBy('slot', 'ASC')->get();
+		return View('dashboard.training.mentors.sessions')->with('sessions', $sessions);
+	}
 }
