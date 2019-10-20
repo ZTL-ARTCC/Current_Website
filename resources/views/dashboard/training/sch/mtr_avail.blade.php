@@ -145,7 +145,7 @@
 						slots.forEach(function(slot){
 							var $option = $("<option />");
 							$option.val(slot.id);
-							$option.text(slot.mentor.first_name + " " + slot.mentor.last_name + " - " + ratingIdToText[slot.mentor.rating_id]);
+							$option.text(slot.mentor.fname + " " + slot.mentor.lname + " - " + ratingIdToText[slot.mentor.rating_id]);
 
 							$slot.append($option);
 						});
