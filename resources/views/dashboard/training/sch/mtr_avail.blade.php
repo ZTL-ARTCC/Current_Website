@@ -47,7 +47,7 @@
 			<div class="col-sm-6">
 			
 				<div class="form-group">
-			    @if($power->training_power > 1)
+			    @if($mentor_power->mentor_power > 1)
 				    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
 						1 => 'Minor Delivery',
