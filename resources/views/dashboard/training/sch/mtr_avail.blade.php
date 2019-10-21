@@ -57,7 +57,7 @@
                         7 => 'Minor Approach',
                         8 => 'Major Approach',
                         9 => 'Enroute',
-					]
+					], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
 				</div>
 			</div>
 			<div class="col-sm-6">
