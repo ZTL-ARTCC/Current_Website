@@ -32,7 +32,7 @@ class TrainingController extends Controller {
 		$Slot->position_id =  Input::get('position');
 		$mentor = User::find($Slot->mentor_id);
 		$trainee = User::find($Slot->trainee_id);
-		Mail::send('emails.training.new_session', ['mentor' => $mentor, 'trainee' => $trainiee, 'position_id' => $position_id, 'trainiee_comments' => $trainiee_comments], function ($m) use ($Slot, $mentor, $trainee) {
+		Mail::send('emails.training.new_session', ['mentor' => $mentor, 'trainee' => $trainee, 'position_id' => $position_id, 'trainee_comments' => $trainee_comments], function ($m) use ($Slot, $mentor, $trainee) {
 			$m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training');
 			$m->subject('New Training Seesion');
 			$m->to($trainee->email)->cc($mentor->email);
