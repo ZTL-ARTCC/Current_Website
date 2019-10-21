@@ -33,7 +33,7 @@ class TrainingController extends Controller {
 		
 		Mail::send('emails.training.new_session', ['session' => $this], function($message){
 			$message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')->subject('Upcoming Event Reminder');
-			$message->to($nSessions->trainee_id->email)->cc($nSessions->mentor_id->email);
+			$message->to($Slot->trainee_id->email)->cc($Slot->mentor_id->email);
 		});
 		
 		$Slot->save();
