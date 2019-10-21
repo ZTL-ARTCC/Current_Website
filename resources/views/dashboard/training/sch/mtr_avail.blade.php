@@ -46,8 +46,8 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="form-group">
-					{{Form::label('position', 'Position:', ['class'=>'control-label'])}}
-					{{Form::select('position', [
+				    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
+                    {!! Form::select('position', [
 						1 => 'Minor Delivery',
                         2 => 'Major Delivery',
                         3 => 'Minor Ground',
