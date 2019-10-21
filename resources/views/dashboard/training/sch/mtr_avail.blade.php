@@ -47,12 +47,12 @@
 			<div class="col-sm-6">
 			
 				<div class="form-group">
-				@if($availability->mentor->RatingShort == 5)
+			
 				    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
 						1 => 'Minor Delivery',
 					], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
-				@endif
+			
 				</div>
 				
 			</div>
