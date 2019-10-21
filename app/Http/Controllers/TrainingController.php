@@ -32,7 +32,11 @@ class TrainingController extends Controller {
 		$mentor = User::find($Slot->mentor_id);
 		$trainee = User::find($Slot->trainee_id);
 		$Slot->save();
-	
+		Mail::send(['html' => 'emails.training.new_session'], ['Slot' => $Slot, 'mentor' => $mentor, 'trainee' => $trainee], function ($t) use ($Slot, $trainee, $mentor) {
+            $t->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
+            $t->subject('New Training Session');
+            $t->to($mentor->email);
+        });
 	}
 	
 	public function cancelSession($id)
