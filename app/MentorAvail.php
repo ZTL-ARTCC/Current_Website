@@ -13,7 +13,7 @@ class MentorAvail extends Model {
 	protected $fillable = array('mentor_id', 'slot', 'trainee_id', 'position_id', 'trainee_comments');
 
 	public function mentor() {
-		return $this->hasOne('app\User', 'id', 'mentor_id');
+		return $this->hasOne('app\User', 'id', 'mentor_id', 'mentor_power');
 	}
 
 	public function Trainee() {
