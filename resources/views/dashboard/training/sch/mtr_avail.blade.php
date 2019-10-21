@@ -35,7 +35,7 @@
 			</tbody>
 		</table>
 	</div>
-
+	
 	{{ Form::open(['action' => 'TrainingController@saveSession', 'class' => 'session-request-form']) }}
 	<div class="row">
 			<div class="col-sm-12">
@@ -81,7 +81,8 @@
 					{{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
 				</div>
 			</div>
-		</div>s
+		</div>
+		@echo ($availability->mentor_id->email)
 	{{ Form::close() }}
 </div>
 
