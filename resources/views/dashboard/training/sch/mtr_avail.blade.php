@@ -82,7 +82,7 @@
 				</div>
 			</div>
 		</div>
-		@echo ($availability->mentor_id->email)
+		
 	{{ Form::close() }}
 </div>
 

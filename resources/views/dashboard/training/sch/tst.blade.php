@@ -1,0 +1,1 @@
+@echo($trainee->email)
