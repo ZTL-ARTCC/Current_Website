@@ -45,20 +45,15 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-6">
+				@if($availability->mentor_power == 1)
 				<div class="form-group">
 				    {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
 						1 => 'Minor Delivery',
-                        2 => 'Major Delivery',
-                        3 => 'Minor Ground',
-                        4 => 'Major Ground',
-                        5 => 'Minor Tower',
-                        6 => 'Major Tower',
-                        7 => 'Minor Approach',
-                        8 => 'Major Approach',
-                        9 => 'Enroute',
 					], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
+				
 				</div>
+				@endif
 			</div>
 			<div class="col-sm-6">
 				<div class="form-group">
