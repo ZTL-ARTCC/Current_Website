@@ -26,14 +26,13 @@ class TrainingController extends Controller {
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
 		$slot_id = Input::get('slot');
 		$Slot = MentorAvail::find($slot_id);
-
-		$Slot->trainee_id = $id;
-		$Slot->position_id = Input::get('position');
-		$Slot->trainee_comments = Input::get('comments');
-
-
+		$request->validate([
+            'position' => 'required',
+		]);
 		
-
+		$Slot->trainee_id = $id;
+		$Slot->trainee_comments = Input::get('comments');
+		$Slot->position_id = $request->position;
 		$Slot->save();
 	}
 	

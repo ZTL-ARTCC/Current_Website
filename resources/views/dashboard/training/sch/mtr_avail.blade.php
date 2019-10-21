@@ -47,7 +47,17 @@
 			<div class="col-sm-6">
 				<div class="form-group">
 					{{Form::label('position', 'Position:', ['class'=>'control-label'])}}
-					{{Form::select('position', App\TrainingRequest::$PosReq, 1, ['class'=>'form-control'])}}
+					{{Form::select('position', [
+						1 => 'Minor Delivery',
+                        2 => 'Major Delivery',
+                        3 => 'Minor Ground',
+                        4 => 'Major Ground',
+                        5 => 'Minor Tower',
+                        6 => 'Major Tower',
+                        7 => 'Minor Approach',
+                        8 => 'Major Approach',
+                        9 => 'Enroute',
+					]
 				</div>
 			</div>
 			<div class="col-sm-6">
