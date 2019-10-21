@@ -35,7 +35,7 @@ class TrainingController extends Controller {
 		Mail::send(['html' => 'emails.training.new_session'], ['Slot' => $Slot, 'mentor' => $mentor, 'trainee' => $trainee], function ($t) use ($Slot, $trainee, $mentor) {
             $t->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
             $t->subject('New Training Session');
-            $t->to($mentor->email);
+            $t->to('atcpilot70@gmail.com');
         });
 	}
 	
