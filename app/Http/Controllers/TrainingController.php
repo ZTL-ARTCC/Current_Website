@@ -29,6 +29,12 @@ class TrainingController extends Controller {
 		$Slot->trainee_id = $id;
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->position_id =  Input::get('position');
+		
+		Mail::send('emails.training.new_session', ['session' => $this], function($message){
+			$message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')->subject('Upcoming Event Reminder');
+			$message->to($this->mentor->email)->cc($this->trainee->email);
+		});
+		
 		$Slot->save();
 	}
 	
