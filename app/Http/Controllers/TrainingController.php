@@ -15,7 +15,7 @@ class TrainingController extends Controller {
 		$id = Auth::id();
 		$power = User::find($id);
 		$mentor = MentorAvail::find($id);
-		$mentor_power = User::find($mentor_id);
+		$mentor_power = User::find($mentor);
 		$availability = MentorAvail::with('mentor')
 			->whereNull('trainee_id')
 			->where('slot', '>', Carbon::now('America/New_York'))
