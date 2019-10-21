@@ -32,10 +32,6 @@ class TrainingController extends Controller {
 		$mentor = User::find($Slot->mentor_id);
 		$trainee = User::find($Slot->trainee_id);
 		$Slot->save();
-		Mail::send('emails.inactive.obs', function($message) {
-			$message->from('activity@notams.ztlartcc.org', 'vZTL ARTCC Activity Department')->subject('You have not met the activity requirement in the last 30 days');
-			$message->to($trainee->email);
-		});
 	}
 	
 	public function cancelSession($id)
