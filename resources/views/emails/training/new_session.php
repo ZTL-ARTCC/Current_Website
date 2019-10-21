@@ -1,6 +1,6 @@
 <h2>Attention!!</h2>
 
-<p>A new session has been created for the following time slot: <b>{{ $session->slot }}</b></p>
+<p>A new session has been created for the following time slot:</b></p>
 
 <h2>Session information:</h2>
 
