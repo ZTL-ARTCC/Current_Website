@@ -32,6 +32,7 @@ class TrainingController extends Controller {
 		$Slot->trainee_comments = Input::get('comments');
 
 
+		
 
 		$Slot->save();
 	}
