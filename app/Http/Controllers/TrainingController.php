@@ -32,7 +32,7 @@ class TrainingController extends Controller {
 		$mentor = User::find($Slot->mentor_id);
 		$trainee = User::find($Slot->trainee_id);
 		$Slot->save();
-		return View('dashboard.training.sch.tst')->with('mentor', $mentor);
+		return View('dashboard.training.sch.tst')->with('mentor', $mentor)->with('trainee', $trainee);
 	}
 	
 	public function cancelSession($id)
