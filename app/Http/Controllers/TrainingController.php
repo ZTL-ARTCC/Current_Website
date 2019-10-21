@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\MentorAvail;
 use App\User;
+use Mail;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
