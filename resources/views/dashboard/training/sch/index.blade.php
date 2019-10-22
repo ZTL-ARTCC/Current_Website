@@ -37,7 +37,7 @@
 				@forelse($sessions as $session)
 				<tr>
 					<td>{{ $session->slot }}</td>
-					<td>{{ App\TrainingRequest::$PosReq[$session->position_id] }}</td>
+					<td>{{{$session->pos_req}}}</td>
 					<td>{{ $session->mentor->full_name }}</td>
 					<td>{{{ $session->trainee_comments }}}</td>
 					<td>
