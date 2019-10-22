@@ -297,8 +297,8 @@ class AdminDash extends Controller
                 $user->ctr = Input::get('ctr');
             }
             $user->initials = Input::get('initials');
-            $user->train_pwr = Input::get('train_pwr');
-            $user->monitor_pwr = Input::get('monitor_pwr');
+            $user->max = Input::get('max');
+          
             if(Input::get('visitor') == null) {
                 $user->visitor = 0;
             } elseif(Input::get('visitor') == 1) {
