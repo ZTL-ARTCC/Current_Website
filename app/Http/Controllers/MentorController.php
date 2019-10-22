@@ -25,7 +25,7 @@ class MentorController extends Controller {
 
 	
 
-		return Redirect::to('/admin/mentor/requests')->with('message', 'Session canceled. Student has been notified!');
+		return Redirect::to('dashboard.training.mentors.sessions')->with('message', 'Session canceled. Student has been notified!');
 	}
 	
     public function postAvail()
