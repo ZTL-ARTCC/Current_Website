@@ -151,6 +151,7 @@ var currTz = sessionStorage.getItem('timezone');
 				var slots = slotsGrouped[date],
 					mentors = slots.map(function(slot){
 						return slot.mentor.fname + " " + slot.mentor.lname + " - " + ratingIdToText[slot.mentor.rating_id];
+
 					});
 
 				$td.attr('title', mentors.join("\n"));
@@ -170,7 +171,7 @@ var currTz = sessionStorage.getItem('timezone');
 							var $option = $("<option />");
 							$option.val(slot.id);
 							$option.attr("name", slot.mentor.max);
-							$option.text(slot.mentor.first_name + " " + slot.mentor.last_name + " - " + ratingIdToText[slot.mentor.rating_id]);
+							$option.text(slot.mentor.fname + " " + slot.mentor.lname + " - " + ratingIdToText[slot.mentor.rating_id]);
 
 							$slot.append($option);
 						});
