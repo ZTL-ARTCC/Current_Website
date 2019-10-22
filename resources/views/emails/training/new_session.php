@@ -15,3 +15,4 @@
 </ul>
 
 <p>If you are unable to make the session you can cancel via the session management interface.</p>
+@endsection
