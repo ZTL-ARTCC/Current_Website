@@ -23,7 +23,7 @@ class MentorController extends Controller {
 		$request->sendCancellationEmail();
 		$request->delete();
 
-		ActivityLog::create(['note' => 'Cancelled Session: '.$request->slot, 'user_id' => Auth::id(), 'log_state' => 3, 'log_type' => 6]);
+	
 
 		return Redirect::to('/admin/mentor/requests')->with('message', 'Session canceled. Student has been notified!');
 	}
