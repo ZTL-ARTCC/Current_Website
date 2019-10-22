@@ -106,6 +106,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
     Route::prefix('training')->group(function() {
         Route::get('atcast', 'TrainingDash@showatcast');
         Route::get('moodle/login', 'TrainingDash@moodleLogin');
+        Route::get('/req', 'TrainingDash@ShowReq');
+        Route::get('/mentor/avail', 'MentorController@showAvail');
+        Route::post('/mentor/avail', 'MentorController@postAvail');
+        Route::get('/mentor/requests', 'MentorController@showRequests');
+        Route::post('/mentor/requests/{id}/cancel', 'MentorController@cancelSession');  
         Route::prefix('tickets')->middleware('permission:train')->group(function() {
             Route::get('/', 'TrainingDash@ticketsIndex');
             Route::post('/search', 'TrainingDash@searchTickets');
@@ -115,11 +120,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::post('/save/{id}', 'TrainingDash@saveTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
-        Route::get('/req', 'TrainingDash@ShowReq');
-        Route::get('/mentor/avail', 'MentorController@showAvail');
-        Route::post('/mentor/avail', 'MentorController@postAvail');
-        Route::get('/mentor/requests', 'MentorController@showRequests');
-        Route::post('/mentor/requests/{id}/cancel', 'MentorController@cancelSession');  
+        
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function() {
             Route::get('/', 'TrainingDash@otsCenter');
