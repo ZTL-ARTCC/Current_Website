@@ -32,12 +32,7 @@ Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 
-Route::get('/mentoravi', 'TrainingController@showMentAvail');
-Route::post('/mentoravi', 'TrainingController@saveSession');
-Route::get('/admin/mentor/avail', 'MentorController@showAvail');
-Route::post('/admin/mentor/avail', 'MentorController@postAvail');
-Route::get('/admin/mentor/requests', 'MentorController@showRequests');
-Route::post('/admin/mentor/requests/{id}/cancel', 'MentorController@cancelSession');
+
 /*
 *   End Front Page Stuff
 */
@@ -61,6 +56,16 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
     Route::get('/', 'ControllerDash@dash');
 
     Route::prefix('controllers')->group(function() {
+      
+        Route::get('/mentoravi', 'TrainingController@showMentAvail');
+        Route::post('/mentoravi', 'TrainingController@saveSession');
+        Route::get('/trainingreq', 'TrainingController@showRequests');
+        Route::delete('/trainingreq/{id}/delete', 'TrainingController@cancelSession');
+
+
+
+
+
         Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
@@ -110,7 +115,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::post('/save/{id}', 'TrainingDash@saveTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
-	    Route::get('/req', 'TrainingDash@ShowReq');
+        Route::get('/req', 'TrainingDash@ShowReq');
+        Route::get('/mentor/avail', 'MentorController@showAvail');
+        Route::post('/mentor/avail', 'MentorController@postAvail');
+        Route::get('/mentor/requests', 'MentorController@showRequests');
+        Route::post('/mentor/requests/{id}/cancel', 'MentorController@cancelSession');  
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function() {
             Route::get('/', 'TrainingDash@otsCenter');

@@ -10,7 +10,24 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 class TrainingController extends Controller {
-    public function showMentAvail()
+	public function cancelSession($id)
+	{
+		$session = MentorAvail::find($id);
+		$session->sendCancellationEmail();
+		$session->trainee_id = null;
+		$session->position_id = null;
+		$session->trainee_comments = null;
+		$session->save();
+		return Redirect::to('/dashboard/training/requests')->with('message', 'Training sessions canceled!');
+	}
+	public function showRequests()
+	{
+		$id = Auth::id();
+		$time = Carbon::now('America/New_York');
+		$sessions = MentorAvail::with('mentor')->where('trainee_id', $id)->where('slot', '>', $time)->get();
+		return View('dashboard.training.sch.index')->with('sessions', $sessions);
+	}
+	public function showMentAvail()
 	{
 		$id = Auth::id();
 		$availability = MentorAvail::with('mentor')
@@ -34,32 +51,5 @@ class TrainingController extends Controller {
 		$Slot->save();
 	}
 	
-	public function cancelSession($id)
-	{
-		$session = MentorAvail::find($id);
-		$session->sendCancellationEmail();
-		$session->trainee_id = null;
-		$session->position_id = null;
-		$session->trainee_comments = null;
-		$session->save();
-
-		ActivityLog::create(['note' => 'Cancelled Session: '.$session->slot, 'user_id' => Auth::id(), 'log_state' => 3, 'log_type' => 6]);
-
-		return Redirect::to('/training')->with('message', 'Training sessions canceled!');
-	}
-
-	public function showNotes()
-	{
-		$id = Auth::id();
-		$user = User::find($id);
-		$notes = TrainingNote::where('controller_id', $id)->orderBy('created_at', 'ASC')->get();
-		$exam = Exam::where('controller_id', '=', $id)->orderBy('updated_at', 'ASC')->get();
-		return View('admin.training.notes')->with('notes', $notes)->with('user', $user)->with('exam', $exam);
-	}
-
-	public function showNote($id)
-	{
-		$note = TrainingNote::find($id);
-		return View('admin.training.note')->with('note', $note);
-	}
+	
 }
