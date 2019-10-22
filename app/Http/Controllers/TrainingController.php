@@ -18,7 +18,7 @@ class TrainingController extends Controller {
 		$session->position_id = null;
 		$session->trainee_comments = null;
 		$session->save();
-		return Redirect::to('dashboard.training.sch.index')->with('success', 'Training session canceled!');
+		return View('dashboard.training.sch.index')->with('success', 'Training session canceled!');
 	}
 	public function showRequests()
 	{
@@ -48,8 +48,13 @@ class TrainingController extends Controller {
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->position_id =  Input::get('position');
 		$Slot->save();
-		$Slot->sendNewSessionEmail();
-		return Redirect::to('dashboard.training.sch.index')->with('success', 'Booking Created, you will receive a email shortly');
+		
+		Mail::send('emails.training.new_session', ['Slot' => $Slot], function($message) use ($Slot){
+			$message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')->subject('ZTL ARTCC - New Seesion');
+			$message->to($Slot->trainee->email)->cc($Slot->mentor->email);
+		});
+		
+		return View('dashboard.training.sch.index')->with('success', 'Booking Created, you will receive a email shortly');
 	}
 	
 	
