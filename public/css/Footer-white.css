@@ -23,6 +23,19 @@
     font-size: 18px;
 }
 
+table.availability td {
+	cursor: pointer;
+	background-color: #A71B1B;
+}
+
+table.availability td.available {
+	background-color: #34BF34;
+}
+
+.session-request-form {
+	display: none;
+}
+
 #myFooter li{
     display: inline-block;
     margin: 0px 15px;

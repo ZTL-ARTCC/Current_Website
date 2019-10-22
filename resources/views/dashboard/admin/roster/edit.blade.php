@@ -188,16 +188,17 @@ Update Controller
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                         <div class="col-sm-6">
-                            {!! Form::label('train_pwr', 'Training Level') !!}
-                            {!! Form::select('train_pwr', [
+                            {!! Form::label('max', 'Training Level') !!}
+                            {!! Form::select('max', [
                                 null => 'Not Able to Train',
-                                1 => 'New Mentor',
-                                2 => 'Minor Local',
-                                3 => 'Major Local',
-                                4 => 'Minor Approach',
-                                5 => 'Major Approach',
-                                6 => 'Center'
-                            ], $user->train_pwr, ['class' => 'form-control']) !!}
+                                1 => 'Minor/ DEL & GMD',
+                                2 => 'Major/ DEL & GMD',
+                                3 => 'Minor Local',
+                                4 => 'Major Local',
+                                5 => 'Minor Approach',
+                                6 => 'Major Approach',
+                                7 => 'Center'
+                            ], $user->max, ['class' => 'form-control']) !!}
                         </div>
                     @endif
                 </div>
@@ -231,16 +232,17 @@ Update Controller
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                         <div class="col-sm-6">
-                            {!! Form::label('train_pwr', 'Training Level') !!}
-                            {!! Form::select('train_pwr', [
+                            {!! Form::label('max', 'Training Level') !!}
+                            {!! Form::select('max', [
                                 null => 'Not Able to Train',
-                                1 => 'New Mentor',
-                                2 => 'Minor Local',
-                                3 => 'Major Local',
-                                4 => 'Minor Approach',
-                                5 => 'Major Approach',
-                                6 => 'Center'
-                            ], $user->train_pwr, ['class' => 'form-control', 'disabled']) !!}
+                                1 => 'Minor/ DEL & GMD',
+                                2 => 'Major/ DEL & GMD',
+                                3 => 'Minor Local',
+                                4 => 'Major Local',
+                                5 => 'Minor Approach',
+                                6 => 'Major Approach',
+                                7 => 'Center'
+                            ], $user->max, ['class' => 'form-control', 'disabled']) !!}
                         </div>
                     @endif
                 </div>
@@ -274,20 +276,6 @@ Update Controller
                             ], $user->train_position, ['class' => 'form-control']) !!}
                         @endif
                     </div>
-                    @if($user->hasRole('mtr') || $user->hasRole('ins'))
-                        <div class="col-sm-6">
-                            {!! Form::label('monitor_pwr', 'Monitoring Level') !!}
-                            {!! Form::select('monitor_pwr', [
-                                null => 'Not Able to Monitor',
-                                1 => 'New Mentor',
-                                2 => 'Minor Local',
-                                3 => 'Major Local',
-                                4 => 'Minor Approach',
-                                5 => 'Major Approach',
-                                6 => 'Center'
-                            ], $user->monitor_pwr, ['class' => 'form-control']) !!}
-                        </div>
-                    @endif
                 </div>
             </div>
         @else
@@ -318,20 +306,6 @@ Update Controller
                             ], $user->train_position, ['class' => 'form-control', 'disabled']) !!}
                         @endif
                     </div>
-                    @if($user->hasRole('mtr') || $user->hasRole('ins'))
-                        <div class="col-sm-6">
-                            {!! Form::label('monitor_pwr', 'Monitoring Level') !!}
-                            {!! Form::select('monitor_pwr', [
-                                null => 'Not Able to Monitor',
-                                1 => 'New Mentor',
-                                2 => 'Minor Local',
-                                3 => 'Major Local',
-                                4 => 'Minor Approach',
-                                5 => 'Major Approach',
-                                6 => 'Center'
-                            ], $user->monitor_pwr, ['class' => 'form-control', 'disabled']) !!}
-                        </div>
-                    @endif
                 </div>
             </div>
         @endif
