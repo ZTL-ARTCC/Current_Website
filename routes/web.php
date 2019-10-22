@@ -61,7 +61,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::post('/mentoravi', 'TrainingController@saveSession');
         Route::get('/trainingreq', 'TrainingController@showRequests');
         Route::delete('/trainingreq/{id}/delete', 'TrainingController@cancelSession');
-
+        Route::get('/sessions_today', 'TrainingController@showsessions_today');
 
 
 
