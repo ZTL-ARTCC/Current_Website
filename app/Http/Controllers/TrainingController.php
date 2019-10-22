@@ -13,14 +13,11 @@ class TrainingController extends Controller {
     public function showMentAvail()
 	{
 		$id = Auth::id();
-		$power = User::find($id);
-		$mentor = MentorAvail::find($mentor_id);
-		$mentor_power = User::find($mentor);
 		$availability = MentorAvail::with('mentor')
 			->whereNull('trainee_id')
 			->where('slot', '>', Carbon::now('America/New_York'))
 			->get();
-		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability)->with('power', $power)->with('mentor_power', $mentor_power);
+		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability);
     }
 	
 	public function saveSession()
