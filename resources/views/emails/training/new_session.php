@@ -1,3 +1,6 @@
+@extends('layouts.email')
+
+@section('content')
 <h2>Attention!!</h2>
 
 <p>A new session has been created for the following time slot: <b>{{ $Slot->slot }}</b></p>
