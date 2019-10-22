@@ -18,7 +18,7 @@ class TrainingController extends Controller {
 		$session->position_id = null;
 		$session->trainee_comments = null;
 		$session->save();
-		return Redirect::to('dashboard.training.sch.index')->with('message', 'Training sessions canceled!');
+		return Redirect::to('dashboard.training.sch.index')->with('success', 'Training session canceled!');
 	}
 	public function showRequests()
 	{
@@ -47,9 +47,9 @@ class TrainingController extends Controller {
 		$Slot->trainee_id = $id;
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->position_id =  Input::get('position');
-		$Slot->sendNewSessionEmail();
-		return Redirect::action('TrainingController@showRequests');
 		$Slot->save();
+		$Slot->sendNewSessionEmail();
+		return Redirect::to('dashboard.training.sch.index')->with('success', 'Booking Created, you will receive a email shortly');
 	}
 	
 	

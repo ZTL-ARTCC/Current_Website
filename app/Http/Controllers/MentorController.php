@@ -52,7 +52,7 @@ class MentorController extends Controller {
 		}
 
 		MentorAvail::where('mentor_id', '=', $mentor_id)->whereIn('slot', $old_slots)->delete();
-		return Redirect::action('MentorController@showAvail')->with('message', 'Availability has been updated');
+		return Redirect::action('MentorController@showAvail')->with('success', 'Availability has been updated');
 	
     }
    
