@@ -48,7 +48,12 @@ class TrainingController extends Controller {
 		$Slot->trainee_comments = Input::get('comments');
 		$Slot->position_id =  Input::get('position');
 		$Slot->save();
-		$Slot->sendNewSessionEmail();
+		
+		Mail::send('emails.training.new_session', ['Slot' => $Slot], function($message) use ($Slot){
+			$message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')->subject('ZTL ARTCC - New Seesion');
+			$message->to($Slot->trainee->email)->cc($Slot->mentor->email);
+		});
+		
 		return View('dashboard.training.sch.index')->with('success', 'Booking Created, you will receive a email shortly');
 	}
 	
