@@ -18,7 +18,7 @@ class TrainingController extends Controller {
 		$session->position_id = null;
 		$session->trainee_comments = null;
 		$session->save();
-		return View('dashboard.training.sch.index')->with('message', 'Training sessions canceled!');
+		return Redirect::to('/dashboard/controllers/trainingreq')->with('message', 'Training sessions canceled!');
 	}
 	public function showRequests()
 	{
@@ -27,6 +27,7 @@ class TrainingController extends Controller {
 		$sessions = MentorAvail::with('mentor')->where('trainee_id', $id)->where('slot', '>', $time)->get();
 		return View('dashboard.training.sch.index')->with('sessions', $sessions);
 	}
+	
 	public function showMentAvail()
 	{
 		$id = Auth::id();
