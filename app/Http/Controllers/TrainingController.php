@@ -27,7 +27,6 @@ class TrainingController extends Controller {
 		$sessions = MentorAvail::with('mentor')->where('trainee_id', $id)->where('slot', '>', $time)->get();
 		return View('dashboard.training.sch.index')->with('sessions', $sessions);
 	}
-	
 	public function showMentAvail()
 	{
 		$id = Auth::id();
@@ -37,7 +36,6 @@ class TrainingController extends Controller {
 			->get();
 		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability);
     }
-	
 	public function saveSession()
 	{
 		$id = Auth::id();
@@ -53,8 +51,7 @@ class TrainingController extends Controller {
 			$message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')->subject('ZTL ARTCC - New Seesion');
 			$message->to($Slot->trainee->email)->cc($Slot->mentor->email);
 		});
-		
-		return View('dashboard.training.sch.index')->with('success', 'Booking Created, you will receive a email shortly');
+		return Redirect::action('TrainingController@showRequests')->with('success', 'Booking Created, you will receive a email shortly');
 	}
 	
 	
