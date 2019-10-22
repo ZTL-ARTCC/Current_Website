@@ -18,7 +18,7 @@ class TrainingController extends Controller {
 		$session->position_id = null;
 		$session->trainee_comments = null;
 		$session->save();
-		return Redirect::to('/dashboard/training/requests')->with('message', 'Training sessions canceled!');
+		return Redirect::to('/dashboard/controllers/trainingreq')->with('message', 'Training sessions canceled!');
 	}
 	public function showRequests()
 	{
