@@ -5,14 +5,7 @@ Home
 @endsection
 
 @section('content')
-<head>
-<style>
-        body {
-        font-family: "Comic Sans MS", cursive;
-        font-size: 16px;
-        color: #036;
-        }
-        </style>
+
 <div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
         <div class="jumbotron">
