@@ -2,6 +2,7 @@
 <div class="jumbotron" style="background-image:url(images/index.jpg); -webkit-background-size; -moz-background-size:cover;-o-background-size: cover;background-size: cover;">
 <div class="container">
 <div class="jumbotron">
+<div class="row">
  
     <nav class="navbar navbar-expand-lg navbar-light">
         @if(Carbon\Carbon::now()->month == 12)
