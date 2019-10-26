@@ -1,4 +1,7 @@
+<div class="jumbotron" style="background-image:url(images/index.jpg); -webkit-background-size; -moz-background-size:cover;-o-background-size: cover;background-size: cover;">
 <div class="container">
+ <div class="jumbotron">
+    <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
         @if(Carbon\Carbon::now()->month == 12)
             <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
@@ -58,4 +61,6 @@
             </ul>
         </div>
     </nav>
+</div>
+</div>
 </div>
