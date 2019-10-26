@@ -5,7 +5,6 @@ Home
 @endsection
 
 @section('content')
-
     <div class="container">
         <div class="jumbotron">
             <div class="row">

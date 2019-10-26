@@ -14,7 +14,13 @@
         <link rel="stylesheet" href="/js/app.js">
         <link rel="stylesheet" href="/css/Footer-white.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+        <style>
+        body {
+        font-family: "Comic Sans MS", cursive;
+        font-size: 16px;
+        color: #036;
+        }
+        </style>
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
             <script src="/js/snowstorm.js"></script>
