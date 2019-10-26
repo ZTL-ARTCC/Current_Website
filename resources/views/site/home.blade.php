@@ -5,7 +5,7 @@ Home
 @endsection
 
 @section('content')
-<div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
+
     <div class="container">
         <div class="jumbotron">
             <div class="row">
@@ -40,6 +40,8 @@ Home
     </div>
 </div>
 <div class="container">
+<div class="jumbotron">
+                    
     <hr>
     <div class="row">
         <div class="col-sm-4">
@@ -143,6 +145,7 @@ Home
             </div>
         </div>
     </div>
+
     <hr>
     <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
     <div class="table">
@@ -178,5 +181,6 @@ Home
             </tbody>
         </table>
     </div>
+</div>
 </div>
 @endsection
