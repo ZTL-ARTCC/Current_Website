@@ -13,7 +13,7 @@ Home
   					<div class="text">
   						<h1>vZTL ARTCC.</h1>
   						<h4 class="mb-5">ARTCC Within VATUSA & VATSIM</h4>
-  						<p><a href="#" class="btn btn-primary px-4 py-3">Why us? Join?</a></p>
+  						<p><a href="https://www.vatusa.net/help/kb#q8" class="btn btn-primary px-4 py-3">How to become a controller. Join?</a></p>
   					</div>
   				</div>
   			</div>
