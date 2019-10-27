@@ -5,7 +5,7 @@ Home
 @endsection
 @section('content')
 <div class="main-section">
-<section class="hero-wrap js-fullheight img" style="background-image: url(images/index.jpg);">
+<section class="hero-wrap js-fullheight img" style="background-image: url(/photos/ZTL_Banner.jpg);">
   		<div class="overlay"></div>
   		<div class="container">
   			<div class="row description js-fullheight align-items-center justify-content-center">

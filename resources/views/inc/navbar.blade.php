@@ -1,6 +1,7 @@
 
+ 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    
         @if(Carbon\Carbon::now()->month == 12)
             <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
         @else
@@ -10,14 +11,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample10">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="pilots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilots</a>
-                    <div class="dropdown-menu" aria-labelledby="pilots">
+        <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav mr-auto">
+	        	<li class="dropdown nav-item">
+              <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center" data-toggle="dropdown"> Pilots
+              <b class="caret"></b>
+              </a>
+                    <div class="dropdown-menu dropdown-menu-left">
                         <a class="dropdown-item" href="https://www.aviationapi.com/charts" target="_blank">Charts</a>
                         <a class="dropdown-item" href="http://www.vatstar.com/" target="_blank">VATSTAR Training</a>
                         <a class="dropdown-item" href="https://www.aviationweather.gov/" target="_blank">Weather</a>
@@ -27,9 +27,11 @@
                         <a class="dropdown-item" href="http://www.flightaware.com/statistics/ifr-route/" target="_blank">IFR Routes</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="controllers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controllers</a>
-                    <div class="dropdown-menu" aria-labelledby="controllers">
+                <li class="dropdown nav-item">
+              <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center" data-toggle="dropdown"> Controllers
+              <b class="caret"></b>
+              </a>
+                    <div class="dropdown-menu dropdown-menu-left">
                         <a class="dropdown-item" href="/controllers/roster">Roster</a>
                         <a class="dropdown-item" href="/controllers/staff">Staff</a>
                         <a class="dropdown-item" href="/controllers/files">Files</a>
@@ -38,8 +40,8 @@
                     </div>
                 </li>
                 @if(Auth::guest())
-                    <a class="nav-link" href="/visit">Visit ZTL</a>
-                    <a class="nav-link" href="/feedback/new">Feedback</a>
+                <li class="nav-item"><a class="nav-link icon d-flex align-items-center" href="/visit">Visit ZTL</a>
+                <li class="nav-item"><a class="nav-link icon d-flex align-items-center" href="/feedback/new">Feedback</a>
                 @endif
                 @if(Auth::check())
                     <li class="nav-item dropdown">
@@ -58,6 +60,6 @@
                 @endif
             </ul>
         </div>
-    </nav>
-</div>
-</div>
+    </div>
+ </nav>
+
