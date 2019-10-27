@@ -4,41 +4,23 @@
 Home
 @endsection
 @section('content')
-<div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
+<div class="main-section">
+<section class="hero-wrap js-fullheight img" style="background-image: url(images/index.jpg);">
+  		<div class="overlay"></div>
+  		<div class="container">
+  			<div class="row description js-fullheight align-items-center justify-content-center">
+  				<div class="col-md-8 text-center">
+  					<div class="text">
+  						<h1>vZTL ARTCC.</h1>
+  						<h4 class="mb-5">ARTCC Within VATUSA & VATSIM</h4>
+  						<p><a href="#" class="btn btn-primary px-4 py-3">Why us? Join?</a></p>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  	</section>
+      <section>
     <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h1><b>Atlanta Virtual ARTCC</b></h1>
-                    <h5>Welcome to the Atlanta ARTCC website. This website is for a group of online hobbyists who partake in simulated flying and air traffic control on the VATSIM network. The procedures we use mirror, to an extent, those utilized by real world air traffic control. At no time, however, should a procedure, chart, or other information contained on this website be used for real world navigation.</h5>
-                </div>
-                <div class="col-sm-4">
-                    @if($atl_ctr === 1)
-                        <div class="alert alert-success">Atlanta Center is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta Center is OFFLINE</div>
-                    @endif
-                    @if($atl_app === 1)
-                        <div class="alert alert-success">A80 TRACON is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">A80 TRACON is OFFLINE</div>
-                    @endif
-                    @if($atl_twr === 1)
-                        <div class="alert alert-success">Atlanta ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta ATCT is OFFLINE</div>
-                    @endif
-                    @if($clt_twr === 1)
-                        <div class="alert alert-success">Charlotte ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Charlotte ATCT is OFFLINE</div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
     <hr>
     <div class="row">
         <div class="col-sm-4">
@@ -73,6 +55,11 @@ Home
             @endif
         </div>
     </div>
+</div>
+</section>
+<section>
+    <div class ="container">
+
     <hr>
     <div class="row">
         <div class="col-sm-6">
@@ -142,6 +129,10 @@ Home
             </div>
         </div>
     </div>
+</div>
+</section>
+<section>
+    <div class ="container">
     <hr>
     <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
     <div class="table">
@@ -177,5 +168,8 @@ Home
             </tbody>
         </table>
     </div>
+</div>
+</div>
+</section>
 </div>
 @endsection
