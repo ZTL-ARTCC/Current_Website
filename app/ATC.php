@@ -5,7 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-
 class ATC extends Model
 {
     protected $table = "online_atc";
