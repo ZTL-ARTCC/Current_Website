@@ -296,7 +296,10 @@ class FrontController extends Controller
         if($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
-
+        //Rating Check
+        if($visit->rating == 1) {
+            return redirect()->back()->with('error', 'You must have a S1 Controller rating or higher to become a visitor.');
+        }
         //Continue Request
         $visit = new Visitor;
         $visit->cid = $request->cid;
