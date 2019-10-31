@@ -103,7 +103,7 @@ class FrontController extends Controller
     }
 
     public function home() {
-        return view('dashboard.new_look.index')
+        return view('dashboard.new_look.index');
     }
     public function teamspeak() {
         return view('site.teamspeak');
