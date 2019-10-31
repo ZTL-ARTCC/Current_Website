@@ -101,8 +101,7 @@ class FrontController extends Controller
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('flights', $flights)->with('flights_update', $flights_update);
     }
-
-    public function home() {
+    public function new_look() {
         return view('dashboard.new_look.index');
     }
     public function teamspeak() {
