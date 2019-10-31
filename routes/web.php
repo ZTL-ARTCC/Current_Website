@@ -15,6 +15,7 @@
 *   Front Page Stuff
 */
 Route::get('/', 'FrontController@home');
+Route::get('/new_look', 'FrontController@new_look');
 Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
 Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');

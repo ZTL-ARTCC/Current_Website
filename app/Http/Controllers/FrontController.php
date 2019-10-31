@@ -59,6 +59,7 @@ class FrontController extends Controller
             }
         }
 
+
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
         $metar_update = Metar::first();
         if($metar_update != null) {
@@ -101,6 +102,9 @@ class FrontController extends Controller
                                 ->with('flights', $flights)->with('flights_update', $flights_update);
     }
 
+    public function home() {
+        return view('dashboard.new_look.index')
+    }
     public function teamspeak() {
         return view('site.teamspeak');
     }
