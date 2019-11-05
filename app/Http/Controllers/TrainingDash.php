@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Training\MentorAvai;
-use App\Audit;
-use App\Ots;
+use App\logs\Audit;
+use App\Training\Ots;
 use App\Training\PublicTrainingInfo;
 use App\Training\PublicTrainingInfoPdf;
 use App\Training\TrainingInfo;

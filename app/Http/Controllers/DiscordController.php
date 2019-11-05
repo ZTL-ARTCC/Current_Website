@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DiscordUser;
-use App\ControllerLog;
+use App\Mship\DiscordUser;
+use App\logs\ControllerLog;
 use App\Mship\User;
 use Auth;
 use Config;
