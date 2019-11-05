@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\WebData;
 
 use App\Mship\User;
 use Illuminate\Database\Eloquent\Model;

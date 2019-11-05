@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Downloads;
 
-use App\File;
+use App\Downloads\File;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model

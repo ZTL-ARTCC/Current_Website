@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Mship;
 
 use Illuminate\Database\Eloquent\Model;
 
