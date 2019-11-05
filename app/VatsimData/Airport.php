@@ -3,7 +3,7 @@
 namespace App\VatsimData;
 
 use App\deserialization;
-use App\Metar;
+use App\VatsimData\Metar;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 
