@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Training;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;

@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Artisan;
-use App\EventRegistration;
-use App\User;
+use App\Event\EventRegistration;
+use App\Mship\User;
 use Config;
 use DB;
 use Eloquent\Collection;

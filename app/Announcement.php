@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\User;
+use App\Mship\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

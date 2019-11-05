@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Mship;
 
-use App\User;
+use App\Mship\User;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use SimpleXMLElement;

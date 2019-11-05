@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Training;
 
-use App\User;
+use App\Mship\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;

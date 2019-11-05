@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\ControllerLog;
 use App\DiscordUser;
-use App\User;
+use App\Mship\User;
 use Illuminate\Console\Command;
 
 class UpdateDiscordUsers extends Command

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\EventRegistration;
-use App\User;
+use App\Event\EventRegistration;
+use App\Mship\User;
 use App\VisitRej;
 use Config;
 use DB;

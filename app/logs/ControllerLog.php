@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\logs;
 
-use App\User;
+use App\Mship\User;
 use DB;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;

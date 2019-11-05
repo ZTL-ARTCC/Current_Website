@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Event;
 
-use App\EventRegistration;
+use App\Event\EventRegistration;
 use Illuminate\Database\Eloquent\Model;
 
 class EventPosition extends Model

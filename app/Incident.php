@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\User;
+use App\Mship\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Incident extends Model

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DiscordUser;
 use App\ControllerLog;
-use App\User;
+use App\Mship\User;
 use Auth;
 use Config;
 use GuzzleHttp\Client;

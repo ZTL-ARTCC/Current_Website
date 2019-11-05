@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Event;
 
-use App\EventPosition;
-use App\User;
+use App\Event\EventPosition;
+use App\Mship\User;
 use Illuminate\Database\Eloquent\Model;
 
 class EventRegistration extends Model

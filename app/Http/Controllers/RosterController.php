@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Opt;
 use App\Role;
-use App\User;
+use App\Mship\User;
 use Carbon\Carbon;
 use Config;
 use DB;

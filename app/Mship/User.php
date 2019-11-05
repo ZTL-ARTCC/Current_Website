@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Mship;
 
 use Carbon\Carbon;
 use App\CotrollerLog;
 use App\MoodleEnrol;
-use App\User;
+use App\Mship\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\VatsimData;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
