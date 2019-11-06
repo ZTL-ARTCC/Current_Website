@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Mship\User;
+use App\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\MoodleEnrol;
-use App\Mship\User;
+use App\User;
 use Illuminate\Console\Command;
 
 class UnenrolMoodleUsers extends Command
