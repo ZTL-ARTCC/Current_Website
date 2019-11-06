@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\SoloCert;
-use App\Mship\User;
+use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Mail;
