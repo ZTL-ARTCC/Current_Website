@@ -4,7 +4,6 @@
 Home
 @endsection
 
-
 @section('content')
 <div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
