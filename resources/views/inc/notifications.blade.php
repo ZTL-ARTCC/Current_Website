@@ -1,5 +1,5 @@
 @if(
-    Auth::user()->hasRole('ins') && App\Mship\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Mship\Ots::where('status', 0)->get()->count() > 0 ||
+    Auth::user()->hasRole('ins') && App\Training\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Mship\Ots::where('status', 0)->get()->count() > 0 ||
     App\Mship\Ots::where('status', 1)->where('ins_id', Auth::id())->get()->count() > 0 ||
     App\Mship\TrainingTicket::where('created_at', '>=', Carbon\Carbon::now()->subHours(24))->where('controller_id', Auth::id())->first() != null ||
     count(App\Mship\Incident::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff') ||
@@ -8,21 +8,21 @@
     )
     <hr>
     <center><h4><i>Notifications</i></h4></center>
-    @if(Auth::user()->hasRole('ins') && App\Mship\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Ots::where('status', 0)->get()->count() > 0)
+    @if(Auth::user()->hasRole('ins') && App\Training\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Ots::where('status', 0)->get()->count() > 0)
         <br>
         <div class="alert alert-success">
             There is a <b>new OTS recommendation</b> that is waiting to be accepted. View the <a href="/dashboard/training/ots-center">OTS Center</a> to view more information.
         </div>
     @endif
 
-    @if(App\Mship\Ots::where('status', 1)->where('ins_id', Auth::id())->get()->count() > 0)
+    @if(App\Training\Ots::where('status', 1)->where('ins_id', Auth::id())->get()->count() > 0)
         <br>
         <div class="alert alert-success">
             You have either been assigned to an OTS or you have accepted an OTS that is waiting to take place. View the <a href="/dashboard/training/ots-center">OTS Center</a> to view more information.
         </div>
     @endif
 
-    @if(App\Mship\TrainingTicket::where('created_at', '>=', Carbon\Carbon::now()->subHours(24))->where('controller_id', Auth::id())->first() != null)
+    @if(App\Training\TrainingTicket::where('created_at', '>=', Carbon\Carbon::now()->subHours(24))->where('controller_id', Auth::id())->first() != null)
         <br>
         <div class="alert alert-success">
             You have a <b>new training ticket</b>. Visit <a href="/dashboard/controllers/profile">your profile</a> to view more information.
