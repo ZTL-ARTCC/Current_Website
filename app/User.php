@@ -5,7 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use App\logs\CotrollerLog;
 use App\Moodle\MoodleEnrol;
-use App\Mship\User;
+use App\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
