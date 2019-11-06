@@ -3,8 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use App\CotrollerLog;
-use App\MoodleEnrol;
+use App\logs\CotrollerLog;
+use App\Moodle\MoodleEnrol;
 use App\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;

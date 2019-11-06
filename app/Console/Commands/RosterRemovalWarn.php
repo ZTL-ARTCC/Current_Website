@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\ControllerLog;
-use App\User;
-use App\TrainingTicket;
+use App\Mship\User;
+use App\Training\TrainingTicket;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
