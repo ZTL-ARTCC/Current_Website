@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mship;
+namespace App;
 
 use Carbon\Carbon;
 use App\logs\CotrollerLog;
