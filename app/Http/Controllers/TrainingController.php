@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\MentorAvail;
-use App\Mship\User;
+use App\User;
 use Mail;
 use Auth;
 use Carbon\Carbon;

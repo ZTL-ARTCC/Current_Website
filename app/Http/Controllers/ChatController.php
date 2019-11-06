@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\WebData\Chat;
-use App\Mship\User;
+use App\Chat;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

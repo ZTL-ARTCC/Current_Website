@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\logs\ControllerLog;
-use App\Mship\User;
-use App\Mship\DiscordUser;
+use App\DiscordUser;
+use App\ControllerLog;
+use App\User;
 use Auth;
 use Config;
 use GuzzleHttp\Client;

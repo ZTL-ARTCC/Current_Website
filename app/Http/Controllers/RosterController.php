@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\VatsimData\Opt;
-use App\Mship\Role;
-use App\Mship\User;
+use App\Opt;
+use App\Role;
+use App\User;
 use Carbon\Carbon;
 use Config;
 use DB;
