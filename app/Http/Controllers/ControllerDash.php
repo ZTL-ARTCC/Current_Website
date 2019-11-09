@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\WebData\Announcement;
-use App\Vatsim\ATC;
+use App\VatsimData\ATC;
 use App\Mship\Bronze;
 use App\WebData\Calendar;
 use App\Logs\ControllerLog;
