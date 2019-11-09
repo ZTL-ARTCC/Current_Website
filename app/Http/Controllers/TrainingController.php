@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use App\Training\MentorAvail;
 use App\Mship\User;
-
 use Mail;
 use Auth;
 use Carbon\Carbon;
