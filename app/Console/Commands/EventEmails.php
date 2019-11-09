@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use Artisan;
-use App\User;
-use App\Event;
-use App\EventPosition;
-use App\EventRegistration;
+use App\Mship\User;
+use App\Events\Event;
+use App\Event\EventPosition;
+use App\Events\EventRegistration;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Mail;
