@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mship;
+namespace App\Http\Controllers\Mship\Feedback;
 
 use App\Mship\Feedback;
 use App\Mship\User;
