@@ -233,7 +233,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/remove/{id}/{year}', 'AdminDash@removePyriteWinner');
         });
         Route::prefix('feedback')->middleware('permission:snrStaff')->group(function() {
-            Route::get('/', 'Feedback\Feedback@showFeedback');
+            Route::get('/', 'Mship\Feedback\FeedbackController@showFeedback');
             Route::post('/save/{id}', 'AdminDash@saveFeedback');
             Route::post('/hide/{id}', 'AdminDash@hideFeedback');
             Route::post('/update/{id}', 'AdminDash@updateFeedback');
