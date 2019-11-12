@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Views;
 use App\WebData\Airport;
 use App\VatsimData\Metar;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class AirportController extends \App\Http\Controllers\Controller
 {
