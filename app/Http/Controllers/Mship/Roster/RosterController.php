@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Log;
 use Session;
 
-class RosterController extends App\Http\Controllers\Controller
+class RosterController extends \App\Http\Controllers\Controller
 {
     public function index() {
         $hcontrollers = User::where('visitor', '0')->where('status', '1')->orderBy('lname', 'ASC')->get();
