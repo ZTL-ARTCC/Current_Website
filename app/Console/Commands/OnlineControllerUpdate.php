@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\ATC;
-use App\ControllerLog;
-use App\ControllerLogUpdate;
+use App\VatsimData\ATC;
+use App\Logs\ControllerLog;
+use App\Logs\ControllerLogUpdate;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
