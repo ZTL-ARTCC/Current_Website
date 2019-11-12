@@ -14,7 +14,7 @@ Add Airport
 </span>
 <br>
 <div class="container">
-    {!! Form::open(['action' => 'FrontController@saveAirport']) !!}
+    {!! Form::open(['action' => 'Views\AirportController@saveAirport']) !!}
         <div class="form-group">
             {!! Form::label('name', 'Airport Name') !!}
             {!! Form::text('name', null, ['class' => 'form-control']) !!}
