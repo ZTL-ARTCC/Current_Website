@@ -6,6 +6,7 @@ use App\WebData\Airport;
 use App\VatsimData\Metar;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use SimpleXMLElement;
 
 class AirportController extends \App\Http\Controllers\Controller
 {
