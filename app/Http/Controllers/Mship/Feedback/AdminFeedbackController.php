@@ -8,7 +8,7 @@ use Logs\Audit;
 use Auth;
 use Mail;
 
-class FeedbackController extends \App\Http\Controllers\Controller
+class FeedbackAdmin extends \App\Http\Controllers\Controller
 {
     public function showFeedback() {
         $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
