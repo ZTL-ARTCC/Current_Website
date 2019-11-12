@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mship\Rotser;
+namespace App\Http\Controllers\Mship\Roster;
 
 use App\Mship\Opt;
 use App\Mship\Role;
