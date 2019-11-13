@@ -28,14 +28,12 @@
             </p>
             <div class="content">
                 <a class="nav-link" href="/dashboard/training/moodle/login" target="_blank">Access Moodle</a>
-                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/tickets/mentor/requests') }}" href="/dashboard/controllers/trainingreq">My Upcoming Sessions</a>
-                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/tickets/mentor/mentoravi') }}" href="/dashboard/controllers/mentoravi">Schedule a Training Session</a>
+                <script id="setmore_script" type="text/javascript" src="https://my.setmore.com/webapp/js/src/others/setmore_iframe.js"></script><a id="Setmore_button_iframe"  class="nav-link" href="https://my.setmore.com/bookingpage/3598990c-a847-4107-81eb-de1794648684">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->can('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
-                    <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/tickets/mentor/avail') }}" href="/dashboard/training/tickets/mentor/avail">Schedule Maanagement</a>
-                    <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/tickets/mentor/requests') }}" href="/dashboard/training/tickets/mentor/requests">Mentors Upcoming Sessions</a>
+                    <a class="nav-link" href="https://my.setmore.com/" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->can('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif

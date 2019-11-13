@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\MentorAvail;
-use App\User;
+
+use App\Training\MentorAvail;
+use App\Mship\User;
 use Mail;
 use Auth;
 use Carbon\Carbon;
@@ -18,7 +19,7 @@ class TrainingController extends Controller {
 		$session->position_id = null;
 		$session->trainee_comments = null;
 		$session->save();
-		return Redirect::action('TrainingController@showRequests')->with('success', 'Training session canceled!');
+		return View('dashboard.training.sch.index')->with('success', 'Training session canceled!');
 	}
 	public function showRequests()
 	{

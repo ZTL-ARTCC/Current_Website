@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\EventRegistration;
-use App\User;
-use App\VisitRej;
+use App\Events\EventRegistration;
+use App\Mship\User;
+use App\Mship\VisitRej;
 use Config;
 use DB;
 use Eloquent\Collection;
