@@ -4,7 +4,7 @@ namespace App;
 
 
 use App\logs\CotrollerLog;
-use App\Moodle\MoodleEnrol;
+use App\Mship\MoodleEnrol;
 use App\User;
 use Config;
 use Illuminate\Database\Eloquent\Model;
