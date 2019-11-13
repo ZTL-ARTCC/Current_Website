@@ -2,24 +2,24 @@
 
 namespace App;
 
-
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use SimpleXMLElement;
 
-class Ots extends Model
+class TrainingTicket extends Model
 {
-    protected $table = 'ots_recommendations';
-    protected $fillable = ['controller_id', 'recommender_id', 'position', 'ins_id', 'status', 'updated_at', 'created_at'];
+    protected $table = 'training_tickets';
+    protected $fillable = ['id', 'controllers_id', 'trainer_id', 'position', 'type', 'date', 'start_time', 'end_time', 'duration', 'comments', 'ins_comments', 'updated_at', 'created_at'];
 
-    public function getControllerNameAttribute() {
-        $user = User::find($this->controller_id);
-        if($user) {
+    public function getTrainerNameAttribute() {
+        $user = User::find($this->trainer_id);
+        if($user != null) {
             $name = $user->full_name;
         } else {
             $client = new Client();
-            $response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$this->controller_id);
+            $response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$this->trainer_id);
             $r = new SimpleXMLElement($response->getBody());
             $name = $r->user->name_first.' '.$r->user->name_last;
         }
@@ -27,27 +27,48 @@ class Ots extends Model
         return $name;
     }
 
-    public function getRecommenderNameAttribute() {
-        $name = User::find($this->recommender_id)->full_name;
+    public function getControllerNameAttribute() {
+        $name = User::find($this->controller_id)->full_name;
 
         return $name;
     }
 
-    public function getInsNameAttribute() {
-        if($this->ins_id != null) {
-            $name = User::find($this->ins_id)->full_name;
-        } else {
-            $name = 'N/A';
+    public function getTypeNameAttribute() {
+        $pos = $this->type;
+        if($pos == 0) {
+            $position = 'Classroom Training';
+        } elseif($pos == 1) {
+            $position = 'Sweatbox Training';
+        } elseif($pos == 2) {
+            $position = 'Live Training';
+        } elseif($pos == 3) {
+            $position = 'Live Monitoring';
+        } elseif($pos == 4) {
+            $position = 'Sweatbox OTS (Pass)';
+        } elseif($pos == 5) {
+            $position = 'Live OTS (Pass)';
+        } elseif($pos == 6) {
+            $position = 'Sweatbox OTS (Fail)';
+        } elseif($pos == 7) {
+            $position = 'Live OTS (Fail)';
+        } elseif($pos == 8) {
+            $position = 'Live OTS';
+        } elseif($pos == 9) {
+            $position = 'Sweatbox OTS';
+        }elseif($pos == 10){
+            $position = 'No Show';
+        }elseif($pos == 11){
+            $position = 'No Show';
+        }elseif($pos == 12){
+            $position = 'Complete';
+        }elseif($pos == 13){
+            $position = 'Incomplete';
         }
 
-        return $name;
-    }
 
-    public function getRecommendedOnAttribute() {
-        $date = $this->created_at;
-        $result = $date->format('m/d/Y');
+    
 
-        return $result;
+        return $position;
     }
 
     public function getPositionNameAttribute() {
@@ -158,36 +179,30 @@ class Ots extends Model
             $position = 'S3 Visiting Major Checkout';
         } elseif($pos == 51) {
             $position = 'C1 Visiting Major Checkout';
+        } elseif($pos == 52) {
+            $position = 'Enroute OTS';
+        } elseif($pos == 53) {
+            $position = 'Approach OTS';
+        } elseif($pos == 54) {
+            $position = 'Local OTS';
         }
-
+  
         return $position;
     }
 
-    public function getStatusNameAttribute() {
-        $status = $this->status;
-        if($status == 0) {
-            $status_r = 'New Recommendation';
-        } elseif($status == 1) {
-            $status_r = 'Accepted by Instructor';
-        } elseif($status == 2) {
-            $status_r = 'OTS Complete, Pass';
-        } elseif($status == 3) {
-            $status_r = 'OTS Complete, Fail';
-        }
-
-        return $status_r;
+    public function getLastTrainingAttribute() {
+        $date = $this->date;
+        return $date;
     }
 
-    public function getResultAttribute() {
-        $status = $this->status;
-        if($status == 2) {
-            $result = 'Pass';
-        } elseif($status == 3) {
-            $result = 'Fail';
-        } else {
-            $result = 'Not yet complete.';
-        }
+    public function getDateEditAttribute() {
+        $date = new Carbon($this->date);
+        $date = $date->format('Y-m-d');
+        return $date;
+    }
 
-        return $result;
+    public function getDateSortAttribute() {
+        $date = strtodate($this->date.' '.$this->time);
+        return $date;
     }
 }

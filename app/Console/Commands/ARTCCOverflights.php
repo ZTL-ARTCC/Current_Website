@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\VatsimData\Overflight;
-use App\VatsimData\OverflightUpdate;
+use App\Overflight;
+use App\OverflightUpdate;
 use Config;
 use DB;
 use GuzzleHttp\Client;

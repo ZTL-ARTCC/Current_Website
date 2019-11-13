@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Mship\MoodleEnrol;
+use App\MoodleEnrol;
 use App\User;
 use Illuminate\Console\Command;
 

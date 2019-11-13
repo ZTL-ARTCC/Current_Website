@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\WebData\Airport;
-use App\VatsimData\ATC;
-use App\Mship\Bronze;
-use App\WebData\Calendar;
-use App\Logs\ControllerLog;
-use App\Logs\ControllerLogUpdate;
-use App\Events\Event;
-use App\Mship\Feedback;
-use App\Downloads\File;
+use App\Airport;
+use App\ATC;
+use App\Bronze;
+use App\Calendar;
+use App\ControllerLog;
+use App\ControllerLogUpdate;
+use App\Event;
+use App\Feedback;
+use App\File;
 use App\Http\Controllers\toArray;
-use App\VatsimData\Metar;
-use App\VatsimData\Overflight;
-use App\VatsimData\OverflightUpdate;
-use App\Mship\Permission;
-use App\Mship\Role;
-use App\WebData\Scenery;
-use App\Mship\User;
-use App\Mship\Visitor;
+use App\Metar;
+use App\Overflight;
+use App\OverflightUpdate;
+use App\Permission;
+use App\Role;
+use App\Scenery;
+use App\User;
+use App\Visitor;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
@@ -58,7 +58,6 @@ class FrontController extends Controller
                 }
             }
         }
-
 
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
         $metar_update = Metar::first();
@@ -101,9 +100,7 @@ class FrontController extends Controller
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('flights', $flights)->with('flights_update', $flights_update);
     }
-    public function new_look() {
-        return view('dashboard.new_look.index');
-    }
+
     public function teamspeak() {
         return view('site.teamspeak');
     }
@@ -299,10 +296,7 @@ class FrontController extends Controller
         if($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
-        //Rating Check
-        if($request->rating == 1) {
-            return redirect()->back()->with('error', 'You must have a S1 Controller rating or higher to become a visitor.');
-        }
+
         //Continue Request
         $visit = new Visitor;
         $visit->cid = $request->cid;

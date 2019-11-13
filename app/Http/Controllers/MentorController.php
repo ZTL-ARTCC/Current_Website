@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Training\MentorAvail;
-use App\Mship\User;
+use App\MentorAvail;
+use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
