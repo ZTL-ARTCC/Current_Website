@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mship\Opt;
-use App\Mship\Role;
-use App\Mship\User;
+use App\Opt;
+use App\Role;
+use App\User;
 use Carbon\Carbon;
 use Config;
 use DB;
@@ -58,7 +58,6 @@ class RosterController extends Controller
 
         $jwk = json_decode(Config::get('vatusa.jwk'),   true);
 
-        
         $algorithms = ['HS256' => 'sha256', 'HS384' => 'sha384', 'HS512' => 'sha512'];
 
         if (!isset($algorithms[$jwk['alg']])) {

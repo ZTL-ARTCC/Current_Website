@@ -14,24 +14,23 @@
 /*
 *   Front Page Stuff
 */
-Route::get('/', 'Views\ViewController@home');
-Route::get('/new_look', 'FrontController@new_look');
-Route::get('/controllers/teamspeak', 'Views\ViewController@teamspeak');
-Route::get('/controllers/stats/{year?}/{month?}', 'Views\ViewController@showStats');
+Route::get('/', 'FrontController@home');
+Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
+Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
 Route::post('/visit/save', 'FrontController@storeVisit');
-Route::get('/pilots/airports', 'Views\AirportController@airportIndex');
-Route::post('/pilots/airports', 'Views\AirportController@searchAirport');
-Route::get('/pilots/airports/search', 'Views\AirportController@searchAirportResult');
-Route::get('/pilots/airports/view/{id}', 'Views\AirportController@showAirport');
-Route::get('/pilots/scenery', 'Views\ViewController@sceneryIndex');
-Route::get('/pilots/scenery/view/{id}', 'Views\ViewController@showScenery');
-Route::post('/pilots/scenery/search', 'Views\ViewController@searchScenery');
-Route::get('/pilots/request-staffing', 'Views\ViewController@showStaffRequest');
-Route::post('/pilots/request-staffing', 'Views\ViewController@staffRequest');
-Route::get('/feedback/new', 'Mship\Feedback\FeedbackUser@newFeedback');
-Route::post('/feedback/new', 'Mship\Feedback\FeedbackUser@saveNewFeedback');
-Route::get('/controllers/files', 'Views\ViewController@showFiles');
+Route::get('/pilots/airports', 'FrontController@airportIndex');
+Route::post('/pilots/airports', 'FrontController@searchAirport');
+Route::get('/pilots/airports/search', 'FrontController@searchAirportResult');
+Route::get('/pilots/airports/view/{id}', 'FrontController@showAirport');
+Route::get('/pilots/scenery', 'FrontController@sceneryIndex');
+Route::get('/pilots/scenery/view/{id}', 'FrontController@showScenery');
+Route::post('/pilots/scenery/search', 'FrontController@searchScenery');
+Route::get('/pilots/request-staffing', 'FrontController@showStaffRequest');
+Route::post('/pilots/request-staffing', 'FrontController@staffRequest');
+Route::get('/feedback/new', 'FrontController@newFeedback');
+Route::post('/feedback/new', 'FrontController@saveNewFeedback');
+Route::get('controllers/files', 'FrontController@showFiles');
 
 
 /*
@@ -41,11 +40,11 @@ Route::get('/controllers/files', 'Views\ViewController@showFiles');
 /*
 *   Roster, Login/Logout
 */
-Route::get('/controllers/roster', 'Mship\Roster\RosterController@index');
-Route::get('/controllers/staff', 'Mship\Roster\RosterController@staffIndex');
-Route::get('/login', 'Mship\Roster\RosterController@login');
-Route::get('login', [ 'as' => 'login', 'uses' => 'Mship\Roster\RosterController@login']);
-Route::get('/logout', 'Mship\Roster\RosterController@logout');
+Route::get('/controllers/roster', 'RosterController@index');
+Route::get('/controllers/staff', 'RosterController@staffIndex');
+Route::get('/login', 'RosterController@login');
+Route::get('login', [ 'as' => 'login', 'uses' => 'RosterController@login']);
+Route::get('/logout', 'RosterController@logout');
 /*
 *   End Roster
 */
@@ -63,7 +62,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/trainingreq', 'TrainingController@showRequests');
         Route::delete('/trainingreq/{id}/delete', 'TrainingController@cancelSession');
         Route::get('/sessions_today', 'TrainingController@showsessions_today');
-        Route::get('/teamspeak', 'Views\ControllerDash@showTeamspeak');
+
+
+
+
+        Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
         Route::get('/files', 'ControllerDash@showFiles');
@@ -229,11 +232,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/remove/{id}/{year}', 'AdminDash@removePyriteWinner');
         });
         Route::prefix('feedback')->middleware('permission:snrStaff')->group(function() {
-            Route::get('/', 'Mship\Feedback\FeedbackAdmin@showFeedback');
-            Route::post('/save/{id}', 'Mship\Feedback\FeedbackAdmin@saveFeedback');
-            Route::post('/hide/{id}', 'Mship\Feedback\FeedbackAdmin@hideFeedback');
-            Route::post('/update/{id}', 'Mship\Feedback\FeedbackAdmin@updateFeedback');
-            Route::post('/email/{id}', 'Mship\Feedback\FeedbackAdmin@emailFeedback');
+            Route::get('/', 'AdminDash@showFeedback');
+            Route::post('/save/{id}', 'AdminDash@saveFeedback');
+            Route::post('/hide/{id}', 'AdminDash@hideFeedback');
+            Route::post('/update/{id}', 'AdminDash@updateFeedback');
+            Route::post('/email/{id}', 'AdminDash@emailFeedback');
         });
         Route::prefix('email')->middleware('permission:email')->group(function() {
             Route::get('/send', 'AdminDash@sendNewEmail');
@@ -277,7 +280,7 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 */
 
 Route::get('/laratrust', function() {
-	$user = App\User::find(1420055);
+	$user = App\User::find(140055);
 	$user->attachRole('wm');
 });
 

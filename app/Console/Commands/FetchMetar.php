@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\WebData\Airport;
-use App\VatsimData\Metar;
+use App\Airport;
+use App\Metar;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
