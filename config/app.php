@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', ture),
+    'debug' => env('APP_DEBUG', false),
     'maintenance' => env('APP_MAINTENANCE_MODE', false),
 
     /*
