@@ -16,7 +16,7 @@ Airports
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            {!! Form::open(['action' => 'Views\AirportController@searchAirport']) !!}
+            {!! Form::open(['action' => 'FrontController@searchAirport']) !!}
                 <div class="form-inline">
                     {!! Form::text('apt', null, ['placeholder' => 'Search Airport (ICAO)', 'class' => 'form-control']) !!}
                     &nbsp;

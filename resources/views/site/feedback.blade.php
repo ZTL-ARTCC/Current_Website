@@ -15,7 +15,7 @@ New Feedback
 <br>
 
 <div class="container">
-    {!! Form::open(['action' => 'Mship\Feedback\FeedbackUser@saveNewFeedback']) !!}
+    {!! Form::open(['action' => 'FrontController@saveNewFeedback']) !!}
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
