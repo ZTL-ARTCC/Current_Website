@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layout')
 
 @section('title')
 Home
