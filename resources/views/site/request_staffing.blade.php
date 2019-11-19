@@ -1,17 +1,11 @@
-@extends('layouts.master')
+@extends('layout')
 
 @section('title')
 Staffing Request
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
-    <div class="container">
-        &nbsp;
-        <h2>ZTL ARTCC Staffing Request</h2>
-        &nbsp;
-    </div>
-</span>
+
 <br>
 
 <div class="container">
