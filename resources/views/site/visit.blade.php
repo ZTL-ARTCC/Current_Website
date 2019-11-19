@@ -1,11 +1,17 @@
-@extends('layout')
+@extends('layouts.master')
 
 @section('title')
 Visit
 @endsection
 
 @section('content')
-
+<span class="border border-light" style="background-color:#F0F0F0">
+    <div class="container">
+        &nbsp;
+        <h2>Visit ZTL ARTCC</h2>
+        &nbsp;
+    </div>
+</span>
 <br>
 
 <div class="container">

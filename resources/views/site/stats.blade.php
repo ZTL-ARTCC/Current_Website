@@ -1,11 +1,17 @@
-@extends('layout')
+@extends('layouts.master')
 
 @section('title')
 Stats
 @endsection
 
 @section('content')
-
+<span class="border border-light" style="background-color:#F0F0F0">
+    <div class="container">
+        &nbsp;
+        <h2>ARTCC Controller Statistics</h2>
+        &nbsp;
+    </div>
+</span>
 <br>
 
 <?php

@@ -1,95 +1,16 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Profile
 @endsection
-@section('scripts')
 
-    <script>
-      $('#toggleOptin').click(function () {
-        let icon  = $(this).find('i.toggle-icon'),
-            currentlyOn = icon.hasClass('fa-toggle-on'),
-            spinner = $(this).find('i.spinner-icon')
-        spinner.show()
-        $.ajax({
-          type: 'POST',
-          url : "{{ secure_url("/dashboard/controllers/profile") }}"
-        }).success(function (result) {
-          spinner.hide()
-          if (result === '1') {
-            //Success
-            icon.attr('class', 'toggle-icon fa fa-toggle-' + (currentlyOn ? 'off' : 'on') +
-              ' text-' + (currentlyOn ? 'danger' : 'success'))
-          }
-          else {
-            bootbox.alert('<div class=\'alert alert-danger\'><i class=\'fa fa-warning\'></i> <strong>Error!</strong> Unable to toggle email opt-in setting.')
-          }
-        })
-          .error(function (result) {
-            spinner.hide()
-            bootbox.alert('<div class=\'alert alert-danger\'><i class=\'fa fa-warning\'></i> <strong>Error!</strong> Unable to toggle email opt-in setting.')
-          })
-      })
-    </script>
-
-@endsection
 @section('content')
-
-<div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    My Profile
-                </h3>
-            </div>
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                     <label class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                        <p class="form-control-static">{{Auth::user()->fname}} {{Auth::user()->lname}}</p>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{Auth::user()->email}}</p>
-                            <span id="helpBlock" class="help-block">Click <a
-                                 href="http://cert.vatsim.net/vatsimnet/newmail.php">here</a> to change.</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Rating</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static">{{Auth::user()->RatingLong}}<br></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Receive Broadcast Emails</label>
-                            <div class="col-sm-10">
-                                <span id="toggleOptin" style="font-size:1.8em;">
-                                
-                                    <i class="toggle-icon fa fa-toggle-{{ Auth::user()->opt ?"on text-success" : "off text-danger"}} "></i>
-                                    <i class="spinner-icon fa fa-spinner fa-spin" style="display:none;"></i>
-                            </span>
-                            <p class="help-block">To receive emails from the ZTL's mass emailing system, you must
-                                opt-in by
-                                clicking on the toggle switch above. <strong>This setting does not affect
-                                account-related emails like training tickets/sessions and exam results/assignments.</strong>
-                            </p>
-                        </div>
-                    </div>
-                   
-           
-                
-        
-                </form>
-            </div>
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>My Profile</h2>
+    &nbsp;
 </div>
-
-
-
+<br>
 
 <div class="container">
     <div class="row">
@@ -155,7 +76,65 @@ Profile
         </div>
     </div>
     <hr>
-   
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>My Information</h4>
+            <br>
+            <p><b>CID:</b> {{ Auth::id() }}</p>
+            <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
+            <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
+            <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            @if(!$discord)
+                <a href="/discord/login" class="btn btn-success"><i class="fab fa-discord"></i>&nbsp;Login To Discord</a>
+            @else
+                <p><b>Discord Username:</b> {{ $discord->discord_username  }} <a style="color:inherit" href="/discord/logout" data-toggle="tooltip" title="Click Here to Logout of Discord"><i class="fas fa-info-circle"></i></a></p>
+                <a class="btn btn-danger disabled"><i class="fab fa-discord"></i>&nbsp;Already Logged Into Discord</a>
+            @endif
+        </div>
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-4">
+            <center>
+                <h4>My Recent Activity:</h4>
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @if($personal_stats->total_hrs < 1)
+                            <li class="list-group-item" style="background-color:#E6B0AA">
+                                <h5>Hours this Month:</h5>
+                                <p><b>{{ $personal_stats->total_hrs }}</b></p>
+                            </li>
+                        @else
+                            <li class="list-group-item" style="background-color:#A9DFBF">
+                                <h5>Hours this Month:</h5>
+                                <p><b>{{ $personal_stats->total_hrs }}</b></p>
+                            </li>
+                        @endif
+                        <li class="list-group-item" style="background-color:aqua">
+                            <h5>Last Training Session Received:</h5>
+                            <p><b>
+                                @if($last_training != null)
+                                    {{ $last_training->last_training }}
+                                @else
+                                    <i>No Training Since 12/04/2018</i>
+                                @endif
+                            </b></p>
+                        </li>
+                        @if(Auth::user()->can('train'))
+                            <li class="list-group-item" style="background-color:lightgray">
+                                <h5>Last Training Session Given:</h5>
+                                <p><b>
+                                    @if(isset($last_training_given))
+                                        {{ $last_training_given->last_training }}
+                                    @else
+                                        <i>No Training Given Since 12/04/2018</i>
+                                    @endif
+                                </b></p>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
 </div>
-
-@stop
+@endsection

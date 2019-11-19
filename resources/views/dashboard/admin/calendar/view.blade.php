@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('layouts.dashboard')
 
 @section('title')
 View Calendar Event/News

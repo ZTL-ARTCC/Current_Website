@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 View Scenery
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h3>Scenery for {{ $scenery->airport }}</h3>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     <a href="/dashboard/controllers/scenery" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>

@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 View Event
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h3>Event Information and Signup</h3>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     @if($event->banner_path != null)
