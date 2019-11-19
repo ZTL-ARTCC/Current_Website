@@ -54,7 +54,7 @@ Route::get('/logout', 'RosterController@logout');
 *   Controller Dashboard
 */
 Route::prefix('dashboard')->middleware('auth')->group(function() {
-    Route::get('/', 'ControllerDash@dash');
+    Route::get('/', 'FrontController@home');
 
     Route::prefix('controllers')->group(function() {
       

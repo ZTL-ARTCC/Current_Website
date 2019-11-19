@@ -7,15 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>VATUSA - @yield('title')</title>
+    <title>ZTL - @yield('title')</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-formhelpers.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/vatusa.css" rel="stylesheet">
-    <link href="/css/vatusaapp.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/Footer-white.css">
-    <link rel="stylesheet" href="/js/vatusaapp.js">
+   
+   
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <!--[if lt IE 9]>
 
@@ -25,94 +24,54 @@
 
     <![endif]-->
 
- 
 </head>
 <body>
 <div class="container-head">
-
     <div class="head">
-   
         <div class="layer">
-
             <div class="container">
             <img src="/photos/logo_white.png" class="logo"/>
-
 @if(Auth::check())
-
     <div class="pull-right">
-
         <div class="wb-usr">
-
             <span class="grab"><strong>{{Auth::user()->fname.' '.Auth::user()->lname}}</strong></span>
-
             <br>
-
             <small><i class="fa fa-user"></i> {{Auth::user()->id}} &nbsp; &mdash; &nbsp; <i
-
                         class="fa fa-trophy"></i> 
-
                 {{Auth::user()->RatingLong}}<br>
-
             </small>
-
         </div>
-
     </div>
-
-@endif
-               
-
-              
+@endif      
             </div>
-
         </div>
-
     </div>
 
     <div class="clear-fix"></div>
-
     <nav class="navbar navbar-default" id="nav">
-
         <div class="container">
-
             <div class="navbar-header">
-
-
-
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
 
 aria-expanded="false" aria-controls="navbar">
-
 <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
-
     class="icon-bar"></span> <span class="icon-bar"></span></button>
-
 </div>
-
 <div id="navbar" class="navbar-collapse collapse">
-
 <ul class="nav navbar-nav">
-
 <li><a href="/">
-
     Home
-
 </a></li>
-
 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-
                     aria-expanded="false">
-
     Pilots
-
     <span class="caret"></span></a>
-
 <ul class="dropdown-menu" role="menu">
     <li><a href="https://www.aviationapi.com/charts" target="_blank">Charts</a></li>
     <li><a href="http://www.vatstar.com/" target="_blank">VATSTAR Training</a></li>
     <li><a href="https://www.aviationweather.gov/" target="_blank">Weather</a></li>
     <li><a href="/pilots/scenery">Scenery</a></li>
-    <li><a href="/pilots/airports" target="_blank">Airports</a></li>
+    <li><a href="/pilots/airports">Airports</a></li>
     <li><a href="/pilots/request-staffing">Request Staffing</a></li>
     <li><a href="http://www.flightaware.com/statistics/ifr-route/" target="_blank">IFR Routes</a></li>
 
@@ -132,10 +91,10 @@ aria-expanded="false" aria-controls="navbar">
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/controllers/roster">Roster</a></li>
-                            <li><a href="/controllers/staff" target="_blank">Staff</a></li>
-                            <li><a href="/contorllers/files">Files</a></li>
-                            <li><a href="/contorllers/stats">Controller Stats</a></li>
-                            <li><a href="/contorllers/teamspeak">Teamspeak Info</a></li>
+                            <li><a href="/controllers/staff">Staff</a></li>
+                            <li><a href="/controllers/files">Files</a></li>
+                            <li><a href="/controllers/stats">Controller Stats</a></li>
+                            <li><a href="/controllers/teamspeak">Teamspeak Info</a></li>
                         </ul>
 
                     </li>
@@ -157,7 +116,7 @@ aria-expanded="false">
 <li><a href="/dashboard/controllers/profile">My Profile</a></li>
 <li class="nav-divider"></li>
 <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Training</h5></li>
-<li><a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/tickets/mentor/mentoravi') }}" href="/dashboard/controllers/mentoravi">Schedule a Training Session</a></li>
+<li><script id="setmore_script" type="text/javascript" src="https://my.setmore.com/webapp/js/src/others/setmore_iframe.js"></script><a id="Setmore_button_iframe" class="nav-link" href="https://my.setmore.com/bookingpage/3598990c-a847-4107-81eb-de1794648684">Schedule a Training Session</a></li>
 <li><a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a></li>
 <li><a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a></li>
 <li class="nav-divider"></li>
@@ -170,9 +129,9 @@ aria-expanded="false">
 <li><a class="fa fa-user" href ="/login">Controller Login</a></li>
 
 @endif                    
-
+@if(Auth::check())
 @if(Auth::user()->can('staff') || Auth::user()->can('email') || Auth::user()->can('scenery') || Auth::user()->can('files') || Auth::user()->can('events'))
-<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="abutton"
 
                                             aria-expanded="false">
 
@@ -184,16 +143,16 @@ aria-expanded="false">
                         @if(Auth::user()->can('snrStaff'))
                         <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Membership</h5></li>
                             <li><a href="/dashboard/controllers/roster">Roster Management</a></li>
-                            <li><a href="/controllers/staff" target="_blank">Feedback Management</a></li>
-                            <li><a href="/contorllers/files">Incident Report Management</a></li>
-                            <li><a href="/contorllers/files">Bronze MIC Management</a></li>
-                            <li><a href="/contorllers/files">Website Activity</a></li>
+                            <li><a href="/dashboard/admin/feedback">Feedback Management</a></li>
+                            <li><a href="/dashboard/admin/incident">Incident Report Management</a></li>
+                            <li><a href="/dashboard/admin/bronze-mic">Bronze MIC Management</a></li>
+                            <li><a href="/dashboard/admin/audits">Website Activity</a></li>
                         @endif
                             <li class="nav-divider"></li>
                         @if(Auth::user()->can('staff'))
                             <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 0; margin-bottom: 5px;">Announcements/ Airports</h5></li>
-                            <li><a href="/dashboard/controller/roster">Calendar/News Management</a></li>
-                            <li><a href="/controllers/staff" target="_blank">Airport Management Management</a></li>
+                            <li><a href="/dashboard/admin/calendar">Calendar/News Management</a></li>
+                            <li><a href="/dashboard/admin/airports">Airport Management</a></li>
                             @if(Auth::user()->can('scenery'))
                                 <li><a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/scenery') }}" href="/dashboard/admin/scenery">Scenery Management</a></li>
                             @endif
@@ -203,7 +162,9 @@ aria-expanded="false">
                             <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 0; margin-bottom: 5px;">Email</h5></li>
                             <li><a href="/dashboard/admin/email/send">Send Email/Broadcast</a></li>
                         @endif
-        
+                        <li class="nav-divider"></li>
+                        <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Zack's Little Corner</h5></li>
+                        <li><a href="/contorllers/files">Downloads/files</a></li>
                         </ul>
 
                     </li>
@@ -219,14 +180,14 @@ aria-expanded="false">
                         
                         <ul class="dropdown-menu" role="menu">                   
                         <li><a href="/dashboard/training/tickets">Training Tickets</a></li>
-                        <li><a href="/dashboard/admin/roster">Update Certs</a></li>
-                        <li><a href="/dashboard/roster">Schedule Maanagement</a></li>
+                        <li><a href="/dashboard/controllers/roster">Update Certs</a></li>
+                        <li><a class="nav-link" href="https://my.setmore.com/" target="_blank">Schedule Management</a></li>
                         @if(Auth::user()->hasRole('ins') || Auth::user()->can('snrStaff'))
                             <li><a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a></li>
                         @endif
                         
 @endif
-                  
+@endif                    
                 
 
 </li>
@@ -270,9 +231,13 @@ aria-expanded="false">
 <script src="/js/bootbox.min.js"></script>
 
 <script src="/js/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
+<link href="/css/vatusa.css" rel="stylesheet">
+ <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="/js/vatusa.js"></script>
-
+<script src="/js/app.js"></script>
 <script src="/js/bootstrap-formhelpers.js"></script>
 </body>
 </html>

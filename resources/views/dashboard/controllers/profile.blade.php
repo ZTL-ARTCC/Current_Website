@@ -3,7 +3,36 @@
 @section('title')
 Profile
 @endsection
+@section('scripts')
 
+    <script>
+      $('#toggleOptin').click(function () {
+        let icon  = $(this).find('i.toggle-icon'),
+            currentlyOn = icon.hasClass('fa-toggle-on'),
+            spinner = $(this).find('i.spinner-icon')
+        spinner.show()
+        $.ajax({
+          type: 'POST',
+          url : "{{ secure_url("/dashboard/controllers/profile") }}"
+        }).success(function (result) {
+          spinner.hide()
+          if (result === '1') {
+            //Success
+            icon.attr('class', 'toggle-icon fa fa-toggle-' + (currentlyOn ? 'off' : 'on') +
+              ' text-' + (currentlyOn ? 'danger' : 'success'))
+          }
+          else {
+            bootbox.alert('<div class=\'alert alert-danger\'><i class=\'fa fa-warning\'></i> <strong>Error!</strong> Unable to toggle email opt-in setting.')
+          }
+        })
+          .error(function (result) {
+            spinner.hide()
+            bootbox.alert('<div class=\'alert alert-danger\'><i class=\'fa fa-warning\'></i> <strong>Error!</strong> Unable to toggle email opt-in setting.')
+          })
+      })
+    </script>
+
+@endsection
 @section('content')
 
 <div class="container">
@@ -40,59 +69,20 @@ Profile
                             <label class="col-sm-2 control-label">Receive Broadcast Emails</label>
                             <div class="col-sm-10">
                                 <span id="toggleOptin" style="font-size:1.8em;">
-                                    <i class="toggle-icon fa fa-toggle-{{ Auth::user()->flag_broadcastOptedIn ? "on text-success" : "off text-danger"}} "></i>
+                                
+                                    <i class="toggle-icon fa fa-toggle-{{ Auth::user()->opt ?"on text-success" : "off text-danger"}} "></i>
                                     <i class="spinner-icon fa fa-spinner fa-spin" style="display:none;"></i>
                             </span>
-                            <p class="help-block">To receive emails from the ZTL'S mass emailing system, you must
+                            <p class="help-block">To receive emails from the ZTL's mass emailing system, you must
                                 opt-in by
-                                clicking on the toggle switch above. <br>This only affects the mass emailing system of
-                                ARTCCs
-                                that choose to use this response.<br><strong>This setting does not affect
-                                account-related emails like transfer requests and exam results/assignments.</strong>
+                                clicking on the toggle switch above. <strong>This setting does not affect
+                                account-related emails like training tickets/sessions and exam results/assignments.</strong>
                             </p>
                         </div>
                     </div>
                    
-            <center>
-                <h4>My Recent Activity:</h4>
-                <div class="card">
-                    <ul class="list-group list-group-flush" style="  float: left; position: absolute;top: 260px;: 0; right: 500px;width: 200px;height: 100px;">
-                        @if($personal_stats->total_hrs < 1)
-                            <li class="list-group-item" style="background-color:#E6B0AA">
-                                <h5>Hours this Month:</h5>
-                                <p><b>{{ $personal_stats->total_hrs }}</b></p>
-                            </li>
-                        @else
-                            <li class="list-group-item" style="background-color:#A9DFBF">
-                                <h5>Hours this Month:</h5>
-                                <p><b>{{ $personal_stats->total_hrs }}</b></p>
-                            </li>
-                        @endif
-                        <li class="list-group-item" style="background-color:aqua">
-                            <h5>Last Training Session Received:</h5>
-                            <p><b>
-                                @if($last_training != null)
-                                    {{ $last_training->last_training }}
-                                @else
-                                    <i>No Training Since 12/04/2018</i>
-                                @endif
-                            </b></p>
-                        </li>
-                        @if(Auth::user()->can('train'))
-                            <li class="list-group-item" style="background-color:lightgray">
-                                <h5>Last Training Session Given:</h5>
-                                <p><b>
-                                    @if(isset($last_training_given))
-                                        {{ $last_training_given->last_training }}
-                                    @else
-                                        <i>No Training Given Since 12/04/2018</i>
-                                    @endif
-                                </b></p>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </center>
+           
+                
         
                 </form>
             </div>
@@ -167,4 +157,5 @@ Profile
     <hr>
    
 </div>
-@endsection
+
+@stop

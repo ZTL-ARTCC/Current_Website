@@ -1,5 +1,4 @@
 @extends('layout')
-
 @section('title')
 Feedback Management
 @endsection
@@ -18,7 +17,7 @@ Feedback Management
     </ul>
 
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="new">
+        <div role="tabpanel" class="" id="new">
             @if($feedback->count() > 0)
                 <table class="table table-outline">
                     <thead>

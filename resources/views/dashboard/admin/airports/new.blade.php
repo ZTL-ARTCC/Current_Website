@@ -1,15 +1,10 @@
-@extends('layouts.dashboard')
-
+@extends('layout')
 @section('title')
     New Airport
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    <h2>New Airport</h2>
-    &nbsp;
-</div>
+
 <br>
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeAirport']) !!}
