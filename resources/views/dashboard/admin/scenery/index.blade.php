@@ -1,15 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layout')
 
 @section('title')
 Scenery Management
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    <h2>Scenery Management</h2>
-    &nbsp;
-</div>
+
 <br>
 <div class="container">
     <a href="/dashboard/admin/scenery/new" class="btn btn-primary">New Scenery</a>

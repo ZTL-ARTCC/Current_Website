@@ -1,15 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layout')
 
 @section('title')
 Visit Requests
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    <h2>Visit Requests</h2>
-    &nbsp;
-</div>
+
 <br>
 <div class="container">
     <div class="form-group inline">

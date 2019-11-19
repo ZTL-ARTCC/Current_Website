@@ -1,15 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layout')
 
 @section('title')
 Teamspeak Info
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    <h2>ZTL ARTCC Teamspeak Information</h2>
-    &nbsp;
-</div>
+
 <br>
 
 <div class="container">

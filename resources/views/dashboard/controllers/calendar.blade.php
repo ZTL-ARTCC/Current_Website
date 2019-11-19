@@ -1,19 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layout')
 
 @section('title')
 View Calendar Event/News
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
-    @if($calendar->type == 1)
-        <h4>Viewing Calendar Event, "{{ $calendar->title }}"</h4>
-    @else
-        <h4>Viewing News Posting, "{{ $calendar->title }}"</h4>
-    @endif
-    &nbsp;
-</div>
+
 <br>
 <div class="container">
     <a href="/dashboard" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
