@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Scenery
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h3>Scenery</h3>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     {!! Form::open(['url' => '/dashboard/controllers/scenery/search']) !!}

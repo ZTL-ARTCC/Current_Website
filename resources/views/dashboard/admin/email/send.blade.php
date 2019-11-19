@@ -1,4 +1,4 @@
-@extends('layout)
+@extends('layouts.dashboard')
 
 @section('title')
     Send New Email

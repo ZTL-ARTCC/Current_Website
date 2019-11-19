@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Update Controller
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Update {{ $user->full_name }} ({{ $user->id }})</h2>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     {!! Form::open(['action' => ['AdminDash@updateController', $user->id]]) !!}

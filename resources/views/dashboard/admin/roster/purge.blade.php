@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Roster Purge
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Roster Purge Assistant</h2>
+    &nbsp;
+</div>
 <br>
 
 <?php

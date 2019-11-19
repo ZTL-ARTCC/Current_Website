@@ -30,49 +30,9 @@ use Mail;
 use Response;
 use SimpleXMLElement;
 use Validation;
-use App\Announcement;
 
 class FrontController extends Controller
 {
-    public function vatusa() {
-        $now = Carbon::now();
-        $news = Calendar::where('type', '2')->where('visible', '1')->get()->filter(function($news) use ($now) {
-            return strtotime($news->date.' '.$news->time) < strtotime($now);
-        })->sortByDesc(function($news) {
-            return strtotime($news->date.' '.$news->time);
-        });
-        $atc = ATC::get();
-        if($atc) {
-            $atl_ctr = 0;
-            $atl_app = 0;
-            $atl_twr = 0;
-            $clt_twr = 0;
-            foreach($atc as $a) {
-                $field = substr($a->position, 0, 3);
-                $position = substr($a->position, -3);
-                if($field == 'ATL') {
-                    if($position == 'TWR' || $position == 'GND') {
-                        $atl_twr = 1;
-                    } elseif($position == 'APP' || $position == 'DEP') {
-                        $atl_app = 1;
-                    } elseif($position == 'CTR') {
-                        $atl_ctr = 1;
-                    }
-                } elseif($field == 'CLT') {
-                    if($position == 'TWR' || $position == 'GND' || $position == 'APP' || $position == 'DEP') {
-                        $clt_twr = 1;
-                    }
-                }
-            }
-        }
-        $events = Event::where('status', 1)->get()->filter(function($e) use ($now) {
-            return strtotime($e->date.' '.$e->start_time) > strtotime($now);
-        })->sortBy(function($e) {
-            return strtotime($e->date);
-        });
-        $announcement = Announcement::find(1);
-        return view('index')->with('news', $news)->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)->with('announcement', $announcement)->with('events', $events);
-    }
     public function home() {
         $atc = ATC::get();
         if($atc) {
@@ -98,7 +58,7 @@ class FrontController extends Controller
                 }
             }
         }
-        $announcement = Announcement::find(1);
+
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
         $metar_update = Metar::first();
         if($metar_update != null) {
@@ -134,7 +94,7 @@ class FrontController extends Controller
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(10)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
 
-        return view('index')->with('announcement', $announcement)->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
+        return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)

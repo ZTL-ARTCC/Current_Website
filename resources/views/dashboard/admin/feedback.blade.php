@@ -1,10 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
+
 @section('title')
 Feedback Management
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Feedback Management</h2>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -17,7 +22,7 @@ Feedback Management
     </ul>
 
     <div class="tab-content">
-        <div role="tabpanel" class="" id="new">
+        <div role="tabpanel" class="tab-pane active" id="new">
             @if($feedback->count() > 0)
                 <table class="table table-outline">
                     <thead>
