@@ -1,6 +1,4 @@
-
-@extends('layout')
-
+@extends('layouts.dashboard')
 
 @section('title')
 Bronze Mic
