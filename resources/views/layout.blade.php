@@ -235,7 +235,7 @@ aria-expanded="false">
 
 
 <link href="/css/vatusa.css" rel="stylesheet">
- <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+ 
 <script src="/js/vatusa.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/bootstrap-formhelpers.js"></script>
