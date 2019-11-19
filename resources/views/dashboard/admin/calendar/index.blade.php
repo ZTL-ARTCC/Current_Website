@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Calendar/News
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Calendar/News</h2>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     <a class="btn btn-primary" href="/dashboard/admin/calendar/new">New Calendar Event/News</a>

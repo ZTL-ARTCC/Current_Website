@@ -15,7 +15,6 @@
 *   Front Page Stuff
 */
 Route::get('/', 'FrontController@home');
-Route::get('/vatusa', 'FrontController@vatusa');
 Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
 Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
@@ -54,7 +53,7 @@ Route::get('/logout', 'RosterController@logout');
 *   Controller Dashboard
 */
 Route::prefix('dashboard')->middleware('auth')->group(function() {
-    Route::get('/', 'FrontController@home');
+    Route::get('/', 'ControllerDash@dash');
 
     Route::prefix('controllers')->group(function() {
       
