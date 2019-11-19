@@ -164,7 +164,7 @@ aria-expanded="false">
                         @endif
                         <li class="nav-divider"></li>
                         <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Zack's Little Corner</h5></li>
-                        <li><a href="/controllers/files">Downloads/files</a></li>
+                        <li><a href="/dashboard/controllers/files">Downloads/files</a></li>
                         </ul>
 
                     </li>
