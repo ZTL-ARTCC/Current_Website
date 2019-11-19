@@ -9,4 +9,5 @@ table.availability td.available {
 
 .session-request-form {
 	display: none;
+	width: 200px;
 }
