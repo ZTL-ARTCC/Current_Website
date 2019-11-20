@@ -172,7 +172,7 @@ aria-expanded="false">
                         @endif
                         
                         <li class="nav-divider"></li>
-                        @if(Auth::user()->can('events')
+                        @if(Auth::user()->can('events'))
                         <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;"Events</h5></li>
                         <li><a href="/dashboard/controllers/events">Events Management</a></li>
      
