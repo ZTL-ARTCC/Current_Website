@@ -166,7 +166,7 @@ aria-expanded="false">
                             <li><a href="/dashboard/admin/email/send">Send Email/Broadcast</a></li>
                         @endif
                         <li class="nav-divider"></li>
-                        @if(Auth::user()->can('files')
+                        @if(Auth::user()->can('files'))
                         <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Zack's Little Corner</h5></li>
                         <li><a href="/dashboard/controllers/files">Downloads/files</a></li>
                         @endif
