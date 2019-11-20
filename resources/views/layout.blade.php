@@ -96,6 +96,7 @@ aria-expanded="false" aria-controls="navbar">
                             <li><a href="/controllers/files">Files</a></li>
                             <li><a href="/controllers/stats">Controller Stats</a></li>
                             <li><a href="/controllers/teamspeak">Teamspeak Info</a></li>
+                            <li><a href="/dashboard/controllers/events">Evens</a></li>
                         </ul>
 
                     </li>
@@ -154,6 +155,7 @@ aria-expanded="false">
                             <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 0; margin-bottom: 5px;">Announcements/ Airports</h5></li>
                             <li><a href="/dashboard/admin/calendar">Calendar/News Management</a></li>
                             <li><a href="/dashboard/admin/airports">Airport Management</a></li>
+                            <li><a href="/dashboard/admin/announcement">Update/Create Announcements</a></li>
                             @if(Auth::user()->can('scenery'))
                                 <li><a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/scenery') }}" href="/dashboard/admin/scenery">Scenery Management</a></li>
                             @endif
@@ -164,8 +166,18 @@ aria-expanded="false">
                             <li><a href="/dashboard/admin/email/send">Send Email/Broadcast</a></li>
                         @endif
                         <li class="nav-divider"></li>
+                        @if(Auth::user()->can('files')
                         <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;">Zack's Little Corner</h5></li>
                         <li><a href="/dashboard/controllers/files">Downloads/files</a></li>
+                        @endif
+                        
+                        <li class="nav-divider"></li>
+                        @if(Auth::user()->can('events')
+                        <li class="dropdown-header"><h5 style="font-weight: bold; margin-top: 5px; margin-bottom: 5px;"Events</h5></li>
+                        <li><a href="/dashboard/controllers/events">Events Management</a></li>
+     
+                        @endif
+                        </ul>
                         </ul>
 
                     </li>
