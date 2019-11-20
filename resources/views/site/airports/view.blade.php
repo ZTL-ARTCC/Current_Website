@@ -1,11 +1,17 @@
-@extends('layout')
+@extends('layouts.master')
 
 @section('title')
 View Airport ({{ $airport->ltr_4 }})
 @endsection
 
 @section('content')
-
+<span class="border border-light" style="background-color:#F0F0F0">
+    <div class="container">
+        &nbsp;
+        <h2>{{ $airport->name }} Airport ({{ $airport->ltr_3 }})</h2>
+        &nbsp;
+    </div>
+</span>
 <br>
 <div class="container">
     <div class="row">

@@ -1,11 +1,15 @@
-@extends('layout')
+@extends('layouts.dashboard')
 
 @section('title')
 Upload File
 @endsection
 
 @section('content')
-
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Upload New File</h2>
+    &nbsp;
+</div>
 <br>
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeFile', 'files' => true]) !!}

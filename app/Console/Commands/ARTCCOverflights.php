@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Overflight;
 use App\OverflightUpdate;
 use Config;
