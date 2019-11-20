@@ -178,7 +178,7 @@ aria-expanded="false">
      
                         @endif
                         </ul>
-                        </ul>
+                       
 
                     </li>
 @endif                          
