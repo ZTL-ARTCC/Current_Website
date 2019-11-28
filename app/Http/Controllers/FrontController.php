@@ -315,10 +315,10 @@ class FrontController extends Controller
             $message->to($visit->email)->cc('datm@ztlartcc.org');
         });
         
-        return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.')
+        return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
         }
         else {
-        return redirect('/')->with('error', 'You need to be a S1 rated controller or greater')
+        return redirect('/')->with('error', 'You need to be a S1 rated controller or greater');
         }
     }
 
