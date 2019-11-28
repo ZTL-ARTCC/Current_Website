@@ -285,6 +285,7 @@ class FrontController extends Controller
         ]);
 
         //Google reCAPTCHA Verification
+       
         $client = new Client;
         $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
@@ -296,9 +297,10 @@ class FrontController extends Controller
         if($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
-
+       
         //Continue Request
         $visit = new Visitor;
+        if($visit->rating != 'OBS') {
         $visit->cid = $request->cid;
         $visit->name = $request->name;
         $visit->email = $request->email;
@@ -312,8 +314,12 @@ class FrontController extends Controller
             $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
             $message->to($visit->email)->cc('datm@ztlartcc.org');
         });
-
-        return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
+        
+        return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.')
+        }
+        else {
+        return redirect('/')->with('error', 'You need to be a S1 rated controller or greater')
+        }
     }
 
     public function newFeedback() {
