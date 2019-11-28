@@ -300,7 +300,7 @@ class FrontController extends Controller
        
         //Continue Request
         $visit = new Visitor;
-        if($visit->rating != 'OBS') {
+        if($visit->rating != 1) {
         $visit->cid = $request->cid;
         $visit->name = $request->name;
         $visit->email = $request->email;
