@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent;
 use Illuminate\Http\Request;
+use Mail;
 
 class RosterUpdate extends Command
 {
@@ -230,6 +231,10 @@ class RosterUpdate extends Command
                         $user->status = '1';
                         $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
                         $user->save();
+                        Mail::send('emails.moodle', ['user' => $user], function($message) use ($user){
+                            $message->from('users@notams.ztlartcc.org');
+                            $message->to('wm@ztlartcc.org');
+                        });
                         $user = User::find($r->cid);
 
                         //Assigns controller initials
