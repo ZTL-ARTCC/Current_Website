@@ -87,7 +87,7 @@ class TrainingTicket extends Model
             $position = 'Major Approach';
         } elseif($pos == 6) {
             $position = 'Center';
-        } ($pos == 7) {
+        } elseif($pos == 7) {
             $position = 'S1 T1-DEL-1 (Theory)';
         } elseif($pos == 8) {
             $position = 'S1 P1-DEL-2';
