@@ -87,7 +87,7 @@ class TrainingTicket extends Model
             $position = 'Major Approach';
         } elseif($pos == 6) {
             $position = 'Center';
-        } elseif($pos == 7) {
+        } ($pos == 7) {
             $position = 'S1 T1-DEL-1 (Theory)';
         } elseif($pos == 8) {
             $position = 'S1 P1-DEL-2';
@@ -96,7 +96,7 @@ class TrainingTicket extends Model
         } elseif($pos == 10) {
             $position = 'S1 M1-DEL-4 (Live Network Monitoring - CLT)';
         } elseif($pos == 11) {
-            $position = 'S1T2-DEL-5 (Theroy)';
+            $position = 'S1T2-DEL-5 (Theroy, ATL)';
         } elseif($pos == 12) {
             $position = 'S1P3-DEL 6';    
         } elseif($pos == 13) {
@@ -110,7 +110,7 @@ class TrainingTicket extends Model
         } elseif($pos == 17) {
             $position = 'S1M3-GND-4 (Live Network Monitoring - CLT)';
         } elseif($pos == 18) {
-            $position = 'S1T4-GND-5 (Theory)';
+            $position = 'S1T4-GND-5 (Theory, ATL)';
         } elseif($pos == 19) {
             $position = 'S1P6-GND-6';
         } elseif($pos == 20) {
@@ -128,7 +128,7 @@ class TrainingTicket extends Model
         } elseif($pos == 26) {
             $position = 'S2M1-TWR-5 (Live Network Monitoring – CLT)'; 
         } elseif($pos == 27) {
-            $position = 'S2T2-TWR-6 (Theory)';     
+            $position = 'S2T2-TWR-6 (Theory, ATL)';     
         } elseif($pos == 28) {
             $position = 'S2P4-TWR-7';
         } elseif($pos == 29) {
