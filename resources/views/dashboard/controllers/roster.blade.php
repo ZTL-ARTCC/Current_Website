@@ -55,7 +55,7 @@ Roster
             <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#visitagree" role="tab" data-toggle="tab" style="color:black">ZHU/ZJX Visiting Controllers</a>
+            <a class="nav-link" href="#visitagree" role="tab" data-toggle="tab" style="color:black">ZJX Visiting Controllers</a>
         </li>
     </ul>
     <div class="tab-content">
