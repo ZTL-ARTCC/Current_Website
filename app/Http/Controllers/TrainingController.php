@@ -30,7 +30,6 @@ class TrainingController extends Controller {
 	public function showMentAvail()
 	{
 		$id = Auth::id();
-		if($user->max == 1)
 		$pos = ['Minor Delivery/Ground',
 		'Major Delivery/Ground']
 		$availability = MentorAvail::with('mentor')
