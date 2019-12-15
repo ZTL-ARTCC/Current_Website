@@ -87,7 +87,7 @@
     function populatePositions() {
 		var $form = $(".session-request-form");
 		var maxi = $form.find('option:selected').attr('name');
-		var pos = ['Minor Delivery/Ground']
+		var pos = $postion
 		var $Hookername = $form.find('#position');
 		$Hookername.html('');
 		for (i=0;i<=6;i++){
