@@ -30,7 +30,7 @@ class TrainingController extends Controller {
 	public function showMentAvail()
 	{
 		$id = Auth::id();
-		$postion = ['Minor Delivery/Ground']
+		$postion = ['Minor Delivery/Ground'];
 		$availability = MentorAvail::with('mentor')
 			->whereNull('trainee_id')
 			->where('slot', '>', Carbon::now('America/New_York'))
