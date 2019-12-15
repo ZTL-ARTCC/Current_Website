@@ -82,12 +82,15 @@
 	function pad (str, max) {
 		str = str.toString();
 		return str.length < max ? pad("0" + str, max) : str;
+		return str.length < max_minor_del ? pad("0" + str, max_minor_del) : str;
 	}
 	
     function populatePositions() {
 		var $form = $(".session-request-form");
 		var maxi = $form.find('option:selected').attr('name');
-		var pos = $postion
+		if (max_minor_del = 1){
+			var pos = ['Minor Delivery/Ground']
+		}
 		var $Hookername = $form.find('#position');
 		$Hookername.html('');
 		for (i=0;i<=6;i++){
