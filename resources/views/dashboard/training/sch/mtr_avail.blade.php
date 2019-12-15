@@ -78,7 +78,7 @@
 <script src="/js/moment.min.js"></script>
 <script src="/js/moment-timezone-with-data-2010-2020.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
-
+@if(mentor->max == 1)
 <script>
 	function pad (str, max) {
 		str = str.toString();
@@ -88,13 +88,7 @@
     function populatePositions() {
 		var $form = $(".session-request-form");
 		var maxi = $form.find('option:selected').attr('name');
-		var pos = ['Minor Delivery/Ground',
-		'Major Delivery/Ground',
-		'Minor Tower', 
-		'Major Tower', 
-		'Minor Approach',
-		'Major Approach', 
-		'Enroute'];
+		var pos = ['Minor Delivery/Ground']
 		var $Hookername = $form.find('#position');
 		$Hookername.html('');
 		for (i=0;i<=6;i++){
@@ -188,7 +182,7 @@ var currTz = sessionStorage.getItem('timezone');
 		now.add(1, 'd');
 	}
 </script>
-
+@endif
 @endif
 
 @stop
