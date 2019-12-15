@@ -88,8 +88,14 @@
     function populatePositions() {
 		var $form = $(".session-request-form");
 		var maxi = $form.find('option:selected').attr('name');
+		var pos = ['Minor Delivery/Ground',
+		'Major Delivery/Ground',
+		'Minor Tower', 
+		'Major Tower', 
+		'Minor Approach',
+		'Major Approach', 
+		'Enroute'];
 		var $Hookername = $form.find('#position');
-		var $pos = $pos
 		$Hookername.html('');
 		for (i=0;i<=6;i++){
 		    if (maxi-1>=i){

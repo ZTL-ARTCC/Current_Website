@@ -37,7 +37,7 @@ class TrainingController extends Controller {
 			->whereNull('trainee_id')
 			->where('slot', '>', Carbon::now('America/New_York'))
 			->get();
-		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability)->with('pos', $pos);
+		return View('dashboard.training.sch.mtr_avail')->with('availability', $availability)->with('pos', $pos)->with('id', $id);
     }
 	public function saveSession()
 	{

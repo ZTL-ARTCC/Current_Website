@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class TrainingRequest extends Model {
-
+	
 	public static $PosReq = [
 		1 => 'Minor Delivery',
 		2 => 'Major Delivery', 
