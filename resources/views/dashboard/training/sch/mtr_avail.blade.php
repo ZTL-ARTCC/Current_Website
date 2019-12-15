@@ -89,8 +89,8 @@
 		return str.length < max_minor_del ? pad("0" + str, max_minor_del) : str;
 		
 	}
-	System.out.format(max_minor_del)
 
+	
 
     function populatePositions() {
 		var $form = $(".session-request-form");
