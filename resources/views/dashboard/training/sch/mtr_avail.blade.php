@@ -82,9 +82,16 @@
 	function pad (str, max) {
 		str = str.toString();
 		return str.length < max ? pad("0" + str, max) : str;
-		return str.length < max_minor_del ? pad("0" + str, max_minor_del) : str;
+		
 	}
-	System.out.format(max_minor_del);
+	function pad (str, max_minor_del) {
+		str = str.toString();
+		return str.length < max_minor_del ? pad("0" + str, max_minor_del) : str;
+		
+	}
+	System.out.format(max_minor_del)
+
+
     function populatePositions() {
 		var $form = $(".session-request-form");
 		var maxi = $form.find('option:selected').attr('name');
