@@ -74,7 +74,7 @@
 		</div>
 	{{ Form::close() }}
 </div>
-@if(availability->mentor->max == 1)
+@if($availability->mentor->max == 1)
 <script src="/js/moment.min.js"></script>
 <script src="/js/moment-timezone-with-data-2010-2020.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
