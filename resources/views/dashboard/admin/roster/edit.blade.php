@@ -188,17 +188,17 @@ Update Controller
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                         <div class="col-sm-6">
-                            {!! Form::label('max', 'Training Level') !!}
-                            {!! Form::select('max', [
-                                null => 'Not Able to Train',
-                                1 => 'Minor/ DEL & GMD',
-                                2 => 'Major/ DEL & GMD',
-                                3 => 'Minor Local',
-                                4 => 'Major Local',
-                                5 => 'Minor Approach',
-                                6 => 'Major Approach',
-                                7 => 'Center'
-                            ], $user->max, ['class' => 'form-control']) !!}
+                            {!! Form::label('max_minor_del', 'Train Minor DEL') !!}
+                            {!! Form::checkbox('max_minor_del', 1, true) !!}
+                           
+                            {!! Form::label('max_minor_gnd', 'Train Minor GND') !!}
+                            {!! Form::checkbox('max_minor_gnd', 1, true) !!}
+
+                            {!! Form::label('max_minor_twr', 'Train Minor TWR') !!}
+                            {!! Form::checkbox('max_minor_twr', 1, true) !!}
+
+                            {!! Form::label('max_minor_app', 'Train Minor APP') !!}
+                            {!! Form::checkbox('max_minor_app', 1, true) !!}
                         </div>
                     @endif
                 </div>

@@ -74,7 +74,6 @@
 		</div>
 	{{ Form::close() }}
 </div>
-@if($availability->mentor->max == 1)
 <script src="/js/moment.min.js"></script>
 <script src="/js/moment-timezone-with-data-2010-2020.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
@@ -142,9 +141,10 @@ var currTz = sessionStorage.getItem('timezone');
 				$td.addClass('available');
 				$td.addClass('simple-tooltip');
 				$td.data('toggle', 'tooltip');
-
+				
 				var slots = slotsGrouped[date],
 					mentors = slots.map(function(slot){
+						
 						return slot.mentor.fname + " " + slot.mentor.lname + " - " + ratingIdToText[slot.mentor.rating_id];
 
 					});
@@ -182,7 +182,7 @@ var currTz = sessionStorage.getItem('timezone');
 		now.add(1, 'd');
 	}
 </script>
-@endif
+
 @endif
 
 @stop
