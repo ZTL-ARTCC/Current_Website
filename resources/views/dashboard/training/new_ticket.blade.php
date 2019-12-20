@@ -30,7 +30,7 @@ New Training Ticket
                 <div class="form-group">
                     {!! Form::label('position', 'Training Session', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
-                        7 => 'S1T1-DEL-1 (Theory)',
+                                                 7 => 'S1T1-DEL-1 (Theory)',
                         8 => 'S1P1-DEL-2',
                         9 => 'S1P2-DEL-3',
                         10 => 'S1M1-DEL-4 (Live Network Monitoring – CLT)',
@@ -67,17 +67,17 @@ New Training Ticket
                         41 => 'S3M2-APP-11 (Live Network Monitoring – ATL)',
                         42 => 'C1T1-CTR-1 (Theory)',
                         43 => 'C1P1-CTR-2',
-                        44 => 'C1P3-CTR-3',
-                        45 => 'C1M2-CTR-4',
-                        46 => 'C1M3-CTR-5 (Live Network Monitoring)',
-                        47 => 'C1M4-CTR-6',
-                        48 => 'S1 Visiting Major Checkout',
-                        49 => 'S2 Visiting Major Checkout',
-                        50 => 'S3 Visiting Major Checkout',
-                        51 => 'C1 Visiting Major Checkout',
-                        52 => 'Enroute OTS',
-                        53 => 'Approach OTS',
-                        54 => 'Local OTS',
+                        45 => 'C1P3-CTR-3',
+                        46 => 'C1M2-CTR-4',
+                        47 => 'C1M3-CTR-5 (Live Network Monitoring)',
+                        48 => 'C1M4-CTR-6',
+                        49 => 'S1 Visiting Major Checkout',
+                        50 => 'S2 Visiting Major Checkout',
+                        51 => 'S3 Visiting Major Checkout',
+                        52 => 'C1 Visiting Major Checkout',
+                        53 => 'Enroute OTS',
+                        54 => 'Approach OTS',
+                        55 => 'Local OTS',
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
