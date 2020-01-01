@@ -51,7 +51,7 @@ class Moodle extends Command
                  'email' => $u->email
              ]);
            $rank = $u->RatingShort + 8
-           DB:table('mdl_role_assignments')->inster([
+           DB:table('mdl_role_assignments')->insert([
             'roleid' => $rank
             ]);
                 
