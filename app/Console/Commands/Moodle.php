@@ -52,7 +52,7 @@ class Moodle extends Command
              ]);
         }
          foreach($users as $u) {
-           $rank = $u->RatingShort + 8
+           $rank = $u->RatingShort + 8;
            DB:table('mdl_role_assignments')->insert([
             'roleid' => $rank
             ]);
