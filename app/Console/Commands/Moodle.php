@@ -50,11 +50,12 @@ class Moodle extends Command
                  'lastname' => $u->lname,
                  'email' => $u->email
              ]);
+        }
+         foreach($users as $u) {
            $rank = $u->RatingShort + 8
            DB:table('mdl_role_assignments')->insert([
             'roleid' => $rank
             ]);
-                
-        }
+         }    
     }
 }
