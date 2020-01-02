@@ -26,7 +26,7 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($feedback))
+                        @if($feedback->count() > 0)
                             @foreach($feedback as $f)
                                 <tr>
                                     <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
@@ -34,16 +34,13 @@ Profile
                                     <td><center>{{ str_limit($f->comments, 50, '...') }}</center></td>
                                 </tr>
                             @endforeach
-                        @endif
                     </tbody>
                 </table>
-                @if(!isset($feedback))
-                    <p>No feedback found.</p>
-                @endif
-                </div>
-                  @if(isset($feedback))
-                {!! $tickets->links() !!}
-            @endif
+                        @else
+                    </tbody>
+                </table>
+                            <p>No feedback found.</p>
+                        @endif
             </div>
         </div>
         <div class="col-sm-6">
