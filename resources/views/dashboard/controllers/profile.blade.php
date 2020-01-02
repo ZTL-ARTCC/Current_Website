@@ -41,6 +41,7 @@ Profile
                 </table>
                             <p>No feedback found.</p>
                         @endif
+               {!! $feedback->links() !!}         
             </div>
         </div>
         <div class="col-sm-6">
