@@ -42,7 +42,7 @@ Profile
                 @endif
                 </div>
                   @if(isset($feedback))
-                {!! $feedback->links() !!}
+                {!! $tickets->links() !!}
             @endif
             </div>
         </div>
