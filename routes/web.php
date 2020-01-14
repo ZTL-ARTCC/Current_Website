@@ -64,6 +64,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/sessions_today', 'TrainingController@showsessions_today');
 
 
+	    
+	    
+	    
 
 
         Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
