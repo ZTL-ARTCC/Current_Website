@@ -29,6 +29,7 @@ Feedback Management
                         <tr>
                             <th scope="col">Position</th>
                             <th scope="col">Controller</th>
+                            <th scope="col">Pilot</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Submitted</th>
                             <th scope="col">Actions</th>
@@ -39,6 +40,7 @@ Feedback Management
                             <tr>
                                 <td><b>{{ $f->position }}</b> ({{ $f->service_level_text }})</td>
                                 <td>{{ $f->controller_name }}</td>
+                                <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
                                 <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                                 <td>{{ $f->created_at }}</td>
                                 <td>

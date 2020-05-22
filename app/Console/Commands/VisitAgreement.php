@@ -174,15 +174,16 @@ class VisitAgreement extends Command
      */
     public function handle()
     {
+        
         $client_zhu = new Client();
         $res_zhu = $client_zhu->get('https://api.vatusa.net/v2/facility/zhu/roster?apikey='.Config::get('vatusa.api_key'));
         $roster_zhu = json_decode($res_zhu->getBody());
 
         $client_zjx = new Client();
-        $res_zjx = $client_zjx->get('https://api.vatusa.net/v2/facility/zjx/roster?apikey='.Config::get('vautsa.api_key'));
+        $res_zjx = $client_zjx->get('https://api.vatusa.net/v2/facility/zjx/roster?apikey='.Config::get('vatusa.api_key'));
         $roster_zjx = json_decode($res_zjx->getBody());
 
-       
+
         //Runs for ZJX
         foreach($roster_zjx as $r) {
             // Last result will be false
@@ -205,7 +206,7 @@ class VisitAgreement extends Command
                         }
                     }
                     $user->visitor_from = 'ZJX';
-                    if ($r->facility_join == '1900-01-01T00:00:01+00:00') {
+                    if ($r->facility_join == '1900-01-01 00:00:01') {
                         $user->added_to_facility = substr($r->created_at, 0, 10) . ' ' . substr($r->created_at, 11, 8);
                     } else {
                         $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
