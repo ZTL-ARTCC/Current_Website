@@ -299,6 +299,7 @@ class FrontController extends Controller
         }
         if($request->rating != 1) {
         //Continue Request
+<<<<<<< HEAD
       /*  $visit = new Visitor;
 
         $visit->cid = $request->cid;
@@ -321,6 +322,32 @@ class FrontController extends Controller
                 'status'=> 0
             ]
         );
+=======
+        if($request->rating != 1) {
+            //Continue Request
+            /*  $visit = new Visitor;
+
+              $visit->cid = $request->cid;
+              $visit->name = $request->name;
+              $visit->email = $request->email;
+              $visit->rating = $request->rating;
+              $visit->home = $request->home;
+              $visit->reason = $request->reason;
+              $visit->status = 0;
+              $visit->save();*/
+
+            $visit = Visitor::updateOrCreate(
+                ['cid' => $request->cid],
+                [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'rating' => $request->rating,
+                    'home' => $request->home,
+                    'reason'=> $request->reason,
+                    'status'=> 0
+                ]
+            );
+>>>>>>> 73e143a627da3c9fc5f3ad18f1623b889aa5c774
 
         Mail::send('emails.visit.new', ['visit' => $visit], function($message) use ($visit){
             $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
