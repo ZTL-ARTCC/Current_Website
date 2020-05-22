@@ -42,8 +42,7 @@ New Training Ticket
                         16 => 'S1P5-GND-3',
                         17 => 'S1M3-GND-4 (Live Network Monitoring – CLT)',
                         18 => 'S1T4-GND-5 (Theory, ATL)',
-                        19 => 'S1P6-GND-6',
-                        20 => 'S1P7-GND-7',
+
                         21 => 'S1M4-GND-8 (Live Network Monitoring – ATL)',
                         22 => 'S2T1-TWR-1 (Theory)',
                         23 => 'S2P1-TWR-2',
@@ -51,8 +50,7 @@ New Training Ticket
                         25 => 'S2P3-TWR-4',
                         26 => 'S2M1-TWR-5 (Live Network Monitoring – CLT)',
                         27 => 'S2T2-TWR-6 (Theory, ATL)',
-                        28 => 'S2P4-TWR-7',
-                        29 => 'S2P5-TWR-8',
+                     
                         30 => 'S2M2-TWR-9 (Live Network Monitoring – ATL)',
                         31 => 'S3T1-APP-1 (Theory)',
                         32 => 'S3T2-APP-2 (Theory)',
