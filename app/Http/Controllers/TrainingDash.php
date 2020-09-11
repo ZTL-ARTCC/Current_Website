@@ -180,7 +180,7 @@ class TrainingDash extends Controller
     }
 
     public function ticketsIndex(Request $request) {
-        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->filter(function($user) {
+        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function($user) {
             if(TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
                 return $user;
             }
@@ -215,7 +215,7 @@ class TrainingDash extends Controller
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
-        $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
     }
 
@@ -255,6 +255,28 @@ class TrainingDash extends Controller
             $ots->status = 0;
             $ots->save();
             $extra = ' and the OTS recommendation has been added';
+        }
+        if($request->monitor == 1) {
+            if($request->position == 10 )
+                $controller->del = 88;
+            elseif ($request->position == 13)
+                $controller->del == 89;
+            elseif ($request->position == 17)
+                $controller->gnd = 88;
+            elseif ($request->position == 21)
+                $controller->gnd = 89;
+            elseif ($request->position == 26)
+                $controller->twr = 88;
+            elseif ($request->position == 30)
+                $controller->twr = 89;
+            elseif ($request->position == 35)
+                $controller->app = 88;
+            elseif ($request->position == 41)
+                $controller->app = 89;
+            elseif ($request->position == 47)
+                $controller->gnd = 89;
+
+            $controller->save();
         }
 
         Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {

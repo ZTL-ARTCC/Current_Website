@@ -19,7 +19,7 @@ Edit Training Ticket
             <div class="col-sm-4">
                 <div class="form-group">
                     {!! Form::label('controller', 'Controller', ['class' => 'form-label']) !!}
-                    {!! Form::select('controller', $controllers, $ticket->controller_id, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+                    {!! Form::select('controller', [  $ticket->controller_id => $ticket->Controller_name], NULL ,['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-sm-4">

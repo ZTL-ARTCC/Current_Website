@@ -155,6 +155,9 @@ New Training Ticket
         {!! Form::label('ots', 'Recommend for OTS?', ['class' => 'form-label']) !!}
         {!! Form::checkBox('ots', '1') !!}
         <br>
+    {!! Form::label('monitor', 'Can be monitored', ['class' => 'form-label']) !!}
+    {!! Form::checkBox('monitor', '1') !!}
+    <br>
         <button class="btn btn-success" action="submit">Submit Ticket</button>
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {!! Form::close() !!}
