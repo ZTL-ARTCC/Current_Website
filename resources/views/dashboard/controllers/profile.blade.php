@@ -26,7 +26,7 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        @if($feedback->count() >=1 )
+                        @if($feedback->count() > 0)
                             @foreach($feedback as $f)
                                 <tr>
                                     <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>

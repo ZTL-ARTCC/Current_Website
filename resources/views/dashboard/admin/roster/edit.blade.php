@@ -37,8 +37,6 @@ Update Controller
                     {!! Form::select('del', [
                         0 => 'None',
                         1 => 'Minor Certified',
-                        88 => 'Minor Montoring',
-                        89 => 'Major Montoring',
                         2 => 'Major Certified'
                     ], $user->del, ['class' => 'form-control']) !!}
                 </div>
@@ -72,8 +70,6 @@ Update Controller
                         0 => 'None',
                         99 => 'Solo Certification',
                         1 => 'Minor Certified',
-                        88 => 'Minor Montoring',
-                        89 => 'Major Montoring',
                         2 => 'Major Certified'
                     ], $user->twr, ['class' => 'form-control']) !!}
                 </div>
@@ -90,10 +86,7 @@ Update Controller
                         {!! Form::label('app', 'Approach Certification') !!}
                         {!! Form::select('app', [
                             0 => 'None',
-                            99 => 'Solo Certification',
                             1 => 'Minor Certified',
-                            88 => 'Minor Montoring',
-                        89 => 'Major Montoring',
                             2 => 'Major Certified'
                         ], $user->app, ['class' => 'form-control']) !!}
                     </div>
@@ -110,10 +103,7 @@ Update Controller
                         {!! Form::label('app', 'Approach Certification') !!}
                         {!! Form::select('app', [
                             0 => 'None',
-                            99 => 'Solo Certification',
                             1 => 'Minor Certified',
-                            88 => 'Minor Montoring',
-                        89 => 'Major Montoring',
                             2 => 'Major Certified'
                         ], $user->app, ['class' => 'form-control']) !!}
                     </div>
@@ -139,7 +129,6 @@ Update Controller
                         {!! Form::label('ctr', 'Center Certification') !!}
                         {!! Form::select('ctr', [
                             0 => 'None',
-                            99 => 'Solo Certification',
                             1 => 'Certified'
                         ], $user->ctr, ['class' => 'form-control']) !!}
                     </div>

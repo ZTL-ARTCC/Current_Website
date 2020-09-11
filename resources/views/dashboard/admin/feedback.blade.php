@@ -40,11 +40,11 @@ Feedback Management
                             <tr>
                                 <td><b>{{ $f->position }}</b> ({{ $f->service_level_text }})</td>
                                 <td>{{ $f->controller_name }}</td>
-
+<<<<<<< HEAD
                                 <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
-
-                                <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
-
+=======
+                                <td>{{$f->pilot_name}} ({{$f-pilot_cid}}), {{$f->pilot_email}}</td>
+>>>>>>> 73e143a627da3c9fc5f3ad18f1623b889aa5c774
                                 <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                                 <td>{{ $f->created_at }}</td>
                                 <td>
