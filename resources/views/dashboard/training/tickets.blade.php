@@ -46,10 +46,10 @@ Training Tickets
         <hr>
         <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
         <br>
-        
-        
-        
-        
+
+
+
+
         <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" href="#s1" role="tab" data-toggle="tab" style="color:black">S1</a>
@@ -66,7 +66,7 @@ Training Tickets
         <li class="nav-item">
             <a class="nav-link" href="#other" role="tab" data-toggle="tab" style="color:black">Other</a>
         </li>
-    </ul>   
+    </ul>
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="s1">
 
@@ -81,14 +81,14 @@ Training Tickets
                     <th scope="col">End Time</th>
                     <th scope="col">INS/MTR Comments</th>
                 </tr>
-               
-               
-                
+
+
+
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position > 6)
-                            @if($t->position < 22 || $t->position == 48)
-                            
+                        @if($t->position > 99)
+                            @if($t->position < 109 || $t->position == 48)
+
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -97,7 +97,7 @@ Training Tickets
                             <td>{{ $t->start_time }}z</td>
                             <td>{{ $t->end_time }}z</td>
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                            
+
                         </tr>
                             @endif
                         @endif
@@ -107,12 +107,12 @@ Training Tickets
                         <td colspan="6">No training tickets found.</td>
                     </tr>
                 @endif
-                
-               
+
+
             </thead>
         </table>
     </div>
-   
+
 
     <div role="tabpanel" class="tab-pane" id="s2">
         <table class="table">
@@ -239,7 +239,7 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                     @if($t->position < 7)
-                        
+
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -249,7 +249,7 @@ Training Tickets
                             <td>{{ $t->end_time }}z</td>
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                         </tr>
-                        
+
                     @endif
                     @endforeach
                 @else
