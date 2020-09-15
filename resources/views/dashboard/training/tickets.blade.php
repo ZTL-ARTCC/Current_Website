@@ -86,8 +86,8 @@ Training Tickets
 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position > 6 && $t->position < 22) || ($t->position > 99 && $t->position < 109)
-
+                        @if($t->position > 6 && $t->position < 22)
+                        @elseif($t->position > 99 && $t->position < 109)
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
