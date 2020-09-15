@@ -100,17 +100,9 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                         @if($t->position > 6 && $t->position < 22)
-                        <tr>
-                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
-                            <td>{{ $t->trainer_name }}</td>
-                            <td>{{ $t->position_name }}</td>
-                            <td>{{ $t->type_name }}</td>
-                            <td>{{ $t->start_time }}z</td>
-                            <td>{{ $t->end_time }}z</td>
-                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
-                        </tr>
-                    
+                    ShowTicketInList() 
+
                     @elseif($t->position > 99 && $t->position < 109)
                     <tr>
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
