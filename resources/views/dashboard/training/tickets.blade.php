@@ -101,7 +101,7 @@ Training Tickets
                     @foreach($tickets as $t)
                         @if($t->position > 6 && $t->position < 22)
 
-                    ShowTicketInList() 
+                    @ShowTicketInList()
 
                     @elseif($t->position > 99 && $t->position < 109)
                     <tr>
