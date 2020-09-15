@@ -4,7 +4,7 @@
 Training Tickets
 @endsection
 
-<<?php  function ShowTicketInList() { ?>
+<?php  function ShowTicketInList() { ?>
   <tr>
       <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
       <td>{{ $t->trainer_name }}</td>
