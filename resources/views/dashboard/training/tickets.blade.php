@@ -4,19 +4,6 @@
 Training Tickets
 @endsection
 
-@function ShowTicketInList() {
-  <tr>
-      <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
-      <td>{{ $t->trainer_name }}</td>
-      <td>{{ $t->position_name }}</td>
-      <td>{{ $t->type_name }}</td>
-      <td>{{ $t->start_time }}z</td>
-      <td>{{ $t->end_time }}z</td>
-      <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-
-  </tr>
-}
-
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
     &nbsp;
@@ -100,8 +87,16 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                         @if($t->position > 6 && $t->position < 22)
+                        <tr>
+                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                            <td>{{ $t->trainer_name }}</td>
+                            <td>{{ $t->position_name }}</td>
+                            <td>{{ $t->type_name }}</td>
+                            <td>{{ $t->start_time }}z</td>
+                            <td>{{ $t->end_time }}z</td>
+                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
-                    @ShowTicketInList()
+                        </tr>
 
                     @elseif($t->position > 99 && $t->position < 109)
                     <tr>
@@ -144,19 +139,30 @@ Training Tickets
                     <th scope="col">INS/MTR Comments</th>
                 </tr>
                 @if($tickets->count() > 0)
-                    @foreach($tickets as $t)
-                    @if($t->position > 21)
-                        @if($t->position < 31 || $t->position == 49 || $t->position == 54)
-                        <tr>
-                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
-                            <td>{{ $t->trainer_name }}</td>
-                            <td>{{ $t->position_name }}</td>
-                            <td>{{ $t->type_name }}</td>
-                            <td>{{ $t->start_time }}z</td>
-                            <td>{{ $t->end_time }}z</td>
-                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                        </tr>
-                        @endif
+                  @foreach($tickets as $t)
+                    @if($t->position > 21 && $t->position < 31)
+                    <tr>
+                        <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                        <td>{{ $t->trainer_name }}</td>
+                        <td>{{ $t->position_name }}</td>
+                        <td>{{ $t->type_name }}</td>
+                        <td>{{ $t->start_time }}z</td>
+                        <td>{{ $t->end_time }}z</td>
+                        <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                    </tr>
+
+                @elseif($t->position > 108 && $t->position < 114)
+                <tr>
+                    <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                    <td>{{ $t->trainer_name }}</td>
+                    <td>{{ $t->position_name }}</td>
+                    <td>{{ $t->type_name }}</td>
+                    <td>{{ $t->start_time }}z</td>
+                    <td>{{ $t->end_time }}z</td>
+                    <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                </tr>
                     @endif
                     @endforeach
                 @else
@@ -181,19 +187,29 @@ Training Tickets
                 </tr>
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                    @if($t->position > 30)
-                        @if($t->position < 42 || $t->position == 50 || $t->position == 53)
-                        <tr>
-                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
-                            <td>{{ $t->trainer_name }}</td>
-                            <td>{{ $t->position_name }}</td>
-                            <td>{{ $t->type_name }}</td>
-                            <td>{{ $t->start_time }}z</td>
-                            <td>{{ $t->end_time }}z</td>
-                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                        </tr>
-                        </tr>
-                        @endif
+                      @if($t->position > 30 && $t->position < 42)
+                    <tr>
+                        <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                        <td>{{ $t->trainer_name }}</td>
+                        <td>{{ $t->position_name }}</td>
+                        <td>{{ $t->type_name }}</td>
+                        <td>{{ $t->start_time }}z</td>
+                        <td>{{ $t->end_time }}z</td>
+                        <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                    </tr>
+
+                @elseif($t->position > 113 && $t->position < 120)
+                <tr>
+                    <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                    <td>{{ $t->trainer_name }}</td>
+                    <td>{{ $t->position_name }}</td>
+                    <td>{{ $t->type_name }}</td>
+                    <td>{{ $t->start_time }}z</td>
+                    <td>{{ $t->end_time }}z</td>
+                    <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                </tr>
                         @endif
                     @endforeach
                 @else
@@ -218,18 +234,29 @@ Training Tickets
                 </tr>
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                    @if($t->position > 41)
-                        @if($t->position < 48 || $t->position == 51 || $t->position == 52)
-                        <tr>
-                            <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
-                            <td>{{ $t->trainer_name }}</td>
-                            <td>{{ $t->position_name }}</td>
-                            <td>{{ $t->type_name }}</td>
-                            <td>{{ $t->start_time }}z</td>
-                            <td>{{ $t->end_time }}z</td>
-                            <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                        </tr>
-                        @endif
+                      @if($t->position > 41 && $t->position < 48)
+                    <tr>
+                        <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                        <td>{{ $t->trainer_name }}</td>
+                        <td>{{ $t->position_name }}</td>
+                        <td>{{ $t->type_name }}</td>
+                        <td>{{ $t->start_time }}z</td>
+                        <td>{{ $t->end_time }}z</td>
+                        <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                    </tr>
+
+                @elseif($t->position > 119 && $t->position < 122)
+                <tr>
+                    <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                    <td>{{ $t->trainer_name }}</td>
+                    <td>{{ $t->position_name }}</td>
+                    <td>{{ $t->type_name }}</td>
+                    <td>{{ $t->start_time }}z</td>
+                    <td>{{ $t->end_time }}z</td>
+                    <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
+
+                </tr>
                     @endif
                     @endforeach
                 @else
