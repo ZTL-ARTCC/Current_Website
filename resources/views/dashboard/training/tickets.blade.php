@@ -86,9 +86,8 @@ Training Tickets
 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position > 6)
-                            @if($t->position < 22 || $t->position == 48)
-                    
+                        @if($t->position > 6 && $t->position < 22) || ($t-position > 99 && $t-position < 109)
+
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
@@ -99,7 +98,7 @@ Training Tickets
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                         </tr>
-                            @endif
+
                         @endif
                     @endforeach
                 @else
