@@ -4,7 +4,7 @@
 Training Tickets
 @endsection
 
-<?php  function ShowTicketInList() { ?>
+@function ShowTicketInList() {
   <tr>
       <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
       <td>{{ $t->trainer_name }}</td>
@@ -15,7 +15,7 @@ Training Tickets
       <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
   </tr>
-<?php } ?>
+}
 
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
