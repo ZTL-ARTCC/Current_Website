@@ -86,8 +86,8 @@ Training Tickets
 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-                        @if($t->position > 99)
-                            @if($t->position < 109 || $t->position == 48)
+                        @if($t->position > 6)
+                            @if($t->position < 22 || $t->position == 48)
 
                         <tr>
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
