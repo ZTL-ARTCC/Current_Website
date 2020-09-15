@@ -4,7 +4,7 @@
 Training Tickets
 @endsection
 
-<?php
+
 function  ShowTicketInList() {
   <tr>
       <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
@@ -17,7 +17,7 @@ function  ShowTicketInList() {
 
   </tr>
 }
-?>
+
 
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
@@ -103,11 +103,11 @@ function  ShowTicketInList() {
                     @foreach($tickets as $t)
                         @if($t->position > 6 && $t->position < 22)
 
-                        <?php ShowTicketInList() ?>
+                        ShowTicketInList()
 
                     @elseif($t->position > 99 && $t->position < 109)
 
-                        <<?php ShowTicketInList() ?>
+                        ShowTicketInList() 
 
                         @endif
                     @endforeach
