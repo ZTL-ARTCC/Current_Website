@@ -67,89 +67,89 @@ class Ots extends Model
         } elseif($pos == 6) {
             $position = 'Center';
         } elseif($pos == 7) {
-            $position = 'S1 T1-DEL-1 (Theory)';
+            $position = 'Class D/C Clearance Delivery';
         } elseif($pos == 8) {
-            $position = 'S1 P1-DEL-2';
+            $position = 'Class D/C Clearance Delivery';
         } elseif($pos == 9) {
-            $position = 'S1 P2-DEL-3';
+            $position = 'Class D/C Clearance Delivery';
         } elseif($pos == 10) {
-            $position = 'S1 M1-DEL-4 (Live Network Monitoring - CLT)';
+            $position = 'Class B Clearance Delivery';
         } elseif($pos == 11) {
-            $position = 'S1T2-DEL-5 (Theroy)';
+            $position = 'ATL Clearance Delivery Theory';
         } elseif($pos == 12) {
-            $position = 'S1P3-DEL 6';
+            $position = 'ATL Clearance Delivery';
         } elseif($pos == 13) {
-            $position = 'S1M2-DEL-7 (Live Network Monitoring - ATL)';
+            $position = 'ATL Clearance Delivery';
         } elseif($pos == 14) {
-            $position = 'S1T3-GND-1 (Theory)';
+            $position = 'Class D/C Ground';
         } elseif($pos == 15) {
-            $position = 'S1P4-GND-2';
+            $position = 'Class D/C Ground';
         } elseif($pos == 16) {
-            $position = 'S1P5-GND-3';
+            $position = 'Class D/C Ground';
         } elseif($pos == 17) {
-            $position = 'S1M3-GND-4 (Live Network Monitoring - CLT)';
+            $position = 'Class B Ground';
         } elseif($pos == 18) {
-            $position = 'S1T4-GND-5 (Theory)';
+            $position = 'ATL Ground Theory';
         } elseif($pos == 19) {
-            $position = 'S1P6-GND-6';
+            $position = 'ATL Ground';
         } elseif($pos == 20) {
-            $position = 'S1P7-GND-7';
+            $position = 'ATL Ground';
         } elseif($pos == 21) {
-            $position = 'S1M4-GND-8 (Live Network Monitoring – ATL)';
+            $position = 'ATL Ground';
         } elseif($pos == 22) {
-            $position = 'S2T1-TWR-1 (Theory)';
+            $position = 'Class D Tower';
         } elseif($pos == 23) {
-            $position = 'S2P1-TWR-2';
+            $position = 'Class D Tower';
         } elseif($pos == 24) {
-            $position = 'S2P2-TWR-3';
+            $position = 'Class C Tower';
         } elseif($pos == 25) {
-            $position = 'S2P3-TWR-4';
+            $position = 'Class B Tower';
         } elseif($pos == 26) {
-            $position = 'S2M1-TWR-5 (Live Network Monitoring – CLT)';
+            $position = 'Class B Tower';
         } elseif($pos == 27) {
-            $position = 'S2T2-TWR-6 (Theory)';
+            $position = 'ATL Tower Theory';
         } elseif($pos == 28) {
-            $position = 'S2P4-TWR-7';
+            $position = 'ATL Tower';
         } elseif($pos == 29) {
-            $position = 'S2P5-TWR-8';
+            $position = 'ATL Tower';
         } elseif($pos == 30) {
-            $position = 'S2M2-TWR-9 (Live Network Monitoring – ATL)';
+            $position = 'ATL Tower';
         } elseif($pos == 31) {
-            $position = 'S3T1-APP-1 (Theory)';
+            $position = 'Minor Approach Introduction';
         } elseif($pos == 32) {
-            $position = 'S3T2-APP-2 (Theory)';
+            $position = 'Minor Approach Introduction';
         } elseif($pos == 33) {
-            $position = 'S3P1-APP-3';
+            $position = 'Minor Approach';
         } elseif($pos == 34) {
-            $position = 'S3P2-APP-4';
+            $position = 'CLT Approach';
         } elseif($pos == 35) {
-            $position = 'S3M1-APP-5 (Live Network Monitoring - BHM/CLT)';
+            $position = 'CLT Approach';
         } elseif($pos == 36) {
-            $position = 'S3T3-APP-6 (Theory)';
+            $position = 'A80 Departure/Satellite Radar';
         } elseif($pos == 37) {
-            $position = 'S3P3-APP-7';
+            $position = 'A80 Departure/Satellite Radar';
         } elseif($pos == 38) {
-            $position = 'S3P3-APP-8';
+            $position = 'A80 Terminal Arrival Radar';
         } elseif($pos == 39) {
-            $position = 'S3P5-APP-9';
+            $position = 'A80 Arrival Radar';
         } elseif($pos == 40) {
-            $position = 'S3P6-APP-10';
+            $position = 'A80 Arrival Radar';
         } elseif($pos == 41) {
-            $position = 'S3M2-APP-11 (Live Network Monitoring – ATL)';
+            $position = 'A80 Arrival Radar';
         } elseif($pos == 42) {
-            $position = 'C1T1-CTR-1 (Theory)';
+            $position = 'Atlanta Center Introduction';
         } elseif($pos == 43) {
-            $position = 'C1P1-CTR-2';
+            $position = 'Atlanta Center';
         } elseif($pos == 44) {
-            $position = 'C1P2-CTR-2';
+            $position = 'Atlanta Center';
         } elseif($pos == 45) {
-            $position = 'C1P3-CTR-3';
+            $position = 'Atlanta Center';
         } elseif($pos == 46) {
-            $position = 'C1M2-CTR-4';
+            $position = 'Atlanta Center';
         } elseif($pos == 46) {
-            $position = 'C1M3-CTR-5 (Live Network Monitoring)';
+            $position = 'Atlanta Center';
         } elseif($pos == 47) {
-            $position = 'C1M4-CTR-6';
+            $position = 'Atlanta Center';
         }  elseif($pos == 48) {
             $position = 'S1 Visiting Major Checkout';
         }  elseif($pos == 49) {
@@ -158,6 +158,12 @@ class Ots extends Model
             $position = 'S3 Visiting Major Checkout';
         } elseif($pos == 51) {
             $position = 'C1 Visiting Major Checkout';
+        } elseif($pos == 52) {
+            $position = 'Enroute OTS';
+        } elseif($pos == 53) {
+            $position = 'Approach OTS';
+        } elseif($pos == 54) {
+            $position = 'Local OTS';
         } elseif($pos == 100) {
             $position = 'ZTL On-Boarding';
         } elseif($pos == 101) {
