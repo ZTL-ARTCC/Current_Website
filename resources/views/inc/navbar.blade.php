@@ -38,7 +38,7 @@
                 </li>
                 @if(Auth::guest())
                     <!--<a class="nav-link" href="/visit">Visit ZTL</a>-->
-                    <a class="nav-link" href="https://www.vatusa.net/docs/GO-41520.pdf">Visit ZTL</a>
+                    <a class="nav-link" href="https://www.ztlartcc.org/visit">Visit ZTL</a>
                     <a class="nav-link" href="/feedback/new">Feedback</a>
                 @endif
                 @if(Auth::check())
