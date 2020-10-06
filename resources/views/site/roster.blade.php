@@ -222,7 +222,7 @@ Roster
                 </thead>
                 <tbody>
                     @foreach($visagreecontrollers as $c)
-                        @if($c->rating_short != "OBS")
+                        @if($c->rating_short != "OBS" && $c->status != 2)
                             <tr>
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
                                 <td><center>{{ $c->initials }}</center></td>
