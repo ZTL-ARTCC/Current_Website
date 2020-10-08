@@ -831,7 +831,7 @@ class AdminDash extends Controller
             $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
             $audit->save();
             
-             Mail::send('emails.remove_Visitor', ['user' => $user], function($message) use ($user){
+             Mail::send('emails.remove_visitor', ['user' => $user], function($message) use ($user){
                         $message->from('datm@ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
                         $message->to($user->email);
 
