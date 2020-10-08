@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Moodle:DeleteUsers')->dailyAt('00:15');
         $schedule->command('RosterUpdate:VisitAgreement')->dailyAt('00:30');
         // $schedule->command('Event:SendEventReminder')->dailyAt('00:30')->timezone('America/New_York');
-        $schedule->command('RosterRemoval:Warning')->monthlyOn('5', '00:30');
+        
     }
 
     /**
