@@ -16,55 +16,50 @@ ATCast
 
 	<div class="row">
 		<div class="col-sm-12">
-            <h5><i>S1 Training</i></h5>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC18_Part_1.mp4" target="_blank">Episode 18 - Introduction to the Air (Part 1)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC18_Part_2.mp4" target="_blank">Episode 18 - Introduction to the Air (Part 2)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC18_Part_3.mp4" target="_blank">Episode 18 - Introduction to the Air (Part 3)</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC09.mp4" target="_blank">Episode 9 - Clearance Delivery</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC10.mp4" target="_blank">Episode 10 - ATIS</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC19_Version_1.mp4" target="_blank">Episode 19 - Ground Control (Part 1)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC20_v1.mp4" target="_blank">Episode 20 - Ground Control (Part 2)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC21_v1.mp4http://media.aero.und.edu/avit.und.edu/a-v/ATCPC20_v1.mp4" target="_blank">Episode 21 - Ground Control (Part 3)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC11_Segment%201.mp4" target="_blank">Episode 11 - Runway Incursions (Part 1)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC11_Segment%202.mp4" target="_blank">Episode 11 - Runway Incursions (Part 2)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC11_Segment%203.mp4" target="_blank">Episode 11 - Runway Incursions (Part 3)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC11_Segment%204.mp4" target="_blank">Episode 11 - Runway Incursions (Part 4)</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC11_Segment%205.mp4" target="_blank">Episode 11 - Runway Incursions (Part 5)</a></p>
+            <h3><i>ATCast Videos</i><h3>
+	    <p><a href="https://aero.und.edu/aviation/current-students/media.html?fbclid=IwAR2iEBMkEub8AgnALnChfLOHsB0HmOqCKJcMhG0kmcyd8Mhfd5C387gxEQo#atcast">Click Here!</a></p>
+	    <h5><i>S1 Training</i></h5>
+            <p>Episode 18 - Introduction to Air Traffic Control (Parts 1, 2, and 3)</p>
+	    <p>Episode 9 - Clearance Delivery</p>
+            <p>Episode 10 - ATIS</p>
+            <p>Episode 19 - Ground Control (Part 1)</p>
+            <p>Episode 20 - Ground Control (Part 2)</p>
+            <p>Episode 21 - Ground Control (Part 3)</p>
+            <p>Episode 11 - Runway Incursions (Parts 1, 2, 3, 4, and 5)</p>
             <hr>
             <h5><i>S2 Training</i></h5>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC13.mp4" target="_blank">Episode 13 - Air Traffic Patterns</a></p>
-            <p><a href="https://youtu.be/8BjiVKMiKRI?t=300" target="_blank">Example Class D Traffic Pattern Procedures - KPDK</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC12.mp4" target="_blank">Episode 12 - Overhead Maneuvering</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC02.mp4" target="_blank">Episode 2 - Wake Turbulence</a></p>
+            <p>Episode 13 - Air Traffic Patterns</p>
+            <p><a href="https://www.youtube.com/watch?v=8BjiVKMiKRI&feature=youtu.be&t=300" target"_blank">Example Class D Traffic Pattern Procedures - KPDK</a></p>
+            <p>Episode 12 - Overhead Maneuvering</p>
+	    <p>Episode 2 - Wake Turbulence</p>
             <hr>
             <h5><i>S3 Training</i></h5>
-        	<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC03.mp4" target="_blank">Episode 3 - Introduction to Radar</a></p>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC01.mp4" target="_blank">Episode 1 - Radar Identification</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC04.mp4" target="_blank">Episode 4 - Merging Target Procedure</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC05.mp4" target="_blank">Episode 5 - ILS Approaches and Clearance</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC07.mp4" target="_blank">Episode 7 - Transfer of Radar Identification</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC08.mp4" target="_blank">Episode 8 - Point Outs</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC14.mp4" target="_blank">Episode 14 - Safety Alerts</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC15.mp4" target="_blank">Episode 15 - Vertical Seperation</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC17.mp4" target="_blank">Episode 17 - Using Speed Adjustments</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC22.mp4" target="_blank">Episode 22 - Holding</a></p>
-            <p><a href="https://youtu.be/4zvlzwMtjdQ" target="_blank">General Approach Airspace Flows</a></p>
-            <p><a href="https://youtu.be/o4N1kljpKkE" target="_blank">A80 Airspace Flows (Major Training)</a></p>
+        	<p>Episode 3 - Introduction to Radar</p>
+            <p>Episode 1 - Radar Identification</p>
+			<p>Episode 4 - Merging Target Procedure</p>
+			<p>Episode 5 - ILS Approaches and Clearances</p>
+			<p>Episode 7 - Transfer of Radar Identification</p>
+			<p>Episode 8 - Point Outs</p>
+			<p>Episode 14 - Safety Alerts</p>
+			<p>Episode 15 - Vertical Seperation</p>
+			<p>Episode 17 - Using Speed Adjustments</p>
+			<p>Episode 22 - Holding</p>
+            <p><a href="https://www.youtube.com/watch?v=4zvlzwMtjdQ&feature=youtu.be" target="_blank">General Approach Airspace Flows</a></p>
+            <p><a href="https://www.youtube.com/watch?v=o4N1kljpKkE&feature=youtu.be" target="_blank">A80 Airspace Flows (Major Training)</a></p>
 			<hr>
             <h5><i>Detailed Strip Marking</i></h5>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT03_Local%20Control.mp4" target="_blank">Strip Marking - Tutorial Local Control</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT01_Introduction%20to%20Flight%20Progress%20Strips.mp4" target="_blank">Strip Marking 1 - Introduction</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT02_Clearance%20Delivery-Ground%20Control.mp4" target="_blank">Strip Marking 2 - Clearance Delivery and Ground Control</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT04_Radar%20Departure.mp4" target="_blank">Strip Marking 4 - Terminal Radar and Departure</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT05_Radar%20Arrival.mp4" target="_blank">Strip Marking 5 - Terminal Radar and Approach</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT06_Uncontrolled.mp4" target="_blank">Strip Marking 6 - Terminal Radar and Uncontrolled Airports</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT07_Tower%20En%20Route.mp4" target="_blank">Strip Marking 7 - Terminal Radar and Tower En Route</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT08_VFR%20and%20Air%20Filed%20IFR.mp4" target="_blank">Strip Marking 8 - Terminal Radar, VFR and Air-Filed IFR</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/SMT09_En%20Route.mp4" target="_blank">Strip Marking 9 - En Route Radar</a></p>
+			<p>Strip Marking - Introduction to Flight Progress Strips</p>
+			<p>Strip Marking - Clearance Delivery/Ground Control</p>
+			<p>Strip Marking - Local Control</p>
+			<p>Strip Marking -  Radar Departures</p>
+			<p>Strip Marking -  Radar Arrivals</p>
+			<p>Strip Marking - Uncontrolled Arrival and Departure</p>
+			<p>Strip Marking - Tower En Route</p>
+			<p>Strip Marking - VFR and Air-Filed IFR</p>
+			<p>Strip Marking - En Route Radar</p>
 			<hr>
             <h5><i>Additional Videos</i></h5>
-            <p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ATCPC06.mp4" target="_blank">Episode 6 - Academy's Satellite Airport</a></p>
-			<p><a href="http://media.aero.und.edu/avit.und.edu/a-v/ADS-B.mp4" target="_blank">Special Episode - ADS-B</a></p>
+			<p>Special Episode - ADS-B</p>
 		</div>
 	</div>
 </div>
