@@ -128,6 +128,12 @@ Roster
                                 <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
                             @elseif($c->app == 2)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                            @elseif($c->app == 90)
+                                <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                            @elseif($c->app == 91)
+                                <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                            @elseif($c->app == 92)
+                                <td><center><i class="fas fa-book" style="color:green"></i></center></td>    
                             @elseif($c->app == 99)
                                 <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
@@ -193,6 +199,12 @@ Roster
                                     <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
                                 @elseif($c->app == 2)
                                     <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @elseif($c->app == 90)
+                                    <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                                @elseif($c->app == 91)
+                                    <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                @elseif($c->app == 92)
+                                    <td><center><i class="fas fa-book" style="color:green"></i></center></td>     
                                 @endif
                                 @if($c->ctr == 0)
                                     <td><center><i class="fas fa-times" style="color:red"></i></center></td>
@@ -255,6 +267,12 @@ Roster
                                     <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
                                 @elseif($c->app == 2)
                                     <td><center><i class="fas fa-check" style="color:green"></i></center></td>
+                                @elseif($c->app == 90)
+                                    <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                                @elseif($c->app == 91)
+                                    <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                @elseif($c->app == 92)
+                                    <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                                 @endif
                                 @if($c->ctr == 0)
                                     <td><center><i class="fas fa-times" style="color:red"></i></center></td>
