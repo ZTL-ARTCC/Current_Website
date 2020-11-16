@@ -94,6 +94,9 @@ Update Controller
                             1 => 'Minor Certified',
                             88 => 'Minor Montoring',
                         89 => 'Major Montoring',
+                        90 => 'A80 SAT Certified',
+                        91 => 'A80 DR Certified',
+                        92 => 'A80 TAR Certified',
                             2 => 'Major Certified'
                         ], $user->app, ['class' => 'form-control']) !!}
                     </div>
@@ -114,6 +117,9 @@ Update Controller
                             1 => 'Minor Certified',
                             88 => 'Minor Montoring',
                         89 => 'Major Montoring',
+                        90 => 'A80 SAT Certified',
+                        91 => 'A80 DR Certified',
+                        92 => 'A80 TAR Certified',
                             2 => 'Major Certified'
                         ], $user->app, ['class' => 'form-control']) !!}
                     </div>
