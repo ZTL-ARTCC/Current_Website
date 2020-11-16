@@ -181,7 +181,7 @@
                             @elseif($c->app == 90)
                                 <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
                             @elseif($c->app == 91)
-                                <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                <td><center><b style="color:blue;">A80 DR</b></center></td>
                             @elseif($c->app == 92)
                                 <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                             @elseif($c->app == 99)
@@ -277,7 +277,7 @@
                                 @elseif($c->app == 90)
                                     <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
                                 @elseif($c->app == 91)
-                                    <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                    <td><center><b style="color:blue;">A80 DR</b></center></td>
                                 @elseif($c->app == 92)
                                     <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                                 @elseif($c->app == 99)
@@ -374,7 +374,7 @@
                                     @elseif($c->app == 90)
                                         <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
                                     @elseif($c->app == 91)
-                                        <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                        <td><center><b style="color:blue;">A80 DR</b></center></td>
                                     @elseif($c->app == 92)
                                         <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                                     @elseif($c->app == 99)
