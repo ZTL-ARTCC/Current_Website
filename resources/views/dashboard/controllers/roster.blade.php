@@ -178,6 +178,12 @@
                                     <td><center style="color:#c1ad13">m</center></td>
                             @elseif($c->app == 89)
                                     <td><center style="color:#c1ad13">M</center></td>
+                            @elseif($c->app == 90)
+                                <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                            @elseif($c->app == 91)
+                                <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                            @elseif($c->app == 92)
+                                <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                             @elseif($c->app == 99)
                                 <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
@@ -268,6 +274,12 @@
                                     <td><center style="color:#c1ad13">m</center></td>
                                 @elseif($c->app == 89)
                                     <td><center style="color:#c1ad13">M</center></td>
+                                @elseif($c->app == 90)
+                                    <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                                @elseif($c->app == 91)
+                                    <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                @elseif($c->app == 92)
+                                    <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                                 @elseif($c->app == 99)
                                     <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                                 @endif
@@ -359,6 +371,12 @@
                                         <td><center style="color:#c1ad13">m</center></td>
                                     @elseif($c->app == 89)
                                         <td><center style="color:#c1ad13">M</center></td>
+                                    @elseif($c->app == 90)
+                                        <td><center><i class="fas fa-tag" style="color:green"></i></center></td>
+                                    @elseif($c->app == 91)
+                                        <td><center><i class="fas fa-tags" style="color:green"></i></center></td>
+                                    @elseif($c->app == 92)
+                                        <td><center><i class="fas fa-book" style="color:green"></i></center></td> 
                                     @elseif($c->app == 99)
                                         <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                                     @endif
