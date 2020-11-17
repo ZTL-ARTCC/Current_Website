@@ -66,7 +66,7 @@ Home
             <center><h4><i class="fas fa-plane"></i> Events</h4></center>
             @if($events->count() > 0)
                 @foreach($events as $e)
-                    <img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}">
+                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}"></a>
                     <p></p>
                 @endforeach
             @else
