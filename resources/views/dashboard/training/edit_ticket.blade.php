@@ -48,6 +48,7 @@ Edit Training Ticket
                         119 => 'A80 Arrival Radar',
                         120 => 'Atlanta Center Introduction',
                         121 => 'Atlanta Center',
+                        122 => 'Recurrent Training',
                     ], $ticket->position, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                 </div>
             </div>
