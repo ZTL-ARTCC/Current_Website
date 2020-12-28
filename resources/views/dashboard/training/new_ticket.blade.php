@@ -52,6 +52,7 @@ New Training Ticket
                         119 => 'A80 Arrival Radar',
                         120 => 'Atlanta Center Introduction',
                         121 => 'Atlanta Center',
+                        122 => 'Recurrent Training',
                     ], null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
                 </div>
             </div>
