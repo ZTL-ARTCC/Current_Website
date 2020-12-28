@@ -229,6 +229,8 @@ class TrainingTicket extends Model
             $position = 'Atlanta Center Introduction';
         } elseif($pos == 121) {
             $position = 'Atlanta Center';
+        } elseif($pos == 122) {
+            $position = 'Recurrent Training';
         }
 
         return $position;
