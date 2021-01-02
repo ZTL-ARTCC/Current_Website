@@ -136,6 +136,8 @@ Roster
                                 <td><center><b style="color:blue;">A80 TAR</b></center></td>    
                             @elseif($c->app == 99)
                                 <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+                            @elseif($c->app == 89)
+                                <td><center style="color:#c1ad13">M</center></td>
                             @endif
                             @if($c->ctr == 0)
                                 <td><center><i class="fas fa-times" style="color:red"></i></center></td>
