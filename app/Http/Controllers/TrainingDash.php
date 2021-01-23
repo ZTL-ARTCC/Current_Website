@@ -13,6 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mail;
+use GuzzleHttp\Client;
 
 class TrainingDash extends Controller
 {
@@ -257,7 +258,7 @@ class TrainingDash extends Controller
                     'location' => 1,
                 ],
             ];
-
+	    $client = new Client();
             $res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .env('VATUSA_API'), $req_params);
 
         if($request->ots == 1) {
