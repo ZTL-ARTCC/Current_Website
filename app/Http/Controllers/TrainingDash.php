@@ -255,7 +255,7 @@ class TrainingDash extends Controller
                 [
                     'instructor_id' => Auth::id(),
                     'session_date' => '2021-01-22' . ' ' . $request->start,
-                    'position' => $ticket->position,
+                    'position' => $request->position,
                     'duration' => $request->duration,
                     'notes' => $request->comments,
                     'location' => 1,
