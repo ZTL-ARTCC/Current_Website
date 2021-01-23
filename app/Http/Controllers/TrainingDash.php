@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mail;
 use GuzzleHttp\Client;
+use Config;
 
 class TrainingDash extends Controller
 {
