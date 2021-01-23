@@ -252,7 +252,7 @@ class TrainingDash extends Controller
 	$req_params = [ 'form_params' =>
                 [
                     'instructor_id' => Auth::id(),
-                    'session_date' => $request->date,
+                    'session_date' => $request->date . ' ' . $request->start,
                     'position' => 'ATL_TWR',
                     'duration' => $request->duration,
                     'notes' => $request->comments,
