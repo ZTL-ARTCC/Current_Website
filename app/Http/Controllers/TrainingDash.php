@@ -259,7 +259,7 @@ class TrainingDash extends Controller
                 ],
             ];
 	    $client = new Client();
-            $res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .env('VATUSA_API'), $req_params);
+            $res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .env('VATUSA_API_KEY'), $req_params);
 
         if($request->ots == 1) {
             $ots = new Ots;
