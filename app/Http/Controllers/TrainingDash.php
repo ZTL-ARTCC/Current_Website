@@ -246,7 +246,7 @@ class TrainingDash extends Controller
         $ticket->save();
         $extra = null;
 
-	$date = $date->format('Y-m-d');
+	$ticket->date = $request->date->format('Y-m-d');
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 	if ($request->position == 113 || $request->position == 112){
@@ -284,7 +284,7 @@ class TrainingDash extends Controller
 	$req_params = [ 'form_params' =>
                 [
                     'instructor_id' => Auth::id(),
-                    'session_date' => $date . ' ' . $request->start,
+                    'session_date' => $ticket->date . ' ' . $request->start,
                     'position' => $ticket->position,
                     'duration' => $request->duration,
                     'notes' => $request->comments,
