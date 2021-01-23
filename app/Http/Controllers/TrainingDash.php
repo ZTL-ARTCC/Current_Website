@@ -248,8 +248,37 @@ class TrainingDash extends Controller
 
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
-	if ($request->position == 113){
+	if ($request->position == 113 || $request->position == 112){
 		$ticket->position = 'ATL_TWR';}
+	    elseif ($request->position == 100){
+		$ticket->position = 'ZTL_ONB';}
+	    elseif ($request->position == 101){
+		$ticket->position = 'ZTL_DEL';}
+	    elseif ($request->position == 103 || $request->position == 104){
+		$ticket->position = 'ATL_DEL';}
+	    elseif ($request->position == 102){
+		$ticket->position = 'CLT_DEL';}
+	    elseif ($request->position == 105){
+		$ticket->position = 'ZTL_GND';}
+	    elseif ($request->position == 106){
+		$ticket->position = 'CLT_GND';}
+	    elseif ($request->position == 107 || $request->position == 108){
+		$ticket->position = 'ATL_GND';}
+	    elseif ($request->position == 109 || $request->position == 110){
+		$ticket->position = 'ZTL_TWR';}
+	    elseif ($request->position == 111){
+		$ticket->position = 'CLT_TWR';}
+	    elseif ($request->position == 114 || $request->position == 115){
+		$ticket->position = 'ZTL_APP';}
+	     elseif ($request->position == 116){
+		$ticket->position = 'CLT_APP';}
+	     elseif ($request->position == 117 || $request->position == 118 || $request->position == 119){
+		$ticket->position = 'ATL_APP';}
+	     elseif ($request->position == 120 || $request->position == 121){
+		$ticket->position = 'ATL_CTR';}
+	     elseif ($request->position == 122){
+		$ticket->position = 'ZTL_RCR';}
+	
 	
 	$req_params = [ 'form_params' =>
                 [
