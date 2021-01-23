@@ -248,14 +248,15 @@ class TrainingDash extends Controller
 
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
+	if ($request->position == 'ATL Tower'){
+		$ticket->position = 'ATL_TWR';}
 	
 	$req_params = [ 'form_params' =>
                 [
                     'instructor_id' => Auth::id(),
                     'session_date' => '2021-01-22' . ' ' . $request->start,
-                    'position' => 'ATL_TWR',
+                    'position' => $ticket->position,
                     'duration' => $request->duration,
-		    'score' => 5,
                     'notes' => $request->comments,
                     'location' => 1,
                 ],
