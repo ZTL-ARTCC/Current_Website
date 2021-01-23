@@ -253,7 +253,7 @@ class TrainingDash extends Controller
                 [
                     'instructor_id' => Auth::id(),
                     'session_date' => $request->date,
-                    'position' => $request->position,
+                    'position' => 'ATL_TWR',
                     'duration' => $request->duration,
                     'notes' => $request->comments,
                     'location' => 1,
