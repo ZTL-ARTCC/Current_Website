@@ -142,7 +142,7 @@ New Training Ticket
 <script type="text/javascript">
 $(function () {
     $('#datetimepicker1').datetimepicker({
-        format: 'Y-m-d'
+        format: 'L'
     });
 });
 
