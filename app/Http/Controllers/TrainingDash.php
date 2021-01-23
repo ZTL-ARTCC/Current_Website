@@ -255,6 +255,7 @@ class TrainingDash extends Controller
                     'session_date' => '2021-01-22' . ' ' . $request->start,
                     'position' => 'ATL_TWR',
                     'duration' => $request->duration,
+		    'score' => 5,
                     'notes' => $request->comments,
                     'location' => 1,
                 ],
