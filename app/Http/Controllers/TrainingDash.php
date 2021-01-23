@@ -246,6 +246,19 @@ class TrainingDash extends Controller
 
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
+	
+	$req_params = [ 'form_params' =>
+                [
+                    'instructor_id' => Auth::id(),
+                    'session_date' => $request->date,
+                    'position' => $request->position,
+                    'duration' => $request->duration,
+                    'notes' => $request->comments,
+                    'location' => 1,
+                ],
+            ];
+
+            $res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .env('VATUSA_API'), $req_params);
 
         if($request->ots == 1) {
             $ots = new Ots;
