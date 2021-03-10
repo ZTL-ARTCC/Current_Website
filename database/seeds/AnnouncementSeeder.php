@@ -17,25 +17,25 @@ class AnnouncementSeeder extends Seeder
         $client = new Client();
         $res = $client->request('GET', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility'));
         $result = json_decode($res->getBody())->role;
-        foreach($result as $r) {
+        foreach($result->data as $r) {
             if($r->role == 'ATM') {
                 $atm = $r->cid;
             }
         }
         if(isset($atm) == false) {
-            foreach($result as $r) {
+            foreach($result->data as $r) {
                 if($r->role == 'DATM') {
                     $atm = $r->cid;
                 }
             }
             if(isset($atm) == false) {
-                foreach($result as $r) {
+                foreach($result->data as $r) {
                     if($r->role == 'TA') {
                         $atm = $r->cid;
                     }
                 }
                 if(isset($atm) == false) {
-                    foreach($result as $r) {
+                    foreach($result->data as $r) {
                         if($r->role == 'WM') {
                             $atm = $r->cid;
                         }
