@@ -700,6 +700,7 @@ class AdminDash extends Controller
         $result = $response->getStatusCode();
         if($result == '200') {
             $visitor = json_decode($response->getBody());
+            $visitor = $visitor->data;
 
             //Assigns controller initials
             $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();

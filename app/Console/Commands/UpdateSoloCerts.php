@@ -46,7 +46,7 @@ class UpdateSoloCerts extends Command
         $res = $client->request('GET', 'https://api.vatusa.net/v2/solo');
         $solo_certs = json_decode($res->getBody());
 
-        foreach($solo_certs as $s) {
+        foreach($solo_certs->data as $s) {
             if(! ($s === true || $s === false)) {
                 if ($s->position == 'ATL_CTR') {
                     $current_cert = SoloCert::where('cid', $s->cid)->where('status', 0)->first();

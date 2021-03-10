@@ -101,7 +101,7 @@ class RosterController extends Controller
     				$client = new Client();
     				$response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$res['cid'].'?apikey='.Config::get('vatusa.api_key'));
     				$resu = json_decode($response->getBody());
-    				if($resu->flag_broadcastOptedIn == 1) {
+    				if($resu->data->flag_broadcastOptedIn == 1) {
     					if($userstatuscheck->opt != 1) {
     						$opt = new Opt;
     						$opt->controller_id = $res['cid'];
@@ -124,8 +124,8 @@ class RosterController extends Controller
     					}
                     }
                     if($userstatuscheck->visitor == '1') {
-                        if($resu->facility != 'ZZN'){
-                            $userstatuscheck->visitor_from = $resu->facility;
+                        if($resu->data->facility != 'ZZN'){
+                            $userstatuscheck->visitor_from = $resu->data->facility;
                         }
                     } else {
                         $userstatuscheck->visitor_from = null;
