@@ -185,7 +185,7 @@ class VisitAgreement extends Command
 
 
         //Runs for ZJX
-        foreach($roster_zjx as $r) {
+        foreach($roster_zjx->data as $r) {
             // Last result will be false
             if(! ($r === true || $r === false)) {
                 if (User::find($r->cid) !== null) {
@@ -304,7 +304,7 @@ class VisitAgreement extends Command
 
         foreach($users_zjx as $u) {
             $delete = 0;
-            foreach($roster_zjx as $r) {
+            foreach($roster_zjx->data as $r) {
                 // Last result will be false
                 if(! ($r === true || $r === false)) {
                     $id = $r->cid;
@@ -327,7 +327,7 @@ class VisitAgreement extends Command
 
         foreach($users_zhu as $u) {
             $delete = 0;
-            foreach($roster_zhu as $r) {
+            foreach($roster_zhu->data as $r) {
                 // Last result will be false
                 if(! ($r === true || $r === false)) {
                     $id = $r->cid;
