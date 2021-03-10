@@ -195,8 +195,8 @@ class RosterUpdate extends Command
             if ($j != $i) {
                 // Last result will be false or true
                 if (!($r === true || $r === false)) {
-                    if (User::find($r['cid']) !== null) {
-                        $user = User::find($r['cid']);
+                    if (User::find($r[0]) !== null) {
+                        $user = User::find($r[0]);
                         $user->fname = $r->fname;
                         $user->lname = $r->lname;
                         $user->email = $r->email;
