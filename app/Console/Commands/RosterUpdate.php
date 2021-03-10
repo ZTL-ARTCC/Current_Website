@@ -179,7 +179,8 @@ class RosterUpdate extends Command
         $res = $client->get('https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster?apikey='.Config::get('vatusa.api_key'));
         $users = User::where('visitor', '0')->where('status', '1')->get()->pluck('id');
         if ($res->getStatusCode() == "200") {
-            $roster = json_decode($res->data);
+            $res = json_decode($res->data);
+            $roster = $res;
         } else {
 
             exit(1);
