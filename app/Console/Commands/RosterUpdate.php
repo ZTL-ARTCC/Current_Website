@@ -180,7 +180,7 @@ class RosterUpdate extends Command
         $users = User::where('visitor', '0')->where('status', '1')->get()->pluck('id');
         if ($res->getStatusCode() == "200") {
             $roster = json_decode($res->getBody());
-            $roster = $roster['data'];
+            $roster->data;
         } else {
 
             exit(1);
