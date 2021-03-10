@@ -185,12 +185,12 @@ class RosterUpdate extends Command
             exit(1);
         }
         $i = 0;
-        foreach($roster as $sett) {
+        foreach($roster->data as $sett) {
             $i++;
         }
         $j = 0;
 
-        foreach($roster as $r) {
+        foreach($roster->data as $r) {
             $j++;
             if ($j != $i) {
                 // Last result will be false or true
@@ -286,7 +286,7 @@ class RosterUpdate extends Command
 
         foreach($users as $u) {
             $delete = 0;
-            foreach($roster as $r) {
+            foreach($roster->data as $r) {
                 // Last result will be false
                 if(! ($r === true || $r === false)) {
                     $id = $r->cid;
