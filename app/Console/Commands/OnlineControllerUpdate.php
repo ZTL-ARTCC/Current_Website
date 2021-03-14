@@ -58,7 +58,7 @@ class OnlineControllerUpdate extends Command
     public function handle()
     {
 		$statsData = $this->getStatsData();
-		$last_update_log = ControllerLogUpdate::first();
+		$last_update_log = ControllerLogUpdate::all();
 	    	dd($last_update_log);
 		$last_update = $last_update_log->created_at;
 		$last_update_log->delete();
