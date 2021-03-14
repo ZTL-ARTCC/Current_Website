@@ -49,7 +49,7 @@ class ARTCCOverflights extends Command
         DB::table('flights_within_artcc')->truncate();
 
         $result = json_decode($res->getBody());
-        foreach($result->data as $r) {
+        foreach($result as $r) {
             $response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$r->cid);
             $res = new SimpleXMLElement($response->getBody());
             $pilot_name = $res->user->name_first.' '.$res->user->name_last;
