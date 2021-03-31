@@ -130,7 +130,7 @@
                                     @endif
                                 </td>
                             @endif
-                            <td><center>{{ $c->initials }}</center></td>
+                            <td><center>{{'SO'}}</center></td>
                             <td><center>{{ $c->rating_short }}</center></td>
                             <td><center>{{ $c->status_text }}</center></td>
                             @if($c->del == 0)
