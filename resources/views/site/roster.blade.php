@@ -96,7 +96,7 @@ Roster
                                     {{ $c->backwards_name }}
                                 @endif
                             </td>
-                            <td><center>{{'SO'}}</center></td>
+                            <td><center>{{$c->initials}}</center></td>
                             <td><center>{{ $c->rating_short }}</center></td>
                             <td><center>{{ $c->status_text }}</center></td>
                             @if($c->del == 0)
@@ -171,7 +171,7 @@ Roster
                         @if($c->status != 2)
                             <tr>
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
-                                <td><center>{{'SO'}}</center></td>
+                                <td><center>{{$c->initials}}</center></td>
                                 <td><center>{{ $c->rating_short }}</center></td>
                                 <td><center>{{ $c->status_text }}</center></td>
                                 @if($c->del == 0)
@@ -239,7 +239,7 @@ Roster
                         @if($c->rating_short != "OBS" && $c->status != 2)
                             <tr>
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
-                                <td><center>{{'SO'}}</center></td>
+                                <td><center>{{$c->initials}}</center></td>
                                 <td><center>{{ $c->rating_short }}</center></td>
                                 <td><center>{{ $c->status_text }}</center></td>
                                 @if($c->del == 0)
