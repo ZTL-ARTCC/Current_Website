@@ -130,7 +130,7 @@
                                     @endif
                                 </td>
                             @endif
-                            <td><center>{{'SO'}}</center></td>
+                            <td><center>{{$c->initials}}</center></td>
                             <td><center>{{ $c->rating_short }}</center></td>
                             <td><center>{{ $c->status_text }}</center></td>
                             @if($c->del == 0)
@@ -226,7 +226,7 @@
                             @else
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
                             @endif
-                            <td><center>{{'SO'}}</center></td>
+                            <td><center>{{$c->initials}}</center></td>
                             <td><center>{{ $c->rating_short }}</center></td>
                             <td><center>{{ $c->status_text }}</center></td>
                                 @if($c->del == 0)
@@ -323,7 +323,7 @@
                                 @else
                                     <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
                                 @endif
-                                <td><center>{{'SO'}}</center></td>
+                                <td><center>{{$c->initials}}</center></td>
                                 <td><center>{{ $c->rating_short }}</center></td>
                                 <td><center>{{ $c->status_text }}</center></td>
                                     @if($c->del == 0)
