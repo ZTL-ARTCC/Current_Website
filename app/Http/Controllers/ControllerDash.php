@@ -285,7 +285,7 @@ class ControllerDash extends Controller
         
         $feedback = Feedback::find($id);
         if($feedback->controller_id != Auth::id() || !Auth::user()->can('snrStaff'){
-            return redirect('dashboard/controllers/profile')->with('error', 'Your Not alloud to see this!.')
+            return redirect('dashboard/controllers/profile')->with('error', 'You\'re not allowed to see this!')
         }    
             
         return view('dashboard.controllers.feedback')->with('feedback', $feedback);
