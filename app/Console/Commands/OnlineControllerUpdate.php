@@ -154,7 +154,7 @@ class OnlineControllerUpdate extends Command
 		shuffle($urls);
 		$data = false;
 
-		foreach($urls->data as $url) {
+		foreach($urls as $url) {
 			$data_file = file(trim($url));
 
 			foreach ($data_file as $record) {
