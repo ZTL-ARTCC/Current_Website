@@ -136,7 +136,7 @@ class OnlineControllerUpdate extends Command
         $client = new Client();
         $res = $client->request('GET', $this->statusUrl);
 
-        $data = $res->getBody();
+        $data = json_decode($res->getBody());
 
 
 		return $data;
