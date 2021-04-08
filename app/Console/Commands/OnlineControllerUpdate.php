@@ -154,10 +154,10 @@ class OnlineControllerUpdate extends Command
 		shuffle($urls);
 		$data = false;
 
-		foreach($urls as $url) {
+		foreach($urls->data as $url) {
 			$data_file = file(trim($url));
 
-			foreach ($data_file->data as $record) {
+			foreach ($data_file as $record) {
 				if (substr($record, 0, 9) == 'UPDATE = ') {
 					$streamupdate = rtrim(substr($record, 9));
 					$update_time = gmmktime(
@@ -174,7 +174,7 @@ class OnlineControllerUpdate extends Command
 
 			$age = time() - $update_time;
 			if ($age < 600) {
-				$data = $data_file->data;
+				$data = $data_file;
 				break;
 			}
 		}
