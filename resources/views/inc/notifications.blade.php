@@ -2,7 +2,7 @@
 
     Auth::user()->hasRole('ins') && App\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Ots::where('status', 0)->get()->count() > 0 ||
 
-    App\Ots::where('status', 1)->where('ins_id', Auth::id())->get()->count() > 0 ||
+    count(App\Ots::where('status', 1)->where('ins_id', Auth::id())->get()) > 0 ||
 
     App\TrainingTicket::where('created_at', '>=', Carbon\Carbon::now()->subHours(24))->where('controller_id', Auth::id())->first() != null ||
 
@@ -18,7 +18,7 @@
 
     <center><h4><i>Notifications</i></h4></center>
 
-    @if(Auth::user()->hasRole('ins') && App\Ots::where('status', 0)->get()->count() > 0 || Auth::user()->hasRole('atm') && App\Ots::where('status', 0)->get()->count() > 0)
+    @if(Auth::user()->hasRole('ins') && count(App\Ots::where('status', 0)->get()) > 0 || Auth::user()->hasRole('atm') && App\Ots::where('status', 0)->get()->count() > 0)
 
         <br>
 
