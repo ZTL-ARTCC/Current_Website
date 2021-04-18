@@ -32,7 +32,7 @@
 
 
 
-    @if(App\Ots::where('status', 1)->where('ins_id', Auth::id())->get()->count() > 0)
+    @if(count(App\Ots::where('status', 1)->where('ins_id', Auth::id())->get()) > 0)
 
         <br>
 
