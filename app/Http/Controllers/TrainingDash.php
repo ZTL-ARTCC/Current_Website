@@ -341,7 +341,7 @@ class TrainingDash extends Controller
 
 
   
-        return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
+        return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully.');
     
 
     }
