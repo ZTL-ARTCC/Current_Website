@@ -246,16 +246,18 @@ class TrainingDash extends Controller
         $ticket->save();
         $extra = null;
 	    
-	Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
-            $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
-            $m->subject('New Training Ticket Submitted');
-            $m->to($controller->email)->cc('ta@ztlartcc.org');
-        });
 
 	$date = $ticket->date;
 	$date = date("Y-m-d");
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
+	    
+	Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
+            $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
+            $m->subject('New Training Ticket Submitted');
+            $m->to($controller->email)->cc('ta@ztlartcc.org');
+        });
+	    
 	if ($request->position == 113 || $request->position == 112){
 		$ticket->position = 'ATL_TWR';}
 	    elseif ($request->position == 100){
