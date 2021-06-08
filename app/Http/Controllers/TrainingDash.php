@@ -245,6 +245,12 @@ class TrainingDash extends Controller
         $ticket->ins_comments = $request->trainer_comments;
         $ticket->save();
         $extra = null;
+	    
+	Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
+            $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
+            $m->subject('New Training Ticket Submitted');
+            $m->to($controller->email)->cc('ta@ztlartcc.org');
+        });
 
 	$date = $ticket->date;
 	$date = date("Y-m-d");
@@ -326,12 +332,6 @@ class TrainingDash extends Controller
 
             $controller->save();
         }
-
-        Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
-            $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
-            $m->subject('New Training Ticket Submitted');
-            $m->to($controller->email)->cc('ta@ztlartcc.org');
-        });
 
         $audit = new Audit;
         $audit->cid = Auth::id();
