@@ -8,7 +8,7 @@
         @endif
     </div>
     <div class="container">
-        <p><a href="https://www.vatusa.net/info/privacy">Privacy Policy, Terms and Conditions</a></p>
+        <p><a href="https://www.ztlartcc.org/privacy">Privacy Policy, Terms and Conditions</a></p>
         <p class="footer-copyright">
             © 2018-2019 vZTL ARTCC
         </p>
