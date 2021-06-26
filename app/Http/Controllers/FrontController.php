@@ -104,6 +104,10 @@ class FrontController extends Controller
     public function teamspeak() {
         return view('site.teamspeak');
     }
+    
+     public function privacy() {
+        return view('site.privacy');
+    }
 
     public function airportIndex() {
         $airports = Airport::orderBy('ltr_3', 'ASC')->get();
