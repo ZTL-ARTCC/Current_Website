@@ -283,9 +283,10 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 */
 
 Route::get('/laratrust', function() {
-	$user = App\User::find(1315134);
+/*	$user = App\User::find(1315134);
 
 	$user->attachRole('wm');
+ */
 });
 
 /*
