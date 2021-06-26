@@ -16,6 +16,7 @@
 */
 Route::get('/', 'FrontController@home');
 Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
+Route::get('/privacy', 'FrontController@privacy');
 Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
 Route::post('/visit/save', 'FrontController@storeVisit');
