@@ -10,7 +10,7 @@
     <div class="container">
         <p><a href="https://www.ztlartcc.org/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
         <p class="footer-copyright">
-            © 2018-2019 vZTL ARTCC
+            © 2021 vZTL ARTCC
         </p>
     </div>
 </footer>
