@@ -13,6 +13,31 @@ Visit
     </div>
 </span>
 <br>
+<div class="d-flex justify-content-center mb-5">
+<div class="position-unset col-xl-6 col-10">
+<div class="fade position-unset m-0 undefined alert alert-primary show" role="alert">
+<table>
+<tbody>
+<tr>
+<td class="pb-2 pb-md-1">&nbsp;</td>
+<td class="pb-2 pb-md-1">
+<h5 class="mb-0">Visiting Prerequisites:</h5>
+</td>
+</tr>
+<tr>
+<td class="d-none d-md-table">&nbsp;</td>
+<td colspan="2">
+<li class="m-0">You must have a home facility.</li>
+  <li class="m-0">You must have 50 hours logged on your current rating.</li>
+  <li class="m-0">You must have been a member of your current facility for 90 days.</li>
+  <li class="m-0">You must have received your most recent VATSIM rating greater than 90 days ago.</li>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 
 <div class="container">
     {!! Form::open(['action' => 'FrontController@storeVisit']) !!}
