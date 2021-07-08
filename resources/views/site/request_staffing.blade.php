@@ -63,7 +63,7 @@ Staffing Request
             <form action="?" method="POST">
                 <div class="g-recaptcha" data-sitekey="6Le7coMbAAAAAK9_THLgH0Y5pSzWHLqhDbB3fJlz"></div>
                 <br/>
-                <input type="submit" value="Submit">
+                <input class="btn btn-success" type="submit" value="Send Request">
             </form>
         </body>
         <br>
