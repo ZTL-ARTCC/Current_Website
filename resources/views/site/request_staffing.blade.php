@@ -67,7 +67,6 @@ Staffing Request
             </form>
         </body>
         <br>
-        <button class="btn btn-success" type="submit">Send Request</button>
     {!! Form::close() !!}
 </div>
 
