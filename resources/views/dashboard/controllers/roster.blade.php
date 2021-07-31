@@ -54,9 +54,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
             </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="#visitagree" role="tab" data-toggle="tab" style="color:black">ZJX Visiting Controllers</a>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
@@ -299,7 +299,7 @@
                     </tbody>
                 </table>
             </div>
-            <div role="tabpanel" class="tab-pane" id="visitagree">
+            <!-- <div role="tabpanel" class="tab-pane" id="visitagree">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -396,7 +396,7 @@
                     @endforeach
                     </tbody>
                 </table>
-            </div>
+            </div> -->
         </div>
 
 
