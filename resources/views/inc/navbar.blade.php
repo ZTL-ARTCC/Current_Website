@@ -32,7 +32,7 @@
                         <a class="dropdown-item" href="/controllers/roster">Roster</a>
                         <a class="dropdown-item" href="/controllers/staff">Staff</a>
                         <a class="dropdown-item" href="/controllers/files">Files</a>
-                        <a class="dropdown-item" href="/controllers/files">vIDS</a>
+                        <a class="dropdown-item" href="https://ids.ztlartcc.org">vIDS</a>
                         <a class="dropdown-item" href="/controllers/stats">Controller Stats</a>
                         <a class="dropdown-item" href="/controllers/teamspeak">Teamspeak Information</a>
                     </div>
