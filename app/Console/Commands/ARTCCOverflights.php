@@ -50,9 +50,17 @@ class ARTCCOverflights extends Command
 
         $result = json_decode($res->getBody());
         foreach($result as $r) {
-            $response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$r->cid);
-            $res = new SimpleXMLElement($response->getBody());
-            $pilot_name = $res->user->name_first.' '.$res->user->name_last;
+            //$response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$r->cid);
+            //$res = new SimpleXMLElement($response->getBody());
+            //$pilot_name = $res->user->name_first.' '.$res->user->name_last;
+            $response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/');
+            //$response = $client->request('GET', 'https://api.vatsim.net/api/ratings/'.$r->cid.'/', ['query' => ['Authorization' => .Config::get('vatsim.api_key')]]);
+            $res = json_decode($response->getBody(),true);
+            //$pilot_name = $res['division']; //'Error: ' . json_last_error_msg(); //print_r($res,true); //$response->getBody();
+			$pilot_name = '';
+            if(array_key_exists('name_first',$res)&&array_key_exists('name_last',$res)) {
+			    $pilot_name = $res['name_first'] . ' ' . $res['name_last'];
+            }
             $flight = new Overflight;
             $flight->pilot_cid = $r->cid;
             $flight->pilot_name = $pilot_name;
