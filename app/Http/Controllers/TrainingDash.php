@@ -303,7 +303,7 @@ class TrainingDash extends Controller
 		if(!is_int($ticket->position)) { // Only post to VATUSA if the position type is valid
 			$client = new Client();
 				$res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .Config::get('vatusa.api_key'), $req_params);
-			}
+		}
         if($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
