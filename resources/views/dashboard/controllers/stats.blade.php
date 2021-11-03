@@ -71,9 +71,11 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
         <li class="nav-item">
             <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
         </li>
+		<!--
         <li class="nav-item">
             <a class="nav-link" href="#agreevisit" role="tab" data-toggle="tab" style="color:black">ZHU/ZJX Controllers</a>
         </li>
+		-->
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
