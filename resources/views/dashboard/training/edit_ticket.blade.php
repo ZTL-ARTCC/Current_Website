@@ -86,7 +86,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('start', 'Start Time in Zulu', ['class' => 'form-label']) !!}
+                    {!! Form::label('start', 'Start Time in Eastern', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('start', $ticket->start_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
                     </div>
@@ -94,7 +94,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('end', 'End Time in Zulu', ['class' => 'form-label']) !!}
+                    {!! Form::label('end', 'End Time in Eastern', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
                         {!! Form::text('end', $ticket->end_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
                     </div>
