@@ -24,7 +24,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('position', 'Lesson', ['class' => 'form-label']) !!}
+                    {!! Form::label('position', 'Session Category', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
                                                 100 => 'ZTL On-Boarding',
                         101 => 'Class D/C Clearance Delivery',
