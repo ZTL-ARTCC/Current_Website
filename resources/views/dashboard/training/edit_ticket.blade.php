@@ -16,13 +16,13 @@ Edit Training Ticket
     {!! Form::open(['action' => ['TrainingDash@saveTicket', $ticket->id]]) !!}
         @csrf
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('controller', 'Controller', ['class' => 'form-label']) !!}
                     {!! Form::select('controller', [  $ticket->controller_id => $ticket->Controller_name], NULL ,['class' => 'form-control']) !!}
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('position', 'Lesson', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
@@ -52,7 +52,71 @@ Edit Training Ticket
                     ], $ticket->position, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    {!! Form::label('sessionId', 'Session ID', ['class' => 'form-label']) !!}
+                    {!! Form::select('sessionId', [
+                        100 => 'DEL0 - S1T0-O',
+                        101 => 'DEL1 - S1T1',
+                        102 => 'DEL2 - S1P1',
+                        103 => 'DEL3 - S1T2',
+                        104 => 'DEL4 - S1P2-S',
+                        105 => 'GND1 - S1T3-S',
+                        106 => 'TWR1 - S2T1',
+                        107 => 'TWR2 - S2T2',
+                        108 => 'TWR3 - S2P1-S',
+                        109 => 'TWR4 - S2T3-S',
+                        110 => 'TWR5 - S2P2-S',
+                        111 => 'TWR6 - S2T4-S',
+                        112 => 'TWR7 - S2T5-S',
+                        113 => 'TWR8 - S2T6',
+                        114 => 'TWR9 - S2P3-O',
+                        115 => 'TWR10 - S2M1-S',
+                        116 => 'APP1 - S3T1-S',
+                        117 => 'APP2 - S3T2-S',
+                        118 => 'APP3 - S3P1-S',
+                        119 => 'APP4 - S3T3-S',
+                        120 => 'APP5 - S3T4-S',
+                        121 => 'APP6 - S3T5-S',
+                        122 => 'APP7 - S3M1-S',
+                        123 => 'APP8 - S3T6',
+                        124 => 'APP9 - S3P2',
+                        125 => 'APP10 - S3P3-O',
+                        126 => 'APP11 - S3P4-O',
+                        127 => 'APP12 - S3M2-S',
+                        128 => 'CTR0 - C1T0-O',
+                        129 => 'CTR1 - C1T1-S',
+                        130 => 'CTR2 - C1T2-S',
+                        131 => 'CTR3 - C1T3-S',
+                        132 => 'CTR4 - C1P1-S',
+                        133 => 'CTR5 - C1P2-S',
+                        134 => 'CTR6 - C1M1-S',
+                        135 => 'CTR7 - C1M2-S',
+                        136 => 'ZTL1 - M1M1-S',
+                        137 => 'ATL1 - M2T1',
+                        138 => 'ATL2 - M2M1-O',
+                        139 => 'ATL3 - M2T2',
+                        140 => 'ATL4 - M2P1',
+                        141 => 'ATL5 - M2M2-O',
+                        142 => 'ATL6 - M2T3',
+                        143 => 'ATL7 - M2T4',
+                        144 => 'ATL8 - M2M3-S',
+                        145 => 'A801 - M3P1-S',
+                        146 => 'A802 - M3M1-O',
+                        147 => 'A803 - M3P2',
+                        148 => 'A804 - M3M2-O',
+                        149 => 'A805 - M3T1-S',
+                        150 => 'A806 - M3P3',
+                        151 => 'A807 - M3P4',
+                        152 => 'A808 - M3M3-O',
+                        153 => 'A809 - M3T3-O',
+                        154 => 'A8010 - M3T4-S',
+                        155 => 'A8011 - M3P5',
+                        156 => 'A8012 - M3M4-S',						
+                    ], null, ['placeholder' => 'Select Session ID', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="col-sm-3">
                 <div class="form-group">
                     @if(Auth::user()->hasRole('ins') || Auth::user()->can('snrStaff'))
                         {!! Form::label('type', 'Session Type', ['class' => 'form-label']) !!}
@@ -102,7 +166,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('duration', 'Duration (HH:mm)', ['class' => 'form-label']) !!}
+                    {!! Form::label('duration', 'Duration (hh:mm)', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
                         {!! Form::text('duration', $ticket->duration, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
                     </div>

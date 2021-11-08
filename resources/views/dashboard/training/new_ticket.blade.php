@@ -170,7 +170,7 @@ New Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('duration', 'Duration (HH:mm)', ['class' => 'form-label']) !!}
+                    {!! Form::label('duration', 'Duration (hh:mm)', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
                         {!! Form::text('duration', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
                     </div>
