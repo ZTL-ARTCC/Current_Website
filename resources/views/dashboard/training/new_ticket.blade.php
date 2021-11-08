@@ -117,7 +117,7 @@ New Training Ticket
                         154 => 'A8010 - M3T4-S',
                         155 => 'A8011 - M3P5',
                         156 => 'A8012 - M3M4-S',						
-                    ], null, ['placeholder' => 'Select Session ID', 'class' => 'form-control'], array('disabled')) !!}
+                    ], null, ['placeholder' => 'Select Session ID', 'class' => 'form-control']), array('disabled' => 'disabled') !!}
                 </div>
             </div>
             <div class="col-sm-3">
