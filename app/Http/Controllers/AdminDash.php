@@ -831,12 +831,12 @@ class AdminDash extends Controller
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
             $audit->save();
-            
+            if(filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
              Mail::send('emails.remove_visitor', ['user' => $user], function($message) use ($user){
                         $message->from('datm@ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
                         $message->to($user->email)->cc('datm@ztlartcc.org');
              });
-
+			}
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
     }
