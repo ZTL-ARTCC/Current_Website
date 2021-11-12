@@ -225,6 +225,7 @@ class TrainingDash extends Controller
         $request->validate([
             'controller' => 'required',
             'position' => 'required',
+			'session_id' => 'required',
             'type' => 'required',
             'date' => 'required',
             'start' => 'required',
@@ -236,6 +237,7 @@ class TrainingDash extends Controller
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
         $ticket->position = $request->position;
+		$ticket->session_id = $request->session_id;
         $ticket->type = $request->type;
         $ticket->date = $request->date;
         $ticket->start_time = $request->start;
