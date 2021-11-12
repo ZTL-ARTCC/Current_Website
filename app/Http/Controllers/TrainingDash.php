@@ -290,6 +290,8 @@ class TrainingDash extends Controller
 		$ticket->position = 'ATL_CTR';}
 	     elseif ($request->position == 122){
 		$ticket->position = 'ZTL_RCR';}
+		elseif ($request->position == 123){
+		$ticket->position = 'BHM_APP';}
 	
 	
 	$req_params = [ 'form_params' =>
