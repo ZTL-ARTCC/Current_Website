@@ -53,7 +53,8 @@ class ARTCCOverflights extends Command
             //$response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$r->cid);
             //$res = new SimpleXMLElement($response->getBody());
             //$pilot_name = $res->user->name_first.' '.$res->user->name_last;
-            $response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/');
+            //$response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/'); // <-- working!
+            $response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/', ['query' => ['Authorization' => 'Token ' .Config::get('vatsim.api_key')]]);
             //$response = $client->request('GET', 'https://api.vatsim.net/api/ratings/'.$r->cid.'/', ['query' => ['Authorization' => .Config::get('vatsim.api_key')]]);
             $res = json_decode($response->getBody(),true);
             //$pilot_name = $res['division']; //'Error: ' . json_last_error_msg(); //print_r($res,true); //$response->getBody();
