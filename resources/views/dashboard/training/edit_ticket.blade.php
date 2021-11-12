@@ -115,7 +115,7 @@ Edit Training Ticket
                         255 => 'A8011 - M3P5',
                         256 => 'A8012 - M3M4-S',
 						257 => 'Unlisted/other',					
-                    ], null, ['placeholder' => 'Select Session ID', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
+                    ], null, ['placeholder' => 'Select Session ID', 'class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-sm-3">
