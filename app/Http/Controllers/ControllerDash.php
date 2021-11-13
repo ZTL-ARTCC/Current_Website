@@ -137,7 +137,7 @@ class ControllerDash extends Controller
 
         $controllers = ATC::get();
         //$last_update = ControllerLogUpdate::first();
-		$last_update = ControllerLogUpdate::last();
+		$last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
         $controllers_update = substr($last_update->created_at, -8, 5);
         $events = Event::where('status', 1)->get()->filter(function($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
