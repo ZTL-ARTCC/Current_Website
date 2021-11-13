@@ -245,6 +245,7 @@ class TrainingTicket extends Model
     }
 	
     public function getSessionNameAttribute() {
+		$session = '';
         $pos = $this->session_id;
         if($pos == 200) {
             $session = 'DEL0 - S1T0-O';
