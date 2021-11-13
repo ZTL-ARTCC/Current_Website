@@ -68,7 +68,8 @@ class FrontController extends Controller
         }
 
         $controllers = ATC::get();
-        $last_update = ControllerLogUpdate::first();
+        //$last_update = ControllerLogUpdate::first();
+		$last_update = ControllerLogUpdate::last();
         $controllers_update = substr($last_update->created_at, -8, 5);
 
         $now = Carbon::now();
