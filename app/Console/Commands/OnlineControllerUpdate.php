@@ -129,7 +129,7 @@ class OnlineControllerUpdate extends Command
 
 			
 		}
-		$time = Carbon::now('Etc/UTC')->format('H:i').'Zz';
+		$time = Carbon::now('Etc/UTC')->format('H:i').'Z';
     }
 
     public function getStatsData() {
