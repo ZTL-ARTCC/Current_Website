@@ -18,6 +18,7 @@ class TrainingTickets extends Migration
             $table->integer('controller_id');
             $table->integer('trainer_id');
             $table->integer('position');
+			$table->integer('session_id');
             $table->integer('type');
             $table->string('date');
             $table->string('start_time');

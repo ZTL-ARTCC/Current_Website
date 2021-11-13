@@ -243,7 +243,7 @@ class TrainingDash extends Controller
         $ticket->start_time = $request->start;
         $ticket->end_time = $request->end;
         $ticket->duration = $request->duration;
-        $ticket->comments = $request->comments;
+        $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
         $ticket->ins_comments = $request->trainer_comments;
         $ticket->save();
         $extra = null;
@@ -292,7 +292,7 @@ class TrainingDash extends Controller
 		$ticket->position = 'ZTL_RCR';}
 		elseif ($request->position == 123){
 		$ticket->position = 'BHM_APP';}
-	
+		else {$ticket->position = 'ZTL_TNG';}
 	
 	$req_params = [ 'form_params' =>
                 [
@@ -304,10 +304,10 @@ class TrainingDash extends Controller
                     'location' => 1,
                 ],
             ];
-		//if(!is_int($ticket->position)) { // Only post to VATUSA if the position type is valid
+
 			$client = new Client();
 				$res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .Config::get('vatusa.api_key'), $req_params);
-		//}
+
         if($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
