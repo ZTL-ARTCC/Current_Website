@@ -259,12 +259,10 @@ class TrainingDash extends Controller
             $m->subject('New Training Ticket Submitted');
             $m->to($controller->email)->cc('ta@ztlartcc.org');
         });
-	    
+	// Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA    
 	if ($request->position == 113 || $request->position == 112){
 		$ticket->position = 'ATL_TWR';}
-	    elseif ($request->position == 100){
-		$ticket->position = 'ZTL_ONB';}
-	    elseif ($request->position == 101){
+	    elseif ($request->position == 100 || $request->position == 101){
 		$ticket->position = 'ZTL_DEL';}
 	    elseif ($request->position == 103 || $request->position == 104){
 		$ticket->position = 'ATL_DEL';}
@@ -292,7 +290,6 @@ class TrainingDash extends Controller
 		$ticket->position = 'ZTL_RCR';}
 		elseif ($request->position == 123){
 		$ticket->position = 'BHM_APP';}
-		else {$ticket->position = 'ZTL_TNG';}
 	
 	$req_params = [ 'form_params' =>
                 [
