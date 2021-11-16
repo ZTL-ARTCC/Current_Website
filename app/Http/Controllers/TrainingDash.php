@@ -290,7 +290,7 @@ class TrainingDash extends Controller
 		$ticket->position = 'ZTL_RCR';}
 		elseif ($request->position == 123){
 		$ticket->position = 'BHM_APP';}
-	
+	// Added http_errors to prevent random errors from being thrown when the VATUSA call fails
 	$req_params = [ 'form_params' =>
                 [
                     'instructor_id' => Auth::id(),
@@ -299,6 +299,7 @@ class TrainingDash extends Controller
                     'duration' => $request->duration,
                     'notes' => $request->comments,
                     'location' => 1,
+					'http_errors' => false 
                 ],
             ];
 
