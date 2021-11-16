@@ -298,9 +298,9 @@ class TrainingDash extends Controller
                     'position' => $ticket->position,
                     'duration' => $request->duration,
                     'notes' => $request->comments,
-                    'location' => 1,
-					'http_errors' => false 
+                    'location' => 1
                 ],
+				'http_errors' => false
             ];
 
 			$client = new Client();
