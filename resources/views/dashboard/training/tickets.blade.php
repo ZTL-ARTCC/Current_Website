@@ -83,7 +83,7 @@ Training Tickets
                     <th scope="col">INS/MTR Comments</th>
                 </tr>
 
-
+				@php($transition_date = \Carbon\Carbon::parse('11/12/2021'))
 
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
@@ -151,8 +151,8 @@ Training Tickets
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
 						<td>{{ $t->session_name }}</td>
-                        <td>{{ $t->start_time }}z</td>
-                        <td>{{ $t->end_time }}z</td>
+                        <td>{{ $t->start_time }} <span style="font-variant:small-caps">@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET</span></td>
+                        <td>{{ $t->end_time }} <span style="font-variant:small-caps">@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET</span></td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr>
@@ -164,8 +164,8 @@ Training Tickets
                     <td>{{ $t->position_name }}</td>
                     <td>{{ $t->type_name }}</td>
 					<td>{{ $t->session_name }}</td>
-                    <td>{{ $t->start_time }}z</td>
-                    <td>{{ $t->end_time }}z</td>
+                    <td>{{ $t->start_time }} <span style="font-variant:small-caps">@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET</span></td>
+                    <td>{{ $t->end_time }} <span style="font-variant:small-caps">@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET</span></td>
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                 </tr>
