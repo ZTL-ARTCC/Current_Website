@@ -164,7 +164,7 @@ Training Tickets
                     <td>{{ $t->position_name }}</td>
                     <td>{{ $t->type_name }}</td>
 					<td>{{ $t->session_name }}</td>
-                    <td>{{ $t->start_time }}<span style="font-variant:small-caps !important">@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</span></td>
+                    <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td>{{ $t->end_time }}z</td>
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
