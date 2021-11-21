@@ -32,9 +32,11 @@ Route::post('/pilots/request-staffing', 'FrontController@staffRequest');
 Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
+/*
 Route::get('/ssd', function () {
     return '<img src=\'/photos/ross_worm.jpg\' style=\'max-height:100%\' />';
 });
+*/
 /*
 *   End Front Page Stuff
 */
