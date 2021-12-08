@@ -1019,7 +1019,7 @@ class AdminDash extends Controller
     }
 	
 	public function updateFileDispOrder(Request $request) {
-        $file = File::find(Input::get('id'));
+        $file = File::find($request->id);
         $file->disp_order = 99; //Input::get('dispOrder');
         $file->save();
 		
