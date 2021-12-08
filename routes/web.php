@@ -184,10 +184,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'AdminDash@editFile');
             Route::post('/edit/{id}', 'AdminDash@saveFile');
             Route::get('/delete/{id}', 'AdminDash@deleteFile');
-			//Route::post('/disp-order', 'AdminDash@updateFileDispOrder');
-			Route::get('/disp-order', function () {
-    return '<img src=\'/photos/ross_worm.jpg\' style=\'max-height:100%\' />';
-});
+			Route::get('/disp-order', 'AdminDash@updateFileDispOrder');
         });
         Route::prefix('airports')->middleware('permission:staff')->group(function() {
             Route::get('/', 'AdminDash@showAirports');
