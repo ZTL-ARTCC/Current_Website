@@ -1024,6 +1024,7 @@ class AdminDash extends Controller
         $file->save();
 		
 		// Need to add return logic here to update the display
+		return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
 	}
 
     public function deleteFile($id) {
