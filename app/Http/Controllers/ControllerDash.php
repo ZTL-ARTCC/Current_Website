@@ -220,7 +220,7 @@ class ControllerDash extends Controller
     }
 
     public function showFiles() {
-        $vrc = File::where('type', 0)->orderBy('name', 'ASC')->get();
+        $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($vrc);$x++){
 			File::where('id',$vrc[$x]['id'])->update(['disp_order' => $x]);
 			//$vrc[$x]['disp_order'] = $x;
