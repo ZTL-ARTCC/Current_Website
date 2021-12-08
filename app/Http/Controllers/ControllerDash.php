@@ -223,7 +223,6 @@ class ControllerDash extends Controller
         $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($vrc);$x++){
 			File::where('id',$vrc[$x]['id'])->update(['disp_order' => $x]);
-			//$vrc[$x]['disp_order'] = $x;
 		}
         $vstars = File::where('type', 1)->orderBy('name', 'ASC')->get();
         $veram = File::where('type', 2)->orderBy('name', 'ASC')->get();
