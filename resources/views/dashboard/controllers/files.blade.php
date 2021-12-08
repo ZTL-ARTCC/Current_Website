@@ -79,7 +79,7 @@ Files
 		<script>
 		function itemReorder(id,pos,act,typ) { // Handles custom re-ordering of items in file browser
 			alert(id + ' ' + pos + ' ' + act + ' ' + typ);
-			$.get('/updatefiledisporder?id=' + id + '&pos=' + pos, function(data) {
+			$.get('/dashboard/admin/files/dispOrder?id=' + id + '&pos=' + pos, function(data) {
 				//document.getElementById(typ).innerHTML = data;
 			})
 		}
