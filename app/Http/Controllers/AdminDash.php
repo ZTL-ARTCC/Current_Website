@@ -1017,6 +1017,14 @@ class AdminDash extends Controller
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
     }
+	
+	public function updateFileDispOrder(Request $request) {
+        $file = File::find(Input::get('id'));
+        $file->disp_order = 99; //Input::get('dispOrder');
+        $file->save();
+		
+		// Need to add return logic here to update the display
+	}
 
     public function deleteFile($id) {
         $file = File::find($id);

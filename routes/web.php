@@ -184,6 +184,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/edit/{id}', 'AdminDash@editFile');
             Route::post('/edit/{id}', 'AdminDash@saveFile');
             Route::get('/delete/{id}', 'AdminDash@deleteFile');
+			Route::post('/updatefiledisporder', 'AdminDash@updateFileDispOrder');
         });
         Route::prefix('airports')->middleware('permission:staff')->group(function() {
             Route::get('/', 'AdminDash@showAirports');
