@@ -30,3 +30,10 @@ $('.dropdown').on('show.bs.dropdown', function(e){
 $('.dropdown').on('hide.bs.dropdown', function(e){
   $(this).find('.dropdown-menu').first().stop(true, true).slideUp(300);
 });
+
+function itemReorder(id,pos,act,typ) { // Handles custom re-ordering of items in file browser
+	alert(id + ' ' + pos + ' ' act + ' ' + typ);
+	//$.get('/getLinks', function(data) {
+	//	document.getElementById(typ).innerHTML = data;
+    //})
+}
