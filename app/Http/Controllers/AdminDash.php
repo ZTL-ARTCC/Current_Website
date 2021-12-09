@@ -1039,7 +1039,7 @@ class AdminDash extends Controller
 		}
 		// Rebuild the display and return it to the AJAX caller
 		$dispString = "";
-		//$files = File::where('type', $request->typ)->get();
+		$files = File::where('type', $request->typ)->get();
 		/*
 		foreach($files as $f) {
 			$dispString .= "<tr>
