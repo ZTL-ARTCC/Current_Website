@@ -1040,7 +1040,15 @@ class AdminDash extends Controller
 			$file->save();
 		}
 		elseif($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
-			//$file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->update(['disp_order' => $request->pos);
+			$file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->->first();
+			if(!is_null($file)) {
+				$file->disp_order = $request->pos;
+				$file->save();
+				$file = File::find($request->id);
+				$file->disp_order =  $request->pos + 1;
+				$file->save();
+			}
+			//update(['disp_order' => $request->pos);
 			//$file->save();
 			//$file = File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos + 1);
 			//$file->save();
