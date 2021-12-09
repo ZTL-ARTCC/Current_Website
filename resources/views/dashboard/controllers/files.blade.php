@@ -80,6 +80,7 @@ Files
 		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
 			//alert(id + ' ' + pos + ' ' + act + ' ' + typ); //?id=' + id + '&pos=' + pos
 			var dType = '';
+			/*
 			switch(typ) {
 				case 0 : dType = 'vrc'; break;
 				case 1 : dType = 'vstars'; break;
@@ -89,8 +90,9 @@ Files
 				case 5 : dType = 'loas'; break;
 				case 6 : dType = 'Staff'; break;
 			}
+			*/
 			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
-			document.getElementById(dType).innerHTML = data;
+			//document.getElementById(dType).innerHTML = data;
 			});
 		}
 		</script>
