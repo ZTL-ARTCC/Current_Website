@@ -1039,8 +1039,8 @@ class AdminDash extends Controller
 		}
 		// Rebuild the display and return it to the AJAX caller
 		$dispString = "";
-		/*
 		$files = File::where('type', $request->typ)->get();
+		/*
 		foreach($files as $f) {
 			$dispString .= "<tr>
                                 <td>$f->name</td>
@@ -1056,8 +1056,7 @@ class AdminDash extends Controller
                             </tr>";
 		}
 		*/
-		//return $dispString;
-		echo 'test';
+		echo encode_json($dispString,true);
 	}
 
     public function deleteFile($id) {
