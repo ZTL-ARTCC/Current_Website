@@ -1056,7 +1056,7 @@ class AdminDash extends Controller
                             </tr>";
 		}
 		*/
-		return $dispString;
+		//return $dispString;
 	}
 
     public function deleteFile($id) {
