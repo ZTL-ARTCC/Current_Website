@@ -1019,11 +1019,18 @@ class AdminDash extends Controller
     }
 	
 	public function updateFileDispOrder(Request $request) {
-        $file = File::find($request->id);
-		// If action is move up, then -1 to all elements <= order and update
-		// If action is move down, then +1 to all elements >= order and update
-        $file->disp_order = 99; //Input::get('dispOrder');
-        $file->save();
+		if($request->act == 'up') { // If action is move up, swap spots with item that = -1
+			File::where('type', $request->typ)->where('disp_order', $request->pos - 1)->update(['disp_order' => $request->pos);
+			File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos - 1);
+		}
+		elseif($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
+			File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->update(['disp_order' => $request->pos);
+			File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos + 1);
+		}
+		
+		//$file = File::find($request->id);
+        //$file->disp_order = 99;
+        //$file->save();
 		
 		// Need to add return logic here to update the display
 		//return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
