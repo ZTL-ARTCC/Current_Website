@@ -1019,7 +1019,7 @@ class AdminDash extends Controller
     }
 	
 	public function updateFileDispOrder(Request $request) {
-		if($request->act == 'up') { // If action is move up, swap spots with item that = -1
+		if(($request->act == 'up')&&($request->pos > 0)) { // If action is move up, swap spots with item that = -1
 		/*
 			$files = File::where('type', $request->typ)->where('disp_order', $request->pos - 1);
 			foreach($files as $file) {
