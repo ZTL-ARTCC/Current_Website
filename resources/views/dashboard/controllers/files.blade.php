@@ -92,7 +92,7 @@ Files
 			}
 			*/
 			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
-				//alert(dType);
+				alert(data);
 				//document.getElementById(dType).innerHTML = data;
 			});
 		}
