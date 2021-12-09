@@ -66,8 +66,8 @@ Files
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
-										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},this.title);" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
-										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},this.title);" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},this);" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},this);" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -77,7 +77,8 @@ Files
             </table>
         </div>
 		<script>
-		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
+		function itemReorder(id,pos,typ,el) { // Handles custom re-ordering of items in file browser
+			var act = el.getAttribute("title");
 			alert(id + ' ' + pos + ' ' + act + ' ' + typ); //?id=' + id + '&pos=' + pos
 			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
 				//document.getElementById(typ).innerHTML = data;
