@@ -1020,12 +1020,18 @@ class AdminDash extends Controller
 	
 	public function updateFileDispOrder(Request $request) {
 		if($request->act == 'up') { // If action is move up, swap spots with item that = -1
-			File::where('type', $request->typ)->where('disp_order', $request->pos - 1)->update(['disp_order' => $request->pos);
-			File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos - 1);
+			$file = File::where('type', $request->typ)->where('disp_order', $request->pos - 1);
+			$file->disp_order = $request->pos;
+			$file->save();
+			$file = File::where('type', $request->typ)->where('id', $request->id);
+			$file->disp_order = $request->pos - 1;
+			$file->save();
 		}
 		elseif($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
-			File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->update(['disp_order' => $request->pos);
-			File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos + 1);
+			//$file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->update(['disp_order' => $request->pos);
+			//$file->save();
+			//$file = File::where('type', $request->typ)->where('id', $request->id)->update(['disp_order' => $request->pos + 1);
+			//$file->save();
 		}
 		
 		//$file = File::find($request->id);
