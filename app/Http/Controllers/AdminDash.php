@@ -1020,6 +1020,8 @@ class AdminDash extends Controller
 	
 	public function updateFileDispOrder(Request $request) {
         $file = File::find($request->id);
+		// If action is move up, then -1 to all elements <= order and update
+		// If action is move down, then +1 to all elements >= order and update
         $file->disp_order = 99; //Input::get('dispOrder');
         $file->save();
 		
