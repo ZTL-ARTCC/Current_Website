@@ -93,7 +93,7 @@ Files
 			
 			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
 				//alert(data);
-				document.getElementById(dType).innerHTML = JSON.parse(data);
+				document.getElementById(dType).innerHTML = data;
 			});
 		}
 		</script>
