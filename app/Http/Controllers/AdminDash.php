@@ -1022,18 +1022,22 @@ class AdminDash extends Controller
 		if(($request->act == 'up')&&($request->pos > 0)) { // If action is move up, swap spots with item that = -1
 			$file = File::where('type', $request->typ)->where('disp_order', $request->pos - 1)->first();
 			$file->disp_order = $request->pos;
+			$file->updated_at = $file->updated_at; // Do not change timestamp
 			$file->save();
 			$file = File::find($request->id);
 			$file->disp_order = $request->pos - 1;
+			$file->updated_at = $file->updated_at; // Do not change timestamp
 			$file->save();
 		}
 		elseif($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
 			$file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->first();
 			if(!is_null($file)) {
 				$file->disp_order = $request->pos;
+				$file->updated_at = $file->updated_at; // Do not change timestamp
 				$file->save();
 				$file = File::find($request->id);
 				$file->disp_order =  $request->pos + 1;
+				$file->updated_at = $file->updated_at; // Do not change timestamp
 				$file->save();
 			}
 		}
