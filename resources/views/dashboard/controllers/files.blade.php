@@ -91,7 +91,7 @@ Files
 			
 			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
 				if(data.length > 0) {
-					document.getElementById(dType).getElementsByTagName('tbody')[0].innerHTML = data;
+					document.getElementById(dType).getElementsByTagName('tbody')[0].innerHTML = data.replace(/\\/g, '');
 				}
 			});
 		}
