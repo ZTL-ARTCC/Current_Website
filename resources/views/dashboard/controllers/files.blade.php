@@ -247,7 +247,7 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" onclick="return confirm('Are you sure?')" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a onclick="return confirm('Are you sure?')" href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
