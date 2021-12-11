@@ -65,7 +65,7 @@ Files
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info btn-block simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
 										@endif
@@ -98,10 +98,10 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
-                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -131,7 +131,7 @@ Files
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -158,10 +158,10 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
-                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -188,10 +188,10 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
-                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -218,10 +218,10 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
-                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -248,10 +248,10 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-                                    <a href="{{ $f->path }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning btn-block simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger btn-block simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info btn-block simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
 										@endif
