@@ -223,7 +223,7 @@ class ControllerDash extends Controller
         $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($vrc);$x++){
 			//File::where('id',$vrc[$x]['id'])->update(['disp_order' => $x]);
-			$file = File::find($staff[$x]['id']);
+			$file = File::find($vrc[$x]['id']);
 			$file->disp_order = $x;
 			$file->timestamps = false;
 			$file->save();
