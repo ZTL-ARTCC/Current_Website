@@ -231,7 +231,11 @@ class ControllerDash extends Controller
         $loa = File::where('type', 5)->orderBy('name', 'ASC')->get();
         $staff = File::where('type', 6)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($staff);$x++){
-			File::where('id',$staff[$x]['id'])->update(['disp_order' => $x]);
+			//File::where('id',$staff[$x]['id'])->update(['disp_order' => $x]);
+			$file = File::find($staff[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
 		}
 		
         return view('dashboard.controllers.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff);
