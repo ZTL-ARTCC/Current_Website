@@ -79,27 +79,6 @@ Files
                 </tbody>
             </table>
         </div>
-		<script>
-		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
-			//alert(act.title);
-			var dType = '';
-			switch(typ) {
-				case 0 : dType = 'vrc'; break;
-				case 1 : dType = 'vstars'; break;
-				case 2 : dType = 'veram'; break;
-				case 3 : dType = 'vatis'; break;
-				case 4 : dType = 'sops'; break;
-				case 5 : dType = 'loas'; break;
-				case 6 : dType = 'Staff'; break;
-			}
-			
-			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
-				if(data.length > 0) {
-					document.getElementById(dType).getElementsByTagName('tbody')[0].innerHTML = data.replace(/\\/g, '');
-				}
-			});
-		}
-		</script>
         <div role="tabpanel" class="tab-pane" id="vstars">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -272,6 +251,11 @@ Files
                                     @if(Auth::user()->can('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+										@if(!$loop->first)
+											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info btn-block simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+										@elseif(!$loop->last)
+											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info btn-block simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+										@endif
                                     @endif
                                 </td>
                             </tr>
@@ -280,6 +264,27 @@ Files
                 </tbody>
             </table>
         </div>
+		<script>
+		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
+			//alert(act.title);
+			var dType = '';
+			switch(typ) {
+				case 0 : dType = 'vrc'; break;
+				case 1 : dType = 'vstars'; break;
+				case 2 : dType = 'veram'; break;
+				case 3 : dType = 'vatis'; break;
+				case 4 : dType = 'sops'; break;
+				case 5 : dType = 'loas'; break;
+				case 6 : dType = 'Staff'; break;
+			}
+			
+			$.get('/dashboard/admin/files/disp-order?id=' + id + '&pos=' + pos + '&act=' + act + '&typ=' + typ, function(data) {
+				if(data.length > 0) {
+					document.getElementById(dType).getElementsByTagName('tbody')[0].innerHTML = data.replace(/\\/g, '');
+				}
+			});
+		}
+		</script>
     </div>
 </div>
 @endsection
