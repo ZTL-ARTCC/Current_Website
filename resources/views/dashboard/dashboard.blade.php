@@ -24,13 +24,14 @@ Dashboard
     <div class="row">
         <div class="col-sm-3">
             <div class="card card-body" style="background-color:lightgrey">
-<!--
+
                 <center><h5>Derek Time Now:</h5></center>
                 <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT0800&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
--->
+<!--
 				<center><h5>Joe Time Now:</h5></center>
 				<style>@font-face { font-family: 'heartbit'; src: url('/storage/files/heartbit.ttf'); }</style>
-                <center><div style="font-family:heartbit; font-size:20px; margin-bottom:0px; padding-bottom:0px;"><?php echo strtoupper(gmdate("D m/d/Y", time())); ?></div><div style="font-family:heartbit; font-size:56px; font-weight:bold;  margin-bottom:0px; padding-bottom:0px;  margin-top:0px; padding-top:0px;">71:10:65</div></center>
+                <center><div style="font-family:heartbit; font-size:20px; margin-bottom:0px; padding-bottom:0px;"><?php //echo strtoupper(gmdate("D m/d/Y", time())); ?></div><div style="font-family:heartbit; font-size:56px; font-weight:bold;  margin-bottom:0px; padding-bottom:0px;  margin-top:0px; padding-top:0px;">71:10:65</div></center>
+-->
             </div>
         </div>
         <div class="col-sm-3">
