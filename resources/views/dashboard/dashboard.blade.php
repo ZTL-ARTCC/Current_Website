@@ -29,7 +29,7 @@ Dashboard
                 <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT0800&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
 -->
 				<center><h5>Joe Time Now:</h5></center>
-				<style>@font-face { font-family: heartbit; src: url('https://ztlartcc.org/storage/files/heartbit.ttf'); }</style>
+				<style>@font-face { font-family: 'heartbit'; src: url('https://ztlartcc.org/storage/files/heartbit.ttf'); }</style>
                 <center><span style="font-family:heartbit"><?php echo gmdate("m/d/Y", time()); ?></span></center>
             </div>
         </div>
