@@ -30,7 +30,7 @@ Dashboard
 -->
 				<center><h5>Joe Time Now:</h5></center>
 				<style>@font-face { font-family: 'heartbit'; src: url('/storage/files/heartbit.ttf'); }</style>
-                <center><span style="font-family:heartbit; size:24px"><?php echo gmdate("m/d/Y", time()); ?></span><br/><span style="font-family:heartbit; size:36px">71:10:65</span></center>
+                <center><span style="font-family:heartbit; font-size:24px"><?php echo gmdate("m/d/Y", time()); ?></span><br/><span style="font-family:heartbit; font-size:36px">71:10:65</span></center>
             </div>
         </div>
         <div class="col-sm-3">
