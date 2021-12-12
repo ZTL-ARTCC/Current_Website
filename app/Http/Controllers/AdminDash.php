@@ -1057,7 +1057,7 @@ class AdminDash extends Controller
 			if($f->disp_order > 0) { // Don't show the up button for the first item listed
 				$dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'up\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Up\"><i class=\"fas fa-arrow-up\"></i></a>";
 			}
-			elseif(count($files) > $f->disp_order + 1) { // Don't show the down button for the last item listed
+			if(count($files) > $f->disp_order + 1) { // Don't show the down button for the last item listed
 				$dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'down\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Down\"><i class=\"fas fa-arrow-down\"></i></a>";
 			}
 			$dispString .= "	</div>
