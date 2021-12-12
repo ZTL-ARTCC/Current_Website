@@ -234,10 +234,34 @@ class ControllerDash extends Controller
 			$file->timestamps = false;
 			$file->save();
 		}
-        $veram = File::where('type', 2)->orderBy('name', 'ASC')->get();
-        $vatis = File::where('type', 3)->orderBy('name', 'ASC')->get();
-        $sop = File::where('type', 4)->orderBy('name', 'ASC')->get();
-        $loa = File::where('type', 5)->orderBy('name', 'ASC')->get();
+        $veram = File::where('type', 2)->orderBy('disp_order', 'ASC')->get();
+		for($x=0;$x<count($veram);$x++){
+			$file = File::find($veram[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
+		}
+        $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
+		for($x=0;$x<count($vatis);$x++){
+			$file = File::find($vatis[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
+		}
+        $sop = File::where('type', 4)->orderBy('disp_order', 'ASC')->get();
+		for($x=0;$x<count($sop);$x++){
+			$file = File::find($sop[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
+		}
+        $loa = File::where('type', 5)->orderBy('disp_order', 'ASC')->get();
+		for($x=0;$x<count($loa);$x++){
+			$file = File::find($loa[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
+		}
         $staff = File::where('type', 6)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($staff);$x++){
 			//File::where('id',$staff[$x]['id'])->update(['disp_order' => $x]);
