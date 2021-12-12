@@ -222,13 +222,18 @@ class ControllerDash extends Controller
     public function showFiles() {
         $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
 		for($x=0;$x<count($vrc);$x++){
-			//File::where('id',$vrc[$x]['id'])->update(['disp_order' => $x]);
 			$file = File::find($vrc[$x]['id']);
 			$file->disp_order = $x;
 			$file->timestamps = false;
 			$file->save();
 		}
-        $vstars = File::where('type', 1)->orderBy('name', 'ASC')->get();
+        $vstars = File::where('type', 1)->orderBy('disp_order', 'ASC')->get();
+		for($x=0;$x<count($vstars);$x++){
+			$file = File::find($vstars[$x]['id']);
+			$file->disp_order = $x;
+			$file->timestamps = false;
+			$file->save();
+		}
         $veram = File::where('type', 2)->orderBy('name', 'ASC')->get();
         $vatis = File::where('type', 3)->orderBy('name', 'ASC')->get();
         $sop = File::where('type', 4)->orderBy('name', 'ASC')->get();
