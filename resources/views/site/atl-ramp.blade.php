@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-ATL-Ramp
+ATL Ramp Status
 @endsection
 
 @section('content')
@@ -115,7 +115,7 @@ KATLArea = new google.maps.Rectangle({
 });
 
 var historicalOverlay = new google.maps.GroundOverlay(
-  '/photos/KATL_Diagram.png',
+  'https://www.ztlartcc.org/photos/KATL_Diagram.png',
   KATLimageBounds
 );
 
