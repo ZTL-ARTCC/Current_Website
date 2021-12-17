@@ -8,7 +8,7 @@ ATL-Ramp
 <span class="border border-light" style="background-color:#F0F0F0">
     <div class="container">
         &nbsp;
-        <h2><center>KATL Gates In Use</center></h2>
+        <h2><center>Atlanta Hartsfield Jackson Int'l Airport (ATL) Ramp/Gate Status</center></h2>
         &nbsp;
     </div>
 </span>
@@ -16,8 +16,6 @@ ATL-Ramp
 <div class="container-fluid">
 <div class="mb-4">
   <div>
-    <h3>This map depicts virtual aircraft connected to the <a href="http://www.vatsim.net/">VATSIM network</a> and can be used
-       to see what gates are open prior to connecting. Enjoy flying out of vZTL!</h3>
     <p class="em">The map refreshes automatically approximately every two minutes, but will take about 10 seconds to load the initial data.</p>
   </div>
   <div id="map" class="center" style="width: 1200px; height: 600px"></div>
@@ -120,6 +118,8 @@ var historicalOverlay = new google.maps.GroundOverlay(
   '/photos/KATL_Diagram.png',
   KATLimageBounds
 );
+
+window.onload = load();
 
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
