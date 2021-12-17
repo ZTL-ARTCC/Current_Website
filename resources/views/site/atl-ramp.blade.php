@@ -57,7 +57,7 @@ ATL Ramp Status
   background-color: #00FF00;
 }
 </style>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzZ5v9pcEo7lmSLjs3iU6CgopALbJfj8Y"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key="></script>
 <script type="text/javascript">
 (function () {/*
 
