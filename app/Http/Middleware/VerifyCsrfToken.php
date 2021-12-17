@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'https://ids.ztlartcc.org/gatedisplay_xml.php/*',
+        //
     ];
 }
