@@ -5,7 +5,7 @@ ATL Ramp Status
 @endsection
 
 @section('content')
-<?php header('Access-Control-Allow-Origin: https://ids.ztlartcc.org/gatedisplay_xml.php*'); ?>
+
 <span class="border border-light" style="background-color:#F0F0F0">
     <div class="container">
         &nbsp;
