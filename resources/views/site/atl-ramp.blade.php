@@ -5,6 +5,7 @@ ATL Ramp Status
 @endsection
 
 @section('content')
+<?php header('Access-Control-Allow-Origin: https://ids.ztlartcc.org/gatedisplay_xml.php*'); ?>
 <span class="border border-light" style="background-color:#F0F0F0">
     <div class="container">
         &nbsp;
@@ -160,7 +161,6 @@ function load() {
   setInterval(function(){
     downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=KATL", function(data) {
       var xml = data.responseXML;
-	  alert(xml);
       markers = xml.documentElement.getElementsByTagName("marker");
       gatez = xml.documentElement.getElementsByTagName("gate");
       DateMod = xml.documentElement.getElementsByTagName("datemod");
