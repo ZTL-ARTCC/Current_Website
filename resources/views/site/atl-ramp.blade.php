@@ -160,6 +160,7 @@ function load() {
   setInterval(function(){
     downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=KATL", function(data) {
       var xml = data.responseXML;
+	  alert(xml);
       markers = xml.documentElement.getElementsByTagName("marker");
       gatez = xml.documentElement.getElementsByTagName("gate");
       DateMod = xml.documentElement.getElementsByTagName("datemod");
