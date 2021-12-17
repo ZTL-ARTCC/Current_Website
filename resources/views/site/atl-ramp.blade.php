@@ -15,9 +15,6 @@ ATL Ramp Status
 <div class="react-reveal">
 <div class="container-fluid">
 <div class="mb-4">
-  <div>
-    <p class="em">The map refreshes automatically approximately every two minutes, but will take about 10 seconds to load the initial data.</p>
-  </div>
   <div id="map" class="center" style="width: 1200px; height: 600px"></div>
   <div class="clearfix">
     <div id="legend">
@@ -31,6 +28,10 @@ ATL Ramp Status
 </div>
 </div>
 <style>
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
 #legend {
   display: flex;
   flex-wrap: wrap;
