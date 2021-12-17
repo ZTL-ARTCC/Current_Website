@@ -115,7 +115,7 @@ KATLArea = new google.maps.Rectangle({
 });
 
 var historicalOverlay = new google.maps.GroundOverlay(
-  'https://www.ztlartcc.org/photos/KATL_Diagram.png',
+  'https://www.ztlartcc.org/photos/KATL_Diagram.PNG',
   KATLimageBounds
 );
 
