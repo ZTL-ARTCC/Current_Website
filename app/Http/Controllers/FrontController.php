@@ -437,4 +437,8 @@ class FrontController extends Controller
 
         return redirect('/')->with('success', 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
     }
+	
+	public function showAtlRamp() {
+        return view('site.atl-ramp');
+    }
 }
