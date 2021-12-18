@@ -10,7 +10,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExample10">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
