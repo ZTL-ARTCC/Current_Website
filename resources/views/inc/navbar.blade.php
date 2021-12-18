@@ -24,6 +24,8 @@
                         <a class="dropdown-item" href="/pilots/airports">Airports</a>
                         <a class="dropdown-item" href="/pilots/request-staffing">Request Staffing</a>
                         <a class="dropdown-item" href="http://www.flightaware.com/statistics/ifr-route/" target="_blank">IFR Routes</a>
+						<a class="dropdown-item" href="/ramp-status/atl">ATL Gate Status</a>
+						<a class="dropdown-item" href="/ramp-status/clt">CLT Gate Status</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
