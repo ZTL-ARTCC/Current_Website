@@ -441,4 +441,8 @@ class FrontController extends Controller
 	public function showAtlRamp() {
         return view('site.atl-ramp');
     }
+	
+	public function showCltRamp() {
+        return view('site.clt-ramp');
+    }
 }

@@ -33,6 +33,7 @@ Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
+Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
 /*
 Route::get('/ssd', function () {
     return '<img src=\'/photos/ross_worm.jpg\' style=\'max-height:100%\' />';

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-ATL Ramp Status
+CLT Ramp Status
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@ ATL Ramp Status
 <span class="border border-light" style="background-color:#F0F0F0">
     <div class="container">
         &nbsp;
-        <h2><center>Atlanta Hartsfield Jackson Int'l Airport (ATL) Ramp/Gate Status</center></h2>
+        <h2><center>Charlotte Douglas Int'l Airport (CLT) Ramp/Gate Status</center></h2>
         &nbsp;
     </div>
 </span>
@@ -94,8 +94,8 @@ var markersArray = [];
 var FDBArray = [];
 
 var KATLimageBounds = new google.maps.LatLngBounds(
-  new google.maps.LatLng(33.61998, -84.4478),   //bottom left
-  new google.maps.LatLng(33.65746, -84.4055)     //top right
+  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
+  new google.maps.LatLng(35.22770, -80.9287)     //top right
 );
 
 var styles = [
@@ -117,7 +117,7 @@ KATLArea = new google.maps.Rectangle({
 });
 
 var historicalOverlay = new google.maps.GroundOverlay(
-  'https://www.ztlartcc.org/photos/KATL_Diagram.PNG',
+  'https://www.ztlartcc.org/photos/KCLT_Diagram.PNG',
   KATLimageBounds
 );
 
@@ -125,7 +125,7 @@ window.onload = load();
 
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
-    center: new google.maps.LatLng(33.64079, -84.43295),
+    center: new google.maps.LatLng(35.22006, -80.94410),
     disableDefaultUI: true,
     panControl: true,
     zoomControl: true,
@@ -159,7 +159,7 @@ function load() {
   historicalOverlay.setOpacity(.4);
 
   setInterval(function(){
-    downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=KATL", function(data) {
+    downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=KCLT", function(data) {
       var xml = data.responseXML;
       markers = xml.documentElement.getElementsByTagName("marker");
       gatez = xml.documentElement.getElementsByTagName("gate");
