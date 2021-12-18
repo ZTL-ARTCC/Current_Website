@@ -1,5 +1,5 @@
 <div class="container">
-    <nav class="navbar navbar-expand-xl navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         @if(Carbon\Carbon::now()->month == 12)
             <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
         @else
