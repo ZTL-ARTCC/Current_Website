@@ -131,10 +131,10 @@ var AFLDimageBounds = new google.maps.LatLngBounds(
 //  new google.maps.LatLng(33.61998, -84.4478),   //bottom left
 //  new google.maps.LatLng(33.65746, -84.4055)     //top right
 @endif
-@if( $afld == 'CLT')
-  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
-  new google.maps.LatLng(35.22770, -80.9287)     //top right
-@endif
+//@if( $afld == 'CLT')
+//  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
+//  new google.maps.LatLng(35.22770, -80.9287)     //top right
+//@endif
 );
 
 var styles = [
