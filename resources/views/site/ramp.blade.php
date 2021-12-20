@@ -276,7 +276,7 @@ function load() {
     new XMLHttpRequest;
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
-        request.onreadystatechange = doNothing;
+        //request.onreadystatechange = doNothing;
         callback(request, request.status);
       }
     };
