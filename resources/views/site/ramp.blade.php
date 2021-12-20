@@ -104,7 +104,11 @@ var FDBArray = [];
 		north: 33.65746,
 		south: 33.61998,
 		west: -84.4478,
-		east: -84.4055,
+		east: -84.4055
+	};
+	const CENTER = {
+		lat: 33.64079, 
+		lon: -84.43295
 	};
 @endif
 
@@ -157,7 +161,8 @@ window.onload = load();
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
 	@if( $afld == 'ATL')
-    center: new google.maps.LatLng(33.64079, -84.43295),
+    center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
+//    center: new google.maps.LatLng(33.64079, -84.43295),
 	@endif
 	@if( $afld == 'CLT')
     center: new google.maps.LatLng(35.22006, -80.94410),
