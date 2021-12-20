@@ -34,7 +34,6 @@ Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
-//Route::get('/ramp-status/test', 'FrontController@showTestRamp');
 
 /*
 Route::get('/ssd', function () {
