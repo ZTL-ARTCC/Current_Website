@@ -119,7 +119,7 @@ var styles = [
 ];
 
 var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
-
+/*
 AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working... need to test it
   strokeColor: "#003300",
   strokeOpacity: 1,
@@ -128,7 +128,7 @@ AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working
   fillOpacity: .5,
   bounds: AFLDimageBounds
 });
-
+*/
 // Imports the base map
 var historicalOverlay = new google.maps.GroundOverlay(
   @if( $afld == 'ATL')
@@ -155,7 +155,12 @@ function load() {
     panControl: true,	// THIS ISN'T WORKING
     zoomControl: true,
     zoom: 16,          //16
-    minZoom: 16,       //16
+    minZoom: 10,       //16
+	restriction: {
+		latLngBounds: {
+			AFLDimageBounds
+		},
+	},
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
     }
@@ -194,7 +199,7 @@ function load() {
   historicalOverlay.setMap(map);
   historicalOverlay.setOpacity(.4);
 
-  AFLDArea.setMap(map);
+  //AFLDArea.setMap(map);
 
   setInterval(function(){
     downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=K{{ $afld }}", function(data) {
