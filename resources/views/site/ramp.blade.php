@@ -67,7 +67,7 @@
 (function () {/*
 
 
- Copyright 2011 Google Inc.
+ lastUpdated 2011 Google Inc.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@
 })()
 </script>
 <script type="text/javascript">
-var copyrightNode;
+var lastUpdatedNode;
 var markersArray = [];
 var FDBArray = [];
 
@@ -119,6 +119,7 @@ var styles = [
 ];
 
 var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
+/*
 AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working... need to test it
   strokeColor: "#003300",
   strokeOpacity: 1,
@@ -127,7 +128,7 @@ AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working
   fillOpacity: .5,
   bounds: AFLDimageBounds
 });
-
+*/
 // Imports the base map
 var historicalOverlay = new google.maps.GroundOverlay(
   @if( $afld == 'ATL')
@@ -176,17 +177,17 @@ function load() {
   loadingDiv.style.color = "red"
   loadingDiv.style.whiteSpace = "nowrap"
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(loadingDiv)
-  loadingDiv.innerHTML = "Loading . . . . "
+  loadingDiv.innerHTML = "Loading . . . . please wait"
 
-  copyrightDiv = document.createElement("div")
-  copyrightDiv.id = "map-copyright"
-  copyrightDiv.style.fontSize = "15px"
-  copyrightDiv.style.fontFamily = "Arial, sans-serif"
-  copyrightDiv.style.margin = "0 2px 2px 0"
-  copyrightDiv.style.color = "red"
-  copyrightDiv.style.whiteSpace = "nowrap"
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(copyrightDiv)
-  copyrightDiv.innerHTML = "Loading . . . . "
+  lastUpdatedDiv = document.createElement("div")
+  lastUpdatedDiv.id = "map-lastUpdated"
+  lastUpdatedDiv.style.fontSize = "15px"
+  lastUpdatedDiv.style.fontFamily = "Arial, sans-serif"
+  lastUpdatedDiv.style.margin = "0 2px 2px 0"
+  lastUpdatedDiv.style.color = "red"
+  lastUpdatedDiv.style.whiteSpace = "nowrap"
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(lastUpdatedDiv)
+  lastUpdatedDiv.innerHTML = "Loading . . . . "
 
   var infoWindow = new google.maps.InfoWindow;
 
@@ -204,7 +205,7 @@ function load() {
         var name = markers[i].getAttribute("name");
         var dest = markers[i].getAttribute("dest");
         if (name == "DATEMODED") {
-          copyrightDiv.innerHTML = "Last Updated: " +dest;
+          lastUpdatedDiv.innerHTML = "Last Updated: " +dest;
         } else {
           var type = markers[i].getAttribute("type");
           var ACType = markers[i].getAttribute("ACType");
@@ -249,7 +250,6 @@ function load() {
             bindInfoWindow(marker, map, infoWindow, html);
           }
         }
-		//loadingDiv.innerHTML = "" // Remove the loading message from view
 		loadingDiv.remove(); //createElement("div") remove the element completely?
       })},10000);
   }
