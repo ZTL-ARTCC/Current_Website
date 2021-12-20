@@ -157,7 +157,7 @@ function load() {
     zoom: 16,          //16
     minZoom: 10,       //16
 	restriction: {
-		AFLDimageBounds
+		AFLDimageBounds,
 	},
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
