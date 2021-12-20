@@ -112,6 +112,7 @@ var FDBArray = [];
 	};
 @endif
 @if( $afld == 'CLT')
+/*
 	const BOUNDS = {
 		north: 35.22770,
 		south: 35.19999,
@@ -122,6 +123,7 @@ var FDBArray = [];
 		lat: 35.22006, 
 		lon: -80.94410
 	};
+*/
 @endif
 
 var AFLDimageBounds = new google.maps.LatLngBounds(
