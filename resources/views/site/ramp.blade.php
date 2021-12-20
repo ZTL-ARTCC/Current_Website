@@ -119,8 +119,8 @@ var FDBArray = [];
 		east: -80.9287
 	};
 	const CENTER = {
-		lat: , 
-		lon: 
+		lat: 35.22006, 
+		lon: -80.94410
 	};
 @endif
 
