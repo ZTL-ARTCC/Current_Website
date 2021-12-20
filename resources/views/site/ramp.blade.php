@@ -157,9 +157,10 @@ AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working
 });
 */
 // Imports the base map
+var i = Math.floor(Math.random() * 10001);
 var historicalOverlay = new google.maps.GroundOverlay(
   @if( $afld == 'ATL')
-  'https://www.ztlartcc.org/photos/KATL_Diagram.PNG', // Add random number parameter as cachebuster? Math.floor(Math.random() * 101);
+  'https://www.ztlartcc.org/photos/KATL_Diagram.PNG?i=' + i, // Add random number parameter as cachebuster? Math.floor(Math.random() * 101);
   @endif
   @if( $afld == 'CLT')
   'https://www.ztlartcc.org/photos/KCLT_Diagram.PNG',
