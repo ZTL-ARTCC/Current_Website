@@ -112,7 +112,6 @@ var FDBArray = [];
 	};
 @endif
 @if( $afld == 'CLT')
-/*
 	const BOUNDS = {
 		north: 35.22770,
 		south: 35.19999,
@@ -120,10 +119,9 @@ var FDBArray = [];
 		east: -80.9287
 	};
 	const CENTER = {
-		lat: 35.22006, 
-		lon: -80.94410
+		lat: , 
+		lon: 
 	};
-*/
 @endif
 
 var AFLDimageBounds = new google.maps.LatLngBounds(
@@ -133,11 +131,10 @@ var AFLDimageBounds = new google.maps.LatLngBounds(
 //  new google.maps.LatLng(33.61998, -84.4478),   //bottom left
 //  new google.maps.LatLng(33.65746, -84.4055)     //top right
 @endif
-//@if( $afld == 'CLT')
-//  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
-//  new google.maps.LatLng(35.22770, -80.9287)     //top right
-//@endif
-
+@if( $afld == 'CLT')
+  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
+  new google.maps.LatLng(35.22770, -80.9287)     //top right
+@endif
 );
 
 var styles = [
@@ -175,13 +172,13 @@ window.onload = load();
 
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
-//	@if( $afld == 'ATL')
+	@if( $afld == 'ATL')
     center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
 //    center: new google.maps.LatLng(33.64079, -84.43295),
-//	@endif
-//	@if( $afld == 'CLT')
-//    center: new google.maps.LatLng(35.22006, -80.94410),
-//	@endif
+	@endif
+	@if( $afld == 'CLT')
+    center: new google.maps.LatLng(35.22006, -80.94410),
+	@endif
     disableDefaultUI: true,
     panControl: true,	// THIS ISN'T WORKING
     zoomControl: true,
