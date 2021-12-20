@@ -127,7 +127,7 @@ var FDBArray = [];
 var AFLDimageBounds = new google.maps.LatLngBounds(
 //@if( $afld == 'ATL')
   new google.maps.LatLng(BOUNDS.south, BOUNDS.west),   //bottom left
-  new google.maps.LatLng(BOUNDS.north, BOUNDS.east)     //top right
+  new google.maps.LatLng(BOUNDS.north, BOUNDS.east),     //top right
 //  new google.maps.LatLng(33.61998, -84.4478),   //bottom left
 //  new google.maps.LatLng(33.65746, -84.4055)     //top right
 //@endif
