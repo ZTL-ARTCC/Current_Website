@@ -173,14 +173,15 @@ window.onload = load();
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
 	@if( $afld == 'ATL')
-    center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
+		center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
 //    center: new google.maps.LatLng(33.64079, -84.43295),
 	@endif
 	@if( $afld == 'CLT')
-    center: new google.maps.LatLng(35.22006, -80.94410),
+		center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
+//    center: new google.maps.LatLng(35.22006, -80.94410),
 	@endif
     disableDefaultUI: true,
-    panControl: true,	// THIS ISN'T WORKING
+    panControl: true,
     zoomControl: true,
     zoom: 16,          //16
     minZoom: 10,       //16
