@@ -177,7 +177,7 @@ function load() {
   loadingDiv.style.color = "red"
   loadingDiv.style.whiteSpace = "nowrap"
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(loadingDiv)
-  loadingDiv.innerHTML = "Loading . . . . please wait"
+  loadingDiv.innerHTML = "Loading... please wait"
 
   lastUpdatedDiv = document.createElement("div")
   lastUpdatedDiv.id = "map-lastUpdated"
@@ -187,7 +187,7 @@ function load() {
   lastUpdatedDiv.style.color = "red"
   lastUpdatedDiv.style.whiteSpace = "nowrap"
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(lastUpdatedDiv)
-  lastUpdatedDiv.innerHTML = "Loading . . . . "
+  //lastUpdatedDiv.innerHTML = "Loading . . . . "
 
   var infoWindow = new google.maps.InfoWindow;
 
@@ -195,7 +195,7 @@ function load() {
   historicalOverlay.setOpacity(.4);
 
   setInterval(function(){
-    downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld={{ $afld }}", function(data) {
+    downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=K{{ $afld }}", function(data) {
       var xml = data.responseXML;
       markers = xml.documentElement.getElementsByTagName("marker");
       //gatez = xml.documentElement.getElementsByTagName("gate"); // What is this?
@@ -250,7 +250,7 @@ function load() {
             bindInfoWindow(marker, map, infoWindow, html);
           }
         }
-		loadingDiv.remove(); //createElement("div") remove the element completely?
+		loadingDiv.remove(); // Remove the please wait notice after loading is complete
       })},10000);
   }
 
@@ -296,7 +296,7 @@ function load() {
       });
   }
 
-  function doNothing() {} // Why is this here?
+  //function doNothing() {} // Why is this here?
 
 </script>
 <footer>
