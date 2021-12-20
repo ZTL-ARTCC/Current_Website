@@ -169,12 +169,13 @@ function load() {
 
   loadingDiv = document.createElement("div")
   loadingDiv.id = "map-loading"
-  loadingDiv.style.fontSize = "32px" // Can I add a font-weight to make this bold?
+  loadingDiv.style.fontSize = "32px"
+  loadingDiv.style.fontWeight = "Bold"
   loadingDiv.style.fontFamily = "Arial, sans-serif"
   loadingDiv.style.margin = "0 2px 2px 0"
   loadingDiv.style.color = "red"
   loadingDiv.style.whiteSpace = "nowrap"
-  map.controls[google.maps.ControlPosition.MIDDLE_CENTER].push(loadingDiv)
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(loadingDiv)
   loadingDiv.innerHTML = "Loading . . . . "
 
   copyrightDiv = document.createElement("div")
@@ -248,8 +249,8 @@ function load() {
             bindInfoWindow(marker, map, infoWindow, html);
           }
         }
-		loadingDiv.innerHTML = "" // Remove the loading message from view
-		//document.createElement("div") remove the element completely?
+		//loadingDiv.innerHTML = "" // Remove the loading message from view
+		loadingDiv.remove(); //createElement("div") remove the element completely?
       })},10000);
   }
 
