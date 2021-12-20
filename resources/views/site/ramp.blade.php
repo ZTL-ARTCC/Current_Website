@@ -135,6 +135,8 @@ var AFLDimageBounds = new google.maps.LatLngBounds(
 //  new google.maps.LatLng(35.19999, -80.9676),   //bottom left
 //  new google.maps.LatLng(35.22770, -80.9287)     //top right
 //@endif
+
+
 );
 
 var styles = [
