@@ -439,16 +439,16 @@ class FrontController extends Controller
     }
 	
 	public function showAtlRamp() {
-        return view('site.atl-ramp');
-//        return view('site.ramp')->with('afld','ATL');
+//        return view('site.atl-ramp');
+        return view('site.ramp')->with('afld','ATL');
     }
 	
 	public function showCltRamp() {
-        return view('site.clt-ramp');
-//        return view('site.ramp')->with('afld','CLT');
+//        return view('site.clt-ramp');
+        return view('site.ramp')->with('afld','CLT');
     }
 	
-	public function showTestRamp() {
-        return view('site.ramp')->with('afld','ATL');
-    }
+//	public function showTestRamp() {
+//        return view('site.ramp')->with('afld','ATL');
+//    }
 }
