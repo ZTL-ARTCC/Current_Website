@@ -99,6 +99,15 @@ var markersArray = [];
 var FDBArray = [];
 
 // Used to georectify the base image
+@if( $afld == 'ATL')
+	const BOUNDS = {
+		north: 33.65746,
+		south: 33.61998,
+		west: -84.4478,
+		east: -84.4055,
+	};
+@endif
+
 var AFLDimageBounds = new google.maps.LatLngBounds(
 @if( $afld == 'ATL')
   new google.maps.LatLng(33.61998, -84.4478),   //bottom left
@@ -157,7 +166,8 @@ function load() {
     zoom: 16,          //16
     minZoom: 10,       //16
 	restriction: {
-		AFLDimageBounds,
+		latLngBounds: BOUNDS,
+		strictBounds: false,
 	},
     mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
