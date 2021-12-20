@@ -25,7 +25,6 @@
   <div class="clearfix">
     <div id="legend">
       <div class="legenditem"><span class="nofp"></span> No Flight Plan</div>
- <!--     <div class="legenditem"><span class="parked"></span> Parked</div>-->
       <div class="legenditem"><span class="taxiarr"></span> Taxiing (Arr)</div>
       <div class="legenditem"><span class="taxidep"></span> Taxiing (Dep)</div>
     </div>
@@ -138,16 +137,6 @@ var styles = [
 ];
 
 var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
-/*
-AFLDArea = new google.maps.Rectangle({ // I'm not confident that this is working... need to test it
-  strokeColor: "#003300",
-  strokeOpacity: 1,
-  strokeWeight: 1,
-  fillColor: "#666633",
-  fillOpacity: .5,
-  bounds: AFLDimageBounds
-});
-*/
 // Imports the base map
 var i = Math.floor(Math.random() * 10001);
 var historicalOverlay = new google.maps.GroundOverlay(
@@ -165,14 +154,7 @@ window.onload = load();
 
 function load() {
   var map = new google.maps.Map(document.getElementById("map"), {
-	@if( $afld == 'ATL')
-		center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
-//    center: new google.maps.LatLng(33.64079, -84.43295),
-	@endif
-	@if( $afld == 'CLT')
-		center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
-//    center: new google.maps.LatLng(35.22006, -80.94410),
-	@endif
+	center: new google.maps.LatLng(CENTER.lat, CENTER.lon),
     disableDefaultUI: true,
     panControl: true,
     zoomControl: true,
@@ -213,20 +195,16 @@ function load() {
   lastUpdatedDiv.style.color = "red"
   lastUpdatedDiv.style.whiteSpace = "nowrap"
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(lastUpdatedDiv)
-  //lastUpdatedDiv.innerHTML = "Loading . . . . "
 
   var infoWindow = new google.maps.InfoWindow;
 
   historicalOverlay.setMap(map);
   historicalOverlay.setOpacity(.4);
 
-  //AFLDArea.setMap(map);
-
   setInterval(function(){
     downloadUrl("https://ids.ztlartcc.org/gatedisplay_xml.php?afld=K{{ $afld }}", function(data) {
       var xml = data.responseXML;
       markers = xml.documentElement.getElementsByTagName("marker");
-      //gatez = xml.documentElement.getElementsByTagName("gate"); // What is this?
       DateMod = xml.documentElement.getElementsByTagName("datemod");
       map.clearOverlays();
       for (var i = 0; i < markers.length; i++) {
@@ -304,7 +282,6 @@ function load() {
     new XMLHttpRequest;
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
-        //request.onreadystatechange = doNothing;
         callback(request, request.status);
       }
     };
@@ -323,9 +300,6 @@ function load() {
           window.location = 'https://ztlartcc.org/';
       });
   }
-
-  //function doNothing() {} // Why is this here?
-
 </script>
 <footer>
 <div class="d-flex justify-content-center mb-5">
