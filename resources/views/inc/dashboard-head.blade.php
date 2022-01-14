@@ -10,7 +10,7 @@
                     <div class="form-inline">
                         {!! Form::text('apt', null, ['placeholder' => 'Search Airport ICAO', 'class' => 'form-control']) !!}
                         &nbsp;
-                        <button class="btn btn-success" type="submit">Search</button>
+                        <button class="btn btn-success" type="submit" disabled>Search</button>
                     </div>
                 {!! Form::close() !!}
             </ul>
