@@ -12,6 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+	// Added for Laravel 8 migration compatibility
+	protected $table='roster';
+
     /**
      * The attributes that are mass assignable.
      *
