@@ -1,13 +1,15 @@
 ZTL ARTCC Website
 =================
 
-Written in Laravel 8.X, The PHP Framework for Web Artisans
+Live Website Status: [![Build Status](https://travis-ci.org/ZTLARTCC/ZTL_website.svg?branch=master)](https://travis-ci.org/ZTLARTCC/ZTL_website)
+
+Development Website Status: [![Build Status](https://travis-ci.org/ZTLARTCC/ZTL_website.svg?branch=development)](https://travis-ci.org/ZTLARTCC/ZTL_website)
+
+Written in Laravel 5.6, The PHP Framework for Web Artisans
 
 Includes VATUSA API Integration
 
-Maintained by Kyle Porter, vZTL ARTCC Webmaster
-Written by Ian Cowan, former vZTL ARTCC Webmaster
-
+Written by Ian Cowan, vZTL ARTCC Webmaster
 
 Purpose
 -------
