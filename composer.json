@@ -9,6 +9,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
+		"laravel/helpers": "^1.5",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
 	"santigarcor/laratrust": "^6.0"
@@ -23,7 +24,7 @@
     },
     "autoload": {
 	"classmap": [
-            "database/seeds",
+            "database/seeders",
             "database/factories",
             "app/User.php"
         ],
