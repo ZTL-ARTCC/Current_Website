@@ -386,12 +386,12 @@ class FrontController extends Controller
     }
 
     public function showFiles() {
-        $vrc = File::where('type', 0)->orderBy('name', 'ASC')->get();
-        $vstars = File::where('type', 1)->orderBy('name', 'ASC')->get();
-        $veram = File::where('type', 2)->orderBy('name', 'ASC')->get();
-        $vatis = File::where('type', 3)->orderBy('name', 'ASC')->get();
-        $sop = File::where('type', 4)->orderBy('name', 'ASC')->get();
-        $loa = File::where('type', 5)->orderBy('name', 'ASC')->get();
+        $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
+        $vstars = File::where('type', 1)->orderBy('disp_order', 'ASC')->get();
+        $veram = File::where('type', 2)->orderBy('disp_order', 'ASC')->get();
+        $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
+        $sop = File::where('type', 4)->orderBy('disp_order', 'ASC')->get();
+        $loa = File::where('type', 5)->orderBy('disp_order', 'ASC')->get();
 
         return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
