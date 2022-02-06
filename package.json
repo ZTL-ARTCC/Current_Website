@@ -1,18 +1,44 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "devDependencies": {
+    "axios": "^0.18.1",
+    "bootstrap": "^4.3.1",
+    "cross-env": "^5.2.0",
+    "jquery": "^3.4.1",
+    "laravel-mix": "^2.1.14",
+    "lodash": "^4.17.13",
+    "popper.js": "^1.15.0",
+    "vue": "^2.6.10"
+  },
+  "name": "ztl-v2",
+  "description": "## Contributers: - Ian Cowan",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "imagemin-pngquant": "^5.1.0",
+    "pngquant-bin": "^3.1.1",
+    "tempusdominus-bootstrap-4": "^5.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iccowan/ztl-v2.git"
+  },
+  "author": "Ian Cowan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iccowan/ztl-v2/issues"
+  },
+  "homepage": "https://github.com/iccowan/ztl-v2#readme"
 }

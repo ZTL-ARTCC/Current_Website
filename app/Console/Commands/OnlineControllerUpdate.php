@@ -90,9 +90,6 @@ class OnlineControllerUpdate extends Command
                     $time_logon = str_replace('T',' ',$time_logon);
                     $time_logon = explode(".",$time_logon);
                     $time_logon = $time_logon[0];
-                    if(strlen($time_logon)< 19) {
-                       $time_logon .= "0";
-                    }
                     $time_logon = Carbon::createFromFormat('Y-m-d H:i:s', $time_logon)->timestamp;
 					$time_now = strtotime(Carbon::now());
 					$duration = $time_now - $time_logon;
