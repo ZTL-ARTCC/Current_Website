@@ -18,7 +18,7 @@ class MentorController extends Controller {
 	public function cancelSession($id)
 	{
 		$request = MentorAvail::find($id);
-		$request->cancel_message = Input::get('cancel');
+		$request->cancel_message = Request::input('cancel');
 		$request->save();
 		$request->sendCancellationEmail();
 		$request->delete();
@@ -31,7 +31,7 @@ class MentorController extends Controller {
     public function postAvail()
 	{
 		$mentor_id = Auth::id();
-		$slots = Input::get('slots');
+		$slots = Request::input('slots');
 		$today = new Carbon("midnight today", 'America/New_York');
 
 		$availability = MentorAvail::where('mentor_id', '=', $mentor_id)->where('slot', '>=', $today)->get();
