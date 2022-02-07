@@ -6,6 +6,7 @@
             <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/logo.png"></a>
         @endif
             <ul class="navbar-nav">
+			<!--
                 {!! Form::open(['action' => 'ControllerDash@searchAirport']) !!}
                     <div class="form-inline">
                         {!! Form::text('apt', null, ['placeholder' => 'Search Airport ICAO', 'class' => 'form-control']) !!}
@@ -13,6 +14,7 @@
                         <button class="btn btn-success" type="submit" disabled>Search</button>
                     </div>
                 {!! Form::close() !!}
+				-->
             </ul>
             &nbsp;&nbsp;&nbsp;
             <ul>
