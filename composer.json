@@ -12,7 +12,7 @@
         "laravel/framework": "6.20.26",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^5.4.0",
-        "santigarcor/laratrust": "^6.0",
+        "santigarcor/laratrust": "5.0.*",
         "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
