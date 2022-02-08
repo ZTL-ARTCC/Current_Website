@@ -174,7 +174,7 @@ class RosterController extends Controller
                             if($old_staff_role)
                                 DB::table('mdl_role_assignments')->where('id', $old_staff_role->id)->delete();
 
-                            if($userstatuscheck->can('snrStaff')) {
+                            if($userstatuscheck->isAbleTo('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 17,
@@ -183,7 +183,7 @@ class RosterController extends Controller
                                     'modifierid' => 1,
                                     'timemodified' => $now
                                 ]);
-                            } elseif($userstatuscheck->can('staff')) {
+                            } elseif($userstatuscheck->isAbleTo('staff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 16,
@@ -251,7 +251,7 @@ class RosterController extends Controller
                             }
 
                             // Check for staff
-                            if($userstatuscheck->can('snrStaff')) {
+                            if($userstatuscheck->isAbleTo('snrStaff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 17,
@@ -260,7 +260,7 @@ class RosterController extends Controller
                                     'modifierid' => 1,
                                     'timemodified' => $now
                                 ]);
-                            } elseif($userstatuscheck->can('staff')) {
+                            } elseif($userstatuscheck->isAbleTo('staff')) {
                                 $now = Carbon::now()->timestamp;
                                 DB::table('mdl_role_assignments')->insert([
                                     'roleid' => 16,

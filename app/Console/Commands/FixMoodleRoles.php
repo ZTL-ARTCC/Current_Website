@@ -84,7 +84,7 @@ class FixMoodleRoles extends Command
             }
 
             // Check for staff
-            if($u->can('snrStaff')) {
+            if($u->isAbleTo('snrStaff')) {
                 $now = Carbon::now()->timestamp;
                 DB::table('mdl_role_assignments')->insert([
                     'roleid' => 17,
@@ -93,7 +93,7 @@ class FixMoodleRoles extends Command
                     'modifierid' => 1,
                     'timemodified' => $now
                 ]);
-            } elseif($u->can('staff')) {
+            } elseif($u->isAbleTo('staff')) {
                 $now = Carbon::now()->timestamp;
                 DB::table('mdl_role_assignments')->insert([
                     'roleid' => 16,

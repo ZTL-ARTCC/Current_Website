@@ -371,14 +371,14 @@ class FrontController extends Controller
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->controller_id = Input::get('controller');
-        $feedback->position = Input::get('position');
-        $feedback->service_level = Input::get('service');
-        $feedback->callsign = Input::get('callsign');
-        $feedback->pilot_name = Input::get('pilot_name');
-        $feedback->pilot_email = Input::get('pilot_email');
-        $feedback->pilot_cid = Input::get('pilot_cid');
-        $feedback->comments = Input::get('comments');
+        $feedback->controller_id = Request::input('controller');
+        $feedback->position = Request::input('position');
+        $feedback->service_level = Request::input('service');
+        $feedback->callsign = Request::input('callsign');
+        $feedback->pilot_name = Request::input('pilot_name');
+        $feedback->pilot_email = Request::input('pilot_email');
+        $feedback->pilot_cid = Request::input('pilot_cid');
+        $feedback->comments = Request::input('comments');
         $feedback->status = 0;
         $feedback->save();
 

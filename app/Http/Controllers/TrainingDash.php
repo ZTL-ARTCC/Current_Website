@@ -121,13 +121,13 @@ class TrainingDash extends Controller
 
 		
 
-		$position = Input::get('position');
-		$slot_id = Input::get('slot');
+		$position = Request::input('position');
+		$slot_id = Request::input('slot');
 		$Slot = MentorAvail::find($slot_id);
 
 		$Slot->trainee_id = $id;
 		$Slot->position_id = $position;
-		$Slot->trainee_comments = Input::get('comments');
+		$Slot->trainee_comments = Request::input('comments');
 		$Slot->save();
 
 		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
@@ -358,7 +358,7 @@ class TrainingDash extends Controller
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if(Auth::id() == $ticket->trainer_id || Auth::user()->can('snrStaff')) {
+        if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
         } else {
@@ -368,7 +368,7 @@ class TrainingDash extends Controller
 
     public function saveTicket(Request $request, $id) {
         $ticket = TrainingTicket::find($id);
-        if(Auth::id() == $ticket->trainer_id || Auth::user()->can('snrStaff')) {
+        if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $request->validate([
                 'controller' => 'required',
                 'position' => 'required',
@@ -406,7 +406,7 @@ class TrainingDash extends Controller
 
     public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if(Auth::user()->can('snrStaff')) {
+        if(Auth::user()->isAbleTo('snrStaff')) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
 
@@ -423,9 +423,9 @@ class TrainingDash extends Controller
     }
 
     public function otsCenter() {
-        $ots_new = Ots::where('status', 0)->orderBy('created_at', 'DSC')->paginate(25);
-        $ots_accepted = Ots::where('status', 1)->orderBy('created_at', 'DSC')->paginate(25);
-        $ots_complete = Ots::where('status', 2)->orWhere('status', 3)->orderBy('created_at', 'DSC')->paginate(25);
+        $ots_new = Ots::where('status', 0)->orderBy('created_at', 'DESC')->paginate(25);
+        $ots_accepted = Ots::where('status', 1)->orderBy('created_at', 'DESC')->paginate(25);
+        $ots_complete = Ots::where('status', 2)->orWhere('status', 3)->orderBy('created_at', 'DESC')->paginate(25);
         $instructors = User::orderBy('lname', 'ASC')->get()->filter(function($user){
                     return $user->hasRole('ins');
                 })->pluck('full_name', 'id');
@@ -448,7 +448,7 @@ class TrainingDash extends Controller
     }
 
     public function rejectRecommendation($id) {
-        if(!Auth::user()->can('snrStaff')) {
+        if(!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
         } else {
             $ots = Ots::find($id);
@@ -459,7 +459,7 @@ class TrainingDash extends Controller
     }
 
     public function assignRecommendation(Request $request, $id) {
-        if(!Auth::user()->can('snrStaff')) {
+        if(!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can assign OTS recommendations to instructors.');
         } else {
             $ots = Ots::find($id);
@@ -494,7 +494,7 @@ class TrainingDash extends Controller
 
         $ots = Ots::find($id);
 
-        if($ots->ins_id == Auth::id() || Auth::user()->can('snrStaff')) {
+        if($ots->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff')) {
             $ext = $request->file('ots_report')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('ots_report')->storeAs(

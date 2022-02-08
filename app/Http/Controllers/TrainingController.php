@@ -41,11 +41,11 @@ class TrainingController extends Controller {
 	{
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
-		$slot_id = Input::get('slot');
+		$slot_id = Request::input('slot');
 		$Slot = MentorAvail::find($slot_id);
 		$Slot->trainee_id = $id;
-		$Slot->trainee_comments = Input::get('comments');
-		$Slot->position_id =  Input::get('position');
+		$Slot->trainee_comments = Request::input('comments');
+		$Slot->position_id =  Request::input('position');
 		$Slot->save();
 		
 		Mail::send('emails.training.new_session', ['Slot' => $Slot], function($message) use ($Slot){

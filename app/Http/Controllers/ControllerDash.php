@@ -179,7 +179,7 @@ class ControllerDash extends Controller
             $last_training = null;
         }
 
-        if(Auth::user()->can('train')){
+        if(Auth::user()->isAbleTo('train')){
             $tickets_sort_t = TrainingTicket::where('trainer_id', Auth::id())->get()->sortByDesc(function($t) {
                 return strtotime($t->date.' '.$t->start_time);
             })->pluck('id');
@@ -336,7 +336,7 @@ class ControllerDash extends Controller
     }
 
     public function showEvents() {
-        if(Auth::user()->can('events')) {
+        if(Auth::user()->isAbleTo('events')) {
             $events = Event::where('status', 0)->orWhere('status', 1)->get()->sortByDesc(function($e) {
                 return strtotime($e->date);
             });
@@ -351,7 +351,7 @@ class ControllerDash extends Controller
     public function viewEvent($id) {
         $event = Event::find($id);
         $positions = EventPosition::where('event_id', $event->id)->orderBy('created_at', 'ASC')->get();
-        if(Auth::user()->can('events')) {
+        if(Auth::user()->isAbleTo('events')) {
             $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
             $presets = PositionPreset::get()->pluck('name', 'id');
             $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name_rating', 'id');

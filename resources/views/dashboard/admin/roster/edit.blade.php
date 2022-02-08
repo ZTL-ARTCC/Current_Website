@@ -79,7 +79,7 @@ Update Controller
                 </div>
             </div>
         </div>
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -126,7 +126,7 @@ Update Controller
                 </div>
             </div>
         @endif
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -176,7 +176,7 @@ Update Controller
                 </div>
             </div>
         @endif
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -265,7 +265,7 @@ Update Controller
                 </div>
             </div>
         @endif
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -326,7 +326,7 @@ Update Controller
                 </div>
             </div>
         @endif
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -357,7 +357,7 @@ Update Controller
                 </div>
             </div>
         @endif
-        @if(Auth::user()->can('roster'))
+        @if(Auth::user()->isAbleTo('roster'))
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-10">

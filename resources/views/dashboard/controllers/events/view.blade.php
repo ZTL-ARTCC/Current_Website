@@ -35,7 +35,7 @@ View Event
                     <p>{!! $event->description !!}</p>
                 </div>
             </div>
-            @if(Auth::user()->can('events'))
+            @if(Auth::user()->isAbleTo('events'))
                 <br>
                 <div class="card">
                     <div class="card-header">
@@ -150,7 +150,7 @@ View Event
                 <div class="card-header">
                     <h3>
                         Signup/Position Assignments
-                        @if(Auth::user()->can('events'))
+                        @if(Auth::user()->isAbleTo('events'))
                             @if($event->reg == 0)
                                 <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-right" data-toggle="tooltip" title="Open Registration"><i class="fas fa-check"></i></a>
                             @else
@@ -165,7 +165,7 @@ View Event
                             <tr>
                                 <th scope="col">Position</th>
                                 <th scope="col">Controller</th>
-                                @if(Auth::user()->can('events'))
+                                @if(Auth::user()->isAbleTo('events'))
                                     <th scope="col">Actions</th>
                                 @endif
                             </tr>
@@ -181,7 +181,7 @@ View Event
                                             @else
                                                 @foreach($p->controller as $c)
                                                     <p>
-                                                        @if(Auth::user()->can('events'))
+                                                        @if(Auth::user()->isAbleTo('events'))
                                                             <a href="/dashboard/admin/events/positions/unassign/{{ $c->id }}" style="color:inherit" data-toggle="tooltip" title="Unassign Controller"><i class="fas fa-times"></i></a>
                                                             &nbsp;
                                                         @endif
@@ -205,7 +205,7 @@ View Event
                                                 @endforeach
                                             @endif
                                         </td>
-                                        @if(Auth::user()->can('events'))
+                                        @if(Auth::user()->isAbleTo('events'))
                                             <td>
                                                 <a href="/dashboard/admin/events/position/delete/{{ $p->id }}" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Remove Position"><i class="fas fa-times"></i></a>
                                             </td>
@@ -284,7 +284,7 @@ View Event
                     @else
                         <p>No positions added.</p>
                     @endif
-                    @if(Auth::user()->can('events'))
+                    @if(Auth::user()->isAbleTo('events'))
                         <br>
                         {!! Form::open(['action' => ['AdminDash@addPosition', $event->id]]) !!}
                             @csrf
@@ -314,12 +314,12 @@ View Event
     </div>
     <br>
     <a href="/dashboard/controllers/events" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
-    @if(Auth::user()->can('events'))
+    @if(Auth::user()->isAbleTo('events'))
         <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
         <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
     @endif
 
-	@if(Auth::user()->can('events'))
+	@if(Auth::user()->isAbleTo('events'))
 		<div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">

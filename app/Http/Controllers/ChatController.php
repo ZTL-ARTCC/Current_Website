@@ -34,7 +34,7 @@ class ChatController extends Controller
         $message = Chat::find($id);
         $requester = User::find($request->cid);
 
-        if($request->cid == $message->cid || $requester->can('snrStaff'))
+        if($request->cid == $message->cid || $requester->isAbleTo('snrStaff'))
             $message->deleted = 1;
 
         $message->save();

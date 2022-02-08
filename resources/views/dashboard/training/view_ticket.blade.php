@@ -14,10 +14,10 @@ View Training Ticket
 
 <div class="container">
     <a class="btn btn-primary" href="/dashboard/training/tickets?id={{ $ticket->controller_id }}"><i class="fas fa-arrow-left"></i> Back</a>
-    @if(Auth::id() == $ticket->trainer_id || Auth::user()->can('snrStaff'))
+    @if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff'))
         <a class="btn btn-warning" href="/dashboard/training/tickets/edit/{{ $ticket->id }}">Edit Ticket</a>
     @endif
-    @if(Auth::user()->can('snrStaff'))
+    @if(Auth::user()->isAbleTo('snrStaff'))
         <a class="btn btn-danger" href="/dashboard/training/tickets/delete/{{ $ticket->id }}">Delete Ticket</a>
     @endif
     <br><br>

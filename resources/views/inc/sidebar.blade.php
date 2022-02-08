@@ -44,7 +44,7 @@
 
         </div>
 
-        @if(Auth::user()->canTrain == 1 || Auth::user()->can('train'))
+        @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
 
             <div class="dropdown-divider"></div>
 
@@ -64,13 +64,13 @@
 
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
 
-                @if(Auth::user()->can('train'))
+                @if(Auth::user()->isAbleTo('train'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
 
                     <a class="nav-link" href="https://my.setmore.com/" target="_blank">Schedule Management</a>
 
-                    @if(Auth::user()->hasRole('ins') || Auth::user()->can('snrStaff'))
+                    @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
 
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
 
@@ -82,7 +82,7 @@
 
         @endif
 
-        @if(Auth::user()->can('staff') || Auth::user()->can('email') || Auth::user()->can('scenery') || Auth::user()->can('files') || Auth::user()->can('events'))
+        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('events'))
 
             <div class="dropdown-divider"></div>
 
@@ -96,7 +96,7 @@
 
             <div class="content">
 
-                @if(Auth::user()->can('staff'))
+                @if(Auth::user()->isAbleTo('staff'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/calendar') }}" href="/dashboard/admin/calendar">Calendar/News</a>
 
@@ -104,19 +104,19 @@
 
                 @endif
 
-                @if(Auth::user()->can('scenery'))
+                @if(Auth::user()->isAbleTo('scenery'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/scenery') }}" href="/dashboard/admin/scenery">Scenery Management</a>
 
                 @endif
 
-                @if(Auth::user()->can('snrStaff'))
+                @if(Auth::user()->isAbleTo('snrStaff'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/feedback') }}" href="/dashboard/admin/feedback">Feedback Management</a>
 
                 @endif
 
-                @if(Auth::user()->can('email'))
+                @if(Auth::user()->isAbleTo('email'))
 
                     <a class="nav-link" href="http://mail.ztlartcc.org" target="_blank">Email</a>
 
@@ -124,25 +124,25 @@
 
                 @endif
 
-                @if(Auth::user()->can('staff'))
+                @if(Auth::user()->isAbleTo('staff'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/announcement') }}" href="/dashboard/admin/announcement">Announcement</a>
 
                 @endif
 
-                @if(Auth::user()->can('snrStaff'))
+                @if(Auth::user()->isAbleTo('snrStaff'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/incident') }}" href="/dashboard/admin/incident">Incident Report Management</a>
 
                 @endif
 
-                @if(Auth::user()->can('roster'))
+                @if(Auth::user()->isAbleTo('roster'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Bronze Mic Management</a>
 
                 @endif
 
-                @if(Auth::user()->can('snrStaff'))
+                @if(Auth::user()->isAbleTo('snrStaff'))
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
 

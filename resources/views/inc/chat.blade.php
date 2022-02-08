@@ -67,7 +67,7 @@
                         "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
                         "</div>"
                 } else {
-                    your_html += "@if(Auth::user()->can('snrStaff'))" +
+                    your_html += "@if(Auth::user()->isAbleTo('snrStaff'))" +
                         "<div class=\"container-chat\">" +
                         "<small><p>" + val.message + "</p></small>" +
                         "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
@@ -116,7 +116,7 @@
                                     "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
                                     "</div>"
                             } else {
-                                your_html += "@if(Auth::user()->can('snrStaff'))" +
+                                your_html += "@if(Auth::user()->isAbleTo('snrStaff'))" +
                                     "<div class=\"container-chat\">" +
                                     "<small><p>" + val.message + "</p></small>" +
                                     "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +
@@ -169,7 +169,7 @@
                                     "<span class=\"time-right\"><i class=\"fa fa-times " + val.id +  "\" id=\"delete\"></i>&nbsp;<small>" + val.format_time + "</small></span>" +
                                     "</div>"
                             } else {
-                                your_html += "@if(Auth::user()->can('snrStaff'))" +
+                                your_html += "@if(Auth::user()->isAbleTo('snrStaff'))" +
                                     "<div class=\"container-chat\">" +
                                     "<small><p>" + val.message + "</p></small>" +
                                     "<span class=\"time-right\"><small>" + val.c_name + " - " + val.cid + "</small></span>" +

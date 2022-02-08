@@ -166,7 +166,7 @@ class User extends Authenticatable
     }
 
     public function getLastLogonAttribute() {
-        $last = ControllerLog::where('cid', $this->id)->orderBy('created_at', 'DSC')->first();
+        $last = ControllerLog::where('cid', $this->id)->orderBy('created_at', 'DESC')->first();
         if($last != null) {
             $date = Carbon::parse($last->created_at)->format('m/d/Y');
         } else {
@@ -227,7 +227,7 @@ class User extends Authenticatable
         elseif ($this->rating_id >= 5)
             $courses = [2, 12, 4, 10, 6, 5, 7, 8, 9];
 
-        if ($this->hasRole('ins') || $this->can('staff'))
+        if ($this->hasRole('ins') || $this->isAbleTo('staff'))
             $courses = $courses + [3, 11];
 
         // Loop through their courses and add them if they don't exist

@@ -13,7 +13,7 @@ Files
 <br>
 
 <div class="container">
-    @if(Auth::user()->can('files'))
+    @if(Auth::user()->isAbleTo('files'))
         <a href="/dashboard/admin/files/upload" class="btn btn-primary">Upload File</a>
         <br><br>
     @endif
@@ -37,7 +37,7 @@ Files
         <li class="nav-item">
             <a class="nav-link" href="#loa" role="tab" data-toggle="tab" style="color:black">LOAs</a>
         </li>
-        @if(Auth::user()->can('staff'))
+        @if(Auth::user()->isAbleTo('staff'))
             <li class="nav-item">
                 <a class="nav-link" href="#staff" role="tab" data-toggle="tab" style="color:black">Staff</a>
             </li>
@@ -64,7 +64,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -102,7 +102,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -140,7 +140,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -178,7 +178,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -216,7 +216,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -254,7 +254,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)
@@ -292,7 +292,7 @@ Files
                                 <td>
 								<div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                    @if(Auth::user()->can('files'))
+                                    @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!$loop->first)

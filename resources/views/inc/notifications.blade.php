@@ -6,11 +6,11 @@
 
     App\TrainingTicket::where('created_at', '>=', Carbon\Carbon::now()->subHours(24))->where('controller_id', Auth::id())->first() != null ||
 
-    count(App\Incident::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff') ||
+    count(App\Incident::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff') ||
 
-    count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff') ||
+    count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff') ||
 
-    count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff')
+    count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff')
 
     )
 
@@ -60,7 +60,7 @@
 
 
 
-    @if(count(App\Incident::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff'))
+    @if(count(App\Incident::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff'))
 
         <br>
 
@@ -72,7 +72,7 @@
 
     @endif
 
-    @if(count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff'))
+    @if(count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff'))
 
         <br>
 
@@ -84,7 +84,7 @@
 
     @endif
 
-    @if(count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->can('snrStaff'))
+    @if(count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff'))
 
         <br>
 

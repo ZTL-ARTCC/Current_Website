@@ -60,25 +60,25 @@ Dashboard
     <div class="row">
         <div class="col-sm-3">
             <a class="btn btn-secondary btn-block" href="/dashboard/controllers/profile">My Profile</a>
-            @if(Auth::user()->can('staff'))
+            @if(Auth::user()->isAbleTo('staff'))
                 <a class="btn btn-secondary btn-block" href="/dashboard/admin/announcement">Edit Announcement</a>
             @endif
         </div>
         <div class="col-sm-3">
             <script id="setmore_script" type="text/javascript" src="https://my.setmore.com/webapp/js/src/others/setmore_iframe.js"></script><a id="Setmore_button_iframe"  class="btn btn-secondary btn-block" href="https://my.setmore.com/bookingpage/3598990c-a847-4107-81eb-de1794648684">Schedule a Training Session</a>
-            @if(Auth::user()->can('staff'))
+            @if(Auth::user()->isAbleTo('staff'))
                 <a class="btn btn-secondary btn-block" href="http://mail.ztlartcc.org" target="_blank">Email</a>
             @endif
         </div>
         <div class="col-sm-3">
             <button data-toggle="modal" data-target="#reportBug" class="btn btn-secondary btn-block">Report a Bug</button>
-            @if(Auth::user()->can('staff'))
+            @if(Auth::user()->isAbleTo('staff'))
                 <a class="btn btn-secondary btn-block" href="/dashboard/admin/calendar">Manage Calendar/News</a>
             @endif
         </div>
         <div class="col-sm-3">
             <a class="btn btn-secondary btn-block" href="/">Return to Main Website</a>
-            @if(Auth::user()->can('staff'))
+            @if(Auth::user()->isAbleTo('staff'))
                 <a class="btn btn-secondary btn-block" href="/dashboard/admin/airports">Manage Airports</a>
             @endif
         </div>

@@ -120,7 +120,7 @@ Profile
                                 @endif
                             </b></p>
                         </li>
-                        @if(Auth::user()->can('train'))
+                        @if(Auth::user()->isAbleTo('train'))
                             <li class="list-group-item" style="background-color:lightgray">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
