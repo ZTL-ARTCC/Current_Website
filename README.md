@@ -1,7 +1,7 @@
 ZTL ARTCC Website
 =================
 
-Written in Laravel 7.x, The PHP Framework for Web Artisans
+Written in Laravel 8.x, The PHP Framework for Web Artisans
 
 Includes VATUSA API Integration
 
