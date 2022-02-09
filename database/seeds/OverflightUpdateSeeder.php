@@ -1,12 +1,11 @@
 <?php
 
-namespace Database\Seeders;
-
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ControllerUpdateSeeder extends Seeder
+class OverflightUpdateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +14,9 @@ class ControllerUpdateSeeder extends Seeder
      */
     public function run()
     {
-		DB::table('controller_log_update')->insert([
-             'created_at' => null,
-             'updated_at' => null
+        DB::table('flights_within_artcc_updates')->insert([
+             'created_at' => Carbon::now(),
+             'updated_at' => Carbon::now()
          ]);
     }
 }

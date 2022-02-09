@@ -1,7 +1,5 @@
 <?php
 
-namespace Database\Seeders;
-
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
