@@ -189,6 +189,13 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
+		{!! Form::label('monitor', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
+        @if($user->canTrain == 1)
+			{!! Form::checkBox('cert', 1, true) !!}
+        @else
+			{!! Form::checkBox('cert', 1) !!}
+        @endif		
+		<br>
         <br>
         <button class="btn btn-success" action="submit">Save Ticket</button>
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>

@@ -11,7 +11,7 @@ use SimpleXMLElement;
 class TrainingTicket extends Model
 {
     protected $table = 'training_tickets';
-    protected $fillable = ['id', 'controllers_id', 'trainer_id', 'position', 'session_id', 'type', 'date', 'start_time', 'end_time', 'duration', 'comments', 'ins_comments', 'updated_at', 'created_at'];
+    protected $fillable = ['id', 'controllers_id', 'trainer_id', 'position', 'session_id', 'type', 'date', 'start_time', 'end_time', 'duration', 'comments', 'ins_comments', 'cert', 'updated_at', 'created_at'];
 
     public function getTrainerNameAttribute() {
         $user = User::find($this->trainer_id);
