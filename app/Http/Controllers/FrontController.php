@@ -62,7 +62,7 @@ class FrontController extends Controller
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
         $metar_update = Metar::first();
         if($metar_update != null) {
-            $metar_last_updated = substr($metar_update, -10, 5);
+            $metar_last_updated = substr($metar_update, -18, 5);
         } else {
             $metar_last_updated = null;
         }
