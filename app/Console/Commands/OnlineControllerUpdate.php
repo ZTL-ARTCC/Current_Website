@@ -86,7 +86,7 @@ class OnlineControllerUpdate extends Command
 
 				if ($is_controller) {
 					// Found an ATC user
-                    $time_logon = substr($time_logon, 0, -1);
+                    //$time_logon = substr($time_logon, 0, -1);
                     $time_logon = str_replace('T',' ',$time_logon);
                     $time_logon = explode(".",$time_logon);
                     $time_logon = $time_logon[0];
