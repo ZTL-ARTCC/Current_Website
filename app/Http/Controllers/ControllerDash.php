@@ -540,8 +540,9 @@ class ControllerDash extends Controller
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
-        $res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
-        $pilots_a = json_decode($res_a->getBody()->getContents(), true);
+		// VATEUD API is no longer accessible
+        //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
+        //$pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if($pilots_a) {
             $pilots_a = collect($pilots_a);
@@ -549,8 +550,8 @@ class ControllerDash extends Controller
             $pilots_a = null;
         }
 
-        $res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
-        $pilots_d = json_decode($res_d->getBody()->getContents(), true);
+        //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
+        //$pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if($pilots_d) {
             $pilots_d = collect($pilots_d);
