@@ -88,7 +88,11 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                         @if($t->position > 6 && $t->position < 22)
-						<tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
                             <td>{{ $t->position_name }}</td>
@@ -101,7 +105,11 @@ Training Tickets
                         </tr>
 
                     @elseif($t->position > 99 && $t->position < 109)
-                    <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
@@ -145,7 +153,11 @@ Training Tickets
                 @if($tickets->count() > 0)
                   @foreach($tickets as $t)
                     @if($t->position > 21 && $t->position < 31)
-                    <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
@@ -158,7 +170,11 @@ Training Tickets
                     </tr>
 
                 @elseif($t->position > 108 && $t->position < 114)
-                <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
@@ -195,7 +211,11 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                       @if($t->position > 30 && $t->position < 42)
-                    <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
@@ -208,7 +228,11 @@ Training Tickets
                     </tr>
 
                 @elseif(($t->position > 113 && $t->position < 120) || ($t->position == 123))
-                <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
@@ -245,7 +269,11 @@ Training Tickets
                 @if($tickets->count() > 0)
                     @foreach($tickets as $t)
                       @if($t->position > 41 && $t->position < 48)
-                    <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
@@ -258,7 +286,11 @@ Training Tickets
                     </tr>
 
                 @elseif($t->position > 119 && $t->position < 122)
-                <tr>
+						@if($t->cert)
+							<tr class="table-success">
+						@else
+							<tr>
+						@endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
