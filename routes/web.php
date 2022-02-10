@@ -34,10 +34,11 @@ Route::post('/feedback/new', 'FrontController@saveNewFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
+/*
 Route::get('/ssd', function () {
     return '<img src=\'/photos/ross_patrick.png\' style=\'max-height:100%\' />';
 });
-
+*/
 /*
 *   End Front Page Stuff
 */
