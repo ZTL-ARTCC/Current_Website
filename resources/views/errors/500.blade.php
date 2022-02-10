@@ -25,7 +25,7 @@ Internal Server Error
                     <p>{{ $exception->getMessage() }}</p>
                 </div>
                 <div class="col-sm-4">
-                    <img src="/photos/shrug.gif" width="300px">
+                    <img src="/photos/this_is_fine.png" width="300px">
                 </div>
             </div>
             <hr>
