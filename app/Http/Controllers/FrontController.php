@@ -152,6 +152,7 @@ class FrontController extends Controller
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
 		// VATEUD API is no longer accessible
+		$pilots_a = $pilots_d = false;
         //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
         //$pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
