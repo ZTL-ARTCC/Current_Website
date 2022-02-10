@@ -190,7 +190,7 @@ Edit Training Ticket
             </div>
         </div>
 		{!! Form::label('monitor', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
-        @if($user->canTrain == 1)
+        @if($ticket->cert == 1)
 			{!! Form::checkBox('cert', 1, true) !!}
         @else
 			{!! Form::checkBox('cert', 1) !!}

@@ -245,6 +245,7 @@ class TrainingDash extends Controller
         $ticket->duration = $request->duration;
         $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
         $ticket->ins_comments = $request->trainer_comments;
+		$ticket->cert = $request->cert;
         $ticket->save();
         $extra = null;
 	    
@@ -390,6 +391,7 @@ class TrainingDash extends Controller
             $ticket->duration = $request->duration;
             $ticket->comments = $request->comments;
             $ticket->ins_comments = $request->trainer_comments;
+			$ticket->cert = $request->cert;
             $ticket->save();
 
             $audit = new Audit;
