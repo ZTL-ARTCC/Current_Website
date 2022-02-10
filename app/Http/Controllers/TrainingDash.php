@@ -121,13 +121,13 @@ class TrainingDash extends Controller
 
 		
 
-		$position = Request::input('position');
-		$slot_id = Request::input('slot');
+		$position = $request->input('position');
+		$slot_id = $request->input('slot');
 		$Slot = MentorAvail::find($slot_id);
 
 		$Slot->trainee_id = $id;
 		$Slot->position_id = $position;
-		$Slot->trainee_comments = Request::input('comments');
+		$Slot->trainee_comments = $request->input('comments');
 		$Slot->save();
 
 		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);

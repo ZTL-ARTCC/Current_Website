@@ -25,7 +25,7 @@ use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input;
 use Mail;
 use Response;
 use SimpleXMLElement;
@@ -371,14 +371,14 @@ class FrontController extends Controller
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->controller_id = Request::input('controller');
-        $feedback->position = Request::input('position');
-        $feedback->service_level = Request::input('service');
-        $feedback->callsign = Request::input('callsign');
-        $feedback->pilot_name = Request::input('pilot_name');
-        $feedback->pilot_email = Request::input('pilot_email');
-        $feedback->pilot_cid = Request::input('pilot_cid');
-        $feedback->comments = Request::input('comments');
+        $feedback->controller_id = $request->input('controller');
+        $feedback->position = $request->input('position');
+        $feedback->service_level = $request->input('service');
+        $feedback->callsign = $request->input('callsign');
+        $feedback->pilot_name = $request->input('pilot_name');
+        $feedback->pilot_email = $request->input('pilot_email');
+        $feedback->pilot_cid = $request->input('pilot_cid');
+        $feedback->comments = $request->input('comments');
         $feedback->status = 0;
         $feedback->save();
 

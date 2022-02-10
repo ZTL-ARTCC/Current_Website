@@ -5,7 +5,8 @@ use App\MentorAvail;
 use App\User;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class MentorController extends Controller {
@@ -18,7 +19,7 @@ class MentorController extends Controller {
 	public function cancelSession($id)
 	{
 		$request = MentorAvail::find($id);
-		$request->cancel_message = Request::input('cancel');
+		$request->cancel_message = $request->input('cancel');
 		$request->save();
 		$request->sendCancellationEmail();
 		$request->delete();
@@ -31,7 +32,7 @@ class MentorController extends Controller {
     public function postAvail()
 	{
 		$mentor_id = Auth::id();
-		$slots = Request::input('slots');
+		$slots = $request->input('slots');
 		$today = new Carbon("midnight today", 'America/New_York');
 
 		$availability = MentorAvail::where('mentor_id', '=', $mentor_id)->where('slot', '>=', $today)->get();

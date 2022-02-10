@@ -6,7 +6,8 @@ use App\User;
 use Mail;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class TrainingController extends Controller {
@@ -41,11 +42,11 @@ class TrainingController extends Controller {
 	{
 		$id = Auth::id();
 		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
-		$slot_id = Request::input('slot');
+		$slot_id = $request->input('slot');
 		$Slot = MentorAvail::find($slot_id);
 		$Slot->trainee_id = $id;
-		$Slot->trainee_comments = Request::input('comments');
-		$Slot->position_id =  Request::input('position');
+		$Slot->trainee_comments = $request->input('comments');
+		$Slot->position_id =  $request->input('position');
 		$Slot->save();
 		
 		Mail::send('emails.training.new_session', ['Slot' => $Slot], function($message) use ($Slot){

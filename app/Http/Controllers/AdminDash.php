@@ -28,9 +28,9 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
-// use Illuminate\Http\Request;
-use Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+//use Request;
+//use Illuminate\Support\Facades\Input;
 use Mail;
 use Storage;
 
@@ -67,15 +67,15 @@ class AdminDash extends Controller
         ]);
 
         $scenery = new Scenery;
-        $scenery->airport = Request::input('apt');
-        $scenery->developer = Request::input('dev');
-        $scenery->sim = Request::input('sim');
-        $scenery->link = Request::input('url');
-        $scenery->price = Request::input('price');
-        $scenery->currency = Request::input('currency');
-        $scenery->image1 = Request::input('image1');
-        $scenery->image2 = Request::input('image2');
-        $scenery->image3 = Request::input('image3');
+        $scenery->airport = $request->input('apt');
+        $scenery->developer = $request->input('dev');
+        $scenery->sim = $request->input('sim');
+        $scenery->link = $request->input('url');
+        $scenery->price = $request->input('price');
+        $scenery->currency = $request->input('currency');
+        $scenery->image1 = $request->input('image1');
+        $scenery->image2 = $request->input('image2');
+        $scenery->image3 = $request->input('image3');
         $scenery->save();
 
         $audit = new Audit;
@@ -102,13 +102,13 @@ class AdminDash extends Controller
         ]);
 
         $scenery = Scenery::find($id);
-        $scenery->airport = Request::input('apt');
-        $scenery->developer = Request::input('dev');
-        $scenery->sim = Request::input('sim');
-        $scenery->link = Request::input('url');
-        $scenery->image1 = Request::input('image1');
-        $scenery->image2 = Request::input('image2');
-        $scenery->image3 = Request::input('image3');
+        $scenery->airport = $request->input('apt');
+        $scenery->developer = $request->input('dev');
+        $scenery->sim = $request->input('sim');
+        $scenery->link = $request->input('url');
+        $scenery->image1 = $request->input('image1');
+        $scenery->image2 = $request->input('image2');
+        $scenery->image3 = $request->input('image3');
         $scenery->save();
 
         $audit = new Audit;
@@ -151,13 +151,13 @@ class AdminDash extends Controller
         ]);
 
         $a = new Airport;
-        $a->name = Request::input('name');
-        $a->ltr_3 = Request::input('FAA');
-        $a->ltr_4 = Request::input('ICAO');
+        $a->name = $request->input('name');
+        $a->ltr_3 = $request->input('FAA');
+        $a->ltr_4 = $request->input('ICAO');
         $a->save();
 
         $metar = new Metar;
-        $metar->icao = Request::input('ICAO');
+        $metar->icao = $request->input('ICAO');
         $metar->save();
 
         Artisan::call('Weather:UpdateWeather');
@@ -244,22 +244,22 @@ class AdminDash extends Controller
         $user = User::find($id);
 
         if(Auth::user()->isAbleTo('roster')) {
-            $user->del = Request::input('del');
-            $user->gnd = Request::input('gnd');
+            $user->del = $request->input('del');
+            $user->gnd = $request->input('gnd');
             if($user->twr == 99) {
-                if(Request::input('twr') != 0) {
+                if($request->input('twr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->twr = Request::input('twr');
+                    $user->twr = $request->input('twr');
                 } else {
                     $user->twr = 99;
                 }
-            } elseif(Request::input('twr') == 99) {
+            } elseif($request->input('twr') == 99) {
                 $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = Request::input('twr');
+                $user->twr = $request->input('twr');
                 $cert = new SoloCert;
                 $cert->cid = $id;
                 $cert->pos = 0;
@@ -267,61 +267,61 @@ class AdminDash extends Controller
                 $cert->status = 0;
                 $cert->save();
             } else {
-                $user->twr = Request::input('twr');
+                $user->twr = $request->input('twr');
             }
             if($user->app == 99) {
-                if(Request::input('app') != 0) {
+                if($request->input('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->app = Request::input('app');
+                    $user->app = $request->input('app');
                 } else {
                     $user->app = 99;
                 }
             } else {
-                $user->app = Request::input('app');
+                $user->app = $request->input('app');
             }
             if($user->ctr == 99) {
-                if(Request::input('ctr') != 0) {
+                if($request->input('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->ctr = Request::input('ctr');
+                    $user->ctr = $request->input('ctr');
                 } else {
                     $user->ctr = 99;
                 }
             } else {
-                $user->ctr = Request::input('ctr');
+                $user->ctr = $request->input('ctr');
             }
-            $user->initials = Request::input('initials');
-            $user->max = Request::input('max');
+            $user->initials = $request->input('initials');
+            $user->max = $request->input('max');
           
-            if(Request::input('visitor') == null) {
+            if($request->input('visitor') == null) {
                 $user->visitor = 0;
-            } elseif(Request::input('visitor') == 1) {
+            } elseif($request->input('visitor') == 1) {
                 $user->visitor = 1;
             }
-            if(Request::input('canTrain') == null) {
+            if($request->input('canTrain') == null) {
                 $user->canTrain = 0;
-            } elseif(Request::input('canTrain') == 1) {
+            } elseif($request->input('canTrain') == 1) {
                 $user->canTrain = 1;
             }
-            if(Request::input('canEvents') == null) {
+            if($request->input('canEvents') == null) {
                 $user->canEvents = 0;
-            } elseif(Request::input('canEvents') == 1) {
+            } elseif($request->input('canEvents') == 1) {
                 $user->canEvents = 1;
             }
-            if(Request::input('api_exempt') == null) {
+            if($request->input('api_exempt') == null) {
                 $user->api_exempt = 0;
-            } elseif(Request::input('api_exempt') == 1) {
+            } elseif($request->input('api_exempt') == 1) {
                 $user->api_exempt = 1;
             }
-            $user->status = Request::input('status');
-            $user->visitor_from = Request::input('visitor_from');
+            $user->status = $request->input('status');
+            $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
             if($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec', 'aec']) == true) {
@@ -348,25 +348,25 @@ class AdminDash extends Controller
                 }
             }
 
-            if(Request::input('staff') == 1) {
+            if($request->input('staff') == 1) {
                 $user->attachRole('atm');
-            } elseif(Request::input('staff') == 2) {
+            } elseif($request->input('staff') == 2) {
                 $user->attachRole('datm');
-            } elseif(Request::input('staff') == 3) {
+            } elseif($request->input('staff') == 3) {
                 $user->attachRole('ta');
-            } elseif(Request::input('staff') == 4) {
+            } elseif($request->input('staff') == 4) {
                 $user->attachRole('ata');
-            } elseif(Request::input('staff') == 5) {
+            } elseif($request->input('staff') == 5) {
                 $user->attachRole('wm');
-            } elseif(Request::input('staff') == 6) {
+            } elseif($request->input('staff') == 6) {
                 $user->attachRole('awm');
-            } elseif(Request::input('staff') == 7) {
+            } elseif($request->input('staff') == 7) {
                 $user->attachRole('fe');
-            } elseif(Request::input('staff') == 8) {
+            } elseif($request->input('staff') == 8) {
                 $user->attachRole('afe');
-            } elseif(Request::input('staff') == 9) {
+            } elseif($request->input('staff') == 9) {
                 $user->attachRole('ec');
-            } elseif(Request::input('staff') == 10) {
+            } elseif($request->input('staff') == 10) {
                 $user->attachRole('aec');
             }
 
@@ -379,14 +379,14 @@ class AdminDash extends Controller
                     $user->save();
                 }
             }
-            if(Request::input('training') == 1) {
+            if($request->input('training') == 1) {
                 $user->attachRole('mtr');
                 if($user->train_pwr == null) {
                     $user->train_pwr = 1;
                     $user->monitor_pwr = 1;
                     $user->save();
                 }
-            } elseif(Request::input('training') == 2) {
+            } elseif($request->input('training') == 2) {
                 $user->attachRole('ins');
                 if($user->train_pwr == null) {
                     $user->train_pwr = 6;
@@ -395,22 +395,22 @@ class AdminDash extends Controller
                 }
             }
         } else {
-            $user->del = Request::input('del');
-            $user->gnd = Request::input('gnd');
+            $user->del = $request->input('del');
+            $user->gnd = $request->input('gnd');
             if($user->twr == 99) {
-                if(Request::input('twr') != 0) {
+                if($request->input('twr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->twr = Request::input('twr');
+                    $user->twr = $request->input('twr');
                 } else {
                     $user->twr = 99;
                 }
-            } elseif(Request::input('twr') == 99) {
+            } elseif($request->input('twr') == 99) {
                 $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = Request::input('twr');
+                $user->twr = $request->input('twr');
                 $cert = new SoloCert;
                 $cert->cid = $id;
                 $cert->pos = 0;
@@ -418,35 +418,35 @@ class AdminDash extends Controller
                 $cert->status = 0;
                 $cert->save();
             } else {
-                $user->twr = Request::input('twr');
+                $user->twr = $request->input('twr');
             }
             if($user->app == 99) {
-                if(Request::input('app') != 0) {
+                if($request->input('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->app = Request::input('app');
+                    $user->app = $request->input('app');
                 } else {
                     $user->app = 99;
                 }
             } else {
-                $user->app = Request::input('app');
+                $user->app = $request->input('app');
             }
             if($user->ctr == 99) {
-                if(Request::input('ctr') != 0) {
+                if($request->input('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                     if($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
-                    $user->ctr = Request::input('ctr');
+                    $user->ctr = $request->input('ctr');
                 } else {
                     $user->ctr = 99;
                 }
             } else {
-                $user->ctr = Request::input('ctr');
+                $user->ctr = $request->input('ctr');
             }
             $user->save();
         }
@@ -780,27 +780,27 @@ class AdminDash extends Controller
 
     public function storeVisitor(Request $request) {
         $user = new User;
-        $user->id = Request::input('cid');
-        $user->fname = Request::input('fname');
-        $user->lname = Request::input('lname');
-        $user->email = Request::input('email');
-        $user->initials = Request::input('initials');
-        $user->rating_id = Request::input('rating_id');
-        if(Request::input('rating_id') == 2) {
+        $user->id = $request->input('cid');
+        $user->fname = $request->input('fname');
+        $user->lname = $request->input('lname');
+        $user->email = $request->input('email');
+        $user->initials = $request->input('initials');
+        $user->rating_id = $request->input('rating_id');
+        if($request->input('rating_id') == 2) {
             $user->del = 1;
             $user->gnd = 1;
-        } elseif(Request::input('rating_id') == 3) {
+        } elseif($request->input('rating_id') == 3) {
             $user->del = 1;
             $user->gnd = 1;
             $user->twr = 1;
-        } elseif(Request::input('rating_id') == 4 || Request::input('rating_id') == 5 || Request::input('rating_id') == 7 || Request::input('rating_id') == 8 || Request::input('rating_id') == 10) {
+        } elseif($request->input('rating_id') == 4 || $request->input('rating_id') == 5 || $request->input('rating_id') == 7 || $request->input('rating_id') == 8 || $request->input('rating_id') == 10) {
             $user->del = 1;
             $user->gnd = 1;
             $user->twr = 1;
             $user->app = 1;
         }
         $user->visitor = '1';
-        $user->visitor_from = Request::input('visitor_from');
+        $user->visitor_from = $request->input('visitor_from');
         $user->status = '1';
         $user->added_to_facility = Carbon::now();
         $user->save();
@@ -872,11 +872,11 @@ class AdminDash extends Controller
         ]);
 
         $calendar = new Calendar;
-        $calendar->title = Request::input('title');
-        $calendar->date = Request::input('date');
-        $calendar->time = Request::input('time');
-        $calendar->body = Request::input('body');
-        $calendar->type = Request::input('type');
+        $calendar->title = $request->input('title');
+        $calendar->date = $request->input('date');
+        $calendar->time = $request->input('time');
+        $calendar->body = $request->input('body');
+        $calendar->type = $request->input('type');
         $calendar->created_by = Auth::id();
         $calendar->save();
 
@@ -905,11 +905,11 @@ class AdminDash extends Controller
             'type' => 'required'
         ]);
 
-        $calendar->title = Request::input('title');
-        $calendar->date = Request::input('date');
-        $calendar->time = Request::input('time');
-        $calendar->body = Request::input('body');
-        $calendar->type = Request::input('type');
+        $calendar->title = $request->input('title');
+        $calendar->date = $request->input('date');
+        $calendar->time = $request->input('time');
+        $calendar->body = $request->input('body');
+        $calendar->type = $request->input('type');
         $calendar->updated_by = Auth::id();
         $calendar->save();
 
@@ -982,9 +982,9 @@ class AdminDash extends Controller
         $public_url = '/storage/files/'.$name;
 
         $file = new File;
-        $file->name = Request::input('title');
-        $file->type = Request::input('type');
-        $file->desc = Request::input('desc');
+        $file->name = $request->input('title');
+        $file->type = $request->input('type');
+        $file->desc = $request->input('desc');
         $file->path = $public_url;
         $file->save();
 
@@ -1005,9 +1005,9 @@ class AdminDash extends Controller
 
     public function saveFile(Request $request, $id) {
         $file = File::find($id);
-        $file->name = Request::input('title');
-        $file->type = Request::input('type');
-        $file->desc = Request::input('desc');
+        $file->name = $request->input('title');
+        $file->type = $request->input('type');
+        $file->desc = $request->input('desc');
         $file->save();
 
         $audit = new Audit;
