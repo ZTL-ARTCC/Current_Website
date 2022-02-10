@@ -118,7 +118,7 @@
 
                 @if(Auth::user()->isAbleTo('email'))
 
-                    <a class="nav-link" href="http://mail.ztlartcc.org" target="_blank">Email</a>
+                    <a class="nav-link" href="https://accounts.zoho.in/" target="_blank">Email</a>
 
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/email/send') }}" href="/dashboard/admin/email/send">Send New Email</a>
 
