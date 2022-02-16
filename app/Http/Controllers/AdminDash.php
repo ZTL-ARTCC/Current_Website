@@ -694,10 +694,9 @@ class AdminDash extends Controller
     }
 	
 	// Added to check roster for an existing record before adding a duplicate visitor or member (happens when requestor was a previous member or visitor)
-	public function checkRosterDuplicate($id) {
-		$user = User::find($id);
-		if($user) {
-			return $user;
+	public function checkRosterDuplicate($cid) {
+		if(User::find($r->cid) !== null) {
+			return User::find($r->cid);
 		}
 		else {
 			return false;
