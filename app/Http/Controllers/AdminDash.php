@@ -688,8 +688,8 @@ class AdminDash extends Controller
             goto a;
         }
 
-		if(User::find($id) !== null) {
-			$user = User::find($id);
+		if(User::find($visitor->cid) !== null) {
+			$user = User::find($visitor->cid);
 		}
 		else {
 			$user = false;
@@ -787,8 +787,8 @@ class AdminDash extends Controller
 
     public function storeVisitor(Request $request) {
 		// See if a record already exists for this CID (a returning visitor)
-		if (User::find($r->cid) !== null) {
-			$user = User::find($r->cid);
+		if (User::find($request->cid) !== null) {
+			$user = User::find($request->cid);
 		}
 		else {
 			$user = new User;
