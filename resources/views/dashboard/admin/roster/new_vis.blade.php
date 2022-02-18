@@ -76,8 +76,8 @@ New Visitor
             <div class="row">
                 <div class="col-sm-12">
 					<p>Note: a record matching this user's CID was found in the facility database. This usually occurs when a user has been a previous member of the facility and then attempts to re-join. Do you want to grant this user their previous certifications?</p>
-					{!! Form::checkbox('grant_previous', null, false, ['class' => 'form-control']) !!}
 					{!! Form::label('grant_previous', 'Grant Previous Certifications?') !!}
+					{!! Form::checkbox('grant_previous', 1) !!}
 				</div>
 			</div>
 			<div class="row">
