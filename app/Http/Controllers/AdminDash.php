@@ -688,21 +688,16 @@ class AdminDash extends Controller
             goto a;
         }
 
-		$user = checkRosterDuplicate($id);
+		if(User::find($id) !== null) {
+			$user = User::find($id);
+		}
+		else {
+			$user = false;
+		}
 
         return view('dashboard.admin.roster.new_vis')->with('visitor', $visitor)->with('initials', $initials)->with('fname', $fname)->with('lname', $lname)->with('user', $user);
     }
 	
-	// Added to check roster for an existing record before adding a duplicate visitor or member (happens when requestor was a previous member or visitor)
-	public function checkRosterDuplicate($cid) {
-		if(User::find($r->cid) !== null) {
-			return User::find($r->cid);
-		}
-		else {
-			return false;
-		}
-	}
-
     public function manualAddVisitor(Request $request) {
         $validator = $request->validate([
             'cid' => 'required'
