@@ -71,6 +71,9 @@ New Visitor
                 </div>
             </div>
         </div>
+		@php
+			print_r($user);
+		@endphp
 		@if ($user != false)
         <div class="form-group">
             <div class="row">
