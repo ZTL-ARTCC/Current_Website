@@ -306,8 +306,8 @@ class FrontController extends Controller
         }
 		
 		// Check to see if CID is already active in database (prevents account takeover)
-		if (User::find($r->cid) !== null) {
-			$user = User::find($r->cid);
+		if (User::find($request->cid) !== null) {
+			$user = User::find($request->cid);
 			if($user->status == 1) {
 				return redirect()->back()->with('error', 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
 			}
