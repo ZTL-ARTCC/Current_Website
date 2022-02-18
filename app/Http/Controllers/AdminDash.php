@@ -791,13 +791,23 @@ class AdminDash extends Controller
     }
 
     public function storeVisitor(Request $request) {
-        $user = new User;
+		// See if a record already exists for this CID (a returning visitor)
+		if (User::find($r->cid) !== null) {
+			$user = User::find($r->cid);
+		}
+		else {
+			$user = new User;
+		}
         $user->id = $request->input('cid');
         $user->fname = $request->input('fname');
         $user->lname = $request->input('lname');
         $user->email = $request->input('email');
         $user->initials = $request->input('initials');
         $user->rating_id = $request->input('rating_id');
+		if((User::find($r->cid) !== null)&&($request->input('grant_previous') == '1')) {
+			// Grant all previous certifications that controller held
+		}
+		else { // Otherwise, grant minor certifications based on GRP
         if($request->input('rating_id') == 2) {
             $user->del = 1;
             $user->gnd = 1;
@@ -811,6 +821,7 @@ class AdminDash extends Controller
             $user->twr = 1;
             $user->app = 1;
         }
+		}
         $user->visitor = '1';
         $user->visitor_from = $request->input('visitor_from');
         $user->status = '1';
