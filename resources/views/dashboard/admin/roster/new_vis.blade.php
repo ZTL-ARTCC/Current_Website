@@ -72,7 +72,7 @@ New Visitor
             </div>
         </div>
 		@php
-			print_r($user);
+			print_r($visitor);
 		@endphp
 		@if ($user != false)
         <div class="form-group">
