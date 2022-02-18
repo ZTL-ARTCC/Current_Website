@@ -80,7 +80,8 @@ class User extends Authenticatable
 
     public static $StatusText = [
         0 => 'LOA',
-        1 => 'Active'
+        1 => 'Active',
+		2 => 'Inactive'
     ];
 
     public function getStatusTextAttribute() {

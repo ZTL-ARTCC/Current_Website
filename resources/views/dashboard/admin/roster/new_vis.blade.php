@@ -71,15 +71,37 @@ New Visitor
                 </div>
             </div>
         </div>
-		@php
-			print_r($user);
-		@endphp
 		@if ($user != false)
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
 					<p>Note: a record matching this user's CID was found in the facility database. This usually occurs when a user has been a previous member of the facility and then attempts to re-join. Do you want to grant this user their previous certifications?</p>
-					
+			    <h5>Certification Key:</h5>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>No Certification:</p>
+        </div>
+        <div class="col-sm-2">
+            <i class="fas fa-times" style="color:red"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Minor Certification:</p>
+        </div>
+        <div class="col-sm-2">
+            <i class="far fa-check-circle" style="color:green"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Full (Minor/Major) Certification:</p>
+        </div>
+        <div class="col-sm-2">
+            <i class="fas fa-check" style="color:green"></i>
+        </div>
+    </div>
+    <br>		
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
