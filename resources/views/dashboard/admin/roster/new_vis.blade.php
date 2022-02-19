@@ -75,9 +75,9 @@ New Visitor
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
-					<p>Note: a record matching this user's CID was found in the facility database. This usually occurs when a user has been a previous member of the facility and then attempts to re-join. Do you want to grant this user their previous certifications? If you do not check the box below, the user's permission will be set in accordance with the GRP for their current rating.</p>
+					<p>Note: a record matching this user's CID was found in the facility database. This usually occurs when a user has been a previous member of the facility and then attempts to re-join. Do you want to grant this user their previous certifications?</p>
 					{!! Form::label('grant_previous', 'Grant Previous Certifications?') !!}
-					{!! Form::checkbox('grant_previous', 1) !!}
+					{!! Form::checkbox('grant_previous', 1, true) !!}
 				</div>
 			</div>
 			<div class="row">
