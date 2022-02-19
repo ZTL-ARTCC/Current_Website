@@ -806,15 +806,21 @@ class AdminDash extends Controller
         if($request->input('rating_id') == 2) {
             $user->del = 1;
             $user->gnd = 1;
+            $user->twr = 0;
+            $user->app = 0;
+            $user->ctr = 0;
         } elseif($request->input('rating_id') == 3) {
             $user->del = 1;
             $user->gnd = 1;
             $user->twr = 1;
+            $user->app = 0;
+            $user->ctr = 0;
         } elseif($request->input('rating_id') == 4 || $request->input('rating_id') == 5 || $request->input('rating_id') == 7 || $request->input('rating_id') == 8 || $request->input('rating_id') == 10) {
             $user->del = 1;
             $user->gnd = 1;
             $user->twr = 1;
             $user->app = 1;
+            $user->ctr = 0;
         }
 		}
         $user->visitor = '1';
