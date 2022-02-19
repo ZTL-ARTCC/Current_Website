@@ -799,7 +799,7 @@ class AdminDash extends Controller
         $user->email = $request->input('email');
         $user->initials = $request->input('initials');
         $user->rating_id = $request->input('rating_id');
-		if((User::find($r->cid) !== null)&&($request->input('grant_previous') == '1')) {
+		if((User::find($request->input('cid')) !== null)&&($request->input('grant_previous') == '1')) {
 			// Grant all previous certifications that controller held
 		}
 		else { // Otherwise, grant minor certifications based on GRP
