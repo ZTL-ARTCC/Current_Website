@@ -405,6 +405,19 @@ class FrontController extends Controller
 
         return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
+	
+	public function showPermalink($slug) {
+		abort(404, 'Slug: ' + $slug);
+/*
+		$redirection = Redirection::whereFrom_uri($slug)->first();
+
+        if($redirection) return Redirect::to( $redirection->to_uri , $redirection->code);
+
+        $article = Articles::where('slug', '=' $slug)->firstOrFail();
+
+        // Display the article
+*/
+	}
 
     public function showStaffRequest() {
         return view('site.request_staffing');
