@@ -407,7 +407,7 @@ class FrontController extends Controller
     }
 	
 	public function showPermalink($slug) {
-		abort(500, 'Slug: ' + $slug);
+		return redirect('/')->with('success', 'Slug ' + $slug);
 /*
 		$redirection = Redirection::whereFrom_uri($slug)->first();
 
