@@ -41,6 +41,10 @@ Upload File
         <div class="form-group">
             {!! Form::file('file', ['class' => 'form-control']) !!}
         </div>
+        <div class="form-group">
+            {!! Form::label('desc', 'Permalink:') !!}
+            {!! Form::text('permalink', null, ['class' => 'form-control', 'placeholder' => 'Optional, no spaces']) !!}
+        </div>
         <div class="row">
             <div class="col-sm-1">
                 <button class="btn btn-success" action="submit">Submit</button>

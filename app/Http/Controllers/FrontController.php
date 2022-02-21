@@ -405,6 +405,16 @@ class FrontController extends Controller
 
         return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
+	
+	public function showPermalink($slug) {
+		$file = File::where('permalink', $slug)->first();
+		if(!is_null($file)) {
+			return redirect($file->path);
+		}
+		else {
+			return redirect('/')->with('error', 'The requested resource is not available.');
+		}
+	}
 
     public function showStaffRequest() {
         return view('site.request_staffing');
