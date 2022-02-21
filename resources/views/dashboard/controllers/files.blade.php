@@ -258,7 +258,7 @@ Files
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!is_null($f->permalink))
-											<a onclick="linkToClipboard('/asset/{{ $f->permalink }}');" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="/asset/{{ $f->permalink }}"><i class="fas fa-link"></i></a>
+											<a href="" onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="/asset/{{ $f->permalink }}"><i class="fas fa-link"></i></a>
 										@endif
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
@@ -368,6 +368,11 @@ Files
 		}, function(err) {
 			//console.error('Async: Could not copy text: ', err);
 		});
+	}
+	
+	function linkToClipboard(e) {
+		var path = location.pathname + e.getAttribute('title');
+		copyTextToClipboard(path);
 	}
 		</script>
     </div>
