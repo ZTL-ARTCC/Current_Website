@@ -1004,13 +1004,17 @@ class AdminDash extends Controller
         );
 
         $public_url = '/storage/files/'.$name;
+		$permalink = $request->input('permalink');
+		if(strlen($permalink) < 1) {
+			$permalink = null;
+		}
 
         $file = new File;
         $file->name = $request->input('title');
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
         $file->path = $public_url;
-		$file->permalink = null;
+		$file->permalink = $permalink;
         $file->save();
 
         $audit = new Audit;
@@ -1029,11 +1033,15 @@ class AdminDash extends Controller
     }
 
     public function saveFile(Request $request, $id) {
+		$permalink = $request->input('permalink');
+		if(strlen($permalink) < 1) {
+			$permalink = null;
+		}
         $file = File::find($id);
         $file->name = $request->input('title');
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
-		$file->permalink = null;
+		$file->permalink = $permalink;
         $file->save();
 
         $audit = new Audit;
