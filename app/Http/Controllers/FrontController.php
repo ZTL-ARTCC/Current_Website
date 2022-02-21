@@ -407,7 +407,7 @@ class FrontController extends Controller
     }
 	
 	public function showPermalink($slug) {
-		$file = File::where('permalink', '=' $slug)->first;
+		$file = File::where('permalink', $slug)->first();
 		if(!is_null($file)) {
 			return redirect($file->path);
 		}
