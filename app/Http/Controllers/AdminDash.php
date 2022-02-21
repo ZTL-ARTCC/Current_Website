@@ -1010,6 +1010,7 @@ class AdminDash extends Controller
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
         $file->path = $public_url;
+		$file->permalink = null;
         $file->save();
 
         $audit = new Audit;
@@ -1032,6 +1033,7 @@ class AdminDash extends Controller
         $file->name = $request->input('title');
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
+		$file->permalink = null;
         $file->save();
 
         $audit = new Audit;
