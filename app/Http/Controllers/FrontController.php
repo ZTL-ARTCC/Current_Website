@@ -407,16 +407,13 @@ class FrontController extends Controller
     }
 	
 	public function showPermalink($slug) {
-		return redirect('/')->with('success', 'Slug ' . $slug);
-/*
-		$redirection = Redirection::whereFrom_uri($slug)->first();
-
-        if($redirection) return Redirect::to( $redirection->to_uri , $redirection->code);
-
-        $article = Articles::where('slug', '=' $slug)->firstOrFail();
-
-        // Display the article
-*/
+		$file = File::where('permalink', '=' $slug)->first;
+		if(!is_null($file)) {
+			return redirect($file->path);
+		}
+		else {
+			return redirect('/')->with('error', 'The requested resource is not available.');
+		}
 	}
 
     public function showStaffRequest() {
