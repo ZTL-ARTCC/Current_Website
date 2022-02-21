@@ -258,7 +258,7 @@ Files
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
 										@if(!is_null($f->permalink))
-											<a href="/asset/{{ $f->permalink }}" onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Permalink"><i class="fas fa-link"></i></a>
+											<a onclick="linkToClipboard('/asset/{{ $f->permalink }}');" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="/asset/{{ $f->permalink }}"><i class="fas fa-link"></i></a>
 										@endif
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
@@ -334,17 +334,41 @@ Files
 			});
 		}
 		
-		function linkToClipboard(e) {
-			e.preventDefault();
-			var copyText = $(this).attr('href');
+	function fallbackCopyTextToClipboard(text) {
+		var textArea = document.createElement("textarea");
+		textArea.value = text;
+  
+		// Avoid scrolling to bottom
+		textArea.style.top = "0";
+		textArea.style.left = "0";
+		textArea.style.position = "fixed";
 
-			document.addEventListener('copy', function(e) {
-				e.clipboardData.setData('text/plain', copyText);
-				e.preventDefault();
-			}, true);
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
 
-			document.execCommand('copy');  
+		try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			//console.log('Fallback: Copying text command was ' + msg);
+		} catch (err) {
+			//console.error('Fallback: Oops, unable to copy', err);
 		}
+
+		document.body.removeChild(textArea);
+	}
+	
+	function copyTextToClipboard(text) {
+		if (!navigator.clipboard) {
+			fallbackCopyTextToClipboard(text);
+			return;
+		}
+		navigator.clipboard.writeText(text).then(function() {
+			//console.log('Async: Copying to clipboard was successful!');
+		}, function(err) {
+			//console.error('Async: Could not copy text: ', err);
+		});
+	}
 		</script>
     </div>
 </div>
