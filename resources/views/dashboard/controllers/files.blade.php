@@ -67,9 +67,6 @@ Files
                                     @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
-										@if(!is_null($f->permalink))
-											<a href="/asset/{{ $f->permalink }}" onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Permalink"><i class="fas fa-link"></i></a>
-										@endif
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
 										@endif
@@ -222,7 +219,6 @@ Files
                                     @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
-										<a href="/dashboard/files/permalink/{{ $f->id }}" class="btn btn-secondary simple-tooltip disabled" data-toggle="tooltip" title="Permalink"><i class="fas fa-link"></i></a>
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
 										@endif
@@ -261,7 +257,9 @@ Files
                                     @if(Auth::user()->isAbleTo('files'))
                                         <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
-										<a href="/dashboard/files/permalink/{{ $f->id }}" class="btn btn-secondary simple-tooltip disabled" data-toggle="tooltip" title="Permalink"><i class="fas fa-link"></i></a>
+										@if(!is_null($f->permalink))
+											<a href="/asset/{{ $f->permalink }}" onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Permalink"><i class="fas fa-link"></i></a>
+										@endif
 										@if(!$loop->first)
 											<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
 										@endif
