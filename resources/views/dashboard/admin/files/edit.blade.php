@@ -38,6 +38,10 @@ Upload File
             {!! Form::label('desc', 'Description:') !!}
             {!! Form::textArea('desc', $file->desc, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
         </div>
+        <div class="form-group">
+            {!! Form::label('desc', 'Permalink:') !!}
+            {!! Form::text('permalink', $file->permalink, ['class' => 'form-control', 'placeholder' => 'Optional, no spaces']) !!}
+        </div>
         <div class="row">
             <div class="col-sm-1">
                 <button class="btn btn-success" action="submit">Save</button>
