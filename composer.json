@@ -16,8 +16,7 @@
         "laravel/tinker": "^2.7",
 		"laravel/legacy-factories": "^1.1.1",
         "laravelcollective/html": "^6.0",
-        "santigarcor/laratrust": "^6.4",
-		"symfony/mailer": "^5.4"
+        "santigarcor/laratrust": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
