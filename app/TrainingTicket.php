@@ -276,7 +276,7 @@ class TrainingTicket extends Model
         }elseif($pos == 213){
             $session = 'TWR8 - S2T6';
         }elseif($pos == 214){
-            $session = 'TWR9 - S2P3-O';
+            $session = 'TWR9 - S2P3';
 		}elseif($pos == 215){
             $session = 'TWR10 - S2M1-S';
 		}elseif($pos == 216){
@@ -298,9 +298,9 @@ class TrainingTicket extends Model
 		}elseif($pos == 224){
             $session = 'APP9 - S3P2';
 		}elseif($pos == 225){
-            $session = 'APP10 - S3P3-O';
+            $session = 'APP10 - S3P3';
 		}elseif($pos == 226){
-            $session = 'APP11 - S3P4-O';
+            $session = 'APP11 - S3P4';
 		}elseif($pos == 227){
             $session = 'APP12 - S3M2-S';
 		}elseif($pos == 228){
@@ -328,13 +328,13 @@ class TrainingTicket extends Model
 		}elseif($pos == 239){
             $session = 'ATL3 - M2T2';
 		}elseif($pos == 240){
-            $session = 'ATL4 - M2P1';
+            $session = 'ATL4 - M2T3';
 		}elseif($pos == 241){
-            $session = 'ATL5 - M2M2-O';
+            $session = 'ATL5 - M2T4';
 		}elseif($pos == 242){
-            $session = 'ATL6 - M2T3';
+            $session = 'ATL6 - M2P1';
 		}elseif($pos == 243){
-            $session = 'ATL7 - M2T4';
+            $session = 'ATL7 - M2M2-O';
 		}elseif($pos == 244){
             $session = 'ATL8 - M2M3-S';
 		}elseif($pos == 245){
