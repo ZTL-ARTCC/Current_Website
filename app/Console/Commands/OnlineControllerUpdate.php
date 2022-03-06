@@ -79,7 +79,7 @@ class OnlineControllerUpdate extends Command
 
 				foreach ($this->facilities as $facility)
 				{
-					$is_controller = strpos($position, $facility) === 0;
+					$is_controller = strpos($position, $facility . "_") === 0;
 					if ($is_controller) break;
 				}
 
