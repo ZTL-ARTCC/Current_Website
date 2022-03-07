@@ -26,7 +26,7 @@ Edit Training Ticket
                 <div class="form-group">
                     {!! Form::label('position', 'Session Category', ['class' => 'form-label']) !!}
                     {!! Form::select('position', [
-                                                100 => 'ZTL On-Boarding',
+                        100 => 'ZTL On-Boarding',
                         101 => 'Class D/C Clearance Delivery',
                         102 => 'Class B Clearance Delivery',
                         103 => 'ATL Clearance Delivery Theory',
@@ -50,6 +50,8 @@ Edit Training Ticket
                         120 => 'Atlanta Center Introduction',
                         121 => 'Atlanta Center',
                         122 => 'Recurrent Training',
+						124 => 'Other',
+						125 => 'Mentor Training',
                     ], $ticket->position, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
                 </div>
             </div>
@@ -96,11 +98,11 @@ Edit Training Ticket
                         236 => 'ZTL1 - M1M1-S',
                         237 => 'ATL1 - M2T1',
                         238 => 'ATL2 - M2M1-O',
+                        239 => 'ATL3 - M2T2',
+                        242 => 'ATL4 - M2T3',						
 						243 => 'ATL5 - M2T4',
 						240 => 'ATL6 - M2P1',
 						241 => 'ATL7 - M2M2-O',
-                        239 => 'ATL3 - M2T2',
-                        242 => 'ATL4 - M2T3',
                         244 => 'ATL8 - M2M3-S',
                         245 => 'A801 - M3P1-S',
                         246 => 'A802 - M3M1-O',

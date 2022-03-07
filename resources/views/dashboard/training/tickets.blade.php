@@ -104,7 +104,7 @@ Training Tickets
 
                         </tr>
 
-                    @elseif($t->position > 99 && $t->position < 109)
+                    @elseif(($t->position > 99 && $t->position < 103)||($t->position > 104 && $t->position < 107)) 
 						@if($t->cert)
 							<tr class="table-success">
 						@else
@@ -169,7 +169,7 @@ Training Tickets
 
                     </tr>
 
-                @elseif($t->position > 108 && $t->position < 114)
+                @elseif(($t->position > 102 && $t->position < 105)||($t->position > 106 && $t->position < 114)) 
 						@if($t->cert)
 							<tr class="table-success">
 						@else
@@ -343,7 +343,7 @@ Training Tickets
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                         </tr>
                     
-                    @elseif($t->position > 121)
+                    @elseif(($t->position > 121)&&($t->position != 123))
 						@if($t->cert)
 							<tr class="table-success">
 						@else

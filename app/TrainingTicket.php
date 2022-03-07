@@ -239,6 +239,10 @@ class TrainingTicket extends Model
             $position = 'Recurrent Training';
 		} elseif($pos == 123) {
             $position = 'BHM Approach';
+		} elseif($pos == 124) {
+            $position = 'Other';
+		} elseif($pos == 125) {
+            $position = 'Mentor Training';
         }
 
         return $position;
