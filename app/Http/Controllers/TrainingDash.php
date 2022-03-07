@@ -199,6 +199,7 @@ class TrainingDash extends Controller
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
 			foreach($tickets as &$t) {
+				$t->position = $this->legacyTicketTypes($t->position);
 				$t->sort_category = $this->getTicketSortCategory($t->position);
 			}           
         } else {
@@ -567,5 +568,33 @@ class TrainingDash extends Controller
 			break;
 			default : return 'other';
 		}
+	}
+	
+	public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
+		switch($position) {
+			case 11 : return 104;
+			break;
+			case 103 : return 104;
+			break;
+			case 18 : return 108;
+			break;
+			case 107 : return 108;
+			break;
+			case 27 : return 113;
+			break;
+			case 112 : return 113;
+			break;
+			case 31 : return 115;
+			break;
+			case 32 : return 115;
+			break;
+			case 114 : return 115;
+			break;
+			case 42 : return 121;
+			break;
+			case 120 : return 121;
+			break;
+			default : return $position;
+		}		
 	}
 }
