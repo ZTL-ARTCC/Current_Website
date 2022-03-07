@@ -358,11 +358,13 @@ class TrainingDash extends Controller
 
     public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
+		$ticket->position = $this->legacyTicketTypes($ticket->position);
         return view('dashboard.training.view_ticket')->with('ticket', $ticket);
     }
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
+		$ticket->position = $this->legacyTicketTypes($ticket->position);
         if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
