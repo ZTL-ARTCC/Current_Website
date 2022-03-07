@@ -198,7 +198,9 @@ class TrainingDash extends Controller
             })->pluck('id');
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
-           
+			foreach($tickets as &$t) {
+				$t->sort_category = $this->getTicketSortCategory($t->position);
+			}           
         } else {
             $tickets = null;
         }
@@ -211,7 +213,7 @@ class TrainingDash extends Controller
         if($search_result != null) {
             return redirect('/dashboard/training/tickets?id='.$search_result->id);
         } else {
-            return redirect()->back()->with('error', 'There is not controlling that exists with this CID.');
+            return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
         }
     }
 
@@ -536,4 +538,34 @@ class TrainingDash extends Controller
 
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
+	
+	public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+		switch(true) {
+			case ($position > 6 && $position < 22) : return 's1';
+			break;
+			case ($position > 99 && $position < 103) : return 's1';
+			break;
+			case ($position > 104 && $position < 107) : return 's1';
+			break;
+			case ($position > 21 && $position < 31) : return 's2';
+			break;
+			case ($position > 102 && $position < 105) : return 's2';
+			break;
+			case ($position > 106 && $position < 114) : return 's2';
+			break;
+			case ($position > 30 && $position < 42) : return 's3';
+			break;
+			case ($position > 113 && $position < 120) : return 's3';
+			break;
+			case ($position == 123) : return 's3';
+			break;
+			case ($position > 41 && $position < 48) : return 'c1';
+			break;
+			case ($position > 119 && $position < 122) : return 'c1';
+			break;
+			case ($position > 121 && $position != 123) : return 'other';
+			break;
+			default : return 'other';
+		}
+	}
 }
