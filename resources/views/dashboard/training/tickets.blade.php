@@ -44,6 +44,41 @@ Training Tickets
     @if($search_result != null)
 
         <hr>
+        <h5>Showing VATUSA Academy/Exam Status for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+        <br>
+		<table class="table"><tr>
+		@if($exams['BASIC']['success'] == 1)
+			<td class="table-success"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
+		@elseif($exams['BASIC']['success'] == 0)
+			<td class="table-danger"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
+		@else
+			<td class="table-secondary"><strong>Basic:</strong> no date</td>
+		@endif
+		
+		@if($exams['S2']['success'] == 1)
+			<td class="table-success"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
+		@elseif($exams['S2']['success'] == 0)
+			<td class="table-danger"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
+		@else
+			<td class="table-secondary"><strong>S2:</strong> no date</td>
+		@endif
+		@if($exams['S3']['success'] == 1)
+			<td class="table-success"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
+		@elseif($exams['S3']['success'] == 0)
+			<td class="table-danger"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
+		@else
+			<td class="table-secondary"><strong>S3:</strong> no date</td>
+		@endif
+		@if($exams['C1']['success'] == 1)
+			<td class="table-success"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
+		@elseif($exams['C1']['success'] == 0)
+			<td class="table-danger"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
+		@else
+			<td class="table-secondary"><strong>C1:</strong> no date</td>
+		@endif
+		</tr></table>
+		
+        <hr>
         <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
         <br>
 
