@@ -198,7 +198,10 @@ class TrainingDash extends Controller
             })->pluck('id');
             $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
-           
+			foreach($tickets as &$t) {
+				$t->position = $this->legacyTicketTypes($t->position);
+				$t->sort_category = $this->getTicketSortCategory($t->position);
+			}           
         } else {
             $tickets = null;
         }
@@ -211,7 +214,7 @@ class TrainingDash extends Controller
         if($search_result != null) {
             return redirect('/dashboard/training/tickets?id='.$search_result->id);
         } else {
-            return redirect()->back()->with('error', 'There is not controlling that exists with this CID.');
+            return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
         }
     }
 
@@ -355,11 +358,13 @@ class TrainingDash extends Controller
 
     public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
+		$ticket->position = $this->legacyTicketTypes($ticket->position);
         return view('dashboard.training.view_ticket')->with('ticket', $ticket);
     }
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
+		$ticket->position = $this->legacyTicketTypes($ticket->position);
         if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
@@ -536,4 +541,62 @@ class TrainingDash extends Controller
 
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
+	
+	public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+		switch(true) {
+			case ($position > 6 && $position < 22) : return 's1';
+			break;
+			case ($position > 99 && $position < 103) : return 's1';
+			break;
+			case ($position > 104 && $position < 107) : return 's1';
+			break;
+			case ($position > 21 && $position < 31) : return 's2';
+			break;
+			case ($position > 102 && $position < 105) : return 's2';
+			break;
+			case ($position > 106 && $position < 114) : return 's2';
+			break;
+			case ($position > 30 && $position < 42) : return 's3';
+			break;
+			case ($position > 113 && $position < 120) : return 's3';
+			break;
+			case ($position == 123) : return 's3';
+			break;
+			case ($position > 41 && $position < 48) : return 'c1';
+			break;
+			case ($position > 119 && $position < 122) : return 'c1';
+			break;
+			case ($position > 121 && $position != 123) : return 'other';
+			break;
+			default : return 'other';
+		}
+	}
+	
+	public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
+		switch($position) {
+			case 11 : return 104;
+			break;
+			case 103 : return 104;
+			break;
+			case 18 : return 108;
+			break;
+			case 107 : return 108;
+			break;
+			case 27 : return 113;
+			break;
+			case 112 : return 113;
+			break;
+			case 31 : return 115;
+			break;
+			case 32 : return 115;
+			break;
+			case 114 : return 115;
+			break;
+			case 42 : return 121;
+			break;
+			case 120 : return 121;
+			break;
+			default : return $position;
+		}		
+	}
 }
