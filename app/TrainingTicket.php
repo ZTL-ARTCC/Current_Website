@@ -102,7 +102,7 @@ class TrainingTicket extends Model
         } elseif($pos == 10) {
             $position = 'Class B Clearance Delivery';
         } elseif($pos == 11) {
-            $position = 'ATL Clearance Delivery Theory';
+            $position = 'ATL Clearance Delivery';
         } elseif($pos == 12) {
             $position = 'ATL Clearance Delivery';
         } elseif($pos == 13) {
@@ -116,7 +116,7 @@ class TrainingTicket extends Model
         } elseif($pos == 17) {
             $position = 'Class B Ground';
         } elseif($pos == 18) {
-            $position = 'ATL Ground Theory';
+            $position = 'ATL Ground';
         } elseif($pos == 19) {
             $position = 'ATL Ground';
         } elseif($pos == 20) {
@@ -134,7 +134,7 @@ class TrainingTicket extends Model
         } elseif($pos == 26) {
             $position = 'Class B Tower';
         } elseif($pos == 27) {
-            $position = 'ATL Tower Theory';
+            $position = 'ATL Tower';
         } elseif($pos == 28) {
             $position = 'ATL Tower';
         } elseif($pos == 29) {
@@ -142,9 +142,9 @@ class TrainingTicket extends Model
         } elseif($pos == 30) {
             $position = 'ATL Tower';
         } elseif($pos == 31) {
-            $position = 'Minor Approach Introduction';
+            $position = 'Minor Approach';
         } elseif($pos == 32) {
-            $position = 'Minor Approach Introduction';
+            $position = 'Minor Approach';
         } elseif($pos == 33) {
             $position = 'Minor Approach';
         } elseif($pos == 34) {
@@ -164,7 +164,7 @@ class TrainingTicket extends Model
         } elseif($pos == 41) {
             $position = 'A80 Arrival Radar';
         } elseif($pos == 42) {
-            $position = 'Atlanta Center Introduction';
+            $position = 'Atlanta Center';
         } elseif($pos == 43) {
             $position = 'Atlanta Center';
         } elseif($pos == 44) {
@@ -194,11 +194,11 @@ class TrainingTicket extends Model
         } elseif($pos == 100) {
             $position = 'ZTL On-Boarding';
         } elseif($pos == 101) {
-            $position = 'Class D/C Clearance Delivery';
+            $position = 'Class D/C Clearance';
         } elseif($pos == 102) {
-            $position = 'Class B Clearance Delivery';
+            $position = 'Class B Clearance';
         } elseif($pos == 103) {
-            $position = 'ATL Clearance Delivery Theory';
+            $position = 'ATL Clearance Delivery';
         } elseif($pos == 104) {
             $position = 'ATL Clearance';
         } elseif($pos == 105) {
@@ -220,7 +220,7 @@ class TrainingTicket extends Model
         } elseif($pos == 113) {
             $position = 'ATL Tower';
         } elseif($pos == 114) {
-            $position = 'Minor Approach Introduction';
+            $position = 'Minor Approach';
         } elseif($pos == 115) {
             $position = 'Minor Approach';
         } elseif($pos == 116) {
@@ -232,7 +232,7 @@ class TrainingTicket extends Model
         } elseif($pos == 119) {
             $position = 'A80 Arrival Radar';
         } elseif($pos == 120) {
-            $position = 'Atlanta Center Introduction';
+            $position = 'Atlanta Center';
         } elseif($pos == 121) {
             $position = 'Atlanta Center';
         } elseif($pos == 122) {
@@ -332,13 +332,17 @@ class TrainingTicket extends Model
 		}elseif($pos == 239){
             $session = 'ATL3 - M2T2';
 		}elseif($pos == 240){
-            $session = 'ATL4 - M2T3';
+            //$session = 'ATL4 - M2T3';
+			$session = 'ATL6 - M2P1';
 		}elseif($pos == 241){
-            $session = 'ATL5 - M2T4';
+            //$session = 'ATL5 - M2T4';
+			$session = 'ATL7 - M2M2-O';
 		}elseif($pos == 242){
-            $session = 'ATL6 - M2P1';
+            //$session = 'ATL6 - M2P1';
+			$session = 'ATL4 - M2T3';
 		}elseif($pos == 243){
-            $session = 'ATL7 - M2M2-O';
+            //$session = 'ATL7 - M2M2-O';
+			$session = 'ATL5 - M2T4';
 		}elseif($pos == 244){
             $session = 'ATL8 - M2M3-S';
 		}elseif($pos == 245){
