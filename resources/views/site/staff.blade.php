@@ -57,7 +57,7 @@ Staff
             @endif
             &nbsp;<a href="mailto:ta@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
         </h4>
-        <p>The Training Administrator works with the Air Traffic Manager and Deputy Air Traffic Manager to build training programmes, establish training procedures and recommend instructors and mentors. The Training Administrator works with Instructors and Mentors to develop knowledge and mentors to help develop teaching ability.</p>
+        <p>The Training Administrator works with the Air Traffic Manager and Deputy Air Traffic Manager to build training programs, establish training procedures and recommend instructors and mentors. The Training Administrator works with Instructors and Mentors to develop knowledge and mentors to help develop teaching ability.</p>
     </div>
     <hr>
     @if($ata != '[]')
