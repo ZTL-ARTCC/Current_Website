@@ -299,7 +299,8 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <div role="tabpanel" class="tab-pane" id="visitagree">
+<?php /*
+            <div role="tabpanel" class="tab-pane" id="visitagree">
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -315,8 +316,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($visagreecontrollers as $c)
-                        @if($c->rating_short != "OBS")
+					    @foreach($visagreecontrollers as $c) 
+						    @if($c->rating_short != "OBS")
                             <tr>
                                 @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train'))
                                     <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} - {{ $c->visitor_from }}</a></td>
@@ -396,7 +397,8 @@
                     @endforeach
                     </tbody>
                 </table>
-            </div> -->
+            </div>
+*/ ?>
         </div>
 
 
