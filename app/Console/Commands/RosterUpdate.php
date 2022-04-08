@@ -236,7 +236,8 @@ class RosterUpdate extends Command
 
                         //Assigns controller initials
                         $user = User::find($r->cid);
-                        $users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+                        //$users_inc_v = User::where('status', '!=', 2)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+						$users_inc_v = User::where('status', '!=', 2)->orWhereNull('visitor_from')->get();
                         $fn_initial = strtoupper(substr($user->fname, 0, 1));
                         $ln_initial = strtoupper(substr($user->lname, 0, 1));
                         $f_initial = $fn_initial;
