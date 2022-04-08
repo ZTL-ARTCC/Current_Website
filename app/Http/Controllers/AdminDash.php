@@ -870,7 +870,13 @@ class AdminDash extends Controller
 			}
 			// Remove on the VATUSA roster
 			$client = new Client();
-			$res = $client->request('DELETE','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'),['http_errors' => false]);
+			$req_params = [ 'form_params' =>
+                [
+                    'reason' => 'IAW ZTL ARTCC Facility Administrative Policy'
+                ],
+				'http_errors' => false
+            ];
+			$res = $client->request('DELETE','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'),$req_params);
 			
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
