@@ -645,7 +645,8 @@ class AdminDash extends Controller
         $lname = $parts[1];
 
         //Assigns controller initials
-        $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+        //$users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+		$users_inc_v = User::whereNull('visitor_from')->get();
         $fn_initial = strtoupper(substr($fname, 0, 1));
         $ln_initial = strtoupper(substr($lname, 0, 1));
         $f_initial = $fn_initial;
@@ -711,7 +712,8 @@ class AdminDash extends Controller
             $visitor = $visitor->data;
 
             //Assigns controller initials
-            $users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+            //$users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
+			$users_inc_v = User::whereNull('visitor_from')->get();
             $fn_initial = strtoupper(substr($visitor->fname, 0, 1));
             $ln_initial = strtoupper(substr($visitor->lname, 0, 1));
             $f_initial = $fn_initial;
@@ -834,6 +836,10 @@ class AdminDash extends Controller
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' added the visitor '.$user->full_name.'.';
         $audit->save();
+		
+		// Add to the VATUSA roster
+		$client = new Client();
+		$res = $client->request('POST','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$user->id.'?apikey='.Config::get('vatusa.api_key'));		
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visitor has been successfully added to the roster.');
     }
@@ -862,6 +868,10 @@ class AdminDash extends Controller
                         $message->to($user->email)->cc('datm@ztlartcc.org');
              });
 			}
+			// Remove on the VATUSA roster
+			$client = new Client();
+			$res = $client->request('DELETE','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'));
+			
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
     }
