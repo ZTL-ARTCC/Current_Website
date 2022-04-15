@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
         $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         $schedule->command('Moodle:DeleteUsers')->dailyAt('00:15');
-        $schedule->command('RosterUpdate:VisitAgreement')->dailyAt('00:30');
+        // $schedule->command('RosterUpdate:VisitAgreement')->dailyAt('00:30');
         // $schedule->command('Event:SendEventReminder')->dailyAt('00:30')->timezone('America/New_York');
         
     }
