@@ -219,6 +219,8 @@ Roster
                 </tbody>
             </table>
         </div>
+		<?php
+		/*
         <!--<div role="tabpanel" class="tab-pane" id="visitagree">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -235,8 +237,8 @@ Roster
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($visagreecontrollers as $c)
-                        @if($c->rating_short != "OBS" && $c->status != 2)
+				@foreach($visagreecontrollers as $c)
+					@if($c->rating_short != "OBS" && $c->status != 2)
                             <tr>
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
                                 <td><center>{{$c->initials}}</center></td>
@@ -287,6 +289,8 @@ Roster
                 </tbody>
             </table>
         </div> -->
+		*/
+		?>
     </div>
 </div>
 
