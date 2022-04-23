@@ -166,7 +166,11 @@
                                 @elseif($c->twr == 89)
                                     <td><center style="color:#c1ad13">M</center></td>
                             @elseif($c->twr == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+								@if($c->twr_solo_fields == '')
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+								@else
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Cert Expires: {{ $c->solo }}\n{{$c->twr_solo_fields}}\nAuth Expires: {{$c->twr_solo_expires}}"></i></center></td>
+								@endif
                             @endif
                             @if($c->app == 0)
                                 <td><center><i class="fas fa-times" style="color:red"></i></center></td>
@@ -262,7 +266,11 @@
                                 @elseif($c->twr == 89)
                                     <td><center style="color:#c1ad13">M</center></td>
                                 @elseif($c->twr == 99)
-                                    <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+								@if($c->twr_solo_fields == '')
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+								@else
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Cert Expires: {{ $c->solo }}\n{{$c->twr_solo_fields}}\nAuth Expires: {{$c->twr_solo_expires}}"></i></center></td>
+								@endif
                                 @endif
                                 @if($c->app == 0)
                                     <td><center><i class="fas fa-times" style="color:red"></i></center></td>

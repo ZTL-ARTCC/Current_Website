@@ -320,6 +320,9 @@ class AdminDash extends Controller
             } elseif($request->input('api_exempt') == 1) {
                 $user->api_exempt = 1;
             }
+			$user->twr_solo_fields = $request->input('twr_solo_fields');
+			$user->twr_solo_expires = $request->input('twr_solo_expires');
+			
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
