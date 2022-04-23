@@ -360,21 +360,13 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                    {!! Form::label('twr_solo_fields', 'Class D Tower Solo Certifications') !!}
-					@if($user->hasRole('mtr') || $user->hasRole('ins'))
+						{!! Form::label('twr_solo_fields', 'Class D Tower Solo Certifications') !!}
 						{!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control']) !!}    
-					@else
-						{!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control', 'disabled']) !!}
-					@endif
-                    </div>
+                   </div>
                     <div class="col-sm-6">
                     {!! Form::label('twr_solo_expires', 'Tower Solo Expiration Date', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-					@if($user->hasRole('mtr') || $user->hasRole('ins'))
                         {!! Form::text('twr_solo_expires', $user->twr_solo_expires, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
-					@else
-						{!! Form::text('twr_solo_expires', $user->twr_solo_expires, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1', 'disabled']) !!}
-					@endif
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
