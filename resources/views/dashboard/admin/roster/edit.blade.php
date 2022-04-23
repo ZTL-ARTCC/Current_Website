@@ -362,7 +362,7 @@ Update Controller
                     <div class="col-sm-6">
 						{!! Form::label('twr_solo_fields', 'Class D Tower Solo Certifications') !!}
 						{!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control']) !!}    
-                   </div>
+                    </div>
                     <div class="col-sm-6">
                     {!! Form::label('twr_solo_expires', 'Tower Solo Expiration Date', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
@@ -477,4 +477,11 @@ Update Controller
             </div>
         </div>
 </div>
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        format: 'L'
+    });
+});
+</script>
 @endsection
