@@ -169,7 +169,7 @@
 								@if($c->twr_solo_fields == '')
 									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
 								@else
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
 								@endif
                             @endif
                             @if($c->app == 0)
@@ -269,7 +269,7 @@
 								@if($c->twr_solo_fields == '')
 									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
 								@else
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
+									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
 								@endif
                                 @endif
                                 @if($c->app == 0)
