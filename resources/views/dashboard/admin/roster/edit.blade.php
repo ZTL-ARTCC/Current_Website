@@ -390,11 +390,7 @@ Update Controller
                         @if($user->visitor == 1)
                             {!! Form::label('visitor', 'Visitor?') !!}
                             {!! Form::checkbox('visitor', 1, true) !!}
-                            @if($user->visitor_from != 'ZJX' && $user->visitor_from != 'ZHU')
-                                <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
-                            @else
-                                <a href="/dashboard/admin/roster/visit-agreement/reject/{{ $user->id }}">(Disallow from Visiting)</a>
-                            @endif
+                            <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
                         @else
                             {!! Form::label('visitor', 'Visitor?') !!}
                             {!! Form::checkbox('visitor', 1) !!}
