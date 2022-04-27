@@ -832,6 +832,8 @@ class AdminDash extends Controller
         $user->visitor_from = $request->input('visitor_from');
         $user->status = '1';
         $user->added_to_facility = Carbon::now();
+		$user->twr_solo_fields = '';
+		$user->twr_solo_expires = '';
         $user->save();
 
         $audit = new Audit;
