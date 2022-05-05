@@ -869,7 +869,7 @@ class AdminDash extends Controller
             $audit->save();
             if(filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
              Mail::send('emails.remove_visitor', ['user' => $user], function($message) use ($user){
-                        $message->from('datm@ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
+                        $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
                         $message->to($user->email)->cc('datm@ztlartcc.org');
              });
 			}
