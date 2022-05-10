@@ -160,7 +160,7 @@
 
 <br>
 
-@include('inc.chat')
+{{ -- @include('inc.chat') -- }}
 
 
 

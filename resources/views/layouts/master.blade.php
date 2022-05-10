@@ -59,6 +59,6 @@
         @yield('content')
 
         {{-- Footer --}}
-        @include('inc.footer')
+        @include('inc.home_footer')
     </body>
 </html>
