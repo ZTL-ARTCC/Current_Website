@@ -50,7 +50,7 @@ $('.carousel').carousel({
 })	
 </script>	
 		</div>
-		<div class="col-sm-* m-1 rounded bg-dark">
+		<div class="col m-1 rounded bg-dark">
 		test
 		</div>
 	</div>
