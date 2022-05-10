@@ -7,14 +7,14 @@ Home
 @section('content')
 <div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
-        <div class="jumbotron">
+
             <div class="row">
                 <div class="col-sm-8">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
                 </div>
 
             </div>
-        </div>
+
     </div>
 </div>
 <div class="container">
