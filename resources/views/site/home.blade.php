@@ -11,30 +11,8 @@ Home
             <div class="row">
                 <div class="col-sm-8">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
-                    <h5>Welcome to the Atlanta ARTCC website. This website is for a group of online hobbyists who partake in simulated flying and air traffic control on the VATSIM network. The procedures we use mirror, to an extent, those utilized by real world air traffic control. At no time, however, should a procedure, chart, or other information contained on this website be used for real world navigation.</h5>
                 </div>
-                <div class="col-sm-4">
-                    @if($atl_ctr === 1)
-                        <div class="alert alert-success">Atlanta Center is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta Center is OFFLINE</div>
-                    @endif
-                    @if($atl_app === 1)
-                        <div class="alert alert-success">A80 TRACON is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">A80 TRACON is OFFLINE</div>
-                    @endif
-                    @if($atl_twr === 1)
-                        <div class="alert alert-success">Atlanta ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta ATCT is OFFLINE</div>
-                    @endif
-                    @if($clt_twr === 1)
-                        <div class="alert alert-success">Charlotte ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Charlotte ATCT is OFFLINE</div>
-                    @endif
-                </div>
+
             </div>
         </div>
     </div>
@@ -74,6 +52,30 @@ Home
             @endif
         </div>
     </div>
+	<div class="row">
+                <div class="col-sm-4">
+                    @if($atl_ctr === 1)
+                        <div class="alert alert-success">Atlanta Center is ONLINE</div>
+                    @else
+                        <div class="alert alert-danger">Atlanta Center is OFFLINE</div>
+                    @endif
+                    @if($atl_app === 1)
+                        <div class="alert alert-success">A80 TRACON is ONLINE</div>
+                    @else
+                        <div class="alert alert-danger">A80 TRACON is OFFLINE</div>
+                    @endif
+                    @if($atl_twr === 1)
+                        <div class="alert alert-success">Atlanta ATCT is ONLINE</div>
+                    @else
+                        <div class="alert alert-danger">Atlanta ATCT is OFFLINE</div>
+                    @endif
+                    @if($clt_twr === 1)
+                        <div class="alert alert-success">Charlotte ATCT is ONLINE</div>
+                    @else
+                        <div class="alert alert-danger">Charlotte ATCT is OFFLINE</div>
+                    @endif
+                </div>	
+	</div>
     <hr>
     <div class="row">
         <div class="col-sm-6">
