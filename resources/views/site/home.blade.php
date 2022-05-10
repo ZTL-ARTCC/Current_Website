@@ -20,7 +20,8 @@ Home
 <div class="container">
     <hr>
     <div class="row">
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		<div class="col-sm-9">
+<div id="eventCarousel" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
             @if($events->count() > 0)
                 @foreach($events as $e)
@@ -43,10 +44,15 @@ Home
     <span class="sr-only">Next</span>
   </a>
 </div>	
-	
-	
-	
-	
+<script>	
+$('.carousel').carousel({
+  interval: 2000 // delay time ms
+})	
+</script>	
+		</div>
+		<div class="col-sm-3 m-1 rounded bg-dark">
+		test
+		</div>
 	</div>
 	<div class="row">
         <div class="col-sm-4">
