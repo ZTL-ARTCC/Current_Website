@@ -46,11 +46,11 @@ Home
 </div>	
 <script>	
 $('.carousel').carousel({
-  interval: 2000 // delay time ms
+  interval: 3000 // delay time ms
 })	
 </script>	
 		</div>
-		<div class="col-sm-3 m-1 rounded bg-dark">
+		<div class="col-sm-2 m-1 rounded bg-dark">
 		test
 		</div>
 	</div>
