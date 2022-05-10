@@ -9,7 +9,7 @@ Home
     <div class="container">
 
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-8 text-white">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
                 </div>
 
@@ -20,6 +20,35 @@ Home
 <div class="container">
     <hr>
     <div class="row">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+            @if($events->count() > 0)
+                @foreach($events as $e)
+			<div class="carousel-item @if ($loop->first) active @endifactive">
+                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" class="d-block w-100" alt="{{ $e->name }}" /></a>
+            </div>
+                @endforeach
+            @else
+			<div class="carousel-item">
+                <center><i><p>No events to show.</p></i></center>
+			</div>
+            @endif
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>	
+	
+	
+	
+	
+	</div>
+	<div class="row">
         <div class="col-sm-4">
             <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
             @if(count($news) > 0)
