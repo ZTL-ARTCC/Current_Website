@@ -8,7 +8,7 @@
     <div class="container bg-secondary">
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
         <p class="footer-copyright">
-            © {{ Carbon::now()->year }} vZTL ARTCC
+            © {{ Carbon\Carbon::now()->year }} vZTL ARTCC
         </p>
     </div>
 </footer>
