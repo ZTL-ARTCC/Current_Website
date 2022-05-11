@@ -96,41 +96,8 @@ $('.carousel').carousel({
             @endif
         </div>
         <div class="col-sm-4">
-            <center><h4><i class="fas fa-plane"></i> Events</h4></center>
-            @if($events->count() > 0)
-                @foreach($events as $e)
-                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}"></a>
-                    <p></p>
-                @endforeach
-            @else
-                <center><i><p>No events to show.</p></i></center>
-            @endif
         </div>
     </div>
-	<div class="row">
-                <div class="col-sm-4">
-                    @if($atl_ctr === 1)
-                        <div class="alert alert-success">Atlanta Center is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta Center is OFFLINE</div>
-                    @endif
-                    @if($atl_app === 1)
-                        <div class="alert alert-success">A80 TRACON is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">A80 TRACON is OFFLINE</div>
-                    @endif
-                    @if($atl_twr === 1)
-                        <div class="alert alert-success">Atlanta ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta ATCT is OFFLINE</div>
-                    @endif
-                    @if($clt_twr === 1)
-                        <div class="alert alert-success">Charlotte ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Charlotte ATCT is OFFLINE</div>
-                    @endif
-                </div>	
-	</div>
     <hr>
     <div class="row">
         <div class="col-sm-6">
