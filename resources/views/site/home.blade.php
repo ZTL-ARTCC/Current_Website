@@ -50,7 +50,9 @@ $('.carousel').carousel({
 })	
 </script>	
 		</div>
-		<div class="col m-1 p-1 rounded bg-dark text-white">
+		<div class="col">
+			<div class="row">
+			<div class="col m-1 p-1 rounded bg-dark text-white">
 			<h4>Airspace Status</h4>
 			@if($atl_ctr === 1)
                 <div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta Center</div>
@@ -72,8 +74,21 @@ $('.carousel').carousel({
             @else
 				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Charlotte ATCT</div>
             @endif
+			</div>
+			</div>
+			<div class="row">
+			<div class="col m-1 p-1 rounded bg-dark text-white">
+			<h4>Weather</h4>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col m-1 p-1 rounded bg-dark text-white">
+			<h4>News/Calendar</h4>
+			</div>
+			</div>
 		</div>
-	</div>
+		
+	</div> <!-- Carousel row -->
 	<div class="row">
         <div class="col-sm-4">
             <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
