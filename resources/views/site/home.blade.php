@@ -50,8 +50,8 @@ $('.carousel').carousel({
 })	
 </script>	
 		</div>
-		<div class="col m-1 rounded bg-dark">
-			<h4 class="text-white">Airspace Status</h4>
+		<div class="col m-1 p-1 rounded bg-dark text-white">
+			<h4>Airspace Status</h4>
 			@if($atl_ctr === 1)
                 <div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta Center</div>
             @else
