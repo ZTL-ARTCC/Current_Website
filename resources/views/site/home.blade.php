@@ -51,7 +51,27 @@ $('.carousel').carousel({
 </script>	
 		</div>
 		<div class="col m-1 rounded bg-dark">
-		test
+			<h4 class="text-white">Airspace Status</h4>
+			@if($atl_ctr === 1)
+                <div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta Center</div>
+            @else
+				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Atlanta Center</div>
+            @endif
+            @if($atl_app === 1)
+				<div><span class="badge bg-success">ONLINE</span>&nbsp;A80 TRACON</div>
+            @else
+				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;A80 TRACON</div>
+            @endif
+            @if($atl_twr === 1)
+				<div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta ATCT</div>
+            @else
+				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Atlanta ATCT</div>
+            @endif
+            @if($clt_twr === 1)
+				<div><span class="badge bg-success">ONLINE</span>&nbsp;Charlotte ATCT</div>
+            @else
+				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Charlotte ATCT</div>
+            @endif
 		</div>
 	</div>
 	<div class="row">
