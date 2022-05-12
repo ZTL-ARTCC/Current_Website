@@ -80,27 +80,27 @@ $('.carousel').carousel({
 			</div>
 			</div>
 			<div class="row">
-			<div class="col m-1 p-1 rounded bg-dark text-white">
-			<h4>Weather</h4>
-            @if($airports->count() > 0)
-                @foreach($airports as $a)
-					<div><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a>&nbsp;
-					@if($a->visual_conditions == 'VFR')
-						<span class="badge bg-success">VFR</span>
-					@elseif($a->visual_conditions == 'IFR')
-						<span class="badge bg-danger">IFR</span>
-					@else
-						<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
-					@endif
-					&nbsp;{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
-                @endforeach
-            @else
-                    <div class="text-center"><i>No Airports to Show</i></div>
-            @endif
-            @if($metar_last_updated != null)
-                <div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div>
-            @endif
-			</div>
+				<div class="col m-1 p-1 rounded bg-dark text-white">
+				<h4>Weather</h4>
+				@if($airports->count() > 0)
+					@foreach($airports as $a)
+						<div><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a>&nbsp;
+						@if($a->visual_conditions == 'VFR')
+							<span class="badge bg-success">VFR</span>
+						@elseif($a->visual_conditions == 'IFR')
+							<span class="badge bg-danger">IFR</span>
+						@else
+							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
+						@endif
+						&nbsp;{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
+					@endforeach
+				@else
+					<div class="text-center"><i>No Airports to Show</i></div>
+				@endif
+				@if($metar_last_updated != null)
+					<div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div>
+				@endif
+				</div>
 			</div>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
@@ -125,42 +125,5 @@ $('.carousel').carousel({
 			</div>
 		</div>
 	</div> <!-- Carousel row -->
-    <hr>
-    <div class="row">
-        <div class="col-sm-6">
-            <center><h4><i class="fa fa-cloud"></i> Weather</h4></center>
-            <div class="table">
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <th scope="col"><center>Airport</center></th>
-                        <th scope="col"><center>Conditions</center></th>
-                        <th scope="col"><center>Wind</center></th>
-                        <th scope="col"><center>Altimeter</center></th>
-                    </thead>
-                    <tbody>
-                        @if($airports->count() > 0)
-                            @foreach($airports as $a)
-                                <tr>
-                                    <td><a href="/pilots/airports/view/{{ $a->id }}"><center>{{ $a->ltr_4 }}</center></a></td>
-                                    <td><center>{{ $a->visual_conditions }}</center></td>
-                                    <td><center>{{ $a->wind }}</center></td>
-                                    <td><center>{{ $a->altimeter }}</center></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <td colspan="4"><div align="center"><i>No Airports to Show</i></div></td>
-                        @endif
-                        <tr>
-                            @if($metar_last_updated != null)
-                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div></td>
-                            @else
-                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated N/A</div></td>
-                            @endif
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
  </div>
 @endsection
