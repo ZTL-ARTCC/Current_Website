@@ -45,8 +45,13 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
+		<style>
+		html, body {
+			height: 100%;
+		}
+		</style>
     </head>
-    <body class="bg-secondary" style="background-color:#aa66cc !important">
+    <body class="bg-secondary">
 
         {{-- Messages --}}
         @include('inc.messages')
