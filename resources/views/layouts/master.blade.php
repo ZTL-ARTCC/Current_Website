@@ -45,11 +45,6 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
-		<style>
-		html, body {
-			height: 100%;
-		}
-		</style>
     </head>
     <body class="bg-secondary">
 
