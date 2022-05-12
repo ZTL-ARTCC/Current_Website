@@ -25,7 +25,7 @@ Home
             @if($events->count() > 0)
                 @foreach($events as $e)
 			<div class="carousel-item @if ($loop->first) active @endif">
-                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" class="d-block w-100" alt="{{ $e->name }}" /></a>
+                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" /></a>
             </div>
                 @endforeach
             @else
