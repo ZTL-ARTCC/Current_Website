@@ -74,6 +74,9 @@ $('.carousel').carousel({
             @else
 				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Charlotte ATCT</div>
             @endif
+			@if($flights->count() > 0)
+				<div><span class="badge bg-info">{{ $flights->count() }}</span>&nbsp;flights in ZTL airspace</div>
+			@endif
 			</div>
 			</div>
 			<div class="row">
@@ -149,73 +152,6 @@ $('.carousel').carousel({
                 </table>
             </div>
         </div>
-        <div class="col-sm-6">
-            <center><h4><i class="fa fa-broadcast-tower"></i> Online Controllers</h4></center>
-            <div class="table">
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <th scope="col"><center>Position</center></th>
-                        <th scope="col"><center>Frequency</center></th>
-                        <th scope="col"><center>Controller</center></th>
-                        <th scope="col"><center>Time Online</center></th>
-                    </thead>
-                    <tbody>
-                        @if($controllers->count() > 0)
-                            @foreach($controllers as $c)
-                                <tr>
-                                    <td><center>{{ $c->position }}</center></td>
-                                    <td><center>{{ $c->freq }}</center></td>
-                                    <td><center>{{ $c->name }}</center></td>
-                                    <td><center>{{ $c->time_online }}</center></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="4"><center><i>No Controllers Online</i></center></td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $controllers_update }}Z</div></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
-    <hr>
-    <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
-    <div class="table">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <th scope="col"><center>Callsign</center></th>
-                <th scope="col"><center>Pilot Name</center></th>
-                <th scope="col"><center>Aircraft Type</center></th>
-                <th scope="col"><center>Departure</center></th>
-                <th scope="col"><center>Arrival</center></th>
-                <th scope="col"><center>Route</center></th>
-            </thead>
-            <tbody>
-                @if($flights->count() > 0)
-                    @foreach($flights as $c)
-                        <tr>
-                            <td><center>{{ $c->callsign }}</center></td>
-                            <td><center>{{ $c->pilot_name }}</center></td>
-                            <td><center>{{ $c->type }}</center></td>
-                            <td><center>{{ $c->dep }}</center></td>
-                            <td><center>{{ $c->arr }}</center></td>
-                            <td><center>{{ str_limit($c->route, 50) }}</center></td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="6"><center><i>No Pilots in ZTL Airspace</i></center></td>
-                    </tr>
-                @endif
-                <tr>
-                    <td colspan="6"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+ </div>
 @endsection
