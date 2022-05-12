@@ -17,8 +17,7 @@ Home
 
     </div>
 </div>
-<div class="container">
-    <hr>
+<div class="container bg-secondary">
     <div class="row">
 		<div class="col-sm-9">
 <div id="eventCarousel" class="carousel slide" data-ride="carousel">
