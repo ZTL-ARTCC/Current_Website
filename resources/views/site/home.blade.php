@@ -87,11 +87,6 @@ $('.carousel').carousel({
 			<div class="row">
 			<div class="col m-1 p-1 rounded bg-dark text-white">
 			<h4>News/Calendar</h4>
-			</div>
-			</div>
-		</div>
-		
-	</div> <!-- Carousel row -->
 	<div class="row">
         <div class="col-sm-4">
             <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
@@ -116,6 +111,11 @@ $('.carousel').carousel({
         <div class="col-sm-4">
         </div>
     </div>
+			</div>
+			</div>
+		</div>
+		
+	</div> <!-- Carousel row -->
     <hr>
     <div class="row">
         <div class="col-sm-6">
