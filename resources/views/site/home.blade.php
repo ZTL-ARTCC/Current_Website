@@ -5,8 +5,7 @@ Home
 @endsection
 
 @section('content')
-<!--
-<div class="jumbotron bg-secondary" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
+<div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
 
             <div class="row">
@@ -17,7 +16,7 @@ Home
             </div>
 
     </div>
-</div> -->
+</div>
 <div class="container bg-secondary">
     <div class="row">
 		<div class="col-sm-9">
