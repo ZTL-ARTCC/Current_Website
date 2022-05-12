@@ -5,7 +5,7 @@ Home
 @endsection
 
 @section('content')
-<div class="jumbotron" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
+<div class="jumbotron jumbotron-fluid" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
 
             <div class="row">
