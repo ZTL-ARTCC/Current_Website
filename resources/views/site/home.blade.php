@@ -5,13 +5,7 @@ Home
 @endsection
 
 @section('content')
-<style>
-.img-blur {
-/*   box-shadow: 0 0 8px 8px #d9e2ef inset; */
-   box-shadow: 0 10px 2px -2px #d9e2ef;
-}
-</style>
-<div class="jumbotron jumbotron-fluid img-blur" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
+<div class="jumbotron jumbotron-fluid" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
             <div class="row">
                 <div class="col-sm-8 text-white">
