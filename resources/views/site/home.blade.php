@@ -85,29 +85,27 @@ $('.carousel').carousel({
 			</div>
 			</div>
 			<div class="row">
-			<div class="col m-1 p-1 rounded bg-dark text-white">
-				<h4><i class="fas fa-newspaper"></i> News</h4>
-				@if(count($news) > 0)
-					@foreach($news as $c)
-						<p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
-					@endforeach
-				@else
-                <center><i><p>No news to show.</p></i></center>
-				@endif
-				<br/><br/>
-				<h4><i class="fas fa-calendar-alt"></i> Calendar</h4>
-				@if(count($calendar) > 0)
-					@foreach($calendar as $c)
-						<p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
-					@endforeach
-				@else
-					<center><i><p>No calendar events to show.</p></i></center>
-				@endif
-
-			</div>
+				<div class="col m-1 p-1 rounded bg-dark text-white">
+					<h4><i class="fas fa-newspaper"></i> News</h4>
+					@if(count($news) > 0)
+						@foreach($news as $c)
+							<p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
+						@endforeach
+					@else
+					<center><i><p>No news to show.</p></i></center>
+					@endif
+					<hr>
+					<h4><i class="fas fa-calendar-alt"></i> Calendar</h4>
+					@if(count($calendar) > 0)
+						@foreach($calendar as $c)
+							<p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
+						@endforeach
+					@else
+						<center><i><p>No calendar events to show.</p></i></center>
+					@endif
+				</div>
 			</div>
 		</div>
-		
 	</div> <!-- Carousel row -->
     <hr>
     <div class="row">
