@@ -10,6 +10,7 @@ Home
             <div class="row">
                 <div class="col-sm-8 text-white">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
+					<h3><b>Providing friendly service in the digital southern skies</b></h3>
                 </div>
             </div>
     </div>
