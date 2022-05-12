@@ -14,6 +14,8 @@ Home
             </div>
     </div>
 </div>
+<div class="container-fluid" style="height:20px; background-image: linear-gradient(#262626, #6c757d);">
+</div>
 <div class="container-fluid bg-secondary">
     <div class="row">
 		<div class="col-sm-9">
@@ -100,7 +102,7 @@ $('.carousel').carousel({
 			</div>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
-					<h4><i class="fas fa-newspaper"></i> News</h4>
+					<h4>News</h4>
 					@if(count($news) > 0)
 						@foreach($news as $c)
 							<p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
@@ -109,7 +111,7 @@ $('.carousel').carousel({
 					<center><i><p>No news to show.</p></i></center>
 					@endif
 					<hr>
-					<h4><i class="fas fa-calendar-alt"></i> Calendar</h4>
+					<h4>Calendar</h4>
 					@if(count($calendar) > 0)
 						@foreach($calendar as $c)
 							<p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
