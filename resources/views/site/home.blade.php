@@ -5,7 +5,18 @@ Home
 @endsection
 
 @section('content')
-<div class="jumbotron jumbotron-fluid" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat; box-shadow: 0 4px 2px -2px gray;">
+<style>
+.img-blur:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 10px 10px #ffffff;
+}
+</style>
+<div class="jumbotron jumbotron-fluid img-blur" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
 
             <div class="row">
