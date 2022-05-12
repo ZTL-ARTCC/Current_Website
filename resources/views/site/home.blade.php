@@ -82,6 +82,24 @@ $('.carousel').carousel({
 			<div class="row">
 			<div class="col m-1 p-1 rounded bg-dark text-white">
 			<h4>Weather</h4>
+            @if($airports->count() > 0)
+                @foreach($airports as $a)
+					<div><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a>&nbsp;
+					@if($a->visual_conditions == 'VFR')
+						<span class="badge bg-success">VFR</span>
+					@elseif($a->visual_conditions == 'IFR')
+						<span class="badge bg-danger">IFR</span>
+					@else
+						<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
+					@endif
+					&nbsp;{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
+                @endforeach
+            @else
+                    <div class="text-center"><i>No Airports to Show</i></div>
+            @endif
+            @if($metar_last_updated != null)
+                <div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div>
+            @endif
 			</div>
 			</div>
 			<div class="row">
