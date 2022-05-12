@@ -6,26 +6,17 @@ Home
 
 @section('content')
 <style>
-.img-blur:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  box-shadow: inset 0 0 10px 10px #ffffff;
+.img-blur {
+   box-shadow: 0 0 8px 8px white inset;
 }
 </style>
 <div class="jumbotron jumbotron-fluid img-blur" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat;">
     <div class="container">
-
             <div class="row">
                 <div class="col-sm-8 text-white">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
                 </div>
-
             </div>
-
     </div>
 </div>
 <div class="container-fluid bg-secondary">
