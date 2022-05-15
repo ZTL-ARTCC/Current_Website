@@ -6,9 +6,9 @@
         <p><i>For entertainment purposes only. Do not use for real world purposes. Part of the VATSIM Network.</i></p>
 		<style>
 		.pride {
-			width: 100px;
-			height: 30px;
-			
+			display: inline-block;
+			width: 50px;
+			height: 20px
 		}
 		.lgbt {
 			background: linear-gradient(180deg, #FE0000 16.66%,
@@ -31,7 +31,7 @@
 			margin-left: 10px;
 		}
 		</style>
-		<div><div><div class="pride lgbt"></div><span class="pride transgender"></span><span class="pride bisexual"></span><span class="pride pansexual"></span></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
+		<div><div><div class="pride lgbt"></div><div class="pride transgender"></div><div class="pride bisexual"></div><div class="pride pansexual"></div></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
     </div>
     <div class="container bg-secondary">
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
