@@ -55,7 +55,7 @@ $('.carousel').carousel({
 			@if($atl_ctr === 1)
                 <div class="col"><span class="badge bg-success">ONLINE</span></div><div class="col">&nbsp;Atlanta Center</div>
             @else
-				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Atlanta Center</div>
+				<div class="col"><span class="badge bg-danger">OFFLINE</span></div><div class="col">&nbsp;Atlanta Center</div>
             @endif
             @if($atl_app === 1)
 				<div><span class="badge bg-success">ONLINE</span>&nbsp;A80 TRACON</div>
