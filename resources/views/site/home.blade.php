@@ -16,6 +16,7 @@ Home
     </div>
 </div>
 -->
+<?php /*
 <div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d); margin-bottom: 10px"></div>
 <div class="container-fluid bg-secondary">
     <div class="row">
@@ -50,7 +51,6 @@ $('.carousel').carousel({
 </script>	
 		</div>
 		<div class="col border border-danger">
-<?php /*
 			<div class="row">
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
