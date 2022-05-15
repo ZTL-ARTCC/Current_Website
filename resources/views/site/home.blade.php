@@ -48,7 +48,7 @@ $('.carousel').carousel({
 </script>	
 		</div>
 
-		<div class="col border border-danger ml-auto">
+		<div class="col border border-danger pl-auto">
 		
 			<div class="row">
 				<div class="col mt-0 mb-1 mx-1 p-1 rounded bg-dark text-white">
