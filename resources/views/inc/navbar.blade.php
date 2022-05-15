@@ -1,4 +1,4 @@
-<!--<div class="container-fluid bg-dark">-->
+<div class="container-fluid bg-dark">
 <?php /*
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
@@ -58,5 +58,5 @@
             </ul>
         </div>
     </nav>
-<!--</div>-->
 */ ?>
+</div>
