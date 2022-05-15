@@ -49,7 +49,7 @@
     <body class="bg-secondary">
 
         {{-- Messages --}}
-        @include('inc.messages')
+        <?php // @include('inc.messages') ?>
 
         {{-- Navbar --}}
         @include('inc.navbar')
