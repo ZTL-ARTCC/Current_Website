@@ -49,7 +49,7 @@ $('.carousel').carousel({
 		</div>
 
 		<div class="col border border-danger">
-			<div class="row">
+			<div class="row" style="margin:auto">
 				<div class="col mt-0 mb-1 mx-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
