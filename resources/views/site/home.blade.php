@@ -14,7 +14,7 @@ Home
             </div>
     </div>
 </div>
-<div class="container-fluid" style="height:20px; background-image: linear-gradient(#262626, #6c757d);">
+<div class="container-fluid" style="height:20px; background-image: linear-gradient(180deg, red, yellow);"> <!-- #262626, #6c757d -->
 </div>
 <div class="container-fluid bg-secondary">
     <div class="row">
