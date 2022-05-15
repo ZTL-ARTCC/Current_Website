@@ -16,7 +16,6 @@ Home
     </div>
 </div>
 -->
-<?php /*
 <div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d); margin-bottom: 10px"></div>
 <div class="container-fluid bg-secondary">
     <div class="row">
@@ -148,5 +147,4 @@ $('.carousel').carousel({
 		</div>
 	</div> <!-- Carousel row -->
  </div>
-*/ ?>
 @endsection
