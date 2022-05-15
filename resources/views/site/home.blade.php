@@ -58,7 +58,7 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col-auto pl-0 border">Atlanta Center</div>
+						</div><div class="col-auto pl-0">Atlanta Center</div>
 					</div>
 					<div class="row">
 						<div class="col-auto">
@@ -67,7 +67,7 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col">&nbsp;A80 TRACON</div>
+						</div><div class="col-auto pl-0">A80 TRACON</div>
 					</div>
 					<div class="row">
 						<div class="col-auto">
@@ -76,7 +76,7 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col">&nbsp;Atlanta ATCT</div>
+						</div><div class="col-auto pl-0">Atlanta ATCT</div>
 					</div>
 					<div class="row">
 						<div class="col-auto">
@@ -85,10 +85,10 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col">&nbsp;Charlotte ATCT</div>
+						</div><div class="col-auto pl-0">Charlotte ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 							<span class="badge bg-info">{{ $flights->count() }}</span>&nbsp;flights in ZTL airspace
 						</div>
 					</div>
