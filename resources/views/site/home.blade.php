@@ -48,9 +48,9 @@ $('.carousel').carousel({
 </script>	
 		</div>
 
-		<div class="col border border-danger">
+		<div class="col border pr-3">
 		
-			<div class="row pr-3">
+			<div class="row">
 				<div class="col mt-0 rounded bg-dark text-white">
 <!--				<div class="col mt-0 mb-1 mr-1 p-1 rounded bg-dark text-white"> -->
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
