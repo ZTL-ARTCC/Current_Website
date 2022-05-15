@@ -31,7 +31,7 @@
 			margin-left: 10px;
 		}
 		</style>
-		<div><div><span class="pride lgbt"></span><span class="pride transgender"></span><span class="pride bisexual"></span><span class="pride pansexual"></span></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
+		<div><div><div class="pride lgbt"></div><span class="pride transgender"></span><span class="pride bisexual"></span><span class="pride pansexual"></span></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
     </div>
     <div class="container bg-secondary">
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
