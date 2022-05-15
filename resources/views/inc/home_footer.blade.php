@@ -1,4 +1,3 @@
-<?php /*
 <footer id="myFooter" class="bg-secondary">
     <div class="footer-social bg-secondary">
         <p>Visit our partners:</p>
@@ -41,4 +40,3 @@
         </p>
     </div>
 </footer>
-*/ ?>
