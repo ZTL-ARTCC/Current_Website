@@ -47,8 +47,8 @@ $('.carousel').carousel({
 })	
 </script>	
 		</div>
-<?php /*
 		<div class="col border border-danger">
+<?php /*
 			<div class="row">
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
@@ -95,7 +95,6 @@ $('.carousel').carousel({
 					</div>
 				</div>
 			</div>
-*/ ?>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
@@ -123,6 +122,7 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
+*/ ?>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 					<h4>News</h4>
