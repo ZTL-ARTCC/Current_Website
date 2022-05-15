@@ -124,7 +124,6 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
-*/ ?>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 					<h4>News</h4>
@@ -149,4 +148,5 @@ $('.carousel').carousel({
 		</div>
 	</div> <!-- Carousel row -->
  </div>
+*/ ?>
 @endsection
