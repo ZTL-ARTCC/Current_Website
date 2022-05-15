@@ -97,11 +97,11 @@ $('.carousel').carousel({
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
-					<div class="row">
-						<div class="col-auto">
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
-						<a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div><div class="col-auto">
+						<div class="row">
+						<div class="col-auto"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div>
+						<div class="col-auto">
 						@if($a->visual_conditions == 'VFR')
 							<span class="badge bg-success">VFR</span>
 						@elseif($a->visual_conditions == 'IFR')
@@ -109,7 +109,8 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
 						@endif
-						</div><div class="col-auto">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
+						</div>
+						<div class="col-auto">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
 						</div>
 					@endforeach
 				@else
