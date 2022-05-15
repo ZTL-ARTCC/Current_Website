@@ -7,7 +7,7 @@
 		<style>
 		.pride {
 			display: inline-block;
-			width: 50px;
+			width: 35px;
 			height: 20px
 		}
 		.lgbt {
@@ -27,7 +27,7 @@
 		.pansexual {
 			background: linear-gradient(180deg, #FF218C 33.33%, #FFD800 33.33%, 66.66%, #21B1FF 66.66%);
 		}
-		span.pride + span.pride {
+		div.pride + div.pride {
 			margin-left: 10px;
 		}
 		</style>
