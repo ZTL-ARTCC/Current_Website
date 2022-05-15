@@ -96,7 +96,7 @@ $('.carousel').carousel({
 					</div>
 				</div>
 			</div>
-		</div>
+
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 				<h4>Weather</h4>
