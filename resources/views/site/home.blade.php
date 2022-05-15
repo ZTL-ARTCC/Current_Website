@@ -71,26 +71,26 @@ $('.carousel').carousel({
 						</div><div class="col-auto pl-0">A80 TRACON</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($atl_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col pl-0">Atlanta ATCT</div>
+						</div><div class="col-auto pl-0">Atlanta ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($clt_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col pl-0">Charlotte ATCT</div>
+						</div><div class="col-auto pl-0">Charlotte ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col">
-							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>flights in ZTL airspace
+						<div class="col-auto">
+							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
 						</div>
 					</div>
 				</div>
@@ -102,8 +102,7 @@ $('.carousel').carousel({
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
 						<div class="row">
-						<div class="col"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div>
-						<div class="col">
+						<div class="col-auto">
 						@if($a->visual_conditions == 'VFR')
 							<span class="badge bg-success">VFR</span>
 						@elseif($a->visual_conditions == 'IFR')
@@ -112,7 +111,8 @@ $('.carousel').carousel({
 							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
 						@endif
 						</div>
-						<div class="col">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
+						<div class="col-auto"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div>
+						<div class="col-auto">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
 						</div>
 					@endforeach
 				@else
