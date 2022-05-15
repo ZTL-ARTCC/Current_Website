@@ -14,7 +14,34 @@
         <link rel="stylesheet" href="/js/app.js">
         <link rel="stylesheet" href="/css/Footer-white.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+		<style>
+		.pride {
+			width: 100px;
+			height: 30px;
+			
+		}
+		.lgbt {
+			background: linear-gradient(180deg, #FE0000 16.66%,
+			#FD8C00 16.66%, 33.32%,
+			#FFE500 33.32%, 49.98%,
+			#119F0B 49.98%, 66.64%,
+			#0644B3 66.64%, 83.3%,
+			#C22EDC 83.3%);
+		}
+		.transgender {
+			background: linear-gradient(180deg, #5BCEFA 20%, #F5A9B8 20%, 40%, #FFFFFF 40%, 60%, #F5A9B8 60%, 80%, #5BCEFA 80%);
+		}
+		.bisexual {
+			background: linear-gradient(180deg, #D60270 40%, #9B4F96 40%, 60%, #0038A8 60%);
+		}
+		.pansexual {
+			background: linear-gradient(180deg, #FF218C 33.33%, #FFD800 33.33%, 66.66%, #21B1FF 66.66%);
+		}
+		span.pride + span.pride {
+			margin-left: 10px;
+		}
+		</style>
+		
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
             <!--<script src="/js/snowstorm.js"></script>-->
