@@ -5,6 +5,7 @@ Home
 @endsection
 
 @section('content')
+<!--
 <div class="jumbotron jumbotron-fluid" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat; margin-bottom: 0px">
     <div class="container">
             <div class="row">
@@ -14,6 +15,7 @@ Home
             </div>
     </div>
 </div>
+-->
 <div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d); margin-bottom: 10px"></div>
 <div class="container-fluid bg-secondary">
     <div class="row">
