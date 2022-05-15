@@ -52,13 +52,13 @@ $('.carousel').carousel({
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 					<h4>Airspace Status</h4>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col-auto mr-0">
 						@if($atl_ctr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col">&nbsp;Atlanta Center</div>
+						</div><div class="col ml-0">&nbsp;Atlanta Center</div>
 					</div>
 					<div class="row">
 						<div class="col-auto">
