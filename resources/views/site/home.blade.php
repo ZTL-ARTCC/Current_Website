@@ -52,7 +52,7 @@ $('.carousel').carousel({
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 					<h4>Airspace Status</h4>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($atl_ctr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
@@ -61,7 +61,7 @@ $('.carousel').carousel({
 						</div><div class="col">&nbsp;Atlanta Center</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($atl_app === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
@@ -70,7 +70,7 @@ $('.carousel').carousel({
 						</div><div class="col">&nbsp;A80 TRACON</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($atl_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
@@ -79,7 +79,7 @@ $('.carousel').carousel({
 						</div><div class="col">&nbsp;Atlanta ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-auto">
 						@if($clt_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
@@ -87,7 +87,7 @@ $('.carousel').carousel({
 						@endif
 						</div><div class="col">&nbsp;Charlotte ATCT</div>
 					</div>
-					<div class="row">
+					<div class="row-auto">
 						<div class="col">
 						@if($flights->count() > 0)
 							<span class="badge bg-info">{{ $flights->count() }}</span>
