@@ -30,8 +30,11 @@
 		div.pride + div.pride {
 			margin-left: 10px;
 		}
+		.inclusivity p {
+			display: inline-block
+		}
 		</style>
-		<div><div><div class="pride lgbt"></div><div class="pride transgender"></div><div class="pride bisexual"></div><div class="pride pansexual"></div></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
+		<div class="inclusivity"><div class="pride lgbt"></div><div class="pride transgender"></div><div class="pride bisexual"></div><div class="pride pansexual"></div><p>The Atlanta ARTCC stands with the LGBTQIA+ community on VATSIM</p></div>
     </div>
     <div class="container bg-secondary">
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
