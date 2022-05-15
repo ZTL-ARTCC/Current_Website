@@ -1,5 +1,6 @@
 <!--<div class="container-fluid bg-dark">-->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+<?php /*
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -58,3 +59,4 @@
         </div>
     </nav>
 <!--</div>-->
+*/ ?>
