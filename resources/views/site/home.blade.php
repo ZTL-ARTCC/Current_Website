@@ -50,7 +50,7 @@ $('.carousel').carousel({
 		<div class="col">
 			<div class="row">
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
-					<div class="row"><h4>Airspace Status</h4></div>
+					<div class="row"><div class="col-auto"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
 						@if($atl_ctr === 1)
