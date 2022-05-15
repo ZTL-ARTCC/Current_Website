@@ -1,5 +1,5 @@
-<footer id="myFooter">
-    <div class="footer-social">
+<footer id="myFooter" class="bg-secondary">
+    <div class="footer-social bg-secondary">
         <p>Visit our partners:</p>
         <a href="http://www.vatstar.com/" target="_blank"><img width="200" src="/photos/partner-vatstar.png"></a> &nbsp;&nbsp;&nbsp; <a style="position: relative; top: -10px" href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="200" src="/photos/partner-ts.png"></a> &nbsp;&nbsp;&nbsp; <a style="position: relative; top: -10px" href="https://www.thepilotclub.org/" target="_blank"><img height="100" src="/photos/partner-tpc.png"></a>
         <br><br>
@@ -35,7 +35,7 @@
     </div>
     <div class="container bg-secondary">
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
-        <p class="footer-copyright">
+        <p class="footer-copyright text-dark">
             © {{ Carbon\Carbon::now()->year }} vZTL ARTCC
         </p>
     </div>

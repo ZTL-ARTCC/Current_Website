@@ -17,7 +17,7 @@
 
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
-            <script src="/js/snowstorm.js"></script>
+            <!--<script src="/js/snowstorm.js"></script>-->
         @endif
 
         {{-- Bootstrap --}}
@@ -45,9 +45,8 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
-
     </head>
-    <body>
+    <body class="bg-secondary">
 
         {{-- Messages --}}
         @include('inc.messages')
