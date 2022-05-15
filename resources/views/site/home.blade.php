@@ -14,7 +14,7 @@ Home
             </div>
     </div>
 </div>
-<div class="container-fluid" style="min-height:20px; width:100%; background-image: linear-gradient(180deg, #262626, #262626);">XXX</div> <!-- #262626, #262626 -->
+<div class="container-fluid" style="min-height:20px; width:100%; background-image: linear-gradient(180deg, #343a40, #6c757d);">XXX</div> <!-- #262626, #262626 -->
 <div class="container-fluid bg-secondary">
     <div class="row">
 		<div class="col-sm-9">
