@@ -50,45 +50,45 @@ $('.carousel').carousel({
 		<div class="col">
 			<div class="row">
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
-					<div class="row"><div class="col-auto"><h4>Airspace Status</h4></div></div>
+					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col">
 						@if($atl_ctr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col-auto pl-0">Atlanta Center</div>
+						</div><div class="col pl-0">Atlanta Center</div>
 					</div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col">
 						@if($atl_app === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col-auto pl-0">A80 TRACON</div>
+						</div><div class="col pl-0">A80 TRACON</div>
 					</div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col">
 						@if($atl_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col-auto pl-0">Atlanta ATCT</div>
+						</div><div class="col pl-0">Atlanta ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col">
 						@if($clt_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col-auto pl-0">Charlotte ATCT</div>
+						</div><div class="col pl-0">Charlotte ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col">
 							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>flights in ZTL airspace
 						</div>
 					</div>
