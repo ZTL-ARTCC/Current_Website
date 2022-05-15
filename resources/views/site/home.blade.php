@@ -47,7 +47,7 @@ $('.carousel').carousel({
 })	
 </script>	
 		</div>
-		<div class="col">
+		<div class="col-sm-3">
 			<div class="row">
 				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
