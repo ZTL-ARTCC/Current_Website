@@ -1,5 +1,5 @@
 <div class="container-fluid bg-dark">
-<div class="row no-gutters">
+<div class="row no-gutters overflow-hidden">
 <div class="col">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
