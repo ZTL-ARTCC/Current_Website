@@ -14,7 +14,7 @@ Home
             </div>
     </div>
 </div>
-<div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d); margin-bottom: 10px"></div>
+<div class="container-fluid" style="min-height:30px; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d); margin-bottom: 10px"></div>
 <div class="container-fluid bg-secondary">
     <div class="row overflow-hidden">
 		<div class="col-sm-9">
@@ -48,7 +48,7 @@ $('.carousel').carousel({
 </script>	
 		</div>
 
-		<div class="col border border-danger mr-auto">
+		<div class="col border border-danger">
 		
 			<div class="row">
 				<div class="col mt-0 mb-1 mx-1 p-1 rounded bg-dark text-white">
