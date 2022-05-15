@@ -88,11 +88,9 @@ $('.carousel').carousel({
 						</div><div class="col">&nbsp;Charlotte ATCT</div>
 					</div>
 					<div class="row">
-						<div class="col-auto">
-						@if($flights->count() > 0)
-							<span class="badge bg-info">{{ $flights->count() }}</span>
-						@endif
-						</div><div class="col">&nbsp;flights in ZTL airspace</div>
+						<div class="col">
+							<span class="badge bg-info">{{ $flights->count() }}</span>&nbsp;flights in ZTL airspace
+						</div>
 					</div>
 				</div>
 			</div>
