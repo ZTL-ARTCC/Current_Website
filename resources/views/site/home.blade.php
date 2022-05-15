@@ -51,8 +51,9 @@ $('.carousel').carousel({
 			<div class="row">
 			<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
 			<h4>Airspace Status</h4>
+			<div class="row">
 			@if($atl_ctr === 1)
-                <div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta Center</div>
+                <div class="col"><span class="badge bg-success">ONLINE</span></div><div class="col">&nbsp;Atlanta Center</div>
             @else
 				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Atlanta Center</div>
             @endif
@@ -74,6 +75,7 @@ $('.carousel').carousel({
 			@if($flights->count() > 0)
 				<div><span class="badge bg-info">{{ $flights->count() }}</span>&nbsp;flights in ZTL airspace</div>
 			@endif
+			</div>
 			</div>
 			</div>
 			<div class="row">
