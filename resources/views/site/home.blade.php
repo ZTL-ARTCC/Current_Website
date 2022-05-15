@@ -58,7 +58,7 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</div><div class="col ml-0 border">&nbsp;Atlanta Center</div>
+						</div><div class="col ml-0 pl-0 border">&nbsp;Atlanta Center</div>
 					</div>
 					<div class="row">
 						<div class="col-auto">
