@@ -49,35 +49,54 @@ $('.carousel').carousel({
 		</div>
 		<div class="col">
 			<div class="row">
-			<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
-			<h4>Airspace Status</h4>
-			<div class="row">
-			@if($atl_ctr === 1)
-                <div class="col"><span class="badge bg-success">ONLINE</span></div><div class="col">&nbsp;Atlanta Center</div>
-            @else
-				<div class="col"><span class="badge bg-danger">OFFLINE</span></div><div class="col">&nbsp;Atlanta Center</div>
-            @endif
-            @if($atl_app === 1)
-				<div><span class="badge bg-success">ONLINE</span>&nbsp;A80 TRACON</div>
-            @else
-				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;A80 TRACON</div>
-            @endif
-            @if($atl_twr === 1)
-				<div><span class="badge bg-success">ONLINE</span>&nbsp;Atlanta ATCT</div>
-            @else
-				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Atlanta ATCT</div>
-            @endif
-            @if($clt_twr === 1)
-				<div><span class="badge bg-success">ONLINE</span>&nbsp;Charlotte ATCT</div>
-            @else
-				<div><span class="badge bg-danger">OFFLINE</span>&nbsp;Charlotte ATCT</div>
-            @endif
-			@if($flights->count() > 0)
-				<div><span class="badge bg-info">{{ $flights->count() }}</span>&nbsp;flights in ZTL airspace</div>
-			@endif
+				<div class="col mt-0 mx-1 mb-1 p-1 rounded bg-dark text-white">
+					<h4>Airspace Status</h4>
+					<div class="row">
+						<div class="col">
+						@if($atl_ctr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col">&nbsp;Atlanta Center</div>
+					</div>
+					<div class="row">
+						<div class="col">
+						@if($atl_app === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col">&nbsp;A80 TRACON</div>
+					</div>
+					<div class="row">
+						<div class="col">
+						@if($atl_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col">&nbsp;Atlanta ATCT</div>
+					</div>
+					<div class="row">
+						<div class="col">
+						@if($clt_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col">&nbsp;Charlotte ATCT</div>
+					</div>
+					<div class="row">
+						<div class="col">
+						@if($flights->count() > 0)
+							<span class="badge bg-info">{{ $flights->count() }}</span>
+						@endif
+						</div><div class="col">&nbsp;flights in ZTL airspace</div>
+					</div>
+				</div>
 			</div>
-			</div>
-			</div>
+		</div>
 			<div class="row">
 				<div class="col m-1 p-1 rounded bg-dark text-white">
 				<h4>Weather</h4>
