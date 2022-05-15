@@ -1,4 +1,4 @@
-<div class="container-fluid bg-dark py-0">
+<div class="container-fluid bg-dark px-0">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
