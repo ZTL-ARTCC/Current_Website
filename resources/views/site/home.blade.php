@@ -53,7 +53,7 @@ $('.carousel').carousel({
 				<div class="col mt-0 mb-1 mx-1 p-1 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
-						<div class="col-auto">
+						<div class="col-1">
 						@if($atl_ctr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
