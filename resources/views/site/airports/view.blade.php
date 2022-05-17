@@ -244,9 +244,9 @@ print_r($airport->inbound_traffic);
                 </table>
             @else
                 <p>No inbound traffic.</p>
-            @endif
 */
-?>
+?>			
+            @endif
         </div>
     </div>
     <br>
@@ -284,9 +284,9 @@ print_r($airport->inbound_traffic);
                 </table>
             @else
                 <p>No outbound traffic.</p>
-            @endif
 */
-?>
+?>			
+            @endif
         </div>
     </div>
 </div>
