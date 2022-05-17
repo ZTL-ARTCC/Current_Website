@@ -153,17 +153,18 @@ class FrontController extends Controller
 
 		// VATEUD API is no longer accessible
 		$pilots_a = $pilots_d = false;
+		$res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$this->ltr_4.'&type=arrival');
         //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
-        //$pilots_a = json_decode($res_a->getBody()->getContents(), true);
+        $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if($pilots_a) {
             $pilots_a = collect($pilots_a);
         } else {
             $pilots_a = null;
         }
-
+		$res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$this->ltr_4.'&type=departure');
         //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
-        //$pilots_d = json_decode($res_d->getBody()->getContents(), true);
+        $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if($pilots_d) {
             $pilots_d = collect($pilots_d);
