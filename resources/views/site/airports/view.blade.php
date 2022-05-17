@@ -214,10 +214,10 @@ View Airport ({{ $airport->ltr_4 }})
             <b>Inbound Traffic (Arrivals)</b>
         </div>
         <div class="card-body">
-            @if($airport->inbound_traffic != null)
 <?php 
 print_r($airport->inbound_traffic);
 /*
+            @if($airport->inbound_traffic != null)
                 <table class="table table-striped">
                     <thead>
                         <th scope="col">Callsign</th>
@@ -244,9 +244,9 @@ print_r($airport->inbound_traffic);
                 </table>
             @else
                 <p>No inbound traffic.</p>
+            @endif
 */
 ?>			
-            @endif
         </div>
     </div>
     <br>
@@ -284,9 +284,9 @@ print_r($airport->inbound_traffic);
                 </table>
             @else
                 <p>No outbound traffic.</p>
+            @endif
 */
 ?>			
-            @endif
         </div>
     </div>
 </div>
