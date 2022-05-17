@@ -230,6 +230,7 @@ print_r($airport->inbound_traffic); ?>
 <tr><td>
 <?php 
 print_r($a);
+print "<br/><br/>";
 /*
                         <tr>
                             <td>{{ $a['callsign'] }}</td>
