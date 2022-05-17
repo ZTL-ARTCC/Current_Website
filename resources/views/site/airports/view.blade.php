@@ -214,7 +214,8 @@ View Airport ({{ $airport->ltr_4 }})
             <b>Inbound Traffic (Arrivals)</b>
         </div>
         <div class="card-body">
-
+<?php 
+print_r($airport->inbound_traffic); ?>
             @if($airport->inbound_traffic != null)
                 <table class="table table-striped">
                     <thead>
