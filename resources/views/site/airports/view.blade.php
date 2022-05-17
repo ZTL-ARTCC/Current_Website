@@ -261,6 +261,7 @@ View Airport ({{ $airport->ltr_4 }})
                     </thead>
                     <tbody>
                         @foreach($airport->outbound_traffic as $a)
+						<?php print_r($a); ?>
                         <tr>
                             <td>{{ $a['callsign'] }}</td>
                             <td>{{ $a['aircraft'] }}</td>
