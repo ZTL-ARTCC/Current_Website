@@ -228,10 +228,7 @@ print_r($airport->inbound_traffic); ?>
                     <tbody>
                         @foreach($airport->inbound_traffic as $a)
 <tr><td>
-<?php 
-print_r($a);
-print "<br/><br/>";
-/*
+
                         <tr>
                             <td>{{ $a['callsign'] }}</td>
                             <td>{{ $a['aircraft'] }}</td>
@@ -243,8 +240,7 @@ print "<br/><br/>";
                             <td>{{ $a['origin'] }}</td>
                             <td>{{ $a['route'] }}</td>
                         </tr>
-*/
-?>
+
 </td></tr>						
                         @endforeach
                     </tbody>
