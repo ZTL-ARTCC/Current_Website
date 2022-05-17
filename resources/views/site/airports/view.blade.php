@@ -214,9 +214,7 @@ View Airport ({{ $airport->ltr_4 }})
             <b>Inbound Traffic (Arrivals)</b>
         </div>
         <div class="card-body">
-<?php 
-print_r($airport->inbound_traffic);
-/*
+
             @if($airport->inbound_traffic != null)
                 <table class="table table-striped">
                     <thead>
@@ -228,6 +226,10 @@ print_r($airport->inbound_traffic);
                     </thead>
                     <tbody>
                         @foreach($airport->inbound_traffic as $a)
+<tr><td>
+<?php 
+print_r($a);
+/*
                         <tr>
                             <td>{{ $a['callsign'] }}</td>
                             <td>{{ $a['aircraft'] }}</td>
@@ -239,14 +241,16 @@ print_r($airport->inbound_traffic);
                             <td>{{ $a['origin'] }}</td>
                             <td>{{ $a['route'] }}</td>
                         </tr>
+*/
+?>
+</td></tr>						
                         @endforeach
                     </tbody>
                 </table>
             @else
                 <p>No inbound traffic.</p>
             @endif
-*/
-?>			
+			
         </div>
     </div>
     <br>
