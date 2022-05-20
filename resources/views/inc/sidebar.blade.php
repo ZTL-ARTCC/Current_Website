@@ -160,9 +160,15 @@
 
 <br>
 
-<?php // @include('inc.chat') ?>
+<?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
-
+<div class="row pr-3">
+	<div class="col m-1 p-1 rounded">
+		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->month }} Leaderboard</h4>
+		</div>
+		</div>
+	</div>
+</div>
 
 <style>
 
