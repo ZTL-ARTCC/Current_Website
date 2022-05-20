@@ -163,8 +163,38 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
 <div class="row pr-3">
-	<div class="col m-1 p-1 rounded">
+	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
 		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
+		</div>
+		</div>
+	</div>
+</div>
+<br/>
+<div class="row pr-3">
+	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
+		<div class="row"><div class="col-auto"><h4>Online Now</h4>
+            <div class="table">
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        @if($controllers->count() > 0)
+                            @foreach($controllers as $c)
+                                <tr>
+									<td><center>{{ $c->name }}</center></td>
+                                    <td><center>{{ $c->position }}</center></td>
+                                    <td><center>{{ $c->time_online }}</center></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4"><center><i>So empty...</i></center></td>
+                            </tr>
+                        @endif
+                        <tr>
+                            <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i>{{ $controllers_update }}Z</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+			</div>
 		</div>
 		</div>
 	</div>
