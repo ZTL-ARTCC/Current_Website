@@ -154,7 +154,7 @@ class ControllerDash extends Controller
 		$leaderboard = array();
 		for($x=0;count($leaderboard) < 5;$x++) {
 			$leaderboard[$x] = $home[$x];
-			$leaderboard[$x]['hours'] = $stats[$home[$x]->id];
+			$leaderboard[$x]['hours'] = $stats[$home[$x]->id]->bronze_hrs;
 		}	
 // New leaderboard shit...		
 
