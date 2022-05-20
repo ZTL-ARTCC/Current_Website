@@ -164,7 +164,7 @@
 
 <div class="row pr-3">
 	<div class="col m-1 p-1 rounded">
-		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->month->format('F'); }} Leaderboard</h4>
+		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->->translatedFormat('F') }} Leaderboard</h4>
 		</div>
 		</div>
 	</div>
