@@ -165,7 +165,7 @@
 <div class="row pr-3">
 	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
 		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
-                        @if($leaderboard->count() > 0)
+                        @if(count($leaderboard) > 0)
                             @foreach($leaderboard as $l)
 									<center>{{ $c->name }}</center>
                                     <center>{{ $c->hours }}</center>
