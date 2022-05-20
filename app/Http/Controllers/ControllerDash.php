@@ -152,7 +152,7 @@ class ControllerDash extends Controller
             return $stats[$user->id]->bronze_hrs;
         });
 		$leaderboard = array();
-		for($x=0;count($leaderboard < 5);$x++) {
+		for($x=0;count($leaderboard) < 5;$x++) {
 			$leaderboard[$x] = $home[$x];
 			$leaderboard[$x]['hours'] = $stats[$home[$x]->id];
 		}	
