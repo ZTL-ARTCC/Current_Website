@@ -144,6 +144,19 @@ class ControllerDash extends Controller
         })->sortBy(function($e) {
             return strtotime($e->date);
         });
+		
+// New leaderboard shit...
+        $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
+        $homec = User::where('visitor', 0)->where('status', 1)->get();
+        $home = $homec->sortByDesc(function($user) use($stats) {
+            return $stats[$user->id]->bronze_hrs;
+        });
+		$leaderboard = array();
+		for($x=0;count($leaderboard < 5);$x++) {
+			$leaderboard[$x] = $home[$x];
+			$leaderboard[$x]['hours'] = $stats[$home[$x]->id];
+		}	
+// New leaderboard shit...		
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
@@ -153,7 +166,7 @@ class ControllerDash extends Controller
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
-                                          ->with('flights', $flights)->with('flights_update', $flights_update);
+                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('leaderboard', $leaderboard);
     }
 
     public function showProfile($year = null, $month = null) {
