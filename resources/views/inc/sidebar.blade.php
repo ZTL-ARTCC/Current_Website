@@ -162,35 +162,31 @@
 
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
-<div class="card bg-dark">
+<div class="card">
 	<div class="card-body">
-		<div class="row">
-			<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
-				<ul class="list-group list-group-flush">
-				@if(count($home) > 0)
-                    @foreach($home as $h)
-						<li class="list-group-item-dark d-flex"><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
-                    @endforeach
-                @else
-                    <li class="list-group-item-dark d-flex"><i>So empty...</i></li>
-                @endif
-			</div>
-		</div>
+		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
+		<ul class="list-group list-group-flush">
+		@if(count($home) > 0)
+            @foreach($home as $h)
+				<li class="list-group-item d-flex"><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
+            @endforeach
+        @else
+            <li class="list-group-item d-flex"><i>So empty...</i></li>
+        @endif
 	</div>
 </div>
 <br/>
-<div class="row pr-3">
-	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
-		<div class="row"><div class="col-auto"><h5>Online Now</h5>
-                        @if($controllers->count() > 0)
-                            @foreach($controllers as $c)
-									<center><strong>{{ $c->name }}</strong> ({{ $c->time_online }})</center>
-                            @endforeach
-                        @else
-                                <center><i>So empty...</i></center>
-                        @endif
-		</div>
-		</div>
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">Online Now</h5>
+		<ul class="list-group list-group-flush">
+        @if($controllers->count() > 0)
+            @foreach($controllers as $c)
+				<li class="list-group-item d-flex"><strong>{{ $c->name }}</strong> ({{ $c->time_online }})</li>
+            @endforeach
+        @else
+            <li class="list-group-item d-flex"><i>So empty...</i></li>
+        @endif
 	</div>
 </div>
 
