@@ -163,16 +163,19 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
 <div class="row pr-3">
-	<div class="col m-1 ml-3 p-1 rounded" style="background-color:#F0F0F0">
-		<div class="row"><div class="col-auto"><h5>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
-                        @if(count($home) > 0)
-                            @foreach($home as $h)
-									<center><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</center>
-                            @endforeach
-                        @else
-                                <center><i>So empty...</i></center>
-                        @endif
-		</div>
+	<div class="col m-3 p-2 rounded" style="background-color:#F0F0F0">
+		<div class="row">
+			<div class="col-auto">
+				<h5>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
+                <ul>
+				@if(count($home) > 0)
+                    @foreach($home as $h)
+						<li><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
+                    @endforeach
+                @else
+                    <li><i>So empty...</i></li>
+                @endif
+			</div>
 		</div>
 	</div>
 </div>
