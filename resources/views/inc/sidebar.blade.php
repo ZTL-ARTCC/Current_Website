@@ -163,12 +163,12 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 @if(isset($home))
 <div class="card">
-	<div class="card-body py-2 px-1">
+	<div class="card-body p-2">
 		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders&nbsp;<i class="fas fa-medal"></i></h5>
 		<ul class="list-group list-group-flush">
 		@if(count($home) > 0)
             @foreach($home as $h)
-				<li class="list-group-item d-flex"><strong>{{ $h->full_name }}</strong>&nbsp;{{ $stats[$h->id]->bronze_hrs }} hrs</li>
+				<li class="list-group-item d-flex px-1"><strong>{{ $h->full_name }}</strong>&nbsp;{{ $stats[$h->id]->bronze_hrs }} hrs</li>
             @endforeach
         @else
             <li class="list-group-item d-flex"><i>So empty...</i></li>
