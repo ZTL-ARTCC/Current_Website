@@ -164,7 +164,7 @@
 
 <div class="card">
 	<div class="card-body p-2">
-		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders</h5>
+		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders&nbsp;<i class="fas fa-medal"></i></h5>
 		<ul class="list-group list-group-flush">
 		@if(count($home) > 0)
             @foreach($home as $h)
@@ -178,7 +178,7 @@
 <br/>
 <div class="card">
 	<div class="card-body p-2">
-		<h5 class="card-title">Online Now</h5>
+		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
 		<ul class="list-group list-group-flush">
         @if($controllers->count() > 0)
             @foreach($controllers as $c)
