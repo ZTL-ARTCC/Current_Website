@@ -5,7 +5,7 @@ Home
 @endsection
 
 @section('content')
-<div class="w-100 pb-3 bg-secondary">
+<div class="w-100 py-3 bg-secondary">
 <div class="jumbotron jumbotron-fluid rounded mb-0 mx-3" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat">
     <div class="container">
             <div class="row">
