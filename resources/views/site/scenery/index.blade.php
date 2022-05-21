@@ -13,7 +13,7 @@ Scenery
     </div>
 </span>
 <br>
-<div class="container">
+<div class="container bg-secondary">
     {!! Form::open(['url' => '/pilots/scenery/search']) !!}
         <div class="form-group inline">
             <div class="row">
