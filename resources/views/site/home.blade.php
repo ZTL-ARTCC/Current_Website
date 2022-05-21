@@ -48,17 +48,10 @@ $('.carousel').carousel({
   interval: 3000 // delay time ms
 })	
 </script>	
-<style>
-@media (max-width: 480px) { 
-	.right_widget {
-		margin-top: ($spacer * .25) !important;
-	}
-}
-</style>
 		</div>
 		<div class="col">
-			<div class="row pr-3">
-				<div class="col mt-0 mb-1 mx-1 p-2 rounded bg-dark text-white">
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
@@ -104,8 +97,8 @@ $('.carousel').carousel({
 				</div>
 			</div>
 
-			<div class="row pr-3">
-				<div class="col m-1 p-2 rounded bg-dark text-white">
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
@@ -128,8 +121,8 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
-			<div class="row pr-3">
-				<div class="col m-1 p-2 rounded bg-dark text-white">
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
 					<h4>News</h4>
 					@if(count($news) > 0)
 						@foreach($news as $c)
