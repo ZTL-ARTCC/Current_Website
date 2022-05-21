@@ -168,7 +168,7 @@
 		<ul class="list-group list-group-flush">
 		@if(count($home) > 0)
             @foreach($home as $h)
-				<li class="list-group-item d-flex px-1"><strong>{{ $h->full_name }}</strong>&nbsp;{{ $stats[$h->id]->bronze_hrs }}</li>
+				<li class="list-group-item d-flex px-1"><strong>{{ $h->full_name }}</strong>&nbsp;<span class="text-right">{{ $stats[$h->id]->bronze_hrs }}</span></li>
             @endforeach
         @else
             <li class="list-group-item d-flex"><i>So empty...</i></li>
