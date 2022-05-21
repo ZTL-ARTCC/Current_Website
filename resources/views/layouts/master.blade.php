@@ -46,7 +46,7 @@
             })
         </script>
     </head>
-    <body class="bg-secondary">
+    <body>
 
         {{-- Messages --}}
         @include('inc.messages')
