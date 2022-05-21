@@ -163,8 +163,8 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
 <div class="card">
-	<div class="card-body">
-		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
+	<div class="card-body p-2">
+		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders</h5>
 		<ul class="list-group list-group-flush">
 		@if(count($home) > 0)
             @foreach($home as $h)
