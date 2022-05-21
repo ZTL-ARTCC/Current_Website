@@ -163,8 +163,8 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
 <div class="row pr-3">
-	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0; margin-left:20px;">
-		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
+	<div class="col m-1 ml-3 p-1 rounded" style="background-color:#F0F0F0">
+		<div class="row"><div class="col-auto"><h5>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
                         @if(count($home) > 0)
                             @foreach($home as $h)
 									<center><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</center>
@@ -179,7 +179,7 @@
 <br/>
 <div class="row pr-3">
 	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
-		<div class="row"><div class="col-auto"><h4>Online Now</h4>
+		<div class="row"><div class="col-auto"><h5>Online Now</h5>
                         @if($controllers->count() > 0)
                             @foreach($controllers as $c)
 									<center><strong>{{ $c->name }}</strong> ({{ $c->time_online }})</center>
