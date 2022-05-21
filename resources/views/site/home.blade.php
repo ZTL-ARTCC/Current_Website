@@ -96,7 +96,35 @@ $('.carousel').carousel({
 					</div>
 				</div>
 			</div>
-
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
+					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
+						<div class="row">
+						<div class="col-auto">
+						<table class="table table-borderless">
+				@if($airports->count() > 0)
+					@foreach($airports as $a)
+						<tr><td>
+						@if($a->visual_conditions == 'VFR')
+							<span class="badge bg-success">VFR</span>
+						@elseif($a->visual_conditions == 'IFR')
+							<span class="badge bg-danger">IFR</span>
+						@else
+							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
+						@endif
+						</td>
+						<td><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></td>
+						<td>{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
+						</tr>
+					@endforeach
+					</table>
+				@else
+					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
+				@endif
+				</div>
+			</div>
+<?php
+/*
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
@@ -121,6 +149,8 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
+*/
+?>
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<h4>News</h4>
