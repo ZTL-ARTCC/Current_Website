@@ -151,11 +151,7 @@ class ControllerDash extends Controller
         $home = $homec->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
-		$leaderboard = array();
-		for($x=0;count($leaderboard) < 5;$x++) {
-			$leaderboard[$x] = $home[$x];
-			$leaderboard[$x]['hours'] = $stats[$home[$x]->id]->bronze_hrs;
-		}	
+		$home = $home->take(5);
 // New leaderboard shit...		
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
@@ -166,7 +162,7 @@ class ControllerDash extends Controller
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
-                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('leaderboard', $leaderboard);
+                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 
     public function showProfile($year = null, $month = null) {

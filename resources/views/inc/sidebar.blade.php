@@ -165,10 +165,10 @@
 <div class="row pr-3">
 	<div class="col m-1 p-1 rounded" style="background-color:#F0F0F0">
 		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
-                        @if(count($leaderboard) > 0)
-                            @foreach($leaderboard as $l)
-									<center>{{ $l->name }}</center>
-                                    <center>{{ $l->hours }}</center>
+                        @if(count($home) > 0)
+                            @foreach($home as $h)
+									<center>{{ $l->full_name }}</center>
+                                    <center>{{ $stats[$h->id]->bronze_hrs }}</center>
                             @endforeach
                         @else
                                 <center><i>So empty...</i>
