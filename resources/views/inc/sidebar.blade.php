@@ -167,11 +167,10 @@
 		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
                         @if(count($home) > 0)
                             @foreach($home as $h)
-									<center>{{ $h->full_name }}</center>
-                                    <center>{{ $stats[$h->id]->bronze_hrs }}</center>
+									<center>{{ $h->full_name }} {{ $stats[$h->id]->bronze_hrs }}</center>
                             @endforeach
                         @else
-                                <center><i>So empty...</i>
+                                <center><i>So empty...</i></center>
                         @endif
 		</div>
 		</div>
@@ -183,8 +182,7 @@
 		<div class="row"><div class="col-auto"><h4>Online Now</h4>
                         @if($controllers->count() > 0)
                             @foreach($controllers as $c)
-									<center>{{ $c->name }}</center>
-                                    <center>{{ $c->time_online }}</center>
+									<center>{{ $c->name }} {{ $c->time_online }}</center>
                             @endforeach
                         @else
                                 <center><i>So empty...</i></center>
