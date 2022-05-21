@@ -167,7 +167,8 @@
 		<div class="row">
 			<div class="col-auto">
 				<h5>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
-                <ul>
+                <hr>
+				<ul>
 				@if(count($home) > 0)
                     @foreach($home as $h)
 						<li><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
