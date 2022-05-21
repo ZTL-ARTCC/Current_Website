@@ -167,7 +167,7 @@
 		<div class="row"><div class="col-auto"><h4>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h4>
                         @if(count($home) > 0)
                             @foreach($home as $h)
-									<center>{{ $l->full_name }}</center>
+									<center>{{ $h->full_name }}</center>
                                     <center>{{ $stats[$h->id]->bronze_hrs }}</center>
                             @endforeach
                         @else
