@@ -50,7 +50,7 @@ $('.carousel').carousel({
 
 		<div class="col">
 			<div class="row pr-3">
-				<div class="col mt-0 mb-1 mx-1 p-1 rounded bg-dark text-white">
+				<div class="col mt-0 mb-1 mx-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
@@ -97,7 +97,7 @@ $('.carousel').carousel({
 			</div>
 
 			<div class="row pr-3">
-				<div class="col m-1 p-1 rounded bg-dark text-white">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
@@ -124,7 +124,7 @@ $('.carousel').carousel({
 				</div>
 			</div>
 			<div class="row pr-3">
-				<div class="col m-1 p-1 rounded bg-dark text-white">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<h4>News</h4>
 					@if(count($news) > 0)
 						@foreach($news as $c)
