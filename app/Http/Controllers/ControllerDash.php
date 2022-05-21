@@ -145,14 +145,14 @@ class ControllerDash extends Controller
             return strtotime($e->date);
         });
 		
-// New leaderboard shit...
+		// Leaderboard
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
         $home = $homec->sortByDesc(function($user) use($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
 		$home = $home->take(5);
-// New leaderboard shit...		
+		// Leaderboard		
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);

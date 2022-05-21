@@ -161,7 +161,7 @@
 <br>
 
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
-
+@if(isset($home))
 <div class="card">
 	<div class="card-body p-2">
 		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders&nbsp;<i class="fas fa-medal"></i></h5>
@@ -189,7 +189,7 @@
         @endif
 	</div>
 </div>
-
+@endif
 <style>
 
     .collapsible {
