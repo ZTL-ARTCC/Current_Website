@@ -118,9 +118,6 @@ $('.carousel').carousel({
 				@else
 					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
 				@endif
-				@if($metar_last_updated != null)
-					<div class="row"><div class="col align-self-end text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div></div>
-				@endif
 				</div>
 			</div>
 			<div class="row pr-3">
