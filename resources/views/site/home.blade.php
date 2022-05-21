@@ -48,8 +48,14 @@ $('.carousel').carousel({
   interval: 3000 // delay time ms
 })	
 </script>	
+<style>
+@media (max-width: 480px) { 
+	.right_widget {
+		margin-top: ($spacer * .25) !important;
+	}
+}
+</style>
 		</div>
-
 		<div class="col">
 			<div class="row pr-3">
 				<div class="col mt-0 mb-1 mx-1 p-2 rounded bg-dark text-white">
