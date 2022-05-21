@@ -121,7 +121,7 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
-			<div class="row pr-3">
+			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<h4>News</h4>
 					@if(count($news) > 0)
