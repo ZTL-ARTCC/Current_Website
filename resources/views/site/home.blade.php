@@ -101,7 +101,7 @@ $('.carousel').carousel({
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 						<div class="row">
 						<div class="col-auto">
-						<table style="border:0px">
+						<table class="table table-sm table-borderless">
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
 						<tr><td>
@@ -117,7 +117,7 @@ $('.carousel').carousel({
 						<td>{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
 						</tr>
 					@endforeach
-					</table>
+					</table></div></div>
 				@else
 					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
 				@endif
