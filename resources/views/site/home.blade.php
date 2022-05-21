@@ -101,7 +101,7 @@ $('.carousel').carousel({
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 						<div class="row">
 						<div class="col-auto">
-						<table class="table table-borderless">
+						<table class="table table-sm table-borderless">
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
 						<tr><td>
