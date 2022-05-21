@@ -97,7 +97,7 @@ $('.carousel').carousel({
 				</div>
 			</div>
 
-			<div class="row pr-3">
+			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 				@if($airports->count() > 0)
