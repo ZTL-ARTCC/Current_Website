@@ -163,18 +163,17 @@
 <?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
 
 <div class="row pr-3">
-	<div class="col m-3 p-2 rounded" style="background-color:#F0F0F0">
+	<div class="col ml-3 my-3 p-2 rounded" style="background-color:#F0F0F0">
 		<div class="row">
 			<div class="col-auto">
 				<h5>{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaderboard</h5>
-                <hr>
-				<ul>
+				<ul class="list-group">
 				@if(count($home) > 0)
                     @foreach($home as $h)
-						<li><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
+						<li class="list-group-item"><strong>{{ $h->full_name }}</strong> ({{ $stats[$h->id]->bronze_hrs }})</li>
                     @endforeach
                 @else
-                    <li><i>So empty...</i></li>
+                    <li class="list-group-item"><i>So empty...</i></li>
                 @endif
 			</div>
 		</div>
