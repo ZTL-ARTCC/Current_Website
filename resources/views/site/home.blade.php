@@ -61,8 +61,7 @@ $('.carousel').carousel({
 		</div>
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
-				<a href="#" data-toggle="modal" data-target="displayAsx">
-				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="alert('show');">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
@@ -103,7 +102,6 @@ $('.carousel').carousel({
 						</div>
 					</div>
 				</div>
-				</a>
 			</div>
 <?php
 /*
