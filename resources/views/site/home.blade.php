@@ -236,8 +236,8 @@ $('.carousel').carousel({
  </div>
  <!-- Modal -->
 <div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
-  <div class="modal-dialog bg-secondary text-white" style="height:80vh; max-width:90vw" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog" style="height:80vh; max-width:90vw" role="document">
+    <div class="modal-content bg-secondary">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">ZTL Airspace Explorer</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
