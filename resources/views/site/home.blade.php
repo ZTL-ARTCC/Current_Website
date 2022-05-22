@@ -53,7 +53,7 @@ $('.carousel').carousel({
 	transition:1s
 }
 .airspace_status:hover {
-	transform:scale(1.1);
+	transform:scale(1.05);
 	background-image:url("/photos/asx_bg.png");
 	background-repeat:no-repeat;
 	background-size:cover;
