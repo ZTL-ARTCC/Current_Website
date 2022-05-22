@@ -53,8 +53,8 @@ $('.carousel').carousel({
 	transition:1s
 }
 .airspace_status:hover {
-	transform:scale(1.2);
-	background-image: url("https://asx.kporter.dev");
+	transform:scale(1.1);
+	background-image:url("/photos/asx_bg.png");
 }
 </style>
 		</div>
