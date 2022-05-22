@@ -59,8 +59,9 @@ $('.carousel').carousel({
 </style>
 		</div>
 		<div class="col">
-			<div class="row px-2 pr-md-3 pl-md-0 airspace_status">
-				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<a href="#" role="button" data-toggle="modal" data-target="#displayAsx">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
@@ -101,6 +102,7 @@ $('.carousel').carousel({
 						</div>
 					</div>
 				</div>
+				</a>
 			</div>
 <?php
 /*
@@ -231,4 +233,23 @@ $('.carousel').carousel({
 		</div>
 	</div> <!-- Carousel row -->
  </div>
+ <!-- Modal -->
+<div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">ZTL Airspace Explorer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <embed src="https://asx.kporter.dev" frameborder="0" style="width:90%; height:70vh" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
