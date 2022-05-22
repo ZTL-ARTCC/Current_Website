@@ -55,8 +55,8 @@ $('.carousel').carousel({
 .airspace_status:hover {
 	transform:scale(1.1);
 	background-image:url("/photos/asx_bg.png");
-	background-repeat: no-repeat;
-	background-size: contain;
+	background-repeat:no-repeat;
+	background-size:cover;
 	background-color:red;
 }
 </style>
@@ -245,7 +245,7 @@ $('.carousel').carousel({
         </button>
       </div>
       <div class="modal-body">
-        <embed src="https://asx.kporter.dev#dispNode" frameborder="0" style="height:70vh" >
+        <embed src="https://asx.kporter.dev#dispNode" frameborder="0" style="height:100%; width:100%" >
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
