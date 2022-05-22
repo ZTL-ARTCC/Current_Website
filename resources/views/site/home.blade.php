@@ -55,6 +55,51 @@ $('.carousel').carousel({
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
+						<table class="table table-sm table-borderless pb-0 mb-0">
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_ctr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Atlanta Center</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_app === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">A80 TRACON</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Atlanta ATCT</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($clt_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Charlotte ATCT</td></tr>
+					</table>
+					</div></div>
+					<div class="row">
+						<div class="col-auto">
+							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
+						</div>
+					</div>
+				</div>
+			</div>
+<?php
+/*
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
+					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
+					<div class="row">
+						<div class="col-auto">
 						@if($atl_ctr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
@@ -96,15 +141,17 @@ $('.carousel').carousel({
 					</div>
 				</div>
 			</div>
+*/
+?>
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 						<div class="row">
 						<div class="col-auto">
-						<table class="table table-sm table-borderless pb-0">
+						<table class="table table-sm table-borderless pb-0 mb-0">
 				@if($airports->count() > 0)
 					@foreach($airports as $a)
-						<tr><td class="p-1">
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
 						@if($a->visual_conditions == 'VFR')
 							<span class="badge bg-success">VFR</span>
 						@elseif($a->visual_conditions == 'IFR')
@@ -113,8 +160,8 @@ $('.carousel').carousel({
 							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
 						@endif
 						</td>
-						<td class="p-1"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></td>
-						<td class="p-1">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
+						<td class="py-0 px-2 m-0"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></td>
+						<td class="py-0 px-2 m-0">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
 						</tr>
 					@endforeach
 					</table></div></div>
