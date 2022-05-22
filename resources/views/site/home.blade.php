@@ -55,13 +55,15 @@ $('.carousel').carousel({
 .airspace_status:hover {
 	transform:scale(1.1);
 	background-image:url("/photos/asx_bg.png");
+	background-repeat: no-repeat;
+	background-size: auto;
 	background-color:red;
 }
 </style>
 		</div>
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="alert('show');">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="$('#displayAsx').modal('toggle');">
 					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
 					<div class="row">
 						<div class="col-auto">
