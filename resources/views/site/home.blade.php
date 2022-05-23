@@ -245,7 +245,7 @@ $('.carousel').carousel({
         </button>
       </div>
       <div class="modal-body">
-        <embed src="https://asx.kporter.dev#dispNode" frameborder="0" style="height:80vh; width:80vw" >
+        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:80vh; width:80vw" >
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
