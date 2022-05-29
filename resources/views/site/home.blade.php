@@ -64,7 +64,7 @@ $('.carousel').carousel({
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="$('#displayAsx').modal('toggle');">
-					<div class="row"><div class="col"><h4 class="pb-0 mb-0"><span class="text-secondary pt-0 mt-0">Click for map</span></div></div>
+					<div class="row"><div class="col"><h4 class="pb-0 mb-0">Airspace Status</h4><span class="text-secondary pt-0 mt-0">Click for map</span></div></div>
 					<div class="row">
 						<div class="col-auto">
 						<table class="table table-sm table-borderless pb-0 mb-0">
