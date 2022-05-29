@@ -236,8 +236,8 @@ $('.carousel').carousel({
  </div>
  <!-- Modal -->
 <div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
-  <div class="modal-dialog bg-secondary py-1" style="height:90vh; max-width:90vw" role="document">
-    <div class="modal-content"> <!--bg-secondary-->
+  <div class="modal-dialog" style="height:90vh; max-width:90vw" role="document">
+    <div class="modal-content bg-secondary py-1"> <!--bg-secondary-->
       <!--<div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">ZTL Airspace Explorer</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -248,7 +248,7 @@ $('.carousel').carousel({
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:80vh; width:80vw" >
+        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="max-height:100%; max-width:100%" >
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
