@@ -245,10 +245,10 @@ $('.carousel').carousel({
         </button>
       </div>-->
       <div class="modal-body">
-        <button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:5px;" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:85vh; width:85vw" >
+        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:100%; width:85vw">
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
