@@ -248,7 +248,7 @@ $('.carousel').carousel({
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="max-height:100%; max-width:100%" >
+        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:90vh; width:90vw" >
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
