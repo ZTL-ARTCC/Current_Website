@@ -55,7 +55,7 @@
   background-color: #FF0000;
 }
 .legenditem .taxiarr {
-  background-color: #FFFF00;
+  background-color: red; //#FFFF00;
 }
 .legenditem .taxidep {
   background-color: #00FF00;
