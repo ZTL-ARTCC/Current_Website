@@ -263,6 +263,8 @@ class TrainingTicket extends Model
             $session = 'DEL4 - S1P2-S';
         } elseif($pos == 205) {
             $session = 'GND1 - S1T3-S';
+        } elseif($pos == 258) {
+            $session = 'GND2 - S1M1-O';
         } elseif($pos == 206) {
             $session = 'TWR1 - S2T1';
         } elseif($pos == 207) {
@@ -271,105 +273,105 @@ class TrainingTicket extends Model
             $session = 'TWR3 - S2P1-S';
         } elseif($pos == 209) {
             $session = 'TWR4 - S2T3-S';
-        }elseif($pos == 210){
+        } elseif($pos == 210){
             $session = 'TWR5 - S2P2-S';
-        }elseif($pos == 211){
+        } elseif($pos == 211){
             $session = 'TWR6 - S2T4-S';
-        }elseif($pos == 212){
+        } elseif($pos == 212){
             $session = 'TWR7 - S2T5-S';
-        }elseif($pos == 213){
+        } elseif($pos == 213){
             $session = 'TWR8 - S2T6';
-        }elseif($pos == 214){
+        } elseif($pos == 214){
             $session = 'TWR9 - S2P3';
-		}elseif($pos == 215){
+		} elseif($pos == 215){
             $session = 'TWR10 - S2M1-S';
-		}elseif($pos == 216){
+		} elseif($pos == 216){
             $session = 'APP1 - S3T1-S';
-		}elseif($pos == 217){
+		} elseif($pos == 217){
             $session = 'APP2 - S3T2-S';
-		}elseif($pos == 218){
+		} elseif($pos == 218){
             $session = 'APP3 - S3P1-S';
-		}elseif($pos == 219){
+		} elseif($pos == 219){
             $session = 'APP4 - S3T3-S';
-		}elseif($pos == 220){
+		} elseif($pos == 220){
             $session = 'APP5 - S3T4-S';
-		}elseif($pos == 221){
+		} elseif($pos == 221){
             $session = 'APP6 - S3T5-S';
-		}elseif($pos == 222){
+		} elseif($pos == 222){
             $session = 'APP7 - S3M1-S';
-		}elseif($pos == 223){
+		} elseif($pos == 223){
             $session = 'APP8 - S3T6';
-		}elseif($pos == 224){
+		} elseif($pos == 224){
             $session = 'APP9 - S3P2';
-		}elseif($pos == 225){
+		} elseif($pos == 225){
             $session = 'APP10 - S3P3';
-		}elseif($pos == 226){
+		} elseif($pos == 226){
             $session = 'APP11 - S3P4';
-		}elseif($pos == 227){
+		} elseif($pos == 227){
             $session = 'APP12 - S3M2-S';
-		}elseif($pos == 228){
+		} elseif($pos == 228){
             $session = 'CTR0 - C1T0-O';
-		}elseif($pos == 229){
+		} elseif($pos == 229){
             $session = 'CTR1 - C1T1-S';
-		}elseif($pos == 230){
-            $session = 'CTR2 - C1T2-S';
-		}elseif($pos == 231){
+		} elseif($pos == 260){
+            $session = 'CTR2 - C1T2-O';
+		} elseif($pos == 230){
             $session = 'CTR3 - C1T3-S';
-		}elseif($pos == 232){
+		} elseif($pos == 232){
             $session = 'CTR4 - C1P1-S';
-		}elseif($pos == 233){
-            $session = 'CTR5 - C1P2-S';
-		}elseif($pos == 234){
-            $session = 'CTR6 - C1M1-S';
-		}elseif($pos == 235){
-            $session = 'CTR7 - C1M2-S';
-		}elseif($pos == 236){
+		} elseif($pos == 233){
+            $session = 'CTR5 - C1M1-S';
+		} elseif($pos == 231){
+            $session = 'CTR6 - C1T4-S';
+		} elseif($pos == 234){
+            $session = 'CTR7 - C1M1-O';
+		} elseif($pos == 235){
+            $session = 'CTR8 - C1M3-S';
+		} elseif($pos == 236){
             $session = 'ZTL1 - M1M1-S';
-		}elseif($pos == 237){
+		} elseif($pos == 237){
             $session = 'ATL1 - M2T1';
-		}elseif($pos == 238){
+		} elseif($pos == 238){ // This is a legacy session that is no longer in use...
             $session = 'ATL2 - M2M1-O';
-		}elseif($pos == 239){
-            $session = 'ATL3 - M2T2';
-		}elseif($pos == 240){
-            //$session = 'ATL4 - M2T3';
-			$session = 'ATL6 - M2P1';
-		}elseif($pos == 241){
-            //$session = 'ATL5 - M2T4';
-			$session = 'ATL7 - M2M2-O';
-		}elseif($pos == 242){
-            //$session = 'ATL6 - M2P1';
-			$session = 'ATL4 - M2T3';
-		}elseif($pos == 243){
-            //$session = 'ATL7 - M2M2-O';
-			$session = 'ATL5 - M2T4';
-		}elseif($pos == 244){
-            $session = 'ATL8 - M2M3-S';
-		}elseif($pos == 245){
+		} elseif($pos == 239){
+            $session = 'ATL2 - M2T2';
+		} elseif($pos == 242){
+			$session = 'ATL3 - M2T3';
+		} elseif($pos == 243){
+			$session = 'ATL4 - M2T4';
+		} elseif($pos == 240){
+			$session = 'ATL5 - M2P1';
+		} elseif($pos == 259){
+			$session = 'ATL6 - M2P2-S';
+		} elseif($pos == 241){
+			$session = 'ATL7 - M2M1-O';
+		} elseif($pos == 244){
+            $session = 'ATL8 - M2M2-S';
+		} elseif($pos == 245){
             $session = 'A801 - M3P1-S';
-		}elseif($pos == 246){
+		} elseif($pos == 246){
             $session = 'A802 - M3M1-O';
-		}elseif($pos == 247){
+		} elseif($pos == 247){
             $session = 'A803 - M3P2';
-		}elseif($pos == 248){
+		} elseif($pos == 248){
             $session = 'A804 - M3M2-O';
-		}elseif($pos == 249){
+		} elseif($pos == 249){
             $session = 'A805 - M3T1-S';
-		}elseif($pos == 250){
+		} elseif($pos == 250){
             $session = 'A806 - M3P3';
-		}elseif($pos == 251){
+		} elseif($pos == 251){
             $session = 'A807 - M3P4';
-		}elseif($pos == 252){
+		} elseif($pos == 252){
             $session = 'A808 - M3M3-O';
-		}elseif($pos == 253){
+		} elseif($pos == 253){
             $session = 'A809 - M3T3-O';
-		}elseif($pos == 254){
+		} elseif($pos == 254){
             $session = 'A8010 - M3T4-S';
-		}elseif($pos == 255){
+		} elseif($pos == 255){
             $session = 'A8011 - M3P5';
-		}elseif($pos == 256){
+		} elseif($pos == 256){
             $session = 'A8012 - M3M4-S';
-		}elseif($pos == 257){
+		} elseif($pos == 257){
             $session = 'Unlisted/other';
         }
         return $session;
