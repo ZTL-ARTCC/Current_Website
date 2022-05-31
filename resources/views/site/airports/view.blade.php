@@ -242,6 +242,7 @@ View Airport ({{ $airport->ltr_4 }})
             @else
                 <p>No inbound traffic.</p>
             @endif
+			
         </div>
     </div>
     <br>
@@ -277,7 +278,7 @@ View Airport ({{ $airport->ltr_4 }})
                 </table>
             @else
                 <p>No outbound traffic.</p>
-            @endif
+            @endif	
         </div>
     </div>
 </div>

@@ -238,8 +238,8 @@
                     </tbody>
                 </table>
             @else
-                <!--<p>No inbound traffic.</p>-->
-				<p>This function is not currently available</p>
+                <p>No inbound traffic.</p>
+				<!--<p>This function is not currently available</p>-->
             @endif
         </div>
     </div>
@@ -275,8 +275,8 @@
                     </tbody>
                 </table>
             @else
-                <!--<p>No outbound traffic.</p>-->
-				<p>This function is not currently available</p>
+                <p>No outbound traffic.</p>
+				<!--<p>This function is not currently available</p>-->
             @endif
         </div>
     </div>

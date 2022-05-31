@@ -144,6 +144,15 @@ class ControllerDash extends Controller
         })->sortBy(function($e) {
             return strtotime($e->date);
         });
+		
+		// Leaderboard
+        $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
+        $homec = User::where('visitor', 0)->where('status', 1)->get();
+        $home = $homec->sortByDesc(function($user) use($stats) {
+            return $stats[$user->id]->bronze_hrs;
+        });
+		$home = $home->take(5);
+		// Leaderboard		
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
@@ -153,7 +162,7 @@ class ControllerDash extends Controller
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
-                                          ->with('flights', $flights)->with('flights_update', $flights_update);
+                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 
     public function showProfile($year = null, $month = null) {
@@ -547,8 +556,9 @@ class ControllerDash extends Controller
 
 		// VATEUD API is no longer accessible
 		$pilots_a = $pilots_d = false;
+		$res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
         //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
-        //$pilots_a = json_decode($res_a->getBody()->getContents(), true);
+        $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if($pilots_a) {
             $pilots_a = collect($pilots_a);
@@ -556,8 +566,9 @@ class ControllerDash extends Controller
             $pilots_a = null;
         }
 
+		$res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
         //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
-        //$pilots_d = json_decode($res_d->getBody()->getContents(), true);
+        $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if($pilots_d) {
             $pilots_d = collect($pilots_d);

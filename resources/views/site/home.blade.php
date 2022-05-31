@@ -5,178 +5,255 @@ Home
 @endsection
 
 @section('content')
-<div class="jumbotron" style="background-image:url(/photos/ZTL_Banner.jpg); background-size:cover; background-repeat:no-repeat;">
+<div class="w-100 py-3 bg-secondary">
+<div class="jumbotron jumbotron-fluid rounded mb-0 mx-3" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat">
     <div class="container">
-        <div class="jumbotron">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-8 text-white">
                     <h1><b>Atlanta Virtual ARTCC</b></h1>
-                    <h5>Welcome to the Atlanta ARTCC website. This website is for a group of online hobbyists who partake in simulated flying and air traffic control on the VATSIM network. The procedures we use mirror, to an extent, those utilized by real world air traffic control. At no time, however, should a procedure, chart, or other information contained on this website be used for real world navigation.</h5>
-                </div>
-                <div class="col-sm-4">
-                    @if($atl_ctr === 1)
-                        <div class="alert alert-success">Atlanta Center is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta Center is OFFLINE</div>
-                    @endif
-                    @if($atl_app === 1)
-                        <div class="alert alert-success">A80 TRACON is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">A80 TRACON is OFFLINE</div>
-                    @endif
-                    @if($atl_twr === 1)
-                        <div class="alert alert-success">Atlanta ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Atlanta ATCT is OFFLINE</div>
-                    @endif
-                    @if($clt_twr === 1)
-                        <div class="alert alert-success">Charlotte ATCT is ONLINE</div>
-                    @else
-                        <div class="alert alert-danger">Charlotte ATCT is OFFLINE</div>
-                    @endif
                 </div>
             </div>
-        </div>
     </div>
 </div>
-<div class="container">
-    <hr>
+</div>
+<!--<div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d)"></div>-->
+<div class="container-fluid bg-secondary">
     <div class="row">
-        <div class="col-sm-4">
-            <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
-            @if(count($news) > 0)
-                @foreach($news as $c)
-                    <p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
-                @endforeach
-            @else
-                <center><i><p>No news to show.</p></i></center>
-            @endif
-        </div>
-        <div class="col-sm-4">
-            <center><h4><i class="fas fa-calendar-alt"></i> Calendar</h4></center>
-            @if(count($calendar) > 0)
-                @foreach($calendar as $c)
-                    <p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
-                @endforeach
-            @else
-                <center><i><p>No calendar events to show.</p></i></center>
-            @endif
-        </div>
-        <div class="col-sm-4">
-            <center><h4><i class="fas fa-plane"></i> Events</h4></center>
+		<div class="col-sm-9">
+<div id="eventCarousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
             @if($events->count() > 0)
                 @foreach($events as $e)
-                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}"></a>
-                    <p></p>
+			<div class="carousel-item @if ($loop->first) active @endif">
+                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" /></a>
+            </div>
                 @endforeach
             @else
+			<div class="carousel-item">
                 <center><i><p>No events to show.</p></i></center>
+			</div>
             @endif
-        </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>	
+<script>	
+$('.carousel').carousel({
+  interval: 3000 // delay time ms
+})	
+</script>	
+<style>
+.airspace_status {
+	transition:1s
+}
+.airspace_status:hover {
+	transform:scale(1.05);
+	background-image:url("/photos/asx_bg.png");
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-color:red;
+}
+</style>
+		</div>
+		<div class="col">
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="$('#displayAsx').modal('toggle');">
+					<div class="row"><div class="col"><h4 class="pb-0 mb-0">Airspace Status</h4><span class="text-secondary pt-0 mt-0">Click for map</span></div></div>
+					<div class="row">
+						<div class="col-auto">
+						<table class="table table-sm table-borderless pb-0 mb-0">
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_ctr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Atlanta Center</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_app === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">A80 TRACON</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($atl_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Atlanta ATCT</td></tr>
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($clt_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</td><td class="py-0 px-2 m-0">Charlotte ATCT</td></tr>
+					</table>
+					</div></div>
+					<div class="row">
+						<div class="col-auto">
+							<span class="badge bg-info ml-1">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
+						</div>
+					</div>
+				</div>
+			</div>
+<?php
+/*
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
+					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
+					<div class="row">
+						<div class="col-auto">
+						@if($atl_ctr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col-auto pl-0">Atlanta Center</div>
+					</div>
+					<div class="row">
+						<div class="col-auto">
+						@if($atl_app === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col-auto pl-0">A80 TRACON</div>
+					</div>
+					<div class="row">
+						<div class="col-auto">
+						@if($atl_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col-auto pl-0">Atlanta ATCT</div>
+					</div>
+					<div class="row">
+						<div class="col-auto">
+						@if($clt_twr === 1)
+							<span class="badge bg-success">ONLINE</span>
+						@else
+							<span class="badge bg-danger">OFFLINE</span>
+						@endif
+						</div><div class="col-auto pl-0">Charlotte ATCT</div>
+					</div>
+					<div class="row">
+						<div class="col-auto">
+							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
+						</div>
+					</div>
+				</div>
+			</div>
+*/
+?>
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
+					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
+						<div class="row">
+						<div class="col-auto">
+						<table class="table table-sm table-borderless pb-0 mb-0">
+				@if($airports->count() > 0)
+					@foreach($airports as $a)
+						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
+						@if($a->visual_conditions == 'VFR')
+							<span class="badge bg-success">VFR</span>
+						@elseif($a->visual_conditions == 'IFR')
+							<span class="badge bg-danger">IFR</span>
+						@else
+							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
+						@endif
+						</td>
+						<td class="py-0 px-2 m-0"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></td>
+						<td class="py-0 px-2 m-0">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
+						</tr>
+					@endforeach
+					</table></div></div>
+				@else
+					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
+				@endif
+				</div>
+			</div>
+<?php
+/*
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
+					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
+				@if($airports->count() > 0)
+					@foreach($airports as $a)
+						<div class="row">
+						<div class="col-auto">
+						@if($a->visual_conditions == 'VFR')
+							<span class="badge bg-success">VFR</span>
+						@elseif($a->visual_conditions == 'IFR')
+							<span class="badge bg-danger">IFR</span>
+						@else
+							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
+						@endif
+						</div>
+						<div class="col-auto"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div>
+						<div class="col-auto">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
+						</div>
+					@endforeach
+				@else
+					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
+				@endif
+				</div>
+			</div>
+*/
+?>
+			<div class="row px-2 pr-md-3 pl-md-0">
+				<div class="col m-1 p-2 rounded bg-dark text-white">
+					<h4>News</h4>
+					@if(count($news) > 0)
+						@foreach($news as $c)
+							<p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
+						@endforeach
+					@else
+					<center><i><p>No news to show.</p></i></center>
+					@endif
+					<hr>
+					<h4>Calendar</h4>
+					@if(count($calendar) > 0)
+						@foreach($calendar as $c)
+							<p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
+						@endforeach
+					@else
+						<center><i><p>No calendar events to show.</p></i></center>
+					@endif
+				</div>
+			</div>
+		</div>
+	</div> <!-- Carousel row -->
+ </div>
+ <!-- Modal -->
+<div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
+  <div class="modal-dialog" style="height:90vh; max-width:90vw" role="document">
+    <div class="modal-content bg-secondary py-1"> <!--bg-secondary-->
+      <!--<div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">ZTL Airspace Explorer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+      <div class="modal-body">
+        <button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:85vh; width:85vw">
+      </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div> -->
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-6">
-            <center><h4><i class="fa fa-cloud"></i> Weather</h4></center>
-            <div class="table">
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <th scope="col"><center>Airport</center></th>
-                        <th scope="col"><center>Conditions</center></th>
-                        <th scope="col"><center>Wind</center></th>
-                        <th scope="col"><center>Altimeter</center></th>
-                    </thead>
-                    <tbody>
-                        @if($airports->count() > 0)
-                            @foreach($airports as $a)
-                                <tr>
-                                    <td><a href="/pilots/airports/view/{{ $a->id }}"><center>{{ $a->ltr_4 }}</center></a></td>
-                                    <td><center>{{ $a->visual_conditions }}</center></td>
-                                    <td><center>{{ $a->wind }}</center></td>
-                                    <td><center>{{ $a->altimeter }}</center></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <td colspan="4"><div align="center"><i>No Airports to Show</i></div></td>
-                        @endif
-                        <tr>
-                            @if($metar_last_updated != null)
-                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $metar_last_updated }}Z</div></td>
-                            @else
-                                <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated N/A</div></td>
-                            @endif
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <center><h4><i class="fa fa-broadcast-tower"></i> Online Controllers</h4></center>
-            <div class="table">
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <th scope="col"><center>Position</center></th>
-                        <th scope="col"><center>Frequency</center></th>
-                        <th scope="col"><center>Controller</center></th>
-                        <th scope="col"><center>Time Online</center></th>
-                    </thead>
-                    <tbody>
-                        @if($controllers->count() > 0)
-                            @foreach($controllers as $c)
-                                <tr>
-                                    <td><center>{{ $c->position }}</center></td>
-                                    <td><center>{{ $c->freq }}</center></td>
-                                    <td><center>{{ $c->name }}</center></td>
-                                    <td><center>{{ $c->time_online }}</center></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="4"><center><i>No Controllers Online</i></center></td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td colspan="4"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $controllers_update }}Z</div></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
-    <div class="table">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <th scope="col"><center>Callsign</center></th>
-                <th scope="col"><center>Pilot Name</center></th>
-                <th scope="col"><center>Aircraft Type</center></th>
-                <th scope="col"><center>Departure</center></th>
-                <th scope="col"><center>Arrival</center></th>
-                <th scope="col"><center>Route</center></th>
-            </thead>
-            <tbody>
-                @if($flights->count() > 0)
-                    @foreach($flights as $c)
-                        <tr>
-                            <td><center>{{ $c->callsign }}</center></td>
-                            <td><center>{{ $c->pilot_name }}</center></td>
-                            <td><center>{{ $c->type }}</center></td>
-                            <td><center>{{ $c->dep }}</center></td>
-                            <td><center>{{ $c->arr }}</center></td>
-                            <td><center>{{ str_limit($c->route, 50) }}</center></td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="6"><center><i>No Pilots in ZTL Airspace</i></center></td>
-                    </tr>
-                @endif
-                <tr>
-                    <td colspan="6"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  </div>
 </div>
 @endsection

@@ -1,14 +1,11 @@
+<div class="bg-dark w-100">
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        @if(Carbon\Carbon::now()->month == 12)
-            <a class="navbar-brand" href="/"><img width="100" src="/photos/xmas_logo.png"></a>
-        @else
-            <a class="navbar-brand" href="/"><img width="100" src="/photos/logo.png"></a>
-        @endif
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/"><img width="100" src="/photos/ztl_logo_white.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+		<style>a.nav-link{ color: white !important }</style>
         <div class="collapse navbar-collapse" id="navbarsExample10">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -40,8 +37,7 @@
                     </div>
                 </li>
                 @if(Auth::guest())
-                    <!--<a class="nav-link" href="/visit">Visit ZTL</a>-->
-                    <a class="nav-link" href="https://www.ztlartcc.org/visit">Visit ZTL</a>
+                    <a class="nav-link" href="{{ URL::to('/'); }}/visit">Visit ZTL</a>
                     <a class="nav-link" href="/feedback/new">Feedback</a>
                 @endif
                 @if(Auth::check())
@@ -62,4 +58,4 @@
             </ul>
         </div>
     </nav>
-</div>
+</div></div>

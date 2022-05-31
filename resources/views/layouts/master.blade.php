@@ -14,10 +14,10 @@
         <link rel="stylesheet" href="/js/app.js">
         <link rel="stylesheet" href="/css/Footer-white.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
-            <script src="/js/snowstorm.js"></script>
+            <!--<script src="/js/snowstorm.js"></script>-->
         @endif
 
         {{-- Bootstrap --}}
@@ -45,7 +45,6 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         </script>
-
     </head>
     <body>
 
@@ -59,6 +58,6 @@
         @yield('content')
 
         {{-- Footer --}}
-        @include('inc.footer')
+        @include('inc.home_footer')
     </body>
 </html>

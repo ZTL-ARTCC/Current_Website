@@ -160,10 +160,36 @@
 
 <br>
 
-@include('inc.chat')
-
-
-
+<?php // @include('inc.chat') // Not using this anymore - functionality replaced with Discord ?>
+@if(isset($home))
+<div class="card">
+	<div class="card-body p-2">
+		<h5 class="card-title">{{ Carbon\Carbon::now()->translatedFormat('F') }} Leaders&nbsp;<i class="fas fa-medal"></i></h5>
+		<ul class="list-group list-group-flush">
+		@if(count($home) > 0)
+            @foreach($home as $h)
+				<li class="list-group-item d-flex px-1"><strong>{{ $h->full_name }}</strong>&nbsp;{{ $stats[$h->id]->bronze_hrs }}</li>
+            @endforeach
+        @else
+            <li class="list-group-item d-flex"><i>So empty...</i></li>
+        @endif
+	</div>
+</div>
+<br/>
+<div class="card">
+	<div class="card-body p-2">
+		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
+		<ul class="list-group list-group-flush">
+        @if($controllers->count() > 0)
+            @foreach($controllers as $c)
+				<li class="list-group-item d-flex px-1"><strong>{{ $c->name }}</strong>&nbsp;{{ $c->time_online }}</li>
+            @endforeach
+        @else
+            <li class="list-group-item d-flex"><i>So empty...</i></li>
+        @endif
+	</div>
+</div>
+@endif
 <style>
 
     .collapsible {
