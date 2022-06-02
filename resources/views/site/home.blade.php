@@ -224,7 +224,7 @@ $('.carousel').carousel({
 					<h4>Calendar</h4>
 					@if(count($calendar) > 0)
 						@foreach($calendar as $c)
-							<p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b></p>
+							<p>{{ $c->date }} @if($c->time != '') ({{ $c->time }}) @endif - <b>{{ $c->title }}</b></p>
 						@endforeach
 					@else
 						<center><i><p>No calendar events to show.</p></i></center>
@@ -237,22 +237,13 @@ $('.carousel').carousel({
  <!-- Modal -->
 <div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
   <div class="modal-dialog" style="height:90vh; max-width:90vw" role="document">
-    <div class="modal-content bg-secondary py-1"> <!--bg-secondary-->
-      <!--<div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">ZTL Airspace Explorer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>-->
+    <div class="modal-content bg-secondary py-1">
       <div class="modal-body">
         <button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:85vh; width:85vw">
       </div>
-<!--      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div> -->
     </div>
   </div>
 </div>
