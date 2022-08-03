@@ -101,7 +101,7 @@ class FrontController extends Controller
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
-                                ->with('flights', $overflightCount);
+                                ->with('overflightCount', $overflightCount);
         //                        ->with('flights', $flights)->with('flights_update', $flights_update);
     }
 
