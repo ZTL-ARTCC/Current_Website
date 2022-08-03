@@ -106,7 +106,7 @@ $('.carousel').carousel({
 					</div></div>
 					<div class="row">
 						<div class="col-auto">
-							<span class="badge bg-info ml-1">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
+							<span class="badge bg-info ml-1">{{ $overflightCount }}</span>&nbsp;&nbsp;flights in ZTL airspace
 						</div>
 					</div>
 				</div>

@@ -92,14 +92,17 @@ class FrontController extends Controller
             return strtotime($e->date);
         });
 
-        $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(10)->get();
-        $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
+        // This was used for the old home page where we displayed a table with flights in ZTL airspace... no longer used
+        //$flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(10)->get();
+        //$flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
+        $overflightCount = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->count();
 
         return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
-                                ->with('flights', $flights)->with('flights_update', $flights_update);
+                                ->with('flights', $overflightCount);
+        //                        ->with('flights', $flights)->with('flights_update', $flights_update);
     }
 
     public function teamspeak() {
