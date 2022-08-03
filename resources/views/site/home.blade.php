@@ -25,7 +25,13 @@ Home
             @if($events->count() > 0)
                 @foreach($events as $e)
 			<div class="carousel-item @if ($loop->first) active @endif">
+				@if(Auth::check())
+					<a href="/dashboard/controllers/events/view/{{ $e->id }}">
+				@endif
                     <img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
+				@if(Auth::check())
+					</a>
+				@endif
             </div>
                 @endforeach
             @else
