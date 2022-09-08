@@ -8,10 +8,10 @@ assignees: ''
 ---
 
 **Description**
-<!-- High level description of the purpose of this story -->
+High level description of the purpose of this story
 
 **Acceptance Criteria**
-<!-- Checkbox list of the acceptance criteria for this story -->
+Checkbox list of the acceptance criteria for this story
 
 _Accepted By:_
 
