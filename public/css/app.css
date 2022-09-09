@@ -9330,7 +9330,7 @@ html, body {
 }
 
 .dropdown:hover .dropdown-menu {
-  /*  max-height: 350px; */
+  max-height: 350px;
   opacity: 1;
 }
 
