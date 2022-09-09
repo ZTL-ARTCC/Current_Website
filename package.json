@@ -10,21 +10,19 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.52.2",
+        "sass-loader": "^12.6.0"
     },
-  "name": "ztl-v2",
-  "description": "## vZTL Website",
-  "version": "1.0.0",
-  "main": "webpack.mix.js",
-  "directories": {
+    "name": "ztl-v2",
+    "description": "## vZTL Website",
+    "version": "1.0.0",
+    "main": "webpack.mix.js",
+    "directories": {
     "test": "tests"
-  },
-  "dependencies": {
-    "imagemin-pngquant": "^5.1.0",
-    "pngquant-bin": "^3.1.1",
-    "tempusdominus-bootstrap-4": "^5.1.2"
-  }
+    }
 }
