@@ -34,6 +34,9 @@
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
+        {{-- Custom Headers --}}
+            @stack('custom_header')
+            
         {{-- Title --}}
         <title>
             @yield('title') | ZTL ARTCC

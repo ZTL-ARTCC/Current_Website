@@ -469,4 +469,64 @@ class FrontController extends Controller
 	public function showCltRamp() {
         return view('site.ramp')->with('afld','CLT');
     }
+
+    public function pilotGuideAtl() {
+        $atc = ATC::get();
+        if($atc) {
+            $lcl_controllers = array();
+            $app_controllers = array();
+            $ctr_controllers = array();
+            foreach($atc as $a) {
+                $field = substr($a->position, 0, 3);
+                $position = substr($a->position, -3);
+                if(($field == 'ATL')||($field == 'ZTL')) {
+                    if($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
+                        $lcl_controllers[] = $a;
+                    } elseif($position == 'APP' || $position == 'DEP') {
+                        $app_controllers[] = $a;
+                    } elseif($position == 'CTR') {
+                        $ctr_controllers[] = $a;
+                    }
+                } 
+            }
+        }
+        if(count($lcl_controllers) < 1) {
+            $lcl_controllers = $app_controllers;
+            if(count($lcl_controllers) < 1) {
+                $lcl_controllers = $ctr_controllers;
+            }
+        }
+        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
+        $controllers_update = substr($last_update->created_at, -8, 5);
+
+        $client = new Client(['http_errors' => false]);
+        $icao_id = 'KATL';
+        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt=' . $icao_id);
+        $status = $res->getStatusCode();
+        $diag = $aaup = '#';
+        if($status == 404) {
+            $charts = null;
+        } elseif(json_decode($res->getBody()) != '[]') {
+            $charts = collect(json_decode($res->getBody())->$icao_id);
+            $diag = $charts->where('chart_code', 'APD');
+            if(count($diag)>0) {
+                $diag = $diag->first()->pdf_path;
+            }
+            else {
+                $diag = '#';
+            }
+            $aaup = $charts->where('chart_code', 'DAU');
+            if(count($aaup)>0) {
+                $aaup = $aaup->first()->pdf_path;
+            }
+            else {
+                $aaup = '#';
+            }
+        } else {
+            $charts = null;
+        }
+        
+        return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)->with('controllers_update', $controllers_update)
+        ->with('diag', $diag)->with('aaup', $aaup);       
+    }
 }
