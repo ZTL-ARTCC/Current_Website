@@ -12,8 +12,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: announce intentions
-      run: echo building ${{ inputs.artifact-name }}
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: load/save cache
+        uses: actions/cache@v2
+        with:
+          path: |
+              vendor
+              node_modules
+              /tmp/composer-cache
+          key: ${{ runner.os }}-prod-scores-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-prod-scores-cached-
+
+      - name: Setup composer and install packages
+        uses: php-actions/composer@v6
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.2.0
+
+      - name: update node packages
+        run: npm ci
+
+      - name: build assets
+        run: npm run prod
+
+      - name: archive for artifact
+        run: |
+          touch ${{ inputs.artifact-name }}.tar.gz
+          tar --exclude=${{ inputs.artifact-name }}.tar.gz -zcvf ${{ inputs.artifact-name }}.tar.gz .
+
+      - name: create artifact for deploy
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ./${{ inputs.artifact-name }}.tar.gz
 

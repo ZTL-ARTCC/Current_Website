@@ -24,13 +24,13 @@ jobs:
   build:
     uses: iccowan/reusable-workflows-test/.github/workflows/build.yml@main
     with:
-      artifact-name: 'deploy-artifact-v1'
+      artifact-name: 'ztl-deploy-artifact-v1'
 
   qa-1:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       environment: 'qa-1'
-      artifact-name: 'deploy-artifact-v1'
+      artifact-name: 'ztl-deploy-artifact-v1'
     secrets:
       dir: ${{ secrets.DIR }}
       host: ${{ secrets.SSH_HOST }}
@@ -45,7 +45,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       environment: 'qa-2'
-      artifact-name: 'deploy-artifact-v1'
+      artifact-name: 'ztl-deploy-artifact-v1'
     secrets:
       dir: ${{ secrets.DIR }}
       host: ${{ secrets.SSH_HOST }}
@@ -60,7 +60,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       environment: 'stag'
-      artifact-name: 'deploy-artifact-v1'
+      artifact-name: 'ztl-deploy-artifact-v1'
     secrets:
       dir: ${{ secrets.DIR }}
       host: ${{ secrets.SSH_HOST }}
@@ -75,7 +75,7 @@ jobs:
     uses: iccowan/reusable-workflows-test/.github/workflows/deploy.yml@main
     with:
       environment: 'prod'
-      artifact-name: 'deploy-artifact-v1'
+      artifact-name: 'ztl-deploy-artifact-v1'
     secrets:
       dir: ${{ secrets.DIR }}
       host: ${{ secrets.SSH_HOST }}
