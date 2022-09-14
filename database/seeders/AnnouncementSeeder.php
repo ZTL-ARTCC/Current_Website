@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use Config;
 use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,26 +19,26 @@ class AnnouncementSeeder extends Seeder
     {
         $client = new Client();
         $res = $client->request('GET', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility'));
-        $result = json_decode($res->getBody())->role;
-        foreach($result->data as $r) {
+        $result = json_decode($res->getBody())->data->facility->roles;
+        foreach($result as $r) {
             if($r->role == 'ATM') {
                 $atm = $r->cid;
             }
         }
         if(isset($atm) == false) {
-            foreach($result->data as $r) {
+            foreach($result as $r) {
                 if($r->role == 'DATM') {
                     $atm = $r->cid;
                 }
             }
             if(isset($atm) == false) {
-                foreach($result->data as $r) {
+                foreach($result as $r) {
                     if($r->role == 'TA') {
                         $atm = $r->cid;
                     }
                 }
                 if(isset($atm) == false) {
-                    foreach($result->data as $r) {
+                    foreach($result as $r) {
                         if($r->role == 'WM') {
                             $atm = $r->cid;
                         }
