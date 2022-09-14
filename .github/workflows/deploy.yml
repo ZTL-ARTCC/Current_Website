@@ -29,11 +29,62 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.dep-env }}
+    environment: ${{ inputs.environment }}
 
     steps:
-    - uses: actions/checkout@v2
+      - name: retrieve artifact for deploy
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ inputs.artifact-name }}
 
-    - name: announce intentions
-      run: echo deploying ${{ inputs.artifact-name }} to ${{ inputs.environment }}
+      - name: extract artifact
+        run: |
+          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
+          rm ${{ inputs.artifact-name }}.tar.gz
+
+      - name: put server in maintenance mode
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && php artisan down
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
+
+      - name: push to server
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: -avzP
+          path: .
+          remote_path: ${{ secrets.dir }}
+          remote_host: ${{ secrets.host }}
+          remote_user: ${{ secrets.user }}
+          remote_key: ${{ secrets.key }}
+
+      - name: run migrations
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && php artisan migrate --no-interaction
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
+
+      - name: recache config
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && php artisan config:cache
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
+
+      - name: take server out of maintenance mode
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && php artisan up
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
 
