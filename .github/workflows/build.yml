@@ -1,0 +1,19 @@
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: announce intentions
+      run: echo building ${{ inputs.artifact-name }}
+
