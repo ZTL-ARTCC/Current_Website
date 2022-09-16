@@ -504,9 +504,8 @@ class FrontController extends Controller
         $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt=' . $icao_id);
         $status = $res->getStatusCode();
         $diag = $aaup = '#';
-        if($status == 404) {
-            $charts = null;
-        } elseif(json_decode($res->getBody()) != '[]') {
+        $charts = null;
+         if($status == 200 && json_decode($res->getBody()) != '[]') {
             $charts = collect(json_decode($res->getBody())->$icao_id);
             $diag = $charts->where('chart_code', 'APD');
             if(count($diag)>0) {
