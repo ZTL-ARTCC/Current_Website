@@ -8,7 +8,7 @@
 <ul>
     <li><b>Session Type:</b> {{ $ticket->type_name }}</li>
     <li><b>Position:</b> {{ $ticket->position_name }}</li>
-    <li><b>Date and Time:</b> {{ $ticket->date }} from {{ $ticket->start_time }}z to {{ $ticket->end_time }}z</li>
+    <li><b>Date and Time:</b> {{ $ticket->date }} from {{ $ticket->start_time }} to {{ $ticket->end_time }} ET</li>
 	<li><b>Duration:</b> {{ $ticket->duration }}</li>
     <li><b>Comments:</b> <br>
         {!! nl2br(e($ticket->comments)) !!}
