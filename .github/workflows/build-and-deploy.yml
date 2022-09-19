@@ -15,19 +15,19 @@ on:
 
   push:
     branches:
-      - main
+      - master
 
   pull_request:
     types: [opened, reopened, synchronize]
 
 jobs:
   build:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@master
     with:
       artifact-name: 'ztl-deploy-artifact-v1'
 
   qa-1:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@master
     with:
       environment: 'qa-1'
       artifact-name: 'ztl-deploy-artifact-v1'
@@ -42,7 +42,7 @@ jobs:
     if: ${{ github.event.inputs.environment == 'qa-1' }}
 
   qa-2:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@master
     with:
       environment: 'qa-2'
       artifact-name: 'ztl-deploy-artifact-v1'
@@ -57,7 +57,7 @@ jobs:
     if: ${{ github.event.inputs.environment == 'qa-2' }}
 
   stag:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@master
     with:
       environment: 'stag'
       artifact-name: 'ztl-deploy-artifact-v1'
@@ -69,10 +69,10 @@ jobs:
       key: ${{ secrets.SSH_KEY }}
 
     needs: build
-    if: ${{ github.event.inputs.environment == 'stag' || (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') }}
+    if: ${{ github.event.inputs.environment == 'stag' || (github.ref == 'refs/heads/master' && github.event_name != 'workflow_dispatch') }}
 
   prod:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@master
     with:
       environment: 'prod'
       artifact-name: 'ztl-deploy-artifact-v1'

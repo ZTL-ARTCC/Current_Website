@@ -12,19 +12,14 @@ on:
     secrets:
       dir:
         required: true
-        type: string
       host:
         required: true
-        type: string
       port:
         required: true
-        type: string
       user:
         required: true
-        type: string
       key:
         required: true
-        type: string
 
 jobs:
   deploy:
