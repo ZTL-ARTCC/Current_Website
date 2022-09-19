@@ -479,7 +479,7 @@ class FrontController extends Controller
             foreach($atc as $a) {
                 $field = substr($a->position, 0, 3);
                 $position = substr($a->position, -3);
-                if(($field == 'ATL')||($field == 'ZTL')) {
+                if((($field == 'ATL')||($field == 'ZTL'))&&($a->freq != '199.998')) {
                     if($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
                         $lcl_controllers[] = $a;
                     } elseif($position == 'APP' || $position == 'DEP') {
