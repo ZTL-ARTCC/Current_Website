@@ -20,6 +20,8 @@ on:
         required: true
       key:
         required: true
+      php_path:
+        required: true
 
 jobs:
   deploy:
@@ -40,7 +42,7 @@ jobs:
       - name: put server in maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.dir }} && php artisan down
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan down
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
@@ -59,7 +61,7 @@ jobs:
       - name: run migrations
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.dir }} && php artisan migrate --no-interaction
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan migrate --no-interaction
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
@@ -68,7 +70,7 @@ jobs:
       - name: recache config
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.dir }} && php artisan config:cache
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan config:cache
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
@@ -77,7 +79,7 @@ jobs:
       - name: take server out of maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.dir }} && php artisan up
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan up
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
