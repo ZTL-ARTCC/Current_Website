@@ -13,89 +13,91 @@ Training Tickets
 <br>
 <div class="container">
     @if($search_result != null)
-        <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
+    <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
     @else
-        <a class="btn btn-primary" href="/dashboard/training/tickets/new">Submit New Training Ticket</a>
+    <a class="btn btn-primary" href="/dashboard/training/tickets/new">Submit New Training Ticket</a>
     @endif
     <br><br>
     <h5>Search Training Tickets:</h5>
     {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
-        <div class="row">
-            <div class="col-sm-3">
-                {!! Form::text('cid', null, ['placeholder' => 'Search by CID', 'class' => 'form-control']) !!}
-            </div>
-            <div class="col-sm-1">
-                <button class="btn btn-primary" action="submit">Search</button>
-            </div>
-            <div class="col-sm-1">
-    {!! Form::close() !!}
-    <center>OR</center>
-    {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
-            </div>
-            <div class="col-sm-3">
-                {!! Form::select('cid', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
-            </div>
-            <div class="col-sm-1">
-                <button class="btn btn-primary" action="submit">Search</button>
-            </div>
+    <div class="row">
+        <div class="col-sm-3">
+            {!! Form::text('cid', null, ['placeholder' => 'Search by CID', 'class' => 'form-control']) !!}
         </div>
+        <div class="col-sm-1">
+            <button class="btn btn-primary" action="submit">Search</button>
+        </div>
+        <div class="col-sm-1">
+            {!! Form::close() !!}
+            <center>OR</center>
+            {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
+        </div>
+        <div class="col-sm-3">
+            {!! Form::select('cid', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+        </div>
+        <div class="col-sm-1">
+            <button class="btn btn-primary" action="submit">Search</button>
+        </div>
+    </div>
     {!! Form::close() !!}
 
     @if($search_result != null)
 
-        <hr>
-        <h5>Showing VATUSA Academy/Exam Status for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
-        <br>
-		<table class="table"><tr>
-        @isset($exams['BASIC'])
-		@if($exams['BASIC']['success'] == 1)
-			<td class="table-success"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
-		@elseif($exams['BASIC']['success'] == 0)
-			<td class="table-danger"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
-		@else
-			<td class="table-secondary"><strong>Basic:</strong> no date</td>
-		@endif
-		@endisset
+    <hr>
+    <h5>Showing VATUSA Academy/Exam Status for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+    <br>
+    <table class="table">
+        <tr>
+            @isset($exams['BASIC'])
+            @if($exams['BASIC']['success'] == 1)
+            <td class="table-success"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
+            @elseif($exams['BASIC']['success'] == 0)
+            <td class="table-danger"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
+            @else
+            <td class="table-secondary"><strong>Basic:</strong> no date</td>
+            @endif
+            @endisset
 
-        @isset($exams['S2'])
-		@if($exams['S2']['success'] == 1)
-			<td class="table-success"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
-		@elseif($exams['S2']['success'] == 0)
-			<td class="table-danger"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
-		@else
-			<td class="table-secondary"><strong>S2:</strong> no date</td>
-		@endif
-        @endisset
+            @isset($exams['S2'])
+            @if($exams['S2']['success'] == 1)
+            <td class="table-success"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
+            @elseif($exams['S2']['success'] == 0)
+            <td class="table-danger"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
+            @else
+            <td class="table-secondary"><strong>S2:</strong> no date</td>
+            @endif
+            @endisset
 
-        @isset($exams['S3'])
-		@if($exams['S3']['success'] == 1)
-			<td class="table-success"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
-		@elseif($exams['S3']['success'] == 0)
-			<td class="table-danger"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
-		@else
-			<td class="table-secondary"><strong>S3:</strong> no date</td>
-		@endif
-        @endisset
+            @isset($exams['S3'])
+            @if($exams['S3']['success'] == 1)
+            <td class="table-success"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
+            @elseif($exams['S3']['success'] == 0)
+            <td class="table-danger"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
+            @else
+            <td class="table-secondary"><strong>S3:</strong> no date</td>
+            @endif
+            @endisset
 
-        @isset($exams['C1'])
-		@if($exams['C1']['success'] == 1)
-			<td class="table-success"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
-		@elseif($exams['C1']['success'] == 0)
-			<td class="table-danger"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
-		@else
-			<td class="table-secondary"><strong>C1:</strong> no date</td>
-		@endif
-        @endisset
-		</tr></table>
-		
-        <hr>
-        <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
-        <br>
+            @isset($exams['C1'])
+            @if($exams['C1']['success'] == 1)
+            <td class="table-success"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
+            @elseif($exams['C1']['success'] == 0)
+            <td class="table-danger"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
+            @else
+            <td class="table-secondary"><strong>C1:</strong> no date</td>
+            @endif
+            @endisset
+        </tr>
+    </table>
+
+    <hr>
+    <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+    <br>
 
 
 
 
-        <ul class="nav nav-tabs nav-justified" role="tablist">
+    <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" href="#s1" role="tab" data-toggle="tab" style="color:black">S1</a>
         </li>
@@ -112,27 +114,27 @@ Training Tickets
             <a class="nav-link" href="#other" role="tab" data-toggle="tab" style="color:black">Other</a>
         </li>
     </ul>
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="s1">
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="s1">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Training Date</th>
-                    <th scope="col">Trainer Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Session Type</th>
-					<th scope="col">Session ID</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="col">INS/MTR Comments</th>
-                </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Training Date</th>
+                        <th scope="col">Trainer Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Session Type</th>
+                        <th scope="col">Session ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">INS/MTR Comments</th>
+                    </tr>
 
-				@php($transition_date = \Carbon\Carbon::parse('11/12/2021'))
+                    @php($transition_date = \Carbon\Carbon::parse('11/12/2021'))
 
-                @if($tickets->count() > 0)
+                    @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-<?php /*
+                    <?php /*
                         @if($t->position > 6 && $t->position < 22)
 						@if($t->cert)
 							<tr class="table-success">
@@ -166,56 +168,56 @@ Training Tickets
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr> */
-?>					
-                    @if($t->sort_category == 's1') 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    ?>
+                    @if($t->sort_category == 's1')
+                    @if($t->cert)
+                    <tr class="table-success">
+                        @else
+                    <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr>
 
-                        @endif
+                    @endif
                     @endforeach
-                @else
+                    @else
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
-                @endif
+                    @endif
 
 
 
 
-            </thead>
-        </table>
-    </div>
+                </thead>
+            </table>
+        </div>
 
 
-    <div role="tabpanel" class="tab-pane" id="s2">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Training Date</th>
-                    <th scope="col">Trainer Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Session Type</th>
-					<th scope="col">Session ID</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="col">INS/MTR Comments</th>
-                </tr>
-                @if($tickets->count() > 0)
-                  @foreach($tickets as $t)
-<?php /*
+        <div role="tabpanel" class="tab-pane" id="s2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Training Date</th>
+                        <th scope="col">Trainer Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Session Type</th>
+                        <th scope="col">Session ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">INS/MTR Comments</th>
+                    </tr>
+                    @if($tickets->count() > 0)
+                    @foreach($tickets as $t)
+                    <?php /*
                     @if($t->position > 21 && $t->position < 31)
 						@if($t->cert)
 							<tr class="table-success">
@@ -249,18 +251,18 @@ Training Tickets
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                 </tr> */
-?>
-                    @if($t->sort_category == 's2') 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    ?>
+                    @if($t->sort_category == 's2')
+                    @if($t->cert)
+                    <tr class="table-success">
+                        @else
+                    <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -268,30 +270,30 @@ Training Tickets
                     </tr>
                     @endif
                     @endforeach
-                @else
+                    @else
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
-                @endif
-            </thead>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="s3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Training Date</th>
-                    <th scope="col">Trainer Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Session Type</th>
-					<th scope="col">Session ID</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="col">INS/MTR Comments</th>
-                </tr>
-                @if($tickets->count() > 0)
+                    @endif
+                </thead>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="s3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Training Date</th>
+                        <th scope="col">Trainer Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Session Type</th>
+                        <th scope="col">Session ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">INS/MTR Comments</th>
+                    </tr>
+                    @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-<?php /*
+                    <?php /*
                       @if($t->position > 30 && $t->position < 42)
 						@if($t->cert)
 							<tr class="table-success">
@@ -325,49 +327,49 @@ Training Tickets
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                 </tr> */
-?>
-                    @if($t->sort_category == 's3') 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    ?>
+                    @if($t->sort_category == 's3')
+                    @if($t->cert)
+                    <tr class="table-success">
+                        @else
+                    <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr>
-                        @endif
+                    @endif
                     @endforeach
-                @else
+                    @else
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
-                @endif
-            </thead>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="c1">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Training Date</th>
-                    <th scope="col">Trainer Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Session Type</th>
-					<th scope="col">Session ID</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="col">INS/MTR Comments</th>
-                </tr>
-                @if($tickets->count() > 0)
+                    @endif
+                </thead>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="c1">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Training Date</th>
+                        <th scope="col">Trainer Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Session Type</th>
+                        <th scope="col">Session ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">INS/MTR Comments</th>
+                    </tr>
+                    @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-<?php /*
+                    <?php /*
                       @if($t->position > 41 && $t->position < 48)
 						@if($t->cert)
 							<tr class="table-success">
@@ -401,18 +403,18 @@ Training Tickets
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                 </tr> */
-?>
-                    @if($t->sort_category == 'c1') 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    ?>
+                    @if($t->sort_category == 'c1')
+                    @if($t->cert)
+                    <tr class="table-success">
+                        @else
+                    <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -420,31 +422,31 @@ Training Tickets
                     </tr>
                     @endif
                     @endforeach
-                @else
+                    @else
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
-                @endif
-            </thead>
-        </table>
-    </div>
+                    @endif
+                </thead>
+            </table>
+        </div>
 
-    <div role="tabpanel" class="tab-pane" id="other">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Training Date</th>
-                    <th scope="col">Trainer Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Session Type</th>
-					<th scope="col">Session ID</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
-                    <th scope="col">INS/MTR Comments</th>
-                </tr>
-                @if($tickets->count() > 0)
+        <div role="tabpanel" class="tab-pane" id="other">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Training Date</th>
+                        <th scope="col">Trainer Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Session Type</th>
+                        <th scope="col">Session ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">INS/MTR Comments</th>
+                    </tr>
+                    @if($tickets->count() > 0)
                     @foreach($tickets as $t)
-<?php /*
+                    <?php /*
                     @if($t->position < 7)
 						@if($t->cert)
 							<tr class="table-success">
@@ -477,18 +479,18 @@ Training Tickets
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr> */
-?>
-                    @if($t->sort_category == 'other') 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    ?>
+                    @if($t->sort_category == 'other')
+                    @if($t->cert)
+                    <tr class="table-success">
+                        @else
+                    <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -496,16 +498,16 @@ Training Tickets
                     </tr>
                     @endif
                     @endforeach
-                @else
+                    @else
                     <tr>
                         <td colspan="6">No training tickets found.</td>
                     </tr>
-                @endif
-            </thead>
-        </table>
+                    @endif
+                </thead>
+            </table>
+        </div>
     </div>
-</div>
-        {!! $tickets->appends(['id' => $search_result->id])->render() !!}
+    {!! $tickets->appends(['id' => $search_result->id])->render() !!}
     @endif
 </div>
 
