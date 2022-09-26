@@ -61,7 +61,7 @@ jobs:
       - name: run migrations
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan migrate --no-interaction
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan migrate --no-interaction --force
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
