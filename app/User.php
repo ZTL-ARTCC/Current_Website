@@ -49,6 +49,31 @@ class User extends Authenticatable
         11 => 'SUP', 12 => 'ADM',
     ];
 
+    private static $letters = [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+    ];
+
+    public static function generateControllerInitials(String $fname, String $lname) {
+        $first_initial = strtoupper(substr($fname, 0, 1));
+        $last_initial = strtoupper(substr($lname, 0, 1));
+        $change_first = true;
+
+        while (User::controllerExistsWithInitials($first_initial . $last_initial)) {
+            $next_char = User::$letters[random_int(0, 25)];
+            if ($change_first) {
+                $first_initial = $next_char;
+            } else {
+                $last_initial = $next_char;
+            }
+        }
+
+        return $first_initial . $last_initial;
+    }
+
+    private static function controllerExistsWithInitials(String $initials) {
+        return User::where('initials', $initials)->exists();
+    }
+
     public function getRatingShortAttribute() {
         foreach (User::$RatingShort as $id => $Short) {
             if ($this->rating_id == $id) {
