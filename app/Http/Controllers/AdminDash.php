@@ -504,134 +504,6 @@ class AdminDash extends Controller
         return view('dashboard.admin.roster.vis_index')->with('new', $new)->with('accepted', $accepted)->with('rejected', $rejected);
     }
 
-    /**
-     * Randomly generate a letter
-     *
-     * @return string
-     */
-     public function genRandLetter() {
-         $fi_int = rand(1, 26);
-
-         if($fi_int == 1) {
-             $fn_initial = 'A';
-         } elseif($fi_int == 2) {
-             $fn_initial = 'B';
-         } elseif($fi_int == 3) {
-             $fn_initial = 'C';
-         } elseif($fi_int == 4) {
-             $fn_initial = 'D';
-         } elseif($fi_int == 5) {
-             $fn_initial = 'E';
-         } elseif($fi_int == 6) {
-             $fn_initial = 'F';
-         } elseif($fi_int == 7) {
-             $fn_initial = 'G';
-         } elseif($fi_int == 8) {
-             $fn_initial = 'H';
-         } elseif($fi_int == 9) {
-             $fn_initial = 'I';
-         } elseif($fi_int == 10) {
-             $fn_initial = 'J';
-         } elseif($fi_int == 11) {
-             $fn_initial = 'K';
-         } elseif($fi_int == 12) {
-             $fn_initial = 'L';
-         } elseif($fi_int == 13) {
-             $fn_initial = 'M';
-         } elseif($fi_int == 14) {
-             $fn_initial = 'N';
-         } elseif($fi_int == 15) {
-             $fn_initial = 'O';
-         } elseif($fi_int == 16) {
-             $fn_initial = 'P';
-         } elseif($fi_int == 17) {
-             $fn_initial = 'Q';
-         } elseif($fi_int == 18) {
-             $fn_initial = 'R';
-         } elseif($fi_int == 19) {
-             $fn_initial = 'S';
-         } elseif($fi_int == 20) {
-             $fn_initial = 'T';
-         } elseif($fi_int == 21) {
-             $fn_initial = 'U';
-         } elseif($fi_int == 22) {
-             $fn_initial = 'V';
-         } elseif($fi_int == 23) {
-             $fn_initial = 'W';
-         } elseif($fi_int == 24) {
-             $fn_initial = 'X';
-         } elseif($fi_int == 25) {
-             $fn_initial = 'Y';
-         } elseif($fi_int == 26) {
-             $fn_initial = 'Z';
-         }
-
-         return $fn_initial;
-     }
-
-     /**
-      * Match a letter to a number
-      *
-      * @return string
-      */
-      public function letterFromNum($fi_int) {
-          if($fi_int == 1) {
-              $fn_initial = 'A';
-          } elseif($fi_int == 2) {
-              $fn_initial = 'B';
-          } elseif($fi_int == 3) {
-              $fn_initial = 'C';
-          } elseif($fi_int == 4) {
-              $fn_initial = 'D';
-          } elseif($fi_int == 5) {
-              $fn_initial = 'E';
-          } elseif($fi_int == 6) {
-              $fn_initial = 'F';
-          } elseif($fi_int == 7) {
-              $fn_initial = 'G';
-          } elseif($fi_int == 8) {
-              $fn_initial = 'H';
-          } elseif($fi_int == 9) {
-              $fn_initial = 'I';
-          } elseif($fi_int == 10) {
-              $fn_initial = 'J';
-          } elseif($fi_int == 11) {
-              $fn_initial = 'K';
-          } elseif($fi_int == 12) {
-              $fn_initial = 'L';
-          } elseif($fi_int == 13) {
-              $fn_initial = 'M';
-          } elseif($fi_int == 14) {
-              $fn_initial = 'N';
-          } elseif($fi_int == 15) {
-              $fn_initial = 'O';
-          } elseif($fi_int == 16) {
-              $fn_initial = 'P';
-          } elseif($fi_int == 17) {
-              $fn_initial = 'Q';
-          } elseif($fi_int == 18) {
-              $fn_initial = 'R';
-          } elseif($fi_int == 19) {
-              $fn_initial = 'S';
-          } elseif($fi_int == 20) {
-              $fn_initial = 'T';
-          } elseif($fi_int == 21) {
-              $fn_initial = 'U';
-          } elseif($fi_int == 22) {
-              $fn_initial = 'V';
-          } elseif($fi_int == 23) {
-              $fn_initial = 'W';
-          } elseif($fi_int == 24) {
-              $fn_initial = 'X';
-          } elseif($fi_int == 25) {
-              $fn_initial = 'Y';
-          } elseif($fi_int == 26) {
-              $fn_initial = 'Z';
-          }
-
-          return $fn_initial;
-      }
-
     public function acceptVisitRequest($id) {
         $visitor = Visitor::find($id);
         $visitor->updated_by = Auth::id();
@@ -646,56 +518,11 @@ class AdminDash extends Controller
         $parts = explode(" ",$visitor->name);
         $fname = $parts[0];
         $lname = $parts[1];
+        $initials = User::generateControllerInitials($fname, $lname);
 
-        //Assigns controller initials
-        //$users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
-		$users_inc_v = User::whereNull('visitor_from')->get();
-        $fn_initial = strtoupper(substr($fname, 0, 1));
-        $ln_initial = strtoupper(substr($lname, 0, 1));
-        $f_initial = $fn_initial;
-        $l_initial = $ln_initial;
-
-        $trys = 0;
-        a:
-        $trys++;
-        $initials = $fn_initial.$ln_initial;
-
-        $yes = 1;
-        foreach($users_inc_v as $u) {
-            if($u->initials == $initials) {
-                $yes = 0;
-            }
-        }
-
-        if($yes == 1) {
-            $initials = $initials;
-        } else {
-            // Check first initial with all letters
-            if($trys <= 26) {
-                $fn_initial = $f_initial;
-                $ln_initial = $this->letterFromNum($trys);
-
-                goto a;
-            } else {
-                $ln_initial = $this->genRandLetter();
-            }
-
-            if($trys >= 27 && $trys <= 52) {
-                $ln_initial = $l_initial;
-                $fn_initial = $this->letterFromNum($trys - 26);
-
-                goto a;
-            } else {
-                $fn_initial = $this->genRandLetter();
-            }
-
-            goto a;
-        }
-
-		if(User::find($visitor->cid) !== null) {
+		if (User::find($visitor->cid) !== null) {
 			$user = User::find($visitor->cid);
-		}
-		else {
+		} else {
 			$user = false;
 		}
 
@@ -713,51 +540,7 @@ class AdminDash extends Controller
         if($result == '200') {
             $visitor = json_decode($response->getBody());
             $visitor = $visitor->data;
-
-            //Assigns controller initials
-            //$users_inc_v = User::where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orWhereNull('visitor_from')->get();
-			$users_inc_v = User::whereNull('visitor_from')->get();
-            $fn_initial = strtoupper(substr($visitor->fname, 0, 1));
-            $ln_initial = strtoupper(substr($visitor->lname, 0, 1));
-            $f_initial = $fn_initial;
-            $l_initial = $ln_initial;
-
-            $trys = 0;
-            a:
-            $trys++;
-            $initials = $fn_initial.$ln_initial;
-
-            $yes = 1;
-            foreach($users_inc_v as $u) {
-                if($u->initials == $initials) {
-                    $yes = 0;
-                }
-            }
-
-            if($yes == 1) {
-                $initials = $initials;
-            } else {
-                // Check first initial with all letters
-                if($trys <= 26) {
-                    $fn_initial = $f_initial;
-                    $ln_initial = $this->letterFromNum($trys);
-
-                    goto a;
-                } else {
-                    $ln_initial = $this->genRandLetter();
-                }
-
-                if($trys >= 27 && $trys <= 52) {
-                    $ln_initial = $l_initial;
-                    $fn_initial = $this->letterFromNum($trys - 26);
-
-                    goto a;
-                } else {
-                    $fn_initial = $this->genRandLetter();
-                }
-
-                goto a;
-            }
+            $initials = User::generateControllerInitials($visitor->fname, $visitor->lname);
         } else {
             $visitor = null;
             $initials = null;
