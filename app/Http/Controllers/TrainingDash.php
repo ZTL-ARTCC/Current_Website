@@ -202,6 +202,9 @@ class TrainingDash extends Controller
 				$t->position = $this->legacyTicketTypes($t->position);
 				$t->sort_category = $this->getTicketSortCategory($t->position);
 			} 
+            if($tickets_sort->isEmpty() && ($search_result->status != 1)) { // Hide inactive users with no tickets from this view
+                return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+            }
 			$exams = $this->getAcademyExamTranscript($request->id);
         } else {
             $tickets = null;
