@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+echo ""
+echo "📜 ✨ Checking your formatting..."
+echo ""
+
+composer format-check
+EXIT_CODE=$?
+npm run format-check
+EXIT_CODE=$(expr $EXIT_CODE + $?)
+
+echo ""
+if [ $EXIT_CODE = 0 ]; then
+    echo "📜 ✅ Great! Your formatting looks good... continuing commit..."
+else
+    echo "📜 ❌ Uh oh... Your formatting doesn't look correct. Try running the following command and commit again..."
+    echo "composer format && npm run format"
+    exit 1
+fi
+echo ""
