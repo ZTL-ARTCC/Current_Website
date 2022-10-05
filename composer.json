@@ -63,7 +63,7 @@
             "vendor/bin/php-cs-fixer fix"
         ],
         "format-check": [
-            "vendor/bin/php-cs-fixer list-files --config=.php-cs-fixer.php"
+            "vendor/bin/php-cs-fixer fix --dry-run"
         ]
     },
     "config": {
