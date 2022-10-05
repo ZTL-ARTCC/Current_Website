@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class PubilcTrainingInfo extends Migration
-{
+class PubilcTrainingInfo extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('public_train_info_pdf', function(Blueprint $table) {
+    public function up() {
+        Schema::create('public_train_info_pdf', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('section_id');
             $table->string('pdf_path');
@@ -26,8 +24,7 @@ class PubilcTrainingInfo extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('public_train_info_pdf');
     }
 }

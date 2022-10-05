@@ -60,11 +60,10 @@ Route::get('/logout', 'RosterController@logout');
 /*
 *   Controller Dashboard
 */
-Route::prefix('dashboard')->middleware('auth')->group(function() {
+Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/', 'ControllerDash@dash');
 
-    Route::prefix('controllers')->group(function() {
-      
+    Route::prefix('controllers')->group(function () {
         Route::get('/mentoravi', 'TrainingController@showMentAvail');
         Route::post('/mentoravi', 'TrainingController@saveSession');
         Route::get('/trainingreq', 'TrainingController@showRequests');
@@ -72,9 +71,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::get('/sessions_today', 'TrainingController@showsessions_today');
 
 
-	    
-	    
-	    
+        
+        
+        
 
 
         Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
@@ -98,27 +97,27 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         Route::post('/search-airport', 'ControllerDash@searchAirport');
         Route::get('/search-airport/search', 'ControllerDash@searchAirportResult');
         Route::post('/report-bug', 'ControllerDash@reportBug');
-        Route::prefix('incident')->group(function() {
+        Route::prefix('incident')->group(function () {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
         });
-        Route::prefix('chat')->group(function() {
+        Route::prefix('chat')->group(function () {
             Route::get('/messages', 'ChatController@getMessages');
             Route::post('/messages/new', 'ChatController@newMessage');
             Route::post('/messages/delete/{id}', 'ChatController@deleteMessage');
         });
     });
 
-    Route::prefix('opt')->group(function() {
+    Route::prefix('opt')->group(function () {
         Route::post('/in', 'ControllerDash@optIn');
         Route::get('/out', 'ControllerDash@optOut');
     });
 
-    Route::prefix('training')->group(function() {
+    Route::prefix('training')->group(function () {
         Route::get('atcast', 'TrainingDash@showatcast');
         Route::get('moodle/login', 'TrainingDash@moodleLogin');
         Route::get('/req', 'TrainingDash@ShowReq');
-        Route::prefix('tickets')->middleware('permission:train')->group(function() {
+        Route::prefix('tickets')->middleware('permission:train')->group(function () {
             Route::get('/', 'TrainingDash@ticketsIndex');
             Route::post('/search', 'TrainingDash@searchTickets');
             Route::get('/new', 'TrainingDash@newTrainingTicket');
@@ -130,10 +129,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/mentor/avail', 'MentorController@showAvail');
             Route::post('/mentor/avail', 'MentorController@postAvail');
             Route::get('/mentor/requests', 'MentorController@showRequests');
-            Route::post('/mentor/requests/{id}/cancel', 'MentorController@cancelSession');  
-        
+            Route::post('/mentor/requests/{id}/cancel', 'MentorController@cancelSession');
         });
-        Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function() {
+        Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function () {
             Route::get('/', 'TrainingDash@otsCenter');
             Route::get('/accept/{id}', 'TrainingDash@acceptRecommendation');
             Route::get('/reject/{id}', 'TrainingDash@rejectRecommendation')->middleware('permission:snrStaff');
@@ -141,11 +139,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/cancel/{id}', 'TrainingDash@otsCancel');
             Route::post('/complete/{id}', 'TrainingDash@completeOTS');
         });
-        Route::prefix('info')->group(function() {
+        Route::prefix('info')->group(function () {
             Route::get('/', 'TrainingDash@trainingInfo');
             Route::post('/add/{section}', 'TrainingDash@addInfo')->middleware('permission:snrStaff');
             Route::get('/delete/{id}', 'TrainingDash@deleteInfo')->middleware('permission:snrStaff');
-            Route::prefix('public')->middleware('permission:snrStaff')->group(function() {
+            Route::prefix('public')->middleware('permission:snrStaff')->group(function () {
                 Route::post('/new-section', 'TrainingDash@newPublicInfoSection');
                 Route::post('/edit-section/{id}', 'TrainingDash@editPublicSection');
                 Route::get('/remove-section/{id}', 'TrainingDash@removePublicInfoSection');
@@ -155,15 +153,15 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
         });
     });
 
-    Route::prefix('admin')->group(function() {
-        Route::prefix('announcement')->middleware('permission:staff')->group(function() {
+    Route::prefix('admin')->group(function () {
+        Route::prefix('announcement')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@setAnnouncement');
             Route::post('/', 'AdminDash@saveAnnouncement');
         });
-        Route::prefix('audits')->middleware('permission:snrStaff')->group(function() {
+        Route::prefix('audits')->middleware('permission:snrStaff')->group(function () {
             Route::get('/', 'AdminDash@showAudits');
         });
-        Route::prefix('calendar')->middleware('permission:staff')->group(function() {
+        Route::prefix('calendar')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@viewCalendar');
             Route::get('/view/{id}', 'AdminDash@viewCalendarEvent');
             Route::get('/new', 'AdminDash@newCalendarEvent');
@@ -173,7 +171,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::delete('/delete/{id}', 'AdminDash@deleteCalendarEvent');
             Route::post('/edit/vis/{id}', 'AdminDash@toggleCalenderEventVisibilty');
         });
-        Route::prefix('scenery')->middleware('permission:scenery')->group(function() {
+        Route::prefix('scenery')->middleware('permission:scenery')->group(function () {
             Route::get('/', 'AdminDash@showScenery');
             Route::get('/view/{id}', 'AdminDash@viewScenery');
             Route::get('/new', 'AdminDash@newScenery');
@@ -182,15 +180,15 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/edit/{id}/save', 'AdminDash@saveScenery');
             Route::delete('/delete/{id}', 'AdminDash@deleteScenery');
         });
-        Route::prefix('files')->middleware('permission:files')->group(function() {
+        Route::prefix('files')->middleware('permission:files')->group(function () {
             Route::get('/upload', 'AdminDash@uploadFile');
             Route::post('/upload', 'AdminDash@storeFile');
             Route::get('/edit/{id}', 'AdminDash@editFile');
             Route::post('/edit/{id}', 'AdminDash@saveFile');
             Route::get('/delete/{id}', 'AdminDash@deleteFile');
-			Route::get('/disp-order', 'AdminDash@updateFileDispOrder');
+            Route::get('/disp-order', 'AdminDash@updateFileDispOrder');
         });
-        Route::prefix('airports')->middleware('permission:staff')->group(function() {
+        Route::prefix('airports')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@showAirports');
             Route::get('/new', 'AdminDash@newAirport');
             Route::post('/new', 'AdminDash@storeAirport');
@@ -198,7 +196,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::get('/del-from-home/{id}', 'AdminDash@removeAirportFromHome');
             Route::delete('/delete/{id}', 'AdminDash@deleteAirport');
         });
-        Route::prefix('events')->middleware('permission:events')->group(function() {
+        Route::prefix('events')->middleware('permission:events')->group(function () {
             Route::get('/new', 'AdminDash@newEvent');
             Route::post('/new', 'AdminDash@saveNewEvent');
             Route::post('/positions/add/{id}', 'AdminDash@addPosition');
@@ -216,7 +214,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/load-preset/{id}', 'AdminDash@retrievePositionPreset');
             Route::post('/delete-preset', 'AdminDash@deletePositionPreset');
         });
-        Route::prefix('roster')->middleware('permission:roster')->group(function() {
+        Route::prefix('roster')->middleware('permission:roster')->group(function () {
             Route::get('/visit/requests', 'AdminDash@showVisitRequests');
             Route::get('/visit/accept/{id}', 'AdminDash@acceptVisitRequest');
             Route::post('/visit/manual-add/search', 'AdminDash@manualAddVisitor');
@@ -224,37 +222,37 @@ Route::prefix('dashboard')->middleware('auth')->group(function() {
             Route::post('/visit/accept/save', 'AdminDash@storeVisitor');
             Route::post('/visit/reject/{id}', 'AdminDash@rejectVisitRequest');
             Route::get('/visit/requests/view/{id}', 'AdminDash@viewVisitRequest');
-			Route::get('/visit/remove/{id}', 'AdminDash@removeVisitor');
+            Route::get('/visit/remove/{id}', 'AdminDash@removeVisitor');
             Route::get('/visit-agreement/reject/{id}', 'AdminDash@disallowVisitReq');
             Route::post('/visit-agreement/permit', 'AdminDash@allowVisitReq');
             Route::get('/purge-assistant/{year?}/{month?}', 'AdminDash@showRosterPurge');
         });
-        Route::prefix('roster')->middleware('permission:roster|train')->group(function() {
+        Route::prefix('roster')->middleware('permission:roster|train')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editController');
             Route::post('/edit/{id}', 'AdminDash@updateController');
         });
-        Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function() {
+        Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function () {
             Route::get('/{year?}/{month?}', 'AdminDash@showBronzeMic');
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setBronzeWinner');
             Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeBronzeWinner');
         });
-        Route::prefix('pyrite-mic')->middleware('permission:snrStaff')->group(function() {
+        Route::prefix('pyrite-mic')->middleware('permission:snrStaff')->group(function () {
             Route::get('/{year?}', 'AdminDash@showPyriteMic');
             Route::post('/{year}/{hours}/{id}', 'AdminDash@setPyriteWinner');
             Route::get('/remove/{id}/{year}', 'AdminDash@removePyriteWinner');
         });
-        Route::prefix('feedback')->middleware('permission:snrStaff')->group(function() {
+        Route::prefix('feedback')->middleware('permission:snrStaff')->group(function () {
             Route::get('/', 'AdminDash@showFeedback');
             Route::post('/save/{id}', 'AdminDash@saveFeedback');
             Route::post('/hide/{id}', 'AdminDash@hideFeedback');
             Route::post('/update/{id}', 'AdminDash@updateFeedback');
             Route::post('/email/{id}', 'AdminDash@emailFeedback');
         });
-        Route::prefix('email')->middleware('permission:email')->group(function() {
+        Route::prefix('email')->middleware('permission:email')->group(function () {
             Route::get('/send', 'AdminDash@sendNewEmail');
             Route::post('/send', 'AdminDash@sendEmail');
         });
-        Route::prefix('incident')->middleware('permission:snrStaff')->group(function() {
+        Route::prefix('incident')->middleware('permission:snrStaff')->group(function () {
             Route::get('/', 'AdminDash@incidentReportIndex');
             Route::get('/view/{id}', 'AdminDash@viewIncidentReport');
             Route::get('/archive/{id}', 'AdminDash@archiveIncident');
@@ -291,11 +289,11 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 *	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
 */
 
-Route::get('/laratrust', function() {
-/*	$user = App\User::find(1315134);
+Route::get('/laratrust', function () {
+    /*	$user = App\User::find(1315134);
 
-	$user->attachRole('wm');
- */
+        $user->attachRole('wm');
+     */
 });
 
 /*

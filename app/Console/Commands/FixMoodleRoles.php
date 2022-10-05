@@ -7,8 +7,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
 
-class FixMoodleRoles extends Command
-{
+class FixMoodleRoles extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -28,8 +27,7 @@ class FixMoodleRoles extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -38,12 +36,11 @@ class FixMoodleRoles extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         DB::table('mdl_role_assignments')->truncate();
         $users = User::where('status', '!=', 2)->get();
 
-        foreach($users as $u) {
+        foreach ($users as $u) {
             if ($u->rating_id == 1) {
                 $mdl_rating = 18;
             } elseif ($u->rating_id == 2) {
@@ -72,7 +69,7 @@ class FixMoodleRoles extends Command
             ]);
 
             // Check for mentor
-            if($u->hasRole('mtr')) {
+            if ($u->hasRole('mtr')) {
                 $now = Carbon::now()->timestamp;
                 DB::table('mdl_role_assignments')->insert([
                     'roleid' => 15,
@@ -84,7 +81,7 @@ class FixMoodleRoles extends Command
             }
 
             // Check for staff
-            if($u->isAbleTo('snrStaff')) {
+            if ($u->isAbleTo('snrStaff')) {
                 $now = Carbon::now()->timestamp;
                 DB::table('mdl_role_assignments')->insert([
                     'roleid' => 17,
@@ -93,7 +90,7 @@ class FixMoodleRoles extends Command
                     'modifierid' => 1,
                     'timemodified' => $now
                 ]);
-            } elseif($u->isAbleTo('staff')) {
+            } elseif ($u->isAbleTo('staff')) {
                 $now = Carbon::now()->timestamp;
                 DB::table('mdl_role_assignments')->insert([
                     'roleid' => 16,

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Airport;
-use App\Audit;
 use App\Announcement;
+use App\Audit;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
@@ -32,10 +32,8 @@ use Illuminate\Http\Request;
 //use Request;
 //use Illuminate\Support\Facades\Input;
 use Mail;
-use Storage;
 
-class AdminDash extends Controller
-{
+class AdminDash extends Controller {
     public function showScenery() {
         $scenery = Scenery::orderBy('airport', 'ASC')->get();
 
@@ -192,10 +190,10 @@ class AdminDash extends Controller
         $hcontrollers = User::where('visitor', '0')->orderBy('lname', 'ASC')->get();
         $vcontrollers = User::where('visitor', '1')->orderBy('lname', 'ASC')->get();
 
-        $mtr = $hcontrollers->filter(function($user){
+        $mtr = $hcontrollers->filter(function ($user) {
             return $user->hasRole('mtr');
         });
-        $ins = $hcontrollers->filter(function($user){
+        $ins = $hcontrollers->filter(function ($user) {
             return $user->hasRole('ins');
         });
 
@@ -203,26 +201,28 @@ class AdminDash extends Controller
     }
 
     public function showRosterPurge($year = null, $month = null) {
-        if ($year == null)
+        if ($year == null) {
             $year = date('y');
+        }
 
-        if ($month == null)
+        if ($month == null) {
             $month = date('n');
+        }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $homec = User::where('visitor', 0)->where('status', 1)->orderBy('lname', 'ASC')->get();
         $visitc = User::where('visitor', 1)->where('status', 1)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
-        $trainc = User::orderBy('lname', 'ASC')->get()->filter(function($user){
+        $trainc = User::orderBy('lname', 'ASC')->get()->filter(function ($user) {
             return $user->hasRole('mtr') || $user->hasRole('ins');
         });
 
-        if($month == 1) {
+        if ($month == 1) {
             $last_year = $year - 1;
         } else {
             $last_year = $year;
         }
 
-        if($month == 1) {
+        if ($month == 1) {
             $last_month = 12;
         } else {
             $last_month = $month - 1;
@@ -243,13 +243,13 @@ class AdminDash extends Controller
     public function updateController(Request $request, $id) {
         $user = User::find($id);
 
-        if(Auth::user()->isAbleTo('roster')) {
+        if (Auth::user()->isAbleTo('roster')) {
             $user->del = $request->input('del');
             $user->gnd = $request->input('gnd');
-            if($user->twr == 99) {
-                if($request->input('twr') != 0) {
+            if ($user->twr == 99) {
+                if ($request->input('twr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -257,7 +257,7 @@ class AdminDash extends Controller
                 } else {
                     $user->twr = 99;
                 }
-            } elseif($request->input('twr') == 99) {
+            } elseif ($request->input('twr') == 99) {
                 $expire = Carbon::now()->addMonth()->format('Y-m-d');
                 $user->twr = $request->input('twr');
                 $cert = new SoloCert;
@@ -269,10 +269,10 @@ class AdminDash extends Controller
             } else {
                 $user->twr = $request->input('twr');
             }
-            if($user->app == 99) {
-                if($request->input('app') != 0) {
+            if ($user->app == 99) {
+                if ($request->input('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -283,10 +283,10 @@ class AdminDash extends Controller
             } else {
                 $user->app = $request->input('app');
             }
-            if($user->ctr == 99) {
-                if($request->input('ctr') != 0) {
+            if ($user->ctr == 99) {
+                if ($request->input('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -300,98 +300,98 @@ class AdminDash extends Controller
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
-            if($request->input('visitor') == null) {
+            if ($request->input('visitor') == null) {
                 $user->visitor = 0;
-            } elseif($request->input('visitor') == 1) {
+            } elseif ($request->input('visitor') == 1) {
                 $user->visitor = 1;
             }
-            if($request->input('canTrain') == null) {
+            if ($request->input('canTrain') == null) {
                 $user->canTrain = 0;
-            } elseif($request->input('canTrain') == 1) {
+            } elseif ($request->input('canTrain') == 1) {
                 $user->canTrain = 1;
             }
-            if($request->input('canEvents') == null) {
+            if ($request->input('canEvents') == null) {
                 $user->canEvents = 0;
-            } elseif($request->input('canEvents') == 1) {
+            } elseif ($request->input('canEvents') == 1) {
                 $user->canEvents = 1;
             }
-            if($request->input('api_exempt') == null) {
+            if ($request->input('api_exempt') == null) {
                 $user->api_exempt = 0;
-            } elseif($request->input('api_exempt') == 1) {
+            } elseif ($request->input('api_exempt') == 1) {
                 $user->api_exempt = 1;
             }
-			$user->twr_solo_fields = $request->input('twr_solo_fields');
-			$user->twr_solo_expires = $request->input('twr_solo_expires');
-			
+            $user->twr_solo_fields = $request->input('twr_solo_fields');
+            $user->twr_solo_expires = $request->input('twr_solo_expires');
+            
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            if($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec', 'aec']) == true) {
-                if($user->hasRole('atm')) {
+            if ($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec', 'aec']) == true) {
+                if ($user->hasRole('atm')) {
                     $user->detachRole('atm');
-                } elseif($user->hasRole('datm')) {
+                } elseif ($user->hasRole('datm')) {
                     $user->detachRole('datm');
-                } elseif($user->hasRole('ta')) {
+                } elseif ($user->hasRole('ta')) {
                     $user->detachRole('ta');
-                } elseif($user->hasRole('ata')) {
+                } elseif ($user->hasRole('ata')) {
                     $user->detachRole('ata');
-                } elseif($user->hasRole('wm')) {
+                } elseif ($user->hasRole('wm')) {
                     $user->detachRole('wm');
-                } elseif($user->hasRole('awm')) {
+                } elseif ($user->hasRole('awm')) {
                     $user->detachRole('awm');
-                } elseif($user->hasRole('fe')) {
+                } elseif ($user->hasRole('fe')) {
                     $user->detachRole('fe');
-                } elseif($user->hasRole('afe')) {
+                } elseif ($user->hasRole('afe')) {
                     $user->detachRole('afe');
-                } elseif($user->hasRole('ec')) {
+                } elseif ($user->hasRole('ec')) {
                     $user->detachRole('ec');
-                } elseif($user->hasRole('aec')) {
+                } elseif ($user->hasRole('aec')) {
                     $user->detachRole('aec');
                 }
             }
 
-            if($request->input('staff') == 1) {
+            if ($request->input('staff') == 1) {
                 $user->attachRole('atm');
-            } elseif($request->input('staff') == 2) {
+            } elseif ($request->input('staff') == 2) {
                 $user->attachRole('datm');
-            } elseif($request->input('staff') == 3) {
+            } elseif ($request->input('staff') == 3) {
                 $user->attachRole('ta');
-            } elseif($request->input('staff') == 4) {
+            } elseif ($request->input('staff') == 4) {
                 $user->attachRole('ata');
-            } elseif($request->input('staff') == 5) {
+            } elseif ($request->input('staff') == 5) {
                 $user->attachRole('wm');
-            } elseif($request->input('staff') == 6) {
+            } elseif ($request->input('staff') == 6) {
                 $user->attachRole('awm');
-            } elseif($request->input('staff') == 7) {
+            } elseif ($request->input('staff') == 7) {
                 $user->attachRole('fe');
-            } elseif($request->input('staff') == 8) {
+            } elseif ($request->input('staff') == 8) {
                 $user->attachRole('afe');
-            } elseif($request->input('staff') == 9) {
+            } elseif ($request->input('staff') == 9) {
                 $user->attachRole('ec');
-            } elseif($request->input('staff') == 10) {
+            } elseif ($request->input('staff') == 10) {
                 $user->attachRole('aec');
             }
 
-            if($user->hasRole(['mtr', 'ins']) == true) {
-                if($user->hasRole('mtr')) {
+            if ($user->hasRole(['mtr', 'ins']) == true) {
+                if ($user->hasRole('mtr')) {
                     $user->detachRole('mtr');
                     $user->save();
-                } elseif($user->hasRole('ins')) {
+                } elseif ($user->hasRole('ins')) {
                     $user->detachRole('ins');
                     $user->save();
                 }
             }
-            if($request->input('training') == 1) {
+            if ($request->input('training') == 1) {
                 $user->attachRole('mtr');
-                if($user->train_pwr == null) {
+                if ($user->train_pwr == null) {
                     $user->train_pwr = 1;
                     $user->monitor_pwr = 1;
                     $user->save();
                 }
-            } elseif($request->input('training') == 2) {
+            } elseif ($request->input('training') == 2) {
                 $user->attachRole('ins');
-                if($user->train_pwr == null) {
+                if ($user->train_pwr == null) {
                     $user->train_pwr = 6;
                     $user->monitor_pwr = 6;
                     $user->save();
@@ -400,10 +400,10 @@ class AdminDash extends Controller
         } else {
             $user->del = $request->input('del');
             $user->gnd = $request->input('gnd');
-            if($user->twr == 99) {
-                if($request->input('twr') != 0) {
+            if ($user->twr == 99) {
+                if ($request->input('twr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -411,7 +411,7 @@ class AdminDash extends Controller
                 } else {
                     $user->twr = 99;
                 }
-            } elseif($request->input('twr') == 99) {
+            } elseif ($request->input('twr') == 99) {
                 $expire = Carbon::now()->addMonth()->format('Y-m-d');
                 $user->twr = $request->input('twr');
                 $cert = new SoloCert;
@@ -423,10 +423,10 @@ class AdminDash extends Controller
             } else {
                 $user->twr = $request->input('twr');
             }
-            if($user->app == 99) {
-                if($request->input('app') != 0) {
+            if ($user->app == 99) {
+                if ($request->input('app') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -437,10 +437,10 @@ class AdminDash extends Controller
             } else {
                 $user->app = $request->input('app');
             }
-            if($user->ctr == 99) {
-                if($request->input('ctr') != 0) {
+            if ($user->ctr == 99) {
+                if ($request->input('ctr') != 0) {
                     $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if($solo) {
+                    if ($solo) {
                         $solo->status = 1;
                         $solo->save();
                     }
@@ -510,25 +510,25 @@ class AdminDash extends Controller
         $visitor->status = 1;
         $visitor->save();
 
-        Mail::send('emails.visit.accept', ['visitor' => $visitor], function($message) use ($visitor){
+        Mail::send('emails.visit.accept', ['visitor' => $visitor], function ($message) use ($visitor) {
             $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Accepted');
             $message->to($visitor->email)->cc('datm@ztlartcc.org');
         });
 
-        $parts = explode(" ",$visitor->name);
+        $parts = explode(" ", $visitor->name);
         $fname = $parts[0];
         $lname = $parts[1];
         $initials = User::generateControllerInitials($fname, $lname);
 
-		if (User::find($visitor->cid) !== null) {
-			$user = User::find($visitor->cid);
-		} else {
-			$user = false;
-		}
+        if (User::find($visitor->cid) !== null) {
+            $user = User::find($visitor->cid);
+        } else {
+            $user = false;
+        }
 
         return view('dashboard.admin.roster.new_vis')->with('visitor', $visitor)->with('initials', $initials)->with('fname', $fname)->with('lname', $lname)->with('user', $user);
     }
-	
+    
     public function manualAddVisitor(Request $request) {
         $validator = $request->validate([
             'cid' => 'required'
@@ -537,7 +537,7 @@ class AdminDash extends Controller
         $client = new Client(['exceptions' => false]);
         $response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key'));
         $result = $response->getStatusCode();
-        if($result == '200') {
+        if ($result == '200') {
             $visitor = json_decode($response->getBody());
             $visitor = $visitor->data;
             $initials = User::generateControllerInitials($visitor->fname, $visitor->lname);
@@ -559,7 +559,7 @@ class AdminDash extends Controller
         $visitor->reject_reason = $request->reject_reason;
         $visitor->save();
 
-        Mail::send(['html' => 'emails.visit.reject'], ['visitor' => $visitor], function($message) use ($visitor) {
+        Mail::send(['html' => 'emails.visit.reject'], ['visitor' => $visitor], function ($message) use ($visitor) {
             $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Rejected');
             $message->to($visitor->email)->cc('datm@ztlartcc.org');
         });
@@ -574,49 +574,47 @@ class AdminDash extends Controller
     }
 
     public function storeVisitor(Request $request) {
-		// See if a record already exists for this CID (a returning visitor)
-		if (User::find($request->cid) !== null) {
-			$user = User::find($request->cid);
-		}
-		else {
-			$user = new User;
-		}
+        // See if a record already exists for this CID (a returning visitor)
+        if (User::find($request->cid) !== null) {
+            $user = User::find($request->cid);
+        } else {
+            $user = new User;
+        }
         $user->id = $request->input('cid');
         $user->fname = $request->input('fname');
         $user->lname = $request->input('lname');
         $user->email = $request->input('email');
         $user->initials = $request->input('initials');
         $user->rating_id = $request->input('rating_id');
-		if((User::find($request->input('cid')) !== null)&&($request->input('grant_previous') == '1')) {
-			// Grant all previous certifications that controller held
-		}
-		else { // Otherwise, grant minor certifications based on GRP
-        if($request->input('rating_id') == 2) {
-            $user->del = 1;
-            $user->gnd = 1;
-            $user->twr = 0;
-            $user->app = 0;
-            $user->ctr = 0;
-        } elseif($request->input('rating_id') == 3) {
-            $user->del = 1;
-            $user->gnd = 1;
-            $user->twr = 1;
-            $user->app = 0;
-            $user->ctr = 0;
-        } elseif($request->input('rating_id') == 4 || $request->input('rating_id') == 5 || $request->input('rating_id') == 7 || $request->input('rating_id') == 8 || $request->input('rating_id') == 10) {
-            $user->del = 1;
-            $user->gnd = 1;
-            $user->twr = 1;
-            $user->app = 1;
-            $user->ctr = 0;
+        if ((User::find($request->input('cid')) !== null)&&($request->input('grant_previous') == '1')) {
+            // Grant all previous certifications that controller held
+        } else { // Otherwise, grant minor certifications based on GRP
+            if ($request->input('rating_id') == 2) {
+                $user->del = 1;
+                $user->gnd = 1;
+                $user->twr = 0;
+                $user->app = 0;
+                $user->ctr = 0;
+            } elseif ($request->input('rating_id') == 3) {
+                $user->del = 1;
+                $user->gnd = 1;
+                $user->twr = 1;
+                $user->app = 0;
+                $user->ctr = 0;
+            } elseif ($request->input('rating_id') == 4 || $request->input('rating_id') == 5 || $request->input('rating_id') == 7 || $request->input('rating_id') == 8 || $request->input('rating_id') == 10) {
+                $user->del = 1;
+                $user->gnd = 1;
+                $user->twr = 1;
+                $user->app = 1;
+                $user->ctr = 0;
+            }
         }
-		}
         $user->visitor = '1';
         $user->visitor_from = $request->input('visitor_from');
         $user->status = '1';
         $user->added_to_facility = Carbon::now();
-		$user->twr_solo_fields = '';
-		$user->twr_solo_expires = '';
+        $user->twr_solo_fields = '';
+        $user->twr_solo_expires = '';
         $user->save();
 
         $audit = new Audit;
@@ -624,10 +622,10 @@ class AdminDash extends Controller
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' added the visitor '.$user->full_name.'.';
         $audit->save();
-		
-		// Add to the VATUSA roster
-		$client = new Client();
-		$res = $client->request('POST','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'),['http_errors' => false]);		
+        
+        // Add to the VATUSA roster
+        $client = new Client();
+        $res = $client->request('POST', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visitor has been successfully added to the roster.');
     }
@@ -635,11 +633,11 @@ class AdminDash extends Controller
     public function removeVisitor($id) {
         $user = User::find($id);
         $name = $user->full_name;
-        if($user->visitor == 0) {
+        if ($user->visitor == 0) {
             return redirect()->back()->with('error', 'You can only remove visitors this way. If you are trying to remove a home controller, please do this from the VATUSA website.');
         } else {
             $event_requests = EventRegistration::where('controller_id', $user->id)->get();
-            foreach($event_requests as $e) {
+            foreach ($event_requests as $e) {
                 $e->delete();
             }
             $user->status = 2;
@@ -650,31 +648,31 @@ class AdminDash extends Controller
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
             $audit->save();
-            if(filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
-             Mail::send('emails.remove_visitor', ['user' => $user], function($message) use ($user){
-                        $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
-                        $message->to($user->email)->cc('datm@ztlartcc.org');
-             });
-			}
-			// Remove on the VATUSA roster
-			$client = new Client();
-			$req_params = [ 'form_params' =>
+            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
+                Mail::send('emails.remove_visitor', ['user' => $user], function ($message) use ($user) {
+                    $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
+                    $message->to($user->email)->cc('datm@ztlartcc.org');
+                });
+            }
+            // Remove on the VATUSA roster
+            $client = new Client();
+            $req_params = [ 'form_params' =>
                 [
                     'reason' => 'IAW ZTL ARTCC Facility Administrative Policy'
                 ],
-				'http_errors' => false
+                'http_errors' => false
             ];
-			$res = $client->request('DELETE','https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'),$req_params);
-			
+            $res = $client->request('DELETE', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
+            
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
     }
 
     public function viewCalendar() {
-        $calendar = Calendar::where('type', '1')->get()->sortByDesc(function($news) {
+        $calendar = Calendar::where('type', '1')->get()->sortByDesc(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
-        $news = Calendar::where('type', '2')->get()->sortByDesc(function($news) {
+        $news = Calendar::where('type', '2')->get()->sortByDesc(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
 
@@ -715,7 +713,6 @@ class AdminDash extends Controller
         $audit->save();
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been created.');
-
     }
 
     public function editCalendarEvent($id) {
@@ -750,7 +747,7 @@ class AdminDash extends Controller
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been edited.');
     }
 
-    public function deleteCalendarEvent($id){
+    public function deleteCalendarEvent($id) {
         $calendar = Calendar::find($id);
         $title = $calendar->title;
         $calendar->delete();
@@ -764,27 +761,27 @@ class AdminDash extends Controller
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
 
-    public function toggleCalenderEventVisibilty($id){
-          $calendar = Calendar::find($id);
-          $type = '';
+    public function toggleCalenderEventVisibilty($id) {
+        $calendar = Calendar::find($id);
+        $type = '';
 
-          if($calendar->visible == 1){
-              $calendar->visible = 0;
-              $type = 'invisible';
-          }elseif($calendar->visible == 0) {
-              $calendar->visible = 1;
-              $type = 'visible';
-          }
+        if ($calendar->visible == 1) {
+            $calendar->visible = 0;
+            $type = 'invisible';
+        } elseif ($calendar->visible == 0) {
+            $calendar->visible = 1;
+            $type = 'visible';
+        }
 
-          $calendar->save();
+        $calendar->save();
 
-          $audit = new Audit;
-          $audit->cid = Auth::id();
-          $audit->ip = $_SERVER['REMOTE_ADDR'];
-          $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
-          $audit->save();
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
+        $audit->save();
 
-            return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
+        return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
     }
 
     public function uploadFile() {
@@ -804,21 +801,22 @@ class AdminDash extends Controller
         $name = $request->title.'_'.$time.'.'.$ext;
 
         $path = $request->file('file')->storeAs(
-            '/public/files', $name
+            '/public/files',
+            $name
         );
 
         $public_url = '/storage/files/'.$name;
-		$permalink = $request->input('permalink');
-		if(strlen($permalink) < 1) {
-			$permalink = null;
-		}
+        $permalink = $request->input('permalink');
+        if (strlen($permalink) < 1) {
+            $permalink = null;
+        }
 
         $file = new File;
         $file->name = $request->input('title');
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
         $file->path = $public_url;
-		$file->permalink = $permalink;
+        $file->permalink = $permalink;
         $file->save();
 
         $audit = new Audit;
@@ -837,15 +835,15 @@ class AdminDash extends Controller
     }
 
     public function saveFile(Request $request, $id) {
-		$permalink = $request->input('permalink');
-		if(strlen($permalink) < 1) {
-			$permalink = null;
-		}
+        $permalink = $request->input('permalink');
+        if (strlen($permalink) < 1) {
+            $permalink = null;
+        }
         $file = File::find($id);
         $file->name = $request->input('title');
         $file->type = $request->input('type');
         $file->desc = $request->input('desc');
-		$file->permalink = $permalink;
+        $file->permalink = $permalink;
         $file->save();
 
         $audit = new Audit;
@@ -856,35 +854,34 @@ class AdminDash extends Controller
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
     }
-	
-	public function updateFileDispOrder(Request $request) {
-		if(($request->act == 'up')&&($request->pos > 0)) { // If action is move up, swap spots with item that = -1
-			$file = File::where('type', $request->typ)->where('disp_order', $request->pos - 1)->first();
-			$file->disp_order = $request->pos;
-			$file->timestamps = false;
-			$file->save();
-			$file = File::find($request->id);
-			$file->disp_order = $request->pos - 1;
-			$file->timestamps = false;
-			$file->save();
-		}
-		elseif($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
-			$file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->first();
-			if(!is_null($file)) {
-				$file->disp_order = $request->pos;
-				$file->timestamps = false;
-				$file->save();
-				$file = File::find($request->id);
-				$file->disp_order =  $request->pos + 1;
-				$file->timestamps = false;
-				$file->save();
-			}
-		}
-		// Rebuild the display and return it to the AJAX caller
-		$dispString = "";
-		$files = File::where('type', $request->typ)->orderBy('disp_order', 'ASC')->get();
-		foreach($files as $f) {
-			$dispString .= "<tr>
+    
+    public function updateFileDispOrder(Request $request) {
+        if (($request->act == 'up')&&($request->pos > 0)) { // If action is move up, swap spots with item that = -1
+            $file = File::where('type', $request->typ)->where('disp_order', $request->pos - 1)->first();
+            $file->disp_order = $request->pos;
+            $file->timestamps = false;
+            $file->save();
+            $file = File::find($request->id);
+            $file->disp_order = $request->pos - 1;
+            $file->timestamps = false;
+            $file->save();
+        } elseif ($request->act == 'down') { // If action is move down, then +1 to all elements >= order and update
+            $file = File::where('type', $request->typ)->where('disp_order', $request->pos + 1)->first();
+            if (!is_null($file)) {
+                $file->disp_order = $request->pos;
+                $file->timestamps = false;
+                $file->save();
+                $file = File::find($request->id);
+                $file->disp_order =  $request->pos + 1;
+                $file->timestamps = false;
+                $file->save();
+            }
+        }
+        // Rebuild the display and return it to the AJAX caller
+        $dispString = "";
+        $files = File::where('type', $request->typ)->orderBy('disp_order', 'ASC')->get();
+        foreach ($files as $f) {
+            $dispString .= "<tr>
                                 <td>$f->name</td>
                                 <td>$f->desc</td>
                                 <td>$f->updated_at</td>
@@ -893,18 +890,18 @@ class AdminDash extends Controller
                                   <a href=\"$f->path\" target=\"_blank\" class=\"btn btn-success simple-tooltip\" data-toggle=\"tooltip\" title=\"Download\"><i class=\"fas fa-download\"></i></a>
                                         <a href=\"/dashboard/admin/files/edit/$f->id\" class=\"btn btn-warning simple-tooltip\" data-toggle=\"tooltip\" title=\"Edit\"><i class=\"fas fa-pencil-alt\"></i></a>
                                         <a href=\"/dashboard/admin/files/delete/$f->id\" onclick=\"return confirm(\'Are you sure you want to delete " . $f->name . "?\')\" class=\"btn btn-danger simple-tooltip\" data-toggle=\"tooltip\" title=\"Delete\"><i class=\"fas fa-times\"></i></a>";
-			if($f->disp_order > 0) { // Don't show the up button for the first item listed
-				$dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'up\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Up\"><i class=\"fas fa-arrow-up\"></i></a>";
-			}
-			if(count($files) > $f->disp_order + 1) { // Don't show the down button for the last item listed
-				$dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'down\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Down\"><i class=\"fas fa-arrow-down\"></i></a>";
-			}
-			$dispString .= "	</div>
+            if ($f->disp_order > 0) { // Don't show the up button for the first item listed
+                $dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'up\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Up\"><i class=\"fas fa-arrow-up\"></i></a>";
+            }
+            if (count($files) > $f->disp_order + 1) { // Don't show the down button for the last item listed
+                $dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'down\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Down\"><i class=\"fas fa-arrow-down\"></i></a>";
+            }
+            $dispString .= "	</div>
 								</td>
                             </tr>";
-		}
-		echo $dispString;
-	}
+        }
+        echo $dispString;
+    }
 
     public function deleteFile($id) {
         $file = File::find($id);
@@ -944,7 +941,7 @@ class AdminDash extends Controller
 
         $controller = User::find($feedback->controller_id);
 
-        Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function($m) use ($feedback, $controller) {
+        Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
             $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
             $m->subject('You Have New Feedback!');
             $m->to($controller->email);
@@ -1010,7 +1007,7 @@ class AdminDash extends Controller
         $audit->what = Auth::user()->full_name.' emailed the pilot for feedback '.$feedback->id.'.';
         $audit->save();
 
-        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function($m) use ($feedback, $subject, $replyTo, $replyToName) {
+        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function ($m) use ($feedback, $subject, $replyTo, $replyToName) {
             $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
             $m->subject($subject);
             $m->to($feedback->pilot_email);
@@ -1057,38 +1054,38 @@ class AdminDash extends Controller
         $s3 = User::where('status', 1)->where('opt', 1)->where('visitor', 0)->where('rating_id', 4)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
         $c1 = User::where('rating_id', 5)->orWhere('rating_id', 7)->orWhere('rating_id', 8)->orWhere('rating_id', 10)->where('status', 1)->where('opt', 1)->where('visitor', 0)->where('email', '!=', $sender->email)->orderBy('lname', 'ASC')->get()->pluck('email');
 
-        if($bulk == null) {
+        if ($bulk == null) {
             $to = User::find($request->to)->email;
             $emails = [$to];
-        } elseif($bulk == 0) {
+        } elseif ($bulk == 0) {
             $emails = $controllers;
-        } elseif($bulk == 1) {
+        } elseif ($bulk == 1) {
             $emails = $hcontrollers;
-        } elseif($bulk == 2) {
+        } elseif ($bulk == 2) {
             $emails = $vcontrollers;
-        } elseif($bulk == 3) {
+        } elseif ($bulk == 3) {
             $emails = $mentors;
-        } elseif($bulk == 4) {
+        } elseif ($bulk == 4) {
             $emails = $ins;
-        } elseif($bulk == 5) {
+        } elseif ($bulk == 5) {
             $emails = $train_staff;
-        } elseif($bulk == 6) {
+        } elseif ($bulk == 6) {
             $emails = $obs;
-        } elseif($bulk == 7) {
+        } elseif ($bulk == 7) {
             $emails = $s1;
-        } elseif($bulk == 8) {
+        } elseif ($bulk == 8) {
             $emails = $s2;
-        } elseif($bulk == 9) {
+        } elseif ($bulk == 9) {
             $emails = $s3;
-        } elseif($bulk == 10) {
+        } elseif ($bulk == 10) {
             $emails = $c1;
         } else {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
 
         //Sends to all recipients
-        foreach($emails as $e){
-            if($e != 'No email') {
+        foreach ($emails as $e) {
+            if ($e != 'No email') {
                 try {
                     Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
                         $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
@@ -1140,11 +1137,13 @@ class AdminDash extends Controller
     }
 
     public function showBronzeMic($year = null, $month = null) {
-        if ($year == null)
+        if ($year == null) {
             $year = date('y');
+        }
 
-        if ($month == null)
+        if ($month == null) {
             $month = date('n');
+        }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $year_stats = ControllerLog::aggregateAllControllersByPosAndYear($year, $month);
@@ -1154,7 +1153,7 @@ class AdminDash extends Controller
         $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
 
-        $home = $homec->sortByDesc(function($user) use($stats) {
+        $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)
@@ -1193,8 +1192,9 @@ class AdminDash extends Controller
     }
 
     public function showPyriteMic($year = null) {
-        if ($year == null)
+        if ($year == null) {
             $year = date('y');
+        }
 
         $year_stats = ControllerLog::aggregateAllControllersByPosAndYear($year);
         $all_stats = ControllerLog::getAllControllerStats();
@@ -1203,7 +1203,7 @@ class AdminDash extends Controller
         $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Pyrite::where('year', $year)->first();
 
-        $home = $homec->sortByDesc(function($user) use($year_stats) {
+        $home = $homec->sortByDesc(function ($user) use ($year_stats) {
             return $year_stats[$user->id]->bronze_hrs;
         });
         return view('dashboard.admin.pyrite-mic')->with('all_stats', $all_stats)->with('year', $year)
@@ -1253,11 +1253,12 @@ class AdminDash extends Controller
             'description' => 'required'
         ]);
 
-        if($request->file('banner') != null) {
+        if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
-                'public/event_banners', $time.'.'.$ext
+                'public/event_banners',
+                $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } else {
@@ -1301,11 +1302,12 @@ class AdminDash extends Controller
 
         $event = Event::find($id);
 
-        if($request->file('banner') != null) {
+        if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
-                'public/event_banners', $time.'.'.$ext
+                'public/event_banners',
+                $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } else {
@@ -1337,10 +1339,10 @@ class AdminDash extends Controller
         $positions = EventPosition::where('event_id', $event->id)->get();
         $reg = EventRegistration::where('event_id', $event->id)->get();
 
-        foreach($reg as $r) {
+        foreach ($reg as $r) {
             $r->delete();
         }
-        foreach($positions as $r) {
+        foreach ($positions as $r) {
             $r->delete();
         }
 
@@ -1371,7 +1373,7 @@ class AdminDash extends Controller
         $position->delete();
 
         $requests = EventRegistration::where('position_id', $id)->get();
-        foreach($requests as $r) {
+        foreach ($requests as $r) {
             $r->delete();
         }
 
@@ -1381,7 +1383,7 @@ class AdminDash extends Controller
     public function toggleRegistration($id) {
         $event = Event::find($id);
 
-        if($event->reg == 0) {
+        if ($event->reg == 0) {
             $event->reg = 1;
             $event->save();
 
@@ -1390,7 +1392,7 @@ class AdminDash extends Controller
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name.' opened registration for the event '.$event->name.'.';
             $audit->save();
-        } elseif($event->reg == 1) {
+        } elseif ($event->reg == 1) {
             $event->reg = 0;
             $event->save();
 
@@ -1483,7 +1485,7 @@ class AdminDash extends Controller
         $position_preset->last_position = $preset_positions;
         $position_preset->save();
 
-        foreach($positions as $p) {
+        foreach ($positions as $p) {
             $preset = new PresetPosition;
             $preset->name = $p->name;
             $preset->save();
@@ -1501,7 +1503,7 @@ class AdminDash extends Controller
 
         $presets = PresetPosition::find($ids);
 
-        foreach($presets as $p) {
+        foreach ($presets as $p) {
             $position = new EventPosition;
             $position->event_id = $id;
             $position->name = $p->name;

@@ -2,15 +2,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class LaratrustSetupTables extends Migration
-{
+class LaratrustSetupTables extends Migration {
     /**
      * Run the migrations.
      *
      * @return  void
      */
-    public function up()
-    {
+    public function up() {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
@@ -87,8 +85,7 @@ class LaratrustSetupTables extends Migration
      *
      * @return  void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('permission_user');
         Schema::dropIfExists('permission_role');
         Schema::dropIfExists('permissions');

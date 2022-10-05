@@ -6,11 +6,10 @@ use App\SoloCert;
 use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use Mail;
 use Illuminate\Console\Command;
+use Mail;
 
-class UpdateSoloCerts extends Command
-{
+class UpdateSoloCerts extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -30,8 +29,7 @@ class UpdateSoloCerts extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -40,14 +38,13 @@ class UpdateSoloCerts extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $client = new Client();
         $res = $client->request('GET', 'https://api.vatusa.net/v2/solo');
         $solo_certs = json_decode($res->getBody());
 
-        foreach($solo_certs->data as $s) {
-            if(! ($s === true || $s === false)) {
+        foreach ($solo_certs->data as $s) {
+            if (! ($s === true || $s === false)) {
                 if ($s->position == 'ATL_CTR') {
                     $current_cert = SoloCert::where('cid', $s->cid)->where('status', 0)->first();
                     if (!$current_cert) {
@@ -89,9 +86,9 @@ class UpdateSoloCerts extends Command
         $today = substr($today, 0, 10);
         $certs = SoloCert::get();
 
-        foreach($certs as $c) {
-            if($c->expiration <= $today && $c->status == 0) {
-                Mail::send('emails.solo_expire', ['c' => $c], function($message){
+        foreach ($certs as $c) {
+            if ($c->expiration <= $today && $c->status == 0) {
+                Mail::send('emails.solo_expire', ['c' => $c], function ($message) {
                     $message->from('solocerts@notams.ztlartcc.org', 'ZTL Solo Certifications')->subject('Solo Certification Expired');
                     $message->to('ta@ztlartcc.org');
                 });
@@ -99,11 +96,11 @@ class UpdateSoloCerts extends Command
 
                 $user = User::find($c->cid);
 
-                if($c->pos == 0) {
+                if ($c->pos == 0) {
                     $user->twr = 0;
-                } elseif($c->pos == 1) {
+                } elseif ($c->pos == 1) {
                     $user->app = 0;
-                } elseif($c->pos == 2) {
+                } elseif ($c->pos == 2) {
                     $user->ctr = 0;
                 }
                 $user->save();

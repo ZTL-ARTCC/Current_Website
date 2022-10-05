@@ -1,24 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class TeamspeakStuff extends Migration
-{
+use Illuminate\Support\Facades\Schema;
+
+class TeamspeakStuff extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('teamspeak_alias', function ($table) {
             $table->increments('id')->unsigned();
             $table->integer('account_id')->unique()->unsigned();
             $table->string('display_name', 30);
             $table->string('notes', 255)->nullable();
             $table->timestamps();
-        }); Schema::create('teamspeak_ban', function ($table) {
+        });
+        Schema::create('teamspeak_ban', function ($table) {
             $table->increments('id')->unsigned();
             $table->integer('account_id')->unsigned()->index();
             $table->string('reason', 255);
@@ -26,7 +25,8 @@ class TeamspeakStuff extends Migration
             $table->timestamps();
             $table->timestamp('expires_at')->nullable();
             $table->softDeletes();
-        });   Schema::create('teamspeak_confirmation', function ($table) {
+        });
+        Schema::create('teamspeak_confirmation', function ($table) {
             $table->integer('registration_id')->primary()->unsigned();
             $table->string('privilege_key', 50);
             $table->timestamps();
@@ -36,7 +36,8 @@ class TeamspeakStuff extends Migration
             $table->integer('registration_id')->unsigned()->nullable();
             $table->string('type', 75);
             $table->timestamps();
-        });        Schema::create('teamspeak_registration', function ($table) {
+        });
+        Schema::create('teamspeak_registration', function ($table) {
             $table->increments('id')->unsigned();
             $table->integer('account_id')->unsigned()->index();
             $table->bigInteger('registration_ip');
@@ -55,8 +56,7 @@ class TeamspeakStuff extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('teamspeak_alias');
         Schema::dropIfExists('teamspeak_ban');
         Schema::dropIfExists('teamspeak_confirmation');

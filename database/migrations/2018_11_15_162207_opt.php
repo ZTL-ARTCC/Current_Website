@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class Opt extends Migration
-{
+class Opt extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('gdpr_compliance', function(Blueprint $table) {
+    public function up() {
+        Schema::create('gdpr_compliance', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('controller_id');
             $table->integer('option');
@@ -28,8 +26,7 @@ class Opt extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('gdpr_compliance');
     }
 }

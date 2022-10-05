@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pyrite extends Model
-{
+class Pyrite extends Model {
     protected $table = 'pyrite_mic';
     protected $fillable = ['id', 'controller_id', 'year', 'year_hours', 'updated_at', 'created_at'];
 

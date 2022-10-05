@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class Announcement extends Model
-{
+class Announcement extends Model {
     protected $table = 'announcement';
     protected $fillable = ['id', 'body', 'staff_member', 'created_at', 'updated_at'];
 

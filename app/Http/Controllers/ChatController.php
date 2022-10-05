@@ -7,8 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ChatController extends Controller
-{
+class ChatController extends Controller {
     public function getMessages() {
         $messages = Chat::where('deleted', 0)->orderBy('created_at', 'DESC')->get();
 
@@ -34,8 +33,9 @@ class ChatController extends Controller
         $message = Chat::find($id);
         $requester = User::find($request->cid);
 
-        if($request->cid == $message->cid || $requester->isAbleTo('snrStaff'))
+        if ($request->cid == $message->cid || $requester->isAbleTo('snrStaff')) {
             $message->deleted = 1;
+        }
 
         $message->save();
 

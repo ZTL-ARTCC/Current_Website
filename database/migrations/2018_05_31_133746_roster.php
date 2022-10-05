@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class Roster extends Migration
-{
+class Roster extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('roster', function(Blueprint $table) {
+    public function up() {
+        Schema::create('roster', function (Blueprint $table) {
             $table->integer('id');
             $table->string('fname');
             $table->string('lname');
@@ -47,8 +45,7 @@ class Roster extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('roster');
     }
 }

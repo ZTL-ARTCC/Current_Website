@@ -6,8 +6,7 @@ use App\MoodleEnrol;
 use App\User;
 use Illuminate\Console\Command;
 
-class UnenrolMoodleUsers extends Command
-{
+class UnenrolMoodleUsers extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -27,8 +26,7 @@ class UnenrolMoodleUsers extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -37,16 +35,16 @@ class UnenrolMoodleUsers extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $enrolments = MoodleEnrol::get();
 
         // Loop through all enrolments. If the user no longer exists, remove their enrolment
-        foreach($enrolments as $e) {
+        foreach ($enrolments as $e) {
             $user = User::where('id', $e->controller_id)->where('status', '!=', '2')->first();
 
-            if(! $user)
+            if (! $user) {
                 $e->delete();
+            }
         }
     }
 }

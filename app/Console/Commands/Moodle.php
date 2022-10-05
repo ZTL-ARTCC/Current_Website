@@ -6,8 +6,7 @@ use App\User;
 use DB;
 use Illuminate\Console\Command;
 
-class Moodle extends Command
-{
+class Moodle extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -27,8 +26,7 @@ class Moodle extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -37,10 +35,9 @@ class Moodle extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $users = User::get();
-        foreach($users as $u) {
+        foreach ($users as $u) {
             DB::table('mdl_user')->insert([
                  'id' => $u->id,
                  'confirmed' => 1,
@@ -51,6 +48,5 @@ class Moodle extends Command
                  'email' => $u->email
              ]);
         }
-        
     }
 }

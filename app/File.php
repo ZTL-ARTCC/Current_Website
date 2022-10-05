@@ -2,11 +2,9 @@
 
 namespace App;
 
-use App\File;
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
-{
+class File extends Model {
     protected $table = 'files';
     protected $fillable = ['id', 'name', 'type', 'desc', 'path', 'disp_order', 'permalink', 'created_at', 'updated_at'];
 

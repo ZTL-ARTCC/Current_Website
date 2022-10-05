@@ -2,20 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
 use App\EventRegistration;
 use App\User;
 use Config;
-use DB;
-use Eloquent\Collection;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent;
-use Illuminate\Http\Request;
-use Mail;
 
-class RosterUpdate extends Command
-{
+class RosterUpdate extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -35,8 +28,7 @@ class RosterUpdate extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -45,15 +37,15 @@ class RosterUpdate extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $client = new Client();
         $res = $client->get('https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster?apikey='.Config::get('vatusa.api_key'));
 
-        if ($res->getStatusCode() == "200")
+        if ($res->getStatusCode() == "200") {
             $roster = json_decode($res->getBody());
-        else
+        } else {
             exit(1);
+        }
 
         foreach ($roster->data as $r) {
             $user = User::find($r->cid);
@@ -79,8 +71,9 @@ class RosterUpdate extends Command
 
             $user->fname = $r->fname;
             $user->lname = $r->lname;
-            if ($user->initials == null)
+            if ($user->initials == null) {
                 $user->initials = User::generateControllerInitials($user->fname, $user->lname);
+            }
             $user->email = $r->email;
             $user->rating_id = $r->rating;
             $user->visitor = 0;
@@ -103,8 +96,9 @@ class RosterUpdate extends Command
             if ($delete) {
                 $event_requests = EventRegistration::where('controller_id', $u->id)->get();
 
-                foreach ($event_requests as $e)
+                foreach ($event_requests as $e) {
                     $e->delete();
+                }
 
                 $u->status = 2;
                 $u->save();
@@ -118,4 +112,3 @@ class RosterUpdate extends Command
         }
     }
 }
-

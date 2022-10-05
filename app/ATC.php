@@ -5,9 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-
-class ATC extends Model
-{
+class ATC extends Model {
     protected $table = "online_atc";
     protected $fillable = ['id', 'position', 'freq', 'name', 'cid', 'time_logon', 'created_at', 'updated_at'];
 

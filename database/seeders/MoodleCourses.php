@@ -5,15 +5,13 @@ namespace Database\Seeders;
 use DB;
 use Illuminate\Database\Seeder;
 
-class MoodleCourses extends Seeder
-{
+class MoodleCourses extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         DB::table('moodle_course_assignments')->insert([
             'course_name' => 'Intro',
             'course_id' => 2,

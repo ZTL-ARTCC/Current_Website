@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class Events extends Migration
-{
+class Events extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('events', function(Blueprint $table) {
+    public function up() {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('host')->nullable();
@@ -27,7 +25,7 @@ class Events extends Migration
             $table->timestamps();
         });
 
-        Schema::create('event_registration', function(Blueprint $table) {
+        Schema::create('event_registration', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id');
             $table->integer('controller_id');
@@ -40,7 +38,7 @@ class Events extends Migration
             $table->timestamps();
         });
 
-        Schema::create('event_positions', function(Blueprint $table) {
+        Schema::create('event_positions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id');
             $table->string('name');
@@ -53,8 +51,7 @@ class Events extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('events');
         Schema::dropIfExists('event_registration');
         Schema::dropIfExists('event_positions');
