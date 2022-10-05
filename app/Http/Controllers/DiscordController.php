@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\DiscordUser;
 use App\ControllerLog;
+use App\DiscordUser;
 use App\User;
 use Auth;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
-class DiscordController extends Controller
-{
+class DiscordController extends Controller {
     public function returnDiscordInfo(Request $request) {
-        if($request->key == Config::get('discord.bot_api_key')) {
+        if ($request->key == Config::get('discord.bot_api_key')) {
             $data = DiscordUser::get();
 
-            foreach($data as $d) {
+            foreach ($data as $d) {
                 $d->discord_id = sprintf('%.0f', $d->discord_id);
             }
 
@@ -29,17 +28,18 @@ class DiscordController extends Controller
 
     public function loginToDiscord() {
         $discordUser = DiscordUser::where('cid', Auth::id())->first();
-        if($discordUser)
+        if ($discordUser) {
             return redirect()->back()->with('error', 'Your discord account is already linked.');
+        }
 
         return redirect('https://discordapp.com/api/oauth2/authorize' . '?response_type=code&scope=identify&client_id=' . Config::get('discord.client_id'));
     }
 
-    public function completeDiscordLogin(Request $request)
-    {
+    public function completeDiscordLogin(Request $request) {
         $code = $request->code;
-        if (!$code)
+        if (!$code) {
             return redirect('/')->with('error', 'No response code found for discord login.');
+        }
 
         $client = new Client();
         $response = $client->request('POST', 'https://discordapp.com/api/oauth2/token', [
@@ -85,8 +85,9 @@ class DiscordController extends Controller
 
     public function logoutOfDiscord() {
         $discord = DiscordUser::where('cid', Auth::id())->first();
-        if(!$discord)
+        if (!$discord) {
             return redirect()->back()->with('error', 'You are not logged into discord');
+        }
 
         $discord->delete();
 

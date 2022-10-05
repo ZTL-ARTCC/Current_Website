@@ -7,8 +7,7 @@ use App\DiscordUser;
 use App\User;
 use Illuminate\Console\Command;
 
-class UpdateDiscordUsers extends Command
-{
+class UpdateDiscordUsers extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -28,8 +27,7 @@ class UpdateDiscordUsers extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -38,8 +36,7 @@ class UpdateDiscordUsers extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $all_users = DiscordUser::get();
 
         // Get controller stats
@@ -47,9 +44,9 @@ class UpdateDiscordUsers extends Command
         $month = date('n');
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
 
-        foreach($all_users as $u) {
+        foreach ($all_users as $u) {
             $user = User::find($u->cid);
-            if($user->status == 2) {
+            if ($user->status == 2) {
                 $u->delete();
             } else {
                 $u->rating_id = $user->rating_id;

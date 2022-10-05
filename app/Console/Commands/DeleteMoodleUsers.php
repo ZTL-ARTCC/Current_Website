@@ -7,8 +7,7 @@ use Config;
 use DB;
 use Illuminate\Console\Command;
 
-class DeleteMoodleUsers extends Command
-{
+class DeleteMoodleUsers extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -28,8 +27,7 @@ class DeleteMoodleUsers extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -38,14 +36,13 @@ class DeleteMoodleUsers extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        if(Config::get('app.moodle') == 1) {
+    public function handle() {
+        if (Config::get('app.moodle') == 1) {
             $moodle_users = DB::table('mdl_user')->where('deleted', 0)->get();
 
             foreach ($moodle_users as $m) {
                 $controller = User::find($m->id);
-                if($controller && $controller->status == 2) {
+                if ($controller && $controller->status == 2) {
                     DB::table('mdl_user')->where('id', $m->id)->update(['deleted' => 1]);
                 }
             }

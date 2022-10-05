@@ -3,17 +3,12 @@
 namespace App;
 
 use Carbon\Carbon;
-use App\CotrollerLog;
-use App\MoodleEnrol;
-use App\User;
 use Config;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use Notifiable;
     use LaratrustUserTrait;
     protected $table = 'roster';
@@ -21,7 +16,7 @@ class User extends Authenticatable
     protected $secret = ['remember_token', 'password', 'json_token'];
 
     public function user() {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function getBackwardsNameAttribute() {
@@ -106,7 +101,7 @@ class User extends Authenticatable
     public static $StatusText = [
         0 => 'LOA',
         1 => 'Active',
-		2 => 'Inactive'
+        2 => 'Inactive'
     ];
 
     public function getStatusTextAttribute() {
@@ -120,25 +115,25 @@ class User extends Authenticatable
     }
 
     public function getStaffPositionAttribute() {
-        if($this->hasRole('atm')) {
+        if ($this->hasRole('atm')) {
             return 1;
-        } elseif($this->hasRole('datm')) {
+        } elseif ($this->hasRole('datm')) {
             return 2;
-        } elseif($this->hasRole('ta')) {
+        } elseif ($this->hasRole('ta')) {
             return 3;
-        } elseif($this->hasRole('ata')) {
+        } elseif ($this->hasRole('ata')) {
             return 4;
-        } elseif($this->hasRole('wm')) {
+        } elseif ($this->hasRole('wm')) {
             return 5;
-        } elseif($this->hasRole('awm')) {
+        } elseif ($this->hasRole('awm')) {
             return 6;
-        } elseif($this->hasRole('fe')) {
+        } elseif ($this->hasRole('fe')) {
             return 7;
-        } elseif($this->hasRole('afe')) {
+        } elseif ($this->hasRole('afe')) {
             return 8;
-        } elseif($this->hasRole('ec')) {
+        } elseif ($this->hasRole('ec')) {
             return 9;
-        } elseif($this->hasRole('aec')) {
+        } elseif ($this->hasRole('aec')) {
             return 10;
         } else {
             return 0;
@@ -146,9 +141,9 @@ class User extends Authenticatable
     }
 
     public function getTrainPositionAttribute() {
-        if($this->hasRole('mtr')) {
+        if ($this->hasRole('mtr')) {
             return 1;
-        } elseif($this->hasrole('ins')) {
+        } elseif ($this->hasrole('ins')) {
             return 2;
         } else {
             return 0;
@@ -156,17 +151,17 @@ class User extends Authenticatable
     }
 
     public function getLastTrainingAttribute() {
-        $tickets_sort = TrainingTicket::where('controller_id', $this->id)->get()->sortByDesc(function($t) {
+        $tickets_sort = TrainingTicket::where('controller_id', $this->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date.' '.$t->start_time);
         })->pluck('id');
-        if($tickets_sort->count() != 0) {
-            $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
+        if ($tickets_sort->count() != 0) {
+            $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $last_training = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
         } else {
             $last_training = null;
         }
 
-        if($last_training != null) {
+        if ($last_training != null) {
             return $last_training->date;
         } else {
             return null;
@@ -174,17 +169,17 @@ class User extends Authenticatable
     }
 
     public function getLastTrainingGivenAttribute() {
-        $tickets_sort = TrainingTicket::where('trainer_id', $this->id)->get()->sortByDesc(function($t) {
+        $tickets_sort = TrainingTicket::where('trainer_id', $this->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date.' '.$t->start_time);
         })->pluck('id');
-        if($tickets_sort->count() != 0) {
-            $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
+        if ($tickets_sort->count() != 0) {
+            $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $last_training_given = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
         } else {
             $last_training_given = null;
         }
 
-        if($last_training_given != null) {
+        if ($last_training_given != null) {
             return $last_training_given->date;
         } else {
             return null;
@@ -193,7 +188,7 @@ class User extends Authenticatable
 
     public function getLastLogonAttribute() {
         $last = ControllerLog::where('cid', $this->id)->orderBy('created_at', 'DESC')->first();
-        if($last != null) {
+        if ($last != null) {
             $date = Carbon::parse($last->created_at)->format('m/d/Y');
         } else {
             $date = 'Never';
@@ -216,10 +211,11 @@ class User extends Authenticatable
 
     public function getSoloAttribute() {
         $cert = SoloCert::where('cid', $this->id)->where('status', 0)->first();
-        if($cert)
+        if ($cert) {
             $date = Carbon::parse($cert->expiration)->format('m/d/Y');
-        else
+        } else {
             $date = 'N/A';
+        }
 
         return $date;
     }
@@ -237,24 +233,25 @@ class User extends Authenticatable
     }
 
     // Enrols the user in the correct Moodle courses for next Moodle login
-    public function enrolInMoodleCourses()
-    {
+    public function enrolInMoodleCourses() {
         // Make an array of all the course id's the user should be enroled in
-        if ($this->visitor == 1)
+        if ($this->visitor == 1) {
             $courses = [2, 4, 5, 6, 7, 8, 10, 12];
-        elseif ($this->rating_id == 1)
+        } elseif ($this->rating_id == 1) {
             $courses = [2, 12];
-        elseif ($this->rating_id == 2)
+        } elseif ($this->rating_id == 2) {
             $courses = [2, 12, 4, 10];
-        elseif ($this->rating_id == 3)
+        } elseif ($this->rating_id == 3) {
             $courses = [2, 12, 4, 10, 6, 5];
-        elseif ($this->rating_id == 4)
+        } elseif ($this->rating_id == 4) {
             $courses = [2, 12, 4, 10, 6, 5, 7, 8];
-        elseif ($this->rating_id >= 5)
+        } elseif ($this->rating_id >= 5) {
             $courses = [2, 12, 4, 10, 6, 5, 7, 8, 9];
+        }
 
-        if ($this->hasRole('ins') || $this->isAbleTo('staff'))
+        if ($this->hasRole('ins') || $this->isAbleTo('staff')) {
             $courses = $courses + [3, 11];
+        }
 
         // Loop through their courses and add them if they don't exist
         foreach ($courses as $c) {

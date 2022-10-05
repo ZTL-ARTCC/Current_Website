@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\MentorAvai;
+
 use App\Audit;
 use App\Ots;
 use App\PublicTrainingInfo;
@@ -11,13 +11,12 @@ use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Config;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
-use GuzzleHttp\Client;
-use Config;
 
-class TrainingDash extends Controller
-{
+class TrainingDash extends Controller {
     public function showATCast() {
         return view('dashboard.training.atcast');
     }
@@ -38,9 +37,9 @@ class TrainingDash extends Controller
 
         $public_sections = PublicTrainingInfo::orderBy('order', 'ASC')->get();
         $public_sections_count = count(PublicTrainingInfo::get());
-        $public_sections_order = array();
+        $public_sections_order = [];
         $i = 0;
-        foreach(range(0, $public_sections_count) as $p) {
+        foreach (range(0, $public_sections_count) as $p) {
             $public_sections_order[$i] = $p + 1;
             $i++;
         }
@@ -54,8 +53,8 @@ class TrainingDash extends Controller
 
     public function addInfo(Request $request, $section) {
         $replacing = TrainingInfo::where('number', '>', $request->number)->where('section', $section)->get();
-        if($replacing != null) {
-            foreach($replacing as $r) {
+        if ($replacing != null) {
+            foreach ($replacing as $r) {
                 $new = $r->number + 1;
                 $r->number = $new;
                 $r->save();
@@ -72,7 +71,7 @@ class TrainingDash extends Controller
     public function deleteInfo($id) {
         $info = TrainingInfo::find($id);
         $other_info = TrainingInfo::where('number', '>', $info->number)->get();
-        foreach($other_info as $o) {
+        foreach ($other_info as $o) {
             $o->number = $o->number - 1;
             $o->save();
         }
@@ -86,9 +85,9 @@ class TrainingDash extends Controller
             'order' => 'required'
         ]);
 
-        if($request->order < count(PublicTrainingInfo::get())) {
+        if ($request->order < count(PublicTrainingInfo::get())) {
             $change_order = PublicTrainingInfo::where('order', '>=', $request->order)->get();
-            foreach($change_order as $c) {
+            foreach ($change_order as $c) {
                 $c->order = $c->order + 1;
                 $c->save();
             }
@@ -114,25 +113,24 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
     }
    
-    public function saveSession()
-	{
-		$id = Auth::id();
-		$nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
+    public function saveSession() {
+        $id = Auth::id();
+        $nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
 
-		
+        
 
-		$position = $request->input('position');
-		$slot_id = $request->input('slot');
-		$Slot = MentorAvail::find($slot_id);
+        $position = $request->input('position');
+        $slot_id = $request->input('slot');
+        $Slot = MentorAvail::find($slot_id);
 
-		$Slot->trainee_id = $id;
-		$Slot->position_id = $position;
-		$Slot->trainee_comments = $request->input('comments');
-		$Slot->save();
+        $Slot->trainee_id = $id;
+        $Slot->position_id = $position;
+        $Slot->trainee_comments = $request->input('comments');
+        $Slot->save();
 
-		ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
+        ActivityLog::create(['note' => 'Accepted Session: '.$Slot->slot, 'user_id' => Auth::id(), 'log_state' => 1, 'log_type' => 6]);
 
-		$Slot->sendNewSessionEmail();	
+        $Slot->sendNewSessionEmail();
     }
 
     public function removePublicInfoSection($id) {
@@ -141,13 +139,13 @@ class TrainingDash extends Controller
         $section->delete();
 
         $order_updates = PublicTrainingInfo::where('order', '>', $order)->get();
-        foreach($order_updates as $o) {
+        foreach ($order_updates as $o) {
             $o->order = $o->order - 1;
             $o->save();
         }
 
         $pdfs = PublicTrainingInfoPdf::where('section_id', $id)->get();
-        foreach($pdfs as $p) {
+        foreach ($pdfs as $p) {
             $p->delete();
         }
 
@@ -162,7 +160,8 @@ class TrainingDash extends Controller
         $ext = $request->file('pdf')->getClientOriginalExtension();
         $time = Carbon::now()->timestamp;
         $path = $request->file('pdf')->storeAs(
-            'public/training_info', $time.'.'.$ext
+            'public/training_info',
+            $time.'.'.$ext
         );
         $public_url = '/storage/training_info/'.$time.'.'.$ext;
 
@@ -182,73 +181,72 @@ class TrainingDash extends Controller
     }
 
     public function ticketsIndex(Request $request) {
-        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function($user) {
-            if(TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
+        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) {
+            if (TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
-        if($request->id != null) {
+        if ($request->id != null) {
             $search_result = User::find($request->id);
         } else {
             $search_result = null;
         }
-        if($search_result != null) {
-            $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function($t) {
+        if ($search_result != null) {
+            $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date.' '.$t->start_time);
             })->pluck('id');
-            $tickets_order = implode(',',array_fill(0, count($tickets_sort), '?'));
+            $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
-			foreach($tickets as &$t) {
-				$t->position = $this->legacyTicketTypes($t->position);
-				$t->sort_category = $this->getTicketSortCategory($t->position);
-			} 
-            if($tickets_sort->isEmpty() && ($search_result->status != 1)) { // Hide inactive users with no tickets from this view
+            foreach ($tickets as &$t) {
+                $t->position = $this->legacyTicketTypes($t->position);
+                $t->sort_category = $this->getTicketSortCategory($t->position);
+            }
+            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) { // Hide inactive users with no tickets from this view
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
-			$exams = $this->getAcademyExamTranscript($request->id);
+            $exams = $this->getAcademyExamTranscript($request->id);
         } else {
             $tickets = null;
-			$exams = null;
+            $exams = null;
         }
 
         return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams);
     }
-	
-	public function getAcademyExamTranscript($cid) {
-		$req_params = [ 'form_params' => [],
-			'http_errors' => false
+    
+    public function getAcademyExamTranscript($cid) {
+        $req_params = [ 'form_params' => [],
+            'http_errors' => false
         ];
-		$client = new Client();
-		$res = $client->request('GET', 'https://api.vatusa.net/v2/academy/transcript/'. $cid . '?apikey=' .Config::get('vatusa.api_key'), $req_params);
-		$academy = (string) $res->getBody();
-		$res = $client->request('GET', 'https://api.vatusa.net/v2/user/'. $cid . '/exam/history?apikey=' .Config::get('vatusa.api_key'), $req_params);
-		$legacy = (string) $res->getBody();
-		$exams = array('BASIC'=>array('date'=>null,'success'=>3,'grade'=>null),'S2'=>array('date'=>null,'success'=>3,'grade'=>null),'S3'=>array('date'=>null,'success'=>3,'grade'=>null),'C1'=>array('date'=>null,'success'=>3,'grade'=>null));
-		$academy = json_decode($academy,true);
-		$legacy = json_decode($legacy,true);
-		$exam_names = array_keys($exams);
-		foreach($exam_names as $exam) {
-			if(array_key_exists($exam,$academy['data']) && count($academy['data'][$exam])>0) {
-				$exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
-				$exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
-				$exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
-			}
-			else{
-				foreach($legacy['data'] as $legacy_record) {
-					if(is_numeric(stripos($legacy_record['exam_name'],$exam))&&($legacy_record['passed'] == '1')) {
-						$exams[$exam]['date'] = date("m/d/y", strtotime($legacy_record['date']));
-						$exams[$exam]['success'] = $legacy_record['passed'];
-						$exams[$exam]['grade'] = $legacy_record['score'];
-					}
-				}
-			}
-		}
-		return $exams;
-	}
+        $client = new Client();
+        $res = $client->request('GET', 'https://api.vatusa.net/v2/academy/transcript/'. $cid . '?apikey=' .Config::get('vatusa.api_key'), $req_params);
+        $academy = (string) $res->getBody();
+        $res = $client->request('GET', 'https://api.vatusa.net/v2/user/'. $cid . '/exam/history?apikey=' .Config::get('vatusa.api_key'), $req_params);
+        $legacy = (string) $res->getBody();
+        $exams = ['BASIC'=>['date'=>null,'success'=>3,'grade'=>null],'S2'=>['date'=>null,'success'=>3,'grade'=>null],'S3'=>['date'=>null,'success'=>3,'grade'=>null],'C1'=>['date'=>null,'success'=>3,'grade'=>null]];
+        $academy = json_decode($academy, true);
+        $legacy = json_decode($legacy, true);
+        $exam_names = array_keys($exams);
+        foreach ($exam_names as $exam) {
+            if (array_key_exists($exam, $academy['data']) && count($academy['data'][$exam])>0) {
+                $exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
+                $exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
+                $exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
+            } else {
+                foreach ($legacy['data'] as $legacy_record) {
+                    if (is_numeric(stripos($legacy_record['exam_name'], $exam))&&($legacy_record['passed'] == '1')) {
+                        $exams[$exam]['date'] = date("m/d/y", strtotime($legacy_record['date']));
+                        $exams[$exam]['success'] = $legacy_record['passed'];
+                        $exams[$exam]['grade'] = $legacy_record['score'];
+                    }
+                }
+            }
+        }
+        return $exams;
+    }
 
     public function searchTickets(Request $request) {
         $search_result = User::find($request->cid);
-        if($search_result != null) {
+        if ($search_result != null) {
             return redirect('/dashboard/training/tickets?id='.$search_result->id);
         } else {
             return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
@@ -265,7 +263,7 @@ class TrainingDash extends Controller
         $request->validate([
             'controller' => 'required',
             'position' => 'required',
-			'session_id' => 'required',
+            'session_id' => 'required',
             'type' => 'required',
             'date' => 'required',
             'start' => 'required',
@@ -277,7 +275,7 @@ class TrainingDash extends Controller
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
         $ticket->position = $request->position;
-		$ticket->session_id = $request->session_id;
+        $ticket->session_id = $request->session_id;
         $ticket->type = $request->type;
         $ticket->date = $request->date;
         $ticket->start_time = $request->start;
@@ -285,70 +283,71 @@ class TrainingDash extends Controller
         $ticket->duration = $request->duration;
         $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
         $ticket->ins_comments = $request->trainer_comments;
-		$ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-		//$ticket->cert = $request->cert;
+        $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
+        //$ticket->cert = $request->cert;
         $ticket->save();
         $extra = null;
-	    
+        
 
-	$date = $ticket->date;
-	$date = date("Y-m-d");
+        $date = $ticket->date;
+        $date = date("Y-m-d");
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
-	    
-	Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
+        
+        Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
             $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
             $m->subject('New Training Ticket Submitted');
             $m->to($controller->email)->cc('ta@ztlartcc.org');
         });
-	// Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA    
-	if ($request->position == 113 || $request->position == 112){
-		$ticket->position = 'ATL_TWR';}
-	    elseif ($request->position == 100 || $request->position == 101){
-		$ticket->position = 'ZTL_DEL';}
-	    elseif ($request->position == 103 || $request->position == 104){
-		$ticket->position = 'ATL_DEL';}
-	    elseif ($request->position == 102){
-		$ticket->position = 'CLT_DEL';}
-	    elseif ($request->position == 105){
-		$ticket->position = 'ZTL_GND';}
-	    elseif ($request->position == 106){
-		$ticket->position = 'CLT_GND';}
-	    elseif ($request->position == 107 || $request->position == 108){
-		$ticket->position = 'ATL_GND';}
-	    elseif ($request->position == 109 || $request->position == 110){
-		$ticket->position = 'ZTL_TWR';}
-	    elseif ($request->position == 111){
-		$ticket->position = 'CLT_TWR';}
-	    elseif ($request->position == 114 || $request->position == 115){
-		$ticket->position = 'ZTL_APP';}
-	     elseif ($request->position == 116){
-		$ticket->position = 'CLT_APP';}
-	     elseif ($request->position == 117 || $request->position == 118 || $request->position == 119){
-		$ticket->position = 'ATL_APP';}
-	     elseif ($request->position == 120 || $request->position == 121){
-		$ticket->position = 'ATL_CTR';}
-	     elseif ($request->position == 122){
-		$ticket->position = 'ZTL_RCR';}
-		elseif ($request->position == 123){
-		$ticket->position = 'BHM_APP';}
-	// Added http_errors to prevent random errors from being thrown when the VATUSA call fails
-	$req_params = [ 'form_params' =>
-                [
-                    'instructor_id' => Auth::id(),
-                    'session_date' => $date . ' ' . $request->start,
-                    'position' => $ticket->position,
-                    'duration' => $request->duration,
-                    'notes' => $request->comments,
-                    'location' => 1
-                ],
-				'http_errors' => false
-            ];
+        // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
+        if ($request->position == 113 || $request->position == 112) {
+            $ticket->position = 'ATL_TWR';
+        } elseif ($request->position == 100 || $request->position == 101) {
+            $ticket->position = 'ZTL_DEL';
+        } elseif ($request->position == 103 || $request->position == 104) {
+            $ticket->position = 'ATL_DEL';
+        } elseif ($request->position == 102) {
+            $ticket->position = 'CLT_DEL';
+        } elseif ($request->position == 105) {
+            $ticket->position = 'ZTL_GND';
+        } elseif ($request->position == 106) {
+            $ticket->position = 'CLT_GND';
+        } elseif ($request->position == 107 || $request->position == 108) {
+            $ticket->position = 'ATL_GND';
+        } elseif ($request->position == 109 || $request->position == 110) {
+            $ticket->position = 'ZTL_TWR';
+        } elseif ($request->position == 111) {
+            $ticket->position = 'CLT_TWR';
+        } elseif ($request->position == 114 || $request->position == 115) {
+            $ticket->position = 'ZTL_APP';
+        } elseif ($request->position == 116) {
+            $ticket->position = 'CLT_APP';
+        } elseif ($request->position == 117 || $request->position == 118 || $request->position == 119) {
+            $ticket->position = 'ATL_APP';
+        } elseif ($request->position == 120 || $request->position == 121) {
+            $ticket->position = 'ATL_CTR';
+        } elseif ($request->position == 122) {
+            $ticket->position = 'ZTL_RCR';
+        } elseif ($request->position == 123) {
+            $ticket->position = 'BHM_APP';
+        }
+        // Added http_errors to prevent random errors from being thrown when the VATUSA call fails
+        $req_params = [ 'form_params' =>
+                    [
+                        'instructor_id' => Auth::id(),
+                        'session_date' => $date . ' ' . $request->start,
+                        'position' => $ticket->position,
+                        'duration' => $request->duration,
+                        'notes' => $request->comments,
+                        'location' => 1
+                    ],
+                    'http_errors' => false
+                ];
 
-			$client = new Client();
-				$res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .Config::get('vatusa.api_key'), $req_params);
+        $client = new Client();
+        $res = $client->request('POST', 'https://api.vatusa.net/v2/user/'. $request->controller . '/training/record?apikey=' .Config::get('vatusa.api_key'), $req_params);
 
-        if($request->ots == 1) {
+        if ($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
             $ots->recommender_id = $ticket->trainer_id;
@@ -357,25 +356,26 @@ class TrainingDash extends Controller
             $ots->save();
             $extra = ' and the OTS recommendation has been added';
         }
-        if($request->monitor == 1) {
-            if($request->position == 10 )
+        if ($request->monitor == 1) {
+            if ($request->position == 10) {
                 $controller->del = 88;
-            elseif ($request->position == 13)
+            } elseif ($request->position == 13) {
                 $controller->del == 89;
-            elseif ($request->position == 17)
+            } elseif ($request->position == 17) {
                 $controller->gnd = 88;
-            elseif ($request->position == 21)
+            } elseif ($request->position == 21) {
                 $controller->gnd = 89;
-            elseif ($request->position == 26)
+            } elseif ($request->position == 26) {
                 $controller->twr = 88;
-            elseif ($request->position == 30)
+            } elseif ($request->position == 30) {
                 $controller->twr = 89;
-            elseif ($request->position == 35)
+            } elseif ($request->position == 35) {
                 $controller->app = 88;
-            elseif ($request->position == 41)
+            } elseif ($request->position == 41) {
                 $controller->app = 89;
-            elseif ($request->position == 47)
+            } elseif ($request->position == 47) {
                 $controller->gnd = 89;
+            }
 
             $controller->save();
         }
@@ -389,20 +389,18 @@ class TrainingDash extends Controller
 
   
         return redirect('/dashboard/training/tickets?id='.$ticket->controller_id)->with('success', 'The training ticket has been submitted successfully'.$extra.'.');
-    
-
     }
 
     public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
-		$ticket->position = $this->legacyTicketTypes($ticket->position);
+        $ticket->position = $this->legacyTicketTypes($ticket->position);
         return view('dashboard.training.view_ticket')->with('ticket', $ticket);
     }
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
-		$ticket->position = $this->legacyTicketTypes($ticket->position);
-        if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
+        $ticket->position = $this->legacyTicketTypes($ticket->position);
+        if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
         } else {
@@ -412,11 +410,11 @@ class TrainingDash extends Controller
 
     public function saveTicket(Request $request, $id) {
         $ticket = TrainingTicket::find($id);
-        if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
+        if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $request->validate([
                 'controller' => 'required',
                 'position' => 'required',
-				'session_id' => 'required',
+                'session_id' => 'required',
                 'type' => 'required',
                 'date' => 'required',
                 'start' => 'required',
@@ -426,7 +424,7 @@ class TrainingDash extends Controller
 
             $ticket->controller_id = $request->controller;
             $ticket->position = $request->position;
-			$ticket->session_id = $request->session_id;
+            $ticket->session_id = $request->session_id;
             $ticket->type = $request->type;
             $ticket->date = $request->date;
             $ticket->start_time = $request->start;
@@ -434,8 +432,8 @@ class TrainingDash extends Controller
             $ticket->duration = $request->duration;
             $ticket->comments = $request->comments;
             $ticket->ins_comments = $request->trainer_comments;
-			$ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-			//$ticket->cert = $request->cert;
+            $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
+            //$ticket->cert = $request->cert;
             $ticket->save();
 
             $audit = new Audit;
@@ -452,7 +450,7 @@ class TrainingDash extends Controller
 
     public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if(Auth::user()->isAbleTo('snrStaff')) {
+        if (Auth::user()->isAbleTo('snrStaff')) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
 
@@ -472,9 +470,9 @@ class TrainingDash extends Controller
         $ots_new = Ots::where('status', 0)->orderBy('created_at', 'DESC')->paginate(25);
         $ots_accepted = Ots::where('status', 1)->orderBy('created_at', 'DESC')->paginate(25);
         $ots_complete = Ots::where('status', 2)->orWhere('status', 3)->orderBy('created_at', 'DESC')->paginate(25);
-        $instructors = User::orderBy('lname', 'ASC')->get()->filter(function($user){
-                    return $user->hasRole('ins');
-                })->pluck('full_name', 'id');
+        $instructors = User::orderBy('lname', 'ASC')->get()->filter(function ($user) {
+            return $user->hasRole('ins');
+        })->pluck('full_name', 'id');
         return view('dashboard.training.ots-center')->with('ots_new', $ots_new)->with('ots_accepted', $ots_accepted)->with('ots_complete', $ots_complete)->with('instructors', $instructors);
     }
 
@@ -494,7 +492,7 @@ class TrainingDash extends Controller
     }
 
     public function rejectRecommendation($id) {
-        if(!Auth::user()->isAbleTo('snrStaff')) {
+        if (!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
         } else {
             $ots = Ots::find($id);
@@ -505,7 +503,7 @@ class TrainingDash extends Controller
     }
 
     public function assignRecommendation(Request $request, $id) {
-        if(!Auth::user()->isAbleTo('snrStaff')) {
+        if (!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can assign OTS recommendations to instructors.');
         } else {
             $ots = Ots::find($id);
@@ -540,11 +538,12 @@ class TrainingDash extends Controller
 
         $ots = Ots::find($id);
 
-        if($ots->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff')) {
+        if ($ots->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff')) {
             $ext = $request->file('ots_report')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('ots_report')->storeAs(
-                'public/ots_reports', $time.'.'.$ext
+                'public/ots_reports',
+                $time.'.'.$ext
             );
             $public_url = '/storage/ots_reports/'.$time.'.'.$ext;
 
@@ -561,7 +560,7 @@ class TrainingDash extends Controller
             return redirect()->back()->with('success', 'The OTS has been updated successfully!');
         } else {
             return redirect()->back()->with('error', 'This OTS has not been assigned to you.');
-    }
+        }
     }
 
     public function otsCancel($id) {
@@ -578,62 +577,62 @@ class TrainingDash extends Controller
 
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
-	
-	public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
-		switch(true) {
-			case ($position > 6 && $position < 22) : return 's1';
-			break;
-			case ($position > 99 && $position < 103) : return 's1';
-			break;
-			case ($position > 104 && $position < 107) : return 's1';
-			break;
-			case ($position > 21 && $position < 31) : return 's2';
-			break;
-			case ($position > 102 && $position < 105) : return 's2';
-			break;
-			case ($position > 106 && $position < 114) : return 's2';
-			break;
-			case ($position > 30 && $position < 42) : return 's3';
-			break;
-			case ($position > 113 && $position < 120) : return 's3';
-			break;
-			case ($position == 123) : return 's3';
-			break;
-			case ($position > 41 && $position < 48) : return 'c1';
-			break;
-			case ($position > 119 && $position < 122) : return 'c1';
-			break;
-			case ($position > 121 && $position != 123) : return 'other';
-			break;
-			default : return 'other';
-		}
-	}
-	
-	public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
-		switch($position) {
-			case 11 : return 104;
-			break;
-			case 103 : return 104;
-			break;
-			case 18 : return 108;
-			break;
-			case 107 : return 108;
-			break;
-			case 27 : return 113;
-			break;
-			case 112 : return 113;
-			break;
-			case 31 : return 115;
-			break;
-			case 32 : return 115;
-			break;
-			case 114 : return 115;
-			break;
-			case 42 : return 121;
-			break;
-			case 120 : return 121;
-			break;
-			default : return $position;
-		}		
-	}
+    
+    public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+        switch(true) {
+            case ($position > 6 && $position < 22): return 's1';
+                break;
+            case ($position > 99 && $position < 103): return 's1';
+                break;
+            case ($position > 104 && $position < 107): return 's1';
+                break;
+            case ($position > 21 && $position < 31): return 's2';
+                break;
+            case ($position > 102 && $position < 105): return 's2';
+                break;
+            case ($position > 106 && $position < 114): return 's2';
+                break;
+            case ($position > 30 && $position < 42): return 's3';
+                break;
+            case ($position > 113 && $position < 120): return 's3';
+                break;
+            case ($position == 123): return 's3';
+                break;
+            case ($position > 41 && $position < 48): return 'c1';
+                break;
+            case ($position > 119 && $position < 122): return 'c1';
+                break;
+            case ($position > 121 && $position != 123): return 'other';
+                break;
+            default: return 'other';
+        }
+    }
+    
+    public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
+        switch($position) {
+            case 11: return 104;
+                break;
+            case 103: return 104;
+                break;
+            case 18: return 108;
+                break;
+            case 107: return 108;
+                break;
+            case 27: return 113;
+                break;
+            case 112: return 113;
+                break;
+            case 31: return 115;
+                break;
+            case 32: return 115;
+                break;
+            case 114: return 115;
+                break;
+            case 42: return 121;
+                break;
+            case 120: return 121;
+                break;
+            default: return $position;
+        }
+    }
 }

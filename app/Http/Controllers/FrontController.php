@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Airport;
 use App\ATC;
-use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
 use App\ControllerLogUpdate;
 use App\Event;
 use App\Feedback;
 use App\File;
-use App\Http\Controllers\toArray;
 use App\Metar;
 use App\Overflight;
 use App\OverflightUpdate;
-use App\Permission;
-use App\Role;
 use App\Scenery;
 use App\User;
 use App\Visitor;
@@ -24,35 +20,31 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Input;
 use Mail;
-use Response;
 use SimpleXMLElement;
-use Validation;
 
-class FrontController extends Controller
-{
+class FrontController extends Controller {
     public function home() {
         $atc = ATC::get();
-        if($atc) {
+        if ($atc) {
             $atl_ctr = 0;
             $atl_app = 0;
             $atl_twr = 0;
             $clt_twr = 0;
-            foreach($atc as $a) {
+            foreach ($atc as $a) {
                 $field = substr($a->position, 0, 3);
                 $position = substr($a->position, -3);
-                if($field == 'ATL') {
-                    if($position == 'TWR' || $position == 'GND') {
+                if ($field == 'ATL') {
+                    if ($position == 'TWR' || $position == 'GND') {
                         $atl_twr = 1;
-                    } elseif($position == 'APP' || $position == 'DEP') {
+                    } elseif ($position == 'APP' || $position == 'DEP') {
                         $atl_app = 1;
-                    } elseif($position == 'CTR') {
+                    } elseif ($position == 'CTR') {
                         $atl_ctr = 1;
                     }
-                } elseif($field == 'CLT') {
-                    if($position == 'TWR' || $position == 'GND' || $position == 'APP' || $position == 'DEP') {
+                } elseif ($field == 'CLT') {
+                    if ($position == 'TWR' || $position == 'GND' || $position == 'APP' || $position == 'DEP') {
                         $clt_twr = 1;
                     }
                 }
@@ -61,7 +53,7 @@ class FrontController extends Controller
 
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
         $metar_update = Metar::first();
-        if($metar_update != null) {
+        if ($metar_update != null) {
             $metar_last_updated = substr($metar_update, -18, 5);
         } else {
             $metar_last_updated = null;
@@ -69,26 +61,26 @@ class FrontController extends Controller
 
         $controllers = ATC::get();
         //$last_update = ControllerLogUpdate::first();
-		$last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
+        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
         $controllers_update = substr($last_update->created_at, -8, 5);
 
         $now = Carbon::now();
 
-        $calendar = Calendar::where('type', '1')->get()->filter(function($news) use ($now) {
+        $calendar = Calendar::where('type', '1')->get()->filter(function ($news) use ($now) {
             return strtotime($news->date.' '.$news->time) > strtotime($now);
-        })->sortBy(function($news) {
+        })->sortBy(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
 
-        $news = Calendar::where('type', '2')->where('visible', '1')->get()->filter(function($news) use ($now) {
+        $news = Calendar::where('type', '2')->where('visible', '1')->get()->filter(function ($news) use ($now) {
             return strtotime($news->date.' '.$news->time) < strtotime($now);
-        })->sortByDesc(function($news) {
+        })->sortByDesc(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
 
-        $events = Event::where('status', 1)->get()->filter(function($e) use ($now) {
+        $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
-        })->sortBy(function($e) {
+        })->sortBy(function ($e) {
             return strtotime($e->date);
         });
 
@@ -110,8 +102,8 @@ class FrontController extends Controller
     }
     
      public function privacy() {
-        return view('site.privacy');
-    }
+         return view('site.privacy');
+     }
 
     public function airportIndex() {
         $airports = Airport::orderBy('ltr_3', 'ASC')->get();
@@ -125,9 +117,9 @@ class FrontController extends Controller
 
     public function searchAirportResult(Request $request) {
         $apt = $request->apt;
-        if(strlen($apt) == 3) {
+        if (strlen($apt) == 3) {
             $apt_s = 'k'.strtolower($apt);
-        } elseif(strlen($apt) == 4) {
+        } elseif (strlen($apt) == 4) {
             $apt_s = strtolower($apt);
         } else {
             return redirect()->back()->with('error', 'You either did not search for an airport or the airport ID is too long.');
@@ -145,31 +137,31 @@ class FrontController extends Controller
         $metar = $root_metar->data->children()->METAR->raw_text;
         $taf = $root_taf->data->children()->TAF->raw_text;
 
-        if($metar == null) {
+        if ($metar == null) {
             return redirect()->back()->with('error', 'The airport code you entered is invalid.');
         }
         $metar = $metar->__toString();
-        if($taf != null) {
+        if ($taf != null) {
             $taf = $taf->__toString();
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
-		// VATEUD API is no longer accessible
-		$pilots_a = $pilots_d = false;
-		$res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
+        // VATEUD API is no longer accessible
+        $pilots_a = $pilots_d = false;
+        $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
         //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
         $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
-        if($pilots_a) {
+        if ($pilots_a) {
             $pilots_a = collect($pilots_a);
         } else {
             $pilots_a = null;
         }
-		$res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
+        $res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
         //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
         $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
-        if($pilots_d) {
+        if ($pilots_d) {
             $pilots_d = collect($pilots_d);
         } else {
             $pilots_d = null;
@@ -178,9 +170,9 @@ class FrontController extends Controller
         $client = new Client(['http_errors' => false]);
         $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$apt_r);
         $status = $res->getStatusCode();
-        if($status == 404) {
+        if ($status == 404) {
             $charts = null;
-        } elseif(json_decode($res->getBody()) != '[]') {
+        } elseif (json_decode($res->getBody()) != '[]') {
             $charts = collect(json_decode($res->getBody())->$apt_r);
             $min = $charts->where('chart_code', 'MIN');
             $hot = $charts->where('chart_code', 'HOT');
@@ -204,9 +196,9 @@ class FrontController extends Controller
         $client = new Client(['http_errors' => false]);
         $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$airport->ltr_4);
         $status = $res->getStatusCode();
-        if($status == 404) {
+        if ($status == 404) {
             $charts = null;
-        } elseif(json_decode($res->getBody()) != '[]') {
+        } elseif (json_decode($res->getBody()) != '[]') {
             $apt_r = $airport->ltr_4;
             $charts = collect(json_decode($res->getBody())->$apt_r);
             $min = $charts->where('chart_code', 'MIN');
@@ -226,7 +218,7 @@ class FrontController extends Controller
     }
 
     public function sceneryIndex(Request $request) {
-        if($request->search == null) {
+        if ($request->search == null) {
             $scenery = Scenery::orderBy('airport', 'ASC')->get();
         } else {
             $scenery = Scenery::where('airport', $request->search)->orWhere('developer', $request->search)->orderBy('airport', 'ASC')->get();
@@ -250,11 +242,13 @@ class FrontController extends Controller
     }
 
     public function showStats($year = null, $month = null) {
-        if ($year == null)
+        if ($year == null) {
             $year = date('y');
+        }
 
-        if ($month == null)
+        if ($month == null) {
             $month = date('n');
+        }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
@@ -264,15 +258,15 @@ class FrontController extends Controller
         $agreevisitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
        
         
-        $home = $homec->sortByDesc(function($user) use($stats) {
+        $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->total_hrs;
         });
 
-        $visit = $visitc->sortByDesc(function($user) use($stats) {
+        $visit = $visitc->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->total_hrs;
         });
 
-        $agreevisit = $agreevisitc->sortByDesc(function($user) use($stats) {
+        $agreevisit = $agreevisitc->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->total_hrs;
         });
 
@@ -305,19 +299,19 @@ class FrontController extends Controller
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if($r != true) {
+        if ($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
-		
-		// Check to see if CID is already active in database (prevents account takeover)
-		if (User::find($request->cid) !== null) {
-			$user = User::find($request->cid);
-			if($user->status == 1) {
-				return redirect()->back()->with('error', 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
-			}
-		}
+        
+        // Check to see if CID is already active in database (prevents account takeover)
+        if (User::find($request->cid) !== null) {
+            $user = User::find($request->cid);
+            if ($user->status == 1) {
+                return redirect()->back()->with('error', 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
+            }
+        }
      
-        if($request->rating != 1) {
+        if ($request->rating != 1) {
             //Continue Request
             /*  $visit = new Visitor;
 
@@ -342,15 +336,14 @@ class FrontController extends Controller
                 ]
             );
 
-        Mail::send('emails.visit.new', ['visit' => $visit], function($message) use ($visit){
-            $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
-            $message->to($visit->email)->cc('datm@ztlartcc.org');
-        });
+            Mail::send('emails.visit.new', ['visit' => $visit], function ($message) use ($visit) {
+                $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
+                $message->to($visit->email)->cc('datm@ztlartcc.org');
+            });
         
-        return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
-        }
-        else {
-        return redirect('/')->with('error', 'You need to be a S1 rated controller or greater');
+            return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
+        } else {
+            return redirect('/')->with('error', 'You need to be a S1 rated controller or greater');
         }
     }
 
@@ -379,7 +372,7 @@ class FrontController extends Controller
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if($r != true) {
+        if ($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
 
@@ -409,16 +402,15 @@ class FrontController extends Controller
 
         return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
-	
-	public function showPermalink($slug) {
-		$file = File::where('permalink', $slug)->first();
-		if(!is_null($file)) {
-			return redirect($file->path);
-		}
-		else {
-			return redirect('/')->with('error', 'The requested resource is not available.');
-		}
-	}
+    
+    public function showPermalink($slug) {
+        $file = File::where('permalink', $slug)->first();
+        if (!is_null($file)) {
+            return redirect($file->path);
+        } else {
+            return redirect('/')->with('error', 'The requested resource is not available.');
+        }
+    }
 
     public function showStaffRequest() {
         return view('site.request_staffing');
@@ -442,7 +434,7 @@ class FrontController extends Controller
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if($r != true) {
+        if ($r != true) {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
 
@@ -454,45 +446,45 @@ class FrontController extends Controller
         $time = $request->time;
         $exp = $request->additional_information;
 
-        Mail::send('emails.request_staff', ['name' => $name, 'email' => $email, 'org' => $org, 'date' => $date, 'time' => $time, 'exp' => $exp], function($message) use ($email, $name, $date) {
+        Mail::send('emails.request_staff', ['name' => $name, 'email' => $email, 'org' => $org, 'date' => $date, 'time' => $time, 'exp' => $exp], function ($message) use ($email, $name, $date) {
             $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staffing Requests')->subject('New Staffing Request for '.$date);
             $message->to('ec@ztlartcc.org')->replyTo($email, $name);
         });
 
         return redirect('/')->with('success', 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
     }
-	
-	public function showAtlRamp() {
-        return view('site.ramp')->with('afld','ATL');
+    
+    public function showAtlRamp() {
+        return view('site.ramp')->with('afld', 'ATL');
     }
-	
-	public function showCltRamp() {
-        return view('site.ramp')->with('afld','CLT');
+    
+    public function showCltRamp() {
+        return view('site.ramp')->with('afld', 'CLT');
     }
 
     public function pilotGuideAtl() {
         $atc = ATC::get();
-        if($atc) {
-            $lcl_controllers = array();
-            $app_controllers = array();
-            $ctr_controllers = array();
-            foreach($atc as $a) {
+        if ($atc) {
+            $lcl_controllers = [];
+            $app_controllers = [];
+            $ctr_controllers = [];
+            foreach ($atc as $a) {
                 $field = substr($a->position, 0, 3);
                 $position = substr($a->position, -3);
-                if((($field == 'ATL')||($field == 'ZTL'))&&($a->freq != '199.998')) {
-                    if($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
+                if ((($field == 'ATL')||($field == 'ZTL'))&&($a->freq != '199.998')) {
+                    if ($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
                         $lcl_controllers[] = $a;
-                    } elseif($position == 'APP' || $position == 'DEP') {
+                    } elseif ($position == 'APP' || $position == 'DEP') {
                         $app_controllers[] = $a;
-                    } elseif($position == 'CTR') {
+                    } elseif ($position == 'CTR') {
                         $ctr_controllers[] = $a;
                     }
-                } 
+                }
             }
         }
-        if(count($lcl_controllers) < 1) {
+        if (count($lcl_controllers) < 1) {
             $lcl_controllers = $app_controllers;
-            if(count($lcl_controllers) < 1) {
+            if (count($lcl_controllers) < 1) {
                 $lcl_controllers = $ctr_controllers;
             }
         }
@@ -505,20 +497,18 @@ class FrontController extends Controller
         $status = $res->getStatusCode();
         $diag = $aaup = '#';
         $charts = null;
-         if($status == 200 && json_decode($res->getBody()) != '[]') {
+        if ($status == 200 && json_decode($res->getBody()) != '[]') {
             $charts = collect(json_decode($res->getBody())->$icao_id);
             $diag = $charts->where('chart_code', 'APD');
-            if(count($diag)>0) {
+            if (count($diag)>0) {
                 $diag = $diag->first()->pdf_path;
-            }
-            else {
+            } else {
                 $diag = '#';
             }
             $aaup = $charts->where('chart_code', 'DAU');
-            if(count($aaup)>0) {
+            if (count($aaup)>0) {
                 $aaup = $aaup->first()->pdf_path;
-            }
-            else {
+            } else {
                 $aaup = '#';
             }
         } else {
@@ -526,6 +516,6 @@ class FrontController extends Controller
         }
         
         return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)->with('controllers_update', $controllers_update)
-        ->with('diag', $diag)->with('aaup', $aaup);       
+        ->with('diag', $diag)->with('aaup', $aaup);
     }
 }

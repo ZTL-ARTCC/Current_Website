@@ -5,8 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-class Kernel extends ConsoleKernel
-{
+class Kernel extends ConsoleKernel {
     /**
      * The Artisan commands provided by your application.
      *
@@ -30,8 +29,7 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
+    protected function schedule(Schedule $schedule) {
         $schedule->command('SoloCerts:UpdateSoloCerts')->daily();
         $schedule->command('RosterUpdate:UpdateRoster')->hourly();
         $schedule->command('Update:DiscordUsers')->hourly();
@@ -41,7 +39,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('Moodle:DeleteUsers')->dailyAt('00:15');
         // $schedule->command('RosterUpdate:VisitAgreement')->dailyAt('00:30');
         // $schedule->command('Event:SendEventReminder')->dailyAt('00:30')->timezone('America/New_York');
-        
     }
 
     /**
@@ -49,8 +46,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
-    {
+    protected function commands() {
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');

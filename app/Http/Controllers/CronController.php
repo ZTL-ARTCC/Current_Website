@@ -6,8 +6,7 @@ use Artisan;
 use Config;
 use Illuminate\Http\Request;
 
-class CronController extends Controller
-{
+class CronController extends Controller {
     public function index(Request $request) {
         $job = $request->j;
         $token = $request->t;
@@ -16,9 +15,9 @@ class CronController extends Controller
             return array_has(Artisan::all(), $name);
         }
 
-        if($token == Config::get('cron.token')) {
-            if($job != null) {
-                if(command_exists($job)) {
+        if ($token == Config::get('cron.token')) {
+            if ($job != null) {
+                if (command_exists($job)) {
                     Artisan::call($job);
                     return 'success';
                 } else {

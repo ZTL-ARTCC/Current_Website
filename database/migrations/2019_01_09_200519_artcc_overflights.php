@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class ArtccOverflights extends Migration
-{
+class ArtccOverflights extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('flights_within_artcc', function(Blueprint $table) {
+    public function up() {
+        Schema::create('flights_within_artcc', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pilot_cid');
             $table->string('pilot_name');
@@ -31,8 +29,7 @@ class ArtccOverflights extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('flights_within_artcc');
     }
 }
