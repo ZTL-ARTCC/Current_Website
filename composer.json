@@ -64,6 +64,9 @@
         ],
         "format-check": [
             "vendor/bin/php-cs-fixer fix --dry-run"
+        ],
+        "setup-git-hooks": [
+            "cp .git-hooks/* .git/hooks/."
         ]
     },
     "config": {
