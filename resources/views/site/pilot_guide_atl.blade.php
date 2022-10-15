@@ -267,7 +267,7 @@ return $badge;
                 location on the airfield. Here is a guide to determine your departure runway:</p>
             <ul>
                 <li>ATL departs runways 8R/26L and 9L/27R. Do not expect other runways for departure.</li>
-                <li>Runway 9L/29R is the longest runway at ATL at 12,390 feet. If your aircraft’s takeoff data indicates that you need this runway
+                <li>Runway 9L/27R is the longest runway at ATL at 12,390 feet. If your aircraft’s takeoff data indicates that you need this runway
                     for departure, you should inform the ground controller on first contact.</li>
                 <li>If parked at concourse T, A, B, C, D, E, F, your departure runway is dependent on your filed SID. See chart on the right side
                     of this page.</li>
