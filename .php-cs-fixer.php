@@ -4,6 +4,7 @@ $finder = Symfony\Component\Finder\Finder::create()
     ->notPath('vendor')
     ->notPath('bootstrap')
     ->notPath('storage')
+    ->notPath('public/ckeditor')
     ->in(__DIR__)
     ->name('*.php')
     ->notName('*.blade.php');
