@@ -8,23 +8,23 @@ on:
         type: string
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
       - name: checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: load/save cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
               vendor
               node_modules
               /tmp/composer-cache
-          key: ${{ runner.os }}-prod-scores-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
+          key: ${{ runner.os }}-ztl-validate-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
           restore-keys: |
-            ${{ runner.os }}-prod-scores-cached-
+            ${{ runner.os }}-ztl-validate-cached-
 
       - name: Setup composer and install packages
         uses: php-actions/composer@v6
@@ -36,9 +36,47 @@ jobs:
 
       - name: update node packages
         run: npm ci
+    
+      - name: check formatting
+        run: npm run format-check; composer format-check
+
+  build:
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: load/save cache
+        uses: actions/cache@v3
+        with:
+          path: |
+              vendor
+              node_modules
+              /tmp/composer-cache
+          key: ${{ runner.os }}-ztl-build-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-ztl-build-cached-
+
+      - name: Setup composer and install packages
+        uses: php-actions/composer@v6
+        with:
+          dev: no
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.2.0
+
+      - name: update node packages
+        run: npm ci
 
       - name: build assets
         run: npm run prod
+
+      - name: uninstall node dev dependencies
+        run: npm prune --omit=dev
 
       - name: archive for artifact
         run: |
@@ -46,8 +84,7 @@ jobs:
           tar --exclude=${{ inputs.artifact-name }}.tar.gz -zcvf ${{ inputs.artifact-name }}.tar.gz .
 
       - name: create artifact for deploy
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.artifact-name }}
           path: ./${{ inputs.artifact-name }}.tar.gz
-
