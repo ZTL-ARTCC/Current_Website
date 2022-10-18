@@ -69,13 +69,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/trainingreq', 'TrainingController@showRequests');
         Route::delete('/trainingreq/{id}/delete', 'TrainingController@cancelSession');
         Route::get('/sessions_today', 'TrainingController@showsessions_today');
-
-
-        
-        
-        
-
-
         Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
@@ -289,12 +282,13 @@ Route::get('/discord/logout', 'DiscordController@logoutOfDiscord');
 *	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
 */
 
+/*
 Route::get('/laratrust', function () {
-    /*	$user = App\User::find(1315134);
+    $user = App\User::find(1315134);
 
-        $user->attachRole('wm');
-     */
+    $user->attachRole('wm');
 });
+*/
 
 /*
 *	End Webmaster Permission Grant
