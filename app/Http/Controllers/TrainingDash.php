@@ -21,11 +21,6 @@ class TrainingDash extends Controller {
         return view('dashboard.training.atcast');
     }
 
-    public function moodleLogin() {
-        Auth::user()->enrolInMoodleCourses();
-        return view('dashboard.training.moodle');
-    }
-
     public function trainingInfo() {
         $info_minor_gnd = TrainingInfo::where('section', 0)->orderBy('number', 'ASC')->get();
         $info_minor_lcl = TrainingInfo::where('section', 1)->orderBy('number', 'ASC')->get();

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Opt;
-use App\Role;
 use App\User;
-use Carbon\Carbon;
 use Config;
-use DB;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -131,183 +128,6 @@ class RosterController extends Controller {
                     }
                     $userstatuscheck->save();
 
-                    // Make sure the user is on Moodle
-                    if (Config::get('app.moodle') == 1) {
-                        $moodle = DB::table('mdl_user')->where('id', $userstatuscheck->id)->first();
-
-                        // Check and see if the user is in Moodle
-                        // If they are, update them
-                        // If they aren't, add them
-                        if ($moodle) {
-                            // Update the moodle user
-                            // Makes sure the user isn't deleted in moodle and updates their email
-                            DB::table('mdl_user')->where('id', $moodle->id)->update(['deleted' => 0]);
-                            DB::table('mdl_user')->where('id', $moodle->id)->update(['email' => $userstatuscheck->email]);
-
-                            // Check for mentor
-                            $old_mtr_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', 15);
-                            if ($old_mtr_role) {
-                                $old_mtr_role->delete();
-                            }
-                            if ($userstatuscheck->hasRole('mtr')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 15,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-
-                            // Check for staff
-                            $all_staff_roles = DB::table('mdl_role_assignments')->where('roleid', 16)->orWhere('roleid', 17)->get();
-
-                            // Go through each staff role and find the one that matches, if any
-                            $old_staff_role = null;
-                            foreach ($all_staff_roles as $r) {
-                                if ($r->userid == $userstatuscheck->id) {
-                                    $old_staff_role = $r;
-                                }
-                            }
-
-                            // Delete the old role
-                            if ($old_staff_role) {
-                                DB::table('mdl_role_assignments')->where('id', $old_staff_role->id)->delete();
-                            }
-
-                            if ($userstatuscheck->isAbleTo('snrStaff')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 17,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            } elseif ($userstatuscheck->isAbleTo('staff')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 16,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-
-                            //Assigns role in moodle database and adds the user to moodle
-                            if ($rating_old != $userstatuscheck->rating_id) {
-                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17);
-                                $old_role->delete();
-
-                                if ($userstatuscheck->rating_id == 1) {
-                                    $mdl_rating = 18;
-                                } elseif ($userstatuscheck->rating_id == 2) {
-                                    $mdl_rating = 9;
-                                } elseif ($userstatuscheck->rating_id == 3) {
-                                    $mdl_rating = 10;
-                                } elseif ($userstatuscheck->rating_id == 4) {
-                                    $mdl_rating = 11;
-                                } elseif ($userstatuscheck->rating_id == 5) {
-                                    $mdl_rating = 12;
-                                } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
-                                    $mdl_rating = 13;
-                                } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
-                                    $mdl_rating = 14;
-                                } else {
-                                    $mdl_rating = 0;
-                                }
-
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => $mdl_rating,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-                        } else {
-                            //Adds user to moodle database
-                            DB::table('mdl_user')->insert([
-                                'id' => $userstatuscheck->id,
-                                'confirmed' => 1,
-                                'mnethostid' => 1,
-                                'username' => $userstatuscheck->id,
-                                'firstname' => $userstatuscheck->fname,
-                                'lastname' => $userstatuscheck->lname,
-                                'email' => $userstatuscheck->email
-                            ]);
-
-                            // Check for mentor
-                            if ($userstatuscheck->hasRole('mtr')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 15,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-
-                            // Check for staff
-                            if ($userstatuscheck->isAbleTo('snrStaff')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 17,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            } elseif ($userstatuscheck->isAbleTo('staff')) {
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => 16,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-
-                            //Assigns role in moodle database and adds the user to moodle
-                            if ($rating_old != $userstatuscheck->rating_id) {
-                                $old_role = DB::table('mdl_role_assignments')->where('userid', $userstatuscheck->id)->where('roleid', '!=', 15)->where('roleid', '!=', 16)->where('roleid', '!=', 17);
-                                $old_role->delete();
-
-                                if ($userstatuscheck->rating_id == 1) {
-                                    $mdl_rating = 18;
-                                } elseif ($userstatuscheck->rating_id == 2) {
-                                    $mdl_rating = 9;
-                                } elseif ($userstatuscheck->rating_id == 3) {
-                                    $mdl_rating = 10;
-                                } elseif ($userstatuscheck->rating_id == 4) {
-                                    $mdl_rating = 11;
-                                } elseif ($userstatuscheck->rating_id == 5) {
-                                    $mdl_rating = 12;
-                                } elseif ($userstatuscheck->rating_id == 7 || $userstatuscheck->rating_id == 11 || $userstatuscheck->rating_id == 12) {
-                                    $mdl_rating = 13;
-                                } elseif ($userstatuscheck->rating_id == 8 || $userstatuscheck->rating_id == 10) {
-                                    $mdl_rating = 14;
-                                } else {
-                                    $mdl_rating = 0;
-                                }
-
-                                $now = Carbon::now()->timestamp;
-                                DB::table('mdl_role_assignments')->insert([
-                                    'roleid' => $mdl_rating,
-                                    'contextid' => 1,
-                                    'userid' => $userstatuscheck->id,
-                                    'modifierid' => 1,
-                                    'timemodified' => $now
-                                ]);
-                            }
-                        }
-                    }
-
                     Auth::loginUsingId($res['cid'], true);
                 } else {
                     return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
@@ -330,11 +150,6 @@ class RosterController extends Controller {
         if (!Auth::check()) {
             return redirect('/')->with('error', 'You are not logged in.');
         } else {
-            if (Config::get('app.moodle') == 1) {
-                // Remove the user's Moodle password
-                DB::table('mdl_user')->where('id', Auth::id())->update(['password' => 'LOGGED OUT']);
-            }
-
             Auth::logout();
             return redirect('/')->with('success', 'You have been logged out successfully.');
         }
