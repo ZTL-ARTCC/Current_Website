@@ -108,7 +108,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 
     Route::prefix('training')->group(function () {
         Route::get('atcast', 'TrainingDash@showatcast');
-        Route::get('moodle/login', 'TrainingDash@moodleLogin');
         Route::get('/req', 'TrainingDash@ShowReq');
         Route::prefix('tickets')->middleware('permission:train')->group(function () {
             Route::get('/', 'TrainingDash@ticketsIndex');
