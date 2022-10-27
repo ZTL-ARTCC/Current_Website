@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder {
             PositionPresetSeeder::class,
             ControllerUpdateSeeder::class,
             AnnouncementSeeder::class,
-            OverflightUpdateSeeder::class,
-            MoodleCourses::class,
+            OverflightUpdateSeeder::class
         ]);
     }
 }
