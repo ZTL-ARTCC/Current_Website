@@ -16,7 +16,6 @@ Home
     </div>
 </div>
 </div>
-<!--<div class="container-fluid" style="min-height:30px; width:100%; background-color:#343a40; background-image: linear-gradient(180deg, #343a40, #6c757d)"></div>-->
 <div class="container-fluid bg-secondary">
     <div class="row">
 		<div class="col-sm-9">
@@ -111,56 +110,6 @@ $('.carousel').carousel({
 					</div>
 				</div>
 			</div>
-<?php
-/*
-			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col mt-md-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
-					<div class="row"><div class="col"><h4>Airspace Status</h4></div></div>
-					<div class="row">
-						<div class="col-auto">
-						@if($atl_ctr === 1)
-							<span class="badge bg-success">ONLINE</span>
-						@else
-							<span class="badge bg-danger">OFFLINE</span>
-						@endif
-						</div><div class="col-auto pl-0">Atlanta Center</div>
-					</div>
-					<div class="row">
-						<div class="col-auto">
-						@if($atl_app === 1)
-							<span class="badge bg-success">ONLINE</span>
-						@else
-							<span class="badge bg-danger">OFFLINE</span>
-						@endif
-						</div><div class="col-auto pl-0">A80 TRACON</div>
-					</div>
-					<div class="row">
-						<div class="col-auto">
-						@if($atl_twr === 1)
-							<span class="badge bg-success">ONLINE</span>
-						@else
-							<span class="badge bg-danger">OFFLINE</span>
-						@endif
-						</div><div class="col-auto pl-0">Atlanta ATCT</div>
-					</div>
-					<div class="row">
-						<div class="col-auto">
-						@if($clt_twr === 1)
-							<span class="badge bg-success">ONLINE</span>
-						@else
-							<span class="badge bg-danger">OFFLINE</span>
-						@endif
-						</div><div class="col-auto pl-0">Charlotte ATCT</div>
-					</div>
-					<div class="row">
-						<div class="col-auto">
-							<span class="badge bg-info pr-10">{{ $flights->count() }}</span>&nbsp;&nbsp;flights in ZTL airspace
-						</div>
-					</div>
-				</div>
-			</div>
-*/
-?>
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
@@ -188,34 +137,6 @@ $('.carousel').carousel({
 				@endif
 				</div>
 			</div>
-<?php
-/*
-			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col m-1 p-2 rounded bg-dark text-white">
-					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
-				@if($airports->count() > 0)
-					@foreach($airports as $a)
-						<div class="row">
-						<div class="col-auto">
-						@if($a->visual_conditions == 'VFR')
-							<span class="badge bg-success">VFR</span>
-						@elseif($a->visual_conditions == 'IFR')
-							<span class="badge bg-danger">IFR</span>
-						@else
-							<span class="badge bg-warning">{{ $a->visual_conditions }}</span>
-						@endif
-						</div>
-						<div class="col-auto"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></div>
-						<div class="col-auto">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</div>
-						</div>
-					@endforeach
-				@else
-					<div class="row"><div class="col-auto text-center"><i>No Airports to Show</i></div></div>
-				@endif
-				</div>
-			</div>
-*/
-?>
 			<div class="row px-2 pr-md-3 pl-md-0">
 				<div class="col m-1 p-2 rounded bg-dark text-white">
 					<h4>News</h4>
