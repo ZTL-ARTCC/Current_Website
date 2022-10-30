@@ -80,28 +80,28 @@ $('.carousel').carousel({
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</td><td class="py-0 px-2 m-0">Atlanta Center</td></tr>
+						</td><td class="py-0 px-2 m-0 text-white">Atlanta Center</td></tr>
 						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
 						@if($atl_app === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</td><td class="py-0 px-2 m-0">A80 TRACON</td></tr>
+						</td><td class="py-0 px-2 m-0 text-white">A80 TRACON</td></tr>
 						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
 						@if($atl_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</td><td class="py-0 px-2 m-0">Atlanta ATCT</td></tr>
+						</td><td class="py-0 px-2 m-0 text-white">Atlanta ATCT</td></tr>
 						<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0">
 						@if($clt_twr === 1)
 							<span class="badge bg-success">ONLINE</span>
 						@else
 							<span class="badge bg-danger">OFFLINE</span>
 						@endif
-						</td><td class="py-0 px-2 m-0">Charlotte ATCT</td></tr>
+						</td><td class="py-0 px-2 m-0 text-white">Charlotte ATCT</td></tr>
 					</table>
 					</div></div>
 					<div class="row">
@@ -179,7 +179,7 @@ $('.carousel').carousel({
 						@endif
 						</td>
 						<td class="py-0 px-2 m-0"><a href="/pilots/airports/view/{{ $a->id }}">{{ $a->ltr_4 }}</a></td>
-						<td class="py-0 px-2 m-0">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
+						<td class="py-0 px-2 m-0 text-white">{{ $a->wind }}&nbsp;{{ $a->altimeter }}</td>
 						</tr>
 					@endforeach
 					</table></div></div>
