@@ -112,8 +112,8 @@ class LoginController extends Controller
                             }
                         }
                         if ($userstatuscheck->visitor == '1') {
-                            if ($resu->data->facility != 'ZZN') {
-                                $userstatuscheck->visitor_from = $resu->data->facility;
+                            if ($res['facility'] != 'ZZN') {
+                                $userstatuscheck->visitor_from = $res['facility'];
                             }
                         } else {
                             $userstatuscheck->visitor_from = null;
