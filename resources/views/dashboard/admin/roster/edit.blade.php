@@ -170,6 +170,7 @@ Update Controller
                         {!! Form::label('ctr', 'Center Certification') !!}
                         {!! Form::select('ctr', [
                             0 => 'None',
+                            99 => 'Solo Certification',
                             1 => 'Certified'
                         ], $user->ctr, ['class' => 'form-control']) !!}
                     </div>
