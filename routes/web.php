@@ -50,9 +50,8 @@ Route::get('/ssd', function () {
 */
 Route::get('/controllers/roster', 'RosterController@index');
 Route::get('/controllers/staff', 'RosterController@staffIndex');
-// VATSIM Connect SSO
-Route::get('/login', 'Auth\LoginController@login')->middleware('guest')->name('login');   // Login
-Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('logout'); // Logout
+Route::get('/login', 'Auth\LoginController@login')->middleware('guest')->name('login');
+Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('logout');
 /*
 *   End Roster
 */
