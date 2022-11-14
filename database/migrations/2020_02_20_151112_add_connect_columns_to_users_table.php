@@ -14,7 +14,6 @@ class AddConnectColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('roster', function (Blueprint $table) {            
-            // Add these to your users table
             $table->text('access_token')->nullable();
             $table->text('refresh_token')->nullable();
             $table->unsignedBigInteger('token_expires')->nullable();
@@ -28,10 +27,13 @@ class AddConnectColumnsToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('roster', function (Blueprint $table) {
-            $table->dropColumn('token_expires');
-            $table->dropColumn('refresh_token');
-            $table->dropColumn('access_token');
-        });
+        $columns = array('token_expires','refresh_token','access_token');
+        foreach($columns as $column) {
+        if (Schema::hasColumn('roster', $column)) {
+            Schema::table('roster', function (Blueprint $table) {
+                $table->dropColumn($column);
+            });
+        }
     }
+
 }
