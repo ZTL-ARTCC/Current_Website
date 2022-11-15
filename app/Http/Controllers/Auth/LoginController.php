@@ -75,20 +75,17 @@ class LoginController extends Controller
     {
         $client = new Client();
         $result = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'));
-        if ($result) {
+        if ($result) {  // VATUSA API response
             $resu = json_decode($result->getBody()->__toString(), true);
-            if (isset($resu['data'])) {
+            if (isset($resu['data'])) { // VATUSA API responded with JSON in expected format
                 $res = $resu['data'];
                 $userstatuscheck = User::find($res['cid']);
-                if ($userstatuscheck) {
-                    if ($userstatuscheck->status != 2) {
-                        // Save the user's rating for use down the line
-                        $rating_old = $userstatuscheck->rating_id;
+                if ($userstatuscheck) { // User's CID found on the facility roster
+                    if ($userstatuscheck->status != 2) { // User is not marked inactive on the facility roster
                         $userstatuscheck->fname = $res['fname'];
                         $userstatuscheck->lname = $res['lname'];
                         $userstatuscheck->email = $res['email'];
                         $userstatuscheck->rating_id = $res['rating'];
-
                         if ($res['flag_broadcastOptedIn'] == 1) {
                             if ($userstatuscheck->opt != 1) {
                                 $opt = new Opt;
@@ -121,22 +118,23 @@ class LoginController extends Controller
                         $userstatuscheck->save();
                         $this->completeLogin($resourceOwner, $accessToken);
                         Auth::loginUsingId($res['cid'], true);
-                    } else {
+
+                    } else { // User was found on the roster, but is not an active home or visiting controller
                         return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
                     }
-                } else {
+                } else { // User was not found on the facility roster as a home or visiting controller
                     return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
                 }
-            } else {
+            } else { // VATUSA API responded in an unexpected format (non-JSON)
                 return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
             }
-            if ($userstatuscheck->status == 0) {
+            if ($userstatuscheck->status == 0) { // User is authenticated and has been logged in. LOA is no longer used at ZTL, this item retained for compatibility
                 return redirect('/dashboard')->with('success', 'You have been logged in successfully. Please note that you are on an LOA and should not control until off the LOA. If this is an error, please let the DATM know.');
-            } else {
+            } else { // User is authenticated and has been logged in
                 return redirect()->intended('/dashboard')->with('success', 'You have been logged in successfully.');
             }
-        } else {
-            return redirect('/')->with('error', 'Bad Signature.');
+        } else { // VATUSA API does not respond or throws an error
+            return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
         }
     }
 
