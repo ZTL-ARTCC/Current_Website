@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use League\OAuth2\Client\Token;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\VatsimOAuthController;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use League\OAuth2\Client\Provider\GenericProvider;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Opt;
+use App\User;
 use Config;
 use GuzzleHttp\Client;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 /**
  * This controller handles authenticating users for the application and
  * redirecting them to your home screen. The controller uses a trait
  * to conveniently provide its functionality to your applications.
  */
-class LoginController extends Controller
-{
+class LoginController extends Controller {
     use AuthenticatesUsers;
 
     protected $provider;
@@ -31,26 +28,23 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->provider = new VatsimOAuthController;
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         if (!$request->has('code') || !$request->has('state')) { // User has clicked "login", redirect to Connect
             $authorizationUrl = $this->provider->getAuthorizationUrl(); // Generates state
             $request->session()->put('vatsimauthstate', $this->provider->getState());
             return redirect()->away($authorizationUrl);
-        } else if ($request->input('state') !== session()->pull('vatsimauthstate')) { // State mismatch, error
+        } elseif ($request->input('state') !== session()->pull('vatsimauthstate')) { // State mismatch, error
             return redirect('/')->withError("Something went wrong, please try again.");
         } else { // Callback (user has just logged in Connect)
             return $this->verifyLogin($request);
         }
     }
 
-    protected function verifyLogin(Request $request)
-    {
+    protected function verifyLogin(Request $request) {
         try {
             $accessToken = $this->provider->getAccessToken('authorization_code', [
                 'code' => $request->input('code')
@@ -71,8 +65,7 @@ class LoginController extends Controller
         return $this->vatusaAuth($resourceOwner, $accessToken);
     }
 
-    protected function vatusaAuth($resourceOwner, $accessToken)
-    {
+    protected function vatusaAuth($resourceOwner, $accessToken) {
         $client = new Client();
         $result = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'));
         if ($result) {  // VATUSA API response
@@ -118,7 +111,6 @@ class LoginController extends Controller
                         $userstatuscheck->save();
                         $this->completeLogin($resourceOwner, $accessToken);
                         Auth::loginUsingId($res['cid'], true);
-
                     } else { // User was found on the roster, but is not an active home or visiting controller
                         return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
                     }
@@ -138,8 +130,7 @@ class LoginController extends Controller
         }
     }
 
-    protected function completeLogin($resourceOwner, $token)
-    {
+    protected function completeLogin($resourceOwner, $token) {
         $account = User::firstOrNew(['id' => $resourceOwner->data->cid]);
         if ($resourceOwner->data->oauth->token_valid === "true") { // User has given us permanent access to data
             $account->access_token = $token->getToken();
@@ -153,8 +144,7 @@ class LoginController extends Controller
         return $account;
     }
 
-    public function logout()
-    {
+    public function logout() {
         auth()->logout();
 
         return redirect('/')->withSuccess('You have been successfully logged out');
