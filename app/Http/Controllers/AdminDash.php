@@ -255,7 +255,7 @@ class AdminDash extends Controller {
                     }
                     $user->twr = $request->input('twr');
                 } else {
-                    $user->twr = 99;
+                    $user->twr = 0;
                 }
             } elseif ($request->input('twr') == 99) {
                 $expire = Carbon::now()->addMonth()->format('Y-m-d');
