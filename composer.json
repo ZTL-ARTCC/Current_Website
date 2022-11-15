@@ -11,11 +11,13 @@
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.4.5",
         "laravel/framework": "^9.0",
-        "laravel/sanctum": "^2.14.1",
         "laravel/helpers": "^1.5",
-        "laravel/tinker": "^2.7",
         "laravel/legacy-factories": "^1.1.1",
+        "laravel/sanctum": "^2.14.1",
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.0",
+        "league/oauth2-client": "^2.4",
         "santigarcor/laratrust": "^7.0"
     },
     "require-dev": {
