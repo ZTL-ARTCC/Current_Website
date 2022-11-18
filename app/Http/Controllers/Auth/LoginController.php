@@ -109,7 +109,7 @@ class LoginController extends Controller {
                             $userstatuscheck->visitor_from = null;
                         }
                         $userstatuscheck->save();
-                        $this->completeLogin($resourceOwner, $accessToken);
+                        $this->completeLogin($resourceOwner);
                         Auth::loginUsingId($res['cid'], true);
                     } else { // User was found on the roster, but is not an active home or visiting controller
                         return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
@@ -130,18 +130,9 @@ class LoginController extends Controller {
         }
     }
 
-    protected function completeLogin($resourceOwner, $token) {
+    protected function completeLogin($resourceOwner) {
         $account = User::firstOrNew(['id' => $resourceOwner->data->cid]);
-        if ($resourceOwner->data->oauth->token_valid === "true") { // User has given us permanent access to data
-            $account->access_token = $token->getToken();
-            $account->refresh_token = $token->getRefreshToken();
-            $account->token_expires = $token->getExpires();
-        }
-
-        $account->save();
         auth()->login($account, true);
-
-        return $account;
     }
 
     public function logout() {
