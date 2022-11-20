@@ -3,7 +3,7 @@
         @if(Carbon\Carbon::now()->month == 12)
             <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/xmas_logo.png"></a>
         @else
-            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/logo.png"></a>
+            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/ztl_logo_black-turkey.png"></a>
         @endif
             <ul class="navbar-nav">
                 {!! Form::open(['action' => 'ControllerDash@searchAirport']) !!}
