@@ -109,8 +109,7 @@ class LoginController extends Controller {
                             $userstatuscheck->visitor_from = null;
                         }
                         $userstatuscheck->save();
-                        $this->completeLogin($resourceOwner);
-                        Auth::loginUsingId($res['cid'], true);
+                        Auth::loginUsingId($userstatuscheck->id, true);
                     } else { // User was found on the roster, but is not an active home or visiting controller
                         return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
                     }
@@ -128,11 +127,6 @@ class LoginController extends Controller {
         } else { // VATUSA API does not respond or throws an error
             return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
         }
-    }
-
-    protected function completeLogin($resourceOwner) {
-        $account = User::firstOrNew(['id' => $resourceOwner->data->cid]);
-        auth()->login($account, true);
     }
 
     public function logout() {
