@@ -749,11 +749,10 @@ class TrainingDash extends Controller {
         }
         // Number of OTS' per month
         if ($dataType == 'stats') {
-            $otsMonth = Ots::whereBetween('updated_at', [$from, $to])->where('status', '2')->orWhere('status', '3')->get();
-            $otsPerMonth = $otsMonth->count();
+            $otsMonth = Ots::whereBetween('updated_at', [$from . ' 00:00:00', $to . ' 00:00:00'])->get();
             $otsPerMonthPass = $otsMonth->where('status', '2')->count();
             $otsPerMonthFail = $otsMonth->where('status', '3')->count();
-            $retArr['otsPerMonth'] = ['total' => $otsPerMonth, 'pass' => $otsPerMonthPass, 'fail' => $otsPerMonthFail];
+            $retArr['otsPerMonth'] = ['pass' => $otsPerMonthPass, 'fail' => $otsPerMonthFail];
         }
         // Average session duration (over last 6-months)
         if ($dataType == 'graph') {
