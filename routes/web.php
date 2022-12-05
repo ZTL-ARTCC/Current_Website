@@ -142,6 +142,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
                 Route::get('/remove-pdf/{id}', 'TrainingDash@removePublicPdf');
             });
         });
+        Route::get('/statistics', 'TrainingDash@statistics')->middleware('role:atm|datm|ta|wm');
+        Route::post('/statistics/graph', 'TrainingDash@generateGraphs')->middleware('role:atm|datm|ta|wm');
     });
 
     Route::prefix('admin')->group(function () {
