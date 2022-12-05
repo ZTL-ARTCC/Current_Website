@@ -18,15 +18,12 @@ use Illuminate\Support\Facades\Response;
 use Mail;
 use mitoteam\jpgraph\MtJpGraph;
 
-class TrainingDash extends Controller
-{
-    public function showATCast()
-    {
+class TrainingDash extends Controller {
+    public function showATCast() {
         return view('dashboard.training.atcast');
     }
 
-    public function trainingInfo()
-    {
+    public function trainingInfo() {
         $info_minor_gnd = TrainingInfo::where('section', 0)->orderBy('number', 'ASC')->get();
         $info_minor_lcl = TrainingInfo::where('section', 1)->orderBy('number', 'ASC')->get();
         $info_minor_app = TrainingInfo::where('section', 2)->orderBy('number', 'ASC')->get();
@@ -51,8 +48,7 @@ class TrainingDash extends Controller
             ->with('public_section_next', $public_section_next);
     }
 
-    public function addInfo(Request $request, $section)
-    {
+    public function addInfo(Request $request, $section) {
         $replacing = TrainingInfo::where('number', '>', $request->number)->where('section', $section)->get();
         if ($replacing != null) {
             foreach ($replacing as $r) {
@@ -69,8 +65,7 @@ class TrainingDash extends Controller
         return redirect()->back()->with('success', 'The information has been added successfully.');
     }
 
-    public function deleteInfo($id)
-    {
+    public function deleteInfo($id) {
         $info = TrainingInfo::find($id);
         $other_info = TrainingInfo::where('number', '>', $info->number)->get();
         foreach ($other_info as $o) {
@@ -81,8 +76,7 @@ class TrainingDash extends Controller
         return redirect()->back()->with('success', 'The information has been removed successfully.');
     }
 
-    public function newPublicInfoSection(Request $request)
-    {
+    public function newPublicInfoSection(Request $request) {
         $request->validate([
             'name' => 'required',
             'order' => 'required'
@@ -104,8 +98,7 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The section was added successfully.');
     }
 
-    public function editPublicSection(Request $request, $id)
-    {
+    public function editPublicSection(Request $request, $id) {
         $request->validate([
             'name' => 'required'
         ]);
@@ -117,8 +110,7 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
     }
 
-    public function saveSession()
-    {
+    public function saveSession() {
         $id = Auth::id();
         $nSessions = MentorAvail::where('trainee_id', $id)->where('slot', '>', Carbon::now())->count();
 
@@ -138,8 +130,7 @@ class TrainingDash extends Controller
         $Slot->sendNewSessionEmail();
     }
 
-    public function removePublicInfoSection($id)
-    {
+    public function removePublicInfoSection($id) {
         $section = PublicTrainingInfo::find($id);
         $order = $section->order;
         $section->delete();
@@ -158,8 +149,7 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
     }
 
-    public function addPublicPdf(Request $request, $section_id)
-    {
+    public function addPublicPdf(Request $request, $section_id) {
         $request->validate([
             'pdf' => 'required'
         ]);
@@ -180,16 +170,14 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/info')->with('success', 'The PDF was added successfully.');
     }
 
-    public function removePublicPdf($id)
-    {
+    public function removePublicPdf($id) {
         $pdf = PublicTrainingInfoPdf::find($id);
         $pdf->delete();
 
         return redirect('/dashboard/training/info')->with('success', 'The PDF was removed successfully.');
     }
 
-    public function ticketsIndex(Request $request)
-    {
+    public function ticketsIndex(Request $request) {
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) {
             if (TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
                 return $user;
@@ -222,8 +210,7 @@ class TrainingDash extends Controller
         return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams);
     }
 
-    public function getAcademyExamTranscript($cid)
-    {
+    public function getAcademyExamTranscript($cid) {
         $req_params = [
             'form_params' => [],
             'http_errors' => false
@@ -255,8 +242,7 @@ class TrainingDash extends Controller
         return $exams;
     }
 
-    public function searchTickets(Request $request)
-    {
+    public function searchTickets(Request $request) {
         $search_result = User::find($request->cid);
         if ($search_result != null) {
             return redirect('/dashboard/training/tickets?id=' . $search_result->id);
@@ -265,15 +251,13 @@ class TrainingDash extends Controller
         }
     }
 
-    public function newTrainingTicket(Request $request)
-    {
+    public function newTrainingTicket(Request $request) {
         $c = $request->id;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
     }
 
-    public function saveNewTicket(Request $request)
-    {
+    public function saveNewTicket(Request $request) {
         $request->validate([
             'controller' => 'required',
             'position' => 'required',
@@ -407,15 +391,13 @@ class TrainingDash extends Controller
         return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
     }
 
-    public function viewTicket($id)
-    {
+    public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         return view('dashboard.training.view_ticket')->with('ticket', $ticket);
     }
 
-    public function editTicket($id)
-    {
+    public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
@@ -426,8 +408,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function saveTicket(Request $request, $id)
-    {
+    public function saveTicket(Request $request, $id) {
         $ticket = TrainingTicket::find($id);
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $request->validate([
@@ -468,8 +449,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function deleteTicket($id)
-    {
+    public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
         if (Auth::user()->isAbleTo('snrStaff')) {
             $controller_id = $ticket->controller_id;
@@ -487,8 +467,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function otsCenter()
-    {
+    public function otsCenter() {
         $ots_new = Ots::where('status', 0)->orderBy('created_at', 'DESC')->paginate(25);
         $ots_accepted = Ots::where('status', 1)->orderBy('created_at', 'DESC')->paginate(25);
         $ots_complete = Ots::where('status', 2)->orWhere('status', 3)->orderBy('created_at', 'DESC')->paginate(25);
@@ -498,8 +477,7 @@ class TrainingDash extends Controller
         return view('dashboard.training.ots-center')->with('ots_new', $ots_new)->with('ots_accepted', $ots_accepted)->with('ots_complete', $ots_complete)->with('instructors', $instructors);
     }
 
-    public function acceptRecommendation($id)
-    {
+    public function acceptRecommendation($id) {
         $ots = Ots::find($id);
         $ots->status = 1;
         $ots->ins_id = Auth::id();
@@ -514,8 +492,7 @@ class TrainingDash extends Controller
         return redirect()->back()->with('success', 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
     }
 
-    public function rejectRecommendation($id)
-    {
+    public function rejectRecommendation($id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
         } else {
@@ -526,8 +503,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function assignRecommendation(Request $request, $id)
-    {
+    public function assignRecommendation(Request $request, $id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
             return redirect()->back()->with('error', 'Only the TA can assign OTS recommendations to instructors.');
         } else {
@@ -555,8 +531,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function completeOTS(Request $request, $id)
-    {
+    public function completeOTS(Request $request, $id) {
         $validator = $request->validate([
             'result' => 'required',
             'ots_report' => 'required'
@@ -589,8 +564,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function otsCancel($id)
-    {
+    public function otsCancel($id) {
         $ots = Ots::find($id);
         $ots->ins_id = null;
         $ots->status = 0;
@@ -605,8 +579,7 @@ class TrainingDash extends Controller
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position)
-    { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+    public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
         switch (true) {
             case ($position > 6 && $position < 22):
                 return 's1';
@@ -649,8 +622,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function legacyTicketTypes($position)
-    { // Returns modern ticket ids for legacy ticket types
+    public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
         switch ($position) {
             case 11:
                 return 104;
@@ -690,8 +662,7 @@ class TrainingDash extends Controller
         }
     }
 
-    public function statistics(Request $request)
-    {
+    public function statistics(Request $request) {
         $yearSel = $monthSel = null;
         if (isset($request->date_select)) {
             $datePart = explode(' ', $request->date_select); // Format: MM YYYY
@@ -702,10 +673,9 @@ class TrainingDash extends Controller
         return view('dashboard.training.statistics')->with('stats', $stats);
     }
 
-    private function generateTrainingStats($year, $month, $dataType)
-    {
-        $retArr = array();
-        $retArr['dateSelect'] = array('month' => $month, 'year' => $year);
+    private function generateTrainingStats($year, $month, $dataType) {
+        $retArr = [];
+        $retArr['dateSelect'] = ['month' => $month, 'year' => $year];
         // Set date range
         if ($year == null) {
             $year = Carbon::now()->format('Y');
@@ -713,7 +683,7 @@ class TrainingDash extends Controller
         }
         $from = Carbon::createFromDate($year, $month, 1)->startOfMonth()->toDateString();
         $to = Carbon::createFromDate($year, $month, 1)->endOfMonth()->toDateString();
-        $retArr['date'] = array('start_date' => $from, 'end_date' => $to);
+        $retArr['date'] = ['start_date' => $from, 'end_date' => $to];
         $sessions = TrainingTicket::whereBetween('start_date', [$from, $to])->get();
         if ($dataType == 'stats') {
             $sessionsPrevious = TrainingTicket::whereBetween('start_date', [Carbon::createFromDate($from)->startOfMonth()->subMonths(1)->toDateString(), Carbon::createFromDate($to)->startOfMonth()->subMonths(1)->toDateString()]);
@@ -733,19 +703,20 @@ class TrainingDash extends Controller
             $sessionsS3 = $sessions->whereIn('position', [115, 116, 117, 118, 119, 123])->count();
             $sessionsC1 = $sessions->whereIn('position', [120, 121])->count();
             $sessionsOther = $sessions->whereIn('position', [122, 124, 125])->count();
-            $retArr['sessionsByType'] = array('S1' => $sessionsS1, 'S2' => $sessionsS2, 'S3' => $sessionsS3, 'C1' => $sessionsC1, 'Other' => $sessionsOther);
+            $retArr['sessionsByType'] = ['S1' => $sessionsS1, 'S2' => $sessionsS2, 'S3' => $sessionsS3, 'C1' => $sessionsC1, 'Other' => $sessionsOther];
         }
         // Training sessions, type, and hours by instructor
-        $trainers = $trainerSessions = array();
+        $trainers = $trainerSessions = [];
         $activeRoster = User::where('status', '1')->where('visitor', '0')->get();
         $activeRoster = $activeRoster->unique('id');
         foreach ($activeRoster as $activeUser) {
-            if ($activeUser->getTrainPositionAttribute() > 0)
+            if ($activeUser->getTrainPositionAttribute() > 0) {
                 $trainers[] = $activeUser;
+            }
         }
         $trainingStaffBelowMins = 0;
         foreach ($trainers as $trainer) {
-            $trainerStats = array();
+            $trainerStats = [];
             $trainerStats['name'] = explode(' ', $trainer->getFullNameAttribute())[1];
             $trainerSesh = $sessions->where('trainer_id', $trainer->id);
             $trainerStats['total'] = $trainerSesh->count();
@@ -769,7 +740,7 @@ class TrainingDash extends Controller
             $studentsS2 = $students->where('rating_id', '2')->count();
             $studentsS3 = $students->where('rating_id', '3')->count();
             $studentsC1 = $students->where('rating_id', '4')->count();
-            $retArr['studentsRequireTng'] = array('S1' => $studentsS1, 'S2' => $studentsS2, 'S3' => $studentsS3, 'C1' => $studentsC1);
+            $retArr['studentsRequireTng'] = ['S1' => $studentsS1, 'S2' => $studentsS2, 'S3' => $studentsS3, 'C1' => $studentsC1];
         }
         // Number of unique students
         if ($dataType == 'stats') {
@@ -782,13 +753,13 @@ class TrainingDash extends Controller
             $otsPerMonth = $otsMonth->count();
             $otsPerMonthPass = $otsMonth->where('status', '2')->count();
             $otsPerMonthFail = $otsMonth->where('status', '3')->count();
-            $retArr['otsPerMonth'] = array('total' => $otsPerMonth, 'pass' => $otsPerMonthPass, 'fail' => $otsPerMonthFail);
+            $retArr['otsPerMonth'] = ['total' => $otsPerMonth, 'pass' => $otsPerMonthPass, 'fail' => $otsPerMonthFail];
         }
         // Average session duration (over last 6-months)
         if ($dataType == 'graph') {
             $sessionsSixMonths = TrainingTicket::where('start_date', '>', Carbon::now()->subMonths(6))->get();
             $uniqueSessionIDs = $sessionsSixMonths->unique('session_id');
-            $sessionDuration = array();
+            $sessionDuration = [];
             foreach ($uniqueSessionIDs as $uniqueSessionID) {
                 $seshByTypeDuration = $averageSeshDuration = null;
                 $seshByType = $sessionsSixMonths->where('session_id', $uniqueSessionID->session_id);
@@ -796,14 +767,14 @@ class TrainingDash extends Controller
                     $seshByTypeDuration += strtotime("1970-01-01 " . $sesh->duration . ":00");
                 }
                 $averageSeshDuration = $seshByTypeDuration / $seshByType->count() / 60; // Get duration in minutes
-                $sessionDuration[] = array($uniqueSessionID->getSessionNameAttribute(), round($averageSeshDuration, 2));
+                $sessionDuration[] = [$uniqueSessionID->getSessionNameAttribute(), round($averageSeshDuration, 2)];
             }
             $retArr['sessionDuration'] = $sessionDuration;
         }
         // Number of student cancellations, no shows
         if ($dataType == 'stats') {
             $setmoreAccessToken = $setmoreCursor = null;
-            $setmoreAppointments = array();
+            $setmoreAppointments = [];
             $studentCancel = $studentNoShow = 0;
             $client = new Client();
             try {
@@ -861,8 +832,7 @@ class TrainingDash extends Controller
         return $retArr;
     }
 
-    private function getAppointmentBatch(&$setmoreAppointments, $setmoreAccessToken, $from, $to, &$cursor)
-    {
+    private function getAppointmentBatch(&$setmoreAppointments, $setmoreAccessToken, $from, $to, &$cursor) {
         $cursorStr = '';
         if (!is_null($cursor)) {
             $cursorStr = '&cursor=' . $cursor;
@@ -893,8 +863,7 @@ class TrainingDash extends Controller
         return false;
     }
 
-    public function generateGraphs(Request $request)
-    {
+    public function generateGraphs(Request $request) {
         $graphId = $request->id;
         $statArr = TrainingDash::generateTrainingStats($request->year, $request->month, 'graph');
         // Reformat date range
@@ -905,12 +874,12 @@ class TrainingDash extends Controller
         $graph->SetFrame(false, 'black', 0);
         $graph->SetScale("textlin");
         // Graph configuration
-        $statsGraphs = array(
-            1 => array('title' => 'Sessions Per Month', 'subtitle' => '(' . $from . ' - ' . $to . ')', 'x-title' => 'Session Type', 'y-title' => 'Number of Sessions', 'dataset' => 'sessionsByType'),
-            2 => array('title' => 'Sessions Per Month By Instructor/Mentor', 'subtitle' => '(' . $from . ' - ' . $to . ')', 'x-title' => '', 'y-title' => 'Number of Sessions', 'dataset' => null),
-            3 => array('title' => 'Average Session Duration', 'subtitle' => 'Last Six Months', 'x-title' => '', 'y-title' => 'Average Session Duration (minutes)', 'dataset' => 'sessionDuration'),
-            4 => array('title' => 'Students Requiring Training', 'subtitle' => 'As of ' . Carbon::now()->format('m/d/Y'), 'x-title' => 'Student Type', 'y-title' => 'Number of Students', 'dataset' => 'studentsRequireTng')
-        );
+        $statsGraphs = [
+            1 => ['title' => 'Sessions Per Month', 'subtitle' => '(' . $from . ' - ' . $to . ')', 'x-title' => 'Session Type', 'y-title' => 'Number of Sessions', 'dataset' => 'sessionsByType'],
+            2 => ['title' => 'Sessions Per Month By Instructor/Mentor', 'subtitle' => '(' . $from . ' - ' . $to . ')', 'x-title' => '', 'y-title' => 'Number of Sessions', 'dataset' => null],
+            3 => ['title' => 'Average Session Duration', 'subtitle' => 'Last Six Months', 'x-title' => '', 'y-title' => 'Average Session Duration (minutes)', 'dataset' => 'sessionDuration'],
+            4 => ['title' => 'Students Requiring Training', 'subtitle' => 'As of ' . Carbon::now()->format('m/d/Y'), 'x-title' => 'Student Type', 'y-title' => 'Number of Students', 'dataset' => 'studentsRequireTng']
+        ];
         $graph->title->Set($statsGraphs[$graphId]['title']);
         $graph->subtitle->Set($statsGraphs[$graphId]['subtitle']);
         $graph->xaxis->SetTitle($statsGraphs[$graphId]['x-title'], 'center');
@@ -924,8 +893,8 @@ class TrainingDash extends Controller
             $graph->Add($bplot);
             $graph->xaxis->SetTickLabels(array_keys($statArr[$statsGraphs[$graphId]['dataset']]));
         } elseif ($graphId == 2) { // Sessions by instructor per month
-            $instructors = $plotArray = array();
-            $instructionalCategories = array('S1', 'S2', 'S3', 'C1', 'Other');
+            $instructors = $plotArray = [];
+            $instructionalCategories = ['S1', 'S2', 'S3', 'C1', 'Other'];
             foreach ($statArr['trainerSessions'] as $instructor) {
                 $instructors[] = $instructor['name'];
                 foreach ($instructionalCategories as $instructionalCategory) {
@@ -946,7 +915,7 @@ class TrainingDash extends Controller
             $graph->xaxis->SetLabelAngle(50);
         } elseif ($graphId == 3) { // Session average time over last 6-months
             // Create the bar plots
-            $sessionAvgTime = $sessionId = array();
+            $sessionAvgTime = $sessionId = [];
             foreach ($statArr['sessionDuration'] as $seshType) {
                 $sIdExp = explode(' ', $seshType[0]);
                 if ($sIdExp[0] == 'Unlisted/other') {

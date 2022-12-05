@@ -4,15 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::table('training_tickets', function (Blueprint $table) {
             $table->date('start_date')->after('date')->nullable();
         });
@@ -24,11 +22,10 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::table('training_tickets', function ($table) {
-            if(Schema::hasColumn('start_date')) {
-            $table->dropColumn('start_date');
+            if (Schema::hasColumn('start_date')) {
+                $table->dropColumn('start_date');
             }
         });
     }
