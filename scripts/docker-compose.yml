@@ -1,0 +1,15 @@
+name: ztl-local
+services:
+  mysql:
+    image: mysql:latest
+    container_name: ztl-db
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ../storage/docker/mysql-data:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_USER: ztl
+      MYSQL_PASSWORD: topsecret
+      MYSQL_ROOT_PASSWORD: evenmoretopsecret
+      MYSQL_DATABASE: ztl
