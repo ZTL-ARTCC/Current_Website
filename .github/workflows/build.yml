@@ -78,6 +78,9 @@ jobs:
       - name: uninstall node dev dependencies
         run: npm prune --omit=dev
 
+      - name: remove scripts
+        run: rm -r scripts
+
       - name: archive for artifact
         run: |
           touch ${{ inputs.artifact-name }}.tar.gz
