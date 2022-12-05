@@ -268,20 +268,20 @@ class TrainingTicket extends Model {
         } elseif ($pos == 207) {
             $session = 'TWR2 - S2T2';
         } elseif ($pos == 208) {
-            $session = 'TWR3 - S2P1-S';
+            $session = 'TWR3 - S2T3';
         } elseif ($pos == 209) {
-            $session = 'TWR4 - S2T3-S';
+            $session = 'TWR4 - S2P1-S';
         } elseif ($pos == 210) {
-            $session = 'TWR5 - S2P2-S';
+            $session = 'TWR5 - S2T4';
         } elseif ($pos == 211) {
-            $session = 'TWR6 - S2T4-S';
+            $session = 'TWR6 - S2T5-S';
         } elseif ($pos == 212) {
-            $session = 'TWR7 - S2T5-S';
+            $session = 'TWR7 - S2T6';
         } elseif ($pos == 213) {
-            $session = 'TWR8 - S2T6';
+            $session = 'TWR8 - S2P2';
         } elseif ($pos == 214) {
-            $session = 'TWR9 - S2P3';
-        } elseif ($pos == 215) {
+            $session = 'TWR9 - S2M1-S';
+        } elseif ($pos == 215) { // No longer used - retained for legacy tickets
             $session = 'TWR10 - S2M1-S';
         } elseif ($pos == 216) {
             $session = 'APP1 - S3T1-S';
