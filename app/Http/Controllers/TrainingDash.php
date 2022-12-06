@@ -19,6 +19,11 @@ use Mail;
 use mitoteam\jpgraph\MtJpGraph;
 
 class TrainingDash extends Controller {
+    public static $GRAPH_SESSIONS_PER_MONTH = 1;
+    public static $GRAPH_SESSIONS_BY_INSTRUCTOR = 2;
+    public static $GRAPH_SESSION_AVERAGE_DURATION = 3;
+    public static $GRAPH_STUDENT_TRAINING_PER_RATING = 4;
+
     public function showATCast() {
         return view('dashboard.training.atcast');
     }
@@ -772,7 +777,7 @@ class TrainingDash extends Controller {
         }
         // Number of student cancellations, no shows
         if ($dataType == 'stats') {
-            $setmoreAccessToken = $setmoreCursor = null;
+            $setmoreAccessToken = null;
             $setmoreAppointments = [];
             $studentCancel = $studentNoShow = 0;
             $client = new Client();
@@ -783,14 +788,13 @@ class TrainingDash extends Controller {
             } catch (ClientErrorResponseException $exception) {
                 // Unused - don't throw an error
             }
-            if (isset($setmoreAuthRespA['response'])) {
+            if (isset($setmoreAuthRespA) && isset($setmoreAuthRespA['response'])) {
                 if ($setmoreAuthRespA['response'] && isset($setmoreAuthRespA['data']['token'])) {
                     $setmoreAccessToken = $setmoreAuthRespA['data']['token']['access_token'];
                 }
             }
             if ($setmoreAccessToken != null) {
-                while ($this->getAppointmentBatch($setmoreAppointments, $setmoreAccessToken, $from, $to, $setmoreCursor)) {
-                }
+                $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to);
                 foreach ($setmoreAppointments as $setmoreAppointment) {
                     if (isset($setmoreAppointment['label'])) {
                         if ($setmoreAppointment['label'] == 'Cancel') {
@@ -831,7 +835,19 @@ class TrainingDash extends Controller {
         return $retArr;
     }
 
-    private function getAppointmentBatch(&$setmoreAppointments, $setmoreAccessToken, $from, $to, &$cursor) {
+    private function getSetmoreAppointments($setmoreAccessToken, $from, $to) {
+        $setmoreAppointments = [];
+        $setmoreCursor = null;
+        do {
+            $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor);
+            if (is_array($appointmentBatch)) {
+                $setmoreAppointments = array_merge($setmoreAppointments, $appointmentBatch);
+            }
+        } while (is_numeric($setmoreCursor));
+        return $setmoreAppointments;
+    }
+
+    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor) {
         $cursorStr = '';
         if (!is_null($cursor)) {
             $cursorStr = '&cursor=' . $cursor;
@@ -852,14 +868,15 @@ class TrainingDash extends Controller {
         );
         $setmoreResp = (string) $res->getBody();
         $setmoreRespA = json_decode($setmoreResp, true);
-        if (isset($setmoreRespA['data']['appointments'])) {
-            $setmoreAppointments = array_merge($setmoreAppointments, $setmoreRespA['data']['appointments']);
-        }
         if (isset($setmoreRespA['data']['cursor'])) {
             $cursor = $setmoreRespA['data']['cursor'];
-            return true;
+        } else {
+            $cursor = null;
         }
-        return false;
+        if (isset($setmoreRespA['data']['appointments'])) {
+            return $setmoreRespA['data']['appointments'];
+        }
+        return null;
     }
 
     public function generateGraphs(Request $request) {
@@ -887,11 +904,11 @@ class TrainingDash extends Controller {
         $graph->yaxis->title->SetFont(FF_FONT1, FS_BOLD);
         $graph->xaxis->title->SetFont(FF_FONT1, FS_BOLD);
 
-        if (in_array($graphId, [1, 4])) { // Sessions per month, students requiring training by category
+        if (in_array($graphId, [TrainingDash::$GRAPH_SESSIONS_PER_MONTH, TrainingDash::$GRAPH_STUDENT_TRAINING_PER_RATING])) {
             $bplot = new \BarPlot(array_values($statArr[$statsGraphs[$graphId]['dataset']]));
             $graph->Add($bplot);
             $graph->xaxis->SetTickLabels(array_keys($statArr[$statsGraphs[$graphId]['dataset']]));
-        } elseif ($graphId == 2) { // Sessions by instructor per month
+        } elseif ($graphId == TrainingDash::$GRAPH_SESSIONS_BY_INSTRUCTOR) {
             $instructors = $plotArray = [];
             $instructionalCategories = ['S1', 'S2', 'S3', 'C1', 'Other'];
             foreach ($statArr['trainerSessions'] as $instructor) {
@@ -912,7 +929,7 @@ class TrainingDash extends Controller {
             $graph->legend->Pos(0.5, 0.1, "center", "top");
             $graph->xaxis->SetTickLabels($instructors);
             $graph->xaxis->SetLabelAngle(50);
-        } elseif ($graphId == 3) { // Session average time over last 6-months
+        } elseif ($graphId == TrainingDash::$GRAPH_SESSION_AVERAGE_DURATION) {
             // Create the bar plots
             $sessionAvgTime = $sessionId = [];
             foreach ($statArr['sessionDuration'] as $seshType) {
