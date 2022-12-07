@@ -5,3 +5,4 @@
  */
 
 require("./bootstrap");
+require("./helpers.js");
