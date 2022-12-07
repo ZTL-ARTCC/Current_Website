@@ -87,12 +87,6 @@ Training Statistics
         </div>
     </div>
 </div>
-<script>
-    function copyToClipboard(eId) {
-        let e = document.getElementById(eId)
-        navigator.clipboard.writeText(e.innerHTML)
-    }
-</script>
 @else
 <h3>Insufficient permissions to view this page</h3>
 @endif
