@@ -712,8 +712,7 @@ class TrainingDash extends Controller {
         }
         // Training sessions, type, and hours by instructor
         $trainers = $trainerSessions = [];
-        $activeRoster = User::where('status', '1')->where('visitor', '0')->get();
-        $activeRoster = $activeRoster->unique('id');
+        $activeRoster = User::where('status', '1')->where('visitor', '0')->get()->unique('id');
         foreach ($activeRoster as $activeUser) {
             if ($activeUser->getTrainPositionAttribute() > 0) {
                 $trainers[] = $activeUser;
