@@ -251,6 +251,12 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/archive/{id}', 'AdminDash@archiveIncident');
             Route::get('/delete/{id}', 'AdminDash@deleteIncident');
         });
+        Route::prefix('toggles')->middleware('permission:staff')->group(function () {
+            Route::get('/', 'AdminDash@showFeatureToggles');
+            Route::get('/create', 'AdminDash@showCreateFeatureToggle');
+            Route::post('/create', 'AdminDash@createFeatureToggle');
+            Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
+        });
     });
 });
 /*

@@ -165,6 +165,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Unisharp\Ckeditor\ServiceProvider::class,
 
+        /*
+         * Custom Service Providers...
+         */
+        App\Providers\HelperServiceProvider::class,
+
     ],
 
     /*
