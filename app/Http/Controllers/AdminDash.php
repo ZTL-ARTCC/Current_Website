@@ -11,6 +11,7 @@ use App\ControllerLog;
 use App\Event;
 use App\EventPosition;
 use App\EventRegistration;
+use App\FeatureToggle;
 use App\Feedback;
 use App\File;
 use App\Incident;
@@ -29,8 +30,6 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-//use Request;
-//use Illuminate\Support\Facades\Input;
 use Mail;
 
 class AdminDash extends Controller {
@@ -1565,5 +1564,36 @@ class AdminDash extends Controller {
     public function showAudits() {
         $audits = Audit::orderBy('created_at', 'DESC')->paginate(50);
         return view('dashboard.admin.audits')->with('audits', $audits);
+    }
+
+    public function showFeatureToggles() {
+        $toggles = FeatureToggle::orderBy('created_at', 'desc')->get();
+
+        return view('dashboard.admin.toggles.show')->with('toggles', $toggles);
+    }
+
+    public function showCreateFeatureToggle() {
+        return view('dashboard.admin.toggles.create');
+    }
+
+    public function createFeatureToggle(Request $request) {
+        $request->merge([
+            'toggle_name' => preg_replace('/\s+/', '_', trim($request->input('toggle_name')))
+        ])->validate([
+            'toggle_name' => 'required|unique:feature_toggles'
+        ]);
+
+        $toggle = new FeatureToggle;
+        $toggle->toggle_name = $request->input('toggle_name');
+        $toggle->toggle_description = $request->input('toggle_description');
+        $toggle->save();
+
+        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been created');
+    }
+
+    public function toggleFeatureToggle($toggle_name) {
+        FeatureToggle::toggle($toggle_name);
+
+        return redirect()->back();
     }
 }
