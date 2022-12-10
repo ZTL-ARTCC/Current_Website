@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -45,6 +46,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'realops' => [
+            'driver' => 'session',
+            'provider' => 'realops_pilots',
+        ]
     ],
 
     /*
@@ -71,10 +77,11 @@ return [
             'table' => 'roster',
         ],
 
-        //'users' => [
-        //    'driver' => 'database',
-        //    'table' => 'roster',
-        //],
+        'realops_pilots' => [
+            'driver' => 'eloquent',
+            'model' => App\RealopsPilot::class,
+            'table' => 'realops_pilots',
+        ]
     ],
 
     /*
