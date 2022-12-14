@@ -903,11 +903,22 @@ class TrainingDash extends Controller {
         $graph->yaxis->title->SetFont(FF_FONT1, FS_BOLD);
         $graph->xaxis->title->SetFont(FF_FONT1, FS_BOLD);
 
+        $noData = new \Text('No Data Available');
+        $noData->SetPos(0.5, 0.5, 'center', 'center');
+        $noData->SetParagraphAlign('center');
+        $noData->SetColor('black');
+        $noData->SetFont(FF_FONT1, FS_BOLD);
+        $noData->SetBox();
+
         if (in_array($graphId, [TrainingDash::$GRAPH_SESSIONS_PER_MONTH, TrainingDash::$GRAPH_STUDENT_TRAINING_PER_RATING])) {
             $bplot = new \BarPlot(array_values($statArr[$statsGraphs[$graphId]['dataset']]));
             $graph->Add($bplot);
             $graph->xaxis->SetTickLabels(array_keys($statArr[$statsGraphs[$graphId]['dataset']]));
         } elseif ($graphId == TrainingDash::$GRAPH_SESSIONS_BY_INSTRUCTOR) {
+            if (count($statArr['trainerSessions']) == 0) {
+                $statArr['trainerSessions'][] = ['name'=>'','S1'=>0,'S2'=>0,'S3'=>0,'C1'=>0,'Other'=>0,'total'=>0];
+                $graph->AddText($noData);
+            }
             $instructors = $plotArray = [];
             $instructionalCategories = ['S1', 'S2', 'S3', 'C1', 'Other'];
             foreach ($statArr['trainerSessions'] as $instructor) {
@@ -929,6 +940,10 @@ class TrainingDash extends Controller {
             $graph->xaxis->SetTickLabels($instructors);
             $graph->xaxis->SetLabelAngle(50);
         } elseif ($graphId == TrainingDash::$GRAPH_SESSION_AVERAGE_DURATION) {
+            if (count($statArr['sessionDuration']) == 0) {
+                $statArr['sessionDuration'][] = ['', 0];
+                $graph->AddText($noData);
+            }
             // Create the bar plots
             $sessionAvgTime = $sessionId = [];
             foreach ($statArr['sessionDuration'] as $seshType) {
