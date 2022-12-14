@@ -78,7 +78,7 @@
 
                     @if(Auth::user()->isAbleTo('snrStaff'))
 
-                        <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/statistics') }}" href="/dashboard/training/statistics">Statistics</a>
+                        <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/statistics') }}" href="/dashboard/training/statistics">TA Dashboard</a>
 
                     @endif
 
