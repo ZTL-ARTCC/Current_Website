@@ -17,7 +17,7 @@
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
-            <!--<script src="/js/snowstorm.js"></script>-->
+            <script src="/js/snowstorm.js"></script>
         @endif
 
         {{-- Bootstrap --}}
