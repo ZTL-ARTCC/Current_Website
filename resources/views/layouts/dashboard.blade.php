@@ -35,6 +35,9 @@
             })
         </script>
 
+        {{-- Custom Headers --}}
+        @stack('custom_header')
+
         {{-- Title --}}
         <title>
             @yield('title') | ZTL ARTCC

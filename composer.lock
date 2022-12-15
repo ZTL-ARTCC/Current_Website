@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bcd96784437ee4b0672ee7ac04b749fa",
+    "content-hash": "67bd4de1805b5db2dfcf17a40de3ef10",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2224,6 +2224,52 @@
                 "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.1"
             },
             "time": "2021-12-22T16:42:49+00:00"
+        },
+        {
+            "name": "mitoteam/jpgraph",
+            "version": "10.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mitoteam/jpgraph.git",
+                "reference": "9ce4d106a89f120c7e220ea22205ef7956a7027b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mitoteam/jpgraph/zipball/9ce4d106a89f120c7e220ea22205ef7956a7027b",
+                "reference": "9ce4d106a89f120c7e220ea22205ef7956a7027b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5 <=8.2"
+            },
+            "replace": {
+                "jpgraph/jpgraph": "4.0.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/MtJpGraph.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "QPL-1.0"
+            ],
+            "authors": [
+                {
+                    "name": "JpGraph team"
+                }
+            ],
+            "description": "JpGraph library composer package with PHP 8.2 support",
+            "homepage": "https://github.com/mitoteam/jpgraph",
+            "keywords": [
+                "jpgraph"
+            ],
+            "support": {
+                "issues": "https://github.com/mitoteam/jpgraph/issues",
+                "source": "https://github.com/mitoteam/jpgraph/tree/10.2.4"
+            },
+            "time": "2022-09-15T05:57:43+00:00"
         },
         {
             "name": "monolog/monolog",
