@@ -15,7 +15,6 @@ Training Statistics
     &nbsp;
 </div>
 <br>
-@if(Auth::user()->isAbleTo('snrStaff'))
 <div class="container">
     <div class="row">
         <div class="col-sm-2 col-xs-12">
@@ -91,8 +90,5 @@ Training Statistics
         </div>
     </div>
 </div>
-@else
-<h3>Insufficient permissions to view this page</h3>
-@endif
 {{Html::script(asset('js/helpers.js'))}}
 @endsection

@@ -36,7 +36,7 @@
         </script>
 
         {{-- Custom Headers --}}
-            @stack('custom_header')
+        @stack('custom_header')
 
         {{-- Title --}}
         <title>
