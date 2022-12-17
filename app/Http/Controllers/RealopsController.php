@@ -12,7 +12,30 @@ use Throwable;
 
 class RealopsController extends Controller {
     public function index() {
-        return view('site.realops');
+        $flights = RealopsFlight::orderBy('dep_time', 'ASC')->paginate(20);
+        return view('site.realops')->with('flights', $flights);
+    }
+
+    public function bid($id) {
+        $flight = RealopsFlight::find($id);
+
+        if (! $flight) {
+            return redirect()->back()->with('error', 'That flight doesn\'t exist');
+        }
+        
+        $flight->assignPilotToFlight(auth()->guard()->id());
+        return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
+    }
+
+    public function cancelBid() {
+        $flight = auth()->guard('realops')->user()->assigned_flight;
+
+        if (! $flight) {
+            return redirect()->back()->with('error', 'You have not yet bid for a flight');
+        }
+        
+        $flight->removeAssignedPilot();
+        return redirect()->back()->with('success', 'You have removed your bid successfully');
     }
 
     public function adminIndex() {
