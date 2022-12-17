@@ -19,6 +19,8 @@
         "laravelcollective/html": "^6.0",
         "league/oauth2-client": "^2.4",
         "mitoteam/jpgraph": "^10.2",
+        "maatwebsite/excel": "^3.1",
+        "psr/simple-cache": "^2.0",
         "santigarcor/laratrust": "^7.0"
     },
     "require-dev": {
