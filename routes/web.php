@@ -36,11 +36,11 @@ Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
 Route::get('/asset/{slug}', 'FrontController@showPermalink');
-/*
-Route::get('/ssd', function () {
-    return '<img src=\'/photos/ross_patrick.png\' style=\'max-height:100%\' />';
+
+Route::prefix('realops')->middleware('toggle:realops')->group(function () {
+    Route::get('/', 'RealopsController@index');
+    Route::get('/login', 'Auth\LoginController@realopsLogin')->middleware('guest:realops');
 });
-*/
 /*
 *   End Front Page Stuff
 */
@@ -50,8 +50,8 @@ Route::get('/ssd', function () {
 */
 Route::get('/controllers/roster', 'RosterController@index');
 Route::get('/controllers/staff', 'RosterController@staffIndex');
-Route::get('/login', 'Auth\LoginController@login')->middleware('guest')->name('login');
-Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('logout');
+Route::get('/login', 'Auth\LoginController@login')->name('login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 /*
 *   End Roster
 */
@@ -250,6 +250,17 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/view/{id}', 'AdminDash@viewIncidentReport');
             Route::get('/archive/{id}', 'AdminDash@archiveIncident');
             Route::get('/delete/{id}', 'AdminDash@deleteIncident');
+        });
+        Route::prefix('realops')->middleware('toggle:realops')->middleware('permission:staff')->group(function () {
+            Route::get('/', 'RealopsController@adminIndex');
+            Route::get('/create', 'RealopsController@showCreateFlight');
+            Route::post('/create', 'RealopsController@createFlight');
+            Route::post('/create/bulk', 'RealopsController@bulkUploadFlights');
+            Route::get('/edit/{id}', 'RealopsController@showEditFlight');
+            Route::put('/edit/{id}', 'RealopsController@editFlight');
+            Route::get('/{id}', 'RealopsController@deleteFlight');
+            Route::put('/assign-pilot/{id}', 'RealopsController@assignPilotToFlight');
+            Route::get('/remove-pilot/{id}', 'RealopsController@removePilotFromFlight');
         });
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@showFeatureToggles');
