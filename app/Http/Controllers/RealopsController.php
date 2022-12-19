@@ -87,7 +87,8 @@ class RealopsController extends Controller {
             'flight_date' => 'required|date_format:m/d/Y',
             'dep_time' => 'required|date_format:H:i',
             'dep_airport' => 'required',
-            'arr_airport' => 'required'
+            'arr_airport' => 'required',
+            'est_arr_time' => 'date_format:H:i|nullable',
         ]);
 
         $flight = new RealopsFlight;
@@ -96,6 +97,7 @@ class RealopsController extends Controller {
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
+        $flight->est_arr_time = $request->input('est_arr_time');
         $flight->route = $request->input('route');
         $flight->save();
 
@@ -124,7 +126,8 @@ class RealopsController extends Controller {
             'flight_date' => 'required|date_format:m/d/Y',
             'dep_time' => 'required|date_format:H:i',
             'dep_airport' => 'required',
-            'arr_airport' => 'required'
+            'arr_airport' => 'required',
+            'est_arr_time' => 'date_format:H:i|nullable',
         ]);
 
         $flight->flight_number = $request->input('flight_number');
@@ -132,6 +135,7 @@ class RealopsController extends Controller {
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
+        $flight->est_arr_time = $request->input('est_arr_time');
         $flight->route = $request->input('route');
         $flight->save();
 

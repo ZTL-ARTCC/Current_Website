@@ -32,13 +32,17 @@
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     {!! Form::label('dep_airport', 'Departure Airport') !!}
                     {!! Form::text('dep_airport', null, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     {!! Form::label('arr_airport', 'Arrival Airport') !!}
                     {!! Form::text('arr_airport', null, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
+                </div>
+                <div class="col-sm-4">
+                    {!! Form::label('est_arr_time', 'Estimated Arrival Time') !!}
+                    {!! Form::text('est_arr_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional']) !!}
                 </div>
             </div>
         </div>

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->time('dep_time');
             $table->string('dep_airport');
             $table->string('arr_airport');
+            $table->time('est_arr_time')->nullable();
             $table->text('route')->nullable();
             $table->timestamps();
         });
