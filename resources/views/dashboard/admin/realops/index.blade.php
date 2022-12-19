@@ -26,9 +26,10 @@
             <th scope="col">Departure Time</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
+            <th scope="col">Estimated Arrival Time</th>
             <th scope="col">Route</th>
             <th scope="col">Assigned Pilot</th>
-            <th scope="col">Actions</th>
+            <th scope="col" style="width: 15%">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -39,6 +40,11 @@
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
+                @if($f->est_arr_time)
+                    <td>{{ $f->est_arr_time_formatted }}</td>
+                @else
+                    <td>N/A</td>
+                @endif
                 @if($f->route)
                     <td>{{ $f->route }}</td>
                 @else

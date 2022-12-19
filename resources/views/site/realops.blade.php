@@ -28,6 +28,7 @@ Realops
             <th scope="col">Departure Time</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
+            <th scope="col">Estimated Arrival Time</th>
             <th scope="col">Route</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
@@ -43,6 +44,11 @@ Realops
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
+                @if($f->est_arr_time)
+                    <td>{{ $f->est_arr_time_formatted }}</td>
+                @else
+                    <td>N/A</td>
+                @endif
                 @if($f->route)
                     <td>{{ $f->route }}</td>
                 @else
@@ -54,7 +60,7 @@ Realops
                             <p>
                                 <span class="badge badge-success">Assigned to You</span>
                                 @unlesstoggle('realops_bidding')
-                                    <a href="/realops/cancel-bid" class="btn btn-danger btn-sm float-right">Cancel Bid</a>
+                                    <a href="/realops/cancel-bid" class="btn btn-danger btn-sm d-block mt-2">Cancel Bid</a>
                                 @endtoggle
                             </p>
                         @else
