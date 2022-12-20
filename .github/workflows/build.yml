@@ -29,6 +29,7 @@ jobs:
       - name: Setup composer and install packages
         uses: php-actions/composer@v6
         with:
+          php_version: 8.0.22
           php_extensions: gd zip
 
       - name: Setup node
@@ -64,6 +65,7 @@ jobs:
       - name: Setup composer and install packages
         uses: php-actions/composer@v6
         with:
+          php_version: 8.0.22
           php_extensions: gd zip
           dev: no
 
