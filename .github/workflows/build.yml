@@ -28,6 +28,8 @@ jobs:
 
       - name: Setup composer and install packages
         uses: php-actions/composer@v6
+        with:
+          php_extensions: gd zip
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -62,6 +64,7 @@ jobs:
       - name: Setup composer and install packages
         uses: php-actions/composer@v6
         with:
+          php_extensions: gd zip
           dev: no
 
       - name: Setup node
