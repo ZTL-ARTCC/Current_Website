@@ -12,9 +12,14 @@ use Mail;
 use Throwable;
 
 class RealopsController extends Controller {
-    public function index() {
-        $flights = RealopsFlight::orderBy('dep_time', 'ASC')->paginate(20);
-        return view('site.realops')->with('flights', $flights);
+    public function index(Request $request) {
+        $airport_filter = $request->get('filter');
+        $flights = RealopsFlight::where('dep_airport', 'like', '%' . $airport_filter . '%')
+                                ->orWhere('arr_airport', 'like', '%' . $airport_filter . '%')
+                                ->orderBy('dep_time', 'ASC')
+                                ->paginate(20);
+
+        return view('site.realops')->with('flights', $flights)->with('airport_filter', $airport_filter);
     }
 
     public function bid($id) {

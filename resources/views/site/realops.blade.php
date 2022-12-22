@@ -20,6 +20,22 @@ Realops
 <div class="container">
 <p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilot to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>
 
+<div class="row">
+    <div class="col-md-8">
+        <h3>Schedule</h3>
+    </div>
+    <div class="col-md-4">
+    {!! Form::open(['action' => 'RealopsController@index', 'method' => 'GET']) !!}
+        <div class="mb-3 input-group">
+            {!! Form::text('filter', $airport_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Airport']) !!}
+            <div class="input-group-append">
+                <button class="btn btn-outline-success" type="submit">Filter</button>
+            </div>
+        </div>
+    {!! Form::close() !!}
+    </div>
+</div>
+@if(count($flights) > 0)
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -93,7 +109,16 @@ Realops
     </tbody>
 </table>
 <div class="float-right">
-    {!! $flights->links() !!}
+    {!! $flights->appends(request()->query())->links() !!}
 </div>
+@else
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>No Flights</h4>
+            <p>There are no flights to display matching that search criteria. Please try adjusting your airport filter or wait for more flights to be added</p>
+            <h4 class="fa fa-plane"></h4>
+        </div>
+    </div>
+@endif
 </div>
 @endsection
