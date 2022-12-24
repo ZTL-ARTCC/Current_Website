@@ -41,10 +41,10 @@ Realops
         <tr>
             <th scope="col">Date</td>
             <th scope="col">Flight Number</th>
-            <th scope="col">Departure Time</th>
+            <th scope="col">Departure Time (ET)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Arrival Time</th>
+            <th scope="col">Estimated Arrival Time (ET)</th>
             <th scope="col">Route</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
