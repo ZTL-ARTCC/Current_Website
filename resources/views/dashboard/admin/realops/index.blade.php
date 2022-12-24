@@ -23,10 +23,10 @@
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Flight Number</th>
-            <th scope="col">Departure Time</th>
+            <th scope="col">Departure Time (ET)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Arrival Time</th>
+            <th scope="col">Estimated Arrival Time (ET)</th>
             <th scope="col">Route</th>
             <th scope="col">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
