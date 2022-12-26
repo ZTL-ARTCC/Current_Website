@@ -16,6 +16,7 @@ class RealopsController extends Controller {
         $airport_filter = $request->get('filter');
         $flights = RealopsFlight::where('dep_airport', 'like', '%' . $airport_filter . '%')
                                 ->orWhere('arr_airport', 'like', '%' . $airport_filter . '%')
+                                ->orderBy('flight_date', 'ASC')
                                 ->orderBy('dep_time', 'ASC')
                                 ->paginate(20);
 
