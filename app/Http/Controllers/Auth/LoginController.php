@@ -67,9 +67,19 @@ class LoginController extends Controller {
 
     protected function vatusaAuth($resourceOwner, $accessToken) {
         $client = new Client();
-        $result = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'));
+        $result = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
+        $realops_toggle_enabled = toggleEnabled('realops');
 
-        if (! $result) {
+        if (! $result || $result->getStatusCode() != 200) {
+            if ($realops_toggle_enabled) {
+                return $this->externalRealopsLogin(
+                    $resourceOwner->data->cid,
+                    $resourceOwner->data->personal->name_first,
+                    $resourceOwner->data->personal->name_last,
+                    $resourceOwner->data->personal->email
+                );
+            }
+
             return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
         }
 
@@ -82,13 +92,12 @@ class LoginController extends Controller {
         $res = $resu['data'];
         $userstatuscheck = User::find($res['cid']);
         
-        $realops_toggle_enabled = toggleEnabled('realops');
         if (! $realops_toggle_enabled && ! $userstatuscheck) {
             return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
         } elseif (! $realops_toggle_enabled && $userstatuscheck->status == 2) {
             return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
         } elseif (! $userstatuscheck || $userstatuscheck->status == 2) {
-            return $this->externalRealopsLogin($res);
+            return $this->externalRealopsLogin($res['cid'], $res['fname'], $res['lname'], $res['email']);
         }
 
         $userstatuscheck->fname = $res['fname'];
@@ -163,16 +172,16 @@ class LoginController extends Controller {
         return $this->completeRealopsLogin($realops_pilot);
     }
 
-    private function externalRealopsLogin($data) {
-        $realops_pilot = RealopsPilot::find($data['cid']);
+    private function externalRealopsLogin($cid, $fname, $lname, $email) {
+        $realops_pilot = RealopsPilot::find($cid);
 
         if (! $realops_pilot) {
             $realops_pilot = new RealopsPilot;
         }
 
-        $realops_pilot->fname = $data['fname'];
-        $realops_pilot->lname = $data['lname'];
-        $realops_pilot->email = $data['email'];
+        $realops_pilot->fname = $fname;
+        $realops_pilot->lname = $lname;
+        $realops_pilot->email = $email;
         $realops_pilot->save();
 
         return $this->completeRealopsLogin($realops_pilot);
