@@ -389,7 +389,7 @@ class FrontController extends Controller {
         $feedback->status = 0;
         $feedback->save();
 
-        return redirect('/')->with('success', 'Thank you for the feedback! It has been recieved successfully.');
+        return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
 
     public function showFiles() {
