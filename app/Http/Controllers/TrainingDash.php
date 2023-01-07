@@ -223,25 +223,16 @@ class TrainingDash extends Controller {
         $client = new Client();
         $res = $client->request('GET', 'https://api.vatusa.net/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
         $academy = (string) $res->getBody();
-        $res = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $cid . '/exam/history?apikey=' . Config::get('vatusa.api_key'), $req_params);
-        $legacy = (string) $res->getBody();
         $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
         $academy = json_decode($academy, true);
-        $legacy = json_decode($legacy, true);
         $exam_names = array_keys($exams);
         foreach ($exam_names as $exam) {
-            if (array_key_exists($exam, $academy['data']) && count($academy['data'][$exam]) > 0) {
-                $exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
-                $exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
-                $exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
-            } else {
-                foreach ($legacy['data'] as $legacy_record) {
-                    if (is_numeric(stripos($legacy_record['exam_name'], $exam)) && ($legacy_record['passed'] == '1')) {
-                        $exams[$exam]['date'] = date("m/d/y", strtotime($legacy_record['date']));
-                        $exams[$exam]['success'] = $legacy_record['passed'];
-                        $exams[$exam]['grade'] = $legacy_record['score'];
-                    }
-                }
+            if(isset($academy['data'][$exam])) {
+                if (count($academy['data'][$exam]) > 0) {
+                    $exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
+                    $exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
+                    $exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
+                } 
             }
         }
         return $exams;
