@@ -44,59 +44,25 @@ Training Tickets
     @if($search_result != null)
 
     <hr>
-    <h5>Showing VATUSA Academy/Exam Status for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
-    <br>
-    <table class="table">
-        <tr>
-            @isset($exams['BASIC'])
-            @if($exams['BASIC']['success'] == 1)
-            <td class="table-success"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
-            @elseif($exams['BASIC']['success'] == 0)
-            <td class="table-danger"><strong>Basic:</strong> {{ $exams['BASIC']['date'] }} ({{$exams['BASIC']['grade'] }}%)</td>
+    <h5>Showing Training Data for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+    <div class="row">
+        <div class="col-sm-4">VATUSA Academy Exam Scores:</div>
+        @php ($examTypes = array('BASIC', 'S2', 'S3', 'C1'))
+        @foreach ($examTypes as $examType)
+        <div class="col-sm-2 text-white">
+            @isset($exams[$examType])
+            @if($exams[$examType]['success'] == 1)
+            <span class="badge bg-success"><strong>{{$examType}}:</strong> {{ $exams[$examType]['date'] }} ({{$exams[$examType]['grade'] }}%)</span>
+            @elseif($exams[$examType]['success'] == 0)
+            <span class="badge bg-danger"><strong>{{$examType}}:</strong> {{ $exams[$examType]['date'] }} ({{$exams[$examType]['grade'] }}%)</span>
             @else
-            <td class="table-secondary"><strong>Basic:</strong> no date</td>
+            <span class="badge bg-secondary"><strong>{{$examType}}:</strong> No date</span>
             @endif
             @endisset
-
-            @isset($exams['S2'])
-            @if($exams['S2']['success'] == 1)
-            <td class="table-success"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
-            @elseif($exams['S2']['success'] == 0)
-            <td class="table-danger"><strong>S2:</strong> {{ $exams['S2']['date'] }} ({{$exams['S2']['grade'] }}%)</td>
-            @else
-            <td class="table-secondary"><strong>S2:</strong> no date</td>
-            @endif
-            @endisset
-
-            @isset($exams['S3'])
-            @if($exams['S3']['success'] == 1)
-            <td class="table-success"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
-            @elseif($exams['S3']['success'] == 0)
-            <td class="table-danger"><strong>S3:</strong> {{ $exams['S3']['date'] }} ({{$exams['S3']['grade'] }}%)</td>
-            @else
-            <td class="table-secondary"><strong>S3:</strong> no date</td>
-            @endif
-            @endisset
-
-            @isset($exams['C1'])
-            @if($exams['C1']['success'] == 1)
-            <td class="table-success"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
-            @elseif($exams['C1']['success'] == 0)
-            <td class="table-danger"><strong>C1:</strong> {{ $exams['C1']['date'] }} ({{$exams['C1']['grade'] }}%)</td>
-            @else
-            <td class="table-secondary"><strong>C1:</strong> no date</td>
-            @endif
-            @endisset
-        </tr>
-    </table>
-
+        </div>
+        @endforeach
+    </div>
     <hr>
-    <h5>Showing Training Tickets for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
-    <br>
-
-
-
-
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" href="#s1" role="tab" data-toggle="tab" style="color:black">S1</a>
