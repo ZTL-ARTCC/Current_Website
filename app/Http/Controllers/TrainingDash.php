@@ -227,12 +227,12 @@ class TrainingDash extends Controller {
         $academy = json_decode($academy, true);
         $exam_names = array_keys($exams);
         foreach ($exam_names as $exam) {
-            if(isset($academy['data'][$exam])) {
+            if (isset($academy['data'][$exam])) {
                 if (count($academy['data'][$exam]) > 0) {
                     $exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
                     $exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
                     $exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
-                } 
+                }
             }
         }
         return $exams;
