@@ -102,33 +102,33 @@ Training Tickets
                     @foreach($tickets as $t)
                     <?php /*
                         @if($t->position > 6 && $t->position < 22)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
                             <td>{{ $t->position_name }}</td>
                             <td>{{ $t->type_name }}</td>
-							<td>{{ $t->session_name }}</td>
+                            <td>{{ $t->session_name }}</td>
                             <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                             <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                         </tr>
 
-                    @elseif(($t->position > 99 && $t->position < 103)||($t->position > 104 && $t->position < 107)) 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                    @elseif(($t->position > 99 && $t->position < 103)||($t->position > 104 && $t->position < 107))
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -185,33 +185,33 @@ Training Tickets
                     @foreach($tickets as $t)
                     <?php /*
                     @if($t->position > 21 && $t->position < 31)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
 
                     </tr>
 
-                @elseif(($t->position > 102 && $t->position < 105)||($t->position > 106 && $t->position < 114)) 
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                @elseif(($t->position > 102 && $t->position < 105)||($t->position > 106 && $t->position < 114))
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
                     <td>{{ $t->type_name }}</td>
-					<td>{{ $t->session_name }}</td>
+                    <td>{{ $t->session_name }}</td>
                     <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -261,16 +261,16 @@ Training Tickets
                     @foreach($tickets as $t)
                     <?php /*
                       @if($t->position > 30 && $t->position < 42)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -278,16 +278,16 @@ Training Tickets
                     </tr>
 
                 @elseif(($t->position > 113 && $t->position < 120) || ($t->position == 123))
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
                     <td>{{ $t->type_name }}</td>
-					<td>{{ $t->session_name }}</td>
+                    <td>{{ $t->session_name }}</td>
                     <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -337,16 +337,16 @@ Training Tickets
                     @foreach($tickets as $t)
                     <?php /*
                       @if($t->position > 41 && $t->position < 48)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -354,16 +354,16 @@ Training Tickets
                     </tr>
 
                 @elseif($t->position > 119 && $t->position < 122)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                     <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                     <td>{{ $t->trainer_name }}</td>
                     <td>{{ $t->position_name }}</td>
                     <td>{{ $t->type_name }}</td>
-					<td>{{ $t->session_name }}</td>
+                    <td>{{ $t->session_name }}</td>
                     <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
@@ -414,32 +414,32 @@ Training Tickets
                     @foreach($tickets as $t)
                     <?php /*
                     @if($t->position < 7)
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                             <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                             <td>{{ $t->trainer_name }}</td>
                             <td>{{ $t->position_name }}</td>
                             <td>{{ $t->type_name }}</td>
-							<td>{{ $t->session_name }}</td>
+                            <td>{{ $t->session_name }}</td>
                             <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                             <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                             <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                         </tr>
-                    
+
                     @elseif(($t->position > 121)&&($t->position != 123))
-						@if($t->cert)
-							<tr class="table-success">
-						@else
-							<tr>
-						@endif
+                        @if($t->cert)
+                            <tr class="table-success">
+                        @else
+                            <tr>
+                        @endif
                         <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
                         <td>{{ $t->trainer_name }}</td>
                         <td>{{ $t->position_name }}</td>
                         <td>{{ $t->type_name }}</td>
-						<td>{{ $t->session_name }}</td>
+                        <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
