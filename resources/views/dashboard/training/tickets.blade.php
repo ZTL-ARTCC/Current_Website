@@ -52,11 +52,11 @@ Training Tickets
         <div class="col-sm-2 text-white">
             @isset($exams[$examType])
             @if($exams[$examType]['success'] == 1)
-            <span class="badge bg-success"><strong>{{$examType}}:</strong> {{ $exams[$examType]['date'] }} ({{$exams[$examType]['grade'] }}%)</span>
+            <span class="badge bg-success"><strong>{{ $examType }}:</strong> {{ $exams[$examType]['date'] }} ({{ $exams[$examType]['grade'] }}%)</span>
             @elseif($exams[$examType]['success'] == 0)
-            <span class="badge bg-danger"><strong>{{$examType}}:</strong> {{ $exams[$examType]['date'] }} ({{$exams[$examType]['grade'] }}%)</span>
+            <span class="badge bg-danger"><strong>{{ $examType }}:</strong> {{ $exams[$examType]['date'] }} ({{ $exams[$examType]['grade'] }}%)</span>
             @else
-            <span class="badge bg-secondary"><strong>{{$examType}}:</strong> No date</span>
+            <span class="badge bg-secondary"><strong>{{ $examType }}:</strong> No date</span>
             @endif
             @endisset
         </div>
