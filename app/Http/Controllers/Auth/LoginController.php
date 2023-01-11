@@ -177,6 +177,7 @@ class LoginController extends Controller {
 
         if (! $realops_pilot) {
             $realops_pilot = new RealopsPilot;
+            $realops_pilot->id = $cid;
         }
 
         $realops_pilot->fname = $fname;
