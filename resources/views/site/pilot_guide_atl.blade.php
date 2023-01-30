@@ -96,7 +96,7 @@ return $badge;
                                 <ul>
                                     <li>Gates D1/D1A/D3: Frontier</li>
                                     <li>Gates D2/D4: Spirit</li>
-                                    <li>Gates D23-D25: American</li>
+                                    <li>Gates D21/D23/D24/D25: American</li>
                                     <li>All other gates: Delta connection</li>
                                 </ul>
                             </li>
