@@ -17,8 +17,13 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    {!! Form::label('flight_date', 'Date') !!}
-                    {!! Form::text('flight_date', $flight->flight_date_formatted, ['class' => 'form-control', 'placeholder' => 'MM/DD/YYYY - Required']) !!}
+                    {!! Form::label('flight_date', 'Date', ['class' => 'form-label']) !!}
+                    <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                        {!! Form::text('flight_date', $flight->flight_date_formatted, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('flight_number', 'Flight Number') !!}
@@ -54,4 +59,11 @@
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {!! Form::close() !!}
 </div>
+<script type="text/javascript">
+$(function () {
+    $('#datetimepicker').datetimepicker({
+        format: 'L'
+    });
+});
+</script>
 @endsection
