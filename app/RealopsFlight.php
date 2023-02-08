@@ -35,6 +35,10 @@ class RealopsFlight extends Model {
     }
 
     private function formatTime($time) {
+        if ($time == null) {
+            return null;
+        }
+
         $time_split = explode(':', $time);
         return $time_split[0] . ':' . $time_split[1];
     }
