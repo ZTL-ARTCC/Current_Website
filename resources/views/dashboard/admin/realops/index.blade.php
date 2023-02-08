@@ -54,6 +54,7 @@
                     <td>
                         <a href="/dashboard/admin/realops/remove-pilot/{{ $f->id }}" class="btn btn-danger btn-sm float-right" title="Unassign Pilot" data-toggle="tooltip"><i class="fas fa-times"></i></a>
                         {{ $f->assigned_pilot->full_name }}
+                        <br/><small>({{ $f->assigned_pilot->email }})</small>
                     </td>
                 @else
                     <td>N/A</td>
