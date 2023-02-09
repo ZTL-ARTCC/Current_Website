@@ -32,7 +32,7 @@ New Calendar Event/News
         </div>
         <div class="form-group">
             {!! Form::label('body', 'Additional Information') !!}
-            {!! Form::textArea('body', null, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Required']) !!}
+            {!! Form::textArea('body', null, ['class' => 'form-control text-editor', 'placeholder' => 'Required']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('type', 'Type of Post') !!}
@@ -52,9 +52,4 @@ New Calendar Event/News
         </div>
 </div>
 
-<!--<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>-->
-<script src={{ asset('ckeditor/ckeditor.js')}}></script>
-<script>
-    CKEDITOR.replace( 'article-ckeditor' );
-</script>
 @endsection
