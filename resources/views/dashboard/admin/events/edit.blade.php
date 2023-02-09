@@ -53,7 +53,7 @@ New Event
         </div>
         <div class="form-group">
             {!! Form::label('description', 'Event Description') !!}
-            {!! Form::textArea('description', $event->description, ['id' => 'article-ckeditor', 'class' => 'form-control']) !!}
+            {!! Form::textArea('description', $event->description, ['class' => 'form-control text-editor']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('banner', 'Upload Banner') !!}
@@ -63,12 +63,6 @@ New Event
         <a class="btn btn-danger" href="/dashboard/controllers/events">Cancel</a>
     {!! Form::close() !!}
 </div>
-
-<!--<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>-->
-<script src={{ asset('ckeditor/ckeditor.js')}}></script>
-<script>
-    CKEDITOR.replace( 'article-ckeditor' );
-</script>
 
 <script type="text/javascript">
 $(function () {
