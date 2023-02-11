@@ -54,7 +54,7 @@
     <body>
 
         {{-- Messages --}}
-        @include('inc.messages')
+        @include('inc.home_messages')
 
         {{-- Navbar --}}
         @include('inc.navbar')
