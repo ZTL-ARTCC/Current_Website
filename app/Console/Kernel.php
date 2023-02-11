@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
+        '\App\Console\Commands\VATUSAEventsUpdate',
     ];
 
     /**
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         $schedule->command('SoloCerts:UpdateSoloCerts')->daily();
         $schedule->command('RosterUpdate:UpdateRoster')->hourly();
+        $schedule->command('VATUSAEvents:Update')->hourly();
         $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
         $schedule->command('OnlineControllers:GetControllers')->everyMinute();
