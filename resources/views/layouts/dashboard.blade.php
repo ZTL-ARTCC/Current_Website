@@ -12,7 +12,6 @@
         {{-- Stylesheets --}}
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/js/app.js">
         <link rel="stylesheet" href="/css/Footer-white.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -27,6 +26,9 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+        {{-- Custom JS --}}
+        <script type="text/javascript" src="/js/app.js"><script>
 
         {{-- Tooltips --}}
         <script>
