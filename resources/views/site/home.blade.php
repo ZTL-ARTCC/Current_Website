@@ -26,16 +26,18 @@ Home
 			<div class="carousel-item @if ($loop->first) active @endif">
 				@if(Auth::check())
 					<a href="/dashboard/controllers/events/view/{{ $e->id }}">
+				@else
+					<a href="https://forums.vatusa.net/index.php?{{ $e->forum }}" target="_blank">
 				@endif
-                    <img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
-				@if(Auth::check())
-					</a>
-				@endif
+                <img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
+				</a>
             </div>
                 @endforeach
             @else
-			<div class="carousel-item">
-                <center><i><p>No events to show.</p></i></center>
+			<div class="carousel-item active">
+				<div class="d-block w-100 h-100 d-flex align-items-center bg-dark rounded" style="min-height:500px">
+                	<h5 class="text-light w-100 text-center">No events scheduled</br>Please check back soon!</h5>
+				</div>
 			</div>
             @endif
   </div>
