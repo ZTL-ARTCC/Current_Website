@@ -64,16 +64,10 @@
         </div>
         <div class="form-group">
             {!! Form::label('message', 'Message') !!}
-            {!! Form::textarea('message', null, ['id' => 'article-ckeditor', 'placeholder' => 'Message (Required)', 'class' => 'form-control']) !!}
+            {!! Form::textarea('message', null, ['placeholder' => 'Message (Required)', 'class' => 'form-control text-editor']) !!}
         </div>
         <button class="btn btn-success" type="submit">Send</button>
     {!! Form::close() !!}
 </div>
-
-<!--<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>-->
-<script src={{ asset('ckeditor/ckeditor.js')}}></script>
-<script>
-    CKEDITOR.replace( 'article-ckeditor' );
-</script>
 
 @endsection

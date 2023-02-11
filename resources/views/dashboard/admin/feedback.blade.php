@@ -43,8 +43,6 @@ Feedback Management
 
                                 <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
 
-                                <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
-
                                 <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                                 <td>{{ $f->created_at }}</td>
                                 <td>
