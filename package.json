@@ -29,6 +29,7 @@
         "test": "tests"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^36.0.1",
         "tempusdominus-bootstrap-4": "^5.39.2"
     }
 }
