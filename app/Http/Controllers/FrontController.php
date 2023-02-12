@@ -522,25 +522,24 @@ class FrontController extends Controller {
         $disk = Storage::disk('public');
         $filename = basename($e->banner_path);
         $banner_path = 'event_banners/';
-        if(!$disk->exists($banner_path . 'reduced/' . $filename)) {
+        $reduced_path = $banner_path . 'reduced/';
+        if(!$disk->exists($reduced_path . $filename)) {
             if($disk->exists($banner_path . $filename)) {
                 $path = $disk->path($banner_path . basename($e->banner_path));
                 $directory = dirname($disk->path($banner_path . $filename));
-                //dd('Path: ' . $path . ' File: ' . $filename . ' Directory: ' . $directory);
                 list($width, $height) = getimagesize($path);
-                $new_width = 1000; // No reason for these banners to be > 1500 px wide
+                $new_width = 1500; // No reason for these banners to be > 1500 px wide
                 $new_height = ($new_width / $width) * $height;
-                $image_resized = imagecreatetruecolor($new_width, $new_height);
-                $image = imagecreatefrompng($path);
-                imagecopyresized($image_resized, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-                imagepng($image_resized, $directory . '/reduced/' . $filename);
-                imagedestroy($image);
-                imagedestroy($image_resized);
+                $im = new \IMagick();
+                $im->readImage($path);
+                $im->resizeImage($new_width, $new_height, \Imagick::FILTER_LANCZOS, 0.9, true);
+                $im->writeImage($directory . '/reduced/' . $filename);
+                $im->destroy();
             }
         }
-        if($disk->exists($banner_path . 'reduced/' . $filename)) {
+        if($disk->exists($reduced_path . $filename)) {
             $directory = dirname($disk->path($banner_path . $filename));
-            $e->banner_path = '/storage/event_banners/reduced/' . $filename;
+            $e->banner_path = $disk->url($reduced_path . $filename);
         }
     }
 }
