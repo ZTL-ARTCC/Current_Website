@@ -1,9 +1,9 @@
 <footer id="myFooter" class="bg-secondary">
-    <div class="footer-social bg-secondary">
+    <div class="container footer-social bg-secondary">
         <p>Visit our partners:</p>
         <a href="http://www.vatstar.com/" target="_blank"><img width="200" src="/photos/partner-vatstar.png"></a> &nbsp;&nbsp;&nbsp; <a style="position: relative; top: -10px" href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="200" src="/photos/partner-ts.png"></a> &nbsp;&nbsp;&nbsp; <a style="position: relative; top: -10px" href="https://www.thepilotclub.org/" target="_blank"><img height="100" src="/photos/partner-tpc.png"></a>
         <br><br>
-        <p class="px-5">Thank you for visiting our website! The Virtual Atlanta ARTCC (vZTL) is a community of flight simulation enthusiasts providing air traffic control services on the VATSIM network. We take pride in fostering an immersive and enjoyable environment for controllers and pilots. While we occupy the same geographic area in our network coverage, we are not affiliated with the real-world ZTL ARTCC or FAA.</p>
+        <p class="px-5 text-white border border-dark rounded">Thank you for visiting our website! The Virtual Atlanta ARTCC (vZTL) is a community of flight simulation enthusiasts providing air traffic control services on the VATSIM network. We take pride in fostering an immersive and enjoyable environment for controllers and pilots. While we occupy the same geographic area in our network coverage, we are not affiliated with the real-world ZTL ARTCC or FAA.</p>
         @if(Carbon\Carbon::now()->month == 12)
             <button class="btn btn-dark btn-sm" onclick="snowStorm.stop();return false">Stop Snow</button>
         @endif
