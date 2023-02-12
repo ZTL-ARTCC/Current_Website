@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 use SimpleXMLElement;
 
@@ -82,6 +83,7 @@ class FrontController extends Controller {
             return strtotime($e->date);
         });
         foreach($events as $e) {
+            $this->reduceEventBanner($e);
             $e->forum = 'board=8.0';
             if(is_numeric($e->id_topic)) {
                 $e->forum = 'topic=' . $e->id_topic;
@@ -514,5 +516,31 @@ class FrontController extends Controller {
         
         return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)->with('controllers_update', $controllers_update)
         ->with('diag', $diag)->with('aaup', $aaup);
+    }
+
+    private function reduceEventBanner(&$e) {
+        $disk = Storage::disk('public');
+        $filename = basename($e->banner_path);
+        $banner_path = 'event_banners/';
+        if(!$disk->exists($banner_path . 'reduced/' . $filename)) {
+            if($disk->exists($banner_path . $filename)) {
+                $path = $disk->path($banner_path . basename($e->banner_path));
+                $directory = dirname($disk->path($banner_path . $filename));
+                //dd('Path: ' . $path . ' File: ' . $filename . ' Directory: ' . $directory);
+                list($width, $height) = getimagesize($path);
+                $new_width = 1000; // No reason for these banners to be > 1500 px wide
+                $new_height = ($new_width / $width) * $height;
+                $image_resized = imagecreatetruecolor($new_width, $new_height);
+                $image = imagecreatefrompng($path);
+                imagecopyresized($image_resized, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+                imagepng($image_resized, $directory . '/reduced/' . $filename);
+                imagedestroy($image);
+                imagedestroy($image_resized);
+            }
+        }
+        if($disk->exists($banner_path . 'reduced/' . $filename)) {
+            $directory = dirname($disk->path($banner_path . $filename));
+            $e->banner_path = '/storage/event_banners/reduced/' . $filename;
+        }
     }
 }
