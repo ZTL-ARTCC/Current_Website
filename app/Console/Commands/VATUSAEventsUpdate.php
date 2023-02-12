@@ -39,23 +39,22 @@ class VATUSAEventsUpdate extends Command {
      * @return mixed
      */
     public function handle() {
-        $vatusa_events = array();
+        $vatusa_events = [];
         $vatusa_json = $this->getEvents();
-        if(!is_array($vatusa_events)) {
+        if (!is_array($vatusa_events)) {
             return null;
         }
-        foreach($vatusa_json as $vatusa_item) {
+        foreach ($vatusa_json as $vatusa_item) {
             $vatusa_events[$vatusa_item['id_topic']] = $vatusa_item['title'];
         }
         $now = Carbon::now();
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
         });
-        foreach($events as $e) {
-            if(in_array($e->name, $vatusa_events)) {
+        foreach ($events as $e) {
+            if (in_array($e->name, $vatusa_events)) {
                 $e->id_topic = array_search($e->name, $vatusa_events);
-            }
-            else {
+            } else {
                 $e->id_topic = null;
             }
             $e->save();
@@ -66,7 +65,7 @@ class VATUSAEventsUpdate extends Command {
         $client = new Client();
         $res = $client->request('GET', $this->apiEndpoint . '100', ['http_errors' => false]);
         $data = json_decode($res->getBody(), true);
-        if(isset($data['data'])) {
+        if (isset($data['data'])) {
             $data = $data['data'];
         }
         return $data;

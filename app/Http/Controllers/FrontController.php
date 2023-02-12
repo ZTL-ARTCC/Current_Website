@@ -12,7 +12,6 @@ use App\Feedback;
 use App\File;
 use App\Metar;
 use App\Overflight;
-use App\OverflightUpdate;
 use App\Scenery;
 use App\User;
 use App\Visitor;
@@ -82,10 +81,10 @@ class FrontController extends Controller {
         })->sortBy(function ($e) {
             return strtotime($e->date);
         });
-        foreach($events as $e) {
+        foreach ($events as $e) {
             $this->reduceEventBanner($e);
             $e->forum = 'board=8.0';
-            if(is_numeric($e->id_topic)) {
+            if (is_numeric($e->id_topic)) {
                 $e->forum = 'topic=' . $e->id_topic;
             }
         }
@@ -523,8 +522,8 @@ class FrontController extends Controller {
         $filename = basename($e->banner_path);
         $banner_path = 'event_banners/';
         $reduced_path = $banner_path . 'reduced/';
-        if(!$disk->exists($reduced_path . $filename)) {
-            if($disk->exists($banner_path . $filename)) {
+        if (!$disk->exists($reduced_path . $filename)) {
+            if ($disk->exists($banner_path . $filename)) {
                 $path = $disk->path($banner_path . basename($e->banner_path));
                 $directory = dirname($disk->path($banner_path . $filename));
                 list($width, $height) = getimagesize($path);
@@ -537,7 +536,7 @@ class FrontController extends Controller {
                 $im->destroy();
             }
         }
-        if($disk->exists($reduced_path . $filename)) {
+        if ($disk->exists($reduced_path . $filename)) {
             $directory = dirname($disk->path($banner_path . $filename));
             $e->banner_path = $disk->url($reduced_path . $filename);
         }
