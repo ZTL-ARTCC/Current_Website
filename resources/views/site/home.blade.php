@@ -56,21 +56,30 @@ $('.carousel').carousel({
 })	
 </script>	
 <style>
-.airspace_status {
+
+.info_card {
 	transition:1s
 }
-.airspace_status:hover {
+.info_card:hover {
 	transform:scale(1.05);
-	background-image:url("/photos/asx_bg.png");
 	background-repeat:no-repeat;
 	background-size:cover;
 	background-color:red;
+}
+.airspace_status:hover {
+	background-image:url("/photos/asx_bg.png");
+}
+.weather_status:hover {
+	background-image:url("/photos/atl_weather.png");
+}
+.news_calendar:hover {
+	background-image:url("/photos/atl_newscalendar.png");
 }
 </style>
 		</div>
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col mt-lg-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white airspace_status" onclick="$('#displayAsx').modal('toggle');">
+				<div class="col mt-lg-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white info_card airspace_status" onclick="$('#displayAsx').modal('toggle');">
 					<div class="row"><div class="col"><h4 class="pb-0 mb-0">Airspace Status</h4><span class="text-secondary pt-0 mt-0">Click for map</span></div></div>
 					<div class="row">
 						<div class="col-auto">
@@ -113,7 +122,7 @@ $('.carousel').carousel({
 				</div>
 			</div>
 			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col m-1 p-2 rounded bg-dark text-white">
+				<div class="col m-1 p-2 rounded bg-dark text-white info_card weather_status">
 					<div class="row"><div class="col-auto"><h4>Weather</h4></div></div>
 						<div class="row">
 						<div class="col-auto">
@@ -140,8 +149,8 @@ $('.carousel').carousel({
 				</div>
 			</div>
 			<div class="row px-2 pr-md-3 pl-md-0">
-				<div class="col m-1 p-2 rounded bg-dark text-white">
-					<h4>News</h4>
+				<div class="col m-1 p-2 rounded bg-dark text-white info_card news_calendar" onclick="$('#displayNewsCalendar').modal('toggle');">
+					<h4>News</h4><span class="text-secondary pt-0 mt-0">Click for details</span>
 					@if(count($news) > 0)
 						@foreach($news as $c)
 							<p>{{ $c->date }} - <b>{{ $c->title }}</b></p>
@@ -172,6 +181,42 @@ $('.carousel').carousel({
           <span aria-hidden="true">&times;</span>
         </button>
         <embed src="https://ids.ztlartcc.org/asx#dispNode" frameborder="0" style="height:85vh; width:85vw">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="displayNewsCalendar" tabindex="-1" role="dialog" aria-labelledby="displayNews" aria-hidden="true">
+  <div class="modal-dialog" style="height:50vh; max-width:50vw" role="document">
+    <div class="modal-content bg-secondary py-1">
+      <div class="modal-body">
+        <button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+		<h4 class="text-white"><i class="fas fa-newspaper"></i>&nbsp;News</h4>
+		@if(count($news) > 0)
+			@foreach($news as $c)
+				<h5 class="text-light"><u>{{ $c->title }}</u></h5>
+				<p class="text-light">
+					{!! $c->body !!}
+					Posted by: {{ App\User::find($c->created_by)->full_name }} at {{ $c->created_at }}								
+				</p>
+			@endforeach
+		@else
+			<center><i><p>No news to show.</p></i></center>
+		@endif
+		<hr>
+		<h4 class="text-white"><i class="fas fa-calendar"></i>&nbsp;Calendar</h4>
+		@if(count($calendar) > 0)
+			@foreach($calendar as $c)
+			<h5 class="text-light"><u>{{ $c->title }}</u></h5>
+				<p class="text-light">
+					{!! $c->body !!}
+					Posted by: {{ App\User::find($c->created_by)->full_name }} at {{ $c->created_at }}								
+				</p>
+			@endforeach
+		@else
+			<center><i><p>No calendar events to show.</p></i></center>
+		@endif
       </div>
     </div>
   </div>
