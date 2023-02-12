@@ -355,7 +355,7 @@ class ControllerDash extends Controller {
                 return strtotime($e->date);
             });
         }
-        foreach($events as $e) {
+        foreach ($events as $e) {
             $this->reduceEventBanner($e);
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
@@ -685,8 +685,8 @@ class ControllerDash extends Controller {
         $filename = basename($e->banner_path);
         $banner_path = 'event_banners/';
         $reduced_path = $banner_path . 'reduced/';
-        if(!$disk->exists($reduced_path . $filename)) {
-            if($disk->exists($banner_path . $filename)) {
+        if (!$disk->exists($reduced_path . $filename)) {
+            if ($disk->exists($banner_path . $filename)) {
                 $path = $disk->path($banner_path . basename($e->banner_path));
                 $directory = dirname($disk->path($banner_path . $filename));
                 list($width, $height) = getimagesize($path);
@@ -699,7 +699,7 @@ class ControllerDash extends Controller {
                 $im->destroy();
             }
         }
-        if($disk->exists($reduced_path . $filename)) {
+        if ($disk->exists($reduced_path . $filename)) {
             $directory = dirname($disk->path($banner_path . $filename));
             $e->banner_path = $disk->url($reduced_path . $filename);
         }
