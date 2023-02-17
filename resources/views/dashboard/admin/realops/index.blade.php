@@ -28,7 +28,7 @@
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Arrival Time (ET)</th>
             <th scope="col">Route</th>
-            <th scope="col">Assigned Pilot</th>
+            <th scope="col" colspan="2">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
         </tr>
     </thead>
@@ -52,11 +52,15 @@
                 @endif
                 @if($f->assigned_pilot)
                     <td>
-                        <a href="/dashboard/admin/realops/remove-pilot/{{ $f->id }}" class="btn btn-danger btn-sm float-right" title="Unassign Pilot" data-toggle="tooltip"><i class="fas fa-times"></i></a>
                         {{ $f->assigned_pilot->full_name }}
+                        <br/>
+                        <span class="small">({{ $f->assigned_pilot->email }})</span>
+                    </td>
+                    <td>
+                        <a href="/dashboard/admin/realops/remove-pilot/{{ $f->id }}" class="btn btn-danger btn-sm float-right" title="Unassign Pilot" data-toggle="tooltip"><i class="fas fa-times"></i></a>
                     </td>
                 @else
-                    <td>N/A</td>
+                    <td colspan="2">N/A</td>
                 @endif
                 <td>
                 <a href="/dashboard/admin/realops/edit/{{ $f->id }}" class="btn btn-warning btn-sm float-left mr-2" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
