@@ -55,30 +55,6 @@ Home
 					interval: 5000 // delay time ms
 				})
 			</script>
-			<style>
-				.info_card {
-					transition: 1s
-				}
-
-				.info_card:hover {
-					transform: scale(1.05);
-					background-repeat: no-repeat;
-					background-size: cover;
-					background-color: red;
-				}
-
-				.airspace_status:hover {
-					background-image: url("/photos/asx_bg.png");
-				}
-
-				.weather_status:hover {
-					background-image: url("/photos/atl_weather.png");
-				}
-
-				.news_calendar:hover {
-					background-image: url("/photos/atl_newscalendar.png");
-				}
-			</style>
 		</div>
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
