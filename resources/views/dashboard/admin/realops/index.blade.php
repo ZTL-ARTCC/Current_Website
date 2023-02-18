@@ -15,7 +15,10 @@
 <div class="mb-4">
     <a href="/dashboard/admin/realops/create" class="btn btn-success mr-2">Add Flight</a>
     <span data-toggle="modal" data-target="#upload">
-        <button type="button" class="btn btn-warning" data-toggle="tooltip">Bulk Upload Flights</button>
+        <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
+    </span>
+    <span data-toggle="modal" data-target="#dump">
+        <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
     </span>
 </div>
 <table class="table table-bordered table-striped">
@@ -113,9 +116,34 @@
             <div class="modal-body">
                 {!! Form::label('file', 'Upload CSV File of Flights') !!}
                 {!! Form::file('file', ['class' => 'form-control', 'accept' => '.csv']) !!}
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-success">Upload</button>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dump" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dump all Realops Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {!! Form::open(['action' => 'RealopsController@dumpData']) !!}
+            @csrf
+            <div class="modal-body">
+                <p>Danger zone! This will dump all realops data and there is no way to reverse this action. Type <b>confirm - dump all</b> to proceed.</p>
+                {!! Form::text('confirm_text', null, ['class' => 'form-control', 'placeholder' => 'confirm - dump all']) !!}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button action="submit" class="btn btn-danger">Continue</button>
             </div>
             {!! Form::close() !!}
         </div>
