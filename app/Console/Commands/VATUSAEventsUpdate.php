@@ -42,7 +42,7 @@ class VATUSAEventsUpdate extends Command {
         $vatusa_events = [];
         $vatusa_json = $this->getEvents();
         if (!is_array($vatusa_events)) {
-            return null;
+            return;
         }
         foreach ($vatusa_json as $vatusa_item) {
             $vatusa_events[$vatusa_item['id_topic']] = $vatusa_item['title'];
