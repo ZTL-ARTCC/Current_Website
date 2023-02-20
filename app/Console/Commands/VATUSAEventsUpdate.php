@@ -47,10 +47,7 @@ class VATUSAEventsUpdate extends Command {
         foreach ($vatusa_json as $vatusa_item) {
             $vatusa_events[$vatusa_item['id_topic']] = $vatusa_item['title'];
         }
-        $now = Carbon::now();
-        $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
-            return strtotime($e->date.' '.$e->start_time) > strtotime($now);
-        });
+        $events = Event::fetchVisibleEvents();
         foreach ($events as $e) {
             if (in_array($e->name, $vatusa_events)) {
                 $e->id_topic = array_search($e->name, $vatusa_events);
