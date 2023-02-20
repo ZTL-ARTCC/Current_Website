@@ -77,7 +77,7 @@ class FrontController extends Controller {
 
         $events = Event::fetchVisibleEvents();
         foreach ($events as $e) {
-            Event::reduceEventBanner($e);
+            $e->banner_path = $e->displayBannerPath();
             $e->forum = 'board=8.0';
             if (is_numeric($e->id_topic)) {
                 $e->forum = 'topic=' . $e->id_topic;

@@ -355,7 +355,7 @@ class ControllerDash extends Controller {
             });
         }
         foreach ($events as $e) {
-            Event::reduceEventBanner($e);
+            $e->banner_path = $e->displayBannerPath();
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }
