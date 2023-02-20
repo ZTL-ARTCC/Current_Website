@@ -12,6 +12,7 @@ class UpdateEventsAddTopicId extends Migration {
     public function up() {
         Schema::table('events', function ($table) {
             $table->integer('id_topic')->nullable();
+            $table->string('banner_reduced_path')->nullable();
         });
     }
 
@@ -23,6 +24,7 @@ class UpdateEventsAddTopicId extends Migration {
     public function down() {
         Schema::table('events', function ($table) {
             $table->dropColumn('id_topic');
+            $table->dropColumn('banner_reduced_path');
         });
     }
 }
