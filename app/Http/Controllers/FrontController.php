@@ -19,7 +19,6 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Mail;
 use SimpleXMLElement;
 
@@ -75,14 +74,16 @@ class FrontController extends Controller {
         })->sortByDesc(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
-
+/*
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
         })->sortBy(function ($e) {
             return strtotime($e->date);
         });
+*/
+        $events = Event::fetchVisibleEvents();
         foreach ($events as $e) {
-            $this->reduceEventBanner($e);
+            Event::reduceEventBanner($e);
             $e->forum = 'board=8.0';
             if (is_numeric($e->id_topic)) {
                 $e->forum = 'topic=' . $e->id_topic;
@@ -515,30 +516,5 @@ class FrontController extends Controller {
         
         return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)->with('controllers_update', $controllers_update)
         ->with('diag', $diag)->with('aaup', $aaup);
-    }
-
-    private function reduceEventBanner(&$e) {
-        $disk = Storage::disk('public');
-        $filename = basename($e->banner_path);
-        $banner_path = 'event_banners/';
-        $reduced_path = $banner_path . 'reduced/';
-        if (!$disk->exists($reduced_path . $filename)) {
-            if ($disk->exists($banner_path . $filename)) {
-                $path = $disk->path($banner_path . basename($e->banner_path));
-                $directory = dirname($disk->path($banner_path . $filename));
-                list($width, $height) = getimagesize($path);
-                $new_width = 1500; // No reason for these banners to be > 1500 px wide
-                $new_height = ($new_width / $width) * $height;
-                $im = new \IMagick();
-                $im->readImage($path);
-                $im->resizeImage($new_width, $new_height, \Imagick::FILTER_LANCZOS, 0.9, true);
-                $im->writeImage($directory . '/reduced/' . $filename);
-                $im->destroy();
-            }
-        }
-        if ($disk->exists($reduced_path . $filename)) {
-            $directory = dirname($disk->path($banner_path . $filename));
-            $e->banner_path = $disk->url($reduced_path . $filename);
-        }
     }
 }

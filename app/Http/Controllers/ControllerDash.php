@@ -26,7 +26,6 @@ use Auth;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Mail;
 use SimpleXMLElement;
 
@@ -356,7 +355,7 @@ class ControllerDash extends Controller {
             });
         }
         foreach ($events as $e) {
-            $this->reduceEventBanner($e);
+            Event::reduceEventBanner($e);
         }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }
@@ -678,30 +677,5 @@ class ControllerDash extends Controller {
         });
 
         return redirect()->back()->with('success', 'Your bug has been reported successfully.');
-    }
-
-    private function reduceEventBanner(&$e) {
-        $disk = Storage::disk('public');
-        $filename = basename($e->banner_path);
-        $banner_path = 'event_banners/';
-        $reduced_path = $banner_path . 'reduced/';
-        if (!$disk->exists($reduced_path . $filename)) {
-            if ($disk->exists($banner_path . $filename)) {
-                $path = $disk->path($banner_path . basename($e->banner_path));
-                $directory = dirname($disk->path($banner_path . $filename));
-                list($width, $height) = getimagesize($path);
-                $new_width = 1500; // No reason for these banners to be > 1500 px wide
-                $new_height = ($new_width / $width) * $height;
-                $im = new \IMagick();
-                $im->readImage($path);
-                $im->resizeImage($new_width, $new_height, \Imagick::FILTER_LANCZOS, 0.9, true);
-                $im->writeImage($directory . '/reduced/' . $filename);
-                $im->destroy();
-            }
-        }
-        if ($disk->exists($reduced_path . $filename)) {
-            $directory = dirname($disk->path($banner_path . $filename));
-            $e->banner_path = $disk->url($reduced_path . $filename);
-        }
     }
 }
