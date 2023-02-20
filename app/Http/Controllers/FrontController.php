@@ -74,13 +74,7 @@ class FrontController extends Controller {
         })->sortByDesc(function ($news) {
             return strtotime($news->date.' '.$news->time);
         });
-/*
-        $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
-            return strtotime($e->date.' '.$e->start_time) > strtotime($now);
-        })->sortBy(function ($e) {
-            return strtotime($e->date);
-        });
-*/
+
         $events = Event::fetchVisibleEvents();
         foreach ($events as $e) {
             Event::reduceEventBanner($e);
