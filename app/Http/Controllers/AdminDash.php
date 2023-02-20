@@ -1272,6 +1272,7 @@ class AdminDash extends Controller {
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->banner_path = $public_url;
+        $event->reduceEventBanner();
         $event->status = 0;
         $event->reg = 0;
         $event->save();
@@ -1320,6 +1321,7 @@ class AdminDash extends Controller {
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->banner_path = $public_url;
+        $event->reduceEventBanner();
         $event->status = 0;
         $event->save();
 
