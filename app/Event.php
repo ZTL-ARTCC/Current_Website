@@ -33,8 +33,7 @@ class Event extends Model {
         $filename = basename($this->banner_path);
         if ($disk->exists($this->banner_base_path . $this->banner_reduced_base_path . $filename)) {
             return $disk->url($this->banner_base_path . $this->banner_reduced_base_path . $filename);
-        }
-        elseif ($disk->exists($this->banner_base_path . $filename)) {
+        } elseif ($disk->exists($this->banner_base_path . $filename)) {
             return $disk->url($this->banner_base_path . $filename);
         }
         return null;
