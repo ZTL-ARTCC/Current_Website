@@ -40,7 +40,7 @@ class VATUSAEventsUpdate extends Command {
     public function handle() {
         $vatusa_events = [];
         $vatusa_json = $this->getEvents();
-        if (!is_array($vatusa_events)) {
+        if (!is_array($vatusa_json)) {
             return;
         }
         foreach ($vatusa_json as $vatusa_item) {
