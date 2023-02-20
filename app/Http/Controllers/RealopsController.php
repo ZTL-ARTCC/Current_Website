@@ -220,6 +220,22 @@ class RealopsController extends Controller {
         return redirect()->back()->with('success', 'That flight has been deleted successfully');
     }
 
+    public function dumpData(Request $request) {
+        if (strtolower($request->input('confirm_text')) != "confirm - dump all") {
+            return redirect()->back()->with('error', 'Data not dumped. Please type in the required message to continue');
+        }
+
+        foreach (RealopsFlight::get() as $f) {
+            $f->delete();
+        }
+
+        foreach (RealopsPilot::get() as $p) {
+            $p->delete();
+        }
+
+        return redirect()->back()->with('success', 'The realops data has been dumped successfully');
+    }
+
     private function emailSubIntro($flight_number) {
         return 'Realops Flight ' . $flight_number . ' - ';
     }

@@ -250,6 +250,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::put('/assign-pilot/{id}', 'RealopsController@assignPilotToFlight');
             Route::get('/remove-pilot/{id}', 'RealopsController@removePilotFromFlight');
             Route::get('/delete/{id}', 'RealopsController@deleteFlight');
+            Route::post('/dump-data', 'RealopsController@dumpData');
         });
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@showFeatureToggles');
