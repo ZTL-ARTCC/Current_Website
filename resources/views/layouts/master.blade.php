@@ -34,7 +34,7 @@
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
         {{-- Custom JS --}}
-        <script type="text/javascript" src="/js/app.js"><script>
+        <script type="text/javascript" src="/js/app.js"></script>
 
         {{-- Custom Headers --}}
             @stack('custom_header')
