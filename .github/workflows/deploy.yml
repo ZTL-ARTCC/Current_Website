@@ -22,6 +22,12 @@ on:
         required: true
       php_path:
         required: true
+      cf_cache_purge_token:
+        required: true
+      cf_ztl_zone:
+        required: true
+      url:
+        required: true
 
 jobs:
   deploy:
@@ -90,4 +96,20 @@ jobs:
           port: ${{ secrets.port }}
           username: ${{ secrets.user }}
           privateKey: ${{ secrets.key }}
+
+  clear-cloudflare-asset-cache:
+    runs-on: ubuntu-latest
+    container: curlimages/curl
+    environment: ${{ inputs.environment }}
+    needs: deploy
+
+    steps:
+      - name: clear cloudflare asset cache
+        run: |
+          curl \
+          --request POST \
+          --url https://api.cloudflare.com/client/v4/zones/${{ secrets.cf_ztl_zone }}/purge_cache \
+          --header 'Content-Type: application/json' \
+          --header 'Authorization: Bearer ${{ secrets.cf_cache_purge_token }}' \
+          --data '{ "files": [ "${{ secrets.url }}/css/app.css", "${{ secrets.url }}/js/app.js" ] }'
 

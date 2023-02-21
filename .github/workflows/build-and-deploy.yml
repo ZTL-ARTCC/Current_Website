@@ -38,6 +38,9 @@ jobs:
       user: ${{ secrets.SSH_USER }}
       key: ${{ secrets.SSH_KEY }}
       php_path: ${{ secrets.PHP_PATH }}
+      cf_cache_purge_token: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
+      cf_ztl_zone: ${{ secrets.CF_ZTL_ZONE }}
+      url: ${{ secrets.URL }}
 
     needs: build
     if: ${{ github.event.inputs.environment == 'qa-1' }}
@@ -54,6 +57,9 @@ jobs:
       user: ${{ secrets.SSH_USER }}
       key: ${{ secrets.SSH_KEY }}
       php_path: ${{ secrets.PHP_PATH }}
+      cf_cache_purge_token: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
+      cf_ztl_zone: ${{ secrets.CF_ZTL_ZONE }}
+      url: ${{ secrets.URL }}
 
     needs: build
     if: ${{ github.event.inputs.environment == 'qa-2' }}
@@ -70,6 +76,9 @@ jobs:
       user: ${{ secrets.SSH_USER }}
       key: ${{ secrets.SSH_KEY }}
       php_path: ${{ secrets.PHP_PATH }}
+      cf_cache_purge_token: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
+      cf_ztl_zone: ${{ secrets.CF_ZTL_ZONE }}
+      url: ${{ secrets.URL }}
 
     needs: build
     if: ${{ github.event.inputs.environment == 'stag' || (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') }}
@@ -86,6 +95,9 @@ jobs:
       user: ${{ secrets.SSH_USER }}
       key: ${{ secrets.SSH_KEY }}
       php_path: ${{ secrets.PHP_PATH }}
+      cf_cache_purge_token: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
+      cf_ztl_zone: ${{ secrets.CF_ZTL_ZONE }}
+      url: ${{ secrets.URL }}
 
     needs: build
     if: ${{ github.event.inputs.environment == 'prod' }}
