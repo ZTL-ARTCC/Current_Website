@@ -22,6 +22,11 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
+    <coverage>
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>

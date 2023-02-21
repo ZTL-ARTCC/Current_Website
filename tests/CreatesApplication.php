@@ -10,7 +10,7 @@ trait CreatesApplication {
      *
      * @return \Illuminate\Foundation\Application
      */
-    public function createApplication() {
+    public function createApplication(): Application {
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();
