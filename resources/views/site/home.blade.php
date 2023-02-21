@@ -184,7 +184,7 @@ Home
 <!-- Modal -->
 <div class="modal fade" id="displayAsx" tabindex="-1" role="dialog" aria-labelledby="displayAsx" aria-hidden="true">
 	<div class="modal-dialog" style="height:90vh; max-width:90vw" role="document">
-		<div class="modal-content bg-secondary py-1">
+		<div class="modal-content py-1 home-modal-bg">
 			<div class="modal-body">
 				<button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -196,7 +196,7 @@ Home
 </div>
 <div class="modal fade" id="displayNewsCalendar" tabindex="-1" role="dialog" aria-labelledby="displayNews" aria-hidden="true">
 	<div class="modal-dialog" style="height:50vh; max-width:50vw" role="document">
-		<div class="modal-content bg-secondary py-1">
+		<div class="modal-content py-1 home-modal-bg">
 			<div class="modal-body">
 				<button type="button" class="close" style="position:absolute; z-index:100; top:5px; right:15px;" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
