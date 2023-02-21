@@ -354,6 +354,9 @@ class ControllerDash extends Controller {
                 return strtotime($e->date);
             });
         }
+        foreach ($events as $e) {
+            $e->banner_path = $e->displayBannerPath();
+        }
         return view('dashboard.controllers.events.index')->with('events', $events);
     }
 

@@ -12,7 +12,6 @@ use App\Feedback;
 use App\File;
 use App\Metar;
 use App\Overflight;
-use App\OverflightUpdate;
 use App\Scenery;
 use App\User;
 use App\Visitor;
@@ -20,7 +19,6 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Input;
 use Mail;
 use SimpleXMLElement;
 
@@ -60,7 +58,6 @@ class FrontController extends Controller {
         }
 
         $controllers = ATC::get();
-        //$last_update = ControllerLogUpdate::first();
         $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
         $controllers_update = substr($last_update->created_at, -8, 5);
 
@@ -78,15 +75,15 @@ class FrontController extends Controller {
             return strtotime($news->date.' '.$news->time);
         });
 
-        $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
-            return strtotime($e->date.' '.$e->start_time) > strtotime($now);
-        })->sortBy(function ($e) {
-            return strtotime($e->date);
-        });
+        $events = Event::fetchVisibleEvents();
+        foreach ($events as $e) {
+            $e->banner_path = $e->displayBannerPath();
+            $e->forum = 'board=8.0';
+            if (is_numeric($e->id_topic)) {
+                $e->forum = 'topic=' . $e->id_topic;
+            }
+        }
 
-        // This was used for the old home page where we displayed a table with flights in ZTL airspace... no longer used
-        //$flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(10)->get();
-        //$flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
         $overflightCount = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->count();
 
         return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
@@ -94,7 +91,6 @@ class FrontController extends Controller {
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('overflightCount', $overflightCount);
-        //                        ->with('flights', $flights)->with('flights_update', $flights_update);
     }
 
     public function teamspeak() {
@@ -146,10 +142,8 @@ class FrontController extends Controller {
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
-        // VATEUD API is no longer accessible
         $pilots_a = $pilots_d = false;
         $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
-        //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
         $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if ($pilots_a) {
@@ -158,7 +152,6 @@ class FrontController extends Controller {
             $pilots_a = null;
         }
         $res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
-        //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
         $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if ($pilots_d) {

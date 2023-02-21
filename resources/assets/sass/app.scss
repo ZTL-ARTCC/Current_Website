@@ -103,3 +103,58 @@ body {
   margin: 15px auto;
   position: relative;
 }
+
+.info_card {
+  transition: 1s;
+}
+
+.info_card:hover {
+  transform: scale(1.05);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: red;
+  cursor: pointer;
+}
+
+.airspace_status:hover {
+  background-image: url("/photos/asx_bg.png");
+}
+
+.weather_status:hover {
+  background-image: url("/photos/atl_weather.png");
+}
+
+.news_calendar:hover {
+  background-image: url("/photos/atl_newscalendar.png");
+}
+
+#teamspeak_logo {
+  position: relative;
+  top: -10px;
+}
+
+#partnerContainer img {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50px;
+  width: auto;
+}
+
+#myFooter p {
+  margin-bottom: 1em;
+}
+
+#myFooter img.vatsim_logo {
+  height: 20px;
+  width: 59px;
+}
+
+#myFooter img.vatusa_logo {
+  margin-top: -5px;
+  height: 20px;
+  width: 86px;
+}
+
+.home-modal-bg {
+  background: silver;
+}
