@@ -126,8 +126,8 @@ Home
 					</div>
 					<div class="row">
 						<div class="col-auto">
+							@if($airports->count() > 0)
 							<table class="table table-sm table-borderless pb-0 mb-0">
-								@if($airports->count() > 0)
 								@foreach($airports as $a)
 								<tr class="p-3 m-0">
 									<td class="py-0 pl-1 pr-2 m-0">
@@ -144,13 +144,13 @@ Home
 								</tr>
 								@endforeach
 							</table>
+							@else
+							<div class="row">
+								<div class="col-auto text-center"><i>No Airports to Show</i></div>
+							</div>
+							@endif
 						</div>
 					</div>
-					@else
-					<div class="row">
-						<div class="col-auto text-center"><i>No Airports to Show</i></div>
-					</div>
-					@endif
 				</div>
 			</div>
 			<div class="row px-2 pr-md-3 pl-md-0">
