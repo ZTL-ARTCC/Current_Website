@@ -22,12 +22,12 @@ on:
 
 jobs:
   build:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@laravel-10
     with:
       artifact-name: 'ztl-deploy-artifact-v1'
 
   qa-1:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@laravel-10
     with:
       environment: 'qa-1'
       artifact-name: 'ztl-deploy-artifact-v1'
@@ -43,7 +43,7 @@ jobs:
     if: ${{ github.event.inputs.environment == 'qa-1' }}
 
   qa-2:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@laravel-10
     with:
       environment: 'qa-2'
       artifact-name: 'ztl-deploy-artifact-v1'
