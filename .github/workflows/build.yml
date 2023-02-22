@@ -25,14 +25,12 @@ jobs:
           key: ${{ runner.os }}-ztl-validate-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
           restore-keys: |
             ${{ runner.os }}-ztl-validate-cached-
-      - name: Setup PHP
+
+      - name: Setup composer and install packages
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
-      - name: Setup composer and install packages
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
+          php-version: '8.1'
+          tools: composer:v2
           php_extensions: gd zip
 
       - name: Setup node
@@ -66,9 +64,10 @@ jobs:
             ${{ runner.os }}-ztl-build-cached-
 
       - name: Setup composer and install packages
-        uses: php-actions/composer@v6
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
+          php-version: '8.1'
+          tools: composer:v2
           php_extensions: gd zip
           dev: no
 
