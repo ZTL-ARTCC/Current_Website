@@ -59,7 +59,7 @@ jobs:
     if: ${{ github.event.inputs.environment == 'qa-2' }}
 
   stag:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/deploy.yml@laravel-10
     with:
       environment: 'stag'
       artifact-name: 'ztl-deploy-artifact-v1'
