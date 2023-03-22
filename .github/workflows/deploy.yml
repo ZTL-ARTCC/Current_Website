@@ -42,6 +42,8 @@ jobs:
       - name: put server in maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
+          php_version: "8.1"
+          php_extensions: gd zip
           command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan down
           host: ${{ secrets.host }}
           port: ${{ secrets.port }}
