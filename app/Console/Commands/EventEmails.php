@@ -41,7 +41,7 @@ class EventEmails extends Command {
     public function handle() {
         $today = Carbon::now()->format('m/d/Y');
         $event = Event::where('date', $today)->first();
-        if(!is_null($this->argument('event_id'))) {
+        if (!is_null($this->argument('event_id'))) {
             $event = $this->argument('event_id');
         }
 
