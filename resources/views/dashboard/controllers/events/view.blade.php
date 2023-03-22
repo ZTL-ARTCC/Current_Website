@@ -311,6 +311,7 @@ View Event
                 </div>
             </div>
             @if(Auth::user()->isAbleTo('events'))
+            <br>
             <div class="card">
                 <div class="card-header">
                     <h3>
