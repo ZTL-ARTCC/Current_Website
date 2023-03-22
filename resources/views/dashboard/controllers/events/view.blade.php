@@ -317,13 +317,11 @@ View Event
                         Send Event Reminder
                     </h3>
                 </div>
-                <div class="card-body">
-                {!! Form::open(['action' => ['AdminDash@sendEventReminder', $event->id]]) !!}
-				@csrf
-                <button type="button" class="btn btn-primary"><i class="fal fa-envelope"></i>&nbsp;Send Reminder</button>
-                {!! Form::close() !!}
+                <div class="card-body text-center">
+                <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
                     <p>
-                        Click this button to send an event reminder email to all members registered for this event.
+                        Send an event reminder email to all members registered for this event. Note: the email system prevents members from being notitified
+                        multiple times. You may trigger this reminder at any time to notify late sign-ups after the initial reminder was sent out.
                     </p>
                 </div>
             </div>
