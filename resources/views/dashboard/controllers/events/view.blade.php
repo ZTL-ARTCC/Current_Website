@@ -310,6 +310,24 @@ View Event
                     @endif
                 </div>
             </div>
+            @if(Auth::user()->isAbleTo('events'))
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Send Event Reminder
+                    </h3>
+                </div>
+                <div class="card-body">
+                {!! Form::open(['action' => ['AdminDash@sendEventReminder', $event->id]]) !!}
+				@csrf
+                <button type="button" class="btn btn-primary"><i class="fal fa-envelope"></i>&nbsp;Send Reminder</button>
+                {!! Form::close() !!}
+                    <p>
+                        Click this button to send an event reminder email to all members registered for this event.
+                    </p>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     <br>
