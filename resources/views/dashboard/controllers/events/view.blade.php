@@ -318,8 +318,10 @@ View Event
                         Send Event Reminder
                     </h3>
                 </div>
-                <div class="card-body text-center">
-                    <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
+                <div class="card-body">
+                    <span class="text-center">
+                        <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
+                    </span>
                     <br>
                     <p>
                         Send an event reminder email to all members registered for this event. Note: the email system prevents members from being notitified
