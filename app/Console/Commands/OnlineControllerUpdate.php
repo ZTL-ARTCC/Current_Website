@@ -80,7 +80,7 @@ class OnlineControllerUpdate extends Command {
 
             if ($is_controller) {
                 // Found an ATC user
-                if(preg_match('/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/', $time_logon, $time_match)) {
+                if (preg_match('/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/', $time_logon, $time_match)) {
                     $time_logon = str_replace('T', ' ', $time_match[0]);
                 }
                 //$time_logon = substr($time_logon, 0, -1);
@@ -89,8 +89,7 @@ class OnlineControllerUpdate extends Command {
                 //$time_logon = $time_logon[0];
                 try {
                     $time_logon = Carbon::createFromFormat('Y-m-d H:i:s', $time_logon)->timestamp;
-                }
-                catch (\Exception) {
+                } catch (\Exception) {
                     $time_logon = strtotime(Carbon::now());
                 }
                 $time_now = strtotime(Carbon::now());
