@@ -319,9 +319,9 @@ View Event
                     </h3>
                 </div>
                 <div class="card-body">
-                    <span class="text-center">
+                    <div class="text-center">
                         <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
-                    </span>
+                    </div>
                     <br>
                     <p>
                         Send an event reminder email to all members registered for this event. Note: the email system prevents members from being notitified
