@@ -1495,6 +1495,11 @@ class AdminDash extends Controller {
         return redirect()->back()->with('success', 'The position preset has been added successfully');
     }
 
+    public function sendEventReminder($id) {
+        Artisan::call('Event:SendEventReminder ' . $id);
+        return redirect()->back()->with('success', 'Event reminder sent');
+    }
+
     public function retrievePositionPreset(Request $request, $id) {
         $preset = PositionPreset::find($request->p_id);
         $first = $preset->first_position;
