@@ -55,10 +55,9 @@ class Handler extends ExceptionHandler {
     protected function safeErrorMessage($exception): string {
         $safeErrorMessage = 'Unspecified error';
         $exceptionMessage = $exception->getMessage();
-        if(preg_match('/(https?:\/\/.*[\?\&])/', $exceptionMessage)) {
+        if (preg_match('/(https?:\/\/.*[\?\&])/', $exceptionMessage)) {
             $safeErrorMessage = preg_replace('/(https?:\/\/.*[\?\&][^\s]+)/', '---', $exceptionMessage);
-        }
-        else {
+        } else {
             $safeErrorMessage = $exceptionMessage;
         }
         return $safeErrorMessage;
