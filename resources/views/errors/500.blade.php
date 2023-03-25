@@ -22,7 +22,7 @@ Internal Server Error
                     <h3>Something just happened that wasn't supposed to happen and we're really not sure why! Please kindly report this error to <a href="mailto:wm@ztlartcc.org">wm@ztlartcc.org</a> with descriptive steps to reproduce and a link to the page. Thank you for your help!</h3>
                     <br>
                     <h3>Please include the following message in your email (if applicable):</h3>
-                    <p>{{ $exception->getMessage() }}</p>
+                    <p>{{ $safeErrorMessage }}</p>
                 </div>
                 <div class="col-sm-4">
                     <img src="/photos/this_is_fine.png" width="300px">
