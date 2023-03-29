@@ -72,7 +72,7 @@ class OnlineControllerUpdate extends Command {
 
             $user = User::find($cid);
             if ($user) {
-                $name = $user->fname . substr($user->lname, 0, 1);
+                $name = $user->fname . ' ' . substr($user->lname, 0, 1) . '.';
             }
 
             foreach ($this->facilities as $facility) {
