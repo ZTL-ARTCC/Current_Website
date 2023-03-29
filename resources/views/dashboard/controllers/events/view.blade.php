@@ -310,6 +310,26 @@ View Event
                     @endif
                 </div>
             </div>
+            @if(Auth::user()->isAbleTo('events'))
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Send Event Reminder
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
+                    </div>
+                    <br>
+                    <p>
+                        Send an event reminder email to all members registered for this event. Note: the email system prevents members from being notitified
+                        multiple times. You may trigger this reminder at any time to notify late sign-ups after the initial reminder was sent out.
+                    </p>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     <br>

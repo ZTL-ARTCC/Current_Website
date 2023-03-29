@@ -797,7 +797,7 @@ class AdminDash extends Controller {
         $time = Carbon::now()->timestamp;
 
         $ext = $request->file('file')->getClientOriginalExtension();
-        $name = $request->title.'_'.$time.'.'.$ext;
+        $name = preg_replace('/^[\w\-. ]+$/', '', $request->title).'_'.$time.'.'.$ext;
 
         $path = $request->file('file')->storeAs(
             '/public/files',
@@ -1493,6 +1493,11 @@ class AdminDash extends Controller {
         }
 
         return redirect()->back()->with('success', 'The position preset has been added successfully');
+    }
+
+    public function sendEventReminder($id) {
+        Artisan::call('Event:SendEventReminder ' . $id);
+        return redirect()->back()->with('success', 'Event reminder sent');
     }
 
     public function retrievePositionPreset(Request $request, $id) {

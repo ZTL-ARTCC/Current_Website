@@ -15,7 +15,7 @@ class EventEmails extends Command {
      *
      * @var string
      */
-    protected $signature = 'Event:SendEventReminder';
+    protected $signature = 'Event:SendEventReminder {event_id? : The event ID}';
 
     /**
      * The console command description.
@@ -41,6 +41,9 @@ class EventEmails extends Command {
     public function handle() {
         $today = Carbon::now()->format('m/d/Y');
         $event = Event::where('date', $today)->first();
+        if (!is_null($this->argument('event_id'))) {
+            $event = Event::where('id', $this->argument('event_id'))->first();
+        }
 
         if ($event != null) {
             $positions = EventRegistration::where('status', 1)->where('event_id', $event->id)->get()->sortBy(function ($a) use ($event) {
