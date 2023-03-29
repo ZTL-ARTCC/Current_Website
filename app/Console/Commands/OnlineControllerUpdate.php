@@ -71,7 +71,7 @@ class OnlineControllerUpdate extends Command {
             $time_logon = $line->logon_time;
 
             $user = User::find($cid);
-            if($user->full_name) {
+            if ($user->full_name) {
                 $user->full_name;
             }
 
@@ -86,8 +86,7 @@ class OnlineControllerUpdate extends Command {
                 if (preg_match('/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/', $time_logon, $time_match)) {
                     $time_logon_str = str_replace('T', ' ', $time_match[0]);
                     $time_logon = Carbon::createFromFormat('Y-m-d H:i:s', $time_logon_str)->timestamp;
-                }
-                else {
+                } else {
                     $time_logon = Carbon::now('UTC')->timestamp;
                 }
                 $time_now = Carbon::now('UTC')->timestamp;
