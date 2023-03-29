@@ -71,8 +71,8 @@ class OnlineControllerUpdate extends Command {
             $time_logon = $line->logon_time;
 
             $user = User::find($cid);
-            if ($user->full_name) {
-                $name = $user->full_name;
+            if ($user) {
+                $name = $user->fname . substr($user->lname, 0, 1);
             }
 
             foreach ($this->facilities as $facility) {
