@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler {
         if ($exception->getStatusCode() == 500) {
             return $this->safeErrorMessage($exception);
         }
-        return parent::render($request, $modifiedException);
+        return parent::render($request, $exception);
     }
 
     /**
