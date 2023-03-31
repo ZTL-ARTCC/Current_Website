@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception) {
-        if($exception->getStatusCode() == 500) {
+        if ($exception->getStatusCode() == 500) {
             return $this->safeErrorMessage($exception);
         }
         return parent::render($request, $modifiedException);
