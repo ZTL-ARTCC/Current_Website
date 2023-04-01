@@ -44,24 +44,6 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception) {
-        if ($exception->getStatusCode() == 500) {
-            return $this->safeErrorMessage($exception);
-        }
         return parent::render($request, $exception);
-    }
-
-    /**
-     * Checks exception messages for POST/GET variables and removes them. Prevents dangerous things like environment variables
-     * from leaking while ensuring a meaningful and safe message can be displayed to the user (and reported to the dev team).
-     */
-    protected function safeErrorMessage($exception) {
-        $safeErrorMessage = 'Unspecified error';
-        $exceptionMessage = $exception->getMessage();
-        if (preg_match('/(https?:\/\/.*[\?\&])/', $exceptionMessage)) {
-            $safeErrorMessage = preg_replace('/(https?:\/\/.*[\?\&][^\s]+)/', '---', $exceptionMessage);
-        } else {
-            $safeErrorMessage = $exceptionMessage;
-        }
-        return view()->make('errors.500')->with('safeErrorMessage', $safeErrorMessage);
     }
 }
