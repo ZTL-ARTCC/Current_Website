@@ -797,7 +797,7 @@ class AdminDash extends Controller {
         $time = Carbon::now()->timestamp;
 
         $ext = $request->file('file')->getClientOriginalExtension();
-        $name = $request->title.'_'.$time.'.'.$ext;
+        $name = preg_replace('/^[\w\-. ]+$/', '', $request->title).'_'.$time.'.'.$ext;
 
         $path = $request->file('file')->storeAs(
             '/public/files',
