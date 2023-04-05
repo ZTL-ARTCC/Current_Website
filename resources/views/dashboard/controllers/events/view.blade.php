@@ -156,6 +156,13 @@ View Event
                             @else
                                 <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-right" data-toggle="tooltip" title="Close Registration"><i class="fas fa-times"></i></a>
                             @endif
+                            @toggle('event_assignment_toggle')
+                                @if($event->show_assignments)
+                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-right mr-2" data-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
+                                @else
+                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-right mr-2" data-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
+                                @endif
+                            @endtoggle
                         @endif
                     </h3>
                 </div>
@@ -176,7 +183,7 @@ View Event
                                     <tr>
                                         <td>{{ $p->name }}</td>
                                         <td>
-                                            @if($p->controller->count() == 0)
+                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && ! Auth::user()->isAbleTo('events')))
                                                 No Assignment
                                             @else
                                                 @foreach($p->controller as $c)

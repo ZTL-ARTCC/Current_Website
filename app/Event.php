@@ -60,4 +60,18 @@ class Event extends Model {
             $this->banner_reduced_path = $disk->url($this->banner_base_path . $this->banner_reduced_base_path . $filename);
         }
     }
+
+    public function toggleRegistration(): void {
+        $this->reg = ($this->reg + 1) % 2;
+        $this->save();
+
+        Audit::newAudit('toggled event registration for ' . $this->name);
+    }
+
+    public function toggleShowAssignments(): void {
+        $this->show_assignments = ! $this->show_assignments;
+        $this->save();
+
+        Audit::newAudit('toggled event assignment visibility for ' . $this->name);
+    }
 }
