@@ -189,6 +189,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/edit/{id}', 'AdminDash@saveEvent');
             Route::get('/delete/{id}', 'AdminDash@deleteEvent');
             Route::get('/toggle-reg/{id}', 'AdminDash@toggleRegistration');
+            Route::get('/toggle-show-assignments/{id}', 'AdminDash@toggleShowAssignments')->middleware('toggle:event_assignment_toggle');
             Route::get('/set-active/{id}', 'AdminDash@setEventActive');
             Route::get('/hide/{id}', 'AdminDash@hideEvent');
             Route::post('/save-preset/{id}', 'AdminDash@setEventPositionPreset');

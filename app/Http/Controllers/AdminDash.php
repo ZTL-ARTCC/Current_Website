@@ -29,6 +29,7 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -1381,30 +1382,27 @@ class AdminDash extends Controller {
         return redirect()->back()->with('success', 'The position has been removed successfully.');
     }
 
-    public function toggleRegistration($id) {
+    public function toggleRegistration($id): RedirectResponse {
         $event = Event::find($id);
 
-        if ($event->reg == 0) {
-            $event->reg = 1;
-            $event->save();
-
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name.' opened registration for the event '.$event->name.'.';
-            $audit->save();
-        } elseif ($event->reg == 1) {
-            $event->reg = 0;
-            $event->save();
-
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name.' closed registration for the event '.$event->name.'.';
-            $audit->save();
+        if (! $event) {
+            return redirect()->back()->with('error', 'That event does not exist');
         }
 
-        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'The registration has been toggle successfully.');
+        $event->toggleRegistration();
+
+        return redirect()->back()->with('success', 'The registration has been toggled successfully.');
+    }
+
+    public function toggleShowAssignments($id): RedirectResponse {
+        $event = Event::find($id);
+        if (! $event) {
+            return redirect()->back()->with('error', 'That event does not exist');
+        }
+
+        $event->toggleShowAssignments();
+
+        return redirect()->back()->with('success', 'The assignment visibility has been toggled successfully.');
     }
 
     public function assignPosition(Request $request, $id) {
