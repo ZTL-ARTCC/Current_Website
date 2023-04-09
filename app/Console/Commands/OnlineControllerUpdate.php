@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\ATC;
 use App\ControllerLog;
 use App\ControllerLogUpdate;
+use App\User;
 use Carbon\Carbon;
 use DB;
 use GuzzleHttp\Client;
@@ -55,7 +56,6 @@ class OnlineControllerUpdate extends Command {
     public function handle() {
         $statsData = $this->getStatsData();
         $last_update_log = ControllerLogUpdate::get()->first();
-        $last_update = $last_update_log->created_at;
         $last_update_log->delete();
         $update_now = new ControllerLogUpdate;
         $update_now->save();
@@ -70,6 +70,11 @@ class OnlineControllerUpdate extends Command {
             $frequency = $line->frequency;
             $time_logon = $line->logon_time;
 
+            $user = User::find($cid);
+            if ($user) {
+                $name = $user->fname . ' ' . substr($user->lname, 0, 1) . '.';
+            }
+
             foreach ($this->facilities as $facility) {
                 $is_controller = strpos($position, $facility . "_") === 0;
                 if ($is_controller) {
@@ -77,15 +82,14 @@ class OnlineControllerUpdate extends Command {
                 }
             }
 
-
             if ($is_controller) {
-                // Found an ATC user
-                //$time_logon = substr($time_logon, 0, -1);
-                $time_logon = str_replace('T', ' ', $time_logon);
-                $time_logon = explode(".", $time_logon);
-                $time_logon = $time_logon[0];
-                $time_logon = Carbon::createFromFormat('Y-m-d H:i:s', $time_logon)->timestamp;
-                $time_now = strtotime(Carbon::now());
+                if (preg_match('/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/', $time_logon, $time_match)) {
+                    $time_logon_str = str_replace('T', ' ', $time_match[0]);
+                    $time_logon = Carbon::createFromFormat('Y-m-d H:i:s', $time_logon_str)->timestamp;
+                } else {
+                    $time_logon = Carbon::now('UTC')->timestamp;
+                }
+                $time_now = Carbon::now('UTC')->timestamp;
                 $duration = $time_now - $time_logon;
 
                 ATC::create([
@@ -96,9 +100,6 @@ class OnlineControllerUpdate extends Command {
                     'time_logon' => $time_logon,
                 ]);
 
-
-                // Is this neccessary? It detects if the streamupdate of the last record for the user matches this one
-                // Shouldn't bog anything down unless we are running this too often
                 $MostRecentLog = ControllerLog::where('cid', $cid)->orderBy('time_logon', 'DESC')->first();
 
                 if (!$MostRecentLog || $MostRecentLog->time_logon != $time_logon) {
@@ -118,7 +119,6 @@ class OnlineControllerUpdate extends Command {
                 }
             }
         }
-        $time = Carbon::now('Etc/UTC')->format('H:i').'Z';
     }
 
     public function getStatsData() {
@@ -126,7 +126,6 @@ class OnlineControllerUpdate extends Command {
         $res = $client->request('GET', $this->statusUrl);
 
         $data = json_decode($res->getBody());
-
 
         return $data;
     }
