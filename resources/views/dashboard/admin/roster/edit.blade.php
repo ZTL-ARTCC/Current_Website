@@ -37,8 +37,8 @@ Update Controller
                     {!! Form::select('del', [
                         0 => 'None',
                         1 => 'Minor Certified',
-                        88 => 'Minor Montoring',
-                        89 => 'Major Montoring',
+                        88 => 'Minor Monitoring',
+                        89 => 'Major Monitoring',
                         2 => 'Major Certified'
                     ], $user->del, ['class' => 'form-control']) !!}
                 </div>
