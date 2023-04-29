@@ -451,6 +451,8 @@ class AdminDash extends Controller {
             } else {
                 $user->ctr = $request->input('ctr');
             }
+            $user->twr_solo_fields = $request->input('twr_solo_fields');
+            $user->twr_solo_expires = $request->input('twr_solo_expires');
             $user->save();
         }
 
