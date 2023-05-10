@@ -678,4 +678,11 @@ class ControllerDash extends Controller {
 
         return redirect()->back()->with('success', 'Your bug has been reported successfully.');
     }
+
+    public function updateTS3(Request $request) {
+        $user = Auth::user();
+        $user->ts3 = $request->ts3;
+        $user->save();
+        return redirect()->back()->with('success', 'Your TS3 UID has been updated successfully.');
+    }
 }
