@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('VATUSAEvents:Update')->hourly();
         $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
-        $schedule->command('OnlineControllers:GetControllers')->everyMinute();
+        $schedule->command('OnlineControllers:GetControllers')->everyMinute()->appendOutputTo('storage/logs/online-controllers.log')->emailOutputOnFailure('wm@ztlartcc.org');
     }
 
     /**
