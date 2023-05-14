@@ -54,7 +54,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -90,7 +90,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -126,7 +126,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -162,7 +162,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -198,7 +198,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -234,7 +234,7 @@ Files
                                 <tr>
                                     <th colspan="4">{{ $f->name }}</th>
                                 </tr>
-                            @else
+                            @endif
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
