@@ -7,7 +7,7 @@ Upload File
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
     &nbsp;
-    <h2>Upload New File</h2>
+    <h2>Edit File</h2>
     &nbsp;
 </div>
 <br>
@@ -34,14 +34,16 @@ Upload File
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            {!! Form::label('desc', 'Description:') !!}
-            {!! Form::textArea('desc', $file->desc, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('desc', 'Permalink:') !!}
-            {!! Form::text('permalink', $file->permalink, ['class' => 'form-control', 'placeholder' => 'Optional, no spaces']) !!}
-        </div>
+        @if(! $file->row_separator)
+            <div class="form-group">
+                {!! Form::label('desc', 'Description:') !!}
+                {!! Form::textArea('desc', $file->desc, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('desc', 'Permalink:') !!}
+                {!! Form::text('permalink', $file->permalink, ['class' => 'form-control', 'placeholder' => 'Optional, no spaces']) !!}
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-1">
                 <button class="btn btn-success" action="submit">Save</button>
