@@ -85,6 +85,8 @@ View Event
                                             <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
                                                 <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
                                             </span>
+                                            &nbsp;
+                                            <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" style="color:inherit" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
                                         </td>
                                     </tr>
 
@@ -206,6 +208,11 @@ View Event
                                                                 @else
                                                                     {{ $event->end_time }}z)
                                                                 @endif
+                                                                @if($c->position_id_detail != null)
+                                                                    %nbsp;
+                                                                    {{ $c->position_id_detail }}
+                                                                @else
+
                                                             </i>
                                                         </b>
                                                     </p>
@@ -248,27 +255,19 @@ View Event
                                                     {!! Form::text('end_time1', $your_registration1->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
                                                 </div>
                                             @else
-                                                @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
                                                 <div class="col-sm-5">
+                                                    @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
+                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['disabled', 'placeholder' => 'Pending...', 'class' => 'form-control']) !!}
+                                                    @else
                                                         {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        {!! Form::text('start_time1', null, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        {!! Form::text('end_time1', null, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                                                    </div>
-                                                @else
-                                                    <div class="col-sm-5">
-                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                                                    </div>
-                                                @endif
+                                                    @endif
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                </div>
                                             @endif
                                         </div>
                                     @else
