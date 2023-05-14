@@ -841,7 +841,7 @@ class AdminDash extends Controller {
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' created the file separator '.$file->name.'.';
-        $audit->save();        
+        $audit->save();
     }
 
     public function editFile($id) {
