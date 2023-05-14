@@ -116,6 +116,14 @@ View Event
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
+                                                            <div class="col-sm-12">
+                                                                {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
+                                                                {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
                                                             <div class="col-sm-6">
                                                                 {!! Form::label('start_time', 'Start Time (Zulu)') !!}
                                                                 {!! Form::text('start_time', $r->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
@@ -451,6 +459,14 @@ View Event
 								</div>
 							</div>
 						</div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
+                                    {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">

@@ -1433,6 +1433,7 @@ class AdminDash extends Controller {
     public function assignPosition(Request $request, $id) {
         $reg = EventRegistration::find($id);
         $reg->position_id = $request->position;
+        $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
         $reg->status = 1;
@@ -1459,6 +1460,7 @@ class AdminDash extends Controller {
         $reg->event_id = $id;
         $reg->controller_id = $request->controller;
         $reg->position_id = $request->position;
+        $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
         $reg->status = 1;
