@@ -164,7 +164,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('files')->middleware('permission:files')->group(function () {
             Route::get('/upload', 'AdminDash@uploadFile');
             Route::post('/upload', 'AdminDash@storeFile');
-            Route::get('/separator', 'AdminDash@fileSeparator');
+            Route::post('/separator', 'AdminDash@fileSeparator');
             Route::get('/edit/{id}', 'AdminDash@editFile');
             Route::post('/edit/{id}', 'AdminDash@saveFile');
             Route::get('/delete/{id}', 'AdminDash@deleteFile');
