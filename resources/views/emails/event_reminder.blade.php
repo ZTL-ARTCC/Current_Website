@@ -11,7 +11,11 @@
     <ul>
         @foreach($positions as $p)
             <li>
-                {{ $p->controller_name }} - {{ $p->position_name }}
+                @if(($positions->status == 1)&&($event->show_assignments == 1))
+                    {{ $p->controller_name }} - {{ $p->position_name }}
+                @else
+                    {{ $p->controller_name }} - position assignment pending
+                @endif
                 <i>
                     @if($p->start_time != null)
                         ({{ $p->start_time }}
