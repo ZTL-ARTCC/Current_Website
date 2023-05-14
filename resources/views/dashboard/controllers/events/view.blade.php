@@ -248,15 +248,27 @@ View Event
                                                     {!! Form::text('end_time1', $your_registration1->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
                                                 </div>
                                             @else
+                                                @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
                                                 <div class="col-sm-5">
-                                                    {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                                                </div>
+                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        {!! Form::text('start_time1', null, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        {!! Form::text('end_time1', null, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                    </div>
+                                                @else
+                                                    <div class="col-sm-5">
+                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                    </div>
+                                                @endif
                                             @endif
                                         </div>
                                     @else
