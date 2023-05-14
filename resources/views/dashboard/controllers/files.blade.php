@@ -365,7 +365,7 @@ Files
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@fileSeparator', $event->id]]) !!}
+					{!! Form::open(['action' => ['AdminDash@fileSeparator']]) !!}
 					@csrf
 					<div class="modal-body">
 						<div class="form-group">
