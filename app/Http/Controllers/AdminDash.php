@@ -834,6 +834,7 @@ class AdminDash extends Controller {
         $file = new File;
         $file->name = $request->input('title');
         $file->type = $request->input('type');
+        $file->path = '';
         $file->row_separator = 1;
         $file->save();
 
@@ -842,6 +843,8 @@ class AdminDash extends Controller {
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' created the file separator '.$file->name.'.';
         $audit->save();
+
+        return redirect('/dashboard/controllers/files')->with('success', 'The file separator has been successfully added.');
     }
 
     public function editFile($id) {
