@@ -219,8 +219,7 @@ View Event
                                                                 @if($c->position_id_detail != null)
                                                                     %nbsp;
                                                                     {{ $c->position_id_detail }}
-                                                                @else
-
+                                                                @endif
                                                             </i>
                                                         </b>
                                                     </p>
