@@ -901,7 +901,7 @@ class AdminDash extends Controller {
         $files = File::where('type', $request->typ)->orderBy('disp_order', 'ASC')->get();
         foreach ($files as $f) {
             $dispString .= "<tr>";
-            if ($f->sep == 1) {
+            if ($f->row_separator) {
                 $dispString .= "<th class=\"text-center\" colspan=\"3\">{{ $f->name }}</th>";
             } else {
                 $dispString .= "<td>$f->name</td>
@@ -910,7 +910,7 @@ class AdminDash extends Controller {
             }
             $dispString .=     "<td>
 								<div class=\"btn-group\">";
-            if ($f->sep != 1) {
+            if (! $f->row_separator) {
                 $dispString .= "<a href=\"$f->path\" target=\"_blank\" class=\"btn btn-success simple-tooltip\" data-toggle=\"tooltip\" title=\"Download\"><i class=\"fas fa-download\"></i></a>";
             }
             $dispString .= "<a href=\"/dashboard/admin/files/edit/$f->id\" class=\"btn btn-warning simple-tooltip\" data-toggle=\"tooltip\" title=\"Edit\"><i class=\"fas fa-pencil-alt\"></i></a>
