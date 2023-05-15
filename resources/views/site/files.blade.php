@@ -54,7 +54,6 @@ Files
                             @if($f->row_separator == 1)
                                 <th class="text-center" colspan="4">{{ $f->name }}</th>
                             @else
-                            <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -90,7 +89,6 @@ Files
                             @if($f->row_separator == 1)
                                 <th class="text-center" colspan="4">{{ $f->name }}</th>
                             @else
-                            <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -126,7 +124,6 @@ Files
                             @if($f->row_separator == 1)
                                     <th class="text-center" colspan="4">{{ $f->name }}</th>
                             @else
-                            <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -162,7 +159,6 @@ Files
                             @if($f->row_separator == 1)
                                     <th class="text-center" colspan="4">{{ $f->name }}</th>
                             @else
-                            <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -233,7 +229,6 @@ Files
                             @if($f->row_separator == 1)
                                 <th class="text-center" colspan="4">{{ $f->name }}</th>
                             @else
-                            <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
