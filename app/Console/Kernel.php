@@ -33,10 +33,9 @@ class Kernel extends ConsoleKernel {
         $schedule->command('VATUSAEvents:Update')->hourly();
         $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
         $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
-        if(FeatureToggle::isEnabled('online_controller_debug')) {
+        if (FeatureToggle::isEnabled('online_controller_debug')) {
             $schedule->command('OnlineControllers:GetControllers')->everyMinute()->appendOutputTo('storage/logs/online-controllers.log')->emailOutputOnFailure('wm@ztlartcc.org');
-        }
-        else {
+        } else {
             $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         }
     }
