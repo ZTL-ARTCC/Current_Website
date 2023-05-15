@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up() {
         Schema::table('event_registration', function ($table) {
-            $table->string('position_id_detail', 100)->default(false);
+            $table->string('position_id_detail', 100)->default('');
         });
     }
 

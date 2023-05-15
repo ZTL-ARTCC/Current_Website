@@ -86,7 +86,7 @@ View Event
                                                 <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
                                             </span>
                                             &nbsp;
-                                            <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" style="color:inherit" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
+                                            <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
                                         </td>
                                     </tr>
 
@@ -217,7 +217,7 @@ View Event
                                                                     {{ $event->end_time }}z)
                                                                 @endif
                                                                 @if($c->position_id_detail != null)
-                                                                    %nbsp;
+                                                                    &nbsp;
                                                                     {{ $c->position_id_detail }}
                                                                 @endif
                                                             </i>
