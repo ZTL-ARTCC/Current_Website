@@ -50,11 +50,10 @@ Files
                 <tbody>
                     @if($vrc->count() > 0)
                         @foreach($vrc as $f)
+                            <tr>
                             @if($f->row_separator == 1)
-                                <tr>
-                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -67,6 +66,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -86,11 +86,10 @@ Files
                 <tbody>
                     @if($vstars->count() > 0)
                         @foreach($vstars as $f)
+                            <tr>
                             @if($f->row_separator == 1)
-                                <tr>
-                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -103,6 +102,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -122,11 +122,10 @@ Files
                 <tbody>
                     @if($veram->count() > 0)
                         @foreach($veram as $f)
+                            <tr>
                             @if($f->row_separator == 1)
-                                <tr>
                                     <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
+                            @else
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -139,6 +138,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -158,11 +158,10 @@ Files
                 <tbody>
                     @if($vatis->count() > 0)
                         @foreach($vatis as $f)
+                            <tr>
                             @if($f->row_separator == 1)
-                                <tr>
                                     <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
+                            @else
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -175,6 +174,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -194,12 +194,10 @@ Files
                 <tbody>
                     @if($sop->count() > 0)
                         @foreach($sop as $f)
-                            @if($f->row_separator == 1)
-                                <tr>
-                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
                             <tr>
+                            @if($f->row_separator == 1)
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -211,6 +209,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -230,11 +229,10 @@ Files
                 <tbody>
                     @if($loa->count() > 0)
                         @foreach($loa as $f)
+                            <tr>
                             @if($f->row_separator == 1)
-                                <tr>
-                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
-                                </tr>
-                            @endif
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                             <tr>
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
@@ -247,6 +245,7 @@ Files
 										@endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif

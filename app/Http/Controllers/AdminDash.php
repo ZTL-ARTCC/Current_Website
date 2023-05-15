@@ -902,7 +902,7 @@ class AdminDash extends Controller {
         foreach ($files as $f) {
             $dispString .= "<tr>";
             if ($f->row_separator) {
-                $dispString .= "<th class=\"text-center\" colspan=\"3\">{{ $f->name }}</th>";
+                $dispString .= "<th class=\"text-center\" colspan=\"3\">$f->name</th>";
             } else {
                 $dispString .= "<td>$f->name</td>
                                 <td>$f->desc</td>
