@@ -520,7 +520,6 @@ Files
         @endif
 		<script>
 		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
-			//alert(act.title);
 			var dType = '';
 			switch(typ) {
 				case 0 : dType = 'vrc'; break;
