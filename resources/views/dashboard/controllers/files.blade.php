@@ -76,7 +76,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -137,7 +137,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -164,6 +164,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
@@ -197,7 +198,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -224,6 +225,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
@@ -257,7 +259,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -284,6 +286,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
@@ -317,7 +320,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -344,6 +347,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
@@ -377,7 +381,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -404,6 +408,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
@@ -437,7 +442,7 @@ Files
 					    					@endif
                                         </td>
                                     @else
-                                        <th colspan="4">{{ $f->name }}</th>
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
                                     @endif
                                 </tr>
                             @else
@@ -464,6 +469,7 @@ Files
 								</div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>

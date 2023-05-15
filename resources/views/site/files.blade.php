@@ -52,7 +52,7 @@ Files
                         @foreach($vrc as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -88,7 +88,7 @@ Files
                         @foreach($vstars as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -124,7 +124,7 @@ Files
                         @foreach($veram as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -160,7 +160,7 @@ Files
                         @foreach($vatis as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -196,7 +196,7 @@ Files
                         @foreach($sop as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
@@ -232,7 +232,7 @@ Files
                         @foreach($loa as $f)
                             @if($f->row_separator == 1)
                                 <tr>
-                                    <th colspan="4">{{ $f->name }}</th>
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
                                 </tr>
                             @endif
                             <tr>
