@@ -61,7 +61,7 @@ Files
                 <tbody>
                     @if($vrc->count() > 0)
                         @foreach($vrc as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -122,7 +122,7 @@ Files
                 <tbody>
                     @if($vstars->count() > 0)
                         @foreach($vstars as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -183,7 +183,7 @@ Files
                 <tbody>
                     @if($veram->count() > 0)
                         @foreach($veram as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -244,7 +244,7 @@ Files
                 <tbody>
                     @if($vatis->count() > 0)
                         @foreach($vatis as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -305,7 +305,7 @@ Files
                 <tbody>
                     @if($sop->count() > 0)
                         @foreach($sop as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -366,7 +366,7 @@ Files
                 <tbody>
                     @if($loa->count() > 0)
                         @foreach($loa as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
@@ -427,7 +427,7 @@ Files
                 <tbody>
                     @if($staff->count() > 0)
                         @foreach($staff as $f)
-                            @if($f->row_separator == 1)
+                            @if($f->row_separator)
                                 <tr>
                                     @if(Auth::user()->isAbleTo('files'))
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
