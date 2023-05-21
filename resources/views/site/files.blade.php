@@ -51,6 +51,9 @@ Files
                     @if($vrc->count() > 0)
                         @foreach($vrc as $f)
                             <tr>
+                            @if($f->row_separator)
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -62,6 +65,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -82,6 +86,9 @@ Files
                     @if($vstars->count() > 0)
                         @foreach($vstars as $f)
                             <tr>
+                            @if($f->row_separator)
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -93,6 +100,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -113,6 +121,9 @@ Files
                     @if($veram->count() > 0)
                         @foreach($veram as $f)
                             <tr>
+                            @if($f->row_separator)
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -124,6 +135,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -144,6 +156,9 @@ Files
                     @if($vatis->count() > 0)
                         @foreach($vatis as $f)
                             <tr>
+                            @if($f->row_separator)
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -155,6 +170,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -175,6 +191,9 @@ Files
                     @if($sop->count() > 0)
                         @foreach($sop as $f)
                             <tr>
+                            @if($f->row_separator)
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -186,6 +205,7 @@ Files
 										@endif
 								</div>									
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -206,6 +226,9 @@ Files
                     @if($loa->count() > 0)
                         @foreach($loa as $f)
                             <tr>
+                            @if($f->row_separator)
+                                <th class="text-center" colspan="4">{{ $f->name }}</th>
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -217,6 +240,7 @@ Files
 										@endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif

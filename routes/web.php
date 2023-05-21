@@ -74,6 +74,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/atcast', 'ControllerDash@showatcast');
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
         Route::get('/profile', 'ControllerDash@showProfile');
+        Route::post('/profile', 'ControllerDash@updateTS3');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
@@ -164,6 +165,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('files')->middleware('permission:files')->group(function () {
             Route::get('/upload', 'AdminDash@uploadFile');
             Route::post('/upload', 'AdminDash@storeFile');
+            Route::post('/separator', 'AdminDash@fileSeparator');
             Route::get('/edit/{id}', 'AdminDash@editFile');
             Route::post('/edit/{id}', 'AdminDash@saveFile');
             Route::get('/delete/{id}', 'AdminDash@deleteFile');

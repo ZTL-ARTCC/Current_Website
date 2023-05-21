@@ -45,6 +45,9 @@ class ARTCCOverflights extends Command {
         DB::table('flights_within_artcc')->truncate();
 
         $result = json_decode($res->getBody());
+        if (is_null($result)) {
+            return;
+        }
         foreach ($result as $r) {
             $response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/', ['headers' => ['Content-Type' => 'application/x-www-form-urlencoded','Authorization' => 'Token ' . Config::get('vatsim.api_key', '')]]);
             $res = json_decode($response->getBody(), true);

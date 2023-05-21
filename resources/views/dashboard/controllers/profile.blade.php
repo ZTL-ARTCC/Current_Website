@@ -85,6 +85,14 @@ Profile
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
             <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            {!! Form::open(['action' => ['ControllerDash@updateTS3', Auth::id()]]) !!}
+            @csrf
+                <div class="row">
+                    <div class="col-3"><b>TS3 UID: <a style="color:inherit" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identities. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-6"><p>{!! Form::text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
+                    <div class="col-3"><button class="btn btn-success" type="submit">Save <i class="fab fa-teamspeak"></i></button></div>
+                </div>
+            {!! Form::close() !!}
         </div>
         <div class="col-sm-2">
         </div>

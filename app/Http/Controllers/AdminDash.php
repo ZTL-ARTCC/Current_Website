@@ -830,6 +830,23 @@ class AdminDash extends Controller {
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been successfully added.');
     }
 
+    public function fileSeparator(Request $request) {
+        $file = new File;
+        $file->name = $request->input('title');
+        $file->type = $request->input('type');
+        $file->path = '';
+        $file->row_separator = 1;
+        $file->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' created the file separator '.$file->name.'.';
+        $audit->save();
+
+        return redirect('/dashboard/controllers/files')->with('success', 'The file separator has been successfully added.');
+    }
+
     public function editFile($id) {
         $file = File::find($id);
 
@@ -883,15 +900,21 @@ class AdminDash extends Controller {
         $dispString = "";
         $files = File::where('type', $request->typ)->orderBy('disp_order', 'ASC')->get();
         foreach ($files as $f) {
-            $dispString .= "<tr>
-                                <td>$f->name</td>
+            $dispString .= "<tr>";
+            if ($f->row_separator) {
+                $dispString .= "<th class=\"text-center\" colspan=\"3\">$f->name</th>";
+            } else {
+                $dispString .= "<td>$f->name</td>
                                 <td>$f->desc</td>
-                                <td>$f->updated_at</td>
-                                <td>
-								<div class=\"btn-group\">
-                                  <a href=\"$f->path\" target=\"_blank\" class=\"btn btn-success simple-tooltip\" data-toggle=\"tooltip\" title=\"Download\"><i class=\"fas fa-download\"></i></a>
-                                        <a href=\"/dashboard/admin/files/edit/$f->id\" class=\"btn btn-warning simple-tooltip\" data-toggle=\"tooltip\" title=\"Edit\"><i class=\"fas fa-pencil-alt\"></i></a>
-                                        <a href=\"/dashboard/admin/files/delete/$f->id\" onclick=\"return confirm(\'Are you sure you want to delete " . $f->name . "?\')\" class=\"btn btn-danger simple-tooltip\" data-toggle=\"tooltip\" title=\"Delete\"><i class=\"fas fa-times\"></i></a>";
+                                <td>$f->updated_at</td>";
+            }
+            $dispString .=     "<td>
+								<div class=\"btn-group\">";
+            if (! $f->row_separator) {
+                $dispString .= "<a href=\"$f->path\" target=\"_blank\" class=\"btn btn-success simple-tooltip\" data-toggle=\"tooltip\" title=\"Download\"><i class=\"fas fa-download\"></i></a>";
+            }
+            $dispString .= "<a href=\"/dashboard/admin/files/edit/$f->id\" class=\"btn btn-warning simple-tooltip\" data-toggle=\"tooltip\" title=\"Edit\"><i class=\"fas fa-pencil-alt\"></i></a>
+                            <a href=\"/dashboard/admin/files/delete/$f->id\" onclick=\"return confirm(\'Are you sure you want to delete " . $f->name . "?\')\" class=\"btn btn-danger simple-tooltip\" data-toggle=\"tooltip\" title=\"Delete\"><i class=\"fas fa-times\"></i></a>";
             if ($f->disp_order > 0) { // Don't show the up button for the first item listed
                 $dispString .= "<a onclick=\"itemReorder($f->id,$f->disp_order,$f->type,\'up\');\" class=\"btn btn-info simple-tooltip\" data-toggle=\"tooltip\" title=\"Up\"><i class=\"fas fa-arrow-up\"></i></a>";
             }

@@ -15,6 +15,10 @@ Files
 <div class="container">
     @if(Auth::user()->isAbleTo('files'))
         <a href="/dashboard/admin/files/upload" class="btn btn-primary">Upload File</a>
+        &nbsp;
+        <span data-toggle="modal" data-target="#addRowSeparator">
+            <button type="button" class="btn btn-primary" data-placement="top">Add Separator</button>
+        </span>
         <br><br>
     @endif
 
@@ -58,6 +62,23 @@ Files
                     @if($vrc->count() > 0)
                         @foreach($vrc as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+      										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                @else
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                @endif
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -79,6 +100,7 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -99,6 +121,23 @@ Files
                     @if($vstars->count() > 0)
                         @foreach($vstars as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+      										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	       								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                    @else
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                    @endif
+                                @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -120,6 +159,7 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -140,6 +180,23 @@ Files
                     @if($veram->count() > 0)
                         @foreach($veram as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+	  										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                    @else
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                    @endif
+                                @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -161,7 +218,8 @@ Files
                                     @endif
 								</div>
                                 </td>
-                            </tr>
+                            @endif
+                        </tr>
                         @endforeach
                     @endif
                 </tbody>
@@ -180,7 +238,24 @@ Files
                 <tbody>
                     @if($vatis->count() > 0)
                         @foreach($vatis as $f)
-                            <tr>
+                        <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+    										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                @else
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                @endif
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -202,6 +277,7 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -222,6 +298,23 @@ Files
                     @if($sop->count() > 0)
                         @foreach($sop as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+       										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                @else
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                @endif
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -243,6 +336,7 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -263,6 +357,23 @@ Files
                     @if($loa->count() > 0)
                         @foreach($loa as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+      										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                    @else
+                                        <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                    @endif
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -284,6 +395,7 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
@@ -304,6 +416,23 @@ Files
                     @if($staff->count() > 0)
                         @foreach($staff as $f)
                             <tr>
+                            @if($f->row_separator)
+                                @if(Auth::user()->isAbleTo('files'))
+                                    <th class="text-center" colspan="3">{{ $f->name }}</th>
+                                    <td>
+                                        <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        @if(!$loop->first)
+      										<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up"></i></a>
+	    								@endif
+		    							@if(!$loop->last)
+			    							<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down"></i></a>
+				    					@endif
+                                    </td>
+                                @else
+                                    <th class="text-center" colspan="4">{{ $f->name }}</th>
+                                @endif
+                            @else
                                 <td>{{ $f->name }}</td>
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
@@ -325,15 +454,58 @@ Files
                                     @endif
 								</div>
                                 </td>
+                            @endif
                             </tr>
                         @endforeach
                     @endif
                 </tbody>
             </table>
         </div>
+        @if(Auth::user()->isAbleTo('files'))
+		<div class="modal fade" id="addRowSeparator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add a Row Separator</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@fileSeparator']]) !!}
+					@csrf
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									{!! Form::label('title', 'File Separator Heading') !!}
+									{!! Form::text('title', null, ['placeholder' => 'Enter heading title', 'class' => 'form-control']) !!}
+								</div>
+                                <div class="col-sm-6">
+                                    {!! Form::label('type', 'Tab:') !!}
+                                    {!! Form::select('type', [
+                                        0 => 'VRC',
+                                        1 => 'vSTARS',
+                                        2 => 'vERAM',
+                                        3 => 'vATIS',
+                                        4 => 'SOPs',
+                                        5 => 'LOAs',
+                                        6 => 'Staff'
+                                    ], null, ['class' => 'form-control']) !!}
+                                </div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Save Separator</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+        @endif
 		<script>
 		function itemReorder(id,pos,typ,act) { // Handles custom re-ordering of items in file browser
-			//alert(act.title);
 			var dType = '';
 			switch(typ) {
 				case 0 : dType = 'vrc'; break;

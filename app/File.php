@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model {
     protected $table = 'files';
-    protected $fillable = ['id', 'name', 'type', 'desc', 'path', 'disp_order', 'permalink', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'name', 'type', 'desc', 'path', 'disp_order', 'permalink', 'created_at', 'updated_at', 'row_separator'];
 
     public static $WordType = [
         0 => 'VRC',
