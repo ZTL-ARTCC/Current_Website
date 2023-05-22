@@ -11,7 +11,7 @@
     <ul>
         @foreach($positions as $p)
             <li>
-                @if(($positions->status == 1)&&($event->show_assignments == 1))
+                @if($positions->status == 1 && ($event->show_assignments || toggle_enabled('event_assignment_toggle')))
                     {{ $p->controller_name }} - {{ $p->position_name }}
                 @else
                     {{ $p->controller_name }} - position assignment pending
