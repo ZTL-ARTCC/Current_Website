@@ -293,8 +293,9 @@ View Event
                                     @endif
                                 </div>
                                 <div class="form-group inline">
+                                    @if(!$your_registration1)
                                     <button type="submit" class="btn btn-success">Submit</button>
-                                    @if($your_registration1)
+                                    @else
                                         <a href="/dashboard/controllers/events/view/{{ $your_registration1->id }}/un-signup" class="btn btn-danger">Delete your Signup</a>
                                     @endif
                                 </div>
