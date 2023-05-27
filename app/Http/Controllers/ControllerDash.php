@@ -343,7 +343,7 @@ class ControllerDash extends Controller {
     }
 
     public function showEvents() {
-        if (Auth::user()->isAbleTo('events')) {
+        if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $events = Event::where('status', 0)->orWhere('status', 1)->get()->sortByDesc(function ($e) {
                 return strtotime($e->date);
             });
