@@ -19,8 +19,8 @@ New Feedback
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    {!! Form::label('controller', 'Controller:', ['class' => 'control-label']) !!}
-                    {!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+                    {!! Form::label('controller', 'Event or Controller:', ['class' => 'control-label']) !!}
+                    {!! Form::select('controller', $feedbackOptions, $controllerSelected, ['placeholder' => 'Select Event or Controller', 'class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('service', 'Service Level:', ['class' => 'control-label']) !!}
@@ -67,6 +67,7 @@ New Feedback
         <div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
         <br>
         <button class="btn btn-success" type="submit">Send Feedback</button>
+        <br>
     {!! Form::close() !!}
 </div>
 @endsection
