@@ -134,6 +134,10 @@ class User extends Authenticatable {
             return 9;
         } elseif ($this->hasRole('aec')) {
             return 10;
+        } elseif ($this->hasRole('aec-ghost')) {
+            return 11;
+        } elseif ($this->hasRole('events-team')) {
+            return 12;
         } else {
             return 0;
         }
