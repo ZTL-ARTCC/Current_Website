@@ -342,7 +342,7 @@ class FrontController extends Controller {
 
     public function newFeedback($cid=null) {
         $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        if(!is_null($cid)) {
+        if (!is_null($cid)) {
             $controllerSelected = User::where('id', $cid)->get()->pluck('backwards_name', 'id')->first();
         }
         array_unshift($controllers, 'General ATC Feedback');
