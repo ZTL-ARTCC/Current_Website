@@ -101,54 +101,34 @@ Dashboard
         </div>
         <div class="col-sm-4">
             <center><h4><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4></center>
-            @if($events->count() > 0)
-                @foreach($events as $e)
-                    <a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="100%" alt="{{ $e->name }}"></a>
-                    <p></p>
-                @endforeach
-            @else
-                <center><i><p>No events to show.</p></i></center>
-            @endif
+			<div id="eventCarousel" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner">
+					@if($events->count() > 0)
+					@foreach($events as $e)
+					<div class="carousel-item @if ($loop->first) active @endif">
+						<a href="/dashboard/controllers/events/view/{{ $e->id }}">
+							<img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
+						</a>
+					</div>
+					@endforeach
+					@else
+					<div class="carousel-item active">
+						<div class="d-block w-100 h-100 d-flex align-items-center bg-dark rounded" style="min-height:500px">
+							<h5 class="text-light w-100 text-center">No events scheduled</br>Please check back soon!</h5>
+						</div>
+					</div>
+					@endif
+				</div>
+				<a class="carousel-control-prev" href="#eventCarousel" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#eventCarousel" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
         </div>
-    </div>
-    <hr>
-    <center><h4><i class="fa fa-broadcast-tower"></i> Online Controllers</h4></center>
-    <div class="table">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <th scope="col"><center>Position</center></th>
-                <th scope="col"><center>Frequency</center></th>
-                <th scope="col"><center>Controller</center></th>
-                <th scope="col"><center>Rating</center></th>
-                <th scope="col"><center>Logon Time</center></th>
-                <th scope="col"><center>Time Online</center></th>
-            </thead>
-            <tbody>
-                @if($controllers->count() > 0)
-                    @foreach($controllers as $c)
-                        <tr>
-                            <td><center>{{ $c->position }}</center></td>
-                            <td><center>{{ $c->freq }}</center></td>
-                            <td><center>{{ $c->name }}</center></td>
-                            @if(App\User::find($c->cid) != null)
-                                <td><center>{{ App\User::find($c->cid)->rating_long }}</center></td>
-                            @else
-                                <td><center><i>Rating Not Available</i></center></td>
-                            @endif
-                            <td><center>{{ $c->logon_time }}</center></td>
-                            <td><center>{{ $c->time_online }}</center></td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="6"><center><i>No Controllers Online</i></center></td>
-                    </tr>
-                @endif
-                <tr>
-                    <td colspan="6"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $controllers_update }}Z</div></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <hr>
     <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
