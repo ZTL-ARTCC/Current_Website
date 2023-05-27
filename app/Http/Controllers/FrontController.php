@@ -340,9 +340,16 @@ class FrontController extends Controller {
         }
     }
 
-    public function newFeedback() {
+    public function newFeedback($cid=null) {
         $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        return view('site.feedback')->with('controllers', $controllers);
+        if(!is_null($cid)) {
+            $controllerSelected = User::where('id', $cid)->get()->pluck('backwards_name', 'id')->first();
+        }
+        array_unshift($controllers, 'General ATC Feedback');
+        $events = Event::where('date', '>', Carbon::now()->subDays(30)->endOfDay())->get()->pluck('name', 'id');
+        $feedbackOptions = array_merge($events, $controllers);
+
+        return view('site.feedback')->with('feedbackOptions', $feedbackOptions)->with('controllerSelected', $controllerSelected);
     }
 
     public function saveNewFeedback(Request $request) {
