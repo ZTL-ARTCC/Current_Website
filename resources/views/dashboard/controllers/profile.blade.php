@@ -78,6 +78,39 @@ Profile
     </div>
     <hr>
     <div class="row">
+        <div class="col">
+            <h4>My Setmore Reservations</h4>
+            <div class="table text-center">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">Lesson Type</th>
+                            <th scope="col">Trainer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        @if(count($setmore_reservations) > 0)
+                            @foreach($setmore_reservations as $sm_res)
+                                <td scope="col">{{ $sm_res->date }}</td>
+                                <td scope="col">{{ $sm_res->start_time }}</td>
+                                <td scope="col">{{ $sm_res->lesson_type }}</td>
+                                <td scope="col">{{ $sm_res->trainer_name }}</td>   
+                            @endforeach
+                        @else
+                            <td scope="col" colspan="4">No Setmore reservations found.</td>
+                        @endif
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Appointments will show here approximately 30 minutes after booking.</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
         <div class="col-sm-4">
             <h4>My Information</h4>
             <br>
