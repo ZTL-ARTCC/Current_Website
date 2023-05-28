@@ -15,7 +15,7 @@ class SetmoreAppointments extends Command {
      *
      * @var string
      */
-    protected $signature = 'SetmoreAppintments:Update';
+    protected $signature = 'SetmoreAppointments:Update';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class SetmoreAppointments extends Command {
      */
     public function handle() {
         $setmoreAccessToken = null;
-        $setmoreAppointments = [];
+        $setmoreAppointments = $setmoreServices = $setmoreStaff = [];
         $from = Carbon::now()->subHours(2)->toDateString();
         $to = Carbon::now()->addDays(90)->toDateString();
         $client = new Client();
@@ -57,30 +57,31 @@ class SetmoreAppointments extends Command {
             }
         }
         if ($setmoreAccessToken != null) {
-            $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to);
+            $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to, true);
             $setmoreServices = $this->getSetmoreServiceNames($setmoreAccessToken);
             $setmoreStaff = $this->getSetmoreStaffNames($setmoreAccessToken);
             DB::table('setmore')->truncate();
             foreach ($setmoreAppointments as $setmoreAppointment) {
                 $appointment = new SetmoreAppointment;
                 $appointment->setmore_key = $setmoreAppointment['key'];
-                $appointment->start_time = $setmoreAppointment['start_time'];
+                $start_time_string = substr(str_replace('T', ' ', $setmoreAppointment['start_time']), 0, -1) . ':00';
+                $appointment->start_time = Carbon::createFromFormat('Y-m-d H:i:s', $start_time_string);
                 $appointment->duration = $setmoreAppointment['duration'];
                 $appointment->staff_key = $setmoreAppointment['staff_key'];
                 $appointment->staff_name = (isset($setmoreStaff[$setmoreAppointment['staff_key']])) ? $setmoreStaff[$setmoreAppointment['staff_key']] : null;
                 $appointment->service_key = $setmoreAppointment['service_key'];
                 $appointment->service_description = (isset($setmoreServices[$setmoreAppointment['service_key']])) ? $setmoreServices[$setmoreAppointment['service_key']] : null;
-                $appointment->customer_cid = (isset($setmoreAppointment['customer']['additional_fields']['cid'])) ? $setmoreAppointment['customer']['additional_fields']['cid'] : null;
+                $appointment->customer_cid = (isset($setmoreCustomerAppointment['customer']['additional_fields']['CID'])) ? $setmoreCustomerAppointment['customer']['additional_fields']['CID'] : null;
                 $appointment->save();
             }
         }
     }
 
-    private function getSetmoreAppointments($setmoreAccessToken, $from, $to) {
+    private function getSetmoreAppointments($setmoreAccessToken, $from, $to, $customerDetails=false) {
         $setmoreAppointments = [];
         $setmoreCursor = null;
         do {
-            $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor);
+            $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor, $customerDetails);
             if (is_array($appointmentBatch)) {
                 $setmoreAppointments = array_merge($setmoreAppointments, $appointmentBatch);
             }
@@ -88,10 +89,13 @@ class SetmoreAppointments extends Command {
         return $setmoreAppointments;
     }
 
-    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor) {
-        $cursorStr = '';
+    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor, $customerDetails=false) {
+        $cursorStr = $customerDetailsStr = '';
         if (!is_null($cursor)) {
             $cursorStr = '&cursor=' . $cursor;
+        }
+        if ($customerDetails) {
+            $customerDetailsStr = '&customerDetails=true';
         }
         $fromDate = Carbon::createFromDate($from)->format('d-m-Y');
         $toDate = Carbon::createFromDate($to)->format('d-m-Y');
@@ -99,7 +103,7 @@ class SetmoreAppointments extends Command {
         try {
             $res = $client->request(
                 'GET',
-                Config::get('setmore.endpoint') . '/bookingapi/appointments?startDate=' . $fromDate . '&endDate=' . $toDate . $cursorStr,
+                Config::get('setmore.endpoint') . '/bookingapi/appointments?startDate=' . $fromDate . '&endDate=' . $toDate . $cursorStr . $customerDetailsStr,
                 [
                     'headers' =>
                     [
@@ -146,7 +150,7 @@ class SetmoreAppointments extends Command {
         }
         if (isset($setmoreRespA)) {
             foreach ($setmoreRespA['data']['services'] as $service) {
-                $serviceNamesByToken[$service['key']] = $service['service_name'];
+                $serviceNamesByKey[$service['key']] = $service['service_name'];
             }
         }
         return $serviceNamesByKey;
@@ -179,7 +183,7 @@ class SetmoreAppointments extends Command {
         } while ((count($setmoreRespTmp) == 50) && !is_null($cursorStr));
         if (isset($setmoreRespA)) {
             foreach ($setmoreRespA as $staff) {
-                $serviceNamesByToken[$staff['key']] = $staff['first_name'] . ' ' . $staff['last_name'];
+                $staffNamesByKey[$staff['key']] = $staff['first_name'] . ' ' . $staff['last_name'];
             }
         }
         return $staffNamesByKey;
