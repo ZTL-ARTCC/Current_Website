@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
         '\App\Console\Commands\VATUSAEventsUpdate',
+        '\App\Console\Commands\SetmoreAppointments',
     ];
 
     /**
@@ -38,6 +39,7 @@ class Kernel extends ConsoleKernel {
         } else {
             $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         }
+        $schedule->command('SetmoreAppointments:Update')->everyThirtyMinutes();
     }
 
     /**
