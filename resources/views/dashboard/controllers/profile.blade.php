@@ -80,24 +80,24 @@ Profile
     <div class="row">
         <div class="col">
             <h4>My Setmore Reservations</h4>
-            <div class="table text-center">
-                <table class="table table-bordered">
+            <div class="table">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Start Time</th>
                             <th scope="col">Lesson Type</th>
-                            <th scope="col">Trainer</th>
+                            <th scope="col">Instructor/Mentor</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        @if(count($setmore_reservations) > 0)
-                            @foreach($setmore_reservations as $sm_res)
-                                <td scope="col">{{ $sm_res->date }}</td>
-                                <td scope="col">{{ $sm_res->start_time }}</td>
-                                <td scope="col">{{ $sm_res->lesson_type }}</td>
-                                <td scope="col">{{ $sm_res->trainer_name }}</td>   
+                        @if(count($setmore_appointments) > 0)
+                            @foreach($setmore_appointments as $sm_res)
+                                <td scope="col">{{ $sm_res->res_date }}</td>
+                                <td scope="col">{{ $sm_res->res_time }} ET</td>
+                                <td scope="col">{{ $sm_res->service_description }}</td>
+                                <td scope="col">{{ $sm_res->staff_name }}</td>   
                             @endforeach
                         @else
                             <td scope="col" colspan="4">No Setmore reservations found.</td>
