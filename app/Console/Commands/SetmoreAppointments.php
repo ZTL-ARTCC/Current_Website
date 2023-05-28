@@ -9,8 +9,7 @@ use DB;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
-class SetmoreAppointments extends Command
-{
+class SetmoreAppointments extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -30,8 +29,7 @@ class SetmoreAppointments extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -40,8 +38,7 @@ class SetmoreAppointments extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $setmoreAccessToken = null;
         $setmoreAppointments = [];
         $from = Carbon::now()->subHours(2)->toDateString();
@@ -79,8 +76,7 @@ class SetmoreAppointments extends Command
         }
     }
 
-    private function getSetmoreAppointments($setmoreAccessToken, $from, $to)
-    {
+    private function getSetmoreAppointments($setmoreAccessToken, $from, $to) {
         $setmoreAppointments = [];
         $setmoreCursor = null;
         do {
@@ -92,8 +88,7 @@ class SetmoreAppointments extends Command
         return $setmoreAppointments;
     }
 
-    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor)
-    {
+    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor) {
         $cursorStr = '';
         if (!is_null($cursor)) {
             $cursorStr = '&cursor=' . $cursor;
@@ -129,8 +124,7 @@ class SetmoreAppointments extends Command
         return null;
     }
 
-    private function getSetmoreServiceNames($setmoreAccessToken)
-    {
+    private function getSetmoreServiceNames($setmoreAccessToken) {
         $serviceNamesByKey = [];
         $client = new Client();
         try {
@@ -158,8 +152,7 @@ class SetmoreAppointments extends Command
         return $serviceNamesByKey;
     }
 
-    private function getSetmoreStaffNames($setmoreAccessToken)
-    {
+    private function getSetmoreStaffNames($setmoreAccessToken) {
         $cursorStr = null;
         $staffNamesByKey = $setmoreRespA = $setmoreRespTmp = [];
         $client = new Client();
