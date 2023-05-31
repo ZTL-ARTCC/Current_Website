@@ -480,7 +480,7 @@ class LaratrustSeeder extends Seeder {
             'role_id' => 12
         ]);
         DB::table('permission_role')->insert([
-            'permission_id' => 9,
+            'permission_id' => 10,
             'role_id' => 13
         ]);
     }
