@@ -29,8 +29,13 @@ class Feedback extends Model {
 
     public function getControllerNameAttribute() {
         $controller = User::find($this->controller_id);
+        $event = Event::find($this->controller_id);
         if (isset($controller)) {
             $name = $controller->full_name;
+        } elseif (isset($event)) {
+            $name = $event->name;
+        } elseif ($this->controller_id == 0) {
+            $name = 'General ATC Feedback';
         } else {
             $name = '[This controller is no longer a member]';
         }
