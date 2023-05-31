@@ -28,7 +28,7 @@ Feedback Management
                     <thead>
                         <tr>
                             <th scope="col">Position</th>
-                            <th scope="col">Controller</th>
+                            <th scope="col">Controller/Event</th>
                             <th scope="col">Pilot</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Submitted</th>
@@ -76,6 +76,7 @@ Feedback Management
                                                 <div class="col-sm-6">
                                                     {!! Form::label('controller_id', 'Controller') !!}
                                                     {!! Form::select('controller_id', $controllers, $f->controller_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::hidden('event_id', $f->controller_id) !!}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     {!! Form::label('position', 'Position') !!}
@@ -185,7 +186,7 @@ Feedback Management
                     <thead>
                         <tr>
                             <th scope="col">Position</th>
-                            <th scope="col">Controller</th>
+                            <th scope="col">Controller/Event</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Staff Comments</th>
                             <th scope="col">Processed</th>
