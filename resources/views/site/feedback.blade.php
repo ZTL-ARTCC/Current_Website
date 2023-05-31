@@ -19,8 +19,8 @@ New Feedback
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    {!! Form::label('controller', 'Event or Controller:', ['class' => 'control-label']) !!}
-                    {!! Form::select('controller', $feedbackOptions, $controllerSelected, ['placeholder' => 'Select Event or Controller', 'class' => 'form-control']) !!}
+                    {!! Form::label('feedback_id', 'Event or Controller:', ['class' => 'control-label']) !!}
+                    {!! Form::select('feedback_id', $feedbackOptions, $controllerSelected, ['placeholder' => 'Select Event or Controller', 'class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('service', 'Service Level:', ['class' => 'control-label']) !!}
