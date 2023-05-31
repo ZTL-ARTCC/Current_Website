@@ -104,19 +104,19 @@ Dashboard
 			<div id="eventCarousel" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)
-					@foreach($events as $e)
-					<div class="carousel-item @if ($loop->first) active @endif">
-						<a href="/dashboard/controllers/events/view/{{ $e->id }}">
-							<img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
-						</a>
-					</div>
-					@endforeach
+					    @foreach($events as $e)
+					        <div class="carousel-item @if ($loop->first) active @endif">
+						        <a href="/dashboard/controllers/events/view/{{ $e->id }}">
+							        <img src="{{ $e->banner_path }}" class="d-block w-100 rounded" alt="{{ $e->name }}" />
+						        </a>
+					        </div>
+					    @endforeach
 					@else
-					<div class="carousel-item active">
-						<div class="d-block w-100 h-100 d-flex align-items-center bg-dark rounded" style="min-height:200px">
-							<h5 class="text-light w-100 text-center">No events scheduled</br>Please check back soon!</h5>
-						</div>
-					</div>
+					    <div class="carousel-item active">
+						    <div class="d-block w-100 h-100 d-flex align-items-center bg-dark rounded" style="min-height:200px">
+							    <h5 class="text-light w-100 text-center">No events scheduled</br>Please check back soon!</h5>
+						    </div>
+					    </div>
 					@endif
 				</div>
 				<a class="carousel-control-prev" href="#eventCarousel" role="button" data-slide="prev">
