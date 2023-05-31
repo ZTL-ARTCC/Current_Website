@@ -35,7 +35,7 @@ View Event
                     <p>{!! $event->description !!}</p>
                 </div>
             </div>
-            @if(Auth::user()->isAbleTo('events'))
+            @if(Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team'))
                 <br>
                 <div class="card">
                     <div class="card-header">
@@ -44,12 +44,14 @@ View Event
                         </h3>
                     </div>
                     <div class="card-body">
+                        @if(Auth::user()->isAbleTo('events'))
                         <p>
                             <i>Assign Positions:</i>
                             <span class="float-right" data-toggle="modal" data-target="#manualAssign">
                                     <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
                                 </span>
                         </p>
+                        @endif
                         <table class="table">
                             <thead>
                             <tr>
@@ -57,7 +59,9 @@ View Event
                                 <th scope="col">Position</th>
                                 <th scope="col">Controller</th>
                                 <th scope="col">Availability</th>
+                                @if(Auth::user()->isAbleTo('events'))
                                 <th scope="col">Actions</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -81,6 +85,7 @@ View Event
                                                 {{ $event->end_time }}z
                                             @endif
                                         </td>
+                                        @if(Auth::user()->isAbleTo('events'))
                                         <td>
                                             <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
                                                 <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
@@ -88,6 +93,7 @@ View Event
                                             &nbsp;
                                             <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
                                         </td>
+                                        @endif
                                     </tr>
 
                                     <div class="modal fade" id="addrequest{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -193,7 +199,7 @@ View Event
                                     <tr>
                                         <td>{{ $p->name }}</td>
                                         <td>
-                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && (! Auth::user()->isAbleTo('events') || ! Auth::user()->hasRole('events-team')) && ! $event->show_assignments))
+                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && ! Auth::user()->isAbleTo('events') && ! $event->show_assignments))
                                                 No Assignment
                                             @else
                                                 @foreach($p->controller as $c)
