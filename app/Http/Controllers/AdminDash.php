@@ -960,10 +960,7 @@ class AdminDash extends Controller {
 
     public function saveFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
-        if ($request->controller_id == '') {
-            $feedback->controller_id = $request->event_id;
-        }
+        $feedback->controller_id = $request->feedback_id == '' ? $request->event_id : $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -976,7 +973,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        $controller = User::find($feedback->controller_id);
+        $controller = User::find($feedback->feedback_id);
         if (isset($controller)) {
             Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
                 $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
@@ -989,10 +986,7 @@ class AdminDash extends Controller {
 
     public function hideFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
-        if ($request->controller_id == '') {
-            $feedback->controller_id = $request->event_id;
-        }
+        $feedback->controller_id = $request->feedback_id == '' ? $request->event_id : $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -1010,7 +1004,7 @@ class AdminDash extends Controller {
 
     public function updateFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
+        $feedback->controller_id = $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
