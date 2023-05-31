@@ -45,12 +45,12 @@ View Event
                     </div>
                     <div class="card-body">
                         @if(Auth::user()->isAbleTo('events'))
-                        <p>
-                            <i>Assign Positions:</i>
-                            <span class="float-right" data-toggle="modal" data-target="#manualAssign">
+                            <p>
+                                <i>Assign Positions:</i>
+                                <span class="float-right" data-toggle="modal" data-target="#manualAssign">
                                     <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
                                 </span>
-                        </p>
+                            </p>
                         @endif
                         <table class="table">
                             <thead>
@@ -86,13 +86,13 @@ View Event
                                             @endif
                                         </td>
                                         @if(Auth::user()->isAbleTo('events'))
-                                        <td>
-                                            <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
-                                                <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
-                                            </span>
-                                            &nbsp;
-                                            <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
-                                        </td>
+                                            <td>
+                                                <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
+                                                    <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
+                                                </span>
+                                                &nbsp;
+                                                <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
+                                            </td>
                                         @endif
                                     </tr>
 
