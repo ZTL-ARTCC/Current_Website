@@ -68,6 +68,7 @@ New Feedback
         <br>
         <button class="btn btn-success" type="submit">Send Feedback</button>
         <br>
+        <br>
     {!! Form::close() !!}
 </div>
 @endsection
