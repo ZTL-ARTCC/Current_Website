@@ -43,7 +43,7 @@
                 @endif
             </div>
         @endif
-        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('events'))
+        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
             <p class="collapsible-admin" style="margin-left:-20px; cursor:pointer">
                 ADMINISTRATION
