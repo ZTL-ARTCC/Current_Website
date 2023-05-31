@@ -340,15 +340,27 @@ class FrontController extends Controller {
         }
     }
 
-    public function newFeedback($cid=null) {
-        $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        if (!is_null($cid)) {
-            $controllerSelected = User::where('id', $cid)->get()->pluck('backwards_name', 'id')->first();
+    public function newFeedback($controllerSelected=null) {
+        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
+            $controllerSelected = intval($controllerSelected);
         }
-        array_unshift($controllers, 'General ATC Feedback');
-        $events = Event::where('date', '>', Carbon::now()->subDays(30)->endOfDay())->get()->pluck('name', 'id');
-        $feedbackOptions = array_merge($events, $controllers);
-
+        $events = Event::all()->pluck('date', 'id');
+        $eventsList = [];
+        foreach ($events as $evId => $event) {
+            $eventDate = Carbon::createFromFormat('m/d/Y', substr($event, 0, 10));
+            if ((Carbon::today() >= $eventDate) && (Carbon::today() <= $eventDate->copy()->addDays(30))) {
+                $eventsList[] = $evId;
+            }
+        }
+        unset($events);
+        $events = Event::whereIn('id', $eventsList)->orderBy('name', 'DESC')->get()->pluck('name', 'id');
+        foreach ($events as $evId => $event) {
+            $events['e' . $evId] = $event;
+            unset($events[$evId]);
+            $feedbackOptions->prepend('Event: ' . $event, 'e' . $evId);
+        }
+        $feedbackOptions->prepend('General ATC Feedback', 'g0');
         return view('site.feedback')->with('feedbackOptions', $feedbackOptions)->with('controllerSelected', $controllerSelected);
     }
 
