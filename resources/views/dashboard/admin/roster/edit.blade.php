@@ -200,7 +200,9 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC'
+                                10 => 'AEC',
+                                11 => 'AEC (Ghost)',
+                                12 => 'Events Team'
                             ], $user->staff_position, ['class' => 'form-control']) !!}
                         @endif
                     </div>
@@ -244,7 +246,9 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC'
+                                10 => 'AEC',
+                                11 => 'AEC (Ghost)',
+                                12 => 'Events Team'
                             ], $user->staff_position, ['class' => 'form-control', 'disabled']) !!}
                         @endif
                     </div>

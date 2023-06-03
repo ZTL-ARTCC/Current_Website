@@ -61,6 +61,14 @@ class LaratrustSeeder extends Seeder {
              'name' => 'ins',
              'display_name' => 'Instructor'
         ]);
+        DB::table('roles')->insert([
+            'name' => 'aec-ghost',
+            'display_name' => 'Assistant Events Coordinator (Ghost)'
+       ]);
+        DB::table('roles')->insert([
+            'name' => 'events-team',
+            'display_name' => 'Events Team Member'
+       ]);
         
         // Adds Permissions to the Permissions Table
         DB::table('permissions')->insert([
@@ -470,6 +478,10 @@ class LaratrustSeeder extends Seeder {
         DB::table('permission_role')->insert([
             'permission_id' => 11,
             'role_id' => 12
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 10,
+            'role_id' => 13
         ]);
     }
 }

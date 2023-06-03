@@ -133,7 +133,7 @@ class ControllerDash extends Controller {
         $pyrite = Pyrite::where('year', $lyear)->first();
 
         $controllers = ATC::get();
-        //$last_update = ControllerLogUpdate::first();
+
         $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
         $controllers_update = substr($last_update->created_at, -8, 5);
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
@@ -142,14 +142,12 @@ class ControllerDash extends Controller {
             return strtotime($e->date);
         });
         
-        // Leaderboard
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
         $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
         $home = $home->take(5);
-        // Leaderboard
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
@@ -352,7 +350,7 @@ class ControllerDash extends Controller {
     }
 
     public function showEvents() {
-        if (Auth::user()->isAbleTo('events')) {
+        if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $events = Event::where('status', 0)->orWhere('status', 1)->get()->sortByDesc(function ($e) {
                 return strtotime($e->date);
             });
@@ -370,7 +368,7 @@ class ControllerDash extends Controller {
     public function viewEvent($id) {
         $event = Event::find($id);
         $positions = EventPosition::where('event_id', $event->id)->orderBy('created_at', 'ASC')->get();
-        if (Auth::user()->isAbleTo('events')) {
+        if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
             $presets = PositionPreset::get()->pluck('name', 'id');
             $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name_rating', 'id');
