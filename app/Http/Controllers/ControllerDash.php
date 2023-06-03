@@ -132,7 +132,7 @@ class ControllerDash extends Controller {
         $pyrite = Pyrite::where('year', $lyear)->first();
 
         $controllers = ATC::get();
-        //$last_update = ControllerLogUpdate::first();
+
         $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
         $controllers_update = substr($last_update->created_at, -8, 5);
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
@@ -141,14 +141,12 @@ class ControllerDash extends Controller {
             return strtotime($e->date);
         });
         
-        // Leaderboard
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
         $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
         $home = $home->take(5);
-        // Leaderboard
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
         $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
