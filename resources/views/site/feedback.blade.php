@@ -66,9 +66,7 @@ New Feedback
         </div>
         <div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
         <br>
-        <button class="btn btn-success" type="submit">Send Feedback</button>
-        <br>
-        <br>
+        <button class="btn btn-success mb-2" type="submit">Send Feedback</button>
     {!! Form::close() !!}
 </div>
 @endsection
