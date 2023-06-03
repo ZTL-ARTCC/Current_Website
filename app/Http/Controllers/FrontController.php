@@ -390,7 +390,7 @@ class FrontController extends Controller {
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->feedback_id = ltrim($request->input('feedback_id'),'ge');
+        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'ge');
         $feedback->position = $request->input('position');
         $feedback->service_level = $request->input('service');
         $feedback->callsign = $request->input('callsign');
