@@ -71,10 +71,10 @@ class SetmoreAppointments extends Command {
                 $appointment->customer_cid = (isset($setmoreCustomerAppointment['customer']['additional_fields']['CID'])) ? $setmoreCustomerAppointment['customer']['additional_fields']['CID'] : null;
                 $appointment->save();
             }
-            if(DB::table('setmore_load')->count() == count($setmoreAppointments)) {
+            if (DB::table('setmore_load')->count() == count($setmoreAppointments)) {
                 DB::table('setmore')->truncate();
                 $loadAppts = SetmoreLoad::get();
-                foreach($loadAppts as $loadAppt) {
+                foreach ($loadAppts as $loadAppt) {
                     $setmoreAppt = new SetmoreAppointment;
                     $setmoreAppt = $loadAppt->replicate();
                     $setmoreAppt->setTable('setmore');
