@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\SetmoreAppointment;
+use App\SetmoreLoad;
 use Carbon\Carbon;
 use Config;
 use DB;
@@ -48,21 +49,17 @@ class SetmoreAppointments extends Command {
             $res = $client->request('GET', Config::get('setmore.endpoint') . '/o/oauth2/token?refreshToken=' . Config::get('setmore.api_key'));
             $setmoreAuthResp = (string) $res->getBody();
             $setmoreAuthRespA = json_decode($setmoreAuthResp, true);
+            $setmoreAccessToken = isset($setmoreAuthRespA['data']['token']) ? $setmoreAuthRespA['data']['token']['access_token'] : null;
         } catch (ClientErrorResponseException $exception) {
             echo "Unable to fetch access token from Setmore API: $exception";
-        }
-        if (isset($setmoreAuthRespA) && isset($setmoreAuthRespA['response'])) {
-            if ($setmoreAuthRespA['response'] && isset($setmoreAuthRespA['data']['token'])) {
-                $setmoreAccessToken = $setmoreAuthRespA['data']['token']['access_token'];
-            }
+            return 1;
         }
         if ($setmoreAccessToken != null) {
             $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to, true);
             $setmoreServices = $this->getSetmoreServiceNames($setmoreAccessToken);
             $setmoreStaff = $this->getSetmoreStaffNames($setmoreAccessToken);
-            DB::table('setmore')->truncate();
             foreach ($setmoreAppointments as $setmoreAppointment) {
-                $appointment = new SetmoreAppointment;
+                $appointment = new SetmoreLoad;
                 $appointment->setmore_key = $setmoreAppointment['key'];
                 $start_time_string = substr(str_replace('T', ' ', $setmoreAppointment['start_time']), 0, -1) . ':00';
                 $appointment->start_time = Carbon::createFromFormat('Y-m-d H:i:s', $start_time_string);
@@ -74,6 +71,17 @@ class SetmoreAppointments extends Command {
                 $appointment->customer_cid = (isset($setmoreCustomerAppointment['customer']['additional_fields']['CID'])) ? $setmoreCustomerAppointment['customer']['additional_fields']['CID'] : null;
                 $appointment->save();
             }
+            if(DB::table('setmore_load')->count() == count($setmoreAppointments)) {
+                DB::table('setmore')->truncate();
+                $loadAppts = SetmoreLoad::get();
+                foreach($loadAppts as $loadAppt) {
+                    $setmoreAppt = new SetmoreAppointment;
+                    $setmoreAppt = $loadAppt->replicate();
+                    $setmoreAppt->setTable('setmore');
+                    $setmoreAppt->save();
+                }
+            }
+            DB::table('setmore_load')->truncate();
         }
     }
 
