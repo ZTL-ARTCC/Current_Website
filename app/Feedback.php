@@ -31,6 +31,10 @@ class Feedback extends Model {
         return $this->controller_id;
     }
 
+    public function setFeedbackIdAttribute($value) {
+        $this->controller_id = $value;
+    }
+
     public function getFeedbackNameAttribute() {
         $controller = User::find($this->feedback_id);
         $event = Event::find($this->feedback_id);
