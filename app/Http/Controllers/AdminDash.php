@@ -952,7 +952,7 @@ class AdminDash extends Controller {
 
     public function saveFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->feedback_id == '' ? $request->event_id : $request->feedback_id;
+        $feedback->feedback_id = $request->feedback_id == '' ? $request->event_id : $request->controller_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -978,7 +978,7 @@ class AdminDash extends Controller {
 
     public function hideFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->feedback_id == '' ? $request->event_id : $request->feedback_id;
+        $feedback->feedback_id = $request->feedback_id == '' ? $request->event_id : $request->controller_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -996,7 +996,7 @@ class AdminDash extends Controller {
 
     public function updateFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->feedback_id;
+        $feedback->feedback_id = $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
