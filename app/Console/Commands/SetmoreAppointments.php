@@ -68,7 +68,7 @@ class SetmoreAppointments extends Command {
                 $appointment->staff_name = (isset($setmoreStaff[$setmoreAppointment['staff_key']])) ? $setmoreStaff[$setmoreAppointment['staff_key']] : null;
                 $appointment->service_key = $setmoreAppointment['service_key'];
                 $appointment->service_description = (isset($setmoreServices[$setmoreAppointment['service_key']])) ? $setmoreServices[$setmoreAppointment['service_key']] : null;
-                $appointment->customer_cid = (isset($setmoreCustomerAppointment['customer']['additional_fields']['CID'])) ? $setmoreCustomerAppointment['customer']['additional_fields']['CID'] : null;
+                $appointment->customer_cid = (isset($setmoreAppointment['customer']['additional_fields']['CID'])) ? $setmoreAppointment['customer']['additional_fields']['CID'] : null;
                 $appointment->save();
             }
             if (DB::table('setmore_load')->count() == count($setmoreAppointments)) {
