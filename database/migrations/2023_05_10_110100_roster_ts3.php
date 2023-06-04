@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up() {
         Schema::table('roster', function ($table) {
-            $table->string('ts3', 50);
+            $table->string('ts3', 50)->nullable();
         });
     }
 

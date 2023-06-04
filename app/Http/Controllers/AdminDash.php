@@ -327,7 +327,7 @@ class AdminDash extends Controller {
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            if ($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec', 'aec']) == true) {
+            if ($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec', 'aec','aec-ghost','events-team']) == true) {
                 if ($user->hasRole('atm')) {
                     $user->detachRole('atm');
                 } elseif ($user->hasRole('datm')) {
@@ -348,6 +348,10 @@ class AdminDash extends Controller {
                     $user->detachRole('ec');
                 } elseif ($user->hasRole('aec')) {
                     $user->detachRole('aec');
+                } elseif ($user->hasRole('aec-ghost')) {
+                    $user->detachRole('aec-ghost');
+                } elseif ($user->hasRole('events-team')) {
+                    $user->detachRole('events-team');
                 }
             }
 
@@ -371,6 +375,10 @@ class AdminDash extends Controller {
                 $user->attachRole('ec');
             } elseif ($request->input('staff') == 10) {
                 $user->attachRole('aec');
+            } elseif ($request->input('staff') == 11) {
+                $user->attachRole('aec-ghost');
+            } elseif ($request->input('staff') == 12) {
+                $user->attachRole('events-team');
             }
 
             if ($user->hasRole(['mtr', 'ins']) == true) {

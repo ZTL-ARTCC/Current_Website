@@ -46,7 +46,7 @@ class EventEmails extends Command {
         }
 
         if ($event != null) {
-            $positions = EventRegistration::where('status', 1)->where('event_id', $event->id)->get()->sortBy(function ($a) use ($event) {
+            $positions = EventRegistration::where('event_id', $event->id)->get()->sortBy(function ($a) use ($event) {
                 if ($a->start_time == null) {
                     return $event->start_time;
                 } else {
