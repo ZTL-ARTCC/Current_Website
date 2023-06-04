@@ -74,8 +74,8 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('feedback_id', 'Controller') !!}
-                                                    {!! Form::select('feedback_id', $controllers, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
+                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
                                                     {!! Form::hidden('event_id', $f->feedback_id) !!}
                                                 </div>
                                                 <div class="col-sm-6">
@@ -112,8 +112,8 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('feedback_id', 'Controller') !!}
-                                                    {!! Form::select('feedback_id', $controllers, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
+                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     {!! Form::label('position', 'Position') !!}
@@ -233,7 +233,7 @@ Feedback Management
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 {!! Form::label('feedback_id', 'Controller') !!}
-                                                {!! Form::select('feedback_id', $controllers, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
                                             </div>
                                             <div class="col-sm-6">
                                                 {!! Form::label('position', 'Position') !!}
