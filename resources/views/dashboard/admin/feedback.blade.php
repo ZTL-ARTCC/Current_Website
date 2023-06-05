@@ -28,7 +28,7 @@ Feedback Management
                     <thead>
                         <tr>
                             <th scope="col">Position</th>
-                            <th scope="col">Controller</th>
+                            <th scope="col">Controller/Event</th>
                             <th scope="col">Pilot</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Submitted</th>
@@ -39,7 +39,7 @@ Feedback Management
                         @foreach($feedback as $f)
                             <tr>
                                 <td><b>{{ $f->position }}</b> ({{ $f->service_level_text }})</td>
-                                <td>{{ $f->controller_name }}</td>
+                                <td>{{ $f->feedback_name }}</td>
 
                                 <td>{{$f->pilot_name}} ({{$f->pilot_cid}}), {{$f->pilot_email}}</td>
 
@@ -64,7 +64,7 @@ Feedback Management
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Save Feedback for {{ $f->controller_name }}</h5>
+                                            <h5 class="modal-title">Save Feedback for {{ $f->feedback_name }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -74,8 +74,9 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('controller_id', 'Controller') !!}
-                                                    {!! Form::select('controller_id', $controllers, $f->controller_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
+                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::hidden('event_id', $f->feedback_id) !!}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     {!! Form::label('position', 'Position') !!}
@@ -101,7 +102,7 @@ Feedback Management
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Hide Feedback for {{ $f->controller_name }}</h5>
+                                            <h5 class="modal-title">Hide Feedback for {{ $f->feedback_name }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -111,8 +112,8 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('controller_id', 'Controller') !!}
-                                                    {!! Form::select('controller_id', $controllers, $f->controller_id, ['class' => 'form-control']) !!}
+                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
+                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     {!! Form::label('position', 'Position') !!}
@@ -185,7 +186,7 @@ Feedback Management
                     <thead>
                         <tr>
                             <th scope="col">Position</th>
-                            <th scope="col">Controller</th>
+                            <th scope="col">Controller/Event</th>
                             <th scope="col">Comments</th>
                             <th scope="col">Staff Comments</th>
                             <th scope="col">Processed</th>
@@ -196,7 +197,7 @@ Feedback Management
                         @foreach($feedback_p as $f)
                         <tr>
                             <td><b>{{ $f->position }}</b> ({{ $f->service_level_text }})</td>
-                            <td>{{ $f->controller_name }}</td>
+                            <td>{{ $f->feedback_name }}</td>
                             <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 40, '...') }}</td>
                             <td data-toggle="tooltip" title="{{ $f->staff_comments }}">{{ str_limit($f->staff_comments, 40, '...') }}</td>
                             <td>{{ $f->created_at }}</td>
@@ -221,7 +222,7 @@ Feedback Management
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Update Feedback for {{ $f->controller_name }}</h5>
+                                        <h5 class="modal-title">Update Feedback for {{ $f->feedback_name }}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -231,8 +232,8 @@ Feedback Management
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                {!! Form::label('controller_id', 'Controller') !!}
-                                                {!! Form::select('controller_id', $controllers, $f->controller_id, ['class' => 'form-control']) !!}
+                                                {!! Form::label('feedback_id', 'Controller') !!}
+                                                {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
                                             </div>
                                             <div class="col-sm-6">
                                                 {!! Form::label('position', 'Position') !!}

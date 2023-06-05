@@ -340,14 +340,33 @@ class FrontController extends Controller {
         }
     }
 
-    public function newFeedback() {
-        $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        return view('site.feedback')->with('controllers', $controllers);
+    public function newFeedback($controllerSelected=null) {
+        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
+            $controllerSelected = intval($controllerSelected);
+        }
+        $events = Event::all()->pluck('date', 'id');
+        $eventsList = [];
+        foreach ($events as $evId => $event) {
+            $eventDate = Carbon::createFromFormat('m/d/Y', substr($event, 0, 10));
+            if ((Carbon::today() >= $eventDate) && (Carbon::today() <= $eventDate->copy()->addDays(30))) {
+                $eventsList[] = $evId;
+            }
+        }
+        unset($events);
+        $events = Event::whereIn('id', $eventsList)->orderBy('name', 'DESC')->get()->pluck('name', 'id');
+        foreach ($events as $evId => $event) {
+            $events['e' . $evId] = $event;
+            unset($events[$evId]);
+            $feedbackOptions->prepend('Event: ' . $event, 'e' . $evId);
+        }
+        $feedbackOptions->prepend('General ATC Feedback', 'g0');
+        return view('site.feedback')->with('feedbackOptions', $feedbackOptions)->with('controllerSelected', $controllerSelected);
     }
 
     public function saveNewFeedback(Request $request) {
         $validatedData = $request->validate([
-            'controller' => 'required',
+            'feedback_id' => 'required',
             'position' => 'required',
             'callsign' => 'required',
             'pilot_name' => 'required',
@@ -371,7 +390,7 @@ class FrontController extends Controller {
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->controller_id = $request->input('controller');
+        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'ge');
         $feedback->position = $request->input('position');
         $feedback->service_level = $request->input('service');
         $feedback->callsign = $request->input('callsign');

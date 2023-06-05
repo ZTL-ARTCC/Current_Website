@@ -951,15 +951,30 @@ class AdminDash extends Controller {
     }
 
     public function showFeedback() {
-        $controllers = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $events = Event::all()->pluck('date', 'id');
+        $eventsList = [];
+        foreach ($events as $evId => $event) {
+            $eventDate = Carbon::createFromFormat('m/d/Y', substr($event, 0, 10));
+            if ((Carbon::today() >= $eventDate) && (Carbon::today() <= $eventDate->copy()->addDays(45))) {
+                $eventsList[] = $evId;
+            }
+        }
+        unset($events);
+        $events = Event::whereIn('id', $eventsList)->orderBy('name', 'DESC')->get()->pluck('name', 'id');
+        foreach ($events as $evId => $event) {
+            $feedbackOptions->prepend('Event: ' . $event, $evId);
+        }
+        $feedbackOptions->prepend('General ATC Feedback', '0');
+
         $feedback = Feedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
         $feedback_p = Feedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
-        return view('dashboard.admin.feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('controllers', $controllers);
+        return view('dashboard.admin.feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', $feedbackOptions);
     }
 
     public function saveFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
+        $feedback->feedback_id = $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -972,20 +987,20 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        $controller = User::find($feedback->controller_id);
-
-        Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
-            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
-            $m->subject('You Have New Feedback!');
-            $m->to($controller->email);
-        });
-
+        $controller = User::find($feedback->feedback_id);
+        if (isset($controller)) {
+            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
+                $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
+                $m->subject('You Have New Feedback!');
+                $m->to($controller->email);
+            });
+        }
         return redirect()->back()->with('success', 'The feedback has been saved.');
     }
 
     public function hideFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
+        $feedback->feedback_id = $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;
@@ -1003,7 +1018,7 @@ class AdminDash extends Controller {
 
     public function updateFeedback(Request $request, $id) {
         $feedback = Feedback::find($id);
-        $feedback->controller_id = $request->controller_id;
+        $feedback->feedback_id = $request->feedback_id;
         $feedback->position = $request->position;
         $feedback->staff_comments = $request->staff_comments;
         $feedback->comments = $request->pilot_comments;

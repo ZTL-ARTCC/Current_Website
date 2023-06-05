@@ -27,10 +27,23 @@ class Feedback extends Model {
         }
     }
 
-    public function getControllerNameAttribute() {
-        $controller = User::find($this->controller_id);
+    public function getFeedbackIdAttribute() {
+        return $this->controller_id;
+    }
+
+    public function setFeedbackIdAttribute($value) {
+        $this->controller_id = $value;
+    }
+
+    public function getFeedbackNameAttribute() {
+        $controller = User::find($this->feedback_id);
+        $event = Event::find($this->feedback_id);
         if (isset($controller)) {
             $name = $controller->full_name;
+        } elseif (isset($event)) {
+            $name = $event->name;
+        } elseif ($this->feedback_id == 0) {
+            $name = 'General ATC Feedback';
         } else {
             $name = '[This controller is no longer a member]';
         }
