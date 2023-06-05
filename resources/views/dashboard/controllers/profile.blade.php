@@ -91,18 +91,20 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
                         @if(count($setmore_appointments) > 0)
                             @foreach($setmore_appointments as $sm_res)
-                                <td scope="col">{{ $sm_res->res_date }}</td>
-                                <td scope="col">{{ $sm_res->res_time }} ET</td>
-                                <td scope="col">{{ $sm_res->service_description }}</td>
-                                <td scope="col">{{ $sm_res->staff_name }}</td>   
+                                <tr>
+                                    <td scope="col">{{ $sm_res->res_date }}</td>
+                                    <td scope="col">{{ $sm_res->res_time }} ET</td>
+                                    <td scope="col">{{ $sm_res->service_description }}</td>
+                                    <td scope="col">{{ $sm_res->staff_name }}</td>
+                                </tr>   
                             @endforeach
                         @else
-                            <td scope="col" colspan="4">No Setmore reservations found.</td>
+                            <tr>
+                                <td scope="col" colspan="4">No Setmore reservations found.</td>
+                            </tr>
                         @endif
-                        </tr>
                     </tbody>
                 </table>
                 <p>Appointments will show here approximately 30 minutes after booking.</p>
