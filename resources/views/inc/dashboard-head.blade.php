@@ -1,10 +1,31 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
-        @if(Carbon\Carbon::now()->month == 12)
-            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/xmas_logo.png"></a>
-        @else
-            <a class="navbar-brand" href="/dashboard"><img width="100" src="/photos/logo.png"></a>
-        @endif
+        <a class="navbar-brand" href="/dashboard">
+            @toggle("custom_theme_logo")
+                @php
+                    $month = Carbon\Carbon::now()->month;
+                    $day = Carbon\Carbon::now()->day;
+                @endphp
+
+                @if($month >= 3 && $month <= 5)
+                    <img width="100" src="/photos/logos/ztl_logo_spring-black.png">
+                @elseif($month == 7 && $day == 4)
+                    <img width="100" src="/photos/logos/ztl_logo_flag-black.png">
+                @elseif($month >= 6 && $month <= 9)
+                    <img width="100" src="/photos/logos/ztl__logo_beach-black.png">
+                @elseif($month == 10)
+                    <img width="100" src="/photos/logos/ztl_logo_halloween-black.png">
+                @elseif($month == 11)
+                    <img width="100" src="/photos/logos/ztl_logo_turkey-black.png">
+                @elseif($month == 12)
+                    <img width="100" src="/photos/logos/ztl_logo_santa-black.png">
+                @else
+                    <img width="100" src="/photos/logos/0_ztl_logo_black.png">
+                @endif
+            @else
+                <img width="100" src="/photos/logos/0_ztl_logo_black.png">
+            @endtoggle
+        </a>
             <ul class="navbar-nav">
                 {!! Form::open(['action' => 'ControllerDash@searchAirport']) !!}
                     <div class="form-inline">
