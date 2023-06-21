@@ -1,7 +1,32 @@
 <div class="bg-dark w-100">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="/"><img width="100" src="/photos/ztl_logo_white.png"></a>
+        <a class="navbar-brand" href="/dashboard">
+            @toggle("custom_theme_logo")
+                @php
+                    $month = Carbon\Carbon::now()->month;
+                    $day = Carbon\Carbon::now()->day;
+                @endphp
+
+                @if($month >= 3 && $month <= 5)
+                    <img width="100" src="/photos/logos/ztl_logo_spring-white.png">
+                @elseif($month == 7 && $day == 4)
+                    <img width="100" src="/photos/logos/ztl_logo_flag-white.png">
+                @elseif($month >= 6 && $month <= 9)
+                    <img width="100" src="/photos/logos/ztl__logo_beach-white.png">
+                @elseif($month == 10)
+                    <img width="100" src="/photos/logos/ztl_logo_halloween-white.png">
+                @elseif($month == 11)
+                    <img width="100" src="/photos/logos/ztl_logo_turkey-white.png">
+                @elseif($month == 12)
+                    <img width="100" src="/photos/logos/ztl_logo_santa-white.png">
+                @else
+                    <img width="100" src="/photos/logos/0_ztl_logo_white.png">
+                @endif
+            @else
+                <img width="100" src="/photos/logos/0_ztl_logo_white.png">
+            @endtoggle
+        </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
