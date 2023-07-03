@@ -8,15 +8,17 @@
                     $day = Carbon\Carbon::now()->day;
                 @endphp
 
-                @if($month >= 3 && $month <= 5)
+                @if(($month == 12 && $day == 31) || ($month == 1 && $day == 1))
+                    <img width="100" src="/photos/logos/ztl_logo_fireworks-white.png">
+                @elseif(($month >= 3 && $day >= 20) && $month <= 4)
                     <img width="100" src="/photos/logos/ztl_logo_spring-white.png">
-                @elseif($month == 7 && $day == 4)
+                @elseif(($month == 1 && $day == 16) || ($month == 2 && $day == 20) || ($month == 5 && $day == 29) || ($month == 6 && $day == 19) || ($month == 7 && $day == 4) || ($month == 9 && $day == 4) || ($month == 10 && $day == 10))
                     <img width="100" src="/photos/logos/ztl_logo_flag-white.png">
                 @elseif($month >= 6 && $month <= 9)
                     <img width="100" src="/photos/logos/ztl__logo_beach-white.png">
                 @elseif($month == 10)
                     <img width="100" src="/photos/logos/ztl_logo_halloween-white.png">
-                @elseif($month == 11)
+                @elseif($month == 11 && $day >= 20)
                     <img width="100" src="/photos/logos/ztl_logo_turkey-white.png">
                 @elseif($month == 12)
                     <img width="100" src="/photos/logos/ztl_logo_santa-white.png">
