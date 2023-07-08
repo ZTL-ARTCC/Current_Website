@@ -199,7 +199,7 @@ View Event
                                     <tr>
                                         <td>{{ $p->name }}</td>
                                         <td>
-                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && ! Auth::user()->isAbleTo('events') && ! $event->show_assignments))
+                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && ! (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team')) && ! $event->show_assignments))
                                                 No Assignment
                                             @else
                                                 @foreach($p->controller as $c)
