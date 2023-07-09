@@ -74,7 +74,7 @@
                     <tbody>
                     @foreach($hcontrollers as $c)
                         <tr>
-                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train'))
+                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events'))
                                 <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">
                                         @if($c->hasRole('atm'))
                                             <span class="badge badge-danger">ATM</span> {{ $c->backwards_name }}
@@ -90,6 +90,8 @@
                                             <span class="badge badge-primary">EC</span> {{ $c->backwards_name }}
                                         @elseif($c->hasRole('aec'))
                                             <span class="badge badge-primary">AEC</span> {{ $c->backwards_name }}
+                                        @elseif($c->hasRole('aec-ghost'))
+                                            <span class="badge badge-primary">AEC-Ghost</span> {{ $c->backwards_name }}
                                         @elseif($c->hasRole('fe'))
                                             <span class="badge badge-primary">FE</span> {{ $c->backwards_name }}
                                         @elseif($c->hasRole('afe'))
@@ -100,6 +102,9 @@
                                             <span class="badge badge-info">MTR</span> {{ $c->backwards_name }}
                                         @else
                                             {{ $c->backwards_name }}
+                                        @endif
+                                        @if($c->hasRole('events-team'))
+                                            &nbsp;<span class="badge badge-warning">Events Team</span>
                                         @endif
                                     </a></td>
                             @else
