@@ -104,7 +104,7 @@
                                             {{ $c->backwards_name }}
                                         @endif
                                         @if($c->hasRole('events-team'))
-                                            &nbsp;<span class="badge badge-warning">Events Team</span>
+                                            <span class="badge badge-warning">Events Team</span>
                                         @endif
                                     </a></td>
                             @else
