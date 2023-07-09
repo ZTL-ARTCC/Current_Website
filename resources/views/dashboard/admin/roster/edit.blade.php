@@ -200,9 +200,6 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC',
-                                11 => 'AEC (Ghost)',
-                                12 => 'Events Team'
                             ], $user->staff_position, ['class' => 'form-control']) !!}
                         @endif
                     </div>
@@ -246,9 +243,6 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC',
-                                11 => 'AEC (Ghost)',
-                                12 => 'Events Team'
                             ], $user->staff_position, ['class' => 'form-control', 'disabled']) !!}
                         @endif
                     </div>
@@ -287,7 +281,6 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC'
                             ], $user->staff_position, ['class' => 'form-control']) !!}
                         @else
                             {!! Form::label('training', 'Training Position') !!}
@@ -317,7 +310,6 @@ Update Controller
                                 7 => 'FE',
                                 8 => 'AFE',
                                 9 => 'EC',
-                                10 => 'AEC'
                             ], $user->staff_position, ['class' => 'form-control', 'disabled']) !!}
                         @else
                             {!! Form::label('training', 'Training Position') !!}
@@ -344,6 +336,15 @@ Update Controller
                             ], $user->train_position, ['class' => 'form-control']) !!}
                         @endif
                     </div>
+                    <div class="col-sm-6">
+                        {!! Form::label('events_staff', 'Events Staff') !!}
+                        {!! Form::select('events_staff', [
+                            0 => 'NONE',
+                            1 => 'AEC',
+                            2 => 'AEC (Ghost)',
+                            3 => 'Events Team'
+                            ], $user->events_position, ['class' => 'form-control']) !!}
+                    </div>
                 </div>
             </div>
         @else
@@ -359,6 +360,27 @@ Update Controller
                             ], $user->train_position, ['class' => 'form-control', 'disabled']) !!}
                         @endif
                     </div>
+                    @if(Auth::user()->isAbleTo('events'))
+                    <div class="col-sm-6">
+                        {!! Form::label('events_staff', 'Events Staff') !!}
+                        {!! Form::select('events_staff', [
+                            0 => 'NONE',
+                            1 => 'AEC',
+                            2 => 'AEC (Ghost)',
+                            3 => 'Events Team'
+                            ], $user->events_position, ['class' => 'form-control']) !!}
+                    </div>
+                    @else
+                    <div class="col-sm-6">
+                        {!! Form::label('events_staff', 'Events Staff') !!}
+                        {!! Form::select('events_staff', [
+                            0 => 'NONE',
+                            1 => 'AEC',
+                            2 => 'AEC (Ghost)',
+                            3 => 'Events Team'
+                            ], $user->events_position, ['class' => 'form-control', 'disabled']) !!}
+                    </div>
+                    @endif
                 </div>
             </div>
         @endif
