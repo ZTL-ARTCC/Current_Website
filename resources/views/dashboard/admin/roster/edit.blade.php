@@ -366,7 +366,7 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
 						{!! Form::label('twr_solo_fields', 'Class D Tower Solo Certifications') !!}
-						{!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control']) !!}    
+						{!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control','maxlength' => 255]) !!}
                     </div>
                     <div class="col-sm-6">
                     {!! Form::label('twr_solo_expires', 'Tower Solo Expiration Date', ['class' => 'form-label']) !!}
