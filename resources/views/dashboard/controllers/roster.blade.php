@@ -229,7 +229,7 @@
                     <tbody>
                     @foreach($vcontrollers as $c)
                         <tr>
-                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train'))
+                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events'))
                                 <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} - {{ $c->visitor_from }}</a></td>
                             @else
                                 <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
