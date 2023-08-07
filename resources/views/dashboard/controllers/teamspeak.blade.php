@@ -45,7 +45,7 @@ Teamspeak Info
         <div class="col-sm-8">
             <ul>
                 <li>If connected to the ZTL TeamSpeak3 server, disconnect</li>
-				<li>In your TeamSpeak 3 menu go to Tools -> Identities (Ctrl-I)</li>
+		<li>In your TeamSpeak 3 menu go to Tools -> Identities (Ctrl-I)</li>
                 <li>Highlight & right click to copy your Unique ID to your clipboard</li>
                 <li>Proceed to your <a href="https://www.ztlartcc.org/dashboard/controllers/profile">ZTL Controller Dashboard</a> and scroll to the bottom to find your TS3 UID field</li>
                 <li>Paste your TeamSpeak3 UUID into the text box and click the Save button</li>
