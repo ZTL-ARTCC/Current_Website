@@ -217,10 +217,6 @@ class ControllerDash extends Controller {
         }
     }
 
-    public function showTeamspeak() {
-        return view('dashboard.controllers.teamspeak');
-    }
-
     public function showRoster() {
         $hcontrollers = User::where('status', '!=', 2)->where('visitor', '0')->where('status', '1')->orWhere('status', '0')->orderBy('lname', 'ASC')->get();
         $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
