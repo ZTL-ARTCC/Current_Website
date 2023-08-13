@@ -66,7 +66,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/', 'ControllerDash@dash');
 
     Route::prefix('controllers')->group(function () {
-        Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
         Route::get('/files', 'ControllerDash@showFiles');
