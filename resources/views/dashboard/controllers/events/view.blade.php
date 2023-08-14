@@ -30,7 +30,12 @@ View Event
                         <h5><b>Host ARTCC:</b> {{ $event->host }}</h5>
                     @endif
                     <h5><b>Date:</b> {{ $event->date }}</h5>
-                    <h5><b>Time:</b> {{ $event->start_time }}z to {{ $event->end_time }}z</h5>
+                    <h5><b>Time:</b>
+                        {{ $local_start_time }} to {{ $local_end_time }} <a style="color:inherit" href="#" data-toggle="tooltip"
+                                                                            title="Showing times in {{ $timezone }}. You can change this on your profile."><i
+                                    class="fas fa-info-circle"></i></a>
+                        ({{ $event->start_time }} to {{ $event->end_time }} Zulu)
+                    </h5>
                     <p><b>Additional Information:</b></p>
                     <p>{!! $event->description !!}</p>
                 </div>

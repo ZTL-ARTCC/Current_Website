@@ -382,8 +382,15 @@ class ControllerDash extends Controller {
         $your_registration2 = EventRegistration::where('event_id', $event->id)->where('controller_id', Auth::id())->where('choice_number', 2)->first();
         $your_registration3 = EventRegistration::where('event_id', $event->id)->where('controller_id', Auth::id())->where('choice_number', 3)->first();
 
+        $user = Auth::user();
+        $timezone = $user->timezone;
+
+        $local_start_time = timeToLocal($event->start_time, $timezone);
+        $local_end_time = timeToLocal($event->end_time, $timezone);
+
         return view('dashboard.controllers.events.view')->with('event', $event)->with('positions', $positions)->with('registrations', $registrations)->with('presets', $presets)->with('controllers', $controllers)
-                                                        ->with('your_registration1', $your_registration1)->with('your_registration2', $your_registration2)->with('your_registration3', $your_registration3);
+                                                        ->with('your_registration1', $your_registration1)->with('your_registration2', $your_registration2)->with('your_registration3', $your_registration3)->with('timezone', $timezone)
+                                                        ->with('local_start_time', $local_start_time)->with('local_end_time', $local_end_time);
     }
 
     public function signupForEvent(Request $request) {
@@ -684,10 +691,11 @@ class ControllerDash extends Controller {
         return redirect()->back()->with('success', 'Your bug has been reported successfully.');
     }
 
-    public function updateTS3(Request $request) {
+    public function updateInfo(Request $request) {
         $user = Auth::user();
         $user->ts3 = $request->ts3;
+        $user->timezone = $request->timezone;
         $user->save();
-        return redirect()->back()->with('success', 'Your TS3 UID has been updated successfully.');
+        return redirect()->back()->with('success', 'Your profile has been updated successfully.');
     }
 }

@@ -74,7 +74,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/atcast', 'ControllerDash@showatcast');
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
         Route::get('/profile', 'ControllerDash@showProfile');
-        Route::post('/profile', 'ControllerDash@updateTS3');
+        Route::post('/profile', 'ControllerDash@updateInfo');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
