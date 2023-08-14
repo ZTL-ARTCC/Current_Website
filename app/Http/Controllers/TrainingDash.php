@@ -221,7 +221,7 @@ class TrainingDash extends Controller {
             'http_errors' => false
         ];
         $client = new Client();
-        $res = $client->request('GET', 'https://api.vatusa.net/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        $res = $client->request('GET', Config::get('vatusa.base').'/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
         $academy = (string) $res->getBody();
         $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
         $academy = json_decode($academy, true);
@@ -341,7 +341,7 @@ class TrainingDash extends Controller {
         ];
 
         $client = new Client();
-        $res = $client->request('POST', 'https://api.vatusa.net/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        $res = $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
 
         if ($request->ots == 1) {
             $ots = new Ots;
