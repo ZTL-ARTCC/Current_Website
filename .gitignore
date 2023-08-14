@@ -22,3 +22,5 @@ favicon.gif
 /public/favicon.gif
 .tool-versions
 .php-cs-fixer.cache
+
+composer.phar

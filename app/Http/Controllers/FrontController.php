@@ -25,26 +25,62 @@ use SimpleXMLElement;
 class FrontController extends Controller {
     public function home() {
         $atc = ATC::get();
+
+        // For each facility (i.e. ATL), we want:
+        // Approach
+        // Departure
+        // Tower (T, G, D, A)
+
+        $fields = [];
+        $center = 0;
+
         if ($atc) {
-            $atl_ctr = 0;
-            $atl_app = 0;
-            $atl_twr = 0;
-            $clt_twr = 0;
+            foreach (monitoredAirfields() as $id => $name) {
+                $fields[$id] = [
+                    'name' => $name,
+                    'approach' => [
+                        'online' => 0
+                    ],
+                    'online' => 0,
+                    'subfields' => [
+                        /*
+                             * [
+                             *   'online' => 1,
+                             *   'short' => 'T',
+                             *   'color' => 'bg-tower'
+                             * ]
+                             */
+                    ]
+                ];
+            }
+
             foreach ($atc as $a) {
                 $field = substr($a->position, 0, 3);
                 $position = substr($a->position, -3);
-                if ($field == 'ATL') {
-                    if ($position == 'TWR' || $position == 'GND') {
-                        $atl_twr = 1;
-                    } elseif ($position == 'APP' || $position == 'DEP') {
-                        $atl_app = 1;
-                    } elseif ($position == 'CTR') {
-                        $atl_ctr = 1;
-                    }
-                } elseif ($field == 'CLT') {
-                    if ($position == 'TWR' || $position == 'GND' || $position == 'APP' || $position == 'DEP') {
-                        $clt_twr = 1;
-                    }
+
+                if (!isMonitoredAirfield($field)) {
+                    continue;
+                }
+
+                if ($field == 'ATL' && $position == 'CTR') {
+                    $center = 1;
+                    continue; // Atlanta Center is not a 'field' persay, so it gets it's own variable.
+                }
+
+                if ($position == 'APP' || $position == 'DEP') {
+                    $fields[$field]['approach'] = [
+                        'online' => 1
+                    ];
+                    continue; // approach and departure
+                }
+
+                if ($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
+                    $fields[$field]['online'] = 1;
+                    $fields[$field]['subfields'][$position] = [
+                        'online' => 1,
+                        'short' => substr($position, 0, 1),
+                        'color' => 'pos'.$position
+                    ];
                 }
             }
         }
@@ -86,7 +122,7 @@ class FrontController extends Controller {
 
         $overflightCount = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->count();
 
-        return view('site.home')->with('clt_twr', $clt_twr)->with('atl_twr', $atl_twr)->with('atl_app', $atl_app)->with('atl_ctr', $atl_ctr)
+        return view('site.home')->with('center', $center)->with('fields', $fields)
                                 ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
                                 ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
