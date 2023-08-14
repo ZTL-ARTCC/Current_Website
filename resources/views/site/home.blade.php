@@ -4,6 +4,10 @@
 Home
 @endsection
 
+@push('custom_header')
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+@endpush
+
 @section('content')
 <div class="w-100 py-3 bg-secondary">
 	<div class="jumbotron jumbotron-fluid rounded mb-0 mx-3" style="background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat">
@@ -69,7 +73,7 @@ Home
 							<table class="table table-sm table-borderless pb-0 mb-0">
 								<tr class="p-3 m-0">
 									<td class="py-0 pl-1 pr-2 m-0">
-										@if($atl_ctr === 1)
+										@if($center === 1)
 										<span class="badge bg-success">ONLINE</span>
 										@else
 										<span class="badge bg-danger">OFFLINE</span>
@@ -77,6 +81,38 @@ Home
 									</td>
 									<td class="py-0 px-2 m-0 text-white">Atlanta Center</td>
 								</tr>
+
+								@foreach ($fields as $field)
+									<tr class="p-3 m-0">
+										<td class="py-0 pl-1 pr-2 m-0">
+											@if($field['online'] === 1)
+												<span class="badge bg-success">ONLINE</span>
+											@else
+												<span class="badge bg-danger">OFFLINE</span>
+											@endif
+										</td>
+										<td class="py-0 px-2 m-0 text-white">
+											{{ $field['name'] }} ATCT
+
+											@foreach ($field['subfields'] as $subfield)
+												<span class="badge {{ $subfield['color'] }}">{{ $subfield['short'] }}</span>
+											@endforeach
+										</td>
+									</tr>
+
+									<tr class="p-3 m-0">
+										<td class="py-0 pl-1 pr-2 m-0">
+											@if($field['approach']['online'] === 1)
+												<span class="badge bg-success">ONLINE</span>
+											@else
+												<span class="badge bg-danger">OFFLINE</span>
+											@endif
+										</td>
+										<td class="py-0 px-2 m-0 text-white">{{ $field['name'] }} Approach</td>
+									</tr>
+								@endforeach
+
+								{{--
 								<tr class="p-3 m-0">
 									<td class="py-0 pl-1 pr-2 m-0">
 										@if($atl_app === 1)
@@ -85,28 +121,67 @@ Home
 										<span class="badge bg-danger">OFFLINE</span>
 										@endif
 									</td>
-									<td class="py-0 px-2 m-0 text-white">A80 TRACON</td>
+									<td class="py-0 px-2 m-0 text-white">Atlanta Approach (A80)</td>
 								</tr>
 								<tr class="p-3 m-0">
 									<td class="py-0 pl-1 pr-2 m-0">
+										@if($atl === 1)
+										<span class="badge bg-success">ONLINE</span>
+										@else
+										<span class="badge bg-danger">OFFLINE</span>
+										@endif
+									</td>
+									<td class="py-0 px-2 m-0 text-white">
+										Atlanta Tower
 										@if($atl_twr === 1)
-										<span class="badge bg-success">ONLINE</span>
-										@else
-										<span class="badge bg-danger">OFFLINE</span>
+											<span class="badge bg-tower">T</span>
+										@endif
+										@if($atl_gnd === 1)
+											<span class="badge bg-ground">G</span>
+										@endif
+										@if($atl_del === 1)
+											<span class="badge bg-delivery">D</span>
+										@endif
+										@if($atl_atis === 1)
+											<span class="badge bg-atis">A</span>
 										@endif
 									</td>
-									<td class="py-0 px-2 m-0 text-white">Atlanta ATCT</td>
 								</tr>
 								<tr class="p-3 m-0">
 									<td class="py-0 pl-1 pr-2 m-0">
-										@if($clt_twr === 1)
+										@if($clt_app === 1)
 										<span class="badge bg-success">ONLINE</span>
 										@else
 										<span class="badge bg-danger">OFFLINE</span>
 										@endif
 									</td>
-									<td class="py-0 px-2 m-0 text-white">Charlotte ATCT</td>
+									<td class="py-0 px-2 m-0 text-white">Charlotte Approach</td>
 								</tr>
+								<tr class="p-3 m-0">
+									<td class="py-0 pl-1 pr-2 m-0">
+										@if($clt === 1)
+										<span class="badge bg-success">ONLINE</span>
+										@else
+										<span class="badge bg-danger">OFFLINE</span>
+										@endif
+									</td>
+									<td class="py-0 px-2 m-0 text-white">
+										Charlotte Tower
+										@if($clt_twr === 1)
+											<span class="badge bg-tower">T</span>
+										@endif
+										@if($clt_gnd === 1)
+											<span class="badge bg-ground">G</span>
+										@endif
+										@if($clt_del === 1)
+											<span class="badge bg-delivery">D</span>
+										@endif
+										@if($clt_atis === 1)
+											<span class="badge bg-atis">A</span>
+										@endif
+									</td>
+								</tr>
+								--}}
 							</table>
 						</div>
 					</div>
