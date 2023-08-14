@@ -9,6 +9,7 @@
         "ckeditor/ckeditor": "^4.17",
         "devmarketer/easynav": "^1.0",
         "guzzlehttp/guzzle": "^7.4.5",
+        "jamesmills/laravel-timezone": "^1.13",
         "laravel/framework": "^10.0",
         "laravel/helpers": "^1.5",
         "laravel/legacy-factories": "^1.1.1",
@@ -17,8 +18,8 @@
         "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.0",
         "league/oauth2-client": "^2.4",
-        "mitoteam/jpgraph": "^10.2",
         "maatwebsite/excel": "^3.1",
+        "mitoteam/jpgraph": "^10.2",
         "psr/simple-cache": "^2.0",
         "santigarcor/laratrust": "^7.0"
     },
