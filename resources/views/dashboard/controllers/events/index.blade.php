@@ -38,7 +38,12 @@ Events
                             <td width="500px"><a href="/dashboard/controllers/events/view/{{ $e->id }}"><h4>{{ $e->name }}</h4></a></td>
                         @endif
                         <td>{{ $e->date }}</td>
-                        <td>{{ $e->start_time }} - {{ $e->end_time }}z</td>
+                        <td>
+                            {{ timeToLocal($e->start_time, Auth::user()->timezone) }} to {{ timeToLocal($e->end_time, Auth::user()->timezone) }} <a style="color:inherit" href="#" data-toggle="tooltip"
+                                                                                title="Showing times in {{ Auth::user()->timezone }}. You can change this on your profile."><i
+                                        class="fas fa-info-circle"></i></a>
+                            ({{ $e->start_time }} to {{ $e->end_time }} Zulu)
+                        </td>
                         @if(Auth::user()->isAbleTo('events'))
                             <td>
                                 @if($e->status == 0)

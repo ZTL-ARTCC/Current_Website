@@ -9,7 +9,7 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::table('roster', function ($table) {
-            $table->string('timezone', '128');
+            $table->string('timezone', '128')->default("America/New_York"); // Default to EST/EDT
         });
     }
 
