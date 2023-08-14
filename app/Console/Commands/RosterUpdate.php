@@ -39,7 +39,7 @@ class RosterUpdate extends Command {
      */
     public function handle() {
         $client = new Client();
-        $res = $client->get('https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster?apikey='.Config::get('vatusa.api_key'));
+        $res = $client->get(Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster?apikey='.Config::get('vatusa.api_key'));
 
         if ($res->getStatusCode() == "200") {
             $roster = json_decode($res->getBody());
