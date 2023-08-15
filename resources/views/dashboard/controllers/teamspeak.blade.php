@@ -49,7 +49,7 @@ Teamspeak Info
                 <li>Highlight & right click to copy your Unique ID to your clipboard</li>
                 <li>Proceed to your <a href="https://www.ztlartcc.org/dashboard/controllers/profile">ZTL Controller Dashboard</a> and scroll to the bottom to find your TS3 UID field</li>
                 <li>Paste your TeamSpeak3 UUID into the text box and click the Save button</li>
-                <li>Log into the ZTL TeamSpeak 3 server and your roles should not auto assign. If they fail to assign, log back out and then in. If the roles fail to assign, please reach out to a ZTL staff member.</li>
+                <li>Log into the ZTL TeamSpeak 3 server and your roles should auto assign. If they fail to assign, log back out and then in. If the roles fail to assign, please reach out to a ZTL staff member.</li>
             </ul>
         </div>
         <div class="col-sm-2">
