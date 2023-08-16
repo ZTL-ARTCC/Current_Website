@@ -43,7 +43,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 <th scope="col">Name</th>
                 <th scope="col">CID</th>
                 <th scope="col">Rating</th>
-                <th scope="col">Eligible Hero Monthly Hours to Date</th>
+                <th scope="col">Eligible Local Hero Monthly Hours to Date</th>
                 <th scope="col">Eligible Bronze Monthly Hours to Date</th>
                 <th scope="col">Eligible Pyrite Yearly Hours to Date</th>
                 <th scope="col">Actions</th>
@@ -74,7 +74,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                         @if($winner == null)
                             {!! Form::open(['url' => '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id]) !!}
                                 @csrf
-                                <button action="submit" class="btn btn-simple-tooltip" style="color:#C9AE5D" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
+                                <button action="submit" class="btn btn-simple-tooltip" style="background-color:#C9AE5D" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                             {!! Form::close() !!}
                         @elseif($winner->controller_id == $h->id)
                             <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fas fa-times"></i></a>
