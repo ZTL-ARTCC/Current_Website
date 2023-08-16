@@ -1200,13 +1200,14 @@ class AdminDash extends Controller {
         $homec = User::where('visitor', 0)->where('status', 1)->get();
         $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
+        $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
         $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->bronze_hrs;
         });
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
-                                                  ->with('home', $home)->with('winner', $winner);
+                                                  ->with('home', $home)->with('winner', $winner)->with('winner', $winner_local);
     }
 
     public function setLocalHeroWinner($year, $month, $hours, $id) {
