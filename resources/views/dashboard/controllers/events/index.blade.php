@@ -39,10 +39,10 @@ Events
                         @endif
                         <td>{{ $e->date }}</td>
                         <td>
-                            {{ timeToLocal($e->start_time, Auth::user()->timezone) }} to {{ timeToLocal($e->end_time, Auth::user()->timezone) }} <a style="color:inherit" href="#" data-toggle="tooltip"
-                                                                                title="Showing times in {{ Auth::user()->timezone }}. You can change this on your profile."><i
-                                        class="fas fa-info-circle"></i></a>
-                            ({{ $e->start_time }} to {{ $e->end_time }} Zulu)
+                            {{ $e->start_time }} to {{ $e->end_time }} Zulu
+                            ({{ timeToLocal($e->start_time, Auth::user()->timezone) }} to {{ timeToLocal($e->end_time, Auth::user()->timezone) }} <a style="color:inherit" href="#" data-toggle="tooltip"
+                                                                                                                                                     title="Showing times in {{ Auth::user()->timezone }}. You can change this on your profile."><i
+                                        class="fas fa-info-circle"></i></a>)
                         </td>
                         @if(Auth::user()->isAbleTo('events'))
                             <td>

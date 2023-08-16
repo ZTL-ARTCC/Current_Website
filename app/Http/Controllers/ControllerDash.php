@@ -394,9 +394,31 @@ class ControllerDash extends Controller {
     }
 
     public function signupForEvent(Request $request) {
+        // Validate start_time and end_time
+        // Also convert them to UTC
+        // https://regex101.com/r/4LGhop/1
+        $valid_time_expr = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/";
         $id = $request->event_id;
+
+        if ($request->whole_event != "1" && !preg_match($valid_time_expr, $request->start_time)) {
+            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+        if ($request->whole_event != "1" && !preg_match($valid_time_expr, $request->end_time)) {
+            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+
+        if ($request->timezone == 'Local') {
+            $request->start_time1 = timeFromLocal($request->start_time1, Auth::user()->timezone);
+            $request->end_time1 = timeFromLocal($request->end_time1, Auth::user()->timezone);
+        }
+
+        if ($request->num1 == null && $request->yr1 == null) {
+            return redirect()->back()->with('error', 'You need to select a position to sign up for.');
+        }
+
         if ($request->num1 != null) {
             if ($request->yr1 != null) {
+                /*
                 $reg = EventRegistration::find($request->yr1);
                 $reg->event_id = $id;
                 $reg->controller_id = Auth::id();
@@ -406,6 +428,9 @@ class ControllerDash extends Controller {
                 $reg->status = 0;
                 $reg->choice_number = 1;
                 $reg->save();
+                */ // What is this for? it looks like it is for updating, but there is no such button on the frontend...
+                // I removed it for now as it leads to confusing frontend behavior.
+                // You can't even reach this codepath with the current frontend.
             } else {
                 $reg = new EventRegistration;
                 $reg->event_id = $id;
