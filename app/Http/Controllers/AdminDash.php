@@ -1209,6 +1209,36 @@ class AdminDash extends Controller {
                                                   ->with('home', $home)->with('winner', $winner);
     }
 
+    public function setLocalHeroWinner($year, $month, $hours, $id) {
+        $local_hero = new LocalHero;
+        $local_hero->controller_id = $id;
+        $local_hero->month = $month;
+        $local_hero->year = $year;
+        $local_hero->month_hours = $hours;
+        $local_hero->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' set the local hero winner for '.$month.'/'.$year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
+    }
+
+    public function removeLocalHeroWinner($id, $year, $month) {
+        $local_hero = LocalHero::find($id);
+        $local_hero->delete();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' removed the local hero winner for '.$month.'/'.$year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
+    }
+
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
         $bronze = new Bronze;
         $bronze->controller_id = $id;
@@ -1236,7 +1266,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
     }
 
     public function showPyriteMic($year = null) {
