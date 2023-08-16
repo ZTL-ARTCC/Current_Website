@@ -9,7 +9,7 @@ Bronze Mic
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
     &nbsp;
-    <h2>Bronze Mic Management</h2>
+    <h2>Bronze Mic/Local Hero Management</h2>
     &nbsp;
 </div>
 <br>
@@ -43,8 +43,9 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 <th scope="col">Name</th>
                 <th scope="col">CID</th>
                 <th scope="col">Rating</th>
-                <th scope="col">Eligible Monthly Hours to Date</th>
-                <th scope="col">Eligible Yearly Hours to Date</th>
+                <th scope="col">Eligible Hero Monthly Hours to Date</th>
+                <th scope="col">Eligible Bronze Monthly Hours to Date</th>
+                <th scope="col">Eligible Pyrite Yearly Hours to Date</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -54,16 +55,29 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                     <td>{{ $h->full_name }}</td>
                     <td>{{ $h->id }}</td>
                     <td>{{ $h->rating_short }}</td>
+                    <td>{{ $stats[$h->id]->local_hero_hrs }}</td>
                     <td>{{ $stats[$h->id]->bronze_hrs }}</td>
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td>
+                        @toggle('localhero')
+                            @if($winner_local == null)
+                                {!! Form::open(['url' => '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id]) !!}
+                                    @csrf
+                                    <button action="submit" class="btn btn-primary btn-simple-tooltip" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
+                                {!! Form::close() !!}
+                            @elseif($winner_local->controller_id == $h->id)
+                                <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-times"></i></a>
+                            @else
+                                <p>Winner already selected.</p>
+                            @endif
+                        @endtoggle
                         @if($winner == null)
                             {!! Form::open(['url' => '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id]) !!}
                                 @csrf
-                                <button action="submit" class="btn btn-success btn-simple-tooltip" data-toggle="tooltip" title="Set as Winner for <?=$mname?>"><i class="fas fa-check"></i></button>
+                                <button action="submit" class="btn btn-simple-tooltip" style="color:#C9AE5D" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                             {!! Form::close() !!}
                         @elseif($winner->controller_id == $h->id)
-                            <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove Winner"><i class="fas fa-times"></i></a>
+                            <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fas fa-times"></i></a>
                         @else
                             <p>Winner already selected.</p>
                         @endif
