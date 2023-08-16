@@ -347,21 +347,6 @@
                                             <div class="col-sm-5 mt-1">
                                                 {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['autocomplete' => 'off', 'placeholder' => 'Desired Position', 'class' => 'form-control']) !!}
                                             </div>
-                                            <div class="col-sm-6">
-                                                <!-- Writing manually for formatting reasons -->
-                                                <div class="form-check">
-                                                    <input autocomplete="off" class="form-check-input" type="radio" value="1"
-                                                           id="whole_event" name="whole_event" checked/>
-                                                    <label class="form-check-label" for="whole_event">Available for full
-                                                        event</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input autocomplete="off" class="form-check-input" type="radio" value="0"
-                                                           id="whole_event2" name="whole_event"/>
-                                                    <label class="form-check-label" for="whole_event2">Available for part
-                                                        of event</label>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-10">
@@ -591,5 +576,4 @@
             </div>
         @endif
     </div>
-    {{Html::script(asset("js/event_view.js"))}}
 @endsection
