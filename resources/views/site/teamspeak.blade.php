@@ -34,6 +34,7 @@ Teamspeak
                 <li>Controlling rooms are limited to controlling only. If a controller asks for you to leave, please do so.</li>
                 <li>Use of the teamspeak is a privilage and can be revoked by a staff member at any time and for any reason. To appeal teamspeak bans, please contact the DATM at <a href="datm@ztlartcc.org">datm@ztlartcc.org</a>.</li>
             </ul>
+            <p>Please review the <a href="https://www.ztlartcc.org/asset/TeamSpeakDiscordPolicy">TeamSpeak and Discord Policy</a> for the full list of rules prior to joining the TeamSpeak server.</p>
         </div>
         <div class="col-sm-2">
         </div>
