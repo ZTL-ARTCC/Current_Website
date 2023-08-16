@@ -48,6 +48,10 @@ class ControllerLog extends Model {
         return floatval($this->attributes['bronze_hrs']) ? number_format($this->attributes['bronze_hrs'], 2) : '--';
     }
 
+    public function getLocalHeroHrsAttribute() {
+        return floatval($this->attributes['local_hero_hrs']) ? number_format($this->attributes['local_hero_hrs'], 2) : '--';
+    }
+
     public static function getAllControllerStats() {
         return static::aggregateStatsByTime(static::query());
     }
@@ -90,6 +94,10 @@ class ControllerLog extends Model {
 				SUM(IF(position LIKE '%_APP' OR position LIKE '%_DEP', duration, 0)) / 3600 `approach_hrs`,
 				SUM(IF(position LIKE '%_CTR', duration, 0)) / 3600 `enroute_hrs`,
 				SUM(IF(position LIKE '%_CTR' OR position LIKE '%_APP' OR position LIKE '%_DEP' OR position LIKE '%_TWR', duration, 0)) / 3600 `bronze_hrs`,
+                SUM(IF(position LIKE 'BHM_%' OR position LIKE 'GSP_%' OR position LIKE 'AVL_%' OR position LIKE 'TYS_%' OR position LIKE 'TYS_%' OR position LIKE 'CHA_%' OR position LIKE 'FTY_%' 
+                    OR position LIKE 'RYY_%' OR position LIKE 'AHN_%' OR position LIKE 'AGS_%' OR position LIKE 'GMU_%' OR position LIKE 'GYH_%' OR position LIKE 'TCL_%' OR position LIKE 'MXF_%'
+                    OR position LIKE 'MGM_%' OR position LIKE 'MGM_%' OR position LIKE 'LSF_%' OR position LIKE 'CSG_%' OR position LIKE 'MCN_%' OR position LIKE 'WRB_%' OR position LIKE 'JQF_%'
+                    OR position LIKE 'VUJ_%' OR position LIKE 'INT_%' OR position LIKE 'TRI_%' OR position LIKE 'LZU_%' OR position LIKE 'ASN_%' OR position LIKE 'HKY_%' OR position LIKE 'PDK_%', duration, 0)) / 3600 `local_hero_hrs`,
 				SUM(duration) / 3600 `total_hrs`
 			")
             ->groupBy('roster.id');
