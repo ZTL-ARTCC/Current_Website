@@ -59,7 +59,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                     <td>{{ $stats[$h->id]->bronze_hrs }}</td>
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td>
-                        @toggle('localhero')
+                        @toggle('local-hero')
                             @if($winner_local == null)
                                 {!! Form::open(['url' => '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id]) !!}
                                     @csrf

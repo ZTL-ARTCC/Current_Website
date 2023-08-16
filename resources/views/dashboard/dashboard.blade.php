@@ -209,7 +209,7 @@ Dashboard
 			</div>
 		</div>
     </div>
-    @toggle('localhero')
+    @toggle('local-hero')
         <hr>
         <center><h2><i class="fas fa-trophy text-primary"></i> Local Hero Award <i class="fas fa-trophy text-primary"></i></h2></center>
 	    <div class="row">
