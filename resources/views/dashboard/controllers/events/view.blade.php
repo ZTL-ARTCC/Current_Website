@@ -345,20 +345,20 @@
                                         {!! Form::hidden('yr1', null) !!}
                                         <div class="row mb-2">
                                             <div class="col-sm-5 mt-1">
-                                                {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['placeholder' => 'Desired Position', 'class' => 'form-control']) !!}
+                                                {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['autocomplete' => 'off', 'placeholder' => 'Desired Position', 'class' => 'form-control']) !!}
                                             </div>
                                             <div class="col-sm-6">
                                                 <!-- Writing manually for formatting reasons -->
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="1"
+                                                    <input autocomplete="off" class="form-check-input" type="radio" value="1"
                                                            id="whole_event" name="whole_event" checked/>
                                                     <label class="form-check-label" for="whole_event">Available for full
                                                         event</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="0"
-                                                           id="whole_event" name="whole_event"/>
-                                                    <label class="form-check-label" for="whole_event">Available for part
+                                                    <input autocomplete="off" class="form-check-input" type="radio" value="0"
+                                                           id="whole_event2" name="whole_event"/>
+                                                    <label class="form-check-label" for="whole_event2">Available for part
                                                         of event</label>
                                                 </div>
                                             </div>
@@ -367,10 +367,10 @@
                                             <div class="col-sm-10">
                                                 <div class="form-inline">
                                                     {!! Form::label('start_time1', 'Available from:', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('start_time1', null, ['placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
+                                                    {!! Form::text('start_time1', null, ['autocomplete' => 'off', 'disabled' => 'true', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
                                                     {!! Form::label('end_time1', '-', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('end_time1', null, ['placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
-                                                    {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['class' => 'form-control col-sm-3']) !!}
+                                                    {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'disabled' => 'true', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
+                                                    {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'disabled' => 'true', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -591,4 +591,5 @@
             </div>
         @endif
     </div>
+    {{Html::script(asset("js/event_view.js"))}}
 @endsection
