@@ -199,7 +199,7 @@ Dashboard
         					<center><h4><b>{{ $winner->name }}</b></h4></center>
         					<center><h5>With {{ $winner->month_hours }} hours!</h5></center>
         				@else
-        					<center><h4>No Winner Has Been Chosen</h4></center>
+        					<center><h4>No Winner Was Chosen</h4></center>
         					<center><h5>Check back for updates!</h5></center>
         				@endif
                     </div>
@@ -244,7 +244,7 @@ Dashboard
         					    <center><h4><b>{{ $winner_local->name }}</b></h4></center>
         					    <center><h5>With {{ $winner_local->month_hours }} hours!</h5></center>
         				    @else
-        					    <center><h4>No Winner Has Been Chosen</h4></center>
+        					    <center><h4>No Winner Was Chosen</h4></center>
         					    <center><h5>Check back for updates!</h5></center>
         				    @endif
                         </div>

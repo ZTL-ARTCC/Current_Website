@@ -15,6 +15,7 @@ use App\FeatureToggle;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LocalHero;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -1207,7 +1208,7 @@ class AdminDash extends Controller {
         });
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
-                                                  ->with('home', $home)->with('winner', $winner)->with('winner', $winner_local);
+                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local);
     }
 
     public function setLocalHeroWinner($year, $month, $hours, $id) {
