@@ -220,7 +220,7 @@ Dashboard
                     <div class="col-sm-8">
         			    <center><h4>Winner for {{ $pmonth_words }}</h4></center>
         			    <div class="card card-body bg-primary">
-        				    @if($pwinner != null)
+        				    @if($pwinner_local != null)
         					    <center><h4><b>{{ $pwinner_local->name }}</b></h4></center>
         					    <center><h5>With {{ $pwinner_local->month_hours }} hours!</h5></center>
         				    @else
@@ -240,7 +240,7 @@ Dashboard
                     <div class="col-sm-8">
         			    <center><h4>Most Recent Winner ({{ $month_words }})</h4></center>
         			    <div class="card card-body bg-primary">
-        				    @if($winner != null)
+        				    @if($winner_local != null)
         					    <center><h4><b>{{ $winner_local->name }}</b></h4></center>
         					    <center><h5>With {{ $winner_local->month_hours }} hours!</h5></center>
         				    @else
