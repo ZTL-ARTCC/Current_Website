@@ -13,6 +13,7 @@ use App\EventPosition;
 use App\EventRegistration;
 use App\Feedback;
 use App\File;
+use App\LocalHero;
 use App\Incident;
 use App\Opt;
 use App\Overflight;
@@ -118,6 +119,7 @@ class ControllerDash extends Controller {
             $year = substr($now->year, -2);
         }
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
+        $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
         if ($pmonth < 1) {
             $pyear = substr($now->year, -2) - '1';
@@ -130,6 +132,7 @@ class ControllerDash extends Controller {
             $pyear = substr($now->year, -2);
         }
         $pwinner = Bronze::where('month', $pmonth)->where('year', $pyear)->first();
+        $pwinner_local = LocalHero::where('month', $month)->where('year', $year)->first();
         $pyrite = Pyrite::where('year', $lyear)->first();
 
         $controllers = ATC::get();
@@ -157,6 +160,7 @@ class ControllerDash extends Controller {
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
+                                          ->with('winner', $winner_local)->with('pwinner', $pwinner_local)
                                           ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 
