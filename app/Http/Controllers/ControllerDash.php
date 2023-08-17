@@ -160,7 +160,7 @@ class ControllerDash extends Controller {
                                           ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
-                                          ->with('winner', $winner_local)->with('pwinner', $pwinner_local)
+                                          ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
                                           ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 
