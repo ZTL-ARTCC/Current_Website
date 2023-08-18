@@ -71,7 +71,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/incident') }}" href="/dashboard/admin/incident">Incident Report Management</a>
                 @endif
                 @if(Auth::user()->isAbleTo('roster'))
-                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Bronze Mic Management</a>
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Award Management</a>
                 @endif
                 @if(Auth::user()->isAbleTo('staff'))
                     @toggle('realops')
