@@ -1192,7 +1192,7 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/announcement')->with('success', 'The announcement has been updated successfully.');
     }
 
-    public function showBronzeMic($year = null, $month = null) {
+    public function showBronzeMic($sort = 'bronzesort', $year = null, $month = null) {
         if ($year == null) {
             $year = date('y');
         }
@@ -1206,14 +1206,22 @@ class AdminDash extends Controller {
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
         $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
-        $home = $homec->sortByDesc(function ($user) use ($stats) {
-            return $stats[$user->id]->bronze_hrs;
-        });
-        return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)
+        if ($sort == 'pyritesort') {
+            $home = $homec->sortByDesc(function ($user) use ($year_stats) {
+                return $year_stats[$user->id]->bronze_hrs;
+            });
+        } else {
+            $home = $homec->sortByDesc(function ($user) use ($stats) {
+                if ($sort == 'localsort') {
+                    return $stats[$user->id]->local_hero_hrs;
+                }
+                return $stats[$user->id]->bronze_hrs;
+            });
+        }
+        return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)->with('sort', $sort)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
                                                   ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local);
     }
