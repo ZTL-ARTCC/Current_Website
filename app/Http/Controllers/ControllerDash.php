@@ -132,7 +132,7 @@ class ControllerDash extends Controller {
             $pyear = substr($now->year, -2);
         }
         $pwinner = Bronze::where('month', $pmonth)->where('year', $pyear)->first();
-        $pwinner_local = LocalHero::where('month', $month)->where('year', $year)->first();
+        $pwinner_local = LocalHero::where('month', $pmonth)->where('year', $pyear)->first();
         $pyrite = Pyrite::where('year', $lyear)->first();
 
         $controllers = ATC::get();
