@@ -9,7 +9,7 @@ Bronze Mic
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
     &nbsp;
-    <h2>Bronze Mic/Local Hero Management</h2>
+    <h2>Award Management</h2>
     &nbsp;
 </div>
 <br>
