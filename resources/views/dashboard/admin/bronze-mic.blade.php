@@ -3,7 +3,7 @@
 
 
 @section('title')
-Bronze Mic
+Award Management
 @endsection
 
 @section('content')
@@ -67,7 +67,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                         <button action="submit" class="btn btn-primary btn-simple-tooltip" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
                                     {!! Form::close() !!}
                                 @elseif($winner_local->controller_id == $h->id)
-                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-times"></i></a>
+                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip margin-right-xs" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
                                 @else
                                     <p>Winner already selected.</p>
                                 @endif
@@ -78,7 +78,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                     <button action="submit" class="btn btn-simple-tooltip" style="background-color:#C9AE5D" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                                 {!! Form::close() !!}
                             @elseif($winner->controller_id == $h->id)
-                                <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-danger btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fas fa-times"></i></a>
+                                <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fa fa-microphone"></i></a>
                             @else
                                 <p>Winner already selected.</p>
                             @endif
