@@ -34,6 +34,26 @@ Teamspeak
                 <li>Controlling rooms are limited to controlling only. If a controller asks for you to leave, please do so.</li>
                 <li>Use of the teamspeak is a privilage and can be revoked by a staff member at any time and for any reason. To appeal teamspeak bans, please contact the DATM at <a href="datm@ztlartcc.org">datm@ztlartcc.org</a>.</li>
             </ul>
+            <p>Please review the <a href="https://www.ztlartcc.org/asset/TeamSpeakDiscordPolicy">TeamSpeak and Discord Policy</a> for the full list of rules prior to joining the TeamSpeak server.</p>
+        </div>
+        <div class="col-sm-2">
+        </div>
+
+            </div> 
+<hr>
+    <center><h2>Link your TeamSpeak3 PC Client UUID to your ZTL Controller Profile to assign your roles:</h2></center>
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8">
+            <ul>
+                <li>If connected to the ZTL TeamSpeak3 server, disconnect</li>
+				<li>In your TeamSpeak 3 menu go to Tools -> Identities (Ctrl-I)</li>
+                <li>Highlight & right click to copy your Unique ID to your clipboard</li>
+                <li>Proceed to your <a href="https://www.ztlartcc.org/dashboard/controllers/profile">ZTL Controller Dashboard</a> and scroll to the bottom to find your TS3 UID field</li>
+                <li>Paste your TeamSpeak3 UUID into the text box and click the Save button</li>
+                <li>Log into the ZTL TeamSpeak 3 server and your roles should not auto assign. If they fail to assign, log back out and then in. If the roles fail to assign, please reach out to a ZTL staff member.</li>
+            </ul>
         </div>
         <div class="col-sm-2">
         </div>
