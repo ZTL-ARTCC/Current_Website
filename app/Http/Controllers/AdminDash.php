@@ -1240,7 +1240,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the local hero winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
     }
 
     public function removeLocalHeroWinner($id, $year, $month) {
@@ -1253,7 +1253,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the local hero winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
@@ -1270,7 +1270,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
     }
 
     public function removeBronzeWinner($id, $year, $month) {
@@ -1283,7 +1283,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
     }
 
     public function showPyriteMic($year = null) {
@@ -1295,7 +1295,6 @@ class AdminDash extends Controller {
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Pyrite::where('year', $year)->first();
 
         $home = $homec->sortByDesc(function ($user) use ($year_stats) {
