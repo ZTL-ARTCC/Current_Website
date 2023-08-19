@@ -15,6 +15,7 @@ use App\FeatureToggle;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LocalHero;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -1191,7 +1192,7 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/announcement')->with('success', 'The announcement has been updated successfully.');
     }
 
-    public function showBronzeMic($year = null, $month = null) {
+    public function showBronzeMic($sort = 'bronzesort', $year = null, $month = null) {
         if ($year == null) {
             $year = date('y');
         }
@@ -1205,15 +1206,54 @@ class AdminDash extends Controller {
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
+        $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
-        $home = $homec->sortByDesc(function ($user) use ($stats) {
-            return $stats[$user->id]->bronze_hrs;
-        });
-        return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)
+        if ($sort == 'pyritesort') {
+            $home = $homec->sortByDesc(function ($user) use ($year_stats) {
+                return $year_stats[$user->id]->bronze_hrs;
+            });
+        } else {
+            $home = $homec->sortByDesc(function ($user) use ($stats, $sort) {
+                if ($sort == 'localsort') {
+                    return $stats[$user->id]->local_hero_hrs;
+                }
+                return $stats[$user->id]->bronze_hrs;
+            });
+        }
+        return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)->with('sort', $sort)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
-                                                  ->with('home', $home)->with('winner', $winner);
+                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local);
+    }
+
+    public function setLocalHeroWinner($year, $month, $hours, $id) {
+        $local_hero = new LocalHero;
+        $local_hero->controller_id = $id;
+        $local_hero->month = $month;
+        $local_hero->year = $year;
+        $local_hero->month_hours = $hours;
+        $local_hero->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' set the local hero winner for '.$month.'/'.$year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
+    }
+
+    public function removeLocalHeroWinner($id, $year, $month) {
+        $local_hero = LocalHero::find($id);
+        $local_hero->delete();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' removed the local hero winner for '.$month.'/'.$year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
@@ -1230,7 +1270,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
     }
 
     public function removeBronzeWinner($id, $year, $month) {
@@ -1243,7 +1283,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/'.$year.'/'.$month)->with('success', 'The winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
     }
 
     public function showPyriteMic($year = null) {
@@ -1255,7 +1295,6 @@ class AdminDash extends Controller {
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
         $winner = Pyrite::where('year', $year)->first();
 
         $home = $homec->sortByDesc(function ($user) use ($year_stats) {

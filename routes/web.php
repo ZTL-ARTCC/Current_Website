@@ -217,8 +217,12 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editController');
             Route::post('/edit/{id}', 'AdminDash@updateController');
         });
+        Route::prefix('local-hero')->middleware('permission:snrStaff')->group(function () {
+            Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setLocalHeroWinner');
+            Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeLocalHeroWinner');
+        });
         Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function () {
-            Route::get('/{year?}/{month?}', 'AdminDash@showBronzeMic');
+            Route::get('/{sort?}/{year?}/{month?}/', 'AdminDash@showBronzeMic');
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setBronzeWinner');
             Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeBronzeWinner');
         });

@@ -199,7 +199,7 @@ Dashboard
         					<center><h4><b>{{ $winner->name }}</b></h4></center>
         					<center><h5>With {{ $winner->month_hours }} hours!</h5></center>
         				@else
-        					<center><h4>No Winner Has Been Chosen</h4></center>
+        					<center><h4>No Winner Was Chosen</h4></center>
         					<center><h5>Check back for updates!</h5></center>
         				@endif
                     </div>
@@ -209,6 +209,52 @@ Dashboard
 			</div>
 		</div>
     </div>
+    @toggle('local-hero')
+        <hr>
+        <center><h2><i class="fas fa-trophy text-primary"></i> Local Hero Award <i class="fas fa-trophy text-primary"></i></h2></center>
+	    <div class="row">
+		    <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-8">
+        			    <center><h4>Winner for {{ $pmonth_words }}</h4></center>
+        			    <div class="card card-body bg-primary">
+        				    @if($pwinner_local != null)
+        					    <center><h4><b>{{ $pwinner_local->name }}</b></h4></center>
+        					    <center><h5>With {{ $pwinner_local->month_hours }} hours!</h5></center>
+        				    @else
+        					    <center><h4>No Winner Was Chosen</h4></center>
+        					    <center><h5>Check back for updates!</h5></center>
+        				    @endif
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+			    </div>
+		    </div>
+		    <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-8">
+        			    <center><h4>Most Recent Winner ({{ $month_words }})</h4></center>
+        			    <div class="card card-body bg-primary">
+        				    @if($winner_local != null)
+        					    <center><h4><b>{{ $winner_local->name }}</b></h4></center>
+        					    <center><h5>With {{ $winner_local->month_hours }} hours!</h5></center>
+        				    @else
+        					    <center><h4>No Winner Was Chosen</h4></center>
+        					    <center><h5>Check back for updates!</h5></center>
+        				    @endif
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+			    </div>
+		    </div>
+        </div>
+    @endtoggle
     <hr>
     <center><h2><i class="fa fa-microphone" style="color:#FFDF00"></i> Pyrite Mic Award for 20{{ $lyear }} <i class="fa fa-microphone" style="color:#FFDF00"></i></h2></center>
     <div class="row">
