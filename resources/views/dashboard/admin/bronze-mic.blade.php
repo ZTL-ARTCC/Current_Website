@@ -92,16 +92,16 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                     <td>{{ $stats[$h->id]->local_hero_hrs }}</td>
                     <td>{{ $stats[$h->id]->bronze_hrs }}</td>
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
-                    <td>
-                        <div class="btn-group">
+                    <td style="min-width:125px">
+                        <div class="btn-toolbar">
                             @toggle('local-hero')
                                 @if($winner_local == null)
                                     {!! Form::open(['url' => '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id]) !!}
                                         @csrf
-                                        <button action="submit" class="btn btn-primary btn-simple-tooltip" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
+                                        <button action="submit" class="btn btn-primary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
                                     {!! Form::close() !!}
                                 @elseif($winner_local->controller_id == $h->id)
-                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
+                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
                                 @endif
                             @endtoggle
                             @if($winner == null)
