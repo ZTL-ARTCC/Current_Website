@@ -279,7 +279,7 @@ return $badge;
             <img class="float-right m-1" src="/photos/pg_atl_tab5.png">
             <h3>Push & Start</h3>
             <p> ATL does not simulate ramp control. During non-event periods, push and start clearances are at your discretion and do not require
-                ATC clearance. For major events (example: cross the pond) where you have been issued an estimate departure clearance time (EDCT),
+                ATC clearance. For major events (example: cross the pond) where you have been issued an estimated departure clearance time (EDCT),
                 you may be required to call ground prior to push. Do not call ground for push/start unless the ATIS or your PDC advises you to do so.</p>
             <p>Exception: If you must push onto an active taxiway, you are required to call {!! fetchBadge($gnd)['position'] !!} on
                 {!! fetchBadge($gnd)['frequency'] !!} and request clearance to do
