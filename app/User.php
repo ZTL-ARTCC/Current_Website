@@ -143,6 +143,18 @@ class User extends Authenticatable {
         }
     }
 
+    public function getEventsPositionAttribute() {
+        if ($this->hasRole('aec')) {
+            return 1;
+        } elseif ($this->hasrole('aec-ghost')) {
+            return 2;
+        } elseif ($this->hasrole('events-team')) {
+            return 3;
+        } else {
+            return 0;
+        }
+    }
+
     public function getTrainPositionAttribute() {
         if ($this->hasRole('mtr')) {
             return 1;
