@@ -18,7 +18,7 @@ Award Management
 $mname = date("F", mktime(0, 0, 0, $month, 1, $year));
 if ($month == 1) { $pm = 12; $pyr = $year - 1; } else { $pm = $month -1; $pyr = $year; }
 if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr = $year; }
-if (($sort != 'localsort')||($sort != 'bronzesort')||($sort != 'pyritesort')) { $sort = 'bronzesort'; }
+if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bronzesort'; }
 ?>
 
 <div class="container">
@@ -68,17 +68,17 @@ if (($sort != 'localsort')||($sort != 'bronzesort')||($sort != 'pyritesort')) { 
                 @if($sort == 'localsort')
                     <th scope="col">Eligible Local Hero Monthly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Local Hero Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/localsort/<?=$year?>/<?=$month?>"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Local Hero Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/localsort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by local hero"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 @if($sort == 'bronzesort')
                     <th scope="col">Eligible Bronze Monthly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Bronze Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/bronzesort/<?=$year?>/<?=$month?>"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Bronze Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/bronzesort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by bronze"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 @if($sort == 'pyritesort')
                     <th scope="col">Eligible Pyrite Yearly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Pyrite Yearly Hours to Date <a class="btn btn-primary btn-sm"href="/dashboard/admin/bronze-mic/pyritesort/<?=$year?>/<?=$month?>"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Pyrite Yearly Hours to Date <a class="btn btn-primary btn-sm"href="/dashboard/admin/bronze-mic/pyritesort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by pyrite"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 <th scope="col">Actions</th>
             </tr>
@@ -101,7 +101,7 @@ if (($sort != 'localsort')||($sort != 'bronzesort')||($sort != 'pyritesort')) { 
                                         <button action="submit" class="btn btn-primary btn-simple-tooltip" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
                                     {!! Form::close() !!}
                                 @elseif($winner_local->controller_id == $h->id)
-                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip margin-right-xs" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
+                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
                                 @endif
                             @endtoggle
                             @if($winner == null)

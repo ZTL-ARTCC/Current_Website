@@ -1207,7 +1207,7 @@ class AdminDash extends Controller {
                 return $year_stats[$user->id]->bronze_hrs;
             });
         } else {
-            $home = $homec->sortByDesc(function ($user) use ($stats) {
+            $home = $homec->sortByDesc(function ($user) use ($stats, $sort) {
                 if ($sort == 'localsort') {
                     return $stats[$user->id]->local_hero_hrs;
                 }
