@@ -60,7 +60,7 @@ View Event
                                 <th scope="col">Controller</th>
                                 <th scope="col">Availability</th>
                                 @if(Auth::user()->isAbleTo('events'))
-                                <th scope="col">Actions</th>
+                                <th scope="col">Actions   </th>
                                 @endif
                             </tr>
                             </thead>
@@ -87,14 +87,50 @@ View Event
                                         </td>
                                         @if(Auth::user()->isAbleTo('events'))
                                             <td>
-                                                <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
-                                                    <button type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign Position"><i class="fas fa-check"></i></button>
-                                                </span>
-                                                &nbsp;
-                                                <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm simple-tooltip" data-toggle="tooltip" title="Delete Request"><i class="fas fa-times"></i></a>
+
+                                                <div class="btn-group" role="group" aria-label="Actions">
+
+                                                    <button data-toggle="modal" data-target="#addrequest{{ $r->id }}" type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" title="Assign Position">
+                                                        <i class="fas fa-check fa-fw"></i>
+                                                    </button>
+                                                    <button onclick="window.location.href='/dashboard/controllers/events/view/{{ $r->id }}/un-signup'" class="btn btn-danger btn-sm simple-tooltip" title="Delete Request">
+                                                        <i class="fas fa-trash fa-fw"></i>
+                                                    </button>
+
+                                                    @if($r->remarks != null)
+                                                        <button data-toggle="modal" data-target="#remarks{{ $r->id }}" type="button" class="btn btn-info btn-sm simple-tooltip" data-placement="top" title="View Remarks">
+                                                            <i class="fas fa-info-circle fa-fw"></i>
+                                                        </button>
+                                                    @else
+                                                        <button disabled data-toggle="modal" data-target="#remarks{{ $r->id }}" type="button" class="btn btn-info btn-sm disabled" data-placement="top" title="No Remarks Provided">
+                                                            <i class="fas fa-info-circle fa-fw"></i>
+                                                        </button>
+                                                    @endif
+                                                </div>
                                             </td>
                                         @endif
                                     </tr>
+
+                                    <div class="modal fade" id="remarks{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Position Remarks</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><i>Remarks submitted by {{ $r->controller_name }}:</i></p>
+                                                    <p>{{ $r->remarks }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="modal fade" id="addrequest{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -294,6 +330,11 @@ View Event
                                             </div>
                                             <div class="col-sm-3">
                                                 {!! Form::text('end_time1', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                        <div class="row pt-2">
+                                            <div class="col-sm-11">
+                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Enter any relevant remarks here...', 'class' => 'form-control textarea-no-resize']) !!}
                                             </div>
                                         </div>
                                     @endif
