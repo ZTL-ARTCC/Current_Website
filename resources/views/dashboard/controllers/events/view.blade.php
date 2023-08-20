@@ -60,7 +60,7 @@ View Event
                                 <th scope="col">Controller</th>
                                 <th scope="col">Availability</th>
                                 @if(Auth::user()->isAbleTo('events'))
-                                <th scope="col">Actions   </th>
+                                <th scope="col">Actions</th>
                                 @endif
                             </tr>
                             </thead>
@@ -93,9 +93,10 @@ View Event
                                                     <button data-toggle="modal" data-target="#addrequest{{ $r->id }}" type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" title="Assign Position">
                                                         <i class="fas fa-check fa-fw"></i>
                                                     </button>
-                                                    <button onclick="window.location.href='/dashboard/controllers/events/view/{{ $r->id }}/un-signup'" class="btn btn-danger btn-sm simple-tooltip" title="Delete Request">
+
+                                                    <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm" title="Delete Request">
                                                         <i class="fas fa-trash fa-fw"></i>
-                                                    </button>
+                                                    </a>
 
                                                     @if($r->remarks != null)
                                                         <button data-toggle="modal" data-target="#remarks{{ $r->id }}" type="button" class="btn btn-info btn-sm simple-tooltip" data-placement="top" title="View Remarks">
