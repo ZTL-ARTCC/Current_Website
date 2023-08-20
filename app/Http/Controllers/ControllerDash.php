@@ -417,99 +417,17 @@ class ControllerDash extends Controller {
         }
 
         if ($request->num1 != null) {
-            if ($request->yr1 != null) {
-                /*
-                $reg = EventRegistration::find($request->yr1);
-                $reg->event_id = $id;
-                $reg->controller_id = Auth::id();
-                $reg->position_id = $request->num1;
-                $reg->start_time = $request->start_time1;
-                $reg->end_time = $request->end_time1;
-                $reg->status = 0;
-                $reg->choice_number = 1;
-                $reg->save();
-                */ // What is this for? it looks like it is for updating, but there is no such button on the frontend...
-                // I removed it for now as it leads to confusing frontend behavior.
-                // You can't even reach this codepath with the current frontend.
-            } else {
-                $reg = new EventRegistration;
-                $reg->event_id = $id;
-                $reg->controller_id = Auth::id();
-                $reg->position_id = $request->num1;
-                $reg->start_time = $request->start_time1;
-                $reg->end_time = $request->end_time1;
-                $reg->status = 0;
-                $reg->choice_number = 1;
-                $reg->save();
-            }
+            $reg = new EventRegistration;
+            $reg->event_id = $id;
+            $reg->controller_id = Auth::id();
+            $reg->position_id = $request->num1;
+            $reg->start_time = $request->start_time1;
+            $reg->end_time = $request->end_time1;
+            $reg->status = 0;
+            $reg->choice_number = 1;
+            $reg->save();
         } else {
             $reg = EventRegistration::find($request->yr1);
-            if ($reg) {
-                $reg->delete();
-            }
-        }
-
-        if ($request->num2 != null) {
-            if ($request->yr2 != null) {
-                $reg = EventRegistration::find($request->yr2);
-                if ($request->num2 == null) {
-                    $reg->delete();
-                } else {
-                    $reg->event_id = $id;
-                    $reg->controller_id = Auth::id();
-                    $reg->position_id = $request->num2;
-                    $reg->start_time = $request->start_time2;
-                    $reg->end_time = $request->end_time2;
-                    $reg->status = 0;
-                    $reg->choice_number = 2;
-                    $reg->save();
-                }
-            } else {
-                $reg = new EventRegistration;
-                $reg->event_id = $id;
-                $reg->controller_id = Auth::id();
-                $reg->position_id = $request->num2;
-                $reg->start_time = $request->start_time2;
-                $reg->end_time = $request->end_time2;
-                $reg->status = 0;
-                $reg->choice_number = 2;
-                $reg->save();
-            }
-        } else {
-            $reg = EventRegistration::find($request->yr2);
-            if ($reg) {
-                $reg->delete();
-            }
-        }
-
-        if ($request->num3 != null) {
-            if ($request->yr3 != null) {
-                $reg = EventRegistration::find($request->yr3);
-                if ($request->num3 == null) {
-                    $reg->delete();
-                } else {
-                    $reg->event_id = $id;
-                    $reg->controller_id = Auth::id();
-                    $reg->position_id = $request->num3;
-                    $reg->start_time = $request->start_time3;
-                    $reg->end_time = $request->end_time3;
-                    $reg->status = 0;
-                    $reg->choice_number = 3;
-                    $reg->save();
-                }
-            } else {
-                $reg = new EventRegistration;
-                $reg->event_id = $id;
-                $reg->controller_id = Auth::id();
-                $reg->position_id = $request->num3;
-                $reg->start_time = $request->start_time3;
-                $reg->end_time = $request->end_time3;
-                $reg->status = 0;
-                $reg->choice_number = 3;
-                $reg->save();
-            }
-        } else {
-            $reg = EventRegistration::find($request->yr3);
             if ($reg) {
                 $reg->delete();
             }
