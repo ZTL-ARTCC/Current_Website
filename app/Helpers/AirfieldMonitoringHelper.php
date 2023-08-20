@@ -2,17 +2,14 @@
 
 function monitoredAirfields() {
     return [
-        //"AGS" => "Augusta",
+        // Format:
+        // "FAA" => "HumanName",
+        // FAA is the 3-letter FAA identifier of the airport
+        // Airports listed here will be picked up by the airfield monitoring
+        // and added to the Airspace Summary on the homepage, in the order
+        // they are specified here.
         "ATL" => "Atlanta",
-        //"AVL" => "Asheville",
-        //"BHM" => "Birmingham",
-        //"CHA" => "Chattanooga",
         "CLT" => "Charlotte",
-        //"GSP" => "Greensboro",
-        //"MGM" => "Montgomery",
-        //"PDK" => "Peachtree",
-        //"TRI" => "Tri-Cities",
-        //"TYS" => "Tyson"
     ];
 }
 
