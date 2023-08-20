@@ -66,7 +66,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/', 'ControllerDash@dash');
 
     Route::prefix('controllers')->group(function () {
-        Route::get('/teamspeak', 'ControllerDash@showTeamspeak');
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
         Route::get('/files', 'ControllerDash@showFiles');
@@ -213,12 +212,16 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/visit-agreement/permit', 'AdminDash@allowVisitReq');
             Route::get('/purge-assistant/{year?}/{month?}', 'AdminDash@showRosterPurge');
         });
-        Route::prefix('roster')->middleware('permission:roster|train')->group(function () {
+        Route::prefix('roster')->middleware('permission:roster|train|events')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editController');
             Route::post('/edit/{id}', 'AdminDash@updateController');
         });
+        Route::prefix('local-hero')->middleware('permission:snrStaff')->group(function () {
+            Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setLocalHeroWinner');
+            Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeLocalHeroWinner');
+        });
         Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function () {
-            Route::get('/{year?}/{month?}', 'AdminDash@showBronzeMic');
+            Route::get('/{sort?}/{year?}/{month?}/', 'AdminDash@showBronzeMic');
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setBronzeWinner');
             Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeBronzeWinner');
         });
