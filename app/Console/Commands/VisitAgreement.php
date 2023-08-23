@@ -168,11 +168,11 @@ class VisitAgreement extends Command {
      */
     public function handle() {
         $client_zhu = new Client();
-        $res_zhu = $client_zhu->get(Config::get('vatusa.base').'/v2/facility/zhu/roster?apikey='.Config::get('vatusa.api_key'));
+        $res_zhu = $client_zhu->get('https://api.vatusa.net/v2/facility/zhu/roster?apikey='.Config::get('vatusa.api_key'));
         $roster_zhu = json_decode($res_zhu->getBody());
 
         $client_zjx = new Client();
-        $res_zjx = $client_zjx->get(Config::get('vatusa.base').'/v2/facility/zjx/roster?apikey='.Config::get('vatusa.api_key'));
+        $res_zjx = $client_zjx->get('https://api.vatusa.net/v2/facility/zjx/roster?apikey='.Config::get('vatusa.api_key'));
         $roster_zjx = json_decode($res_zjx->getBody());
 
 
