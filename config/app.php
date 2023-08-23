@@ -154,7 +154,7 @@ return [
         /*
          * Package Service Providers...
          */
-        \Torann\GeoIP\GeoIPServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -222,7 +222,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'GeoIP' => Torann\GeoIP\GeoIP::class,
 
     ],
 
