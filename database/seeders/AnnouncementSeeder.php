@@ -16,7 +16,7 @@ class AnnouncementSeeder extends Seeder {
      */
     public function run() {
         $client = new Client();
-        $res = $client->request('GET', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility'));
+        $res = $client->request('GET', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility'));
         $result = json_decode($res->getBody())->data->facility->roles;
         foreach ($result as $r) {
             if ($r->role == 'ATM') {
