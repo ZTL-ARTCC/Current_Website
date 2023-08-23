@@ -335,7 +335,7 @@ View Event
                                         </div>
                                         <div class="row pt-2">
                                             <div class="col-sm-11">
-                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Enter any relevant remarks here...', 'class' => 'form-control textarea-no-resize']) !!}
+                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Specific position requests/additional information', 'class' => 'form-control textarea-no-resize', 'rows' => '3', 'maxlength' => '1024']) !!}
                                             </div>
                                         </div>
                                     @endif
