@@ -67,7 +67,7 @@ class LoginController extends Controller {
 
     protected function vatusaAuth($resourceOwner, $accessToken) {
         $client = new Client();
-        $result = $client->request('GET', Config::get('vatusa.base').'/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
+        $result = $client->request('GET', 'https://api.vatusa.net/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
         $realops_toggle_enabled = toggleEnabled('realops');
 
         if (! $result || $result->getStatusCode() != 200) {
