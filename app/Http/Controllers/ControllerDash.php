@@ -400,7 +400,7 @@ class ControllerDash extends Controller {
         $valid_time_expr = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/";
         $id = $request->event_id;
 
-        if ($request->timezone == 'Local') {
+        if ($request->timezone == '1') { // Local: 1
             $request->start_time1 = timeFromLocal($request->start_time1, Auth::user()->timezone);
             $request->end_time1 = timeFromLocal($request->end_time1, Auth::user()->timezone);
         }
@@ -426,7 +426,7 @@ class ControllerDash extends Controller {
             }
         }
 
-        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully.');
+        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully. tz: '.$request->timezone);
     }
 
     public function unsignupForEvent($id) {
