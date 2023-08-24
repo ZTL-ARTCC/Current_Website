@@ -1,77 +1,76 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    View Event
+View Event
 @endsection
 
 @section('content')
-    <div class="container-fluid" style="background-color:#F0F0F0;">
-        &nbsp;
-        <h3>Event Information and Signup</h3>
-        &nbsp;
-    </div>
-    <br>
-    <div class="container">
-        @if($event->banner_path != null)
-            <div class="jumbotron">
-                <img src="{{ $event->banner_path }}" width="100%" alt="{{ $event->name }}">
-            </div>
-        @endif
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>
-                            {{ $event->name }}
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        @if($event->host != null)
-                            <h5><b>Host ARTCC:</b> {{ $event->host }}</h5>
-                        @endif
-                        <h5><b>Date:</b> {{ $event->date }}</h5>
-                        <h5><b>Time:</b>
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h3>Event Information and Signup</h3>
+    &nbsp;
+</div>
+<br>
+<div class="container">
+    @if($event->banner_path != null)
+        <div class="jumbotron">
+            <img src="{{ $event->banner_path }}" width="100%" alt="{{ $event->name }}">
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        {{ $event->name }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if($event->host != null)
+                        <h5><b>Host ARTCC:</b> {{ $event->host }}</h5>
+                    @endif
+                    <h5><b>Date:</b> {{ $event->date }}</h5>
+                    <h5><b>Time:</b>
                             {{ $event->start_time }} to {{ $event->end_time }} Zulu
-                            ({{ $local_start_time }} to {{ $local_end_time }} <a style="color:inherit" href="#"
+                            ({{ $local_start_time }} to {{ $local_end_time }} local <a style="color:inherit" href="#"
                                                                                  data-toggle="tooltip"
                                                                                  title="Showing times in {{ $timezone }}. You can change this on your profile."><i
                                         class="fas fa-info-circle"></i></a>)
                         </h5>
-                        <p><b>Additional Information:</b></p>
-                        <p>{!! $event->description !!}</p>
-                    </div>
+                    <p><b>Additional Information:</b></p>
+                    <p>{!! $event->description !!}</p>
                 </div>
-                @if(Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team'))
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>
-                                Position Requests
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            @if(Auth::user()->isAbleTo('events'))
-                                <p>
-                                    <i>Assign Positions:</i>
-                                    <span class="float-right" data-toggle="modal" data-target="#manualAssign">
-                                    <button type="button" class="btn btn-success btn-sm pull-right"
-                                            data-placement="top">Manual Assign</button>
+            </div>
+            @if(Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team'))
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>
+                            Position Requests
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @if(Auth::user()->isAbleTo('events'))
+                            <p>
+                                <i>Assign Positions:</i>
+                                <span class="float-right" data-toggle="modal" data-target="#manualAssign">
+                                    <button type="button" class="btn btn-success btn-sm pull-right" data-placement="top">Manual Assign</button>
                                 </span>
-                                </p>
-                            @endif
-                            <table class="table">
-                                <thead>
-                                <tr>
+                            </p>
+                        @endif
+                        <table class="table">
+                            <thead>
+                            <tr>
 
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Controller</th>
-                                    <th scope="col">Availability</th>
-                                    @if(Auth::user()->isAbleTo('events'))
-                                        <th scope="col">Actions</th>
-                                    @endif
-                                </tr>
-                                </thead>
-                                <tbody>
+                                <th scope="col">Position</th>
+                                <th scope="col">Controller</th>
+                                <th scope="col">Availability</th>
+                                @if(Auth::user()->isAbleTo('events'))
+                                <th scope="col">Actions</th>
+                                @endif
+                            </tr>
+                            </thead>
+                            <tbody>
                                 @if($registrations->count() > 0)
                                     @foreach($registrations as $r)
                                         <tr>
@@ -187,44 +186,36 @@
                                         <td colspan="3">No positions posted.</td>
                                     </tr>
                                 @endif
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                @endif
-            </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>
-                            Signup/Position Assignments
-                            @if(Auth::user()->isAbleTo('events'))
-                                @if($event->reg == 0)
-                                    <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}"
-                                       class="btn btn-success btn-simple-tooltip float-right" data-toggle="tooltip"
-                                       title="Open Registration"><i class="fas fa-check"></i></a>
-                                @else
-                                    <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}"
-                                       class="btn btn-danger btn-simple-tooltip float-right" data-toggle="tooltip"
-                                       title="Close Registration"><i class="fas fa-times"></i></a>
-                                @endif
-                                @toggle('event_assignment_toggle')
-                                @if($event->show_assignments)
-                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}"
-                                       class="btn btn-danger btn-simple-tooltip float-right mr-2" data-toggle="tooltip"
-                                       title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
-                                @else
-                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}"
-                                       class="btn btn-success btn-simple-tooltip float-right mr-2" data-toggle="tooltip"
-                                       title="Show Assignments"><i class="fas fa-eye"></i></a>
-                                @endif
-                                @endtoggle
+                </div>
+            @endif
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Signup/Position Assignments
+                        @if(Auth::user()->isAbleTo('events'))
+                            @if($event->reg == 0)
+                                <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-right" data-toggle="tooltip" title="Open Registration"><i class="fas fa-check"></i></a>
+                            @else
+                                <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-right" data-toggle="tooltip" title="Close Registration"><i class="fas fa-times"></i></a>
                             @endif
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
+                            @toggle('event_assignment_toggle')
+                                @if($event->show_assignments)
+                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-right mr-2" data-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
+                                @else
+                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-right mr-2" data-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
+                                @endif
+                            @endtoggle
+                        @endif
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
                             <tr>
                                 <th scope="col">Position</th>
                                 <th scope="col">Controller</th>
@@ -232,8 +223,8 @@
                                     <th scope="col">Actions</th>
                                 @endif
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             @if($positions->count() > 0)
                                 @foreach($positions as $p)
                                     <tr>
@@ -303,10 +294,10 @@
                                     <td colspan="3">No positions posted.</td>
                                 </tr>
                             @endif
-                            </tbody>
-                        </table>
-                        <hr>
-                        @if($positions->count() > 0)
+                        </tbody>
+                    </table>
+                    <hr>
+                    @if($positions->count() > 0)
                             {!! Form::open(['action' => 'ControllerDash@signupForEvent']) !!}
                             @csrf
                             @if($event->reg == 1 && Auth::user()->canEvents == 1)
@@ -413,167 +404,160 @@
                             <button type="button" class="btn btn-danger btn-sm" data-placement="top">Remove Position Preset</button>
                         </span>
                         @endif
-                    </div>
                 </div>
-                @if(Auth::user()->isAbleTo('events'))
+            </div>
+            @if(Auth::user()->isAbleTo('events'))
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Send Event Reminder
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
+                    </div>
                     <br>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>
-                                Send Event Reminder
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center">
-                                <a href="/dashboard/admin/events/send-reminder/{{ $event->id }}"
-                                   class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>&nbsp;Send Reminder</a>
-                            </div>
-                            <br>
-                            <p>
-                                Send an event reminder email to all members registered for this event. Note: the email
-                                system prevents members from being notitified
-                                multiple times. You may trigger this reminder at any time to notify late sign-ups after
-                                the initial reminder was sent out.
-                            </p>
-                        </div>
-                    </div>
-                @endif
+                    <p>
+                        Send an event reminder email to all members registered for this event. Note: the email system prevents members from being notitified
+                        multiple times. You may trigger this reminder at any time to notify late sign-ups after the initial reminder was sent out.
+                    </p>
+                </div>
             </div>
+            @endif
         </div>
-        <br>
-        <a href="/dashboard/controllers/events" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
-        @if(Auth::user()->isAbleTo('events'))
-            <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
-            <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
-        @endif
-
-        @if(Auth::user()->isAbleTo('events'))
-            <div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Position Preset Name</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        {!! Form::open(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) !!}
-                        @csrf
-                        <div class="modal-body">
-                            {!! Form::label('name', 'Name') !!}
-                            {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button action="submit" class="btn btn-success">Save Position Preset</button>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="loadPreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Load Position Preset</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        {!! Form::open(['action' => ['AdminDash@retrievePositionPreset', $event->id]]) !!}
-                        @csrf
-                        <div class="modal-body">
-                            {!! Form::label('p_id', 'Position Preset') !!}
-                            {!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button action="submit" class="btn btn-success">Load Position Preset</button>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="removePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Remove Position Preset</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        {!! Form::open(['action' => ['AdminDash@deletePositionPreset', $event->id]]) !!}
-                        @csrf
-                        <div class="modal-body">
-                            {!! Form::label('p_id', 'Position Preset') !!}
-                            {!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button action="submit" class="btn btn-success">Remove Position Preset</button>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="manualAssign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Manual Assign Position</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        {!! Form::open(['action' => ['AdminDash@manualAssign', $event->id]]) !!}
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        {!! Form::label('controller', 'Controller Name') !!}
-                                        {!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
-                                    </div>
-                                    <div class="col-sm-6">
-                                        {!! Form::label('position', 'Position') !!}
-                                        {!! Form::select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
-                                        {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        {!! Form::label('start_time', 'Start Time (Zulu)') !!}
-                                        {!! Form::text('start_time', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
-                                    </div>
-                                    <div class="col-sm-6">
-                                        {!! Form::label('end_time', 'End Time (Zulu)') !!}
-                                        {!! Form::text('end_time', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button action="submit" class="btn btn-success">Assign Position</button>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
+    <br>
+    <a href="/dashboard/controllers/events" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+    @if(Auth::user()->isAbleTo('events'))
+        <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
+        <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
+    @endif
+
+	@if(Auth::user()->isAbleTo('events'))
+		<div class="modal fade" id="savePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Position Preset Name</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('name', 'Name') !!}
+						{!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Save Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="loadPreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Load Position Preset</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@retrievePositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('p_id', 'Position Preset') !!}
+						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Load Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="removePreset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Remove Position Preset</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@deletePositionPreset', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						{!! Form::label('p_id', 'Position Preset') !!}
+						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Remove Position Preset</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="manualAssign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Manual Assign Position</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{!! Form::open(['action' => ['AdminDash@manualAssign', $event->id]]) !!}
+					@csrf
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									{!! Form::label('controller', 'Controller Name') !!}
+									{!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+								</div>
+								<div class="col-sm-6">
+									{!! Form::label('position', 'Position') !!}
+									{!! Form::select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
+								</div>
+							</div>
+						</div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
+                                    {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									{!! Form::label('start_time', 'Start Time (Zulu)') !!}
+									{!! Form::text('start_time', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+								</div>
+								<div class="col-sm-6">
+									{!! Form::label('end_time', 'End Time (Zulu)') !!}
+									{!! Form::text('end_time', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button action="submit" class="btn btn-success">Assign Position</button>
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+	@endif
+</div>
 @endsection
