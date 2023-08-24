@@ -343,10 +343,10 @@ View Event
                                             <div class="col-sm-10">
                                                 <div class="form-inline">
                                                     {!! Form::label('start_time1', 'Available from:', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('start_time1', null, ['autocomplete' => 'off', 'disabled' => 'true', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
+                                                    {!! Form::text('start_time1', null, ['autocomplete' => 'off', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
                                                     {!! Form::label('end_time1', '-', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'disabled' => 'true', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
-                                                    {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'disabled' => 'true', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
+                                                    {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'placeholder' => '00:00', 'class' => 'form-control col-sm-2 mr-2']) !!}
+                                                    {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
                                                 </div>
                                             </div>
                                         </div>
