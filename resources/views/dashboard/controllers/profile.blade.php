@@ -123,35 +123,39 @@ Profile
             {!! Form::open(['action' => ['ControllerDash@updateInfo', Auth::id()]]) !!}
             @csrf
                 <div class="row">
-
                     <div class="col-5"><b>TS3 UID: <a style="color:inherit" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
-                    <div class=col-7">{!! Form::Text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
+                    <div class="col-7">{!! Form::text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
+                </div>
 
-                    <div class="row">
-                    <div class="col-5"><b>Timezone: <a style="color:inherit" href="#" data-toggle="tooltip"
-                                                       title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
-                                        class="fas fa-info-circle"></i></a></b></div>
+                <div class="row mt-2">
+                    <div class="col-5">
+                        <b>Timezone: <a style="color:inherit" href="#" data-toggle="tooltip"
+                                        title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
+                                        class="fas fa-info-circle"></i></a></b>
+                    </div>
+
                     <div class="col-7">
                         <p>
                             <!-- Form::select default isn't working (because it doesn't set autocomplete=off), so I'm doing it manually -->
                             <select autocomplete="off" name="timezone" class="form-control">
                                 @foreach (DateTimeZone::listIdentifiers() as $timezone)
                                     <option autocomplete="off" value="{{ $timezone }}"
-                                    @if ($timezone == Auth::user()->timezone)
-                                        selected="selected"
-                                    @endif
+                                            @if ($timezone == Auth::user()->timezone)
+                                                selected="selected"
+                                            @endif
                                     >{{ $timezone }}</option>
                                 @endforeach
                             </select>
                         </p>
                     </div>
-                    <div class="row">
+                </div>
+
+                <div class="row">
                     <div class="col-3">
                         <button class="btn btn-success" type="submit">Save Profile</button>
                     </div>
                 </div>
                 {!! Form::close() !!}
-            </div>
         </div>
         <div class="col-sm-2">
         </div>
