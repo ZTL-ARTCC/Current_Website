@@ -10,12 +10,8 @@ window.onload = () => {
     let start_time = document.getElementById("start_time1");
     let end_time = document.getElementById("end_time1");
 
-    console.log(`Event info: Zulu ${start_zulu}-${end_zulu} Local ${start_local}-${end_local}`);
-
     timezone.onchange = () => {
         let newselected = timezone.value;
-
-        console.log(newselected);
 
         if (newselected == "1") {
             // switch to local time
