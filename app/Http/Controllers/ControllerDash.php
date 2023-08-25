@@ -426,7 +426,7 @@ class ControllerDash extends Controller {
             }
         }
 
-        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully. tz: '.$request->timezone);
+        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully.');
     }
 
     public function unsignupForEvent($id) {
