@@ -46,7 +46,7 @@ table.availability td.available {
     text-align: center;
     padding-top: 25px;
     padding-bottom: 25px;
-    background-color: #eee;
+    /*background-color: #eee;*/ /* Now handled by SCSS themes */
 }
 
 #myFooter .fa{

@@ -44,7 +44,7 @@
             @yield('title') | ZTL ARTCC
         </title>
     </head>
-    <body>
+    <body class="bg-darker-themed">
         {{-- Messages --}}
         @include('inc.messages')
 

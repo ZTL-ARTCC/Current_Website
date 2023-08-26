@@ -5,15 +5,15 @@ Profile
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
+<div class="container-fluid bg-themed">
     &nbsp;
     <h2>My Profile</h2>
     &nbsp;
 </div>
 <br>
 
-<div class="container">
-    <div class="row">
+<div class="container bg-darker-themed">
+    <div class="row bg-darker-themed">
         <div class="col-sm-6">
             <center><h4>My Feedback:</h4></center>
             <div class="table">
@@ -151,29 +151,30 @@ Profile
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <button class="btn btn-success" type="submit">Save Profile</button>
                     </div>
                 </div>
                 {!! Form::close() !!}
 
-                Receive Broadcast Emails?
-                &nbsp;
+            <div class="row">
+                <p class="m-2">Receive Broadcast Emails?</p>
                 @if(Auth::user()->opt == 1)
-                   <span data-toggle="modal" data-target="#unOpt">
+                    <span class="mt-2" data-toggle="modal" data-target="#unOpt">
                           <label class="switch">
                               <input type="checkbox" checked>
                             <span class="slider round"></span>
                             </label>
                         </span>
-               @else
-                   <span data-toggle="modal" data-target="#Opt">
+                @else
+                    <span class="mt-2" data-toggle="modal" data-target="#Opt">
                         <label class="switch">
                             <input type="checkbox">
                             <span class="slider round"></span>
                         </label>
                     </span>
-            @endif
+                @endif
+            </div>
         </div>
         <div class="col-sm-2">
         </div>
@@ -183,17 +184,17 @@ Profile
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         @if($personal_stats->total_hrs < 1)
-                            <li class="list-group-item" style="background-color:#E6B0AA">
+                            <li class="list-group-item bg-danger">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @else
-                            <li class="list-group-item" style="background-color:#A9DFBF">
+                            <li class="list-group-item bg-success">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @endif
-                        <li class="list-group-item" style="background-color:aqua">
+                        <li class="list-group-item bg-info">
                             <h5>Last Training Session Received:</h5>
                             <p><b>
                                 @if($last_training != null)
@@ -204,7 +205,7 @@ Profile
                             </b></p>
                         </li>
                         @if(Auth::user()->isAbleTo('train'))
-                            <li class="list-group-item" style="background-color:lightgray">
+                            <li class="list-group-item bg-secondary">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
                                     @if(isset($last_training_given))

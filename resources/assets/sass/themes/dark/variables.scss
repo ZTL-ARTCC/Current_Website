@@ -11,6 +11,7 @@ $gray-600: #6c757d;
 $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
+$darker: #222;
 $black: #000;
 
 $color-darker-percent-full: 20%;
@@ -45,6 +46,8 @@ $colors: map-merge(
     "white": $white,
     "gray": $gray-600,
     "gray-dark": $gray-800,
+    "black": $black,
+    "darker": $darker,
   )
 );
 
@@ -236,3 +239,7 @@ $pagination-disabled-border-color: $gray-700;
 // Code
 // $code-color:                        $pink;
 $pre-color: $gray-100;
+
+.bg-darker {
+  background-color: $darker;
+}

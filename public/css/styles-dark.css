@@ -7,6 +7,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 
+.bg-darker, .bg-darker-themed {
+  background-color: #222;
+}
+
 :root {
   --blue: #3395ff;
   --indigo: #6610f2;
@@ -21,6 +25,8 @@ body {
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
+  --black: #000;
+  --darker: #222;
   --primary: #3395ff;
   --secondary: #6c757d;
   --success: #28a745;
@@ -9424,6 +9430,14 @@ h3 {
     border-color: #343a40;
   }
 }
+h1, h2, h3, h4, h5, h6, p, b, i {
+  color: #dee2e6;
+}
+
+.form-label {
+  color: #dee2e6;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

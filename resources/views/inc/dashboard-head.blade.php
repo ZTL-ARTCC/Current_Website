@@ -25,7 +25,7 @@
                     <img width="100" src="/photos/logos/0_ztl_logo_black.png">
                 @endif
             @else
-                <img width="100" src="/photos/logos/0_ztl_logo_black.png">
+                <img width="100" src="/photos/logos/0_ztl_logo_white.png">
             @endtoggle
         </a>
             <ul class="navbar-nav">
@@ -40,9 +40,9 @@
             &nbsp;&nbsp;&nbsp;
 
             <ul class="navbar-nav ml-auto">
-			<a class="nav-link {{ Nav::isRoute('controller_dash_home') }}" href="/dashboard">Dashboard Home</a>
+			<a class="nav-link text-themed {{ Nav::isRoute('controller_dash_home') }}" href="/dashboard">Dashboard Home</a>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" style="pointer-events:none">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
+                    <a class="nav-link text-themed" style="pointer-events:none">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
                 </li>
             </ul>
         </div>

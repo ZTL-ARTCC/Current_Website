@@ -9,6 +9,9 @@
 .bg-themed-inverted {
   @extend .bg-light;
 }
+.bg-darker-themed {
+  @extend .bg-darker;
+}
 
 .text-themed {
   @extend .text-light;
@@ -22,4 +25,20 @@
 }
 .alert-themed-inverted {
   @extend .alert-light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+b,
+i {
+  color: #dee2e6; // proper text colors (it defaults to black)
+  // do not @extend .text-light as it will override styles in confusing and unwanted ways
+}
+.form-label {
+  color: #dee2e6;
 }

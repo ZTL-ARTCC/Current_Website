@@ -32,19 +32,19 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <style>#navbarsExample10 a.nav-link{ color: white !important }</style>
+            <style>#navbarsExample10 a.nav-link text-themed{ color: white !important }</style>
             <div class="collapse navbar-collapse" id="navbarsExample10">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link text-themed" href="/">Home</a>
                     </li>
                     @toggle('realops')
                         <li class="nav-item">
-                            <a class="nav-link" href="/realops">Realops</a>
+                            <a class="nav-link text-themed" href="/realops">Realops</a>
                         </li>
                     @endtoggle
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="pilots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilots</a>
+                        <a class="nav-link text-themed dropdown-toggle" href="#" id="pilots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilots</a>
                         <div class="dropdown-menu" aria-labelledby="pilots">
                             <a class="dropdown-item" href="https://www.aviationapi.com/charts" target="_blank">Charts</a>
                             <a class="dropdown-item" href="http://www.vatstar.com/" target="_blank">VATSTAR Training</a>
@@ -59,7 +59,7 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="controllers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controllers</a>
+                        <a class="nav-link text-themed dropdown-toggle" href="#" id="controllers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controllers</a>
                         <div class="dropdown-menu" aria-labelledby="controllers">
                             <a class="dropdown-item" href="/controllers/roster">Roster</a>
                             <a class="dropdown-item" href="/controllers/staff">Staff</a>
@@ -70,12 +70,12 @@
                         </div>
                     </li>
                     @if(Auth::guest())
-                        <a class="nav-link" href="{{ URL::to('/'); }}/visit">Visit ZTL</a>
-                        <a class="nav-link" href="/feedback/new">Feedback</a>
+                        <a class="nav-link text-themed" href="{{ URL::to('/'); }}/visit">Visit ZTL</a>
+                        <a class="nav-link text-themed" href="/feedback/new">Feedback</a>
                     @endif
                     @if(Auth::check())
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
+                            <a class="nav-link text-themed dropdown-toggle" href="#" id="dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
                             <div class="dropdown-menu" aria-labelledby="dashboard">
                                 <a class="dropdown-item" href="/dashboard/controllers/profile"><i class="fas fa-user"></i> My Profile</a>
                                 <a class="dropdown-item" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Controller Dashboard</a>
@@ -85,7 +85,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Controller Login</a>
+                            <a class="nav-link text-themed" href="/login">Controller Login</a>
                         </li>
                     @endif
                 </ul>
