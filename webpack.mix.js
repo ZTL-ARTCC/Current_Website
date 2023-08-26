@@ -85,5 +85,6 @@ mix.webpackConfig({
  */
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-   .sass('resources/assets/sass/home.scss', 'public/css/home.css');
+    .sass('resources/assets/sass/styles-light.scss', 'public/css/styles-light.css') // Default (Light) Theme
+    .sass('resources/assets/sass/styles-dark.scss', 'public/css/styles-dark.css')  // Dark Theme
+    .sass('resources/assets/sass/home.scss', 'public/css/home.css');
