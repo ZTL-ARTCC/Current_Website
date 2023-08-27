@@ -7,7 +7,7 @@
         </p>
         <div class="content">
             @if(Auth::user()->rating_id == 1)
-                <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/teamspeak') }}" href="/dashboard/controllers/teamspeak">Teamspeak Information</a>
+                <a class="nav-link {{ Nav::urlDoesContain('controllers/teamspeak') }}" href="/controllers/teamspeak">Teamspeak Information</a>
             @endif
             <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/roster') }} {{ Nav::urlDoesContain('/dashboard/admin/roster') }}" href="/dashboard/controllers/roster">Roster</a>
             <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/events') }} {{ Nav::urlDoesContain('dashboard/admin/events') }}" href="/dashboard/controllers/events">Events</a>
