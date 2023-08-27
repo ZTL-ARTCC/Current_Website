@@ -40,7 +40,7 @@ class ARTCCOverflights extends Command {
      */
     public function handle() {
         $client = new Client();
-        $res = $client->get('https://api.denartcc.org/live/'.Config::get('vatusa.facility'));
+        $res = $client->get('https://api.zdvartcc.org/live/'.Config::get('vatusa.facility'));
 
         DB::table('flights_within_artcc')->truncate();
 
