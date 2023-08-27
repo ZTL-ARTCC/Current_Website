@@ -413,7 +413,7 @@ class AdminDash extends Controller {
                     $user->save();
                 }
             }
-        } else {
+        } elseif (Auth::user()->isAbleTo('train')) {
             $user->del = $request->input('del');
             $user->gnd = $request->input('gnd');
             if ($user->twr == 99) {
@@ -469,6 +469,25 @@ class AdminDash extends Controller {
             }
             $user->twr_solo_fields = $request->input('twr_solo_fields');
             $user->twr_solo_expires = $request->input('twr_solo_expires');
+            $user->save();
+        } else { // Events
+            if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
+                if ($user->hasRole('aec')) {
+                    $user->detachRole('aec');
+                } elseif ($user->hasRole('aec-ghost')) {
+                    $user->detachRole('aec-ghost');
+                } elseif ($user->hasRole('events-team')) {
+                    $user->detachRole('events-team');
+                }
+            }
+
+            if ($request->input('events_staff') == 1) {
+                $user->attachRole('aec');
+            } elseif ($request->input('events_staff') == 2) {
+                $user->attachRole('aec-ghost');
+            } elseif ($request->input('events_staff') == 3) {
+                $user->attachRole('events-team');
+            }
             $user->save();
         }
 
