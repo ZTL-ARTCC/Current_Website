@@ -9,7 +9,6 @@ use SimpleXMLElement;
 
 class TrainingTicket extends Model {
     protected $table = 'training_tickets';
-    protected $fillable = ['id', 'controllers_id', 'trainer_id', 'position', 'session_id', 'type', 'date', 'start_time', 'end_time', 'duration', 'comments', 'ins_comments', 'cert', 'updated_at', 'created_at'];
 
     public function getTrainerNameAttribute() {
         $user = User::find($this->trainer_id);
@@ -17,9 +16,6 @@ class TrainingTicket extends Model {
             $name = $user->full_name;
         } else {
             $client = new Client();
-            //$response = $client->request('GET', 'https://cert.vatsim.net/vatsimnet/idstatus.php?cid='.$this->trainer_id);
-            //$r = new SimpleXMLElement($response->getBody());
-            //$name = $r->user->name_first.' '.$r->user->name_last;
             $response = $client->get('https://api.vatsim.net/api/ratings/'.$r->cid.'/', ['headers' => ['Content-Type' => 'application/x-www-form-urlencoded','Authorization' => 'Token ' . Config::get('vatsim.api_key', '')]]);
             $res = json_decode($response->getBody(), true);
             $name = '';
@@ -68,10 +64,6 @@ class TrainingTicket extends Model {
         } elseif ($pos == 13) {
             $position = 'Incomplete';
         }
-
-
-
-
         return $position;
     }
 
@@ -242,7 +234,6 @@ class TrainingTicket extends Model {
         } elseif ($pos == 125) {
             $position = 'Mentor Training';
         }
-
         return $position;
     }
     
