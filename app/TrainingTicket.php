@@ -5,7 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
-use SimpleXMLElement;
 
 class TrainingTicket extends Model {
     protected $table = 'training_tickets';
