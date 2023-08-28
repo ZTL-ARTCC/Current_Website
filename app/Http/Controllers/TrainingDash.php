@@ -228,8 +228,8 @@ class TrainingDash extends Controller {
         $exam_names = array_keys($exams);
         foreach ($exam_names as $exam) {
             if (isset($academy['data'][$exam])) {
-                foreach($academy['data'][$exam] as $exam_attempt) {
-                    if(is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
+                foreach ($academy['data'][$exam] as $exam_attempt) {
+                    if (is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
                         $exams[$exam]['date'] = date("m/d/y", $exam_attempt['time_finished']);
                         $exams[$exam]['success'] = ($exam_attempt['grade'] >= 80) ? 1 : 0;
                         $exams[$exam]['grade'] = $exam_attempt['grade'];
