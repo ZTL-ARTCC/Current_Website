@@ -65,9 +65,9 @@ Training Tickets
         @php ($trainingCategories = array('s1', 's2', 's3', 'c1', 'other'))
         <ul class="nav nav-tabs nav-justified" role="tablist">
             @foreach($trainingCategories as $trainingCategory)
-                @php $active = ''
+                @php ($active = '')
                 @if ($loop->first)
-                    @php $active = ' active'
+                    @php ($active = ' active')
                @endif
                 <li class="nav-item">
                     <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
@@ -77,9 +77,9 @@ Training Tickets
         <div class="tab-content">
             @php($transition_date = \Carbon\Carbon::parse('11/12/2021')) {{-- ticket dates eastern timezone after this date --}}
             @foreach($trainingCategories as $trainingCategory)
-                @php $active = ''
+                @php ($active = '')
                 @if ($loop->first)
-                    @php $active = ' active'
+                    @php ($active = ' active')
                @endif
                 <div role="tabpanel" class="tab-pane{{ $active }}" id="{{ $trainingCategory }}">
                     <table class="table">
@@ -98,7 +98,7 @@ Training Tickets
                         <tbody>
                         @if($tickets->count() > 0)
                             @foreach($tickets as $t)
-                                @if($t->sort_category == {{ $trainingCategory }})
+                                @if($t->sort_category == $trainingCategory)
                                     @if($t->cert) {{-- student certified: green highlight --}}
                                         <tr class="table-success">
                                     @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
