@@ -400,6 +400,10 @@ class ControllerDash extends Controller {
         $valid_time_expr = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/";
         $id = $request->event_id;
 
+        if (!preg_match($valid_time_expr, $request->start_time) || !preg_match($valid_time_expr, $request->end_time)) {
+            return redirect()->back()->with('error', 'Invalid signup time. Must be in the format HH:MM, and only contain numbers and the \':\' character');
+        }
+
         if ($request->timezone == '1') { // Local: 1
             $request->start_time1 = timeFromLocal($request->start_time1, Auth::user()->timezone);
             $request->end_time1 = timeFromLocal($request->end_time1, Auth::user()->timezone);
