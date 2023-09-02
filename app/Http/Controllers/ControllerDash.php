@@ -397,11 +397,14 @@ class ControllerDash extends Controller {
         // Validate start_time and end_time
         // Also convert them to UTC
         // https://regex101.com/r/4LGhop/1
-        $valid_time_expr = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/";
+        $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
         $id = $request->event_id;
 
-        if (!preg_match($valid_time_expr, $request->start_time) || !preg_match($valid_time_expr, $request->end_time)) {
-            return redirect()->back()->with('error', 'Invalid signup time. Must be in the format HH:MM, and only contain numbers and the \':\' character');
+        if (!preg_match($valid_time_expr, $request->start_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+        if (!preg_match($valid_time_expr, $request->end_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
         }
 
         if ($request->timezone == '1') { // Local: 1
