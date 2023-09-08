@@ -155,6 +155,7 @@ Update Controller
                         @if($user->visitor == 1)
                             {!! Form::label('visitor_from', 'Visitor From') !!}
                             {!! Form::text('visitor_from', $user->visitor_from, ['class' => 'form-control']) !!}
+                            {!! Form::hidden('status', $user->status) !!}
                         @else
                             {!! Form::label('status', 'Status') !!}
                             {!! Form::select('status', [
