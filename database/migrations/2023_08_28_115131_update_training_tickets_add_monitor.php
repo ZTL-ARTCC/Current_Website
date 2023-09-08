@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up() {
         Schema::table('training_tickets', function ($table) {
-            $table->integer('monitor');
+            $table->boolean('monitor')->default(0);
         });
     }
 
