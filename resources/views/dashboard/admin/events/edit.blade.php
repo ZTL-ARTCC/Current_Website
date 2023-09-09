@@ -37,17 +37,21 @@ New Event
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     {!! Form::label('start_time', 'Start Time (Zulu)', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('start_time', $event->start_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     {!! Form::label('end_time', 'End Time (Zulu)', ['class' => 'form-label']) !!}
                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
                         {!! Form::text('end_time', $event->end_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
                     </div>
+                </div>
+                <div class="col-sm-4">
+                    {!! Form::label('type', 'Event Type', ['class' => 'form-label']) !!}
+                    {!! Form::select('type', ['Local Event', 'Support Event', 'Support Event (unverified)'], $event->type, ['class' => 'form-control']) !!}
                 </div>
             </div>
         </div>

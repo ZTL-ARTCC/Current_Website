@@ -1389,6 +1389,7 @@ class AdminDash extends Controller {
         $event->reduceEventBanner();
         $event->status = 0;
         $event->reg = 0;
+        $event->type = $request->type;
         $event->save();
 
         $audit = new Audit;
@@ -1437,6 +1438,7 @@ class AdminDash extends Controller {
         $event->banner_path = $public_url;
         $event->reduceEventBanner();
         $event->status = 0;
+        $event->type = $request->type;
         $event->save();
 
         $audit = new Audit;
