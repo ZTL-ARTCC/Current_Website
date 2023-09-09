@@ -348,7 +348,11 @@ View Event
                                                     {!! Form::label('end_time1', '-', ['class' => 'form-label pr-2']) !!}
                                                     {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'placeholder' => $event->end_time, 'class' => 'form-control col-sm-2 mr-2']) !!}
                                                     {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
+
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-10 pt-2 pr-2">
+                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Specific position requests/additional information', 'class' => 'form-control textarea-no-resize col-sm-11 pr-2', 'rows' => '3', 'maxlength' => '1024']) !!}
                                             </div>
                                         </div>
                                     @endif
