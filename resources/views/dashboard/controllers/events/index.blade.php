@@ -31,8 +31,10 @@ Events
         <tbody>
             @if($events->count() > 0)
                 @foreach($events as $e)
-                    @if($e->type == 2)
+                    @if($e->type == 2 && Auth::user()->isAbleTo('events'))
                         <tr class="alert-warning">
+                    @elseif($e->type == 1 && Auth::user()->isAbleTo('events'))
+                        <tr class="alert-info">
                     @else
                         <tr>
                     @endif
@@ -50,17 +52,20 @@ Events
                         </td>
                         @if(Auth::user()->isAbleTo('events'))
                             <td>
-                                @if($e->type == 2)
-                                    <button disabled class="btn btn-success" title="This event has not been verified and cannot be made public"><i class="fas fa-check"></i></button>
-                                @else
-                                    @if($e->status == 0)
-                                        <a href="/dashboard/admin/events/set-active/{{ $e->id }}" class="btn btn-success" data-toggle="tooltip" title="Unhide Event"><i class="fas fa-check"></i></a>
-                                    @elseif($e->status == 1)
-                                        <a href="/dashboard/admin/events/hide/{{ $e->id }}" class="btn btn-warning" data-toggle="tooltip" title="Hide Event"><i class="fas fa-ban"></i></a>
+
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    @if($e->type == 2)
+                                        <button disabled class="btn btn-success" title="This event has not been verified and cannot be made public"><i class="fas fa-check"></i></button>
+                                    @else
+                                        @if($e->status == 0)
+                                            <a href="/dashboard/admin/events/set-active/{{ $e->id }}" class="btn btn-success" data-toggle="tooltip" title="Unhide Event"><i class="fas fa-check"></i></a>
+                                        @elseif($e->status == 1)
+                                            <a href="/dashboard/admin/events/hide/{{ $e->id }}" class="btn btn-warning" data-toggle="tooltip" title="Hide Event"><i class="fas fa-ban"></i></a>
+                                        @endif
                                     @endif
-                                @endif
-                                <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                </div>
                                     @if($e->type == 2)
                                         <p><small><i>Unverified</i></small></p>
                                     @else
