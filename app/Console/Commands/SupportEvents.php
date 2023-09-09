@@ -122,7 +122,11 @@ class SupportEvents extends Command {
             $our_event->date = $start_time->toDate();
             $our_event->start_time = $start_time->toTimeString('minute');
             $our_event->end_time = $end_time->toTimeString('minute');
-            $our_event->banner_path = $public_url; // TODO, we need to download this
+
+            $our_event->banner_path = $public_url;
+            $our_event->reduceEventBanner();
+
+            $our_event->banner_path = '/storage/'.$public_url; // TODO, we need to download this
             $our_event->status = 0;
             $our_event->reg = 0;
             $our_event->type = 2; // auto - unverified
