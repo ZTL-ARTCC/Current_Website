@@ -37,6 +37,24 @@ View Event
                                                                                  title="Showing times in {{ $timezone }}. You can change this on your profile."><i
                                         class="fas fa-info-circle"></i></a>)
                         </h5>
+                        <h5><b>Type:</b>
+                            @if(Auth::user()->isAbleTo('events'))
+                                @if($event->type == 0)
+                                    Local Event
+                                @elseif($event->type == 1)
+                                    Support Event
+                                @else
+                                    Unverified Support Event
+                                    <a style="color:inherit" href="#" data-toggle="tooltip" title="Verify by setting the Event Type to 'Support Event' on the Edit Event page."><i class="fas fa-info-circle"></i></a>
+                                @endif
+                            @else
+                                @if($event->type == 0)
+                                    Local Event
+                                @else
+                                    Support Event
+                                @endif
+                            @endif
+                        </h5>
                     <p><b>Additional Information:</b></p>
                     <p>{!! $event->description !!}</p>
                 </div>
