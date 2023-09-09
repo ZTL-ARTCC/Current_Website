@@ -31,7 +31,11 @@ Events
         <tbody>
             @if($events->count() > 0)
                 @foreach($events as $e)
-                    <tr>
+                    @if($e->type == 2)
+                        <tr class="alert-warning">
+                    @else
+                        <tr>
+                    @endif
                         @if($e->banner_path != null)
                             <td width="500px"><a href="/dashboard/controllers/events/view/{{ $e->id }}"><img src="{{ $e->banner_path }}" width="500px" alt="{{ $e->name }}"></a></td>
                         @else
