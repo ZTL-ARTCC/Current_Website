@@ -58,13 +58,13 @@ Events
                                         <button disabled class="btn btn-success" title="This event has not been verified and cannot be made public"><i class="fas fa-check"></i></button>
                                     @else
                                         @if($e->status == 0)
-                                            <a href="/dashboard/admin/events/set-active/{{ $e->id }}" class="btn btn-success" data-toggle="tooltip" title="Unhide Event"><i class="fas fa-check"></i></a>
+                                            <a href="/dashboard/admin/events/set-active/{{ $e->id }}" class="btn btn-success" data-toggle="tooltip" title="Unhide Event"><i class="fas fa-check fa-fw"></i></a>
                                         @elseif($e->status == 1)
-                                            <a href="/dashboard/admin/events/hide/{{ $e->id }}" class="btn btn-warning" data-toggle="tooltip" title="Hide Event"><i class="fas fa-ban"></i></a>
+                                            <a href="/dashboard/admin/events/hide/{{ $e->id }}" class="btn btn-warning" data-toggle="tooltip" title="Hide Event"><i class="fas fa-ban fa-fw"></i></a>
                                         @endif
                                     @endif
-                                        <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
+                                        <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
                                 </div>
                                     @if($e->type == 2)
                                         <p><small><i>Unverified</i></small></p>
