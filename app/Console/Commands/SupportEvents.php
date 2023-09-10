@@ -182,10 +182,12 @@ class SupportEvents extends Command {
             $our_event->vatsim_id = $event->id;
             $our_event->save();
 
-            foreach ($this->event_position_preset as $position) {
+            $new_event_id = Event::where('vatsim_id', $event->id)->first()->id;
+
+            foreach ($this->event_position_preset as $position_name) {
                 $position = new EventPosition;
-                $position->event_id = $our_event->id;
-                $position->name = $position;
+                $position->event_id = $new_event_id;
+                $position->name = $position_name;
                 $position->save();
             }
 
