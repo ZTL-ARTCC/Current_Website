@@ -33,6 +33,7 @@ class SupportEvents extends Command {
         parent::__construct();
     }
 
+    // Pulled from the vatSpy datafile - update this list if airports are addded/removed to KZID, KZDC, KZJX, KZHU, KZME, KZMA, or KZNY
     protected array $event_pull_lut = [
         'all_events' => [
             // KZID
@@ -108,6 +109,8 @@ class SupportEvents extends Command {
         }
 
         foreach ($result->data as $event) {
+            // If an even already exists associated with this myVATSIM event, skip it
+            // This won't filter out our events, but this is done shortly
             $existing = Event::where('vatsim_id', $event->id)->first();
             if ($existing !== null) {
                 $this->info("Skipping already processed event ".$event->id);
@@ -121,6 +124,8 @@ class SupportEvents extends Command {
             $start_time = Carbon::parse($event->start_time);
             $end_time = Carbon::parse($event->end_time);
 
+            // Airport check: is this a facility we care about?
+            // Checked based off the list of airports pulled from vatSpy datafile.
             foreach ($event->airports as $airport) {
                 if (in_array($airport->icao, $all_events_lut)) {
                     $pull_this_event = true;
@@ -164,31 +169,31 @@ class SupportEvents extends Command {
 
             $this->info($event->id.': Saving to database');
 
-            $our_event = new Event;
-            $our_event->name = $event->name;
-            $our_event->host = $organizer;
-            $our_event->description = $event->description;
-            $our_event->date = $start_time->format("m/d/Y");
-            $our_event->start_time = $start_time->toTimeString('minute');
-            $our_event->end_time = $end_time->toTimeString('minute');
+            $new_event = new Event;
+            $new_event->name = $event->name;
+            $new_event->host = $organizer;
+            $new_event->description = $event->description;
+            $new_event->date = $start_time->format("m/d/Y");
+            $new_event->start_time = $start_time->toTimeString('minute');
+            $new_event->end_time = $end_time->toTimeString('minute');
 
-            $our_event->banner_path = $public_url;
-            $our_event->reduceEventBanner();
+            $new_event->banner_path = $public_url;
+            $new_event->reduceEventBanner();
 
-            $our_event->banner_path = '/storage/'.$public_url;
-            $our_event->status = 0;
-            $our_event->reg = 0;
-            $our_event->type = 2; // auto - unverified
-            $our_event->vatsim_id = $event->id;
-            $our_event->save();
+            $new_event->banner_path = '/storage/'.$public_url;
+            $new_event->status = 0;
+            $new_event->reg = 0;
+            $new_event->type = 2; // auto - unverified
+            $new_event->vatsim_id = $event->id;
+            $new_event->save();
 
             $new_event_id = Event::where('vatsim_id', $event->id)->first()->id;
 
             foreach ($this->event_position_preset as $position_name) {
-                $position = new EventPosition;
-                $position->event_id = $new_event_id;
-                $position->name = $position_name;
-                $position->save();
+                $new_event_position = new EventPosition;
+                $new_event_position->event_id = $new_event_id;
+                $new_event_position->name = $position_name;
+                $new_event_position->save();
             }
 
             $this->info('Created ' . $event->id);
