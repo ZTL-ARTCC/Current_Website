@@ -7,7 +7,6 @@ use App\EventPosition;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
 class SupportEvents extends Command {
     /**
@@ -156,15 +155,6 @@ class SupportEvents extends Command {
 
             $this->info('Creating support event with vatsim id '.$event->id);
 
-            // download the event banner
-            // public/storage/event_banners/vatsim_ID.ext
-
-            $this->info($event->id.': Downloading banner');
-
-            $public_url = '/event_banners/vatsim_'.$event->id.substr($event->banner, -4);
-
-            Storage::disk('public')->put($public_url, file_get_contents($event->banner));
-
             // create the event in our database
 
             $this->info($event->id.': Saving to database');
@@ -177,10 +167,8 @@ class SupportEvents extends Command {
             $new_event->start_time = $start_time->toTimeString('minute');
             $new_event->end_time = $end_time->toTimeString('minute');
 
-            $new_event->banner_path = $public_url;
-            $new_event->reduceEventBanner();
+            $new_event->banner_path = $event->banner;
 
-            $new_event->banner_path = '/storage/'.$public_url;
             $new_event->status = 0;
             $new_event->reg = 0;
             $new_event->type = 2; // auto - unverified
