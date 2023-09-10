@@ -293,7 +293,7 @@ class TrainingDash extends Controller {
         Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
             $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
             $m->subject('New Training Ticket Submitted');
-            $m->to($controller->email)->cc('ta@ztlartcc.org');
+            $m->to($controller->email)->cc('training@ztlartcc.org');
         });
         // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
         if ($request->position == 113 || $request->position == 112) {
@@ -512,7 +512,7 @@ class TrainingDash extends Controller {
             Mail::send('emails.ots_assignment', ['ots' => $ots, 'controller' => $controller, 'ins' => $ins], function ($m) use ($ins, $controller) {
                 $m->from('ots-center@notams.ztlartcc.org', 'vZTL ARTCC OTS Center')->replyTo($controller->email, $controller->full_name);
                 $m->subject('You Have Been Assigned an OTS for ' . $controller->full_name);
-                $m->to($ins->email)->cc('ta@ztlartcc.org');
+                $m->to($ins->email)->cc('training@ztlartcc.org');
             });
 
             $audit = new Audit;

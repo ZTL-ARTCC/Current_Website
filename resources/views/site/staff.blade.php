@@ -73,6 +73,7 @@ Staff
                 @endif
             </h4>
         </div>
+        <p>Reports to the Training Administrator and is responsible for overseeing the day-to-day operation of the training department. Reviews training tickets and works with instructors and mentors for staff development.</p>
         <hr>
     @endif
     <div class="block-heading-two">
