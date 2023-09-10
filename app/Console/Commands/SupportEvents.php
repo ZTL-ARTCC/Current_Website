@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Event;
+use App\EventPosition;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -51,6 +52,18 @@ class SupportEvents extends Command {
             // KZNY
             'KZNY' => ['KABE', 'KAVP', 'KBDR', 'KBGM', 'KBLM', 'KCDW', 'KCKZ', 'KCTO', 'KCXY', 'KCZG', 'KDMW', 'KDXR', 'KDYL', 'KELM', 'KEVY', 'KEWR', 'KFOK', 'KFRG', 'KFWN', 'KHPN', 'KHTO', 'KHVN', 'KHWV', 'KHZL', 'KILG', 'KIPT', 'KISP', 'KJFK', 'KJRB', 'KLDJ', 'KLGA', 'KLHV', 'KLNS', 'KLOM', 'KMDT', 'KMGJ', 'KMJX', 'KMMU', 'KMPO', 'KMQS', 'KMUI', 'KNEL', 'KOQN', 'KOXC', 'KPHL', 'KPNE', 'KPOU', 'KPSB', 'KPTW', 'KRDG', 'KRVL', 'KSEG', 'KSMQ', 'KSWF', 'KTEB', 'KTHV', 'KTTN', 'KUKT', 'KUNV', 'KVAY', 'KWBW', 'KWRI', 'KXLL', 'KZER']
         ]
+    ];
+
+    protected array $event_position_preset = [
+        "STBY | Standby",
+        "ZTL | Atlanta Center",
+        "A80 | Sattelite ATCT",
+        "A80 | Atlanta TRACON",
+        "ATL | Atlanta ATCT",
+        "CLT | Satellite ATCT",
+        "CLT | Charlotte TRACON",
+        "CLT | Charlotte ATCT",
+        "CIC/TMU",
     ];
 
     /**
@@ -168,6 +181,13 @@ class SupportEvents extends Command {
             $our_event->type = 2; // auto - unverified
             $our_event->vatsim_id = $event->id;
             $our_event->save();
+
+            foreach ($this->event_position_preset as $position) {
+                $position = new EventPosition;
+                $position->event_id = $our_event->id;
+                $position->name = $position;
+                $position->save();
+            }
 
             $this->info('Created ' . $event->id);
         }
