@@ -1357,6 +1357,11 @@ class AdminDash extends Controller {
         return view('dashboard.admin.events.new');
     }
 
+    public function scanForEvents() {
+        Artisan::call('Events:UpdateSupportEvents', []); // start a background task to update support events
+        return redirect('/dashboard/controllers/events/')->with('success', 'Support events updated successfully.');
+    }
+
     public function saveNewEvent(Request $request) {
         $validator = $request->validate([
             'name' => 'required',
