@@ -5,6 +5,7 @@ namespace App;
 use DB;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use LocalHeroChallenges;
 
 class ControllerLog extends Model {
     protected $table = 'controller_log';
@@ -76,6 +77,7 @@ class ControllerLog extends Model {
     }
 
     public static function aggregateAllControllersByPosAndMonth($year = null, $month = null) {
+        $local_hero_query_str = $this->localHeroQueryBuilder($year, $month);
         $query = static::query()
             ->rightJoin('roster', function ($join) use ($year, $month) {
                 $join->on('roster.id', '=', 'controller_log.cid');
@@ -94,10 +96,7 @@ class ControllerLog extends Model {
 				SUM(IF(position LIKE '%_APP' OR position LIKE '%_DEP', duration, 0)) / 3600 `approach_hrs`,
 				SUM(IF(position LIKE '%_CTR', duration, 0)) / 3600 `enroute_hrs`,
 				SUM(IF(position LIKE '%_CTR' OR position LIKE '%_APP' OR position LIKE '%_DEP' OR position LIKE '%_TWR', duration, 0)) / 3600 `bronze_hrs`,
-                SUM(IF(position LIKE 'BHM_%' OR position LIKE 'GSP_%' OR position LIKE 'AVL_%' OR position LIKE 'GSO_%' OR position LIKE 'TYS_%' OR position LIKE 'CHA_%' OR position LIKE 'FTY_%' 
-                    OR position LIKE 'RYY_%' OR position LIKE 'AHN_%' OR position LIKE 'AGS_%' OR position LIKE 'GMU_%' OR position LIKE 'GYH_%' OR position LIKE 'TCL_%' OR position LIKE 'MXF_%'
-                    OR position LIKE 'MGM_%' OR position LIKE 'LSF_%' OR position LIKE 'CSG_%' OR position LIKE 'MCN_%' OR position LIKE 'WRB_%' OR position LIKE 'JQF_%' OR position LIKE 'VUJ_%'
-                    OR position LIKE 'INT_%' OR position LIKE 'TRI_%' OR position LIKE 'LZU_%' OR position LIKE 'ASN_%' OR position LIKE 'HKY_%' OR position LIKE 'PDK_%', duration, 0)) / 3600 `local_hero_hrs`,
+                " . $local_hero_query_str . "
 				SUM(duration) / 3600 `total_hrs`
 			")
             ->groupBy('roster.id');
@@ -131,5 +130,27 @@ class ControllerLog extends Model {
             $m[$r->cid] = $r;
             return $m;
         }, []);
+    }
+
+    private function localHeroQueryBuilder($year, $month) { // If there is a configured local hero challenge, the build the query. If not, the use the default challenge.
+        $query = "SUM(IF(";
+        $default_query = "SUM(IF(position LIKE 'BHM_%' OR position LIKE 'GSP_%' OR position LIKE 'AVL_%' OR position LIKE 'GSO_%' OR position LIKE 'TYS_%' OR position LIKE 'CHA_%' OR position LIKE 'FTY_%' 
+        OR position LIKE 'RYY_%' OR position LIKE 'AHN_%' OR position LIKE 'AGS_%' OR position LIKE 'GMU_%' OR position LIKE 'GYH_%' OR position LIKE 'TCL_%' OR position LIKE 'MXF_%'
+        OR position LIKE 'MGM_%' OR position LIKE 'LSF_%' OR position LIKE 'CSG_%' OR position LIKE 'MCN_%' OR position LIKE 'WRB_%' OR position LIKE 'JQF_%' OR position LIKE 'VUJ_%'
+        OR position LIKE 'INT_%' OR position LIKE 'TRI_%' OR position LIKE 'LZU_%' OR position LIKE 'ASN_%' OR position LIKE 'HKY_%' OR position LIKE 'PDK_%', duration, 0)) / 3600 `local_hero_hrs`,";
+        $local_hero_challenge = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
+        if($local_hero_challenge) {
+            $positions = str_getcsv($local_hero_challenge->positions);
+            foreach($positions as $p=>$position) {
+                if($p > 0) {
+                    $query .= " OR ";
+                }
+                $pos = explode('_',$position);
+                $query .= "position LIKE '" . $pos[0] . "_%_" . $pos[1] . "'";
+            }
+            $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
+            return $query;
+        }
+        return $default_query;
     }
 }
