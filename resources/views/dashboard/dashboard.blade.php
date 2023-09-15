@@ -229,6 +229,7 @@ Dashboard
         				    @endif
                         </div>
                         <div class="col-sm-2">
+                            {{ $pmonth_challenge_description }}
                         </div>
                     </div>
 			    </div>
@@ -249,6 +250,7 @@ Dashboard
         				    @endif
                         </div>
                         <div class="col-sm-2">
+                            {{ $month_challenge_description }}
                         </div>
                     </div>
 			    </div>
