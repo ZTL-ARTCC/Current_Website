@@ -219,6 +219,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('local-hero')->middleware('permission:snrStaff')->group(function () {
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setLocalHeroWinner');
             Route::get('/remove/{id}/{year}/{month}', 'AdminDash@removeLocalHeroWinner');
+            Route::post('/config-challenge', 'AdminDash@updateLocalHeroChallenge');
         });
         Route::prefix('bronze-mic')->middleware('permission:snrStaff')->group(function () {
             Route::get('/{sort?}/{year?}/{month?}/', 'AdminDash@showBronzeMic');
