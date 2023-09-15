@@ -16,6 +16,7 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\LocalHero;
+use App\LocalHeroChallenges;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -1229,6 +1230,9 @@ class AdminDash extends Controller {
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
         $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
+        $challenge = LocalHeroChallenges::where('month', $month)->where('year', $year)->first();
+        $challenge->positions = explode(', ', $challenge->positions);
+
         if ($sort == 'pyritesort') {
             $home = $homec->sortByDesc(function ($user) use ($year_stats) {
                 return $year_stats[$user->id]->bronze_hrs;
@@ -1241,9 +1245,11 @@ class AdminDash extends Controller {
                 return $stats[$user->id]->bronze_hrs;
             });
         }
+        
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)->with('sort', $sort)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
-                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local);
+                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local)
+                                                  ->with('challenge', $challenge);
     }
 
     public function setLocalHeroWinner($year, $month, $hours, $id) {
@@ -1274,6 +1280,23 @@ class AdminDash extends Controller {
         $audit->save();
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
+    }
+
+    public function updateLocalHeroChallenge(Request $request) {
+        $local_hero_challenge = LocalHeroChallenges::find($request->id);
+        $local_hero_challenge->year = $request->year;
+        $local_hero_challenge->month = $request->month;
+        $local_hero_challenge->positions = implode(', ', $request->positions);
+        $local_hero_challenge->description = $request->description;
+        $local_hero_challenge->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$month.'/'.$year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'Local hero configuration settings were saved.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
