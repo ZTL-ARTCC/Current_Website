@@ -12,13 +12,13 @@ class LocalHeroChallenges extends Model {
 
     public function getLocalHeroChallengePositionsAttribute() {
         $control_positions = [];
-        foreach($this->enroute as $facility) {
+        foreach ($this->enroute as $facility) {
             $control_positions[] = $facility . '_CTR';
         }
-        foreach($this->approach as $facility) {
+        foreach ($this->approach as $facility) {
             $control_positions[] = $facility . '_APP';
         }
-        foreach($this->local as $facility) {
+        foreach ($this->local as $facility) {
             $control_positions[] = $facility . '_TWR';
             $control_positions[] = $facility . '_GND';
             $control_positions[] = $facility . '_DEL';
