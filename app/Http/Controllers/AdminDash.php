@@ -1230,7 +1230,12 @@ class AdminDash extends Controller {
         $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
         $challenge = LocalHeroChallenges::where('month', $month)->where('year', $year)->first();
-        $challenge->positions = explode(', ', $challenge->positions);
+        if ($challenge) {
+            $challenge->positions = explode(', ', $challenge->positions);
+        } else {
+            $challenge = new LocalHeroChallenges;
+        }
+        $local_hero_positions = LocalHeroChallenges::getLocalHeroChallengePositions();
 
         if ($sort == 'pyritesort') {
             $home = $homec->sortByDesc(function ($user) use ($year_stats) {
@@ -1248,7 +1253,7 @@ class AdminDash extends Controller {
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)->with('sort', $sort)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
                                                   ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local)
-                                                  ->with('challenge', $challenge);
+                                                  ->with('challenge', $challenge)->with('local_hero_challenge_positions', $local_hero_positions);
     }
 
     public function setLocalHeroWinner($year, $month, $hours, $id) {
@@ -1282,11 +1287,36 @@ class AdminDash extends Controller {
     }
 
     public function updateLocalHeroChallenge(Request $request) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
         $local_hero_challenge = LocalHeroChallenges::find($request->id);
-        $local_hero_challenge->year = $request->year;
-        $local_hero_challenge->month = $request->month;
+        if (!$local_hero_challenge) {
+            $local_hero_challenge = new LocalHeroChallenges;
+            $local_hero_challenge->year = $request->year;
+            $local_hero_challenge->month = $request->month;
+            $news = new Calendar;
+        } else {
+            $news = Calendar::find($local_hero_challenge->news_id);
+            if (!$news) {
+                $news = new Calendar;
+            }
+        }
+
+        $news->title = $request->title;
+        $news->date = Carbon::now()->format('m/d/Y');
+        $news->body = $request->description;
+        $news->created_by = Auth::id();
+        $news->type = 2;
+        $news->visible = ($request->postToNews == 1) ? 1 : 0;
+        $news->save();
+
         $local_hero_challenge->positions = implode(', ', $request->positions);
+        $local_hero_challenge->title = $request->title;
         $local_hero_challenge->description = $request->description;
+        $local_hero_challenge->news_id = $news->id;
         $local_hero_challenge->save();
 
         $audit = new Audit;
