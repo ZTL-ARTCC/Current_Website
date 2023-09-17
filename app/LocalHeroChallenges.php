@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LocalHeroChallenges extends Model {
     protected $table = 'local_hero_challenges';
-    private $enroute = ['ZTL'];
-    private $approach = ['ATL','CLT','BHM','GSP','AVL','GSO','TYS','CHA','FTY','RYY','AHN'];
-    private $local = ['AGS','GMU','GYH','TCL','MXF','MGM','LSF','CSG','MCN','WRB','JQF','VUJ','INT','TRI','LZU','ASN','HKY','PDK'];
+    private static $enroute = ['ZTL'];
+    private static $approach = ['ATL','CLT','BHM','GSP','AVL','GSO','TYS','CHA','FTY','RYY','AHN'];
+    private static $local = ['AGS','GMU','GYH','TCL','MXF','MGM','LSF','CSG','MCN','WRB','JQF','VUJ','INT','TRI','LZU','ASN','HKY','PDK'];
 
-    public function getLocalHeroChallengePositionsAttribute() {
+    public static function getLocalHeroChallengePositions() {
         $control_positions = [];
         foreach ($this->enroute as $facility) {
             $control_positions[] = $facility . '_CTR';
