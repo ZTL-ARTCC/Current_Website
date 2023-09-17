@@ -146,7 +146,11 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         {!! Form::textArea('description', $challenge->description, ['class' => 'form-control', 'rows' => '5']) !!}
                     </div>
                     <div class="row form-check mb-2">
-                        {!! Form::checkbox('postToNews', 1, true, ['class' => 'form-check-input']) !!}
+                        @toggle('local-hero')
+                            {!! Form::checkbox('postToNews', 1, true, ['class' => 'form-check-input']) !!}
+                        @else
+                            {!! Form::checkbox('postToNews', 1, false, ['class' => 'form-check-input', 'disabled' => 'disabled']) !!}
+                        @endtoggle
                         {!! Form::label('postToNews', 'Post challenge to site news feed?', ['class' => 'form-check-label']) !!}
                     </div>
                     <hr>

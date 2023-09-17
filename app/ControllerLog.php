@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\LocalHeroChallenges;
 use DB;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
