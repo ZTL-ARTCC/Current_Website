@@ -1237,7 +1237,7 @@ class AdminDash extends Controller {
         }
         $local_hero_pos = LocalHeroChallenges::getLocalHeroChallengePositions();
         $local_hero_positions = [];
-        foreach($local_hero_pos as $pos) {
+        foreach ($local_hero_pos as $pos) {
             $local_hero_positions[$pos] = $pos;
         }
 
