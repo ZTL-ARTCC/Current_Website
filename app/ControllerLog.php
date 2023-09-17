@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\LocalHeroChallenges;
 use DB;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
-use LocalHeroChallenges;
 
 class ControllerLog extends Model {
     protected $table = 'controller_log';
@@ -77,7 +77,7 @@ class ControllerLog extends Model {
     }
 
     public static function aggregateAllControllersByPosAndMonth($year = null, $month = null) {
-        $local_hero_query_str = $this->localHeroQueryBuilder($year, $month);
+        $local_hero_query_str = static::localHeroQueryBuilder($year, $month);
         $query = static::query()
             ->rightJoin('roster', function ($join) use ($year, $month) {
                 $join->on('roster.id', '=', 'controller_log.cid');
@@ -132,7 +132,7 @@ class ControllerLog extends Model {
         }, []);
     }
 
-    private function localHeroQueryBuilder($year, $month) { // If there is a configured local hero challenge, the build the query. If not, the use the default challenge.
+    private static function localHeroQueryBuilder($year, $month) { // If there is a configured local hero challenge, the build the query. If not, the use the default challenge.
         $query = "SUM(IF(";
         $default_query = "SUM(IF(position LIKE 'BHM_%' OR position LIKE 'GSP_%' OR position LIKE 'AVL_%' OR position LIKE 'GSO_%' OR position LIKE 'TYS_%' OR position LIKE 'CHA_%' OR position LIKE 'FTY_%' 
         OR position LIKE 'RYY_%' OR position LIKE 'AHN_%' OR position LIKE 'AGS_%' OR position LIKE 'GMU_%' OR position LIKE 'GYH_%' OR position LIKE 'TCL_%' OR position LIKE 'MXF_%'
