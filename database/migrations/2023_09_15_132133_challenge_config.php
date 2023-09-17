@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('title', 255);
             $table->text('description');
             $table->integer('news_id');
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
