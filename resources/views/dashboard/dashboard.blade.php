@@ -228,8 +228,8 @@ Dashboard
         					    <center><h5>Check back for updates!</h5></center>
         				    @endif
                         </div>
+                        <center><h6>{{ $pmonth_challenge_description }}</h6></center>
                         <div class="col-sm-2">
-                            {{ $pmonth_challenge_description }}
                         </div>
                     </div>
 			    </div>
@@ -249,8 +249,8 @@ Dashboard
         					    <center><h5>Check back for updates!</h5></center>
         				    @endif
                         </div>
+                        <center><h6>{{ $month_challenge_description }}</h6></center>
                         <div class="col-sm-2">
-                            {{ $month_challenge_description }}
                         </div>
                     </div>
 			    </div>

@@ -139,8 +139,8 @@ class ControllerDash extends Controller {
         $default_challenge_description = "Control any field/any position other than ATL, CLT, and ZTL";
         $local_hero_challenge_this_month = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
         $local_hero_challenge_prev_month = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
-        $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->description : $default_challenge_description;
-        $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->description : $default_challenge_description;
+        $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->title : $default_challenge_description;
+        $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->title : $default_challenge_description;
 
         $controllers = ATC::get();
 
