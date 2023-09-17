@@ -39,6 +39,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
     </div>
     <div class="row">
         <div class="col">
+            <br>
             <span data-toggle="modal" data-target="#updateLocalHeroChallenge">
                 <button type="button" class="btn btn-primary"><i class="fas fa-cog"></i> Configure Local Hero Challenge</a></button>
             </span>
@@ -135,14 +136,24 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                 </div>
                 {!! Form::open(['action' => ['AdminDash@updateLocalHeroChallenge', $challenge->id]]) !!}
                 @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        {!! Form::label('description', 'Description of the monthly challenge') !!}
-                        {!! Form::textArea('description', $challenge->description, ['class' => 'form-control']) !!}
+                <div class="modal-body mx-2">
+                    <div class="row mb-2">
+                        {!! Form::label('title', 'Name of the monthly challenge') !!}
+                        {!! Form::text('title', $challenge->title, ['class' => 'form-control']) !!}
                     </div>
+                    <div class="row mb-2">
+                        {!! Form::label('description', 'Description of the monthly challenge') !!}
+                        {!! Form::textArea('description', $challenge->description, ['class' => 'form-control', 'rows' => '5']) !!}
+                    </div>
+                    <div class="row form-check mb-2">
+                        {!! Form::checkbox('postToNews', 1, true, ['class' => 'form-check-input']) !!}
+                        {!! Form::label('postToNews', 'Post challenge to site news feed?', ['class' => 'form-check-label']) !!}
+                    </div>
+                    <hr>
                     <div class="row">
                         {!! Form::label('positions', 'Control Positions for this Challenge') !!}
-                        {!! Form::select('positions[]', $localHeroChallengePositions, $challenge->positions, ['class' => 'form-control', 'multiple', 'size' => '10']) !!}
+                        {!! Form::select('positions[]', $local_hero_challenge_positions, $challenge->positions, ['class' => 'form-control', 'multiple', 'size' => '5']) !!}
+                        <div class="small text-secondary">Hold CTRL + click to select multiple positions</div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
