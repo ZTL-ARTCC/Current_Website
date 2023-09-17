@@ -15,6 +15,7 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\LocalHero;
+use App\LocalHeroChallenges;
 use App\Opt;
 use App\Overflight;
 use App\OverflightUpdate;
