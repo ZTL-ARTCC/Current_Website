@@ -16,7 +16,9 @@ return new class extends Migration {
             $table->integer('year');
             $table->integer('month');
             $table->text('positions');
+            $table->string('title', 255);
             $table->text('description');
+            $table->integer('news_id');
             $table->timestamp('created_at')->useCurrent();
         });
     }
