@@ -1290,13 +1290,13 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
     }
 
-    public function updateLocalHeroChallenge(Request $request) {
+    public function updateLocalHeroChallenge(Request $request, $id) {
         $validator = $request->validate([
             'title' => 'required',
             'description' => 'required'
         ]);
 
-        $local_hero_challenge = LocalHeroChallenges::find($request->id);
+        $local_hero_challenge = LocalHeroChallenges::find($id);
         if (!$local_hero_challenge) {
             $local_hero_challenge = new LocalHeroChallenges;
             $local_hero_challenge->year = $request->year;
