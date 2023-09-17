@@ -1236,7 +1236,11 @@ class AdminDash extends Controller {
         } else {
             $challenge = new LocalHeroChallenges;
         }
-        $local_hero_positions = LocalHeroChallenges::getLocalHeroChallengePositions();
+        $local_hero_pos = LocalHeroChallenges::getLocalHeroChallengePositions();
+        $local_hero_positions = [];
+        foreach($local_hero_pos as $pos) {
+            $local_hero_positions[$pos] = $pos;
+        }
 
         if ($sort == 'pyritesort') {
             $home = $homec->sortByDesc(function ($user) use ($year_stats) {
@@ -1305,8 +1309,8 @@ class AdminDash extends Controller {
                 $news = new Calendar;
             }
         }
-
-        $news->title = $request->title;
+        $news_pre_title = Carbon::create()->day(1)->month($request->month)->format('F') . " Challenge: ";
+        $news->title = $news_pre_title . $request->title;
         $news->date = Carbon::now()->format('m/d/Y');
         $news->body = $request->description;
         $news->created_by = Auth::id();
@@ -1323,10 +1327,10 @@ class AdminDash extends Controller {
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$month.'/'.$year.'.';
+        $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$request->month.'/'.$request->year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'Local hero configuration settings were saved.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with('success', 'Local hero configuration settings were saved.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
