@@ -182,7 +182,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('events')->middleware('permission:events')->group(function () {
             Route::get('/new', 'AdminDash@newEvent');
             Route::post('/new', 'AdminDash@saveNewEvent');
-            Route::get('/scan', 'AdminDash@scanForEvents');
             Route::post('/positions/add/{id}', 'AdminDash@addPosition');
             Route::get('/position/delete/{id}', 'AdminDash@removePosition');
             Route::post('/positions/assign/{id}', 'AdminDash@assignPosition');

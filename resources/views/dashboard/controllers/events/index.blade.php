@@ -15,7 +15,6 @@ Events
 <div class="container">
     @if(Auth::user()->isAbleTo('events'))
         <a href="/dashboard/admin/events/new" class="btn btn-primary">New Event</a>
-        <a href="/dashboard/admin/events/scan" class="btn btn-primary">Scan for Support Events (may take a long time)</a>
         <br><br>
     @endif
     <table class="table table-bordered">
