@@ -121,6 +121,11 @@ class SupportEvents extends Command {
 
             // parse times
             $start_time = Carbon::parse($event->start_time);
+
+            if (Carbon::now()->diffInMonths($start_time) > 4) {
+                continue; // skip events that are too far out or too far in the past
+            }
+
             $end_time = Carbon::parse($event->end_time);
 
             // Airport check: is this a facility we care about?
