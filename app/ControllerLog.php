@@ -76,7 +76,7 @@ class ControllerLog extends Model {
     }
 
     public static function aggregateAllControllersByPosAndMonth($year = null, $month = null) {
-        $local_hero_query_str = static::localHeroQueryBuilder($year, $month);
+        $local_hero_query = static::localHeroQueryBuilder($year, $month);
         $query = static::query()
             ->rightJoin('roster', function ($join) use ($year, $month) {
                 $join->on('roster.id', '=', 'controller_log.cid');
@@ -95,9 +95,9 @@ class ControllerLog extends Model {
 				SUM(IF(position LIKE '%_APP' OR position LIKE '%_DEP', duration, 0)) / 3600 `approach_hrs`,
 				SUM(IF(position LIKE '%_CTR', duration, 0)) / 3600 `enroute_hrs`,
 				SUM(IF(position LIKE '%_CTR' OR position LIKE '%_APP' OR position LIKE '%_DEP' OR position LIKE '%_TWR', duration, 0)) / 3600 `bronze_hrs`,
-                " . $local_hero_query_str . "
+                " . $local_hero_query['query'] . "
 				SUM(duration) / 3600 `total_hrs`
-			")
+			", $local_hero_query['bindings'])
             ->groupBy('roster.id');
 
         return $query->get()->reduce(function ($m, $r) {
@@ -132,6 +132,7 @@ class ControllerLog extends Model {
     }
 
     private static function localHeroQueryBuilder($year, $month) { // If there is a configured local hero challenge, the build the query. If not, the use the default challenge.
+        $bindings = [];
         $query = "SUM(IF(";
         $default_query = "SUM(IF(position LIKE 'BHM_%' OR position LIKE 'GSP_%' OR position LIKE 'AVL_%' OR position LIKE 'GSO_%' OR position LIKE 'TYS_%' OR position LIKE 'CHA_%' OR position LIKE 'FTY_%' 
         OR position LIKE 'RYY_%' OR position LIKE 'AHN_%' OR position LIKE 'AGS_%' OR position LIKE 'GMU_%' OR position LIKE 'GYH_%' OR position LIKE 'TCL_%' OR position LIKE 'MXF_%'
@@ -145,11 +146,12 @@ class ControllerLog extends Model {
                     $query .= " OR ";
                 }
                 $pos = explode('_', $position);
-                $query .= "position LIKE '" . $pos[0] . "_%_" . $pos[1] . "'";
+                $query .= "position LIKE ?_%_?";
+                $bindings[] = array_merge($bindings, $pos);
             }
             $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
-            return $query;
+            return ['query'=>$query, 'bindings'=>$bindings];
         }
-        return $default_query;
+        return ['query'=>$default_query, 'bindings'=>[]];
     }
 }
