@@ -146,8 +146,8 @@ class ControllerLog extends Model {
                     $query .= " OR ";
                 }
                 $pos = explode('_', $position);
-                $query .= "position LIKE ?_%_?";
-                $bindings[] = array_merge($bindings, $pos);
+                $query .= "position LIKE ?";
+                $bindings[] = $pos[0] . '_%_' . $pos[1];
             }
             $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
             return ['query'=>$query, 'bindings'=>$bindings];
