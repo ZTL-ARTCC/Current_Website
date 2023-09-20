@@ -432,6 +432,7 @@ class ControllerDash extends Controller {
             $reg->end_time = $request->end_time1;
             $reg->status = 0;
             $reg->choice_number = 1;
+            $reg->remarks = $request->remarks;
             $reg->save();
         } else {
             $reg = EventRegistration::find($request->yr1);

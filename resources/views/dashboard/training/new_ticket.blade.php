@@ -201,7 +201,7 @@ New Training Ticket
 		{!! Form::label('monitor', 'Can be monitored', ['class' => 'form-label']) !!}
 		{!! Form::checkBox('monitor', '1') !!}
 		<br>
-	    {!! Form::label('monitor', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
+	    {!! Form::label('cert', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
 		{!! Form::checkBox('cert', 1) !!}
 		<br>
         <button class="btn btn-success" action="submit">Submit Ticket</button>

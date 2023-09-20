@@ -228,10 +228,12 @@ class TrainingDash extends Controller {
         $exam_names = array_keys($exams);
         foreach ($exam_names as $exam) {
             if (isset($academy['data'][$exam])) {
-                if (count($academy['data'][$exam]) > 0) {
-                    $exams[$exam]['date'] = date("m/d/y", end($academy['data'][$exam])['time_finished']);
-                    $exams[$exam]['success'] = (end($academy['data'][$exam])['grade'] >= 80) ? 1 : 0;
-                    $exams[$exam]['grade'] = end($academy['data'][$exam])['grade'];
+                foreach ($academy['data'][$exam] as $exam_attempt) {
+                    if (is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
+                        $exams[$exam]['date'] = date("m/d/y", $exam_attempt['time_finished']);
+                        $exams[$exam]['success'] = ($exam_attempt['grade'] >= 80) ? 1 : 0;
+                        $exams[$exam]['grade'] = $exam_attempt['grade'];
+                    }
                 }
             }
         }
@@ -279,10 +281,9 @@ class TrainingDash extends Controller {
         $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
         $ticket->ins_comments = $request->trainer_comments;
         $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-        //$ticket->cert = $request->cert;
+        $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
         $ticket->save();
         $extra = null;
-
 
         $date = $ticket->date;
         $date = date("Y-m-d");
@@ -326,7 +327,7 @@ class TrainingDash extends Controller {
         } elseif ($request->position == 123) {
             $ticket->position = 'BHM_APP';
         }
-        // Added http_errors to prevent random errors from being thrown when the VATUSA call fails
+
         $req_params = [
             'form_params' =>
             [
@@ -372,7 +373,6 @@ class TrainingDash extends Controller {
             } elseif ($request->position == 47) {
                 $controller->gnd = 89;
             }
-
             $controller->save();
         }
 
@@ -381,8 +381,6 @@ class TrainingDash extends Controller {
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
         $audit->save();
-
-
 
         return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
     }
@@ -430,7 +428,7 @@ class TrainingDash extends Controller {
             $ticket->comments = $request->comments;
             $ticket->ins_comments = $request->trainer_comments;
             $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-            //$ticket->cert = $request->cert;
+            $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
             $ticket->save();
 
             $audit = new Audit;

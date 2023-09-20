@@ -124,20 +124,49 @@ View Event
                                             </td>
                                             @if(Auth::user()->isAbleTo('events'))
                                                 <td>
-                                                <span data-toggle="modal" data-target="#addrequest{{ $r->id }}">
-                                                    <button type="button" class="btn btn-success btn-sm simple-tooltip"
-                                                            data-placement="top" data-toggle="tooltip"
-                                                            title="Assign Position"><i
-                                                                class="fas fa-check"></i></button>
-                                                </span>
-                                                    &nbsp;
-                                                    <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup"
-                                                       class="btn btn-danger btn-sm simple-tooltip"
-                                                       data-toggle="tooltip" title="Delete Request"><i
-                                                                class="fas fa-times"></i></a>
-                                                </td>
+
+                                                    <div class="btn-group" role="group" aria-label="Actions">
+                                                        <button data-toggle="modal" data-target="#addrequest{{ $r->id }}" type="button" class="btn btn-success btn-sm simple-tooltip" data-placement="top" title="Assign Position">
+                                                            <i class="fas fa-check fa-fw"></i>
+                                                        </button>
+
+                                                        <a href="/dashboard/controllers/events/view/{{ $r->id }}/un-signup" class="btn btn-danger btn-sm" title="Delete Request">
+                                                            <i class="fas fa-trash fa-fw"></i>
+                                                        </a>
+
+                                                        @if($r->remarks != null)
+                                                            <button data-toggle="modal" data-target="#remarks{{ $r->id }}" type="button" class="btn btn-info btn-sm simple-tooltip" data-placement="top" title="View Remarks">
+                                                                <i class="fas fa-info-circle fa-fw"></i>
+                                                            </button>
+                                                        @else
+                                                            <button disabled data-toggle="modal" data-target="#remarks{{ $r->id }}" type="button" class="btn btn-info btn-sm disabled" data-placement="top" title="No Remarks Provided">
+                                                                <i class="fas fa-info-circle fa-fw"></i>
+                                                            </button>
+                                                        @endif
+                                                    </div>
                                             @endif
                                         </tr>
+
+                                        <div class="modal fade" id="remarks{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Position Remarks</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p><i>Remarks submitted by {{ $r->controller_name }}:</i></p>
+                                                        <p>{{ $r->remarks }}</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="modal fade" id="addrequest{{ $r->id }}" tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -366,7 +395,11 @@ View Event
                                                     {!! Form::label('end_time1', '-', ['class' => 'form-label pr-2']) !!}
                                                     {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'placeholder' => $event->end_time, 'class' => 'form-control col-sm-2 mr-2']) !!}
                                                     {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
+
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-10 pt-2 pr-2">
+                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Specific position requests/additional information (optional)', 'class' => 'form-control textarea-no-resize col-sm-11 pr-2', 'rows' => '3', 'maxlength' => '1024']) !!}
                                             </div>
                                         </div>
                                     @endif
