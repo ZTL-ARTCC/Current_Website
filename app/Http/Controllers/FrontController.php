@@ -354,7 +354,7 @@ class FrontController extends Controller {
               $visit->save();*/
             
             $expireDate = new DateTime($request->updated_at);
-            $expireDate->modify('1 year');
+            $expireDate->modify('+ 90 days');
             if (date_create() > $expireDate) {
                 $visit = Visitor::Create(
                     ['cid' => $request->cid,
