@@ -51,7 +51,7 @@ Visit Requests
                                 <td><center>{{ $v->rating_short }}</center></td>
                                 <td><center>{{ $v->email }}</center></td>
                                 <td><center>{{ $v->home }}</center></td>
-                                <td><center>{{ $v->created_at }}</center></td>
+                                <td><center>{{ $v->updated_at }}</center></td>
                                 <td>
                                     <a href="/dashboard/admin/roster/visit/accept/{{ $v->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept"><i class="fa fa-check"></i></a>
                                     <span data-toggle="modal" data-target="#reject{{ $v->id }}">
