@@ -17,6 +17,7 @@ use App\User;
 use App\Visitor;
 use Carbon\Carbon;
 use Config;
+use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
@@ -319,7 +320,6 @@ class FrontController extends Controller {
         ]);
 
         //Google reCAPTCHA Verification
-       
         $client = new Client;
         $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
@@ -339,7 +339,7 @@ class FrontController extends Controller {
                 return redirect()->back()->with('error', 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
             }
         }
-     
+        
         if ($request->rating != 1) {
             //Continue Request
             /*  $visit = new Visitor;
@@ -352,18 +352,35 @@ class FrontController extends Controller {
               $visit->reason = $request->reason;
               $visit->status = 0;
               $visit->save();*/
-
-            $visit = Visitor::updateOrCreate(
-                ['cid' => $request->cid],
-                [
+            
+            $expireDate = new DateTime($request->updated_at);
+            $expireDate->modify('1 year');
+            if (date_create() > $expireDate) {
+                $visit = Visitor::Create(
+                    ['cid' => $request->cid,
                     'name' => $request->name,
-                    'email' => $request->email,
-                    'rating' => $request->rating,
-                    'home' => $request->home,
-                    'reason'=> $request->reason,
-                    'status'=> 0
-                ]
-            );
+                        'email' => $request->email,
+                        'rating' => $request->rating,
+                        'home' => $request->home,
+                        'reason'=> $request->reason,
+                        'status'=> 0
+                    ]//
+                );
+            } else {
+                $visit = Visitor::updateOrCreate(
+                    ['cid' => $request->cid],
+                    [
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'rating' => $request->rating,
+                        'home' => $request->home,
+                        'reason'=> $request->reason,
+                        'status'=> 0
+                    ]
+                );
+            }
+                    
+        
 
             Mail::send('emails.visit.new', ['visit' => $visit], function ($message) use ($visit) {
                 $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
