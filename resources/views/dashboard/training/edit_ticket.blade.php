@@ -188,7 +188,14 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
-		{!! Form::label('monitor', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
+		{!! Form::label('monitor', 'Can be monitored', ['class' => 'form-label']) !!}
+        @if($ticket->monitor == 1)
+			{!! Form::checkBox('monitor', 1, true) !!}
+        @else
+			{!! Form::checkBox('monitor', 1) !!}
+        @endif	
+        <br>
+		{!! Form::label('cert', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
         @if($ticket->cert == 1)
 			{!! Form::checkBox('cert', 1, true) !!}
         @else

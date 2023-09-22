@@ -400,6 +400,13 @@ class ControllerDash extends Controller {
         $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
         $id = $request->event_id;
 
+        if (($request->start_time1 == "" || $request->start_time1 == " ") && ($request->end_time1 == "" || $request->end_time1 == " ")) {
+            $e = Event::find($id);
+            $request->start_time1 = $e->start_time;
+            $request->end_time1 = $e->end_time;
+            $request->timezone == "0";
+        }
+
         if (!preg_match($valid_time_expr, $request->start_time1)) {
             return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
         }
@@ -425,6 +432,7 @@ class ControllerDash extends Controller {
             $reg->end_time = $request->end_time1;
             $reg->status = 0;
             $reg->choice_number = 1;
+            $reg->remarks = $request->remarks;
             $reg->save();
         } else {
             $reg = EventRegistration::find($request->yr1);
