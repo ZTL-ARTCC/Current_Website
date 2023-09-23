@@ -140,18 +140,21 @@ class ControllerLog extends Model {
         OR position LIKE 'INT_%' OR position LIKE 'TRI_%' OR position LIKE 'LZU_%' OR position LIKE 'ASN_%' OR position LIKE 'HKY_%' OR position LIKE 'PDK_%', duration, 0)) / 3600 `local_hero_hrs`,";
         $local_hero_challenge = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
         if ($local_hero_challenge) {
-            $positions = str_getcsv($local_hero_challenge->positions);
-            foreach ($positions as $p=>$position) {
-                if ($p > 0) {
-                    $query .= " OR ";
+            if(strlen($local_hero_challenge->positions > 0)) {
+                $positions = str_getcsv($local_hero_challenge->positions);
+                foreach ($positions as $p=>$position) {
+                    if ($p > 0) {
+                        $query .= " OR ";
+                    }
+                    $pos = explode('_', $position);
+                    $query .= "position LIKE ?";
+                    $bindings[] = trim($pos[0]) . '_%_' . trim($pos[1]);
                 }
-                $pos = explode('_', $position);
-                $query .= "position LIKE ?";
-                $bindings[] = $pos[0] . '_%_' . $pos[1];
+                $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
+                return ['query'=>$query, 'bindings'=>$bindings];
             }
-            $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
-            return ['query'=>$query, 'bindings'=>$bindings];
         }
+
         return ['query'=>$default_query, 'bindings'=>[]];
     }
 }
