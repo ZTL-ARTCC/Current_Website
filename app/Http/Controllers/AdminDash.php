@@ -1318,7 +1318,7 @@ class AdminDash extends Controller {
         $news->visible = ($request->postToNews == 1) ? 1 : 0;
         $news->save();
 
-        $local_hero_challenge->positions = implode(', ', $request->positions);
+        $local_hero_challenge->positions = is_array($request->positions) ? implode(', ', $request->positions) : '';
         $local_hero_challenge->title = $request->title;
         $local_hero_challenge->description = $request->description;
         $local_hero_challenge->news_id = $news->id;
