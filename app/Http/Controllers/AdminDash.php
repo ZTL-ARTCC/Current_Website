@@ -32,6 +32,7 @@ use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 
 class AdminDash extends Controller {
@@ -1389,6 +1390,7 @@ class AdminDash extends Controller {
         $event->reduceEventBanner();
         $event->status = 0;
         $event->reg = 0;
+        $event->type = $request->type;
         $event->save();
 
         $audit = new Audit;
@@ -1416,6 +1418,17 @@ class AdminDash extends Controller {
 
         $event = Event::find($id);
 
+        if ($request->type == 1) { // if we are setting it to a verified support event, verify the banner
+            if (starts_with($event->banner_path, "http://") || starts_with($event->banner_path, "https://")) {
+                // download the banner
+                $public_url = '/event_banners/vatsim_'.$event->vatsim_id.substr($event->banner_path, -4);
+                Storage::disk('public')->put($public_url, file_get_contents($event->banner_path));
+                $event->banner_path = $public_url;
+                $event->reduceEventBanner();
+                $event->banner_path = '/storage'.$public_url;
+            }
+        }
+
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1437,6 +1450,7 @@ class AdminDash extends Controller {
         $event->banner_path = $public_url;
         $event->reduceEventBanner();
         $event->status = 0;
+        $event->type = $request->type;
         $event->save();
 
         $audit = new Audit;

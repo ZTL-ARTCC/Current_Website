@@ -40,6 +40,9 @@ class Kernel extends ConsoleKernel {
             $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         }
         $schedule->command('SetmoreAppointments:Update')->everyThirtyMinutes();
+        if (FeatureToggle::isEnabled("auto_support_events")) {
+            $schedule->command('Events:UpdateSupportEvents')->daily();
+        }
     }
 
     /**

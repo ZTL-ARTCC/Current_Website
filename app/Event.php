@@ -29,6 +29,9 @@ class Event extends Model {
     }
 
     public function displayBannerPath() {
+        if (starts_with($this->banner_path, "http://") || starts_with($this->banner_path, "https://")) {
+            return $this->banner_path;
+        }
         $disk = Storage::disk('public');
         $filename = basename($this->banner_path);
         if ($disk->exists($this->banner_base_path . $this->banner_reduced_base_path . $filename)) {
