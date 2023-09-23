@@ -140,7 +140,7 @@ class ControllerLog extends Model {
         OR position LIKE 'INT_%' OR position LIKE 'TRI_%' OR position LIKE 'LZU_%' OR position LIKE 'ASN_%' OR position LIKE 'HKY_%' OR position LIKE 'PDK_%', duration, 0)) / 3600 `local_hero_hrs`,";
         $local_hero_challenge = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
         if ($local_hero_challenge) {
-            if(strlen($local_hero_challenge->positions > 0)) {
+            if (strlen($local_hero_challenge->positions > 0)) {
                 $positions = str_getcsv($local_hero_challenge->positions);
                 foreach ($positions as $p=>$position) {
                     if ($p > 0) {
