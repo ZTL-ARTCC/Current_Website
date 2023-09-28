@@ -102,7 +102,7 @@ class OnlineControllerUpdate extends Command {
 
                 $MostRecentLog = ControllerLog::where('cid', $cid)->orderBy('time_logon', 'DESC')->first();
 
-                if (!$MostRecentLog || $MostRecentLog->time_logon != $time_logon) {
+                if (!$MostRecentLog || (($MostRecentLog->time_logon != $time_logon) && ($MostRecentLog->streamupdate <= $time_logon))) {
                     ControllerLog::create([
                         'cid' => $cid,
                         'name' => $name,
