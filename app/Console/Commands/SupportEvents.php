@@ -145,7 +145,7 @@ class SupportEvents extends Command {
                         break;
                     }
                     // is it on a friday? (FNO)
-                    if ($start_time->dayOfWeek == 6) { // 06: Friday
+                    if ($start_time->dayOfWeek == 5) { // 05 (not 06): Friday
                         // FNO - pull this event too
                         $pull_this_event = true;
                         $organizer = $inverse_lut[$airport->icao];
