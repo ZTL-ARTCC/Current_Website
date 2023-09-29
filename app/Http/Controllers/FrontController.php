@@ -52,7 +52,6 @@ class FrontController extends Controller {
                              */
                     ]
                 ];
-                
             }
 
             
