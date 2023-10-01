@@ -1232,7 +1232,7 @@ class AdminDash extends Controller {
 
         $challenge = LocalHeroChallenges::where('month', $month)->where('year', $year)->first();
         if ($challenge) {
-            $challenge->positions = explode(', ', $challenge->positions);
+            $challenge->positions = explode(',', $challenge->positions);
         } else {
             $challenge = new LocalHeroChallenges;
             $challenge->id = -1;
@@ -1319,7 +1319,7 @@ class AdminDash extends Controller {
         $news->visible = ($request->postToNews == 1) ? 1 : 0;
         $news->save();
 
-        $local_hero_challenge->positions = is_array($request->positions) ? implode(', ', $request->positions) : '';
+        $local_hero_challenge->positions = is_array($request->positions) ? implode(',', $request->positions) : '';
         $local_hero_challenge->title = $request->title;
         $local_hero_challenge->description = $request->description;
         $local_hero_challenge->news_id = $news->id;
