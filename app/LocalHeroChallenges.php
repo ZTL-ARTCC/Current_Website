@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LocalHeroChallenges extends Model {
     protected $table = 'local_hero_challenges';
-    private static $enroute = ['ZTL'];
+    private static $enroute = ['ATL'];
     private static $approach = ['ATL','CLT','BHM','GSP','AVL','GSO','TYS','CHA','AHN'];
     private static $local = ['AGS','FTY','RYY','GMU','GYH','TCL','MXF','MGM','LSF','CSG','MCN','WRB','JQF','VUJ','INT','TRI','LZU','ASN','HKY','PDK'];
 
