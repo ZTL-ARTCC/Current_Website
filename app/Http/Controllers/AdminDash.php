@@ -1235,6 +1235,7 @@ class AdminDash extends Controller {
             $challenge->positions = explode(', ', $challenge->positions);
         } else {
             $challenge = new LocalHeroChallenges;
+            $challenge->id = -1;
         }
         $local_hero_pos = LocalHeroChallenges::getLocalHeroChallengePositions();
         $local_hero_positions = [];
