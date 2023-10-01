@@ -54,11 +54,9 @@ class FrontController extends Controller {
                 ];
             }
 
-            
             foreach ($atc as $a) {
                 $field = substr($a->position, 0, 3);
                 $position = substr($a->position, -3);
-                
 
                 if (!isMonitoredAirfield($field)) {
                     continue;
