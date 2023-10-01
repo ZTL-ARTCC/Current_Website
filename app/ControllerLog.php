@@ -148,7 +148,7 @@ class ControllerLog extends Model {
                     }
                     $pos = explode('_', $position);
                     $query .= "position LIKE ?";
-                    $bindings[] = trim($pos[0]) . '_%_' . trim($pos[1]);
+                    $bindings[] = trim($pos[0]) . '_%' . trim($pos[1]);
                 }
                 $query .= ", duration, 0)) / 3600 `local_hero_hrs`,";
                 return ['query'=>$query, 'bindings'=>$bindings];
