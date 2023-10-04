@@ -7,9 +7,9 @@ use App\RealopsFlight;
 use App\RealopsPilot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Mail;
-use Throwable;
 
 class RealopsController extends Controller {
     public function index(Request $request) {
@@ -191,10 +191,21 @@ class RealopsController extends Controller {
         ]);
 
         try {
-            $contents = file_get_contents($request->file('file')->getRealPath());
+            // what is this for?
+            // this doesn't do anything
+            //$contents = file_get_contents($request->file('file')->getRealPath());
             Excel::import(new RealopsFlightImporter, request()->file('file'));
-        } catch (Throwable $e) {
-            return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Please check file format and try again');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            $errors = "";
+
+            foreach ($failures as $failure) {
+                // L21#0 Blah blah blah (value: 'fbalsdhj')
+                Log::info($failure);
+                $errors = $errors.' L'.$failure->row().'#'.$failure->attribute().': '.join(',', $failure->errors()).' ('.$failure->values()[$failure->attribute()].')';
+            }
+            return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Errors: ' . $errors);
         }
 
         return redirect('/dashboard/admin/realops')->with('success', 'Upload succeeded');
