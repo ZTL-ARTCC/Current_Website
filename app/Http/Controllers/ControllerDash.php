@@ -15,6 +15,7 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\LocalHero;
+use App\LocalHeroChallenges;
 use App\Opt;
 use App\Overflight;
 use App\OverflightUpdate;
@@ -135,6 +136,12 @@ class ControllerDash extends Controller {
         $pwinner_local = LocalHero::where('month', $pmonth)->where('year', $pyear)->first();
         $pyrite = Pyrite::where('year', $lyear)->first();
 
+        $default_challenge_description = "Control any field/any position other than ATL, CLT, and ZTL";
+        $local_hero_challenge_this_month = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
+        $local_hero_challenge_prev_month = LocalHeroChallenges::where('year', $pyear)->where('month', $pmonth)->first();
+        $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->title : $default_challenge_description;
+        $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->title : $default_challenge_description;
+
         $controllers = ATC::get();
 
         $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
@@ -161,6 +168,7 @@ class ControllerDash extends Controller {
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
+                                          ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
                                           ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 

@@ -37,6 +37,14 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
             <a class="btn btn-primary" href="/dashboard/admin/bronze-mic/<?=$sort?>/<?=$nyr?>/<?=$nm?>">Next Month <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <br>
+            <span data-toggle="modal" data-target="#updateLocalHeroChallenge">
+                <button type="button" class="btn btn-primary"><i class="fas fa-cog"></i> Configure Local Hero Challenge</a></button>
+            </span>
+        </div>
+    </div>
     <br>
     <table class="table table-bordered table-striped">
         <colgroup>
@@ -118,6 +126,50 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
             @endforeach
         </tbody>
     </table>
+    <div class="modal fade" id="updateLocalHeroChallenge" tabindex="-1" role="dialog" aria-labelledby="updateLocalHeroChallenge" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Local Hero Challenge Configuration for <?=$mname?> 20<?=$year?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                </div>
+                {!! Form::open(['action' => ['AdminDash@updateLocalHeroChallenge', $challenge->id]]) !!}
+                @csrf
+                <div class="modal-body mx-2">
+                    <div class="row mb-2">
+                        {!! Form::label('title', 'Name of the monthly challenge') !!}
+                        {!! Form::text('title', $challenge->title, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="row mb-2">
+                        {!! Form::label('description', 'Description of the monthly challenge') !!}
+                        {!! Form::textArea('description', $challenge->description, ['class' => 'form-control', 'rows' => '5']) !!}
+                    </div>
+                    <div class="row form-check mb-2">
+                        @toggle('local-hero')
+                            {!! Form::checkbox('postToNews', 1, true, ['class' => 'form-check-input']) !!}
+                        @else
+                            {!! Form::checkbox('postToNews', 1, false, ['class' => 'form-check-input', 'disabled' => 'disabled']) !!}
+                        @endtoggle
+                        {!! Form::label('postToNews', 'Post challenge to site news feed?', ['class' => 'form-check-label']) !!}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        {!! Form::label('positions', 'Control Positions for this Challenge') !!}
+                        {!! Form::select('positions[]', $local_hero_challenge_positions, $challenge->positions, ['class' => 'form-control', 'multiple', 'size' => '5']) !!}
+                        <div class="small text-secondary">Hold CTRL + click to select multiple positions</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button action="submit" class="btn btn-success">Save Challenge</button>
+                    </div>
+                    {!! Form::hidden('year', $year) !!}
+                    {!! Form::hidden('month', $month) !!}
+                {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

@@ -83,6 +83,7 @@ class FrontController extends Controller {
                         'short' => substr($position, 0, 1),
                         'color' => 'pos'.$position
                     ];
+                    rsort($fields[$field]['subfields']);
                 }
             } rsort($fields[$field]['subfields']);
         }
