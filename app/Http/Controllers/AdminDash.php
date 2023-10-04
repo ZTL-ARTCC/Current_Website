@@ -574,7 +574,7 @@ class AdminDash extends Controller {
         ]);
 
         $client = new Client(['exceptions' => false]);
-        $response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key'));
+        $response = $client->request('GET', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key'));
         $result = $response->getStatusCode();
         if ($result == '200') {
             $visitor = json_decode($response->getBody());
@@ -664,7 +664,7 @@ class AdminDash extends Controller {
         
         // Add to the VATUSA roster
         $client = new Client();
-        $res = $client->request('POST', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
+        $res = $client->request('POST', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visitor has been successfully added to the roster.');
     }
@@ -701,7 +701,7 @@ class AdminDash extends Controller {
                 ],
                 'http_errors' => false
             ];
-            $res = $client->request('DELETE', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
+            $res = $client->request('DELETE', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
             
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
