@@ -206,6 +206,8 @@ class RealopsController extends Controller {
                 $errors = $errors.' L'.$failure->row().'#'.$failure->attribute().': '.join(',', $failure->errors()).' ('.$failure->values()[$failure->attribute()].')';
             }
             return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Errors: ' . $errors);
+        } catch (\Exception $e) {
+            return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Check your formatting: ' . $e->getMessage());
         }
 
         return redirect('/dashboard/admin/realops')->with('success', 'Upload succeeded');
