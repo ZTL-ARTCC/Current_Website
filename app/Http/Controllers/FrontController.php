@@ -82,7 +82,10 @@ class FrontController extends Controller {
                         'color' => 'pos'.$position
                     ];
                 }
-            } rsort($fields[$field]['subfields']);
+            }
+            if (in_array('subfields', $fields)) {
+                rsort($fields[$field]['subfields']);
+            }
         }
 
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
