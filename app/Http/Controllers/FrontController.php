@@ -34,6 +34,7 @@ class FrontController extends Controller {
 
         $fields = [];
         $center = 0;
+        $field =null;
         if ($atc) {
             foreach (monitoredAirfields() as $id => $name) {
                 $fields[$id] = [
@@ -83,7 +84,7 @@ class FrontController extends Controller {
                     ];
                 }
             }
-            if (in_array('subfields', $fields)) {
+            if (isset($fields[$field])) {
                 rsort($fields[$field]['subfields']);
             }
         }
