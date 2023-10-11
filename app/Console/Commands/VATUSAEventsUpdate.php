@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Event;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 
 class VATUSAEventsUpdate extends Command {
     /**
@@ -20,8 +21,6 @@ class VATUSAEventsUpdate extends Command {
      * @var string
      */
     protected $description = 'Fetches events from VATUSA and syncs id_topics in the events table.';
-
-    protected $apiEndpoint = "https://api.vatusa.net/v2/public/events/";
 
     /**
      * Create a new command instance.
@@ -59,7 +58,7 @@ class VATUSAEventsUpdate extends Command {
 
     public function getEvents() {
         $client = new Client();
-        $res = $client->request('GET', $this->apiEndpoint . '100', ['http_errors' => false]);
+        $res = $client->request('GET', Config::get('vatusa.base')."/v2/public/events/" . '100', ['http_errors' => false]);
         $data = json_decode($res->getBody(), true);
         if (isset($data['data'])) {
             $data = $data['data'];
