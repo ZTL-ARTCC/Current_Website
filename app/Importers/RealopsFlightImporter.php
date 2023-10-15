@@ -3,10 +3,18 @@
 namespace App\Importers;
 
 use App\RealopsFlight;
+use Exception;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class RealopsFlightImporter implements ToModel {
+class RealopsFlightImporter implements ToModel, WithValidation {
+    /**
+     * @throws Exception
+     */
     public function model($row) {
+        if (count($row) < 5) {
+            throw new Exception("Invalid row: too few entries (expected at least 5, got " . count($row) . ")");
+        }
         $est_arr_time = null;
         $route = null;
 
@@ -28,5 +36,16 @@ class RealopsFlightImporter implements ToModel {
         $flight->route = $route;
 
         return $flight;
+    }
+
+    public function rules(): array {
+        return [
+            '0' => ['required', 'date_format:Y-m-d'],
+            '1' => 'required',
+            '2' => ['required', 'date_format:H:i'],
+            '3' => 'required',
+            '4' => 'required',
+            '5' => ['date_format:H:i']
+        ];
     }
 }
