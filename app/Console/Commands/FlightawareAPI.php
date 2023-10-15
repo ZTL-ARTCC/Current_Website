@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\FeatureToggle;
+use App\RealopsFlight;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 
 class FlightawareAPI extends Command implements PromptsForMissingInput {
@@ -31,7 +33,9 @@ class FlightawareAPI extends Command implements PromptsForMissingInput {
             $this->error("realops is not enabled");
             return;
         }
-        $this->info("Loading a maximum of " . $this->argument("max") . ($this->argument("incoming") == "true" ? "arriving" : "departing") . " flights for " . $this->argument("airport") . " from " . $this->argument("from") . " to " . $this->argument("to"));
+        $start_time = microtime(true);
+
+        $this->info("Loading a maximum of " . $this->argument("max") . " " . ($this->argument("incoming") == "true" ? "arriving" : "departing") . " flights for " . $this->argument("airport") . " from " . $this->argument("from") . " to " . $this->argument("to"));
 
         $url = Config::get('flightaware.base') . '/aeroapi/schedules/' . $this->argument('from') . '/' . $this->argument('to') . "?" . ($this->argument("incoming") == "true" ? "destination" : "origin") . "=" . $this->argument("airport") . "&max_pages=2";
         $req_num = 1;
@@ -60,7 +64,7 @@ class FlightawareAPI extends Command implements PromptsForMissingInput {
                 }
             }
 
-            $this->info("Request #" . $req_num . ": " . $url . "(" . count($flights) . " flights so far)");
+            $this->info("Request #" . $req_num . ": " . $url . " (" . count($flights) . " flights so far)");
 
             $res = $client->request('GET', $url);
             $data = json_decode($res->getBody(), true);
@@ -76,6 +80,42 @@ class FlightawareAPI extends Command implements PromptsForMissingInput {
         }
 
         $this->info("Loaded " . count($flights) . " flights in " . $req_num . " requests");
+
+        foreach ($flights as $num => $flight) {
+            $this->info("Saving " . $num+1 . "/" . count($flights));
+
+            $callsign = $flight['ident'];
+
+            $existing = RealopsFlight::where('flight_number', $callsign)->first();
+            if ($existing !== null) {
+                $this->info("Skipping already processed flight ".$callsign);
+                continue;
+            } // this event has already been processed
+
+            // insert
+            $new_flight = new RealopsFlight;
+
+            // parse the departure and arrival times
+            $deptime = $flight['scheduled_out'];
+            $arrtime = $flight['scheduled_in'];
+            $deptime_parsed = Carbon::parse($deptime);
+            $arrtime_parsed = Carbon::parse($arrtime);
+
+            $new_flight->assigned_pilot_id = null;
+            $new_flight->flight_number = $callsign;
+            $new_flight->flight_date = $deptime_parsed->toDateString();
+            $new_flight->dep_time = $deptime_parsed->toTimeString();
+            $new_flight->dep_airport = $flight['origin'];
+            $new_flight->arr_airport = $flight['destination'];
+            $new_flight->est_arr_time = $arrtime_parsed->toTimeString();
+            $new_flight->route = 'Pilot Choice';
+
+            $new_flight->save();
+        }
+
+        $end_time = microtime(true);
+
+        $this->info(count($flights) . ' flights imported from FlightAware in ' . $end_time - $start_time . ' seconds');
     }
 
     /**
