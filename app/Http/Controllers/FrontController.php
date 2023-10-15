@@ -34,6 +34,7 @@ class FrontController extends Controller {
 
         $fields = [];
         $center = 0;
+        $field =null;
         if ($atc) {
             foreach (monitoredAirfields() as $id => $name) {
                 $fields[$id] = [
@@ -82,7 +83,10 @@ class FrontController extends Controller {
                         'color' => 'pos'.$position
                     ];
                 }
-            };// rsort($fields[$field]['subfields']);
+            }
+            if (isset($fields[$field])) {
+                rsort($fields[$field]['subfields']);
+            }
         }
 
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
