@@ -222,7 +222,7 @@ Update Controller
                             3 => 'Events Team'
                             ], $user->events_position, ['class' => 'form-control']) !!}
                     </div>
-                @elseif(Auth::user()->isAbleTo('events'))
+                @elseif(Auth::user()->hasRole('ec'))
                     <div class="col-sm-6">
                         {!! Form::label('staff', 'Staff Position') !!}
                         {!! Form::select('staff', [
