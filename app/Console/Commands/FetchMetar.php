@@ -44,8 +44,8 @@ class FetchMetar extends Command {
         $airports = $airports_icao->toArray();
 
         $client = new Client;
-        $response_metars = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
-        $response_tafs = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
+        $response_metars = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
+        $response_tafs = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
 
         $root_metars = new SimpleXMLElement($response_metars->getBody());
         $root_tafs = new SimpleXMLElement($response_tafs->getBody());
