@@ -72,7 +72,6 @@ class Airport extends Model {
 
     public function getInboundTrafficAttribute() {
         $client = new Client();
-        //$res = $client->get('http://api.vateud.net/online/arrivals/'.$this->ltr_4.'.json');
         $res = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$this->ltr_4.'&type=arrival');
         $pilots = json_decode($res->getBody()->getContents(), true);
 
@@ -85,7 +84,6 @@ class Airport extends Model {
 
     public function getOutboundTrafficAttribute() {
         $client = new Client();
-        //$res = $client->get('http://api.vateud.net/online/departures/'.$this->ltr_4.'.json');
         $res = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$this->ltr_4.'&type=departure');
         $pilots = json_decode($res->getBody()->getContents(), true);
 
