@@ -399,7 +399,7 @@ class FrontController extends Controller {
     public function newFeedback($controllerSelected=null) {
         $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         $feedbackCIDs = User::where('status', 1)->orderBy('id', 'ASC')->get()->pluck('id');
-        foreach($feedbackCIDs as $feedbackCID) {
+        foreach ($feedbackCIDs as $feedbackCID) {
             $feedbackOptions->put('c' . $feedbackCID, $feedbackCID);
         }
         if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
