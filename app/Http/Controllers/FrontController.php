@@ -398,6 +398,10 @@ class FrontController extends Controller {
 
     public function newFeedback($controllerSelected=null) {
         $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $feedbackCIDs = User::where('status', 1)->orderBy('id', 'ASC')->get()->pluck('id');
+        foreach($feedbackCIDs as $feedbackCID) {
+            $feedbackOptions->put('c' . $feedbackCID, $feedbackCID);
+        }
         if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
             $controllerSelected = intval($controllerSelected);
         }
@@ -446,7 +450,7 @@ class FrontController extends Controller {
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'ge');
+        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'gec');
         $feedback->position = $request->input('position');
         $feedback->service_level = $request->input('service');
         $feedback->callsign = $request->input('callsign');
