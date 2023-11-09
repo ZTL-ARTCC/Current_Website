@@ -83,6 +83,20 @@ class RosterUpdate extends Command {
             $user->save();
         }
 
+        $visitors = User::where('visitor', 1)->where('status', 1)->where('api_exempt', 0)->get();
+        foreach ($visitors as $visitor) {
+            $res = $client->get(Config::get('vatusa.base').'/v2/user/'.$visitor->id);
+            if ($res->getStatusCode() == "200") {
+                $v = json_decode($res->getBody());
+                $visitor->fname = $v->data->fname;
+                $visitor->lname = $v->data->lname;
+                $visitor->email = $v->data->email;
+                $visitor->rating_id = $v->data->rating;
+                $visitor->visitor_from = $v->data->facility;
+                $visitor->save();
+            }
+        }
+
         $users = User::where('visitor', 0)->where('status', 1)->where('api_exempt', 0)->get();
         foreach ($users as $u) {
             $delete = true;
