@@ -217,7 +217,13 @@ class ControllerDash extends Controller {
             $setmore_appointment->res_time = Carbon::parse($setmore_appointment->start_time)->format('H:i');
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments);
+        $setmore_data_stale = false;
+        $setmore_recent_pulls = SetmoreAppointment::where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString())->count();
+        if ($setmore_recent_pulls == 0) {
+            $setmore_data_stale = true;
+        }
+
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments)->with('setmore_data_stale', $setmore_data_stale);
     }
 
     public function showTicket($id) {
