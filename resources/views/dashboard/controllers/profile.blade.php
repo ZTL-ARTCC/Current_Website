@@ -91,6 +91,13 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
+                        @if($setmore_data_stale)
+                            <tr class="table-warning">
+                                <td colspan="4">
+                                    <i class="fas fa-exclamation-triangle"></i> Our connection with Setmore is malfunctioning - reservation data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
+                                </td>
+                            </tr>
+                        @endif
                         @if(count($setmore_appointments) > 0)
                             @foreach($setmore_appointments as $sm_res)
                                 <tr>
