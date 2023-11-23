@@ -204,9 +204,7 @@ class FlightawareImport extends Command {
                 $existing = RealopsFlight::where('flight_number', $callsign)->first();
                 if ($existing !== null) {
                     continue;
-                } // this event has already been processed
-
-                // insert
+                }
                 $new_flight = new RealopsFlight;
 
                 // parse the departure and arrival times
