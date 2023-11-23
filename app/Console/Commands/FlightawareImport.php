@@ -25,49 +25,7 @@ class FlightawareImport extends Command {
      */
     protected $description = 'Flightaware import task. Interactive and VERY SLOW.';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle(): void {
-        if (!FeatureToggle::isEnabled("realops")) {
-            $this->error("Realops is not enabled");
-            return;
-        }
-
-        $this->info('[CollectInformation] Step 1/3: Collecting Information');
-
-        /*
-         * Import Task: Steps
-         * (Planning) 1. Collect Information
-         * (Planning) 2. Create Chunks
-         * (Fetching) 3. Load Chunks
-         */
-
-        $start_time = Carbon::parse(Config::get('flightaware.start_date'));
-        $end_time = Carbon::parse(Config::get('flightaware.end_date'));
-
-        $this->info('[CollectInformation] Import task: importing flights ' . $start_time . ' to ' . $end_time);
-
-        $duration = $end_time->diffInSeconds($start_time);
-
-        $this->info('[CollectInformation] Event duration ' . $duration . ' seconds.');
-
-        $this->info('[CreateChunks] Calculating event chunks');
-
-        // we are going to pull some amount of pages for every chunk. means we want to distribute (n1 / n2) chunks across the time period
-        $departure_flights_per_chunk = intval(Config::get('flightaware.flights_per_page')) * intval(Config::get('flightaware.departure_pages_per_chunk'));
-        $arrival_flights_per_chunk = intval(Config::get('flightaware.flights_per_page')) * intval(Config::get('flightaware.arrival_pages_per_chunk'));
-        $flights_per_chunk = $departure_flights_per_chunk + $arrival_flights_per_chunk;
-
-        $this->info('[CreateChunks] Chunk flight counts: D' . $departure_flights_per_chunk . ' A' . $arrival_flights_per_chunk . ' T' . $flights_per_chunk);
-
-        $target_flights = intval(Config::get('flightaware.max_flights'));
-        $chunk_count = floor($target_flights / $flights_per_chunk);
-        $optimal_chunk_len_seconds = floor($duration / $chunk_count);
-
-        $this->info('[CreateChunks] Optimal chunk length: ' . $optimal_chunk_len_seconds . 's, number of chunks: ' . $chunk_count . ' to target ' . Config::get('flightaware.max_flights') . ' flights');
-        $this->info('[CreateChunks] Event will be ' . $chunk_count * $optimal_chunk_len_seconds . 's long');
-
+    function calculateChunks($start_time, $chunk_count, $optimal_chunk_len_seconds) {
         $pbar_chunks = $this->output->createProgressBar($chunk_count * 2);
         $pbar_chunks->start();
 
@@ -96,22 +54,147 @@ class FlightawareImport extends Command {
         }
 
         $pbar_chunks->finish();
-        $this->info('');
-        $this->info('[LoadChunks] Loading all data from FlightAware. Do not stop the script for ANY REASON after this point! Your api credits will not be returned.');
+        $this->info(''); // blank line after progress bar
+
+        return $chunks;
+    }
+
+    function save_flights($pbar, $flights) {
+        for ($i = 0; $i < sizeof($flights); $i++) {
+            $flight = $flights[$i];
+            $pbar->setMessage('Saving ' . $flight['ident']);
+
+            $callsign = $flight['ident'];
+
+            $existing = RealopsFlight::where('flight_number', $callsign)->first();
+            if ($existing !== null) {
+                continue;
+            }
+            $new_flight = new RealopsFlight;
+
+            // parse the departure and arrival times
+            $deptime = $flight['scheduled_out'];
+            $arrtime = $flight['scheduled_in'];
+            $deptime_parsed = Carbon::parse($deptime);
+            $arrtime_parsed = Carbon::parse($arrtime);
+
+            $new_flight->assigned_pilot_id = null;
+            $new_flight->flight_number = $callsign;
+            $new_flight->flight_date = $deptime_parsed->toDateString();
+            $new_flight->dep_time = $deptime_parsed->toTimeString();
+            $new_flight->dep_airport = $flight['origin'];
+            $new_flight->arr_airport = $flight['destination'];
+            $new_flight->est_arr_time = $arrtime_parsed->toTimeString();
+            $new_flight->route = 'Pilot Choice';
+
+            $new_flight->save();
+            $pbar->advance();
+        }
+    }
+
+    function load_departures(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
+        // First, load as many pages of departures as is configured
+        for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
+            // If we hit the ratelimit, pause for a bit.
+            if ($flights_count > $ratelimit_max_flights) {
+                $pbar->setMessage('Ratelimit timeout');
+                $pbar->advance();
+                $flights_count = 0;
+                sleep($ratelimit_timeout);
+            }
+
+            // Generate the URL for the HTTP client.
+            // Format: %BASE/schedules/FROM/TO/?origin=KATL
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL';
+            $pbar->setMessage($url);
+
+            if (!Config::get('flightaware.dryrun')) {
+                $res = $client->request('GET', $url);
+                $data = json_decode($res->getBody(), true);
+
+                $flights = array_merge($flights, $data['scheduled']); // add actual flights to $flights
+                $flights_count += sizeof($data['scheduled']); // then increase the counter used for ratelimit compliance
+            }
+
+            $pbar->advance();
+        }
+    }
+
+    function load_arrivals(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
+        // First, load as many pages of arrivals as is configured
+        for ($i = 0; $i < intval(Config::get('flightaware.arrival_pages_per_chunk')); $i++) {
+            // If we hit the ratelimit, pause for a bit.
+            if ($flights_count > $ratelimit_max_flights) {
+                $pbar->setMessage('Ratelimit timeout');
+                $pbar->advance();
+                $flights_count = 0;
+                sleep($ratelimit_timeout);
+            }
+
+            // Generate the URL for the HTTP client.
+            // Format: %BASE/schedules/FROM/TO/?destination=KATL
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL';
+            $pbar->setMessage($url);
+
+            if (!Config::get('flightaware.dryrun')) {
+                $res = $client->request('GET', $url);
+                $data = json_decode($res->getBody(), true);
+
+                $flights = array_merge($flights, $data['scheduled']); // add actual flights to $flights
+                $flights_count += sizeof($data['scheduled']); // then increase the counter used for ratelimit compliance
+            }
+
+            $pbar->advance();
+        }
+    }
+
+    /**
+     * Execute the console command.
+     */
+    public function handle(): void {
+        if (!FeatureToggle::isEnabled("realops")) {
+            $this->error("Realops is not enabled");
+            return;
+        }
 
         /*
-         * Steps:
-         * for each chunk:
-         * - fetch departure flights
-         * - fetch arrival flights
-         * - save all flights
-         * in between chunks: ratelimit delay
-         *
+         * Import Task: Steps
+         * (Planning) 1. Collect Information
+         * (Planning) 2. Create Chunks
+         * (Fetching) 3. Load Chunks
          */
+
+        $start_time = Carbon::parse(Config::get('flightaware.start_date'));
+        $end_time = Carbon::parse(Config::get('flightaware.end_date'));
+
+        $duration = $end_time->diffInSeconds($start_time);
+
+        $this->info('[CollectInformation] Event duration ' . $duration . ' seconds.');
+
+        // we are going to pull some amount of pages for every chunk. means we want to distribute (n1 / n2) chunks across the time period
+        // First, how many flights are we going to pull per chunk?
+        $departure_flights_per_chunk = intval(Config::get('flightaware.flights_per_page')) * intval(Config::get('flightaware.departure_pages_per_chunk'));
+        $arrival_flights_per_chunk = intval(Config::get('flightaware.flights_per_page')) * intval(Config::get('flightaware.arrival_pages_per_chunk'));
+        $flights_per_chunk = $departure_flights_per_chunk + $arrival_flights_per_chunk;
+
+        // Next, how many chunks can we have before we hit our configured flight limit?
+        $target_flights = intval(Config::get('flightaware.max_flights'));
+        $chunk_count = floor($target_flights / $flights_per_chunk);
+
+        // Based on all of that, third, what is the optimal chunk length to maximize flight count?
+        $optimal_chunk_len_seconds = floor($duration / $chunk_count);
+
+        $this->info('[CreateChunks] Optimal chunk length: ' . $optimal_chunk_len_seconds . 's, number of chunks: ' . $chunk_count . ' to target ' . Config::get('flightaware.max_flights') . ' flights');
+        $this->info('[CreateChunks] Event will be ' . $chunk_count * $optimal_chunk_len_seconds . 's long');
+
+        $chunks = $this->calculateChunks($start_time, $chunk_count, $optimal_chunk_len_seconds);
+
+        $this->info('[LoadChunks] Loading all data from FlightAware. Do not stop the script for ANY REASON after this point! Your api credits will not be returned.');
 
         $pages_per_chunk = intval(Config::get('flightaware.departure_pages_per_chunk')) + intval(Config::get('flightaware.arrival_pages_per_chunk'));
         $flights_total = $flights_per_chunk * $chunk_count;
 
+        // Calculating steps for the progress bar
         $steps_per_chunk = $pages_per_chunk + $flights_per_chunk;
 
         $ratelimit_max_flights = intval(Config::get('flightaware.ratelimit_count'));
@@ -147,84 +230,20 @@ class FlightawareImport extends Command {
 
             $flights = [];
 
-            for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
-                if ($flights_count > $ratelimit_max_flights) {
-                    $pbar->setMessage('Ratelimit timeout');
-                    $pbar->advance();
-                    $flights_count = 0;
-                    sleep($ratelimit_timeout);
-                }
+            $this->load_departures($flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count);
 
-                $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL';
-                $pbar->setMessage($url);
-
-                if (!Config::get('flightaware.dryrun')) {
-                    $res = $client->request('GET', $url);
-                    $data = json_decode($res->getBody(), true);
-
-                    $flights = array_merge($flights, $data['scheduled']);
-                    $flights_count += sizeof($data['scheduled']);
-                }
-
-                $pbar->advance();
-            }
+            // Rinse and repeat, for arrivals.
 
             $pbar->setMessage('Arrivals, chunk #' . $y);
 
-            for ($i = 0; $i < intval(Config::get('flightaware.arrival_pages_per_chunk')); $i++) {
-                if ($flights_count > $ratelimit_max_flights) {
-                    $pbar->setMessage('Ratelimit timeout');
-                    $pbar->advance();
-                    $flights_count = 0;
-                    sleep($ratelimit_timeout);
-                }
-
-                $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->toIso8601String() . '/' . $chunk[1]->toIso8601String() . '?destination=KATL';
-                $pbar->setMessage($url);
-
-                if (!Config::get('flightaware.dryrun')) {
-                    $res = $client->request('GET', $url);
-                    $data = json_decode($res->getBody(), true);
-
-                    $flights = array_merge($flights, $data['scheduled']);
-                    $flights_count += sizeof($data['scheduled']);
-                }
-
-                $pbar->advance();
-            }
+            $this->load_arrivals($flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count);
 
             $pbar->setMessage('Saving flights for chunk #' . $y);
 
-            for ($i = 0; $i < sizeof($flights); $i++) {
-                $flight = $flights[$i];
-                $pbar->setMessage('Saving ' . $flight['ident']);
-
-                $callsign = $flight['ident'];
-
-                $existing = RealopsFlight::where('flight_number', $callsign)->first();
-                if ($existing !== null) {
-                    continue;
-                }
-                $new_flight = new RealopsFlight;
-
-                // parse the departure and arrival times
-                $deptime = $flight['scheduled_out'];
-                $arrtime = $flight['scheduled_in'];
-                $deptime_parsed = Carbon::parse($deptime);
-                $arrtime_parsed = Carbon::parse($arrtime);
-
-                $new_flight->assigned_pilot_id = null;
-                $new_flight->flight_number = $callsign;
-                $new_flight->flight_date = $deptime_parsed->toDateString();
-                $new_flight->dep_time = $deptime_parsed->toTimeString();
-                $new_flight->dep_airport = $flight['origin'];
-                $new_flight->arr_airport = $flight['destination'];
-                $new_flight->est_arr_time = $arrtime_parsed->toTimeString();
-                $new_flight->route = 'Pilot Choice';
-
-                $new_flight->save();
-                $pbar->advance();
-            }
+            // Then, save every flight we got so far.
+            $this->save_flights($pbar, $flights);
         }
+
+        $this->info("Import task finished. No errors.");
     }
 }
