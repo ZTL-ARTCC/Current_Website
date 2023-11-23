@@ -25,7 +25,7 @@ class FlightawareImport extends Command {
      */
     protected $description = 'Flightaware import task. Interactive and VERY SLOW.';
 
-    function calculateChunks($start_time, $chunk_count, $optimal_chunk_len_seconds) {
+    public function calculateChunks($start_time, $chunk_count, $optimal_chunk_len_seconds) {
         $pbar_chunks = $this->output->createProgressBar($chunk_count * 2);
         $pbar_chunks->start();
 
@@ -59,7 +59,7 @@ class FlightawareImport extends Command {
         return $chunks;
     }
 
-    function save_flights($pbar, $flights) {
+    public function save_flights($pbar, $flights) {
         for ($i = 0; $i < sizeof($flights); $i++) {
             $flight = $flights[$i];
             $pbar->setMessage('Saving ' . $flight['ident']);
@@ -92,7 +92,7 @@ class FlightawareImport extends Command {
         }
     }
 
-    function load_departures(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
+    public function load_departures(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
         // First, load as many pages of departures as is configured
         for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
             // If we hit the ratelimit, pause for a bit.
@@ -120,7 +120,7 @@ class FlightawareImport extends Command {
         }
     }
 
-    function load_arrivals(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
+    public function load_arrivals(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
         // First, load as many pages of arrivals as is configured
         for ($i = 0; $i < intval(Config::get('flightaware.arrival_pages_per_chunk')); $i++) {
             // If we hit the ratelimit, pause for a bit.
