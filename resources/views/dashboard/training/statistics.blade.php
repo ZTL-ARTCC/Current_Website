@@ -16,6 +16,11 @@ Training Statistics
 </div>
 <br>
 <div class="container">
+    @if($stats['setmoreAPIFail'])
+        <div class="alert alert-warning text-center" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> Our connection with Setmore is malfunctioning - student no-show and cancellation data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
+        </div>
+    @endif
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
