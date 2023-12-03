@@ -95,7 +95,7 @@ class RosterUpdate extends Command {
                 $visitor->visitor_from = $v->data->facility;
                 $visitor->save();
             } else {
-                exit(1);
+                continue;
             }
         }
 
