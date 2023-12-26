@@ -21,14 +21,19 @@ Realops
 <p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilots to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <h3>Schedule</h3>
     </div>
-    <div class="col-md-9">
-    <p>Filter by any or all of these criteria</p>
+    <div class="col-md-10 text-right">
+        <p>Filter by any or all of these criteria</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
     {!! Form::open(['action' => 'RealopsController@index', 'method' => 'GET', 'id' => 'realops_filter']) !!}
         <div class="mb-3 input-group">
             {!! Form::text('airport_filter', $airport_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Airport (DEN)', 'id' => 'airport_filter']) !!}
+            {!! Form::text('flightno_filter', $flightno_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Flight (DAL367)', 'id' => 'flightno_filter']) !!}
             {!! Form::text('date_filter', $date_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Date (YYYY-MM-DD)', 'id' => 'date_filter']) !!}
             {!! Form::text('time_filter', $time_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Time (11:00)', 'id' => 'time_filter']) !!}
             <div class="input-group-append">
@@ -128,6 +133,7 @@ Realops
 <script>
     function realopsFilterReset() {
         $('#airport_filter').val('');
+        $('#flightno_filter').val('');
         $('#date_filter').val('');
         $('#time_filter').val('');
         $('#realops_filter').submit();
