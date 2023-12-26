@@ -15,6 +15,7 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\LocalHero;
+use App\LocalHeroChallenges;
 use App\Opt;
 use App\Overflight;
 use App\OverflightUpdate;
@@ -135,6 +136,12 @@ class ControllerDash extends Controller {
         $pwinner_local = LocalHero::where('month', $pmonth)->where('year', $pyear)->first();
         $pyrite = Pyrite::where('year', $lyear)->first();
 
+        $default_challenge_description = "Control any field/any position other than ATL, CLT, and ZTL";
+        $local_hero_challenge_this_month = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
+        $local_hero_challenge_prev_month = LocalHeroChallenges::where('year', $pyear)->where('month', $pmonth)->first();
+        $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->title : $default_challenge_description;
+        $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->title : $default_challenge_description;
+
         $controllers = ATC::get();
 
         $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
@@ -161,6 +168,7 @@ class ControllerDash extends Controller {
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
+                                          ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
                                           ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
     }
 
@@ -209,7 +217,13 @@ class ControllerDash extends Controller {
             $setmore_appointment->res_time = Carbon::parse($setmore_appointment->start_time)->format('H:i');
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments);
+        $setmore_data_stale = false;
+        $setmore_recent_pulls = SetmoreAppointment::where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString())->count();
+        if ($setmore_recent_pulls == 0) {
+            $setmore_data_stale = true;
+        }
+
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments)->with('setmore_data_stale', $setmore_data_stale);
     }
 
     public function showTicket($id) {
@@ -496,9 +510,9 @@ class ControllerDash extends Controller {
 
         $apt_r = strtoupper($apt_s);
 
-        $client = new Client;
-        $response_metar = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
-        $response_taf = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $client = new Client(['http_errors' => false]);
+        $response_metar = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $response_taf = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
 
         $root_metar = new SimpleXMLElement($response_metar->getBody());
         $root_taf = new SimpleXMLElement($response_taf->getBody());
@@ -515,10 +529,8 @@ class ControllerDash extends Controller {
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
-        // VATEUD API is no longer accessible
         $pilots_a = $pilots_d = false;
         $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
-        //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
         $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if ($pilots_a) {
@@ -528,7 +540,6 @@ class ControllerDash extends Controller {
         }
 
         $res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
-        //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
         $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if ($pilots_d) {

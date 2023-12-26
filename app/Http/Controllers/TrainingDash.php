@@ -223,7 +223,7 @@ class TrainingDash extends Controller {
             'http_errors' => false
         ];
         $client = new Client();
-        $res = $client->request('GET', 'https://api.vatusa.net/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        $res = $client->request('GET', Config::get('vatusa.base').'/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
         $academy = (string) $res->getBody();
         $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
         $academy = json_decode($academy, true);
@@ -349,7 +349,7 @@ class TrainingDash extends Controller {
         ];
 
         $client = new Client();
-        $res = $client->request('POST', 'https://api.vatusa.net/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        $res = $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
 
         if ($request->ots == 1) {
             $ots = new Ots;
@@ -775,6 +775,7 @@ class TrainingDash extends Controller {
             $setmoreAccessToken = null;
             $setmoreAppointments = [];
             $studentCancel = $studentNoShow = 0;
+            $retArr['setmoreAPIFail'] = false;
             $client = new Client();
             try {
                 $res = $client->request('GET', Config::get('setmore.endpoint') . '/o/oauth2/token?refreshToken=' . Config::get('setmore.api_key'));
@@ -787,9 +788,15 @@ class TrainingDash extends Controller {
                 if ($setmoreAuthRespA['response'] && isset($setmoreAuthRespA['data']['token'])) {
                     $setmoreAccessToken = $setmoreAuthRespA['data']['token']['access_token'];
                 }
+            } else {
+                $retArr['setmoreAPIFail'] = true;
             }
             if ($setmoreAccessToken != null) {
                 $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to);
+                if ($setmoreAppointments == 'API_FAIL') {
+                    $retArr['setmoreAPIFail'] = true;
+                    $setmoreAppointments = [];
+                }
                 foreach ($setmoreAppointments as $setmoreAppointment) {
                     if (isset($setmoreAppointment['label'])) {
                         if ($setmoreAppointment['label'] == 'Cancel') {
@@ -799,6 +806,8 @@ class TrainingDash extends Controller {
                         }
                     }
                 }
+            } else {
+                $retArr['setmoreAPIFail'] = true;
             }
             $retArr['studentCancel'] = $studentCancel;
             $retArr['studentNoShow'] = $studentNoShow;
@@ -837,6 +846,8 @@ class TrainingDash extends Controller {
             $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor);
             if (is_array($appointmentBatch)) {
                 $setmoreAppointments = array_merge($setmoreAppointments, $appointmentBatch);
+            } elseif ($appointmentBatch == 'API_FAIL') {
+                return $appointmentBatch;
             }
         } while (is_numeric($setmoreCursor));
         return $setmoreAppointments;
@@ -858,18 +869,24 @@ class TrainingDash extends Controller {
                 [
                     'Content-type' => "application/json",
                     'Authorization' => "Bearer {$setmoreAccessToken}"
-                ]
+                ],
+                'http_errors' => false
             ]
         );
-        $setmoreResp = (string) $res->getBody();
-        $setmoreRespA = json_decode($setmoreResp, true);
-        if (isset($setmoreRespA['data']['cursor'])) {
-            $cursor = $setmoreRespA['data']['cursor'];
+        
+        if ($res->getStatusCode() == 200) {
+            $setmoreResp = (string) $res->getBody();
+            $setmoreRespA = json_decode($setmoreResp, true);
+            if (isset($setmoreRespA['data']['cursor'])) {
+                $cursor = $setmoreRespA['data']['cursor'];
+            } else {
+                $cursor = null;
+            }
+            if (isset($setmoreRespA['data']['appointments'])) {
+                return $setmoreRespA['data']['appointments'];
+            }
         } else {
-            $cursor = null;
-        }
-        if (isset($setmoreRespA['data']['appointments'])) {
-            return $setmoreRespA['data']['appointments'];
+            return 'API_FAIL';
         }
         return null;
     }

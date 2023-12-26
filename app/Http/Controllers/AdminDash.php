@@ -16,6 +16,7 @@ use App\Feedback;
 use App\File;
 use App\Incident;
 use App\LocalHero;
+use App\LocalHeroChallenges;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -573,7 +574,7 @@ class AdminDash extends Controller {
         ]);
 
         $client = new Client(['exceptions' => false]);
-        $response = $client->request('GET', 'https://api.vatusa.net/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key'));
+        $response = $client->request('GET', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key'));
         $result = $response->getStatusCode();
         if ($result == '200') {
             $visitor = json_decode($response->getBody());
@@ -663,7 +664,7 @@ class AdminDash extends Controller {
         
         // Add to the VATUSA roster
         $client = new Client();
-        $res = $client->request('POST', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
+        $res = $client->request('POST', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visitor has been successfully added to the roster.');
     }
@@ -700,7 +701,7 @@ class AdminDash extends Controller {
                 ],
                 'http_errors' => false
             ];
-            $res = $client->request('DELETE', 'https://api.vatusa.net/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
+            $res = $client->request('DELETE', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
             
             return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
         }
@@ -1229,6 +1230,19 @@ class AdminDash extends Controller {
         $winner = Bronze::where('month', $month)->where('year', $year)->first();
         $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
 
+        $challenge = LocalHeroChallenges::where('month', $month)->where('year', $year)->first();
+        if ($challenge) {
+            $challenge->positions = explode(',', $challenge->positions);
+        } else {
+            $challenge = new LocalHeroChallenges;
+            $challenge->id = -1;
+        }
+        $local_hero_pos = LocalHeroChallenges::getLocalHeroChallengePositions();
+        $local_hero_positions = [];
+        foreach ($local_hero_pos as $pos) {
+            $local_hero_positions[$pos] = $pos;
+        }
+
         if ($sort == 'pyritesort') {
             $home = $homec->sortByDesc(function ($user) use ($year_stats) {
                 return $year_stats[$user->id]->bronze_hrs;
@@ -1241,9 +1255,11 @@ class AdminDash extends Controller {
                 return $stats[$user->id]->bronze_hrs;
             });
         }
+        
         return view('dashboard.admin.bronze-mic')->with('all_stats', $all_stats)->with('year', $year)->with('sort', $sort)
                                                   ->with('month', $month)->with('stats', $stats)->with('year_stats', $year_stats)
-                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local);
+                                                  ->with('home', $home)->with('winner', $winner)->with('winner_local', $winner_local)
+                                                  ->with('challenge', $challenge)->with('local_hero_challenge_positions', $local_hero_positions);
     }
 
     public function setLocalHeroWinner($year, $month, $hours, $id) {
@@ -1274,6 +1290,48 @@ class AdminDash extends Controller {
         $audit->save();
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
+    }
+
+    public function updateLocalHeroChallenge(Request $request, $id) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $local_hero_challenge = LocalHeroChallenges::find($id);
+        if (!$local_hero_challenge) {
+            $local_hero_challenge = new LocalHeroChallenges;
+            $local_hero_challenge->year = $request->year;
+            $local_hero_challenge->month = $request->month;
+            $news = new Calendar;
+        } else {
+            $news = Calendar::find($local_hero_challenge->news_id);
+            if (!$news) {
+                $news = new Calendar;
+            }
+        }
+        $news_pre_title = Carbon::create()->day(1)->month($request->month)->format('F') . " Challenge: ";
+        $news->title = $news_pre_title . $request->title;
+        $news->date = Carbon::now()->format('m/d/Y');
+        $news->body = $request->description;
+        $news->created_by = Auth::id();
+        $news->type = 2;
+        $news->visible = ($request->postToNews == 1) ? 1 : 0;
+        $news->save();
+
+        $local_hero_challenge->positions = is_array($request->positions) ? implode(',', $request->positions) : '';
+        $local_hero_challenge->title = $request->title;
+        $local_hero_challenge->description = $request->description;
+        $local_hero_challenge->news_id = $news->id;
+        $local_hero_challenge->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$request->month.'/'.$request->year.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with('success', 'Local hero configuration settings were saved.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
