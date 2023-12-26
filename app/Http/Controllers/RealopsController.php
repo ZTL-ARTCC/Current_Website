@@ -13,14 +13,20 @@ use Mail;
 
 class RealopsController extends Controller {
     public function index(Request $request) {
-        $airport_filter = $request->get('filter');
-        $flights = RealopsFlight::where('dep_airport', 'like', '%' . $airport_filter . '%')
-                                ->orWhere('arr_airport', 'like', '%' . $airport_filter . '%')
+        $airport_filter = $request->get('airport_filter');
+        $date_filter = $request->get('date_filter');
+        $time_filter = $request->get('time_filter');
+        $flights = RealopsFlight::where('flight_date', 'like', '%' . $date_filter . '%')
+                                ->where('dep_time', 'like', '%' . $time_filter . '%')
+                                ->where(function ($query) use ($airport_filter) {
+                                    $query->where('dep_airport', 'like', '%' . $airport_filter . '%')
+                                          ->orWhere('arr_airport', 'like', '%' . $airport_filter . '%');
+                                })
                                 ->orderBy('flight_date', 'ASC')
                                 ->orderBy('dep_time', 'ASC')
                                 ->paginate(20);
 
-        return view('site.realops')->with('flights', $flights)->with('airport_filter', $airport_filter);
+        return view('site.realops')->with('flights', $flights)->with('airport_filter', $airport_filter)->with('date_filter', $date_filter)->with('time_filter', $time_filter);
     }
 
     public function bid($id) {
