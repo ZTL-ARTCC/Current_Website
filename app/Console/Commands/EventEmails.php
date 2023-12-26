@@ -60,7 +60,7 @@ class EventEmails extends Command {
                 $r = EventRegistration::find($remind->id);
                 if ($r->reminder != 1) {
                     $user = User::find($r->controller_id);
-                    if(empty($user->email)) {
+                    if (empty($user->email)) {
                         continue;
                     }
                     $reg = EventRegistration::where('controller_id', $user->id)->where('event_id', $event->id)->get();
