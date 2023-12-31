@@ -12,7 +12,7 @@
 </div>
 <br>
 <div class="container">
-    {!! Form::open(['action' => 'RealopsController@createFlight']) !!}
+    {!! Form::open(['action' => 'RealopsController@createFlight', 'id' => 'realops_add_edit_flight']) !!}
         @csrf
         <div class="form-group">
             <div class="row">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('dep_time', 'Departure Time') !!}
-                    {!! Form::text('dep_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Required']) !!}
+                    {!! Form::text('dep_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Required', 'id' => 'realops_add_edit_dep_time']) !!}
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('est_arr_time', 'Estimated Arrival Time') !!}
-                    {!! Form::text('est_arr_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional']) !!}
+                    {!! Form::text('est_arr_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional', 'id' => 'realops_add_edit_arr_time']) !!}
                 </div>
             </div>
         </div>
@@ -55,15 +55,9 @@
             {!! Form::label('route', 'Route') !!}
             {!! Form::text('route', null, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
         </div>
-        <button class="btn btn-success mr-2" action="submit">Submit</button>
+        <button class="btn btn-success mr-2" type="button" onclick="realopsValidateAndSubmit();">Submit</button>
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {!! Form::close() !!}
 </div>
-<script type="text/javascript">
-$(function () {
-    $('#datetimepicker').datetimepicker({
-        format: 'L'
-    });
-});
-</script>
+{{Html::script(asset('js/realops.js'))}}
 @endsection
