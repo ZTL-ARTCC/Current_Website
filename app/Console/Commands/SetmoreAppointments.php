@@ -76,7 +76,9 @@ class SetmoreAppointments extends Command {
                 $loadAppts = SetmoreLoad::get();
                 foreach ($loadAppts as $loadAppt) {
                     $setmoreAppt = new SetmoreAppointment;
-                    $setmoreAppt = $loadAppt->replicate();
+                    $setmoreAppt = $loadAppt->replicate()->fill([
+                        'created_at' => $loadAppt->created_at
+                    ]);
                     $setmoreAppt->setTable('setmore');
                     $setmoreAppt->save();
                 }
