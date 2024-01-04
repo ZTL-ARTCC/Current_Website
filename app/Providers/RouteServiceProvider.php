@@ -24,8 +24,9 @@ class RouteServiceProvider extends ServiceProvider {
      * Typically, users are redirected here after authentication.
      *
      * @var string
+     * 
+     * public const HOME = '/home';
      */
-    public const HOME = '/home';
 
     /**
      * Define your route model bindings, pattern filters, etc.
