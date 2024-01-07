@@ -24,6 +24,26 @@ function realopsValidateAndSubmit() {
     }
 }
 
+function realopsFilterValidateAndSubmit() {
+    let valid = true;
+    let validateFields = ['time_filter'];
+    validateFields.forEach(function(field_id) {
+        let dep_time = document.getElementById(field_id).value; 
+        if(!dep_time.match(/^\d{2}:\d{2}$/) && dep_time != '') {
+            if(!fixTime(field_id)) {
+                document.getElementById(field_id).classList.add("is-invalid");
+                valid = false;
+            }
+            else {
+                document.getElementById(field_id).classList.remove("is-invalid");
+            }
+        }
+    });
+    if(valid) {
+        document.getElementById('realops_filter').submit();
+    }
+}
+
 function fixTime(el) {
     let timeStr = document.getElementById(el).value;
     if(timeStr.match(/^\d{1,2}:\d{2}$/)) { // Format H:MM

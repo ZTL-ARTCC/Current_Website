@@ -41,7 +41,7 @@ Realops
                {!! Form::text('time_filter', $time_filter, ['class' => 'form-control', 'placeholder' => 'Time (11:00)', 'id' => 'time_filter']) !!}
             </div>
             <div class="col-sm-12 col-md p-1 mr-2 text-center">
-                <button class="btn btn-success mr-2" type="submit" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
+                <button class="btn btn-success mr-2" type="button" onclick="realopsFilterValidateAndSubmit();" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
                 <a href="/realops" class="btn btn-warning" title="Clear"><i class="fas fa-redo"></i>&nbsp;Clear</a>
             </div>
        </div>
@@ -134,4 +134,5 @@ Realops
     </div>
 @endif
 </div>
+{{Html::script(asset('js/realops.js'))}}
 @endsection
