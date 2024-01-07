@@ -249,27 +249,6 @@ class ControllerDash extends Controller {
     }
 
     public function showFiles() {
-        $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($vrc);$x++) {
-            $file = File::find($vrc[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
-        $vstars = File::where('type', 1)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($vstars);$x++) {
-            $file = File::find($vstars[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
-        $veram = File::where('type', 2)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($veram);$x++) {
-            $file = File::find($veram[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
         $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
         for ($x=0;$x<count($vatis);$x++) {
             $file = File::find($vatis[$x]['id']);
@@ -299,8 +278,15 @@ class ControllerDash extends Controller {
             $file->timestamps = false;
             $file->save();
         }
+        $training = File::where('type', 7)->orderBy('disp_order', 'ASC')->get();
+        for ($x=0;$x<count($training);$x++) {
+            $file = File::find($training[$x]['id']);
+            $file->disp_order = $x;
+            $file->timestamps = false;
+            $file->save();
+        }
         
-        return view('dashboard.controllers.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff);
+        return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
     }
 
     public function showTickets() {
