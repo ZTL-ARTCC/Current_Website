@@ -4,21 +4,20 @@ namespace App\Listeners;
 
 use Illuminate\Mail\Events\MessageSending;
 
-class CheckEmailPreferences {
+class ValidateEmail {
     public function handle(MessageSending $event) {
         // Ensures 'to' email address is valid before attempting to send email
-        $to_address = $event->message->getTo(); // ['john@doe.com' => 'John Doe']
-        $valid_to_address = [];
-        for ($e=0; $e<count($to_address); $e++) {
-            $valid_email_addr = filter_var(key($to_address[$e]), FILTER_VALIDATE_EMAIL);
-            if ($valid_email_addr && !empty(key($to_address[$e]))) {
-                $valid_to_address[$valid_email_addr] = $to_address[$e];
+        $valid_to_addresses = [];
+        foreach ($event->message->getTo() as $addressee) { // ['john@doe.com' => 'John Doe']
+            $valid_email_addr = filter_var($addressee->getAddress(), FILTER_VALIDATE_EMAIL);
+            if ($valid_email_addr !== false) {
+                $valid_to_addresses[] = $addressee->getAddress();
             }
         }
-        if (count($valid_to_address) == 0) {
+        if (count($valid_to_addresses) == 0) {
             return false; // Stop the mailer
         } else {
-            $event->message->setTo($valid_to_address);
+            $event->message->to(...$valid_to_addresses);
             return $event;
         }
     }
