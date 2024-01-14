@@ -240,12 +240,6 @@ class ControllerDash extends Controller {
         $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
  
         return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
-        /*
-                $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->get();
-                $visagreecontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->orderBy('visitor_from', 'ASC')->orderBy('lname', 'ASC')->get();
-
-                return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers)->with('visagreecontrollers', $visagreecontrollers);
-        */
     }
 
     public function showFiles() {
