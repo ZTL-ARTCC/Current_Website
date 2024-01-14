@@ -334,7 +334,7 @@ class TrainingDash extends Controller {
             $ticket->position = 'ZTL_CTR';
         } else { // Do not submit other ticket types to VATUSA
             $ticket->position = null;
-        } 
+        }
 
         $req_params = [
             'form_params' =>
@@ -348,7 +348,7 @@ class TrainingDash extends Controller {
             ],
             'http_errors' => false
         ];
-        if(!is_null($ticket->position)) {
+        if (!is_null($ticket->position)) {
             $client = new Client();
             $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
         }
@@ -381,11 +381,11 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         $positions = $ticket->getPositionSelectAttribute();
-        if(!key_exists($ticket->position, $positions)) {
+        if (!key_exists($ticket->position, $positions)) {
             $positions[$ticket->position] = 'Legacy Category';
         }
         $sessions = $ticket->getSessionSelectAttribute();
-        if(!key_exists($ticket->session_id, $sessions)) {
+        if (!key_exists($ticket->session_id, $sessions)) {
             $sessions[$ticket->session_id] = 'Legacy Session';
         }
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
