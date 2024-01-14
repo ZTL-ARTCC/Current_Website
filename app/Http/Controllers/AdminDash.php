@@ -246,60 +246,7 @@ class AdminDash extends Controller {
     public function updateController(Request $request, $id) {
         $user = User::find($id);
 
-        if (Auth::user()->isAbleTo('roster')) {
-            $user->del = $request->input('del');
-            $user->gnd = $request->input('gnd');
-            if ($user->twr == 99) {
-                if ($request->input('twr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->twr = $request->input('twr');
-                } else {
-                    $user->twr = 0;
-                }
-            } elseif ($request->input('twr') == 99) {
-                $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = $request->input('twr');
-                $cert = new SoloCert;
-                $cert->cid = $id;
-                $cert->pos = 0;
-                $cert->expiration = $expire;
-                $cert->status = 0;
-                $cert->save();
-            } else {
-                $user->twr = $request->input('twr');
-            }
-            if ($user->app == 99) {
-                if ($request->input('app') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->app = $request->input('app');
-                } else {
-                    $user->app = 99;
-                }
-            } else {
-                $user->app = $request->input('app');
-            }
-            if ($user->ctr == 99) {
-                if ($request->input('ctr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->ctr = $request->input('ctr');
-                } else {
-                    $user->ctr = 99;
-                }
-            } else {
-                $user->ctr = $request->input('ctr');
-            }
+        if (Auth::user()->isAbleTo('roster')) { // Update controller profile and account settings
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
@@ -323,71 +270,23 @@ class AdminDash extends Controller {
             } elseif ($request->input('api_exempt') == 1) {
                 $user->api_exempt = 1;
             }
-            $user->twr_solo_fields = $request->input('twr_solo_fields');
-            $user->twr_solo_expires = $request->input('twr_solo_expires');
-            
+
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            if ($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec']) == true) {
-                if ($user->hasRole('atm')) {
-                    $user->detachRole('atm');
-                } elseif ($user->hasRole('datm')) {
-                    $user->detachRole('datm');
-                } elseif ($user->hasRole('ta')) {
-                    $user->detachRole('ta');
-                } elseif ($user->hasRole('ata')) {
-                    $user->detachRole('ata');
-                } elseif ($user->hasRole('wm')) {
-                    $user->detachRole('wm');
-                } elseif ($user->hasRole('awm')) {
-                    $user->detachRole('awm');
-                } elseif ($user->hasRole('fe')) {
-                    $user->detachRole('fe');
-                } elseif ($user->hasRole('afe')) {
-                    $user->detachRole('afe');
-                } elseif ($user->hasRole('ec')) {
-                    $user->detachRole('ec');
+            $staff_roles = [1 => 'atm', 2 => 'datm', 3 => 'ta', 4 => 'ata', 5 => 'wm', 6 => 'awm', 7 => 'fe', 8 => 'afe', 9 => 'ec'];
+            if ($user->hasRole($staff_roles) == true) {
+                foreach ($staff_roles as $staff_role) {
+                    if ($user->hasRole($staff_role)) {
+                        $user->detachRole($staff_role);
+                    }
                 }
             }
-
-            if ($request->input('staff') == 1) {
-                $user->attachRole('atm');
-            } elseif ($request->input('staff') == 2) {
-                $user->attachRole('datm');
-            } elseif ($request->input('staff') == 3) {
-                $user->attachRole('ta');
-            } elseif ($request->input('staff') == 4) {
-                $user->attachRole('ata');
-            } elseif ($request->input('staff') == 5) {
-                $user->attachRole('wm');
-            } elseif ($request->input('staff') == 6) {
-                $user->attachRole('awm');
-            } elseif ($request->input('staff') == 7) {
-                $user->attachRole('fe');
-            } elseif ($request->input('staff') == 8) {
-                $user->attachRole('afe');
-            } elseif ($request->input('staff') == 9) {
-                $user->attachRole('ec');
-            }
-
-            if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
-                if ($user->hasRole('aec')) {
-                    $user->detachRole('aec');
-                } elseif ($user->hasRole('aec-ghost')) {
-                    $user->detachRole('aec-ghost');
-                } elseif ($user->hasRole('events-team')) {
-                    $user->detachRole('events-team');
+            foreach ($staff_roles as $role_id => $staff_role) {
+                if ($request->input('staff') == $role_id) {
+                    $user->attachRole($staff_role);
                 }
-            }
-
-            if ($request->input('events_staff') == 1) {
-                $user->attachRole('aec');
-            } elseif ($request->input('events_staff') == 2) {
-                $user->attachRole('aec-ghost');
-            } elseif ($request->input('events_staff') == 3) {
-                $user->attachRole('events-team');
             }
 
             if ($user->hasRole(['mtr', 'ins']) == true) {
@@ -415,64 +314,48 @@ class AdminDash extends Controller {
                     $user->save();
                 }
             }
-        } elseif (Auth::user()->isAbleTo('train')) {
-            $user->del = $request->input('del');
+        }
+        if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
+            $user->clt_gnd = $request->input('clt_gnd');
+            $user->clt_twr = $request->input('clt_twr');
+            $user->clt_app = $request->input('clt_app');
+            $user->atl_gnd = $request->input('atl_gnd');
+            $user->atl_twr = $request->input('atl_twr');
+            $user->atl_app = $request->input('atl_app');
+
             $user->gnd = $request->input('gnd');
-            if ($user->twr == 99) {
-                if ($request->input('twr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
+            $positions = ['twr','app','ctr'];
+            foreach ($positions as $solo_id => $position) {
+                if ($user[$position] == 99) {
+                    if ($request->input($position) != 0) {
+                        $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+                        if ($solo) {
+                            $solo->status = 1;
+                            $solo->save();
+                        }
+                        $user[$position] = $request->input($position);
+                    } else {
+                        $user[$position] = 99;
                     }
-                    $user->twr = $request->input('twr');
+                } elseif ($request->input($position) == 99) {
+                    $user[$position] = $request->input($position);
+                    $expire = Carbon::now()->addMonth()->format('Y-m-d');
+                    $cert = new SoloCert;
+                    $cert->cid = $id;
+                    $cert->pos = $solo_id;
+                    $cert->expiration = $expire;
+                    $cert->status = 0;
+                    $cert->save();
                 } else {
-                    $user->twr = 99;
+                    $user[$position] = $request->input($position);
                 }
-            } elseif ($request->input('twr') == 99) {
-                $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = $request->input('twr');
-                $cert = new SoloCert;
-                $cert->cid = $id;
-                $cert->pos = 0;
-                $cert->expiration = $expire;
-                $cert->status = 0;
-                $cert->save();
-            } else {
-                $user->twr = $request->input('twr');
             }
-            if ($user->app == 99) {
-                if ($request->input('app') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->app = $request->input('app');
-                } else {
-                    $user->app = 99;
-                }
-            } else {
-                $user->app = $request->input('app');
-            }
-            if ($user->ctr == 99) {
-                if ($request->input('ctr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->ctr = $request->input('ctr');
-                } else {
-                    $user->ctr = 99;
-                }
-            } else {
-                $user->ctr = $request->input('ctr');
-            }
+
             $user->twr_solo_fields = $request->input('twr_solo_fields');
             $user->twr_solo_expires = $request->input('twr_solo_expires');
             $user->save();
-        } else { // Events
+        }
+        if (Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) { // Update events team
             if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
                 if ($user->hasRole('aec')) {
                     $user->detachRole('aec');
