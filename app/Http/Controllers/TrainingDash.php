@@ -253,8 +253,11 @@ class TrainingDash extends Controller {
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
+        $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
+        return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
+            ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
+            ->with('progress_types', $ticket->getProgressSelectAttribute());
     }
 
     public function saveNewTicket(Request $request) {
@@ -303,37 +306,35 @@ class TrainingDash extends Controller {
         }
 
         // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
-        if ($request->position == 113 || $request->position == 112) {
-            $ticket->position = 'ATL_TWR';
-        } elseif ($request->position == 100 || $request->position == 101) {
+        if ($request->position == 100 || $request->position == 101) {
             $ticket->position = 'ZTL_DEL';
-        } elseif ($request->position == 103 || $request->position == 104) {
-            $ticket->position = 'ATL_DEL';
-        } elseif ($request->position == 102) {
-            $ticket->position = 'CLT_DEL';
         } elseif ($request->position == 105) {
             $ticket->position = 'ZTL_GND';
+        } elseif ($request->position == 109) {
+            $ticket->position = 'ZTL_TWR';
+        } elseif ($request->position == 115) {
+            $ticket->position = 'ZTL_APP';
+        } elseif ($request->position == 102) {
+            $ticket->position = 'CTL_DEL';
         } elseif ($request->position == 106) {
             $ticket->position = 'CLT_GND';
-        } elseif ($request->position == 107 || $request->position == 108) {
-            $ticket->position = 'ATL_GND';
-        } elseif ($request->position == 109 || $request->position == 110) {
-            $ticket->position = 'ZTL_TWR';
         } elseif ($request->position == 111) {
             $ticket->position = 'CLT_TWR';
-        } elseif ($request->position == 114 || $request->position == 115) {
-            $ticket->position = 'ZTL_APP';
         } elseif ($request->position == 116) {
             $ticket->position = 'CLT_APP';
+        } elseif ($request->position == 104) {
+            $ticket->position = 'ATL_DEL';
+        } elseif ($request->position == 108) {
+            $ticket->position = 'ATL_GND';
+        } elseif ($request->position == 113) {
+            $ticket->position = 'ATL_TWR';
         } elseif ($request->position == 117 || $request->position == 118 || $request->position == 119) {
             $ticket->position = 'ATL_APP';
-        } elseif ($request->position == 120 || $request->position == 121) {
-            $ticket->position = 'ATL_CTR';
-        } elseif ($request->position == 122) {
-            $ticket->position = 'ZTL_RCR';
-        } elseif ($request->position == 123) {
-            $ticket->position = 'BHM_APP';
-        }
+        } elseif ($request->position == 121) {
+            $ticket->position = 'ZTL_CTR';
+        } else { // Do not submit other ticket types to VATUSA
+            $ticket->position = null;
+        } 
 
         $req_params = [
             'form_params' =>
@@ -347,10 +348,10 @@ class TrainingDash extends Controller {
             ],
             'http_errors' => false
         ];
-
-        $client = new Client();
-        $res = $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
-
+        if(!is_null($ticket->position)) {
+            $client = new Client();
+            $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        }
         if ($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
@@ -359,28 +360,6 @@ class TrainingDash extends Controller {
             $ots->status = 0;
             $ots->save();
             $extra = ' and the OTS recommendation has been added';
-        }
-        if ($request->monitor == 1) {
-            if ($request->position == 10) {
-                $controller->del = 88;
-            } elseif ($request->position == 13) {
-                $controller->del == 89;
-            } elseif ($request->position == 17) {
-                $controller->gnd = 88;
-            } elseif ($request->position == 21) {
-                $controller->gnd = 89;
-            } elseif ($request->position == 26) {
-                $controller->twr = 88;
-            } elseif ($request->position == 30) {
-                $controller->twr = 89;
-            } elseif ($request->position == 35) {
-                $controller->app = 88;
-            } elseif ($request->position == 41) {
-                $controller->app = 89;
-            } elseif ($request->position == 47) {
-                $controller->gnd = 89;
-            }
-            $controller->save();
         }
 
         $audit = new Audit;
@@ -401,9 +380,19 @@ class TrainingDash extends Controller {
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
+        $positions = $ticket->getPositionSelectAttribute();
+        if(!key_exists($ticket->position, $positions)) {
+            $positions[$ticket->position] = 'Legacy Category';
+        }
+        $sessions = $ticket->getSessionSelectAttribute();
+        if(!key_exists($ticket->session_id, $sessions)) {
+            $sessions[$ticket->session_id] = 'Legacy Session';
+        }
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-            return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
+            return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
+            ->with('positions', $positions)->with('session_ids', $sessions)
+            ->with('progress_types', $ticket->getProgressSelectAttribute());
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
@@ -582,37 +571,28 @@ class TrainingDash extends Controller {
 
     public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
         switch (true) {
-            case ($position > 6 && $position < 22):
+            case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;
-            case ($position > 99 && $position < 103):
+            case (in_array($position, [100, 101, 105])):
                 return 's1';
                 break;
-            case ($position > 104 && $position < 107):
-                return 's1';
-                break;
-            case ($position > 21 && $position < 31):
+            case ($position > 21 && $position < 31): // Legacy types
                 return 's2';
                 break;
-            case ($position > 102 && $position < 105):
+            case (in_array($position, [102, 103, 106, 107, 109, 110])):
                 return 's2';
                 break;
-            case ($position > 106 && $position < 114):
-                return 's2';
-                break;
-            case ($position > 30 && $position < 42):
+            case ($position > 30 && $position < 42): // Legacy types
                 return 's3';
                 break;
-            case ($position > 113 && $position < 120):
+            case (in_array($position, [104, 108, 111, 112, 113, 114, 115, 123])):
                 return 's3';
                 break;
-            case ($position == 123):
-                return 's3';
-                break;
-            case ($position > 41 && $position < 48):
+            case ($position > 41 && $position < 48): // Legacy types
                 return 'c1';
                 break;
-            case ($position > 119 && $position < 122):
+            case (in_array($position, [116, 117, 118, 119, 120, 121])):
                 return 'c1';
                 break;
             case ($position > 121 && $position != 123):
