@@ -84,6 +84,18 @@ mix.webpackConfig({
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js/app.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-   .sass('resources/assets/sass/home.scss', 'public/css/home.css');
+mix.setPublicPath('public')
+   .js('resources/assets/js/app.js', 'js')
+   .js('resources/assets/js/bootstrap.js', 'js')
+   .js('resources/assets/js/event_view.js', 'js')
+   .js('resources/assets/js/filebrowser.js', 'js')
+   .js('resources/assets/js/helpers.js', 'js')
+   .js('resources/assets/js/pilots_guide.js', 'js')
+   .js('resources/assets/js/realops.js', 'js')
+   .js('resources/assets/js/snowstorm.js', 'js')
+   .sass('resources/assets/sass/app.scss', 'css')
+   .sass('resources/assets/sass/clipboard.scss', 'css')
+   .sass('resources/assets/sass/Footer-white.scss', 'css')
+   .sass('resources/assets/sass/home.scss', 'css')
+   .sass('resources/assets/sass/main.scss', 'css')
+   .sass('resources/assets/sass/pilots_guide.scss', 'css');
