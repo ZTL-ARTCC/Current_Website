@@ -86,10 +86,8 @@ mix.webpackConfig({
 
 mix.setPublicPath('public')
    .js('resources/assets/js/app.js', 'js')
-   .js('resources/assets/js/bootstrap.js', 'js')
    .js('resources/assets/js/event_view.js', 'js')
    .js('resources/assets/js/filebrowser.js', 'js')
-   .js('resources/assets/js/helpers.js', 'js')
    .js('resources/assets/js/pilots_guide.js', 'js')
    .js('resources/assets/js/realops.js', 'js')
    .js('resources/assets/js/snowstorm.js', 'js')
