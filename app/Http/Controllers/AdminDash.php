@@ -1789,14 +1789,13 @@ class AdminDash extends Controller {
     }
 
     public function editFeatureToggle(Request $request) {
-        $request->merge([
-            'toggle_name' => preg_replace('/\s+/', '_', trim($request->input('toggle_name')))
-        ])->validate([
-            'toggle_name' => 'required|unique:feature_toggles'
-        ]);
-        FeatureToggle::updateToggle($toggle->toggle_name, $toggle->toggle_description);
+        $request->merge(['toggle_name' => preg_replace('/\s+/', '_', trim($request->input('toggle_name')))]);
+        if($request->input('toggle_name') != $request->input('toggle_name_orig')) {
+            $request->validate(['toggle_name' => 'required|unique:feature_toggles']);
+        }
+        FeatureToggle::updateToggle($request->input('toggle_name'), $request->input('toggle_description'));
 
-        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been updated');
+        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $request->input('toggle_name') . '` has been updated');
     }
 
     public function toggleFeatureToggle($toggle_name) {
