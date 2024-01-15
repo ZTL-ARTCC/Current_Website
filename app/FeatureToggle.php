@@ -37,4 +37,20 @@ class FeatureToggle extends Model {
             return $toggle != null && $toggle->is_enabled;
         });
     }
+
+    public static function updateToggle($toggle_name, $toggle_description) {
+        $toggle = FeatureToggle::find($toggle_name);
+        $toggle->toggle_name = $toggle_name;
+        $toggle->toggle_description = $toggle_description;
+        $toggle->save();
+    }
+
+    public static function deleteToggle($toggle_name) {
+        $toggle = FeatureToggle::find($toggle_name);
+        if ($toggle) {
+            $toggle->delete();
+            return true;
+        }
+        return false;
+    }
 }
