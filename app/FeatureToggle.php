@@ -38,8 +38,8 @@ class FeatureToggle extends Model {
         });
     }
 
-    public static function updateToggle($toggle_name, $toggle_description) {
-        $toggle = FeatureToggle::find($toggle_name);
+    public static function updateToggle($toggle_name_orig, $toggle_name, $toggle_description) {
+        $toggle = FeatureToggle::find($toggle_name_orig);
         $toggle->toggle_name = $toggle_name;
         $toggle->toggle_description = $toggle_description;
         $toggle->save();
