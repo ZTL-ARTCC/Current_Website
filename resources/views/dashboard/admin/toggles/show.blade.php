@@ -37,6 +37,7 @@ Feature Toggles
                         <div class="btn-group">
                             <a href="/dashboard/admin/toggles/toggle/{{ $t->toggle_name }}" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="Flip Toggle"><i class="fas fa-sliders-h fa-fw"></i></a>
                             <a href="/dashboard/admin/toggles/edit/{{ $t->toggle_name }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit Toggle"><i class="fas fa-pencil-alt fa-fw"></i></i></a>
+                            <a href="/dashboard/admin/toggles/delete/{{ $t->toggle_name }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Edit Toggle"><i class="fas fa-trash fa-fw"></i></i></a>
                         </div>
                     </td>
                 </tr>
