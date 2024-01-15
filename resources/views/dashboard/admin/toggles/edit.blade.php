@@ -12,7 +12,7 @@ Edit Feature Toggle
 </div>
 <br>
 <div class="container">
-    {!! Form::open(['action' => 'AdminDash@createFeatureToggle']) !!}
+    {!! Form::open(['action' => 'AdminDash@editFeatureToggle']) !!}
         @csrf
         <div class="form-group">
             <div class="row">
