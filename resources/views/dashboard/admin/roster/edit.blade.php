@@ -23,14 +23,14 @@ Update Controller
     {!! Form::open(['action' => ['AdminDash@updateController', $user->id]]) !!}
     @csrf
     @php
-    $roster_disable = 'disabled';
-    if(Auth::user()->isAbleTo('roster')) {
-    $roster_disable = null;
-    }
-    $events_disable = 'disabled';
-    if(Auth::user()->isAbleTo('roster')||Auth::user()->hasRole('ec')) {
-    $events_disable = null;
-    }
+        $roster_disable = 'disabled';
+        if(Auth::user()->isAbleTo('roster')) {
+            $roster_disable = null;
+        }
+        $events_disable = 'disabled';
+        if(Auth::user()->isAbleTo('roster')||Auth::user()->hasRole('ec')) {
+            $events_disable = null;
+        }
     @endphp
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="profile">
@@ -75,15 +75,15 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         @if($user->visitor == 1)
-                        {!! Form::label('visitor_from', 'Visitor From') !!}
-                        {!! Form::text('visitor_from', $user->visitor_from, ['class' => 'form-control', $roster_disable]) !!}
-                        {!! Form::hidden('status', $user->status) !!}
+                            {!! Form::label('visitor_from', 'Visitor From') !!}
+                            {!! Form::text('visitor_from', $user->visitor_from, ['class' => 'form-control', $roster_disable]) !!}
+                            {!! Form::hidden('status', $user->status) !!}
                         @else
-                        {!! Form::label('status', 'Status') !!}
-                        {!! Form::select('status', [
-                        1 => 'Active',
-                        0 => 'Leave of Absence'
-                        ], $user->status, ['class' => 'form-control', $roster_disable]) !!}
+                            {!! Form::label('status', 'Status') !!}
+                            {!! Form::select('status', [
+                                1 => 'Active',
+                                0 => 'Leave of Absence'
+                                ], $user->status, ['class' => 'form-control', $roster_disable]) !!}
                         @endif
                     </div>
                     <div class="col-sm-6">
@@ -98,26 +98,26 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('staff', 'Facility Staff') !!}
                         {!! Form::select('staff', [
-                        0 => 'NONE',
-                        1 => 'ATM',
-                        2 => 'DATM',
-                        3 => 'TA',
-                        4 => 'ATA',
-                        5 => 'WM',
-                        6 => 'AWM',
-                        7 => 'FE',
-                        8 => 'AFE',
-                        9 => 'EC'
-                        ], $user->staff_position, ['class' => 'form-control', $roster_disable]) !!}
+                            0 => 'NONE',
+                            1 => 'ATM',
+                            2 => 'DATM',
+                            3 => 'TA',
+                            4 => 'ATA',
+                            5 => 'WM',
+                            6 => 'AWM',
+                            7 => 'FE',
+                            8 => 'AFE',
+                            9 => 'EC'
+                            ], $user->staff_position, ['class' => 'form-control', $roster_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('events_staff', 'Events Staff') !!}
                         {!! Form::select('events_staff', [
-                        0 => 'NONE',
-                        1 => 'AEC',
-                        2 => 'AEC (Ghost)',
-                        3 => 'Events Team'
-                        ], $user->events_position, ['class' => 'form-control', $events_disable]) !!}
+                            0 => 'NONE',
+                            1 => 'AEC',
+                            2 => 'AEC (Ghost)',
+                            3 => 'Events Team'
+                            ], $user->events_position, ['class' => 'form-control', $events_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -126,23 +126,23 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('training', 'Training Staff') !!}
                         {!! Form::select('training', [
-                        0 => 'NONE',
-                        1 => 'MTR',
-                        2 => 'INS'
-                        ], $user->train_position, ['class' => 'form-control', $roster_disable]) !!}
+                            0 => 'NONE',
+                            1 => 'MTR',
+                            2 => 'INS'
+                            ], $user->train_position, ['class' => 'form-control', $roster_disable]) !!}
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
                         {!! Form::label('max', 'Training Level') !!}
                         {!! Form::select('max', [
-                        null => 'Not Able to Train',
-                        1 => 'Unrestricted DEL & GND',
-                        3 => 'Unrestricted TWR',
-                        5 => 'Unrestricted Approach',
-                        8 => 'Tier 1 Local',
-                        9 => 'Tier 1 Approach',
-                        7 => 'Center'
-                        ], $user->max, ['class' => 'form-control', $roster_disable]) !!}
+                            null => 'Not Able to Train',
+                            1 => 'Unrestricted DEL & GND',
+                            3 => 'Unrestricted TWR',
+                            5 => 'Unrestricted Approach',
+                            8 => 'Tier 1 Local',
+                            9 => 'Tier 1 Approach',
+                            7 => 'Center'
+                            ], $user->max, ['class' => 'form-control', $roster_disable]) !!}
                     </div>
                     @endif
                 </div>
@@ -153,10 +153,10 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-10">
                         @php
-                        $allow_training = ($user->canTrain == 1) ? true : false;
-                        $is_visitor = ($user->visitor == 1) ? true : false;
-                        $allow_events = ($user->canEvents == 1) ? true : false;
-                        $api_exempt = ($user->api_exempt == 1) ? true : false;
+                            $allow_training = ($user->canTrain == 1) ? true : false;
+                            $is_visitor = ($user->visitor == 1) ? true : false;
+                            $allow_events = ($user->canEvents == 1) ? true : false;
+                            $api_exempt = ($user->api_exempt == 1) ? true : false;
                         @endphp
                         {!! Form::label('canTrain', 'Allow Training?') !!}
                         {!! Form::checkbox('canTrain', 1, $allow_training, [$roster_disable]) !!}
@@ -165,7 +165,7 @@ Update Controller
                         {!! Form::label('visitor', 'Visitor?') !!}
                         {!! Form::checkbox('visitor', 1, $is_visitor, ['disabled']) !!}
                         @if($user->visitor == 1)
-                        <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
+                            <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
                         @endif
                     </div>
                     <div class="col-sm-10">
@@ -197,36 +197,36 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         @php
-                        $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = 'disabled';
-                        $center_disable = $t1_lcl_disable = $t1_app_disable = 'disabled';
-                        if(Auth::user()->isAbleTo('roster')) {
-                        $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = null;
-                        $center_disable = $t1_lcl_disable = $t1_app_disable = null;
-                        }
-                        elseif (Auth::user()->isAbleTo('train') && is_numeric(Auth::user()->max)) {
-                        $train_disable = null;
-                        $unres_gnd_disable = (Auth::user()->max >= 1) ? null : 'disabled';
-                        $unres_twr_disable = (Auth::user()->max >= 3) ? null : 'disabled';
-                        $unres_app_disable = (Auth::user()->max >= 5) ? null : 'disabled';
-                        $center_disable = (Auth::user()->max >= 7) ? null : 'disabled';
-                        $t1_lcl_disable = (Auth::user()->max >= 8) ? null : 'disabled';
-                        $t1_app_disable = (Auth::user()->max >= 9) ? null : 'disabled';
-                        }
+                            $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = 'disabled';
+                            $center_disable = $t1_lcl_disable = $t1_app_disable = 'disabled';
+                            if(Auth::user()->isAbleTo('roster')) {
+                                $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = null;
+                                $center_disable = $t1_lcl_disable = $t1_app_disable = null;
+                            }
+                            elseif (Auth::user()->isAbleTo('train') && is_numeric(Auth::user()->max)) {
+                                $train_disable = null;
+                                $unres_gnd_disable = (Auth::user()->max >= 1) ? null : 'disabled';
+                                $unres_twr_disable = (Auth::user()->max >= 3) ? null : 'disabled';
+                                $unres_app_disable = (Auth::user()->max >= 5) ? null : 'disabled';
+                                $center_disable = (Auth::user()->max >= 7) ? null : 'disabled';
+                                $t1_lcl_disable = (Auth::user()->max >= 8) ? null : 'disabled';
+                                $t1_app_disable = (Auth::user()->max >= 9) ? null : 'disabled';
+                            }
                         @endphp
                         {!! Form::hidden('del', $user->del) !!}
                         {!! Form::label('gnd', 'Unrestricted Ground/Clearance Delivery') !!}
                         {!! Form::select('gnd', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->gnd, ['class' => 'form-control', $unres_gnd_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->gnd, ['class' => 'form-control', $unres_gnd_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('twr', 'Unrestricted Tower') !!}
                         {!! Form::select('twr', [
-                        0 => 'None',
-                        99 => 'Solo Certification',
-                        1 => 'Certified'
-                        ], $user->twr, ['class' => 'form-control', $unres_twr_disable]) !!}
+                            0 => 'None',
+                            99 => 'Solo Certification',
+                            1 => 'Certified'
+                            ], $user->twr, ['class' => 'form-control', $unres_twr_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -235,18 +235,18 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('app', 'Unrestricted Approach') !!}
                         {!! Form::select('app', [
-                        0 => 'None',
-                        99 => 'Solo Certification',
-                        1 => 'Certified'
-                        ], $user->app, ['class' => 'form-control', $unres_app_disable]) !!}
+                            0 => 'None',
+                            99 => 'Solo Certification',
+                            1 => 'Certified'
+                            ], $user->app, ['class' => 'form-control', $unres_app_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('ctr', 'Center Certification') !!}
                         {!! Form::select('ctr', [
-                        0 => 'None',
-                        99 => 'Solo Certification',
-                        1 => 'Certified'
-                        ], $user->ctr, ['class' => 'form-control', $center_disable]) !!}
+                            0 => 'None',
+                            99 => 'Solo Certification',
+                            1 => 'Certified'
+                            ], $user->ctr, ['class' => 'form-control', $center_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -274,16 +274,16 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('clt_gnd', 'Charlotte Ground/Clearance Delivery') !!}
                         {!! Form::select('clt_gnd', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('clt_twr', 'Charlotte Tower') !!}
                         {!! Form::select('clt_twr', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -292,9 +292,9 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('clt_app', 'Charlotte Approach') !!}
                         {!! Form::select('clt_app', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -303,16 +303,16 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('atl_gnd', 'Atlanta Ground/Clearance Delivery') !!}
                         {!! Form::select('atl_gnd', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('atl_twr', 'Atlanta Tower') !!}
                         {!! Form::select('atl_twr', [
-                        0 => 'None',
-                        1 => 'Certified'
-                        ], $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                            0 => 'None',
+                            1 => 'Certified'
+                            ], $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -321,12 +321,12 @@ Update Controller
                     <div class="col-sm-6">
                         {!! Form::label('atl_app', 'Atlanta (A80) Approach') !!}
                         {!! Form::select('atl_app', [
-                        0 => 'None',
-                        90 => 'A80 SAT Certified',
-                        91 => 'A80 DR Certified',
-                        92 => 'A80 TAR Certified',
-                        1 => 'Certified'
-                        ], $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
+                            0 => 'None',
+                            90 => 'A80 SAT Certified',
+                            91 => 'A80 DR Certified',
+                            92 => 'A80 TAR Certified',
+                            1 => 'Certified'
+                            ], $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
                     </div>
                 </div>
             </div>
