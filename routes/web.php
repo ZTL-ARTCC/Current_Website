@@ -265,7 +265,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/', 'AdminDash@showFeatureToggles');
             Route::get('/create', 'AdminDash@showCreateFeatureToggle');
             Route::post('/create', 'AdminDash@createFeatureToggle');
-            Route::get('/edit', 'AdminDash@showEditFeatureToggle');
+            Route::get('/edit/{toggle_name}', 'AdminDash@showEditFeatureToggle');
             Route::put('/edit', 'AdminDash@editFeatureToggle');
             Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
             Route::delete('/toggle/{toggle_name}', 'AdminDash@deleteFeatureToggle');
