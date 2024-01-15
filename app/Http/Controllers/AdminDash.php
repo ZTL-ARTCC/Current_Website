@@ -1807,9 +1807,9 @@ class AdminDash extends Controller {
     public function deleteFeatureToggle($toggle_name) {
         $result = FeatureToggle::deleteToggle($toggle_name);
         if ($result) {
-            return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been deleted');
+            return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle_name . '` has been deleted');
         } else {
-            return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle->toggle_name . '` could not be deleted');
+            return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
         }
     }
 }
