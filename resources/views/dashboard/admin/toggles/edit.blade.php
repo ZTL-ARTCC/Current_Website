@@ -19,6 +19,7 @@ Edit Feature Toggle
                 <div class="col-sm-6">
                     {!! Form::label('toggle_name', 'Toggle Name') !!}
                     {!! Form::text('toggle_name', $t->toggle_name, ['class' => 'form-control', 'placeholder' => 'new_toggle_name']) !!}
+                    {!! Form::hidden('toggle_name_orig', $t->toggle_name) !!}
                 </div>
                 <div class="col-sm-6">
                     {!! Form::label('toggle_description', 'Toggle Description') !!}
