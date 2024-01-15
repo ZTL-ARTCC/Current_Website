@@ -325,8 +325,9 @@ class AdminDash extends Controller {
 
             $user->gnd = $request->input('gnd');
             $positions = ['twr','app','ctr'];
+            define('SOLO_CERT', 99);
             foreach ($positions as $solo_id => $position) {
-                if ($user[$position] == 99) {
+                if ($user[$position] == SOLO_CERT) {
                     if ($request->input($position) != 0) {
                         $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                         if ($solo) {
@@ -335,9 +336,9 @@ class AdminDash extends Controller {
                         }
                         $user[$position] = $request->input($position);
                     } else {
-                        $user[$position] = 99;
+                        $user[$position] = SOLO_CERT;
                     }
-                } elseif ($request->input($position) == 99) {
+                } elseif ($request->input($position) == SOLO_CERT) {
                     $user[$position] = $request->input($position);
                     $expire = Carbon::now()->addMonth()->format('Y-m-d');
                     $cert = new SoloCert;
