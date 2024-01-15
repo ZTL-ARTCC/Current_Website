@@ -1793,7 +1793,7 @@ class AdminDash extends Controller {
         if($request->input('toggle_name') != $request->input('toggle_name_orig')) {
             $request->validate(['toggle_name' => 'required|unique:feature_toggles']);
         }
-        FeatureToggle::updateToggle($request->input('toggle_name'), $request->input('toggle_description'));
+        FeatureToggle::updateToggle($request->input('toggle_name_orig'), $request->input('toggle_name'), $request->input('toggle_description'));
 
         return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $request->input('toggle_name') . '` has been updated');
     }
