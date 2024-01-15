@@ -18,21 +18,34 @@ Realops
 <br>
 
 <div class="container">
-<p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilot to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>
+<p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilots to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-12 mx-2">
         <h3>Schedule</h3>
+        <p>Filter by any or all of these criteria</p>
     </div>
-    <div class="col-md-4">
-    {!! Form::open(['action' => 'RealopsController@index', 'method' => 'GET']) !!}
-        <div class="mb-3 input-group">
-            {!! Form::text('filter', $airport_filter, ['class' => 'form-control', 'placeholder' => 'Filter by Airport']) !!}
-            <div class="input-group-append">
-                <button class="btn btn-outline-success" type="submit">Filter</button>
+    <div class="col-md-12 mb-3 mx-3">
+       {!! Form::open(['action' => 'RealopsController@index', 'method' => 'GET', 'id' => 'realops_filter']) !!}
+       <div class="row">
+            <div class="col-sm-12 col-md p-1">
+               {!! Form::text('airport_filter', $airport_filter, ['class' => 'form-control', 'placeholder' => 'Airport (DEN)', 'id' => 'airport_filter']) !!}
             </div>
-        </div>
-    {!! Form::close() !!}
+            <div class="col-sm-12 col-md p-1">
+               {!! Form::text('flightno_filter', $flightno_filter, ['class' => 'form-control', 'placeholder' => 'Flight (DAL367)', 'id' => 'flightno_filter']) !!}
+            </div>
+            <div class="col-sm-12 col-md p-1">
+               {!! Form::text('date_filter', $date_filter, ['class' => 'form-control', 'placeholder' => 'Date (YYYY-MM-DD)', 'id' => 'date_filter']) !!}
+            </div>
+            <div class="col-sm-12 col-md p-1">
+               {!! Form::text('time_filter', $time_filter, ['class' => 'form-control', 'placeholder' => 'Time (11:00)', 'id' => 'time_filter']) !!}
+            </div>
+            <div class="col-sm-12 col-md p-1 mr-2 text-center">
+                <button class="btn btn-success mr-2" type="button" onclick="realopsFilterValidateAndSubmit();" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
+                <a href="/realops" class="btn btn-warning" title="Clear"><i class="fas fa-redo"></i>&nbsp;Clear</a>
+            </div>
+       </div>
+       {!! Form::close() !!}
     </div>
 </div>
 @if(count($flights) > 0)
@@ -121,4 +134,5 @@ Realops
     </div>
 @endif
 </div>
+{{Html::script(asset('js/realops.js'))}}
 @endsection
