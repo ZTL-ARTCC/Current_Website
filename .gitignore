@@ -3,8 +3,9 @@
 
 /public/hot
 /public/storage
-/public/**/app.js
-/public/**/app.css
+/public/mix-manifest.json
+/public/js/*.js
+/public/css/*.css
 /storage/*.key
 /vendor
 /.idea
