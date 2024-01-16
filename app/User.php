@@ -98,9 +98,82 @@ class User extends Authenticatable {
     ];
 
     public static $StatusText = [
-        0 => 'LOA',
         1 => 'Active',
+        0 => 'LOA',
         2 => 'Inactive'
+    ];
+
+    public const FACILITY_STAFF_POSITION_MAP = [
+        1 => 'ATM',
+        2 => 'DATM',
+        3 => 'TA',
+        4 => 'ATA',
+        5 => 'WM',
+        6 => 'AWM',
+        7 => 'FE',
+        8 => 'AFE',
+        9 => 'EC'
+    ];
+
+    public static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
+
+    public static $EventsStaff = [
+        0 => 'NONE',
+        1 => 'AEC',
+        2 => 'AEC (Ghost)',
+        3 => 'Events Team'
+    ];
+
+    public static $TrainingStaff = [
+        0 => 'NONE',
+        1 => 'MTR',
+        2 => 'INS'
+    ];
+
+    public const TRAIN_UNABLE = 0;
+    public const TRAIN_UNRES_GND = 1;
+    public const TRAIN_UNRES_TWR = 3;
+    public const TRAIN_UNRES_APP = 5;
+    public const TRAIN_T1_LCL = 8;
+    public const TRAIN_T1_APP = 9;
+    public const TRAIN_CTR = 7;
+
+    public static $TrainingLevel = [
+        0 => 'Not Able to Train',
+        1 => 'Unrestricted DEL & GND',
+        3 => 'Unrestricted TWR',
+        5 => 'Unrestricted Approach',
+        8 => 'Tier 1 Local',
+        9 => 'Tier 1 Approach',
+        7 => 'Center'
+    ];
+
+    public const UNCERTIFIED = 0;
+    public const CERTIFIED = 1;
+    public const SOLO_CERTIFICATION = 99;
+    public const TRACON_SAT_CERTIFIED = 90;
+    public const TRACON_DR_CERTIFIED = 91;
+    public const TRACON_TAR_CERTIFIED = 92;
+    public const LEGACY_MINOR_CERTIFIED = 1;
+    public const LEGACY_MAJOR_CERTIFIED = 2;
+
+    public static $UncertifiedCertified = [
+        self::UNCERTIFIED => 'None',
+        self::CERTIFIED => 'Certified'
+    ];
+
+    public static $UncertifiedSoloCertified = [
+        self::UNCERTIFIED => 'None',
+        self::SOLO_CERTIFICATION => 'Solo Certification',
+        self::CERTIFIED => 'Certified'
+    ];
+
+    public static $UncertifiedCertifiedA80 = [
+        self::UNCERTIFIED => 'None',
+        self::TRACON_SAT_CERTIFIED => 'A80 SAT Certified',
+        self::TRACON_DR_CERTIFIED => 'A80 DR Certified',
+        self::TRACON_TAR_CERTIFIED => 'A80 TAR Certified',
+        self::CERTIFIED => 'Certified'
     ];
 
     public function getStatusTextAttribute() {

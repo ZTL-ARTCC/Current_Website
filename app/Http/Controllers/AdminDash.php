@@ -250,32 +250,15 @@ class AdminDash extends Controller {
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
-            if ($request->input('visitor') == null) {
-                $user->visitor = 0;
-            } elseif ($request->input('visitor') == 1) {
-                $user->visitor = 1;
+            $attributes = ['visitor', 'canTrain', 'canEvents', 'api_exempt'];
+            foreach ($attributes as $attribute) {
+                $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
-            if ($request->input('canTrain') == null) {
-                $user->canTrain = 0;
-            } elseif ($request->input('canTrain') == 1) {
-                $user->canTrain = 1;
-            }
-            if ($request->input('canEvents') == null) {
-                $user->canEvents = 0;
-            } elseif ($request->input('canEvents') == 1) {
-                $user->canEvents = 1;
-            }
-            if ($request->input('api_exempt') == null) {
-                $user->api_exempt = 0;
-            } elseif ($request->input('api_exempt') == 1) {
-                $user->api_exempt = 1;
-            }
-
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            $staff_roles = [1 => 'atm', 2 => 'datm', 3 => 'ta', 4 => 'ata', 5 => 'wm', 6 => 'awm', 7 => 'fe', 8 => 'afe', 9 => 'ec'];
+            $staff_roles = $user->FACILITY_STAFF_POSITION_MAP;
             if ($user->hasRole($staff_roles) == true) {
                 foreach ($staff_roles as $staff_role) {
                     if ($user->hasRole($staff_role)) {
@@ -325,9 +308,8 @@ class AdminDash extends Controller {
 
             $user->gnd = $request->input('gnd');
             $positions = ['twr','app','ctr'];
-            define('SOLO_CERT', 99);
             foreach ($positions as $solo_id => $position) {
-                if ($user[$position] == SOLO_CERT) {
+                if ($user[$position] == $user->SOLO_CERTIFICATION) {
                     if ($request->input($position) != 0) {
                         $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                         if ($solo) {
@@ -336,9 +318,9 @@ class AdminDash extends Controller {
                         }
                         $user[$position] = $request->input($position);
                     } else {
-                        $user[$position] = SOLO_CERT;
+                        $user[$position] = $user->SOLO_CERTIFICATION;
                     }
-                } elseif ($request->input($position) == SOLO_CERT) {
+                } elseif ($request->input($position) == $user->SOLO_CERTIFICATION) {
                     $user[$position] = $request->input($position);
                     $expire = Carbon::now()->addMonth()->format('Y-m-d');
                     $cert = new SoloCert;
