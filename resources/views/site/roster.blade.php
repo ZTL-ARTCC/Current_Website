@@ -84,50 +84,54 @@ Roster
                             <td class="text-center">{{ $c->status_text }}</td>
                             <!-- Unrestricted -->
                             <td class="text-center">
-                                @if($c->gnd > 0)
+                                @if($c->gnd > $c->UNCERTIFIED)
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if($c->twr == 99)
+                                @if($c->twr === $c->SOLO_CERTIFICATION)
                                 <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">GND-SOLO</span>
-                                @elseif($c->twr > 0)
+                                @elseif($c->twr > $c->UNCERTIFIED)
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if($c->app == 99)
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" style="color:#c1ad13" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">APP-SOLO</span>
-                                @elseif($c->app > 0)
+                                @if($c->app === $c->SOLO_CERTIFICATION)
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">APP-SOLO</span>
+                                @elseif($c->app > $c->UNCERTIFIED)
                                 <span class="badge badge-info">APP</span>
                                 @endif
                             </td>
                             <!-- CLT Tier 1 -->
+                            <?php
+                                //  The LEGACY cases below are a temporary measure to ease transition into GCAP. These can be removed when
+                                //  the facility roster has been fully updated to account for the new Tier 1 structure at CLT.
+                            ?>
                             <td class="text-center">
-                                @if(($c->clt_gnd > 0)||($c->gnd == 2))
+                                @if(($c->clt_gnd > $c->UNCERTIFIED)||($c->gnd === $c->LEGACY_MAJOR_CERTIFIED))
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if(($c->clt_twr > 0)||($c->twr == 2))
+                                @if(($c->clt_twr > $c->UNCERTIFIED)||($c->twr === $c->LEGACY_MAJOR_CERTIFIED))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->clt_app > 0)||($c->app > 1))
+                                @if(($c->clt_app > $c->UNCERTIFIED)||($c->app > $c->LEGACY_MINOR_CERTIFIED))
                                 <span class="badge badge-info">APP</span>
                                 @endif
                             </td>
                             <!-- ATL Tier 1 -->
                             <td class="text-center">
-                                @if(($c->atl_gnd > 0)||($c->gnd == 2))
+                                @if(($c->atl_gnd > $c->UNCERTIFIED)||($c->gnd === $c->LEGACY_MAJOR_CERTIFIED))
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if(($c->atl_twr > 0)||($c->twr == 2))
+                                @if(($c->atl_twr > $c->UNCERTIFIED)||($c->twr === $c->LEGACY_MAJOR_CERTIFIED))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->atl_app > 0)||($c->app > 1))
+                                @if(($c->atl_app > $c->UNCERTIFIED)||($c->app > $c->LEGACY_MINOR_CERTIFIED))
                                 <span class="badge badge-info">
-                                    @if($c->app == 90)
+                                    @if($c->app === $c->TRACON_SAT_CERTIFIED)
                                     SAT
-                                    @elseif($c->app == 91)
+                                    @elseif($c->app === $c->TRACON_DR_CERTIFIED)
                                     DR
-                                    @elseif($c->app == 92)
+                                    @elseif($c->app === $c->TRACON_TAR_CERTIFIED)
                                     TAR
                                     @else
                                     APP
@@ -137,9 +141,9 @@ Roster
                             </td>
                             <!-- Enroute -->
                             <td class="text-center">
-                                @if($c->ctr == 99)
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">ZTL-SOLO</span>
-                                @elseif($c->ctr > 0)
+                                @if($c->ctr === $c->SOLO_CERTIFICATION)
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">ZTL-SOLO</span>
+                                @elseif($c->ctr > $c->UNCERTIFIED)
                                 <span class="badge badge-secondary">ZTL</span>
                                 @endif
                             </td>
