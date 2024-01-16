@@ -103,6 +103,10 @@ class User extends Authenticatable {
         2 => 'Inactive'
     ];
 
+    public static function getStatusAttribute() {
+        return array_filter(self::$StatusText);
+    }
+
     public const FACILITY_STAFF_POSITION_MAP = [
         1 => 'ATM',
         2 => 'DATM',
@@ -117,6 +121,10 @@ class User extends Authenticatable {
 
     public static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
 
+    public static function getFacilityStaffAttribute() {
+        return array_filter(self::$FacilityStaff);
+    }
+
     public static $EventsStaff = [
         0 => 'NONE',
         1 => 'AEC',
@@ -124,11 +132,19 @@ class User extends Authenticatable {
         3 => 'Events Team'
     ];
 
+    public static function getEventsStaffAttribute() {
+        return array_filter(self::$EventsStaff);
+    }
+
     public static $TrainingStaff = [
         0 => 'NONE',
         1 => 'MTR',
         2 => 'INS'
     ];
+
+    public static function getTrainingStaffAttribute() {
+        return array_filter(self::$TrainingStaff);
+    }
 
     public const TRAIN_UNABLE = 0;
     public const TRAIN_UNRES_GND = 1;
@@ -148,6 +164,10 @@ class User extends Authenticatable {
         7 => 'Center'
     ];
 
+    public static function getTrainingLevelAttribute() {
+        return array_filter(self::$TrainingLevel);
+    }
+
     public const UNCERTIFIED = 0;
     public const CERTIFIED = 1;
     public const SOLO_CERTIFICATION = 99;
@@ -162,11 +182,19 @@ class User extends Authenticatable {
         self::CERTIFIED => 'Certified'
     ];
 
+    public static function getUncertifiedCertifiedAttribute() {
+        return array_filter(self::$UncertifiedCertified);
+    }
+
     public static $UncertifiedSoloCertified = [
         self::UNCERTIFIED => 'None',
         self::SOLO_CERTIFICATION => 'Solo Certification',
         self::CERTIFIED => 'Certified'
     ];
+
+    public static function getUncertifiedSoloCertifiedAttribute() {
+        return array_filter(self::$UncertifiedSoloCertified);
+    }
 
     public static $UncertifiedCertifiedA80 = [
         self::UNCERTIFIED => 'None',
@@ -175,6 +203,10 @@ class User extends Authenticatable {
         self::TRACON_TAR_CERTIFIED => 'A80 TAR Certified',
         self::CERTIFIED => 'Certified'
     ];
+
+    public static function getUncertifiedCertifiedA80Attribute() {
+        return array_filter(self::$UncertifiedCertifiedA80);
+    }
 
     public function getStatusTextAttribute() {
         foreach (User::$StatusText as $id => $Status) {
