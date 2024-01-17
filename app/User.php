@@ -103,11 +103,11 @@ class User extends Authenticatable {
         2 => 'Inactive'
     ];
 
-    public static function getStatusAttribute() {
+    public static function getUserStatusAttribute() {
         return array_filter(self::$StatusText);
     }
 
-    public const FACILITY_STAFF_POSITION_MAP = [
+    protected const FACILITY_STAFF_POSITION_MAP = [
         1 => 'ATM',
         2 => 'DATM',
         3 => 'TA',
@@ -119,13 +119,13 @@ class User extends Authenticatable {
         9 => 'EC'
     ];
 
-    public static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
+    protected static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
 
     public static function getFacilityStaffAttribute() {
         return array_filter(self::$FacilityStaff);
     }
 
-    public static $EventsStaff = [
+    protected static $EventsStaff = [
         0 => 'NONE',
         1 => 'AEC',
         2 => 'AEC (Ghost)',
@@ -136,7 +136,7 @@ class User extends Authenticatable {
         return array_filter(self::$EventsStaff);
     }
 
-    public static $TrainingStaff = [
+    protected static $TrainingStaff = [
         0 => 'NONE',
         1 => 'MTR',
         2 => 'INS'
@@ -146,38 +146,42 @@ class User extends Authenticatable {
         return array_filter(self::$TrainingStaff);
     }
 
-    public const TRAIN_UNABLE = 0;
-    public const TRAIN_UNRES_GND = 1;
-    public const TRAIN_UNRES_TWR = 3;
-    public const TRAIN_UNRES_APP = 5;
-    public const TRAIN_T1_LCL = 8;
-    public const TRAIN_T1_APP = 9;
-    public const TRAIN_CTR = 7;
+    protected const TRAIN_UNABLE = 0;
+    protected const TRAIN_UNRES_GND = 1;
+    protected const TRAIN_UNRES_TWR = 3;
+    protected const TRAIN_UNRES_APP = 5;
+    protected const TRAIN_T1_LCL = 8;
+    protected const TRAIN_T1_APP = 9;
+    protected const TRAIN_CTR = 7;
 
-    public static $TrainingLevel = [
-        0 => 'Not Able to Train',
-        1 => 'Unrestricted DEL & GND',
-        3 => 'Unrestricted TWR',
-        5 => 'Unrestricted Approach',
-        8 => 'Tier 1 Local',
-        9 => 'Tier 1 Approach',
-        7 => 'Center'
+    protected static $TrainingLevel = [
+        self::TRAIN_UNABLE => 'Not Able to Train',
+        self::TRAIN_UNRES_GND => 'Unrestricted DEL & GND',
+        self::TRAIN_UNRES_TWR => 'Unrestricted TWR',
+        self::TRAIN_UNRES_APP => 'Unrestricted Approach',
+        self::TRAIN_T1_LCL => 'Tier 1 Local',
+        self::TRAIN_T1_APP => 'Tier 1 Approach',
+        self::TRAIN_CTR => 'Center'
     ];
 
     public static function getTrainingLevelAttribute() {
         return array_filter(self::$TrainingLevel);
     }
 
-    public const UNCERTIFIED = 0;
-    public const CERTIFIED = 1;
-    public const SOLO_CERTIFICATION = 99;
-    public const TRACON_SAT_CERTIFIED = 90;
-    public const TRACON_DR_CERTIFIED = 91;
-    public const TRACON_TAR_CERTIFIED = 92;
-    public const LEGACY_MINOR_CERTIFIED = 1;
-    public const LEGACY_MAJOR_CERTIFIED = 2;
+    protected const UNCERTIFIED = 0;
+    protected const CERTIFIED = 1;
+    protected const SOLO_CERTIFICATION = 99;
+    protected const TRACON_SAT_CERTIFIED = 90;
+    protected const TRACON_DR_CERTIFIED = 91;
+    protected const TRACON_TAR_CERTIFIED = 92;
+    protected const LEGACY_MINOR_CERTIFIED = 1;
+    protected const LEGACY_MAJOR_CERTIFIED = 2;
 
-    public static $UncertifiedCertified = [
+    public static function getMagicNumber($const_name) {
+        return (defined('self::'.$const_name)) ? constant('self::'.$const_name) : null;
+    }
+
+    protected static $UncertifiedCertified = [
         self::UNCERTIFIED => 'None',
         self::CERTIFIED => 'Certified'
     ];
@@ -186,7 +190,7 @@ class User extends Authenticatable {
         return array_filter(self::$UncertifiedCertified);
     }
 
-    public static $UncertifiedSoloCertified = [
+    protected static $UncertifiedSoloCertified = [
         self::UNCERTIFIED => 'None',
         self::SOLO_CERTIFICATION => 'Solo Certification',
         self::CERTIFIED => 'Certified'
@@ -196,7 +200,7 @@ class User extends Authenticatable {
         return array_filter(self::$UncertifiedSoloCertified);
     }
 
-    public static $UncertifiedCertifiedA80 = [
+    protected static $UncertifiedCertifiedA80 = [
         self::UNCERTIFIED => 'None',
         self::TRACON_SAT_CERTIFIED => 'A80 SAT Certified',
         self::TRACON_DR_CERTIFIED => 'A80 DR Certified',
