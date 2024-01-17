@@ -1610,6 +1610,22 @@ class AdminDash extends Controller {
         return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
     }
 
+    public function eventMarkNoShow($id) {
+        $position = EventRegistration::find($id);
+        $position->no_show = 1;
+        $position->save();
+
+        return redirect()->back()->with('success', 'Controller was marked as a no-show.');        
+    }
+
+    public function eventUnMarkNoShow($id) {
+        $position = EventRegistration::find($id);
+        $position->no_show = 0;
+        $position->save();
+
+        return redirect()->back()->with('success', 'Controller was unmarked as a no-show.');        
+    }
+
     public function manualAssign(Request $request, $id) {
         $validator = $request->validate([
             'controller' => 'required',
