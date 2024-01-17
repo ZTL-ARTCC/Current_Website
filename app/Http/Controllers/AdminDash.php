@@ -258,7 +258,7 @@ class AdminDash extends Controller {
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            $staff_roles = $user->FACILITY_STAFF_POSITION_MAP;
+            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
             if ($user->hasRole($staff_roles) == true) {
                 foreach ($staff_roles as $staff_role) {
                     if ($user->hasRole($staff_role)) {
@@ -309,7 +309,7 @@ class AdminDash extends Controller {
             $user->gnd = $request->input('gnd');
             $positions = ['twr','app','ctr'];
             foreach ($positions as $solo_id => $position) {
-                if ($user[$position] == $user->SOLO_CERTIFICATION) {
+                if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     if ($request->input($position) != 0) {
                         $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
                         if ($solo) {
@@ -318,9 +318,9 @@ class AdminDash extends Controller {
                         }
                         $user[$position] = $request->input($position);
                     } else {
-                        $user[$position] = $user->SOLO_CERTIFICATION;
+                        $user[$position] = $user->getMagicNumber('SOLO_CERTIFICATION');
                     }
-                } elseif ($request->input($position) == $user->SOLO_CERTIFICATION) {
+                } elseif ($request->input($position) == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     $user[$position] = $request->input($position);
                     $expire = Carbon::now()->addMonth()->format('Y-m-d');
                     $cert = new SoloCert;

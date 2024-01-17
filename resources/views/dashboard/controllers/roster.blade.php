@@ -98,18 +98,18 @@ Roster
                             <td class="text-center">{{ $c->status_text }}</td>
                             <!-- Unrestricted -->
                             <td class="text-center">
-                                @if($c->gnd > $c->UNCERTIFIED)
+                                @if($c->gnd > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if($c->twr === $c->SOLO_CERTIFICATION)
+                                @if($c->twr === $c->getMagicNumber('SOLO_CERTIFICATION'))
                                 <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">GND-SOLO</span>
-                                @elseif($c->twr > $c->UNCERTIFIED)
+                                @elseif($c->twr > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if($c->app === $c->SOLO_CERTIFICATION)
+                                @if($c->app === $c->getMagicNumber('SOLO_CERTIFICATION'))
                                 <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">APP-SOLO</span>
-                                @elseif($c->app > $c->UNCERTIFIED)
+                                @elseif($c->app > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-info">APP</span>
                                 @endif
                             </td>
@@ -119,33 +119,33 @@ Roster
                                 //  the facility roster has been fully updated to account for the new Tier 1 structure at CLT.
                             ?>
                             <td class="text-center">
-                                @if(($c->clt_gnd > $c->UNCERTIFIED)||($c->gnd === $c->LEGACY_MAJOR_CERTIFIED))
+                                @if(($c->clt_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if(($c->clt_twr > $c->UNCERTIFIED)||($c->twr === $c->LEGACY_MAJOR_CERTIFIED))
+                                @if(($c->clt_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->clt_app > $c->UNCERTIFIED)||($c->app > $c->LEGACY_MINOR_CERTIFIED))
+                                @if(($c->clt_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app > $c->getMagicNumber('LEGACY_MINOR_CERTIFIED')))
                                 <span class="badge badge-info">APP</span>
                                 @endif
                             </td>
                             <!-- ATL Tier 1 -->
                             <td class="text-center">
-                                @if(($c->atl_gnd > $c->UNCERTIFIED)||($c->gnd === $c->LEGACY_MAJOR_CERTIFIED))
+                                @if(($c->atl_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-primary">DEL</span>
                                 <span class="badge badge-success">GND</span>
                                 @endif
-                                @if(($c->atl_twr > $c->UNCERTIFIED)||($c->twr === $c->LEGACY_MAJOR_CERTIFIED))
+                                @if(($c->atl_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->atl_app > $c->UNCERTIFIED)||($c->app > $c->LEGACY_MINOR_CERTIFIED))
+                                @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app > $c->getMagicNumber('LEGACY_MINOR_CERTIFIED')))
                                 <span class="badge badge-info">
-                                    @if($c->app == $c->TRACON_SAT_CERTIFIED)
+                                    @if($c->app == $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
                                     SAT
-                                    @elseif($c->app === $c->TRACON_DR_CERTIFIED)
+                                    @elseif($c->app === $c->getMagicNumber('TRACON_DR_CERTIFIED'))
                                     DR
-                                    @elseif($c->app === $c->TRACON_TAR_CERTIFIED)
+                                    @elseif($c->app === $c->getMagicNumber('TRACON_TAR_CERTIFIED'))
                                     TAR
                                     @else
                                     APP
@@ -155,9 +155,9 @@ Roster
                             </td>
                             <!-- Enroute -->
                             <td class="text-center">
-                                @if($c->ctr === $c->SOLO_CERTIFICATION)
+                                @if($c->ctr === $c->getMagicNumber('SOLO_CERTIFICATION'))
                                 <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">ZTL-SOLO</span>
-                                @elseif($c->ctr > $c->UNCERTIFIED)
+                                @elseif($c->ctr > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-secondary">ZTL</span>
                                 @endif
                             </td>
