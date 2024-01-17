@@ -212,12 +212,7 @@ Update Controller
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('twr_solo_expires', 'Solo Expiration Date', ['class' => 'form-label']) !!}
-                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            {!! Form::text('twr_solo_expires', $user->twr_solo_expires, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1', $train_disable]) !!}
-                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
+                        {!! Form::text('solo_expires', $user->solo_exp, ['class' => 'form-control', 'disabled']) !!}
                     </div>
                 </div>
             </div>
