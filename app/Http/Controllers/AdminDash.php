@@ -241,14 +241,13 @@ class AdminDash extends Controller {
         $user = User::find($id);
         $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
         $exp_date = null;
-        if(!is_null($solo)) {
+        if (!is_null($solo)) {
             $exp_date = Carbon::createFromFormat('Y-m-d', $solo->expiration);
             $user->solo_exp = $exp_date->format('m/d/Y');
-            if($exp_date->isPast()) {
+            if ($exp_date->isPast()) {
                 $user->solo_exp .= ' Expired!';
             }
-        }
-        else {
+        } else {
             $user->solo_exp = '';
         }
         return view('dashboard.admin.roster.edit')->with('user', $user);
