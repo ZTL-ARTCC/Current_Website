@@ -239,7 +239,18 @@ class AdminDash extends Controller {
 
     public function editController($id) {
         $user = User::find($id);
-
+        $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+        $exp_date = null;
+        if(!is_null($solo)) {
+            $exp_date = Carbon::createFromFormat('Y-m-d', $solo->expiration);
+            $user->solo_exp = $exp_date->format('m/d/Y');
+            if($exp_date->isPast()) {
+                $user->solo_exp .= ' Expired!';
+            }
+        }
+        else {
+            $user->solo_exp = '';
+        }
         return view('dashboard.admin.roster.edit')->with('user', $user);
     }
 
@@ -322,7 +333,7 @@ class AdminDash extends Controller {
                     }
                 } elseif ($request->input($position) == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     $user[$position] = $request->input($position);
-                    $expire = Carbon::now()->addMonth()->format('Y-m-d');
+                    $expire = Carbon::now()->addDays($user->getMagicNumber('SOLO_CERT_DURATION'))->format('Y-m-d');
                     $cert = new SoloCert;
                     $cert->cid = $id;
                     $cert->pos = $solo_id;
@@ -335,7 +346,6 @@ class AdminDash extends Controller {
             }
 
             $user->twr_solo_fields = $request->input('twr_solo_fields');
-            $user->twr_solo_expires = $request->input('twr_solo_expires');
             $user->save();
         }
         if (Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) { // Update events team
