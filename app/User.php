@@ -177,6 +177,8 @@ class User extends Authenticatable {
     protected const LEGACY_MINOR_CERTIFIED = 1;
     protected const LEGACY_MAJOR_CERTIFIED = 2;
 
+    protected const SOLO_CERT_DURATION = 30; // Duration of solo certs in days
+
     public static function getMagicNumber($const_name) {
         return (defined('self::'.$const_name)) ? constant('self::'.$const_name) : null;
     }
