@@ -198,6 +198,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/load-preset/{id}', 'AdminDash@retrievePositionPreset');
             Route::post('/delete-preset', 'AdminDash@deletePositionPreset');
             Route::get('/send-reminder/{id}', 'AdminDash@sendEventReminder');
+            Route::get('/noshow/mark/{id}', 'AdminDash@eventMarkNoShow');
+            Route::get('/noshow/unmark/{id}', 'AdminDash@eventUnMarkNoShow');
         });
         Route::prefix('roster')->middleware('permission:roster')->group(function () {
             Route::get('/visit/requests', 'AdminDash@showVisitRequests');
