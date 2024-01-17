@@ -103,12 +103,12 @@ Roster
                                 <span class="badge badge-success">GND</span>
                                 @endif
                                 @if($c->twr === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">GND-SOLO</span>
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">GND-SOLO</span>
                                 @elseif($c->twr > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
                                 @if($c->app === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">APP-SOLO</span>
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">APP-SOLO</span>
                                 @elseif($c->app > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-info">APP</span>
                                 @endif
@@ -156,7 +156,7 @@ Roster
                             <!-- Enroute -->
                             <td class="text-center">
                                 @if($c->ctr === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}">ZTL-SOLO</span>
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">ZTL-SOLO</span>
                                 @elseif($c->ctr > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-secondary">ZTL</span>
                                 @endif
