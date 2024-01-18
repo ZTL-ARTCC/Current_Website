@@ -22,6 +22,13 @@ class User extends Authenticatable {
         return $this->lname.', '.$this->fname;
     }
 
+    public function getBackwardsPublicNameAttribute() {
+        if ($this->name_privacy == 1) {
+            return $this->id.', '.$this->fname;
+        }
+        return $this->lname.', '.$this->fname;
+    }
+
     public function getBackwardsNameRatingAttribute() {
         return $this->backwards_name . ' - ' . $this->rating_short;
     }

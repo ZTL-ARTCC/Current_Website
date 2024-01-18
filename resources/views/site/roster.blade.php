@@ -92,7 +92,7 @@ Roster
                                 @elseif($c->hasRole('mtr'))
                                     <span class="badge badge-info">MTR</span> {{ $c->backwards_name }}
                                 @else
-                                    {{ $c->backwards_name }}
+                                    {{ $c->backwards_public_name }}
                                 @endif
                             </td>
                             <td><center>{{$c->initials}}</center></td>
