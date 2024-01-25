@@ -49,7 +49,7 @@ Realops
     </div>
 </div>
 @if(count($flights) > 0)
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped text-center">
     <thead>
         <tr>
             <th scope="col">Date</td>
