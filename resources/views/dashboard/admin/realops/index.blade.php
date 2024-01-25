@@ -21,7 +21,7 @@
         <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
     </span>
 </div>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped text-center">
     <thead>
         <tr>
             <th scope="col">Date</th>
