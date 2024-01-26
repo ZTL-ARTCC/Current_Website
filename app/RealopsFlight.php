@@ -42,4 +42,8 @@ class RealopsFlight extends Model {
         $time_split = explode(':', $time);
         return $time_split[0] . ':' . $time_split[1];
     }
+
+    public function getImageDirectory() {
+      return '/photos/airline_logos/' . substr($this->flight_number, 0, 3) . ".png";
+    }
 }
