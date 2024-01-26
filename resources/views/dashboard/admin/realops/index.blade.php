@@ -39,7 +39,10 @@
         @foreach($flights as $f)
             <tr>
                 <td>{{ $f->flight_date_formatted }}</td>
-                <td>{{ $f->flight_number }}</td>
+                <td style="width: 125px">
+                    <img src="/photos/airline_logos/{{ substr($f->flight_number,0 ,3) }}.png" style="width: 20px; float: left">
+                    {{ $f->flight_number }}
+                </td>
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
