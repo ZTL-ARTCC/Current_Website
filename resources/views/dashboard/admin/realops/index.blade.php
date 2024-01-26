@@ -40,7 +40,7 @@
             <tr>
                 <td>{{ $f->flight_date_formatted }}</td>
                 <td style="width: 125px">
-                    <img src="/photos/airline_logos/{{ substr($f->flight_number,0 ,3) }}.png" style="width: 20px; float: left">
+                    <img src="{{ $f->getImageDirectory() }}" style="width: 20px; float: left">
                     {{ $f->flight_number }}
                 </td>
                 <td>{{ $f->dep_time_formatted }}</td>
