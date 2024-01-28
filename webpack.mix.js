@@ -86,14 +86,8 @@ mix.webpackConfig({
 
 mix.setPublicPath('public')
    .js('resources/assets/js/app.js', 'js')
-   .js('resources/assets/js/event_view.js', 'js')
-   .js('resources/assets/js/filebrowser.js', 'js')
-   .js('resources/assets/js/pilots_guide.js', 'js')
-   .js('resources/assets/js/realops.js', 'js')
-   .js('resources/assets/js/snowstorm.js', 'js')
-   .sass('resources/assets/sass/app.scss', 'css')
-   .sass('resources/assets/sass/clipboard.scss', 'css')
-   .sass('resources/assets/sass/Footer-white.scss', 'css')
-   .sass('resources/assets/sass/home.scss', 'css')
-   .sass('resources/assets/sass/main.scss', 'css')
-   .sass('resources/assets/sass/pilots_guide.scss', 'css');
+   .sass('resources/assets/sass/app.scss', 'css');
+
+const fs = require("fs");
+fs.readdirSync("resources/assets/js/mix/").forEach(fileName => mix.js(`resources/assets/js/mix/${fileName}`, "public/js"));
+fs.readdirSync("resources/assets/sass/mix/").forEach(fileName => mix.sass(`resources/assets/sass/mix/${fileName}`, "public/css"));
