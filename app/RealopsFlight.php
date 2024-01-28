@@ -44,6 +44,6 @@ class RealopsFlight extends Model {
     }
 
     public function getImageDirectory() {
-      return '/photos/airline_logos/' . substr($this->flight_number, 0, 3) . ".png";
+        return '/photos/airline_logos/' . substr($this->flight_number, 0, 3) . ".png";
     }
 }
