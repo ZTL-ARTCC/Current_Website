@@ -339,6 +339,7 @@ class AdminDash extends Controller {
                     $cert->expiration = $expire;
                     $cert->status = 0;
                     $cert->save();
+                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position=ZTL_'.strtoupper($solo_id).'&expDate='.$expire, ['http_errors' => false]);
                 } else {
                     $user[$position] = $request->input($position);
                 }
