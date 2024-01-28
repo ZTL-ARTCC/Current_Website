@@ -19,9 +19,9 @@ New Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('controller', 'Controller', ['class' => 'form-label']) !!}
-                    @if (!is_null($c))
-                        $c = null;
-                    @endif
+                    @php
+                        $c = (is_null($c)) ? null : $c;
+                    @endphp
                     {!! Form::select('controller', $controllers, $c, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
                 </div>
             </div>
