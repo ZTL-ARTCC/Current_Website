@@ -16,9 +16,16 @@ Update Controller
         <li class="nav-item">
             <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
         </li>
+        @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->hasRole('ec'))
         <li class="nav-item">
             <a class="nav-link" href="#certifications" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
         </li>
+        @endif
+        @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+        </li>
+        @endif
     </ul>
     {!! Form::open(['action' => ['AdminDash@updateController', $user->id]]) !!}
     @csrf
@@ -28,7 +35,7 @@ Update Controller
             $roster_disable = null;
         }
         $events_disable = 'disabled';
-        if(Auth::user()->isAbleTo('roster')||Auth::user()->hasRole('ec')) {
+        if(Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) {
             $events_disable = null;
         }
     @endphp
@@ -221,40 +228,48 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('clt_gnd', 'Charlotte Ground/Clearance Delivery') !!}
-                        {!! Form::select('clt_gnd', $user->uncertified_certified, $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::label('clt_del', 'Charlotte Clearance Delivery') !!}
+                        {!! Form::select('clt_del', $user->uncertified_certified, $user->clt_del, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
+                    <div class="col-sm-6">
+                        {!! Form::label('atl_twr', 'Charlotte Ground') !!}
+                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->clt_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('clt_twr', 'Charlotte Tower') !!}
-                        {!! Form::select('clt_twr', $user->uncertified_certified, $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('clt_twr', $user->uncertified_certified, $user->clt_twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('clt_app', 'Charlotte Approach') !!}
-                        {!! Form::select('clt_app', $user->uncertified_certified, $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
+                        {!! Form::select('clt_app', $user->uncertified_certified, $user->clt_app, ['class' => 'form-control', $t1_app_disable]) !!}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('atl_gnd', 'Atlanta Ground/Clearance Delivery') !!}
-                        {!! Form::select('atl_gnd', $user->uncertified_certified, $user->gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::label('atl_del', 'Atlanta Clearance Delivery') !!}
+                        {!! Form::select('atl_del', $user->uncertified_certified, $user->atl_del, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
+                    <div class="col-sm-6">
+                        {!! Form::label('atl_gnd', 'Atlanta Ground') !!}
+                        {!! Form::select('atl_gnd', $user->uncertified_certified, $user->atl_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('atl_twr', 'Atlanta Tower') !!}
-                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->atl_twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('atl_app', 'Atlanta (A80) Approach') !!}
-                        {!! Form::select('atl_app', $user->uncertified_certified_a80, $user->app, ['class' => 'form-control', $t1_app_disable]) !!}
+                        {!! Form::select('atl_app', $user->uncertified_certified_a80, $user->atl_app, ['class' => 'form-control', $t1_app_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -268,6 +283,8 @@ Update Controller
                 </div>
             </div>
         </div>
+        <div role="tabpanel" class="tab-pane" id="events">
+        </events>
     </div>
     {!! Form::close() !!}
 </div>
