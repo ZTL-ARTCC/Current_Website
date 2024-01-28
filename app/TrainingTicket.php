@@ -61,11 +61,7 @@ class TrainingTicket extends Model {
     public static function getPositionSelectAttribute() { // Returns array of sessions for the new ticket view
         return array_filter(self::$position_types);
     }
-/*
-    public static function getPositionEditSelectAttribute() { // Returns array of Sessons for the edit ticket view
-        return array_map(function($value) { return (is_null($value)) ? 'Legacy' : $value; }, self::$position_types);
-    }
-*/
+
     public function getSessionNameAttribute() { // Lookup for training session name ex: 'ATL1'
         return (key_exists($this->session_id, self::$session_ids)) ? self::$session_ids[$this->session_id] : 'Legacy';
     }
@@ -73,11 +69,7 @@ class TrainingTicket extends Model {
     public static function getSessionSelectAttribute() { // Returns array of sessions for the new ticket view
         return array_filter(self::$session_ids);
     }
-/*
-    public static function getSessionEditSelectAttribute() { // Returns array of Sessons for the edit ticket view
-        return array_map(function($value) { return (is_null($value)) ? 'Legacy' : $value; }, self::$session_ids);
-    }
-*/
+
     public function getLastTrainingAttribute() {
         $date = $this->date;
         return $date;
