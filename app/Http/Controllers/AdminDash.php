@@ -309,15 +309,21 @@ class AdminDash extends Controller {
             }
         }
         if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
+            $user->clt_del = $request->input('clt_del');
             $user->clt_gnd = $request->input('clt_gnd');
             $user->clt_twr = $request->input('clt_twr');
             $user->clt_app = $request->input('clt_app');
+            $user->atl_del = $request->input('atl_del');
             $user->atl_gnd = $request->input('atl_gnd');
             $user->atl_twr = $request->input('atl_twr');
             $user->atl_app = $request->input('atl_app');
 
             $user->gnd = $request->input('gnd');
             $positions = ['twr','app','ctr'];
+            $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
+                'twr' => 'GSO',
+                'app' => 'BHM',
+                'ctr' => 'ZTL'];
             foreach ($positions as $solo_id => $position) {
                 if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     if ($request->input($position) != 0) {
@@ -339,7 +345,8 @@ class AdminDash extends Controller {
                     $cert->expiration = $expire;
                     $cert->status = 0;
                     $cert->save();
-                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position=ZTL_'.strtoupper($solo_id).'&expDate='.$expire, ['http_errors' => false]);
+                    $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
+                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
                 } else {
                     $user[$position] = $request->input($position);
                 }
