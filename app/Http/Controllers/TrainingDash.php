@@ -717,8 +717,7 @@ class TrainingDash extends Controller {
             $trainerSessions[] = $trainerStats;
             if (User::find($trainer->id)->hasRole('ins')) {
                 $ins++;
-            }
-            elseif (User::find($trainer->id)->hasRole('mtr')) {
+            } elseif (User::find($trainer->id)->hasRole('mtr')) {
                 $mtr++;
             }
         }
