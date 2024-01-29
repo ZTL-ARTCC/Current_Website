@@ -697,6 +697,8 @@ class TrainingDash extends Controller {
             }
         }
         $trainingStaffBelowMins = 0;
+        $ins = 0;
+        $mtr = 0;
         foreach ($trainers as $trainer) {
             $trainerStats = [];
             $trainerStats['name'] = explode(' ', $trainer->getFullNameAttribute())[1];
@@ -713,7 +715,15 @@ class TrainingDash extends Controller {
                 $trainingStaffBelowMins++;
             }
             $trainerSessions[] = $trainerStats;
+            if (User::find($trainer->id)->hasRole('ins')) {
+                $ins++;
+            }
+            elseif (User::find($trainer->id)->hasRole('mtr')) {
+                $mtr++;
+            }
         }
+        $retArr['totalInstructors'] = $ins;
+        $retArr['totalMentors'] = $mtr;
         $retArr['trainerSessions'] = $trainerSessions;
         // Students requiring training
         if ($dataType == 'graph') {
