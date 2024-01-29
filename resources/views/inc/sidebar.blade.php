@@ -28,12 +28,12 @@
                 <b id="caret-train" class="float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                <script id="setmore_script" type="text/javascript" src="https://my.setmore.com/webapp/js/src/others/setmore_iframe.js"></script><a id="Setmore_button_iframe"  class="nav-link" href="https://my.setmore.com/bookingpage/3598990c-a847-4107-81eb-de1794648684">Schedule a Training Session</a>
+                <a class="nav-link" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
-                    <a class="nav-link" href="https://my.setmore.com/" target="_blank">Schedule Management</a>
+                    <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/login" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif
