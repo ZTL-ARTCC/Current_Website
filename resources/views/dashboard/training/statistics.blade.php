@@ -51,15 +51,9 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
-                <div class="card-header">Student<br />Cancellations</div>
-                <div class="card-body">
-                    <h2>{{ $stats['studentCancel'] }}</h2>
-                </div>
-            </div>
-            <div class="card text-center mt-2">
                 <div class="card-header">Student<br />No-Shows</div>
                 <div class="card-body">
-                    <h2>{{ $stats['studentNoShow'] }}</h2>
+                    <h2>{{ $stats['sessionsPerMonthNoShow'] }}</h2>
                 </div>
             </div>
         </div>
