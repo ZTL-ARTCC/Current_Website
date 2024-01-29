@@ -770,48 +770,6 @@ class TrainingDash extends Controller {
             }
             $retArr['sessionDuration'] = $sessionDuration;
         }
-        // Number of student cancellations, no shows
-        if ($dataType == 'stats') {
-            $setmoreAccessToken = null;
-            $setmoreAppointments = [];
-            $studentCancel = $studentNoShow = 0;
-            $retArr['setmoreAPIFail'] = false;
-            $client = new Client();
-            try {
-                $res = $client->request('GET', Config::get('setmore.endpoint') . '/o/oauth2/token?refreshToken=' . Config::get('setmore.api_key'));
-                $setmoreAuthResp = (string) $res->getBody();
-                $setmoreAuthRespA = json_decode($setmoreAuthResp, true);
-            } catch (ClientErrorResponseException $exception) {
-                // Unused - don't throw an error
-            }
-            if (isset($setmoreAuthRespA) && isset($setmoreAuthRespA['response'])) {
-                if ($setmoreAuthRespA['response'] && isset($setmoreAuthRespA['data']['token'])) {
-                    $setmoreAccessToken = $setmoreAuthRespA['data']['token']['access_token'];
-                }
-            } else {
-                $retArr['setmoreAPIFail'] = true;
-            }
-            if ($setmoreAccessToken != null) {
-                $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to);
-                if ($setmoreAppointments == 'API_FAIL') {
-                    $retArr['setmoreAPIFail'] = true;
-                    $setmoreAppointments = [];
-                }
-                foreach ($setmoreAppointments as $setmoreAppointment) {
-                    if (isset($setmoreAppointment['label'])) {
-                        if ($setmoreAppointment['label'] == 'Cancel') {
-                            $studentCancel++;
-                        } elseif ($setmoreAppointment['label'] == 'No-Show') {
-                            $studentNoShow++;
-                        }
-                    }
-                }
-            } else {
-                $retArr['setmoreAPIFail'] = true;
-            }
-            $retArr['studentCancel'] = $studentCancel;
-            $retArr['studentNoShow'] = $studentNoShow;
-        }
         // Generate TA's monthly report
         if ($dataType == 'stats') {
             if ($retArr['sessionsPerMonth'] == 0) {
@@ -837,58 +795,6 @@ class TrainingDash extends Controller {
             $retArr['taMonthlyReport'] = "In the Month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . ", ZTL has offered " . $retArr['sessionsPerMonth'] . " training sessions (" . $percentSessionsChange . "% change from " . Carbon::createFromDate($retArr['date']['start_date'])->subMonths(1)->format('F') . "). " . $retArr['sessionsCompletePerMonth'] . " sessions were completed (" . $percentSessionsCompleteChange . "%), with " . $retArr['sessionsPerMonthNoShow'] . " known no-shows. " . $trainingStaffBelowMins . " Training Staff members did not meet monthly minimums.";
         }
         return $retArr;
-    }
-
-    private function getSetmoreAppointments($setmoreAccessToken, $from, $to) {
-        $setmoreAppointments = [];
-        $setmoreCursor = null;
-        do {
-            $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor);
-            if (is_array($appointmentBatch)) {
-                $setmoreAppointments = array_merge($setmoreAppointments, $appointmentBatch);
-            } elseif ($appointmentBatch == 'API_FAIL') {
-                return $appointmentBatch;
-            }
-        } while (is_numeric($setmoreCursor));
-        return $setmoreAppointments;
-    }
-
-    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor) {
-        $cursorStr = '';
-        if (!is_null($cursor)) {
-            $cursorStr = '&cursor=' . $cursor;
-        }
-        $fromDate = Carbon::createFromDate($from)->format('d-m-Y');
-        $toDate = Carbon::createFromDate($to)->format('d-m-Y');
-        $client = new Client();
-        $res = $client->request(
-            'GET',
-            Config::get('setmore.endpoint') . '/bookingapi/appointments?startDate=' . $fromDate . '&endDate=' . $toDate . $cursorStr,
-            [
-                'headers' =>
-                [
-                    'Content-type' => "application/json",
-                    'Authorization' => "Bearer {$setmoreAccessToken}"
-                ],
-                'http_errors' => false
-            ]
-        );
-        
-        if ($res->getStatusCode() == 200) {
-            $setmoreResp = (string) $res->getBody();
-            $setmoreRespA = json_decode($setmoreResp, true);
-            if (isset($setmoreRespA['data']['cursor'])) {
-                $cursor = $setmoreRespA['data']['cursor'];
-            } else {
-                $cursor = null;
-            }
-            if (isset($setmoreRespA['data']['appointments'])) {
-                return $setmoreRespA['data']['appointments'];
-            }
-        } else {
-            return 'API_FAIL';
-        }
-        return null;
     }
 
     public function generateGraphs(Request $request) {
