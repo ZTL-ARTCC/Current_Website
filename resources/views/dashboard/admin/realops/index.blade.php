@@ -4,6 +4,10 @@
     Realops Management
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/realops.css') }}" />
+@endpush
+
 @section('content')
 <div class="container-fluid" style="background-color:#F0F0F0;">
     &nbsp;
@@ -39,8 +43,8 @@
         @foreach($flights as $f)
             <tr>
                 <td>{{ $f->flight_date_formatted }}</td>
-                <td style="width: 125px">
-                    <img src="{{ $f->getImageDirectory() }}" style="width: 20px; float: left">
+                <td class="airline-cell">
+                    <img src="{{ $f->getImageDirectory() }}" class="airline-logo">
                     {{ $f->flight_number }}
                 </td>
                 <td>{{ $f->dep_time_formatted }}</td>
