@@ -45,7 +45,7 @@ class RealopsFlight extends Model {
 
     public function getImageDirectory() {
         $directory = '/photos/airline_logos/' . substr($this->flight_number, 0, 3) . ".png";
-        if (file_exists(public_path() . $directory)){
+        if (file_exists(public_path() . $directory)) {
             return $directory;
         }
         return '/photos/airline_logos/default.png';
