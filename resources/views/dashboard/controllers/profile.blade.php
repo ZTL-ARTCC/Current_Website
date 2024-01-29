@@ -79,7 +79,7 @@ Profile
     <hr>
     <div class="row">
         <div class="col">
-            <h4>My Setmore Reservations</h4>
+            <h4>My Training Appointments</h4>
             <div class="table">
                 <table class="table table-bordered text-center">
                     <thead>
@@ -91,30 +91,29 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        @if($setmore_data_stale)
+                        @if($ea_data_stale)
                             <tr class="table-warning">
                                 <td colspan="4">
-                                    <i class="fas fa-exclamation-triangle"></i> Our connection with Setmore is malfunctioning - reservation data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
+                                    <i class="fas fa-exclamation-triangle"></i> Our connection with the scheduling system is malfunctioning - appointment data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
                                 </td>
                             </tr>
                         @endif
-                        @if(count($setmore_appointments) > 0)
-                            @foreach($setmore_appointments as $sm_res)
+                        @if(count($ea_appointments) > 0)
+                            @foreach($ea_appointments as $ea_appointment)
                                 <tr>
-                                    <td scope="col">{{ $sm_res->res_date }}</td>
-                                    <td scope="col">{{ $sm_res->res_time }} ET</td>
-                                    <td scope="col">{{ $sm_res->service_description }}</td>
-                                    <td scope="col">{{ $sm_res->staff_name }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_date }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_time }} ET</td>
+                                    <td scope="col">{{ $ea_appointment->service_description }}</td>
+                                    <td scope="col">{{ $ea_appointment->staff_name }}</td>
                                 </tr>   
                             @endforeach
                         @else
                             <tr>
-                                <td scope="col" colspan="4">No Setmore reservations found.</td>
+                                <td scope="col" colspan="4">No appointments found.</td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
-                <p>Appointments will show here approximately 30 minutes after booking.</p>
             </div>
         </div>
     </div>
