@@ -34,6 +34,12 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
+                <div class="card-header">Staff Ins/Mtr</div>
+                <div class="card-body">
+                    <h2>{{ $stats['totalInstructors'] }} / {{ $stats['totalMentors'] }}</h2>
+                </div>
+            </div>
+            <div class="card text-center mt-2">
                 <div class="card-header">Unique Students</div>
                 <div class="card-body">
                     <h2>{{ $stats['uniqueStudents'] }}</h2>
