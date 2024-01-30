@@ -88,6 +88,7 @@ Profile
                             <th scope="col">Start Time</th>
                             <th scope="col">Lesson Type</th>
                             <th scope="col">Instructor/Mentor</th>
+                            <th scope="col">View/Modify</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,6 +99,7 @@ Profile
                                     <td scope="col">{{ $ea_appointment->res_time }} ET</td>
                                     <td scope="col">{{ $ea_appointment->service_description }}</td>
                                     <td scope="col">{{ $ea_appointment->staff_name }}</td>
+                                    <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/booking/reschedule/{{ $ea_appointment->link_token }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>
                                 </tr>   
                             @endforeach
                         @else
