@@ -211,9 +211,9 @@ class ControllerDash extends Controller {
         }
 
         // Begin new scheduling integration
-        if(is_null(Auth::user()->ea_customer_id)) {
+        if (is_null(Auth::user()->ea_customer_id)) {
             $ea_users = DB::connection('ea_mysql')->select("id FROM ea_users WHERE notes = '" . Auth::user()->id . "' and id_roles = '3' LIMIT 1");
-            if(is_array($ea_users)) {
+            if (is_array($ea_users)) {
                 $u = reset($ea_users);
                 $user = Auth::user();
                 $user->ea_customer_id = $u->id;
@@ -221,9 +221,9 @@ class ControllerDash extends Controller {
             }
         }
         $training_appointments = [];
-        if(!is_null(Auth::user()->ea_customer_id)) {
-            $ea_appointments = DB::connection('ea_mysql')->select("* FROM ea_appointments INNER JOIN ea_services ON ea_appointments.id_services = ea_services.id INNER JOIN ea_providers ON ea_appointments.provider_id = ea_providers.id WHERE ea_appointments.id_users_customer = '" . Auth::user()->ea_customer_id . "'");
-            foreach($ea_appointments as $a) {
+        if (!is_null(Auth::user()->ea_customer_id)) {
+            $ea_appointments = DB::connection('ea_mysql')->select("ea_appointments.start_datetime, ea_services.name, ea_providers.first_name, ea_providers.last_name FROM ea_appointments INNER JOIN ea_services ON ea_appointments.id_services = ea_services.id INNER JOIN ea_providers ON ea_appointments.provider_id = ea_providers.id WHERE ea_appointments.id_users_customer = '" . Auth::user()->ea_customer_id . "'");
+            foreach ($ea_appointments as $a) {
                 $training_appointments[] = [
                     'res_date' => Carbon::parse($a['start_datetime'])->format('m/d/Y'),
                     'res_time' => Carbon::parse($a['start_datetime'])->format('H:i'),
