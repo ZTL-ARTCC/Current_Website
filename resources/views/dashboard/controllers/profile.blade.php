@@ -91,13 +91,6 @@ Profile
                         </tr>
                     </thead>
                     <tbody>
-                        @if($ea_data_stale)
-                            <tr class="table-warning">
-                                <td colspan="4">
-                                    <i class="fas fa-exclamation-triangle"></i> Our connection with the scheduling system is malfunctioning - appointment data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
-                                </td>
-                            </tr>
-                        @endif
                         @if(count($ea_appointments) > 0)
                             @foreach($ea_appointments as $ea_appointment)
                                 <tr>
