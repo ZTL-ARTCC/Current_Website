@@ -22,7 +22,6 @@ use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
-use App\SetmoreAppointment;
 use App\TrainingTicket;
 use App\User;
 use Auth;
@@ -211,19 +210,60 @@ class ControllerDash extends Controller {
             $last_training_given = null;
         }
 
-        $setmore_appointments = SetmoreAppointment::where('customer_cid', Auth::id())->get();
-        foreach ($setmore_appointments as &$setmore_appointment) {
-            $setmore_appointment->res_date = Carbon::parse($setmore_appointment->start_time)->format('m/d/Y');
-            $setmore_appointment->res_time = Carbon::parse($setmore_appointment->start_time)->format('H:i');
+        // Begin new scheduling integration
+        if(is_null(Auth::user()->ea_customer_id)) {
+            $ea_users = DB::connection('ea_mysql')->select("id FROM ea_users WHERE notes = '" . Auth::user()->id . "' and id_roles = '3' LIMIT 1");
+            if(is_array($ea_users)) {
+                $u = reset($ea_users);
+                $user = Auth::user();
+                $user->ea_customer_id = $u->id;
+                $user->save();
+            }
         }
-
-        $setmore_data_stale = false;
-        $setmore_recent_pulls = SetmoreAppointment::where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString())->count();
-        if ($setmore_recent_pulls == 0) {
-            $setmore_data_stale = true;
+        $training_appointments = [];
+        if(!is_null(Auth::user()->ea_customer_id)) {
+            $ea_appointments = DB::connection('ea_mysql')->select("* FROM ea_appointments INNER JOIN ea_services ON ea_appointments.id_services = ea_services.id INNER JOIN ea_providers ON ea_appointments.provider_id = ea_providers.id WHERE ea_appointments.id_users_customer = '" . Auth::user()->ea_customer_id . "'");
+            foreach($ea_appointments as $a) {
+                $training_appointments[] = [
+                    'res_date' => Carbon::parse($a['start_datetime'])->format('m/d/Y'),
+                    'res_time' => Carbon::parse($a['start_datetime'])->format('H:i'),
+                    'service_description' => $a['name'],
+                    'staff_name' => $a['first_name'] . ' ' . $a['last_name']
+                ];
+            }
         }
-
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments)->with('setmore_data_stale', $setmore_data_stale);
+        /*
+        $ea_data_stale = false;
+        if(is_null(Auth::user()->ea_customer_id)) {
+            $res = (new Client())->request('POST', Config::get('ea.base').'customers?fields=&with=',['headers' => [ 'Authorization' => 'Bearer ' . Config::get('ea.api_key') ]]);
+            $status = $res->getStatusCode();
+            if ($status != 200) {
+                $ea_data_stale = true;
+                $res_body = json_decode($res->getBody());
+            } elseif ($res_body != '[]') {
+                $user = Auth::user();
+                $user->ea_customer_id = $res_body->id;
+                $user->save();
+            }
+        }
+        $res = (new Client())->request('POST', Config::get('ea.endpoint').'appointments?fields=&with=',['headers' => [ 'Authorization' => 'Bearer ' . Config::get('ea.api_key') ]]);
+        $status = $res->getStatusCode();
+        $ea_appointments = [];
+        if ($status != 200) {
+            $ea_data_stale = true;
+            $res_body = json_decode($res->getBody());
+        } elseif ($res_body != '[]') {
+            foreach($res_body as $a) {
+                $ea_appointment[] = [
+                    'res_date'=>Carbon::parse($a->start)->format('m/d/Y'),
+                    'res_time'=>Carbon::parse($a->start)->format('H:i'),
+                    'service_description'=>EA_Service::getServiceDescription($a->serviceId),
+                    'staff_name'=>EA_Provider::getProviderName($a->providerId)
+                ];
+            }
+        }
+*/
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $training_appointments);
     }
 
     public function showTicket($id) {
