@@ -32,6 +32,8 @@ use Mail;
 use SimpleXMLElement;
 
 class ControllerDash extends Controller {
+    protected static $SHOW_BOOKINGS_AFTER_APPT = 6; // Show bookings for X hours after appt start time
+
     public function dash() {
         $now = Carbon::now();
 
@@ -210,59 +212,30 @@ class ControllerDash extends Controller {
             $last_training_given = null;
         }
 
-        // Begin new scheduling integration
         if (is_null(Auth::user()->ea_customer_id)) {
-            $ea_users = DB::connection('ea_mysql')->select("id FROM ea_users WHERE notes = '" . Auth::user()->id . "' and id_roles = '3' LIMIT 1");
-            if (is_array($ea_users)) {
-                $u = reset($ea_users);
+            $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+            foreach ($ea_users as $u) {
                 $user = Auth::user();
                 $user->ea_customer_id = $u->id;
                 $user->save();
             }
         }
-        $training_appointments = [];
-        if (!is_null(Auth::user()->ea_customer_id)) {
-            $ea_appointments = DB::connection('ea_mysql')->select("ea_appointments.start_datetime, ea_services.name, ea_providers.first_name, ea_providers.last_name FROM ea_appointments INNER JOIN ea_services ON ea_appointments.id_services = ea_services.id INNER JOIN ea_providers ON ea_appointments.provider_id = ea_providers.id WHERE ea_appointments.id_users_customer = '" . Auth::user()->ea_customer_id . "'");
-            foreach ($ea_appointments as $a) {
-                $training_appointments[] = [
-                    'res_date' => Carbon::parse($a['start_datetime'])->format('m/d/Y'),
-                    'res_time' => Carbon::parse($a['start_datetime'])->format('H:i'),
-                    'service_description' => $a['name'],
-                    'staff_name' => $a['first_name'] . ' ' . $a['last_name']
-                ];
-            }
-        }
-        /*
-        $ea_data_stale = false;
-        if(is_null(Auth::user()->ea_customer_id)) {
-            $res = (new Client())->request('POST', Config::get('ea.base').'customers?fields=&with=',['headers' => [ 'Authorization' => 'Bearer ' . Config::get('ea.api_key') ]]);
-            $status = $res->getStatusCode();
-            if ($status != 200) {
-                $ea_data_stale = true;
-                $res_body = json_decode($res->getBody());
-            } elseif ($res_body != '[]') {
-                $user = Auth::user();
-                $user->ea_customer_id = $res_body->id;
-                $user->save();
-            }
-        }
-        $res = (new Client())->request('POST', Config::get('ea.endpoint').'appointments?fields=&with=',['headers' => [ 'Authorization' => 'Bearer ' . Config::get('ea.api_key') ]]);
-        $status = $res->getStatusCode();
         $ea_appointments = [];
-        if ($status != 200) {
-            $ea_data_stale = true;
-            $res_body = json_decode($res->getBody());
-        } elseif ($res_body != '[]') {
-            foreach($res_body as $a) {
-                $ea_appointment[] = [
-                    'res_date'=>Carbon::parse($a->start)->format('m/d/Y'),
-                    'res_time'=>Carbon::parse($a->start)->format('H:i'),
-                    'service_description'=>EA_Service::getServiceDescription($a->serviceId),
-                    'staff_name'=>EA_Provider::getProviderName($a->providerId)
-                ];
+        if (!is_null(Auth::user()->ea_customer_id)) {
+            $ea_appointments = DB::connection('ea_mysql')
+                ->table('ea_appointments')
+                ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
+                ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
+                ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
+                ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))->get();
+            foreach ($ea_appointments as &$ea_appointment) {
+                $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
+                $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
+                $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
             }
         }
-*/
+
         return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $training_appointments);
     }
 
