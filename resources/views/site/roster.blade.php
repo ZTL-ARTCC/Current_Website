@@ -105,27 +105,31 @@ Roster
                                 //  the facility roster has been fully updated to account for the new Tier 1 structure at CLT.
                             ?>
                             <td class="text-center">
-                                @if(($c->clt_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                @if(($c->clt_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-primary">DEL</span>
+                                @endif
+                                @if(($c->clt_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-success">GND</span>
                                 @endif
                                 @if(($c->clt_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->clt_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app > $c->getMagicNumber('LEGACY_MINOR_CERTIFIED')))
+                                @if(($c->clt_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-info">APP</span>
                                 @endif
                             </td>
                             <!-- ATL Tier 1 -->
                             <td class="text-center">
-                                @if(($c->atl_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                @if(($c->atl_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-primary">DEL</span>
+                                @endif
+                                @if(($c->atl_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-success">GND</span>
                                 @endif
                                 @if(($c->atl_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
-                                @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app > $c->getMagicNumber('LEGACY_MINOR_CERTIFIED')))
+                                @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-info">
                                     @if($c->app === $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
                                     SAT
