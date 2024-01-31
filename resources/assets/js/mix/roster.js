@@ -1,5 +1,5 @@
 $(function () {
-    $('#datetimepicker1').datetimepicker({
-        format: 'L'
-    });
+  $("#datetimepicker1").datetimepicker({
+    format: "L",
+  });
 });
