@@ -250,6 +250,22 @@ class AdminDash extends Controller {
         } else {
             $user->solo_exp = '';
         }
+        if ($user->del == 2) {
+            $user->clt_del = 1;
+            $user->atl_del = 1;
+        }
+        if ($user->gnd == 2) {
+            $user->clt_gnd = 1;
+            $user->atl_gnd = 1;
+        }
+        if ($user->twr == 2) {
+            $user->clt_twr = 1;
+            $user->atl_twr = 1;
+        }
+        if ($user->app == 2) {
+            $user->clt_app = 1;
+            $user->atl_app = 1;
+        }
         return view('dashboard.admin.roster.edit')->with('user', $user);
     }
 
