@@ -1,318 +1,177 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Roster
+Roster
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/roster.css') }}" />
+@endpush
+
 @section('content')
-    <div class="container-fluid" style="background-color:#F0F0F0;">
-        &nbsp;
-        <h2>Roster</h2>
-        &nbsp;
-    </div>
-    <br>
-
-    <div class="container">
-        <h5>Certification Key:</h5>
-        <div class="row">
-            <div class="col-sm-2">
-                <p>No Certification:</p>
-            </div>
-            <div class="col-sm-2">
-                <i class="fas fa-times" style="color:red"></i>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <p>Minor Certification:</p>
-            </div>
-            <div class="col-sm-2">
-                <i class="far fa-check-circle" style="color:green"></i>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <p>Full (Minor/Major) Certification:</p>
-            </div>
-            <div class="col-sm-2">
-                <i class="fas fa-check" style="color:green"></i>
-            </div>
-        </div>
-        <br>
-        @if(Auth::user()->isAbleTo('roster'))
-            <a href="/dashboard/admin/roster/visit/requests" class="btn btn-warning">Visit Requests</a>
-            <a href="/dashboard/admin/roster/purge-assistant" class="btn btn-danger">Roster Purge Assistant</a>
-            <span data-toggle="modal" data-target="#allowVisitor">
-            <button type="button" class="btn btn-warning">Allow Rejected Visitor</button>
-        </span>
-            <br><br>
-        @endif
-        <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" href="#home" role="tab" data-toggle="tab" style="color:black">Home Controllers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
+<div class="container-fluid" style="background-color:#F0F0F0;">
+    &nbsp;
+    <h2>Roster</h2>
+    &nbsp;
+</div>
+<br>
+<div class="container">
+    @if(Auth::user()->isAbleTo('roster'))
+    <a href="/dashboard/admin/roster/visit/requests" class="btn btn-warning">Visit Requests</a>
+    <a href="/dashboard/admin/roster/purge-assistant" class="btn btn-danger">Roster Purge Assistant</a>
+    <span data-toggle="modal" data-target="#allowVisitor">
+        <button type="button" class="btn btn-warning">Allow Rejected Visitor</button>
+    </span>
+    <br><br>
+    @endif
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="#hcontrollers" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#vcontrollers" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
+        </li>
+    </ul>
+    @php
+    $tabs = ['hcontrollers', 'vcontrollers'];
+    @endphp
+    <div class="tab-content">
+        @foreach($tabs as $tab)
+        @if($loop->first)
+        <div role="tabpanel" class="tab-pane active" id="{{ $tab }}">
+            @else
+            <div role="tabpanel" class="tab-pane" id="{{ $tab }}">
+                @endif
                 <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col"><center>Initials</center></th>
-                        <th scope="col"><center>Rating</center></th>
-                        <th scope="col"><center>Status</center></th>
-                        <th scope="col"><center>Delivery</center></th>
-                        <th scope="col"><center>Ground</center></th>
-                        <th scope="col"><center>Tower</center></th>
-                        <th scope="col"><center>Approach</center></th>
-                        <th scope="col"><center>Center</center></th>
-                    </tr>
+                    <thead class="sticky">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-center">Initials</th>
+                            <th scope="col" class="text-center">Rating</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center">Unrestricted<br>Fields</th>
+                            <th scope="col" class="text-center">CLT<br>Tier 1</th>
+                            <th scope="col" class="text-center">ATL<br> Tier 1</th>
+                            <th scope="col" class="text-center">ZTL<br>Enroute</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach($hcontrollers as $c)
+                        @foreach($$tab as $c)
                         <tr>
-                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events'))
-                                <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">
-                                        @if($c->hasRole('atm'))
-                                            <span class="badge badge-danger">ATM</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('datm'))
-                                            <span class="badge badge-danger">DATM</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('ta'))
-                                            <span class="badge badge-danger">TA</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('wm'))
-                                            <span class="badge badge-primary">WM</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('awm'))
-                                            <span class="badge badge-primary">AWM</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('ec'))
-                                            <span class="badge badge-primary">EC</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('aec'))
-                                            <span class="badge badge-primary">AEC</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('aec-ghost'))
-                                            <span class="badge badge-primary">AEC-Ghost</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('fe'))
-                                            <span class="badge badge-primary">FE</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('afe'))
-                                            <span class="badge badge-primary">AFE</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('ins'))
-                                            <span class="badge badge-info">INS</span> {{ $c->backwards_name }}
-                                        @elseif($c->hasRole('mtr'))
-                                            <span class="badge badge-info">MTR</span> {{ $c->backwards_name }}
-                                        @else
-                                            {{ $c->backwards_name }}
-                                        @endif
-                                        @if($c->hasRole('events-team'))
-                                            <span class="badge badge-warning">Events Team</span>
-                                        @endif
-                                    </a></td>
-                            @else
-                                <td>
-                                    @if($c->hasRole('atm'))
-                                        <span class="badge badge-danger">ATM</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('datm'))
-                                        <span class="badge badge-danger">DATM</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('ta'))
-                                        <span class="badge badge-danger">TA</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('wm'))
-                                        <span class="badge badge-primary">WM</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('ec'))
-                                        <span class="badge badge-primary">EC</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('aec'))
-                                        <span class="badge badge-primary">AEC</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('fe'))
-                                        <span class="badge badge-primary">FE</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('afe'))
-                                        <span class="badge badge-primary">AFE</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('ins'))
-                                        <span class="badge badge-info">INS</span> {{ $c->backwards_name }}
-                                    @elseif($c->hasRole('mtr'))
-                                        <span class="badge badge-info">MTR</span> {{ $c->backwards_name }}
+                            <td>
+                                @if($c->hasRole('atm'))
+                                <span class="badge badge-danger">ATM</span>
+                                @elseif($c->hasRole('datm'))
+                                <span class="badge badge-danger">DATM</span>
+                                @elseif($c->hasRole('ta'))
+                                <span class="badge badge-danger">TA</span>
+                                @elseif($c->hasRole('wm'))
+                                <span class="badge badge-primary">WM</span>
+                                @elseif($c->hasRole('awm'))
+                                <span class="badge badge-primary">AWM</span>
+                                @elseif($c->hasRole('ec'))
+                                <span class="badge badge-primary">EC</span>
+                                @elseif($c->hasRole('aec'))
+                                <span class="badge badge-primary">AEC</span>
+                                @elseif($c->hasRole('aec-ghost')&&(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events')))
+                                <span class="badge badge-primary">AEC-Ghost</span>
+                                @elseif($c->hasRole('fe'))
+                                <span class="badge badge-primary">FE</span>
+                                @elseif($c->hasRole('afe'))
+                                <span class="badge badge-primary">AFE</span>
+                                @elseif($c->hasRole('ins'))
+                                <span class="badge badge-info">INS</span>
+                                @elseif($c->hasRole('mtr'))
+                                <span class="badge badge-info">MTR</span>
+                                @endif
+                                @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events'))
+                                <a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }}</a>
+                                @else
+                                {{ $c->backwards_name }}
+                                @endif
+                                @if($c->hasRole('events-team')&&(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events')))
+                                <span class="badge badge-warning text-light">Events Team</span>
+                                @endif
+                            </td>
+                            <td class="text-center">{{$c->initials}}</td>
+                            <td class="text-center">{{ $c->rating_short }}</td>
+                            <td class="text-center">{{ $c->status_text }}</td>
+                            <!-- Unrestricted -->
+                            <td class="text-center">
+                                @if($c->gnd > $c->getMagicNumber('UNCERTIFIED'))
+                                <span class="badge badge-primary">DEL</span>
+                                <span class="badge badge-success">GND</span>
+                                @endif
+                                @if($c->twr === $c->getMagicNumber('SOLO_CERTIFICATION'))
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">GND-SOLO</span>
+                                @elseif($c->twr > $c->getMagicNumber('UNCERTIFIED'))
+                                <span class="badge badge-danger">TWR</span>
+                                @endif
+                                @if($c->app === $c->getMagicNumber('SOLO_CERTIFICATION'))
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">APP-SOLO</span>
+                                @elseif($c->app > $c->getMagicNumber('UNCERTIFIED'))
+                                <span class="badge badge-info">APP</span>
+                                @endif
+                            </td>
+                            <!-- CLT Tier 1 -->
+                            <?php
+                                //  The LEGACY cases below are a temporary measure to ease transition into GCAP. These can be removed when
+                                //  the facility roster has been fully updated to account for the new Tier 1 structure at CLT.
+                            ?>
+                            <td class="text-center">
+                                @if(($c->clt_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-primary">DEL</span>
+                                @endif
+                                @if(($c->clt_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-success">GND</span>
+                                @endif
+                                @if(($c->clt_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-danger">TWR</span>
+                                @endif
+                                @if(($c->clt_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-info">APP</span>
+                                @endif
+                            </td>
+                            <!-- ATL Tier 1 -->
+                            <td class="text-center">
+                                @if(($c->atl_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-primary">DEL</span>
+                                @endif
+                                @if(($c->atl_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-success">GND</span>
+                                @endif
+                                @if(($c->atl_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
+                                <span class="badge badge-danger">TWR</span>
+                                @endif
+                                @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||(($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED'))))
+                                <span class="badge badge-info">
+                                    @if($c->app == $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
+                                    SAT
+                                    @elseif($c->app === $c->getMagicNumber('TRACON_DR_CERTIFIED'))
+                                    DR
+                                    @elseif($c->app === $c->getMagicNumber('TRACON_TAR_CERTIFIED'))
+                                    TAR
                                     @else
-                                        {{ $c->backwards_name }}
+                                    APP
                                     @endif
-                                </td>
-                            @endif
-                            <td><center>{{$c->initials}}</center></td>
-                            <td><center>{{ $c->rating_short }}</center></td>
-                            <td><center>{{ $c->status_text }}</center></td>
-                            @if($c->del == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->del == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->del == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @elseif($c->del == 88)
-                                <td><center style="color:#c1ad13">m</center></td>
-                            @elseif($c->del == 89)
-                                <td><center style="color:#c1ad13">M</center></td>
-                            @endif
-                            @if($c->gnd == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->gnd == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->gnd == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @elseif($c->gnd == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                            @elseif($c->gnd == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                            @endif
-                            @if($c->twr == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->twr == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->twr == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->twr == 88)
-                                    <td><center style="color:#c1ad13;">m</center></td>
-                                @elseif($c->twr == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                            @elseif($c->twr == 99)
-								@if($c->twr_solo_fields == '')
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-								@else
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
-								@endif
-                            @endif
-                            @if($c->app == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->app == 1)
-                                <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                            @elseif($c->app == 2)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @elseif($c->app == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                            @elseif($c->app == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                            @elseif($c->app == 90)
-                                <td><center><b style="color:blue;">A80 SAT</b></center></td>
-                            @elseif($c->app == 91)
-                                <td><center><b style="color:blue;">A80 DR</b></center></td>
-                            @elseif($c->app == 92)
-                                <td><center><b style="color:blue;">A80 TAR</b></center></td> 
-                            @elseif($c->app == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-                            @endif
-                            @if($c->ctr == 0)
-                                <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                            @elseif($c->ctr == 1)
-                                <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                            @elseif($c->ctr == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                            @elseif($c->ctr == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                            @elseif($c->ctr == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-                            @endif
+                                </span>
+                                @endif
+                            </td>
+                            <!-- Enroute -->
+                            <td class="text-center">
+                                @if($c->ctr === $c->getMagicNumber('SOLO_CERTIFICATION'))
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">ZTL-SOLO</span>
+                                @elseif($c->ctr > $c->getMagicNumber('UNCERTIFIED'))
+                                <span class="badge badge-secondary">ZTL</span>
+                                @endif
+                            </td>
                         </tr>
-                    @endforeach
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            <div role="tabpanel" class="tab-pane" id="visit">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col"><center>Initials</center></th>
-                        <th scope="col"><center>Rating</center></th>
-                        <th scope="col"><center>Status</center></th>
-                        <th scope="col"><center>Delivery</center></th>
-                        <th scope="col"><center>Ground</center></th>
-                        <th scope="col"><center>Tower</center></th>
-                        <th scope="col"><center>Approach</center></th>
-                        <th scope="col"><center>Center</center></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($vcontrollers as $c)
-                        <tr>
-                            @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events'))
-                                <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} - {{ $c->visitor_from }}</a></td>
-                            @else
-                                <td>{{ $c->backwards_name }} - {{ $c->visitor_from }}</td>
-                            @endif
-                            <td><center>{{$c->initials}}</center></td>
-                            <td><center>{{ $c->rating_short }}</center></td>
-                            <td><center>{{ $c->status_text }}</center></td>
-                                @if($c->del == 0)
-                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                                @elseif($c->del == 1)
-                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                                @elseif($c->del == 2)
-                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->del == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                                @elseif($c->del == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                                @endif
-                                @if($c->gnd == 0)
-                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                                @elseif($c->gnd == 1)
-                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                                @elseif($c->gnd == 2)
-                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->gnd == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                                @elseif($c->gnd == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                                @endif
-                                @if($c->twr == 0)
-                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                                @elseif($c->twr == 1)
-                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                                @elseif($c->twr == 2)
-                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->twr == 88)
-                                    <td><center style="color:#c1ad13;">m</center></td>
-                                @elseif($c->twr == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                                @elseif($c->twr == 99)
-								@if($c->twr_solo_fields == '')
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-								@else
-									<td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}<br>Auth Expires: {{$c->twr_solo_expires}}"></i></center></td>
-								@endif
-                                @endif
-                                @if($c->app == 0)
-                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                                @elseif($c->app == 1)
-                                    <td><center><i class="far fa-check-circle" style="color:green"></i></center></td>
-                                @elseif($c->app == 2)
-                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->app == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                                @elseif($c->app == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                                @elseif($c->app == 90)
-                                    <td><center><b style="color:blue;">A80 SAT</b></center></td>
-                                @elseif($c->app == 91)
-                                    <td><center><b style="color:blue;">A80 DR</b></center></td>
-                                @elseif($c->app == 92)
-                                    <td><center><b style="color:blue;">A80 TAR</b></center></td> 
-                                @elseif($c->app == 99)
-                                    <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-                                @endif
-                                @if($c->ctr == 0)
-                                    <td><center><i class="fas fa-times" style="color:red"></i></center></td>
-                                @elseif($c->ctr == 1)
-                                    <td><center><i class="fas fa-check" style="color:green"></i></center></td>
-                                @elseif($c->ctr == 88)
-                                    <td><center style="color:#c1ad13">m</center></td>
-                                @elseif($c->ctr == 89)
-                                    <td><center style="color:#c1ad13">M</center></td>
-                                @elseif($c->ctr == 99)
-                                    <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
-                                @endif
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            @endforeach
         </div>
-
 
         <div class="modal fade" id="allowVisitor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -344,4 +203,4 @@
             </div>
         </div>
     </div>
-@endsection
+    @endsection
