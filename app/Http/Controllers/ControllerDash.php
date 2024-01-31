@@ -26,6 +26,7 @@ use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
@@ -236,7 +237,7 @@ class ControllerDash extends Controller {
             }
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $training_appointments);
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
     }
 
     public function showTicket($id) {
