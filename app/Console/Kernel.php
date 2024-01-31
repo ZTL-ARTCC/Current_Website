@@ -20,8 +20,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
-        '\App\Console\Commands\VATUSAEventsUpdate',
-        '\App\Console\Commands\SetmoreAppointments',
+        '\App\Console\Commands\VATUSAEventsUpdate'
     ];
 
     /**
@@ -39,7 +38,6 @@ class Kernel extends ConsoleKernel {
         } else {
             $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         }
-        $schedule->command('SetmoreAppointments:Update')->everyThirtyMinutes();
         if (FeatureToggle::isEnabled("auto_support_events")) {
             $schedule->command('Events:UpdateSupportEvents')->daily();
         }
