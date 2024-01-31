@@ -22,17 +22,19 @@ use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
-use App\SetmoreAppointment;
 use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
 use SimpleXMLElement;
 
 class ControllerDash extends Controller {
+    protected static $SHOW_BOOKINGS_AFTER_APPT = 6; // Show bookings for X hours after appt start time
+
     public function dash() {
         $now = Carbon::now();
 
@@ -211,19 +213,32 @@ class ControllerDash extends Controller {
             $last_training_given = null;
         }
 
-        $setmore_appointments = SetmoreAppointment::where('customer_cid', Auth::id())->get();
-        foreach ($setmore_appointments as &$setmore_appointment) {
-            $setmore_appointment->res_date = Carbon::parse($setmore_appointment->start_time)->format('m/d/Y');
-            $setmore_appointment->res_time = Carbon::parse($setmore_appointment->start_time)->format('H:i');
+        if (is_null(Auth::user()->ea_customer_id)) {
+            $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+            foreach ($ea_users as $u) {
+                $user = Auth::user();
+                $user->ea_customer_id = $u->id;
+                $user->save();
+            }
+        }
+        $ea_appointments = [];
+        if (!is_null(Auth::user()->ea_customer_id)) {
+            $ea_appointments = DB::connection('ea_mysql')
+                ->table('ea_appointments')
+                ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
+                ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
+                ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
+                ->whereNull('ea_appointments.delete_datetime')
+                ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))->get();
+            foreach ($ea_appointments as &$ea_appointment) {
+                $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
+                $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
+                $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+            }
         }
 
-        $setmore_data_stale = false;
-        $setmore_recent_pulls = SetmoreAppointment::where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString())->count();
-        if ($setmore_recent_pulls == 0) {
-            $setmore_data_stale = true;
-        }
-
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments)->with('setmore_data_stale', $setmore_data_stale);
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
     }
 
     public function showTicket($id) {
@@ -240,12 +255,6 @@ class ControllerDash extends Controller {
         $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
  
         return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
-        /*
-                $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->get();
-                $visagreecontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->orderBy('visitor_from', 'ASC')->orderBy('lname', 'ASC')->get();
-
-                return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers)->with('visagreecontrollers', $visagreecontrollers);
-        */
     }
 
     public function showFiles() {

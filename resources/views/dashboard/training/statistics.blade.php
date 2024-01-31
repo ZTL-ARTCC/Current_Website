@@ -16,11 +16,6 @@ Training Statistics
 </div>
 <br>
 <div class="container">
-    @if($stats['setmoreAPIFail'])
-        <div class="alert alert-warning text-center" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> Our connection with Setmore is malfunctioning - student no-show and cancellation data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
-        </div>
-    @endif
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
@@ -39,6 +34,12 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
+                <div class="card-header">Staff Ins/Mtr</div>
+                <div class="card-body">
+                    <h2>{{ $stats['totalInstructors'] }} / {{ $stats['totalMentors'] }}</h2>
+                </div>
+            </div>
+            <div class="card text-center mt-2">
                 <div class="card-header">Unique Students</div>
                 <div class="card-body">
                     <h2>{{ $stats['uniqueStudents'] }}</h2>
@@ -51,15 +52,9 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
-                <div class="card-header">Student<br />Cancellations</div>
-                <div class="card-body">
-                    <h2>{{ $stats['studentCancel'] }}</h2>
-                </div>
-            </div>
-            <div class="card text-center mt-2">
                 <div class="card-header">Student<br />No-Shows</div>
                 <div class="card-body">
-                    <h2>{{ $stats['studentNoShow'] }}</h2>
+                    <h2>{{ $stats['sessionsPerMonthNoShow'] }}</h2>
                 </div>
             </div>
         </div>
