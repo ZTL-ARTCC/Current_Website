@@ -1682,9 +1682,33 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been created');
     }
 
+    public function showEditFeatureToggle($toggle_name) {
+        $toggle = FeatureToggle::find($toggle_name);
+        return view('dashboard.admin.toggles.edit')->with('t', $toggle);
+    }
+
+    public function editFeatureToggle(Request $request) {
+        $request->merge(['toggle_name' => preg_replace('/\s+/', '_', trim($request->input('toggle_name')))]);
+        if ($request->input('toggle_name') != $request->input('toggle_name_orig')) {
+            $request->validate(['toggle_name' => 'required|unique:feature_toggles']);
+        }
+        FeatureToggle::updateToggle($request->input('toggle_name_orig'), $request->input('toggle_name'), $request->input('toggle_description'));
+
+        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $request->input('toggle_name') . '` has been updated');
+    }
+
     public function toggleFeatureToggle($toggle_name) {
         FeatureToggle::toggle($toggle_name);
 
         return redirect()->back();
+    }
+
+    public function deleteFeatureToggle($toggle_name) {
+        $result = FeatureToggle::deleteToggle($toggle_name);
+        if ($result) {
+            return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle_name . '` has been deleted');
+        } else {
+            return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
+        }
     }
 }
