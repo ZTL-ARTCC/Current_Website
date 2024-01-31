@@ -6,7 +6,7 @@
 <p>A new training ticket has been submitted for you by {{ $trainer->full_name }}:</p>
 
 <ul>
-    <li><b>Session Type:</b> {{ $ticket->type_name }}</li>
+    <li><b>Progress:</b> {{ $ticket->type_name }}</li>
     <li><b>Position:</b> {{ $ticket->position_name }}</li>
     <li><b>Date and Time:</b> {{ $ticket->date }} from {{ $ticket->start_time }} to {{ $ticket->end_time }} ET</li>
 	<li><b>Duration:</b> {{ $ticket->duration }}</li>
