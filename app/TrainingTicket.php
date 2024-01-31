@@ -8,6 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingTicket extends Model {
     protected $table = 'training_tickets';
+    // ***Null values in the arrays below denote legacy IDs that we don't want to repurpose. Will display as 'Legacy' in select menus.
+    protected static $progress_types = [10=>'No Show', 12=>'Complete', 13=>'Incomplete'];
+    protected static $position_types = [100=>'ZTL On-Boarding', 101=>'Unrestricted Clearance', 105=>'Unrestricted Ground', 109=>'Unrestricted Tower',
+                                 115=>'Unrestricted Approach', 123=>null, 102=>'T1 CLT Delivery', 106=>'T1 CLT Ground', 111=>'T1 CLT Tower',
+                                 116=>'T1 CLT Approach', 104=>'T1 ATL Clearance', 108=>'T1 ATL Ground', 113=>'T1 ATL Tower',
+                                 117 => 'A80 Departure/Satellite Radar', 118 => 'A80 Terminal Arrival Radar', 119 => 'A80 Arrival Radar',
+                                 121 => 'Atlanta Center', 122 => 'Recurrent Training', 124 => 'Other', 125 => 'Mentor Training'];
+    protected static $session_ids = [  200=>'DEL1', 201=>'DEL2', 202=>'DEL3', 205=>'GND1', 203=>'CC1', 204=>null, 258=>'CC2', 206=>'TWR1',
+                                207=>'TWR2', 208=>'TWR3', 209=>'TWR4', 210=>'TWR5', 211=>'TWR6', 261=>'TWR7', 212=>'CC3', 262=>'CC4',
+                                213=>'CC5', 214=>'CC6', 215=>null, 216=>'APP1', 217=>'APP2', 218=>'APP3', 219=>'APP4', 220=>'APP5',
+                                221=>'APP6', 222=>'APP7', 225=>'CT1', 226=>'CT2', 223=>'CT3', 224=>null, 263=>'CT4', 227=>'CT5', 228=>null,
+                                229=>'CTR1', 260=>'CTR2', 230=>'CTR3', 232=>'CTR4', 233=>'CTR5', 231=>'CTR6', 234=>null, 235=>'CTR7',
+                                236=>'ZTL1', 237=>'ATL1', 238=>null, 239=>'ATL2', 242=>'ATL3', 243=>'ATL4', 240=>'ATL5', 259=>'ATL6',
+                                241=>'ATL7', 244=>'ATL8', 245=>'A801', 246=>'A802', 247=>null, 248=>'A803', 249=>null, 250=>'A804',
+                                251=>null, 252=>'A805',253=>'A806',254=>'A807', 255=>'A808', 256=>null, 257=>'Other'];
 
     public function getTrainerNameAttribute() {
         $user = User::find($this->trainer_id);
@@ -28,341 +43,31 @@ class TrainingTicket extends Model {
 
     public function getControllerNameAttribute() {
         $name = User::find($this->controller_id)->full_name;
-
         return $name;
     }
 
-    public function getTypeNameAttribute() {
-        $pos = $this->type;
-        if ($pos == 0) {
-            $position = 'Classroom Training';
-        } elseif ($pos == 1) {
-            $position = 'Sweatbox Training';
-        } elseif ($pos == 2) {
-            $position = 'Live Training';
-        } elseif ($pos == 3) {
-            $position = 'Live Monitoring';
-        } elseif ($pos == 4) {
-            $position = 'Sweatbox OTS (Pass)';
-        } elseif ($pos == 5) {
-            $position = 'Live OTS (Pass)';
-        } elseif ($pos == 6) {
-            $position = 'Sweatbox OTS (Fail)';
-        } elseif ($pos == 7) {
-            $position = 'Live OTS (Fail)';
-        } elseif ($pos == 8) {
-            $position = 'Live OTS';
-        } elseif ($pos == 9) {
-            $position = 'Sweatbox OTS';
-        } elseif ($pos == 10) {
-            $position = 'No Show';
-        } elseif ($pos == 11) {
-            $position = 'No Show';
-        } elseif ($pos == 12) {
-            $position = 'Complete';
-        } elseif ($pos == 13) {
-            $position = 'Incomplete';
-        }
-        return $position;
+    public function getTypeNameAttribute() { // Lookup for session types (now progress type)
+        return (key_exists($this->type, self::$progress_types)) ? self::$progress_types[$this->type] : 'Legacy';
     }
 
-    public function getPositionNameAttribute() {
-        $pos = $this->position;
-        if ($pos == 0) {
-            $position = 'Minor Delivery/Ground';
-        } elseif ($pos == 1) {
-            $position = 'Minor Local';
-        } elseif ($pos == 2) {
-            $position = 'Major Delivery/Ground';
-        } elseif ($pos == 3) {
-            $position = 'Major Local';
-        } elseif ($pos == 4) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 5) {
-            $position = 'Major Approach';
-        } elseif ($pos == 6) {
-            $position = 'Center';
-        } elseif ($pos == 7) {
-            $position = 'Class D/C Clearance Delivery';
-        } elseif ($pos == 8) {
-            $position = 'Class D/C Clearance Delivery';
-        } elseif ($pos == 9) {
-            $position = 'Class D/C Clearance Delivery';
-        } elseif ($pos == 10) {
-            $position = 'Class B Clearance Delivery';
-        } elseif ($pos == 11) {
-            $position = 'ATL Clearance Delivery';
-        } elseif ($pos == 12) {
-            $position = 'ATL Clearance Delivery';
-        } elseif ($pos == 13) {
-            $position = 'ATL Clearance Delivery';
-        } elseif ($pos == 14) {
-            $position = 'Class D/C Ground';
-        } elseif ($pos == 15) {
-            $position = 'Class D/C Ground';
-        } elseif ($pos == 16) {
-            $position = 'Class D/C Ground';
-        } elseif ($pos == 17) {
-            $position = 'Class B Ground';
-        } elseif ($pos == 18) {
-            $position = 'ATL Ground';
-        } elseif ($pos == 19) {
-            $position = 'ATL Ground';
-        } elseif ($pos == 20) {
-            $position = 'ATL Ground';
-        } elseif ($pos == 21) {
-            $position = 'ATL Ground';
-        } elseif ($pos == 22) {
-            $position = 'Class D Tower';
-        } elseif ($pos == 23) {
-            $position = 'Class D Tower';
-        } elseif ($pos == 24) {
-            $position = 'Class C Tower';
-        } elseif ($pos == 25) {
-            $position = 'Class B Tower';
-        } elseif ($pos == 26) {
-            $position = 'Class B Tower';
-        } elseif ($pos == 27) {
-            $position = 'ATL Tower';
-        } elseif ($pos == 28) {
-            $position = 'ATL Tower';
-        } elseif ($pos == 29) {
-            $position = 'ATL Tower';
-        } elseif ($pos == 30) {
-            $position = 'ATL Tower';
-        } elseif ($pos == 31) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 32) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 33) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 34) {
-            $position = 'CLT Approach';
-        } elseif ($pos == 35) {
-            $position = 'CLT Approach';
-        } elseif ($pos == 36) {
-            $position = 'A80 Departure/Satellite Radar';
-        } elseif ($pos == 37) {
-            $position = 'A80 Departure/Satellite Radar';
-        } elseif ($pos == 38) {
-            $position = 'A80 Terminal Arrival Radar';
-        } elseif ($pos == 39) {
-            $position = 'A80 Arrival Radar';
-        } elseif ($pos == 40) {
-            $position = 'A80 Arrival Radar';
-        } elseif ($pos == 41) {
-            $position = 'A80 Arrival Radar';
-        } elseif ($pos == 42) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 43) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 44) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 45) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 46) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 46) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 47) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 48) {
-            $position = 'S1 Visiting Major Checkout';
-        } elseif ($pos == 49) {
-            $position = 'S2 Visiting Major Checkout';
-        } elseif ($pos == 50) {
-            $position = 'S3 Visiting Major Checkout';
-        } elseif ($pos == 51) {
-            $position = 'C1 Visiting Major Checkout';
-        } elseif ($pos == 52) {
-            $position = 'Enroute OTS';
-        } elseif ($pos == 53) {
-            $position = 'Approach OTS';
-        } elseif ($pos == 54) {
-            $position = 'Local OTS';
-        } elseif ($pos == 100) {
-            $position = 'ZTL On-Boarding';
-        } elseif ($pos == 101) {
-            $position = 'Class D/C Clearance';
-        } elseif ($pos == 102) {
-            $position = 'Class B Clearance';
-        } elseif ($pos == 103) {
-            $position = 'ATL Clearance Delivery';
-        } elseif ($pos == 104) {
-            $position = 'ATL Clearance';
-        } elseif ($pos == 105) {
-            $position = 'Class D/C Ground';
-        } elseif ($pos == 106) {
-            $position = 'Class B Ground';
-        } elseif ($pos == 107) {
-            $position = 'ATL Ground Theory';
-        } elseif ($pos == 108) {
-            $position = 'ATL Ground';
-        } elseif ($pos == 109) {
-            $position = 'Class D Tower';
-        } elseif ($pos == 110) {
-            $position = 'Class C Tower';
-        } elseif ($pos == 111) {
-            $position = 'Class B Tower';
-        } elseif ($pos == 112) {
-            $position = 'ATL Tower Theory';
-        } elseif ($pos == 113) {
-            $position = 'ATL Tower';
-        } elseif ($pos == 114) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 115) {
-            $position = 'Minor Approach';
-        } elseif ($pos == 116) {
-            $position = 'CLT Approach';
-        } elseif ($pos == 117) {
-            $position = 'A80 Departure/Satellite Radar';
-        } elseif ($pos == 118) {
-            $position = 'A80 Terminal Arrival Radar';
-        } elseif ($pos == 119) {
-            $position = 'A80 Arrival Radar';
-        } elseif ($pos == 120) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 121) {
-            $position = 'Atlanta Center';
-        } elseif ($pos == 122) {
-            $position = 'Recurrent Training';
-        } elseif ($pos == 123) {
-            $position = 'BHM Approach';
-        } elseif ($pos == 124) {
-            $position = 'Other';
-        } elseif ($pos == 125) {
-            $position = 'Mentor Training';
-        }
-        return $position;
+    public static function getProgressSelectAttribute() { // Returns array of progress types for the new/edit ticket views
+        return array_filter(self::$progress_types);
     }
-    
-    public function getSessionNameAttribute() {
-        $session = '';
-        $pos = $this->session_id;
-        if ($pos == 200) {
-            $session = 'DEL0 - S1T0-O';
-        } elseif ($pos == 201) {
-            $session = 'DEL1 - S1T1';
-        } elseif ($pos == 202) {
-            $session = 'DEL2 - S1P1';
-        } elseif ($pos == 203) {
-            $session = 'DEL3 - S1T2';
-        } elseif ($pos == 204) {
-            $session = 'DEL4 - S1P2-S';
-        } elseif ($pos == 205) {
-            $session = 'GND1 - S1T3-S';
-        } elseif ($pos == 258) {
-            $session = 'GND2 - S1M1-O';
-        } elseif ($pos == 206) {
-            $session = 'TWR1 - S2T1';
-        } elseif ($pos == 207) {
-            $session = 'TWR2 - S2T2';
-        } elseif ($pos == 208) {
-            $session = 'TWR3 - S2T3';
-        } elseif ($pos == 209) {
-            $session = 'TWR4 - S2P1-S';
-        } elseif ($pos == 210) {
-            $session = 'TWR5 - S2T4';
-        } elseif ($pos == 211) {
-            $session = 'TWR6 - S2T5-S';
-        } elseif ($pos == 212) {
-            $session = 'TWR7 - S2T6';
-        } elseif ($pos == 213) {
-            $session = 'TWR8 - S2P2';
-        } elseif ($pos == 214) {
-            $session = 'TWR9 - S2M1-S';
-        } elseif ($pos == 215) { // No longer used - retained for legacy tickets
-            $session = 'TWR10 - S2M1-S';
-        } elseif ($pos == 216) {
-            $session = 'APP1 - S3T1-S';
-        } elseif ($pos == 217) {
-            $session = 'APP2 - S3T2-S';
-        } elseif ($pos == 218) {
-            $session = 'APP3 - S3P1-S';
-        } elseif ($pos == 219) {
-            $session = 'APP4 - S3T3-S';
-        } elseif ($pos == 220) {
-            $session = 'APP5 - S3T4-S';
-        } elseif ($pos == 221) {
-            $session = 'APP6 - S3T5-S';
-        } elseif ($pos == 222) {
-            $session = 'APP7 - S3M1-S';
-        } elseif ($pos == 223) {
-            $session = 'APP8 - S3T6';
-        } elseif ($pos == 224) {
-            $session = 'APP9 - S3P2';
-        } elseif ($pos == 225) {
-            $session = 'APP10 - S3P3';
-        } elseif ($pos == 226) {
-            $session = 'APP11 - S3P4';
-        } elseif ($pos == 227) {
-            $session = 'APP12 - S3M2-S';
-        } elseif ($pos == 228) {
-            $session = 'CTR0 - C1T0-O';
-        } elseif ($pos == 229) {
-            $session = 'CTR1 - C1T1-S';
-        } elseif ($pos == 260) {
-            $session = 'CTR2 - C1T2-O';
-        } elseif ($pos == 230) {
-            $session = 'CTR3 - C1T3-S';
-        } elseif ($pos == 232) {
-            $session = 'CTR4 - C1P1-S';
-        } elseif ($pos == 233) {
-            $session = 'CTR5 - C1M1-S';
-        } elseif ($pos == 231) {
-            $session = 'CTR6 - C1T4-S';
-        } elseif ($pos == 234) {
-            $session = 'CTR7 - C1M1-O';
-        } elseif ($pos == 235) {
-            $session = 'CTR8 - C1M3-S';
-        } elseif ($pos == 236) {
-            $session = 'ZTL1 - M1M1-S';
-        } elseif ($pos == 237) {
-            $session = 'ATL1 - M2T1';
-        } elseif ($pos == 238) { // This is a legacy session that is no longer in use...
-            $session = 'ATL2 - M2M1-O';
-        } elseif ($pos == 239) {
-            $session = 'ATL2 - M2T2';
-        } elseif ($pos == 242) {
-            $session = 'ATL3 - M2T3';
-        } elseif ($pos == 243) {
-            $session = 'ATL4 - M2T4';
-        } elseif ($pos == 240) {
-            $session = 'ATL5 - M2P1';
-        } elseif ($pos == 259) {
-            $session = 'ATL6 - M2P2-S';
-        } elseif ($pos == 241) {
-            $session = 'ATL7 - M2M1-O';
-        } elseif ($pos == 244) {
-            $session = 'ATL8 - M2M2-S';
-        } elseif ($pos == 245) {
-            $session = 'A801 - M3P1-S';
-        } elseif ($pos == 246) {
-            $session = 'A802 - M3M1-O';
-        } elseif ($pos == 247) {
-            $session = 'A803 - M3P2';
-        } elseif ($pos == 248) {
-            $session = 'A804 - M3M2-O';
-        } elseif ($pos == 249) {
-            $session = 'A805 - M3T1-S';
-        } elseif ($pos == 250) {
-            $session = 'A806 - M3P3';
-        } elseif ($pos == 251) {
-            $session = 'A807 - M3P4';
-        } elseif ($pos == 252) {
-            $session = 'A808 - M3M3-O';
-        } elseif ($pos == 253) {
-            $session = 'A809 - M3T3-O';
-        } elseif ($pos == 254) {
-            $session = 'A8010 - M3T4-S';
-        } elseif ($pos == 255) {
-            $session = 'A8011 - M3P5';
-        } elseif ($pos == 256) {
-            $session = 'A8012 - M3M4-S';
-        } elseif ($pos == 257) {
-            $session = 'Unlisted/other';
-        }
-        return $session;
+
+    public function getPositionNameAttribute() { // Lookup for session categories
+        return (key_exists($this->position, self::$position_types)) ? self::$position_types[$this->position] : 'Legacy';
+    }
+
+    public static function getPositionSelectAttribute() { // Returns array of sessions for the new ticket view
+        return array_filter(self::$position_types);
+    }
+
+    public function getSessionNameAttribute() { // Lookup for training session name ex: 'ATL1'
+        return (key_exists($this->session_id, self::$session_ids)) ? self::$session_ids[$this->session_id] : 'Legacy';
+    }
+
+    public static function getSessionSelectAttribute() { // Returns array of sessions for the new ticket view
+        return array_filter(self::$session_ids);
     }
 
     public function getLastTrainingAttribute() {

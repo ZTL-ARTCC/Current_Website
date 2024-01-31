@@ -239,155 +239,63 @@ class AdminDash extends Controller {
 
     public function editController($id) {
         $user = User::find($id);
-
+        $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+        $exp_date = null;
+        if (!is_null($solo)) {
+            $exp_date = Carbon::createFromFormat('Y-m-d', $solo->expiration);
+            $user->solo_exp = $exp_date->format('m/d/Y');
+            if ($exp_date->isPast()) {
+                $user->solo_exp .= ' Expired!';
+            }
+        } else {
+            $user->solo_exp = '';
+        }
+        if ($user->del == 2) {
+            $user->clt_del = 1;
+            $user->atl_del = 1;
+        }
+        if ($user->gnd == 2) {
+            $user->clt_gnd = 1;
+            $user->atl_gnd = 1;
+        }
+        if ($user->twr == 2) {
+            $user->clt_twr = 1;
+            $user->atl_twr = 1;
+        }
+        if ($user->app == 2) {
+            $user->clt_app = 1;
+            $user->atl_app = 1;
+        }
         return view('dashboard.admin.roster.edit')->with('user', $user);
     }
 
     public function updateController(Request $request, $id) {
         $user = User::find($id);
 
-        if (Auth::user()->isAbleTo('roster')) {
-            $user->del = $request->input('del');
-            $user->gnd = $request->input('gnd');
-            if ($user->twr == 99) {
-                if ($request->input('twr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->twr = $request->input('twr');
-                } else {
-                    $user->twr = 0;
-                }
-            } elseif ($request->input('twr') == 99) {
-                $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = $request->input('twr');
-                $cert = new SoloCert;
-                $cert->cid = $id;
-                $cert->pos = 0;
-                $cert->expiration = $expire;
-                $cert->status = 0;
-                $cert->save();
-            } else {
-                $user->twr = $request->input('twr');
-            }
-            if ($user->app == 99) {
-                if ($request->input('app') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->app = $request->input('app');
-                } else {
-                    $user->app = 99;
-                }
-            } else {
-                $user->app = $request->input('app');
-            }
-            if ($user->ctr == 99) {
-                if ($request->input('ctr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->ctr = $request->input('ctr');
-                } else {
-                    $user->ctr = 99;
-                }
-            } else {
-                $user->ctr = $request->input('ctr');
-            }
+        if (Auth::user()->isAbleTo('roster')) { // Update controller profile and account settings
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
-            if ($request->input('visitor') == null) {
-                $user->visitor = 0;
-            } elseif ($request->input('visitor') == 1) {
-                $user->visitor = 1;
+            $attributes = ['visitor', 'canTrain', 'canEvents', 'api_exempt'];
+            foreach ($attributes as $attribute) {
+                $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
-            if ($request->input('canTrain') == null) {
-                $user->canTrain = 0;
-            } elseif ($request->input('canTrain') == 1) {
-                $user->canTrain = 1;
-            }
-            if ($request->input('canEvents') == null) {
-                $user->canEvents = 0;
-            } elseif ($request->input('canEvents') == 1) {
-                $user->canEvents = 1;
-            }
-            if ($request->input('api_exempt') == null) {
-                $user->api_exempt = 0;
-            } elseif ($request->input('api_exempt') == 1) {
-                $user->api_exempt = 1;
-            }
-            $user->twr_solo_fields = $request->input('twr_solo_fields');
-            $user->twr_solo_expires = $request->input('twr_solo_expires');
-            
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            if ($user->hasRole(['atm', 'datm', 'ta', 'ata', 'wm', 'awm', 'fe', 'afe', 'ec']) == true) {
-                if ($user->hasRole('atm')) {
-                    $user->detachRole('atm');
-                } elseif ($user->hasRole('datm')) {
-                    $user->detachRole('datm');
-                } elseif ($user->hasRole('ta')) {
-                    $user->detachRole('ta');
-                } elseif ($user->hasRole('ata')) {
-                    $user->detachRole('ata');
-                } elseif ($user->hasRole('wm')) {
-                    $user->detachRole('wm');
-                } elseif ($user->hasRole('awm')) {
-                    $user->detachRole('awm');
-                } elseif ($user->hasRole('fe')) {
-                    $user->detachRole('fe');
-                } elseif ($user->hasRole('afe')) {
-                    $user->detachRole('afe');
-                } elseif ($user->hasRole('ec')) {
-                    $user->detachRole('ec');
+            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
+            if ($user->hasRole($staff_roles) == true) {
+                foreach ($staff_roles as $staff_role) {
+                    if ($user->hasRole($staff_role)) {
+                        $user->detachRole($staff_role);
+                    }
                 }
             }
-
-            if ($request->input('staff') == 1) {
-                $user->attachRole('atm');
-            } elseif ($request->input('staff') == 2) {
-                $user->attachRole('datm');
-            } elseif ($request->input('staff') == 3) {
-                $user->attachRole('ta');
-            } elseif ($request->input('staff') == 4) {
-                $user->attachRole('ata');
-            } elseif ($request->input('staff') == 5) {
-                $user->attachRole('wm');
-            } elseif ($request->input('staff') == 6) {
-                $user->attachRole('awm');
-            } elseif ($request->input('staff') == 7) {
-                $user->attachRole('fe');
-            } elseif ($request->input('staff') == 8) {
-                $user->attachRole('afe');
-            } elseif ($request->input('staff') == 9) {
-                $user->attachRole('ec');
-            }
-
-            if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
-                if ($user->hasRole('aec')) {
-                    $user->detachRole('aec');
-                } elseif ($user->hasRole('aec-ghost')) {
-                    $user->detachRole('aec-ghost');
-                } elseif ($user->hasRole('events-team')) {
-                    $user->detachRole('events-team');
+            foreach ($staff_roles as $role_id => $staff_role) {
+                if ($request->input('staff') == $role_id) {
+                    $user->attachRole($staff_role);
                 }
-            }
-
-            if ($request->input('events_staff') == 1) {
-                $user->attachRole('aec');
-            } elseif ($request->input('events_staff') == 2) {
-                $user->attachRole('aec-ghost');
-            } elseif ($request->input('events_staff') == 3) {
-                $user->attachRole('events-team');
             }
 
             if ($user->hasRole(['mtr', 'ins']) == true) {
@@ -415,64 +323,55 @@ class AdminDash extends Controller {
                     $user->save();
                 }
             }
-        } elseif (Auth::user()->isAbleTo('train')) {
-            $user->del = $request->input('del');
+        }
+        if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
+            $user->clt_del = $request->input('clt_del');
+            $user->clt_gnd = $request->input('clt_gnd');
+            $user->clt_twr = $request->input('clt_twr');
+            $user->clt_app = $request->input('clt_app');
+            $user->atl_del = $request->input('atl_del');
+            $user->atl_gnd = $request->input('atl_gnd');
+            $user->atl_twr = $request->input('atl_twr');
+            $user->atl_app = $request->input('atl_app');
+
             $user->gnd = $request->input('gnd');
-            if ($user->twr == 99) {
-                if ($request->input('twr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
+            $positions = ['twr','app','ctr'];
+            $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
+                'twr' => 'GSO',
+                'app' => 'BHM',
+                'ctr' => 'ZTL'];
+            foreach ($positions as $solo_id => $position) {
+                if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
+                    if ($request->input($position) != 0) {
+                        $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
+                        if ($solo) {
+                            $solo->status = 1;
+                            $solo->save();
+                        }
+                        $user[$position] = $request->input($position);
+                    } else {
+                        $user[$position] = $user->getMagicNumber('SOLO_CERTIFICATION');
                     }
-                    $user->twr = $request->input('twr');
+                } elseif ($request->input($position) == $user->getMagicNumber('SOLO_CERTIFICATION')) {
+                    $user[$position] = $request->input($position);
+                    $expire = Carbon::now()->addDays($user->getMagicNumber('SOLO_CERT_DURATION'))->format('Y-m-d');
+                    $cert = new SoloCert;
+                    $cert->cid = $id;
+                    $cert->pos = $solo_id;
+                    $cert->expiration = $expire;
+                    $cert->status = 0;
+                    $cert->save();
+                    $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
+                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
                 } else {
-                    $user->twr = 99;
+                    $user[$position] = $request->input($position);
                 }
-            } elseif ($request->input('twr') == 99) {
-                $expire = Carbon::now()->addMonth()->format('Y-m-d');
-                $user->twr = $request->input('twr');
-                $cert = new SoloCert;
-                $cert->cid = $id;
-                $cert->pos = 0;
-                $cert->expiration = $expire;
-                $cert->status = 0;
-                $cert->save();
-            } else {
-                $user->twr = $request->input('twr');
             }
-            if ($user->app == 99) {
-                if ($request->input('app') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->app = $request->input('app');
-                } else {
-                    $user->app = 99;
-                }
-            } else {
-                $user->app = $request->input('app');
-            }
-            if ($user->ctr == 99) {
-                if ($request->input('ctr') != 0) {
-                    $solo = SoloCert::where('cid', $user->id)->where('status', 0)->first();
-                    if ($solo) {
-                        $solo->status = 1;
-                        $solo->save();
-                    }
-                    $user->ctr = $request->input('ctr');
-                } else {
-                    $user->ctr = 99;
-                }
-            } else {
-                $user->ctr = $request->input('ctr');
-            }
+
             $user->twr_solo_fields = $request->input('twr_solo_fields');
-            $user->twr_solo_expires = $request->input('twr_solo_expires');
             $user->save();
-        } else { // Events
+        }
+        if (Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) { // Update events team
             if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
                 if ($user->hasRole('aec')) {
                     $user->detachRole('aec');
@@ -1783,9 +1682,33 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been created');
     }
 
+    public function showEditFeatureToggle($toggle_name) {
+        $toggle = FeatureToggle::find($toggle_name);
+        return view('dashboard.admin.toggles.edit')->with('t', $toggle);
+    }
+
+    public function editFeatureToggle(Request $request) {
+        $request->merge(['toggle_name' => preg_replace('/\s+/', '_', trim($request->input('toggle_name')))]);
+        if ($request->input('toggle_name') != $request->input('toggle_name_orig')) {
+            $request->validate(['toggle_name' => 'required|unique:feature_toggles']);
+        }
+        FeatureToggle::updateToggle($request->input('toggle_name_orig'), $request->input('toggle_name'), $request->input('toggle_description'));
+
+        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $request->input('toggle_name') . '` has been updated');
+    }
+
     public function toggleFeatureToggle($toggle_name) {
         FeatureToggle::toggle($toggle_name);
 
         return redirect()->back();
+    }
+
+    public function deleteFeatureToggle($toggle_name) {
+        $result = FeatureToggle::deleteToggle($toggle_name);
+        if ($result) {
+            return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle_name . '` has been deleted');
+        } else {
+            return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
+        }
     }
 }
