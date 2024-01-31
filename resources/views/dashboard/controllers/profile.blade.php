@@ -99,12 +99,12 @@ Profile
                                     <td scope="col">{{ $ea_appointment->res_time }} ET</td>
                                     <td scope="col">{{ $ea_appointment->service_description }}</td>
                                     <td scope="col">{{ $ea_appointment->staff_name }}</td>
-                                    <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/booking/reschedule/{{ $ea_appointment->link_token }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>
+                                    <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/booking/reschedule/{{ $ea_appointment->link_token }}?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>
                                 </tr>   
                             @endforeach
                         @else
                             <tr>
-                                <td scope="col" colspan="4">No appointments found.</td>
+                                <td scope="col" colspan="5">No appointments found.</td>
                             </tr>
                         @endif
                     </tbody>
