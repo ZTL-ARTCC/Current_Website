@@ -78,7 +78,7 @@ class RosterUpdate extends Command {
             $user->rating_id = $r->rating;
             $user->visitor = 0;
             $user->status = 1;
-            $user->name_privacy = ($r->data->flag_nameprivacy == 'true') ? 1 : 0;
+            $user->name_privacy = ($r->flag_nameprivacy == 'true') ? 1 : 0;
             $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
 
             $user->save();
