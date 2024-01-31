@@ -59,7 +59,7 @@ Dashboard
             @endif
         </div>
         <div class="col-sm-3">
-            <a class="btn btn-secondary btn-block" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}">Schedule a Training Session</a>
+            <a class="btn btn-secondary btn-block" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
             @if(Auth::user()->isAbleTo('staff'))
                 <a class="btn btn-secondary btn-block" href="http://mail.ztlartcc.org" target="_blank">Email</a>
             @endif
