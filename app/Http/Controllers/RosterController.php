@@ -10,12 +10,6 @@ class RosterController extends Controller {
         $vcontrollers = User::where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
  
         return view('site.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
-        
-//        $hcontrollers = User::where('visitor', '0')->where('status', '1')->orderBy('lname', 'ASC')->get();
-//        $vcontrollers = User::where('visitor', '1')->where('status', '1')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
-//        $visagreecontrollers = User::where('visitor', '1')->where('visitor_from', 'ZJX')->orderBy('visitor_from', 'ASC')->orderBy('lname', 'ASC')->get();
-
-//        return view('site.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers)->with('visagreecontrollers', $visagreecontrollers);
     }
 
     public function staffIndex() {
