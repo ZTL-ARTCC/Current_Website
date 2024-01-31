@@ -12,7 +12,6 @@
         {{-- Stylesheets --}}
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/css/Footer-white.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
@@ -32,6 +31,9 @@
 
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>
+
+        {{-- Fontawesome --}}
+        <script src="https://kit.fontawesome.com/f3eeeb43e3.js" crossorigin="anonymous"></script>
 
         {{-- Custom JS --}}
         <script type="text/javascript" src="/js/app.js"></script>
