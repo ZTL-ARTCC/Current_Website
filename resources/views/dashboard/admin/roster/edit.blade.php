@@ -232,8 +232,8 @@ Update Controller
                         {!! Form::select('clt_del', $user->uncertified_certified, $user->clt_del, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('atl_twr', 'Charlotte Ground') !!}
-                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->clt_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::label('clt_gnd', 'Charlotte Ground') !!}
+                        {!! Form::select('clt_gnd', $user->uncertified_certified, $user->clt_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
                     </div>
                 </div>
             </div>
