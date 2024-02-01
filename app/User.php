@@ -150,9 +150,9 @@ class User extends Authenticatable {
     protected const TRAIN_UNRES_GND = 1;
     protected const TRAIN_UNRES_TWR = 3;
     protected const TRAIN_UNRES_APP = 5;
-    protected const TRAIN_T1_LCL = 8;
-    protected const TRAIN_T1_APP = 9;
-    protected const TRAIN_CTR = 7;
+    protected const TRAIN_T1_LCL = 7;
+    protected const TRAIN_T1_APP = 8;
+    protected const TRAIN_CTR = 9;
 
     protected static $TrainingLevel = [
         self::TRAIN_UNABLE => 'Not Able to Train',
