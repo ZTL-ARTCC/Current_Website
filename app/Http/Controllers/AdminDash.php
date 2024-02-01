@@ -251,18 +251,22 @@ class AdminDash extends Controller {
             $user->solo_exp = '';
         }
         if ($user->del == 2) {
+            $user->del = 1;
             $user->clt_del = 1;
             $user->atl_del = 1;
         }
         if ($user->gnd == 2) {
+            $user->gnd = 1;
             $user->clt_gnd = 1;
             $user->atl_gnd = 1;
         }
         if ($user->twr == 2) {
+            $user->twr = 1;
             $user->clt_twr = 1;
             $user->atl_twr = 1;
         }
         if ($user->app == 2) {
+            $user->app = 1;
             $user->clt_app = 1;
             $user->atl_app = 1;
         }
@@ -276,7 +280,8 @@ class AdminDash extends Controller {
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
-            $attributes = ['visitor', 'canTrain', 'canEvents', 'api_exempt'];
+            //$attributes = ['visitor', 'canTrain', 'canEvents', 'api_exempt'];
+            $attributes = ['canTrain', 'canEvents', 'api_exempt'];
             foreach ($attributes as $attribute) {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
@@ -338,7 +343,7 @@ class AdminDash extends Controller {
             $positions = ['twr','app','ctr'];
             $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
                 'twr' => 'GSO',
-                'app' => 'BHM',
+                'app' => 'GSO',
                 'ctr' => 'ZTL'];
             foreach ($positions as $solo_id => $position) {
                 if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
