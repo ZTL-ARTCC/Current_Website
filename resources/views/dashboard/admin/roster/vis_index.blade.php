@@ -5,10 +5,8 @@ Visit Requests
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Visit Requests</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -21,13 +19,13 @@ Visit Requests
     <br><br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-toggle="tab" style="color:black">New Requests</a>
+            <a class="nav-link tab-link active" href="#new" role="tab" data-toggle="tab">New Requests</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#accepted" role="tab" data-toggle="tab" style="color:black">Accepted Requests</a>
+            <a class="nav-link tab-link" href="#accepted" role="tab" data-toggle="tab">Accepted Requests</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#rejected" role="tab" data-toggle="tab" style="color:black">Rejected Requests</a>
+            <a class="nav-link tab-link" href="#rejected" role="tab" data-toggle="tab">Rejected Requests</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -36,11 +34,11 @@ Visit Requests
                 <thead>
                     <tr>
                         <th scope="col">Name (CID)</th>
-                        <th scope="col"><center>Rating</center></th>
-                        <th scope="col"><center>Email</center></th>
-                        <th scope="col"><center>Home ARTCC/Division</center></th>
-                        <th scope="col"><center>Submitted at</center></th>
-                        <th scope="col" width="120px"><center>Actions</center></th>
+                        <th scope="col" class="text-center">Rating</th>
+                        <th scope="col" class="text-center">Email</th>
+                        <th scope="col" class="text-center">Home ARTCC/Division</th>
+                        <th scope="col" class="text-center">Submitted at</th>
+                        <th scope="col" class="text-center" width="120px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,10 +46,10 @@ Visit Requests
                         @foreach($new as $v)
                             <tr>
                                 <td data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td><center>{{ $v->rating_short }}</center></td>
-                                <td><center>{{ $v->email }}</center></td>
-                                <td><center>{{ $v->home }}</center></td>
-                                <td><center>{{ $v->updated_at }}</center></td>
+                                <td class="text-center">{{ $v->rating_short }}</td>
+                                <td class="text-center">{{ $v->email }}</td>
+                                <td class="text-center">{{ $v->home }}</td>
+                                <td class="text-center">{{ $v->updated_at }}</td>
                                 <td>
                                     <a href="/dashboard/admin/roster/visit/accept/{{ $v->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept"><i class="fa fa-check"></i></a>
                                     <span data-toggle="modal" data-target="#reject{{ $v->id }}">
@@ -94,23 +92,23 @@ Visit Requests
                 <thead>
                     <tr>
                         <th scope="col">Name (CID)</th>
-                        <th scope="col"><center>Rating</center></th>
-                        <th scope="col"><center>Email</center></th>
-                        <th scope="col"><center>Home ARTCC/Division</center></th>
-                        <th scope="col"><center>Accepted at</center></th>
-                        <th scope="col"><center>Accepted by</center></th>
+                        <th class="text-center" scope="col">Rating</th>
+                        <th class="text-center" scope="col">Email</th>
+                        <th class="text-center" scope="col">Home ARTCC/Division</th>
+                        <th class="text-center" scope="col">Accepted at</th>
+                        <th class="text-center" scope="col">Accepted by</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($accepted)
                         @foreach($accepted as $v)
                             <tr>
-                                <td data-toggle="tooltip" title="{{ $v->reason }}"><center>{{ $v->name }} ({{ $v->cid }})</td>
-                                <td><center>{{ $v->rating_short }}</center></td>
-                                <td><center>{{ $v->email }}</center></td>
-                                <td><center>{{ $v->home }}</center></td>
-                                <td><center>{{ $v->updated_at }}</center></td>
-                                <td><center>{{ App\User::find($v->updated_by)->full_name }}</center></td>
+                                <td class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td class="text-center">{{ $v->rating_short }}</td>
+                                <td class="text-center">{{ $v->email }}</td>
+                                <td class="text-center">{{ $v->home }}</td>
+                                <td class="text-center">{{ $v->updated_at }}</td>
+                                <td class="text-center">{{ App\User::find($v->updated_by)->full_name }}</td>
                             </tr>
                         @endforeach
                     @else
@@ -124,23 +122,23 @@ Visit Requests
                 <thead>
                     <tr>
                         <th scope="col">Name (CID)</th>
-                        <th scope="col"><center>Rating</center></th>
-                        <th scope="col"><center>Email</center></th>
-                        <th scope="col"><center>Home ARTCC/Division</center></th>
-                        <th scope="col"><center>Rejected at</center></th>
-                        <th scope="col"><center>Rejected by</center></th>
+                        <th class="text-center" scope="col">Rating</th>
+                        <th class="text-center" scope="col">Email</th>
+                        <th class="text-center" scope="col">Home ARTCC/Division</th>
+                        <th class="text-center" scope="col">Rejected at</th>
+                        <th class="text-center" scope="col">Rejected by</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($rejected)
                         @foreach($rejected as $v)
                             <tr>
-                                <td data-toggle="tooltip" title="{{ $v->reason }}"><center>{{ $v->name }} ({{ $v->cid }})</center></td>
-                                <td><center>{{ $v->rating_short }}</center></td>
-                                <td><center>{{ $v->email }}</center></td>
-                                <td><center>{{ $v->home }}</center></td>
-                                <td><center>{{ $v->updated_at }}</center></td>
-                                <td><center>{{ App\User::find($v->updated_by)->full_name }}</center></td>
+                                <td class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td class="text-center">{{ $v->rating_short }}</td>
+                                <td class="text-center">{{ $v->email }}</td>
+                                <td class="text-center">{{ $v->home }}</td>
+                                <td class="text-center">{{ $v->updated_at }}</td>
+                                <td class="text-center">{{ App\User::find($v->updated_by)->full_name }}</td>
                             </tr>
                         @endforeach
                     @else

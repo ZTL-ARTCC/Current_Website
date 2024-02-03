@@ -1,3 +1,7 @@
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+@endpush
+
 <div class="bg-dark w-100">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -9,30 +13,29 @@
                 @endphp
 
                 @if(($month == 12 && $day == 31) || ($month == 1 && $day == 1))
-                    <img width="100" src="/photos/logos/ztl_logo_fireworks-white.png">
+                    <img src="/photos/logos/ztl_logo_fireworks-white.png">
                 @elseif(($month >= 3 && $day >= 20) && $month <= 4)
-                    <img width="100" src="/photos/logos/ztl_logo_spring-white.png">
+                    <img src="/photos/logos/ztl_logo_spring-white.png">
                 @elseif(($month == 1 && $day == 16) || ($month == 2 && $day == 20) || ($month == 5 && $day == 29) || ($month == 6 && $day == 19) || ($month == 7 && $day == 4) || ($month == 9 && $day == 4) || ($month == 10 && $day == 10))
-                    <img width="100" src="/photos/logos/ztl_logo_flag-white.png">
+                    <img src="/photos/logos/ztl_logo_flag-white.png">
                 @elseif($month >= 6 && $month <= 9)
-                    <img width="100" src="/photos/logos/ztl__logo_beach-white.png">
+                    <img src="/photos/logos/ztl__logo_beach-white.png">
                 @elseif($month == 10)
-                    <img width="100" src="/photos/logos/ztl_logo_halloween-white.png">
+                    <img src="/photos/logos/ztl_logo_halloween-white.png">
                 @elseif($month == 11 && $day >= 20)
-                    <img width="100" src="/photos/logos/ztl_logo_turkey-white.png">
+                    <img src="/photos/logos/ztl_logo_turkey-white.png">
                 @elseif($month == 12)
-                    <img width="100" src="/photos/logos/ztl_logo_santa-white.png">
+                    <img src="/photos/logos/ztl_logo_santa-white.png">
                 @else
-                    <img width="100" src="/photos/logos/0_ztl_logo_white.png">
+                    <img src="/photos/logos/0_ztl_logo_white.png">
                 @endif
             @else
-                <img width="100" src="/photos/logos/0_ztl_logo_white.png">
+                <img src="/photos/logos/0_ztl_logo_white.png">
             @endtoggle
         </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <style>#navbarsExample10 a.nav-link{ color: white !important }</style>
             <div class="collapse navbar-collapse" id="navbarsExample10">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="vZTL ARTCC Website. For entertainment purposes only. Do not use for real world purposes. Part of the VATSIM Network.">
         <meta name="keywords" content="ztl,vatusa,vatsim,atlanta,center,georgia,artcc,aviation,airplane,airport,charlotte,controller,atc,air,traffic,control,pilot">
-        <meta name="author" content="Ian Cowan">
+        <meta name="author" content="ZTL Web Team">
 
         {{-- Stylesheets --}}
         <link rel="stylesheet" href="/css/app.css">
@@ -30,13 +30,6 @@
 
         {{-- Custom JS --}}
         <script type="text/javascript" src="/js/app.js"></script>
-
-        {{-- Tooltips --}}
-        <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
-        </script>
 
         {{-- Custom Headers --}}
         @stack('custom_header')

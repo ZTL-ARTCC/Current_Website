@@ -5,10 +5,8 @@ New Incident Report
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>New Incident Report</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -24,13 +22,16 @@ New Incident Report
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('time', 'Time of Incident (Zulu)', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('time', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('date', 'Date of Incident', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -62,17 +63,4 @@ New Incident Report
         <button action="submit" class="btn btn-success">Submit</button>
     {!! Form::close() !!}
 </div>
-
-<script type="text/javascript">
-$(function () {
-    $('#datetimepicker1').datetimepicker({
-        format: 'L'
-    });
-});
-$(function () {
-    $('#datetimepicker2').datetimepicker({
-        format: 'HH:mm'
-    });
-});
-</script>
 @endsection
