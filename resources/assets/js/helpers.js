@@ -4,16 +4,16 @@ function copyToClipboard(eId) {
 }
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+  $('[data-toggle="tooltip"]').tooltip();
+});
 
 $(function () {
-  $('.dt_picker_date').datetimepicker({
-      format: 'L'
+  $(".dt_picker_date").datetimepicker({
+    format: "L",
   });
 });
 $(function () {
-  $('.dt_picker_time').datetimepicker({
-      format: 'HH:mm'
+  $(".dt_picker_time").datetimepicker({
+    format: "HH:mm",
   });
 });
