@@ -164,10 +164,11 @@ body {
 }
 
 .view-header {
-  background-color:#F0F0F0;
+  background-color: #f0f0f0;
 }
 
-.view-header::before, .view-header::after {
+.view-header::before,
+.view-header::after {
   content: "\a";
   white-space: pre;
 }
@@ -177,29 +178,29 @@ body {
 }
 
 .item-black {
-  color:black;
+  color: black;
 }
 
 .bronze {
-  color:#C9AE5D;
+  color: #c9ae5d;
 }
 
 div.bronze-bg {
-  background-color:#C9AE5D;
+  background-color: #c9ae5d;
 }
 
 .pyrite {
-  color: #FFDF00;
+  color: #ffdf00;
 }
 
 div.pyrite-bg {
-  background-color: #FFDF00;
+  background-color: #ffdf00;
 }
 
 div.hours-bad {
-  background-color:#E6B0AA
+  background-color: #e6b0aa;
 }
 
 div.hours-good {
-  background-color:#A9DFBF
+  background-color: #a9dfbf;
 }
