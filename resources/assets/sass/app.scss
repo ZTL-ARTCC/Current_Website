@@ -164,5 +164,42 @@ body {
 }
 
 .view-header {
-  background-color:#F0F0F0
+  background-color:#F0F0F0;
+}
+
+.view-header::before, .view-header::after {
+  content: "\a";
+  white-space: pre;
+}
+
+.tab-link {
+  color: black;
+}
+
+.item-black {
+  color:black;
+}
+
+.bronze {
+  color:#C9AE5D;
+}
+
+.bronze-bg {
+  background-color:#C9AE5D;
+}
+
+.pyrite {
+  color: #FFDF00;
+}
+
+.pyrite-bg {
+  background-color: #FFDF00;
+}
+
+.hours-bad {
+  background-color:#E6B0AA
+}
+
+.hours-good {
+  background-color:#A9DFBF
 }
