@@ -1,0 +1,10 @@
+div.clocks div.card-body {
+    text-align: center;
+    background-color: lightgrey
+}
+
+div.clocks iframe {
+    pointer-events: none;
+    width: 200px;
+    height: 64px;
+}
