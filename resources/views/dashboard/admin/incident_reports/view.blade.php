@@ -5,10 +5,8 @@ View Incident Report
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h3>View Incident Report</h3>
-    &nbsp;
 </div>
 <br>
 <div class="container">

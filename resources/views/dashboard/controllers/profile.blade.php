@@ -4,11 +4,13 @@
 Profile
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}" />
+@endpush
+
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>My Profile</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -120,17 +122,17 @@ Profile
             <p><b>CID:</b> {{ Auth::id() }}</p>
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
-            <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
             {!! Form::open(['action' => ['ControllerDash@updateInfo', Auth::id()]]) !!}
             @csrf
                 <div class="row">
-                    <div class="col-5"><b>TS3 UID: <a style="color:inherit" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{!! Form::text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-5">
-                        <b>Timezone: <a style="color:inherit" href="#" data-toggle="tooltip"
+                        <b>Timezone: <a class="info-tooltip" href="#" data-toggle="tooltip"
                                         title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
                                         class="fas fa-info-circle"></i></a></b>
                     </div>
@@ -174,7 +176,7 @@ Profile
                             <span class="slider round"></span>
                         </label>
                     </span>
-            @endif
+                @endif
         </div>
         <div class="col-sm-2">
         </div>
@@ -184,17 +186,17 @@ Profile
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         @if($personal_stats->total_hrs < 1)
-                            <li class="list-group-item" style="background-color:#E6B0AA">
+                            <li class="list-group-item hours-bad">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @else
-                            <li class="list-group-item" style="background-color:#A9DFBF">
+                            <li class="list-group-item hours-good">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @endif
-                        <li class="list-group-item" style="background-color:aqua">
+                        <li class="list-group-item tng-received">
                             <h5>Last Training Session Received:</h5>
                             <p><b>
                                 @if($last_training != null)
@@ -205,7 +207,7 @@ Profile
                             </b></p>
                         </li>
                         @if(Auth::user()->isAbleTo('train'))
-                            <li class="list-group-item" style="background-color:lightgray">
+                            <li class="list-group-item tng-given">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
                                     @if(isset($last_training_given))

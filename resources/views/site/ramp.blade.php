@@ -11,9 +11,8 @@
 @endpush
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
   <div class="container">
-    &nbsp;
     @if( $afld == 'ATL')
     <h2>
       <center>Atlanta Hartsfield Jackson Int'l Airport (ATL) Ramp/Gate Status</center>
@@ -24,12 +23,11 @@
       <center>Charlotte Douglas Int'l Airport (CLT) Ramp/Gate Status</center>
     </h2>
     @endif
-    &nbsp;
   </div>
 </span>
 <div class="container">
   <div style="width:100%; height:70vh">
-    <div id="map" style="position:relative; height:100%; max-width:100%; max-height:100%; cursor:crosshair"></div>
+    <div id="map"></div>
   </div>
   <div id="legend">
     <div class="legenditem"><span class="taxiarr"></span> Arrival</div>

@@ -5,10 +5,8 @@ New Event
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>New Event</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -26,7 +24,7 @@ New Event
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('date', 'Date of Event', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {!! Form::text('date', $event->date, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -39,14 +37,20 @@ New Event
             <div class="row">
                 <div class="col-sm-4">
                     {!! Form::label('start_time', 'Start Time (Zulu)', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('start_time', $event->start_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('end_time', 'End Time (Zulu)', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {!! Form::text('end_time', $event->end_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -67,24 +71,4 @@ New Event
         <a class="btn btn-danger" href="/dashboard/controllers/events">Cancel</a>
     {!! Form::close() !!}
 </div>
-
-<script type="text/javascript">
-$(function () {
-    $('#datetimepicker1').datetimepicker({
-        format: 'L'
-    });
-});
-
-$(function () {
-    $('#datetimepicker2').datetimepicker({
-        format: 'HH:mm'
-    });
-});
-
-$(function () {
-    $('#datetimepicker3').datetimepicker({
-        format: 'HH:mm'
-    });
-});
-</script>
 @endsection

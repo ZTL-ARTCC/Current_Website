@@ -45,13 +45,6 @@
         <title>
             @yield('title') | ZTL ARTCC
         </title>
-
-        {{-- Tooltips --}}
-        <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
-        </script>
     </head>
     <body>
 

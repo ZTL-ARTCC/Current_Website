@@ -4,11 +4,13 @@
 Dashboard
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />
+@endpush
+
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Controller Dashboard</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -21,35 +23,35 @@ Dashboard
         </div>
         <hr>
     @endif
-    <div class="row">
+    <div class="row clocks">
         <div class="col-sm-3">
-            <div class="card card-body" style="background-color:lightgrey">
-                <center><h5>Zulu/UTC Time Now:</h5></center>
-                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            <div class="card card-body">
+                <h5>Zulu/UTC Time Now:</h5>
+                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="card card-body" style="background-color:lightgrey">
-                <center><h5>Eastern Time Now:</h5></center>
-                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=EST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            <div class="card card-body">
+                <h5>Eastern Time Now:</h5>
+                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=EST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="card card-body" style="background-color:lightgrey">
-                <center><h5>Central Time Now:</h5></center>
-                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=CST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            <div class="card card-body">
+                <h5>Central Time Now:</h5>
+                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=CST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="card card-body" style="background-color:lightgrey">
-                <center><h5>Pacific Time Now:</h5></center>
-                <center><iframe style="pointer-events: none" src="https://www.clocklink.com/html5embed.php?clock=043&timezone=PST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" width="200" height="64" allowTransparency="true"></iframe></center>
+            <div class="card card-body">
+                <h5>Pacific Time Now:</h5>
+                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=PST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
             </div>
         </div>
     </div>
     @include('inc.notifications')
     <hr>
-    <center><h4><i>Controller Dashboard Quicklinks</i></h4></center>
+    <h4 class="text-center"><i>Controller Dashboard Quicklinks</i></h4>
     <br>
     <div class="row">
         <div class="col-sm-3">
@@ -80,27 +82,27 @@ Dashboard
     <hr>
     <div class="row">
         <div class="col-sm-4">
-            <center><h4><i class="fas fa-newspaper"></i> News</h4></center>
+            <h4 class="text-center"><i class="fas fa-newspaper"></i> News</h4>
             @if(count($news) > 0)
                 @foreach($news as $c)
                     <p>{{ $c->date }} - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
                 @endforeach
             @else
-                <center><i><p>No news to show.</p></i></center>
+                <p class="text-center"><i>No news to show.</i></p>
             @endif
         </div>
         <div class="col-sm-4">
-            <center><h4><i class="fas fa-calendar-alt"></i> Calendar</h4></center>
+            <h4 class="text-center"><i class="fas fa-calendar-alt"></i> Calendar</h4>
             @if(count($calendar) > 0)
                 @foreach($calendar as $c)
                     <p>{{ $c->date }} ({{ $c->time }}) - <b>{{ $c->title }}</b> <a href="/dashboard/controllers/calendar/view/{{ $c->id }}">(View)</a></p>
                 @endforeach
             @else
-                <center><i><p>No calendar events to show.</p></i></center>
+                <p class="text-center"><i>No calendar events to show.</i></p>
             @endif
         </div>
         <div class="col-sm-4">
-            <center><h4><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4></center>
+            <h4 class="text-center"><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4>
 			<div id="eventCarousel" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)
@@ -131,57 +133,59 @@ Dashboard
         </div>
     </div>
     <hr>
-    <center><h4><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4></center>
+    <h4 class="text-center"><i class="fa fa-plane"></i> Flights Currently Within ZTL Airspace</h4>
     <div class="table">
         <table class="table table-bordered table-sm">
-            <thead>
-                <th scope="col"><center>Callsign</center></th>
-                <th scope="col"><center>Pilot Name</center></th>
-                <th scope="col"><center>Aircraft Type</center></th>
-                <th scope="col"><center>Departure</center></th>
-                <th scope="col"><center>Arrival</center></th>
-                <th scope="col"><center>Route</center></th>
+            <thead class="text-center">
+                <th scope="col">Callsign</th>
+                <th scope="col">Pilot Name</th>
+                <th scope="col">Aircraft Type</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col">Route</th>
             </thead>
             <tbody>
                 @if($flights->count() > 0)
                     @foreach($flights as $c)
-                        <tr>
-                            <td><center>{{ $c->callsign }}</center></td>
-                            <td><center>{{ $c->pilot_name }}</center></td>
-                            <td><center>{{ $c->type }}</center></td>
-                            <td><center>{{ $c->dep }}</center></td>
-                            <td><center>{{ $c->arr }}</center></td>
-                            <td><center>{{ str_limit($c->route, 50) }}</center></td>
+                        <tr class="text-center">
+                            <td>{{ $c->callsign }}</td>
+                            <td>{{ $c->pilot_name }}</td>
+                            <td>{{ $c->type }}</td>
+                            <td>{{ $c->dep }}</td>
+                            <td>{{ $c->arr }}</td>
+                            <td>{{ str_limit($c->route, 50) }}</td>
                         </tr>
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6"><center><i>No Pilots in ZTL Airspace</i></center></td>
+                        <td class="text-center" colspan="6"><i>No Pilots in ZTL Airspace</i></td>
                     </tr>
                 @endif
                 <tr>
-                    <td colspan="6"><div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
+                    <td colspan="6"><div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <hr>
-    <center><h2><i class="fa fa-microphone" style="color:#C9AE5D"></i> Bronze Mic Award <i class="fa fa-microphone" style="color:#C9AE5D"></i></h2></center>
-	<div class="row">
+    @php
+        $no_winner = "<h4>No Winner Selected</h4><h5>Check back for updates!</h5>";
+    @endphp
+    <h2 class="text-center"><i class="fa fa-microphone bronze"></i> Bronze Mic Award <i class="fa fa-microphone bronze"></i></h2>
+	<div class="row text-center">
 		<div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-8">
-        			<center><h4>Winner for {{ $pmonth_words }}</h4></center>
-        			<div class="card card-body" style="background-color:#C9AE5D">
+        			<h4>Winner for {{ $pmonth_words }}</h4>
+        			<div class="card card-body bronze-bg">
         				@if($pwinner != null)
-        					<center><h4><b>{{ $pwinner->name }}</b></h4></center>
-        					<center><h5>With {{ $pwinner->month_hours }} hours!</h5></center>
+        					<h4><b>{{ $pwinner->name }}</b></h4>
+        					<h5>With {{ $pwinner->month_hours }} hours!</h5>
         				@else
-        					<center><h4>No Winner Was Chosen</h4></center>
-        					<center><h5>Check back for updates!</h5></center>
-        				@endif
+                            {!! $no_winner !!}
+                        @endif
                     </div>
                     <div class="col-sm-2">
                     </div>
@@ -193,14 +197,13 @@ Dashboard
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-8">
-        			<center><h4>Most Recent Winner ({{ $month_words }})</h4></center>
-        			<div class="card card-body" style="background-color:#C9AE5D">
+        			<h4>Winner for {{ $month_words }}</h4>
+        			<div class="card card-body bronze-bg">
         				@if($winner != null)
-        					<center><h4><b>{{ $winner->name }}</b></h4></center>
-        					<center><h5>With {{ $winner->month_hours }} hours!</h5></center>
+        					<h4><b>{{ $winner->name }}</b></h4>
+        					<h5>With {{ $winner->month_hours }} hours!</h5>
         				@else
-        					<center><h4>No Winner Was Chosen</h4></center>
-        					<center><h5>Check back for updates!</h5></center>
+                            {!! $no_winner !!}
         				@endif
                     </div>
                     <div class="col-sm-2">
@@ -211,24 +214,23 @@ Dashboard
     </div>
     @toggle('local-hero')
         <hr>
-        <center><h2><i class="fas fa-trophy text-primary"></i> Local Hero Award <i class="fas fa-trophy text-primary"></i></h2></center>
-	    <div class="row">
+        <h2 class="text-center"><i class="fas fa-trophy text-primary"></i> Local Hero Award <i class="fas fa-trophy text-primary"></i></h2>
+	    <div class="row text-center">
 		    <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-2">
                     </div>
                     <div class="col-sm-8">
-        			    <center><h4>Winner for {{ $pmonth_words }}</h4></center>
+        			    <h4>Winner for {{ $pmonth_words }}</h4>
         			    <div class="card card-body bg-primary">
         				    @if($pwinner_local != null)
-        					    <center><h4><b>{{ $pwinner_local->name }}</b></h4></center>
-        					    <center><h5>With {{ $pwinner_local->month_hours }} hours!</h5></center>
+        					    <h4><b>{{ $pwinner_local->name }}</b></h4>
+        					    <h5>With {{ $pwinner_local->month_hours }} hours!</h5>
         				    @else
-        					    <center><h4>No Winner Was Chosen</h4></center>
-        					    <center><h5>Check back for updates!</h5></center>
+                                {!! $no_winner !!}
         				    @endif
                         </div>
-                        <center><h6>{{ $pmonth_challenge_description }}</h6></center>
+                        <h6>{{ $pmonth_challenge_description }}</h6>
                         <div class="col-sm-2">
                         </div>
                     </div>
@@ -239,17 +241,16 @@ Dashboard
                     <div class="col-sm-2">
                     </div>
                     <div class="col-sm-8">
-        			    <center><h4>Most Recent Winner ({{ $month_words }})</h4></center>
+        			    <h4>Winner for {{ $month_words }}</h4>
         			    <div class="card card-body bg-primary">
         				    @if($winner_local != null)
-        					    <center><h4><b>{{ $winner_local->name }}</b></h4></center>
-        					    <center><h5>With {{ $winner_local->month_hours }} hours!</h5></center>
+        					    <h4><b>{{ $winner_local->name }}</b></h4>
+        					    <h5>With {{ $winner_local->month_hours }} hours!</h5>
         				    @else
-        					    <center><h4>No Winner Was Chosen</h4></center>
-        					    <center><h5>Check back for updates!</h5></center>
+                                {!! $no_winner !!}
         				    @endif
                         </div>
-                        <center><h6>{{ $month_challenge_description }}</h6></center>
+                        <h6>{{ $month_challenge_description }}</h6>
                         <div class="col-sm-2">
                         </div>
                     </div>
@@ -258,18 +259,17 @@ Dashboard
         </div>
     @endtoggle
     <hr>
-    <center><h2><i class="fa fa-microphone" style="color:#FFDF00"></i> Pyrite Mic Award for 20{{ $lyear }} <i class="fa fa-microphone" style="color:#FFDF00"></i></h2></center>
-    <div class="row">
+    <h2 class="text-center"><i class="fa fa-microphone pyrite"></i> Pyrite Mic Award for 20{{ $lyear }} <i class="fa fa-microphone pyrite"></i></h2>
+    <div class="row text-center">
         <div class="col-sm-4">
         </div>
         <div class="col-sm-4">
-            <div class="card card-body" style="background-color:#FFDF00">
+            <div class="card card-body pyrite-bg">
                 @if($pyrite != null)
-                    <center><h4><b>{{ $pyrite->name }}</b></h4></center>
-                    <center><h5>With {{ $pyrite->year_hours }} hours!</h5></center>
+                    <h4><b>{{ $pyrite->name }}</b></h4>
+                    <h5>With {{ $pyrite->year_hours }} hours!</h5>
                 @else
-                    <center><h4>No Winner Was Chosen</h4></center>
-                    <center><h5>Check back for updates!</h5></center>
+                    {!! $no_winner !!}
                 @endif
             </div>
         </div>
