@@ -34,6 +34,10 @@ Update Controller
         if(Auth::user()->isAbleTo('roster')) {
             $roster_disable = null;
         }
+        $train_config_disable = 'disabled';
+        if(Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ata')) {
+           $train_config_disable = null;
+        }
         $events_disable = 'disabled';
         if(Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) {
             $events_disable = null;
@@ -118,7 +122,7 @@ Update Controller
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
                         {!! Form::label('max', 'Training Level') !!}
-                        {!! Form::select('max', $user->training_level, $user->max, ['class' => 'form-control', $roster_disable]) !!}
+                        {!! Form::select('max', $user->training_level, $user->max, ['class' => 'form-control', $train_config_disable]) !!}
                     </div>
                     @endif
                 </div>
