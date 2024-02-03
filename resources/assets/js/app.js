@@ -5,3 +5,5 @@
  */
 
 require("./ckeditor.js");
+require("./bootstrap.js");
+require("./helpers.js");
