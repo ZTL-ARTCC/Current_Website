@@ -1,8 +1,3 @@
-@push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
-<link rel="stylesheet" href="{{ asset('css/dashboard_head.css') }}" />
-@endpush
-
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="/dashboard">

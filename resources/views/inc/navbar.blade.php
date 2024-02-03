@@ -1,7 +1,3 @@
-@push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
-@endpush
-
 <div class="bg-dark w-100">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
