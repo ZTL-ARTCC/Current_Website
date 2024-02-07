@@ -576,25 +576,25 @@ class TrainingDash extends Controller {
             case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;
-            case (in_array($position, [100, 101, 105])):
+            case (in_array($position, [100, 101, 102, 105, 106])):
                 return 's1';
                 break;
             case ($position > 21 && $position < 31): // Legacy types
                 return 's2';
                 break;
-            case (in_array($position, [102, 103, 106, 107, 109, 110])):
+            case (in_array($position, [103, 104, 107, 108, 109, 110, 111, 113])):
                 return 's2';
                 break;
             case ($position > 30 && $position < 42): // Legacy types
                 return 's3';
                 break;
-            case (in_array($position, [104, 108, 111, 112, 113, 114, 115, 123])):
+            case (in_array($position, [112, 114, 115, 116, 117, 118, 119, 123])):
                 return 's3';
                 break;
             case ($position > 41 && $position < 48): // Legacy types
                 return 'c1';
                 break;
-            case (in_array($position, [116, 117, 118, 119, 120, 121])):
+            case (in_array($position, [120, 121])):
                 return 'c1';
                 break;
             case ($position > 121 && $position != 123):

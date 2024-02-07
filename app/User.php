@@ -148,19 +148,25 @@ class User extends Authenticatable {
 
     protected const TRAIN_UNABLE = 0;
     protected const TRAIN_UNRES_GND = 1;
+    protected const TRAIN_CLT_DEL_GND = 2;
     protected const TRAIN_UNRES_TWR = 3;
-    protected const TRAIN_UNRES_APP = 5;
-    protected const TRAIN_T1_LCL = 8;
-    protected const TRAIN_T1_APP = 9;
-    protected const TRAIN_CTR = 7;
+    protected const TRAIN_CLT_TWR = 4;
+    protected const TRAIN_ATL_TWR = 5;
+    protected const TRAIN_UNRES_APP = 6;
+    protected const TRAIN_CLT_APP = 7;
+    protected const TRAIN_ATL_APP = 8;
+    protected const TRAIN_CTR = 9;
 
     protected static $TrainingLevel = [
-        self::TRAIN_UNABLE => 'Not Able to Train',
+        self::TRAIN_UNABLE => 'Unable to Train',
         self::TRAIN_UNRES_GND => 'Unrestricted DEL & GND',
+        self::TRAIN_CLT_DEL_GND => 'CLT DEL & GND',
         self::TRAIN_UNRES_TWR => 'Unrestricted TWR',
+        self::TRAIN_CLT_TWR => 'CLT TWR',
+        self::TRAIN_ATL_TWR => 'ATL TWR',
         self::TRAIN_UNRES_APP => 'Unrestricted Approach',
-        self::TRAIN_T1_LCL => 'Tier 1 Local',
-        self::TRAIN_T1_APP => 'Tier 1 Approach',
+        self::TRAIN_CLT_APP => 'CLT Approach',
+        self::TRAIN_ATL_APP => 'ATL (A80) Approach',
         self::TRAIN_CTR => 'Center'
     ];
 
