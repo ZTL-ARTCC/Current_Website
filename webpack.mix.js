@@ -84,6 +84,10 @@ mix.webpackConfig({
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js/app.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-   .sass('resources/assets/sass/home.scss', 'public/css/home.css');
+mix.setPublicPath('public')
+   .js('resources/assets/js/app.js', 'js')
+   .sass('resources/assets/sass/app.scss', 'css');
+
+const fs = require("fs");
+fs.readdirSync("resources/assets/js/mix/").forEach(fileName => mix.js(`resources/assets/js/mix/${fileName}`, "public/js"));
+fs.readdirSync("resources/assets/sass/mix/").forEach(fileName => mix.sass(`resources/assets/sass/mix/${fileName}`, "public/css"));
