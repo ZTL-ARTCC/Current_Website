@@ -280,7 +280,6 @@ class AdminDash extends Controller {
             $user->initials = $request->input('initials');
             $user->max = $request->input('max');
           
-            //$attributes = ['visitor', 'canTrain', 'canEvents', 'api_exempt'];
             $attributes = ['canTrain', 'canEvents', 'api_exempt'];
             foreach ($attributes as $attribute) {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
