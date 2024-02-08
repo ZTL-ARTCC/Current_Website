@@ -197,10 +197,14 @@ div.pyrite-bg {
   background-color: #ffdf00;
 }
 
-div.hours-bad {
+div.hours-bad, li.hours-bad {
   background-color: #e6b0aa;
 }
 
-div.hours-good {
+div.hours-good, li.hours-good {
   background-color: #a9dfbf;
+}
+
+.navbar-brand img {
+  width: 100px;
 }
