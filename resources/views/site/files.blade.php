@@ -56,7 +56,7 @@ Files
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
 								<div class="btn-group">
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download"><i class="fas fa-download fa-fw"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download" download><i class="fas fa-download fa-fw"></i></a>
 										@if(!is_null($f->permalink))
 											<a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Copy Permalink" data-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
 										@endif

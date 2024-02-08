@@ -32,6 +32,10 @@ Update Controller
         if(Auth::user()->isAbleTo('roster')) {
             $roster_disable = null;
         }
+        $train_config_disable = 'disabled';
+        if(Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ata')) {
+           $train_config_disable = null;
+        }
         $events_disable = 'disabled';
         if(Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) {
             $events_disable = null;
@@ -116,7 +120,7 @@ Update Controller
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
                         {!! Form::label('max', 'Training Level') !!}
-                        {!! Form::select('max', $user->training_level, $user->max, ['class' => 'form-control', $roster_disable]) !!}
+                        {!! Form::select('max', $user->training_level, $user->max, ['class' => 'form-control', $train_config_disable]) !!}
                     </div>
                     @endif
                 </div>
@@ -171,20 +175,23 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         @php
-                            $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = 'disabled';
-                            $center_disable = $t1_lcl_disable = $t1_app_disable = 'disabled';
+                            $solo_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = $center_disable = 'disabled';
+                            $clt_del_gnd_disable = $clt_twr_disable = $clt_app_disable = $atl_disable = $atl_app_disable = 'disabled';
                             if(Auth::user()->isAbleTo('roster')) {
-                                $train_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = null;
-                                $center_disable = $t1_lcl_disable = $t1_app_disable = null;
+                                $solo_disable = $unres_gnd_disable = $unres_twr_disable = $unres_app_disable = $center_disable = null;
+                                $clt_del_gnd_disable = $clt_twr_disable = $clt_app_disable = $atl_disable = $atl_app_disable = null;
                             }
                             elseif (Auth::user()->isAbleTo('train') && is_numeric(Auth::user()->max)) {
-                                $train_disable = null;
                                 $unres_gnd_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_GND')) ? null : 'disabled';
+                                $solo_disable = (Auth::user()->max > Auth::user()->getMagicNumber('TRAIN_UNRES_GND')) ? null : 'disabled';
+                                $clt_del_gnd_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_DEL_GND')) ? null : 'disabled';
                                 $unres_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_TWR')) ? null : 'disabled';
+                                $clt_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_TWR')) ? null : 'disabled';
+                                $atl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL')) ? null : 'disabled';
                                 $unres_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_APP')) ? null : 'disabled';
+                                $clt_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_APP')) ? null : 'disabled';
+                                $atl_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL_APP')) ? null : 'disabled';
                                 $center_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CTR')) ? null : 'disabled';
-                                $t1_lcl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_T1_LCL')) ? null : 'disabled';
-                                $t1_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_T1_APP')) ? null : 'disabled';
                             }
                         @endphp
                         {!! Form::hidden('del', $user->del) !!}
@@ -213,7 +220,7 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('twr_solo_fields', 'Unrestricted Solo Certifications (list facility IDs)') !!}
-                        {!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control','maxlength' => 255, $train_disable]) !!}
+                        {!! Form::text('twr_solo_fields', $user->twr_solo_fields, ['class' => 'form-control','maxlength' => 255, $solo_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('twr_solo_expires', 'Solo Expiration Date', ['class' => 'form-label']) !!}
@@ -227,11 +234,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('clt_del', 'Charlotte Clearance Delivery') !!}
-                        {!! Form::select('clt_del', $user->uncertified_certified, $user->clt_del, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('clt_del', $user->uncertified_certified, $user->clt_del, ['class' => 'form-control', $clt_del_gnd_disable]) !!}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('atl_twr', 'Charlotte Ground') !!}
-                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->clt_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::label('clt_gnd', 'Charlotte Ground') !!}
+                        {!! Form::select('clt_gnd', $user->uncertified_certified, $user->clt_gnd, ['class' => 'form-control', $clt_del_gnd_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -239,11 +246,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('clt_twr', 'Charlotte Tower') !!}
-                        {!! Form::select('clt_twr', $user->uncertified_certified, $user->clt_twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('clt_twr', $user->uncertified_certified, $user->clt_twr, ['class' => 'form-control', $clt_twr_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('clt_app', 'Charlotte Approach') !!}
-                        {!! Form::select('clt_app', $user->uncertified_certified, $user->clt_app, ['class' => 'form-control', $t1_app_disable]) !!}
+                        {!! Form::select('clt_app', $user->uncertified_certified, $user->clt_app, ['class' => 'form-control', $clt_app_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -251,11 +258,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('atl_del', 'Atlanta Clearance Delivery') !!}
-                        {!! Form::select('atl_del', $user->uncertified_certified, $user->atl_del, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('atl_del', $user->uncertified_certified, $user->atl_del, ['class' => 'form-control', $atl_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('atl_gnd', 'Atlanta Ground') !!}
-                        {!! Form::select('atl_gnd', $user->uncertified_certified, $user->atl_gnd, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('atl_gnd', $user->uncertified_certified, $user->atl_gnd, ['class' => 'form-control', $atl_disable]) !!}
                     </div>
                 </div>
             </div>
@@ -263,11 +270,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         {!! Form::label('atl_twr', 'Atlanta Tower') !!}
-                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->atl_twr, ['class' => 'form-control', $t1_lcl_disable]) !!}
+                        {!! Form::select('atl_twr', $user->uncertified_certified, $user->atl_twr, ['class' => 'form-control', $atl_disable]) !!}
                     </div>
                     <div class="col-sm-6">
                         {!! Form::label('atl_app', 'Atlanta (A80) Approach') !!}
-                        {!! Form::select('atl_app', $user->uncertified_certified_a80, $user->atl_app, ['class' => 'form-control', $t1_app_disable]) !!}
+                        {!! Form::select('atl_app', $user->uncertified_certified_a80, $user->atl_app, ['class' => 'form-control', $atl_app_disable]) !!}
                     </div>
                 </div>
             </div>

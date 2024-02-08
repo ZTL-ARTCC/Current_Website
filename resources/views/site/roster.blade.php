@@ -75,7 +75,7 @@ Roster
                                 @elseif($c->hasRole('mtr'))
                                 <span class="badge badge-info">MTR</span>
                                 @endif
-                                {{ $c->backwards_name }}
+                                {{ $c->backwards_public_name }}
                             </td>
                             <td class="text-center">{{$c->initials}}</td>
                             <td class="text-center">{{ $c->rating_short }}</td>
@@ -87,7 +87,7 @@ Roster
                                 <span class="badge badge-success">GND</span>
                                 @endif
                                 @if($c->twr === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">GND-SOLO</span>
+                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">TWR-SOLO</span>
                                 @elseif($c->twr > $c->getMagicNumber('UNCERTIFIED'))
                                 <span class="badge badge-danger">TWR</span>
                                 @endif
@@ -129,14 +129,14 @@ Roster
                                 @endif
                                 @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
                                 <span class="badge badge-info">
-                                    @if($c->app === $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
-                                    SAT
-                                    @elseif($c->app === $c->getMagicNumber('TRACON_DR_CERTIFIED'))
-                                    DR
-                                    @elseif($c->app === $c->getMagicNumber('TRACON_TAR_CERTIFIED'))
-                                    TAR
+                                    @if($c->atl_app === $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
+                                    A80 SAT
+                                    @elseif($c->atl_app === $c->getMagicNumber('TRACON_DR_CERTIFIED'))
+                                    A80 DR
+                                    @elseif($c->atl_app === $c->getMagicNumber('TRACON_TAR_CERTIFIED'))
+                                    A80 TAR
                                     @else
-                                    APP
+                                    A80
                                     @endif
                                 </span>
                                 @endif
