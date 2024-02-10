@@ -186,12 +186,12 @@ Profile
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         @if($personal_stats->total_hrs < 1)
-                            <li class="list-group-item hours-bad">
+                            <li class="list-group-item hours-danger">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @else
-                            <li class="list-group-item hours-good">
+                            <li class="list-group-item hours-success">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>

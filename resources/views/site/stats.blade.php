@@ -94,9 +94,9 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td>{{ $stats[$h->id]->approach_hrs }}</td>
                             <td>{{ $stats[$h->id]->enroute_hrs }}</td>
                             @if($stats[$h->id]->total_hrs >= 1)
-                                <td class="hours-good black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-success black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @else
-                                <td class="hours-bad black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-danger black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @endif
                         </tr>
                     @endforeach
@@ -124,9 +124,9 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td>{{ $stats[$h->id]->approach_hrs }}</td>
                             <td>{{ $stats[$h->id]->enroute_hrs }}</td>
                             @if($stats[$h->id]->total_hrs >= 1)
-                                <td class="hours-good black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-success black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @else
-                                <td class="hours-bad black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-danger black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @endif
                         </tr>
                     @endforeach
