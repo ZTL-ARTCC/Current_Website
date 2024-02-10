@@ -108,7 +108,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} ({{ $c->id }})</a></td>
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 2)
-                                <td class="black hours-good"><b>
+                                <td class="black hours-success"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
@@ -116,7 +116,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                     @endif
                                 </b></td>
                             @else
-                                <td class="black hours-bad"><b>
+                                <td class="black hours-danger"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
