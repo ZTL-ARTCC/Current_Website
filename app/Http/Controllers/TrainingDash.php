@@ -253,8 +253,11 @@ class TrainingDash extends Controller {
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
+        $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c);
+        return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
+            ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
+            ->with('progress_types', $ticket->getProgressSelectAttribute());
     }
 
     public function saveNewTicket(Request $request) {
@@ -303,36 +306,37 @@ class TrainingDash extends Controller {
         }
 
         // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
-        if ($request->position == 113 || $request->position == 112) {
-            $ticket->position = 'ATL_TWR';
-        } elseif ($request->position == 100 || $request->position == 101) {
-            $ticket->position = 'ZTL_DEL';
-        } elseif ($request->position == 103 || $request->position == 104) {
-            $ticket->position = 'ATL_DEL';
-        } elseif ($request->position == 102) {
-            $ticket->position = 'CLT_DEL';
-        } elseif ($request->position == 105) {
-            $ticket->position = 'ZTL_GND';
-        } elseif ($request->position == 106) {
-            $ticket->position = 'CLT_GND';
-        } elseif ($request->position == 107 || $request->position == 108) {
-            $ticket->position = 'ATL_GND';
-        } elseif ($request->position == 109 || $request->position == 110) {
-            $ticket->position = 'ZTL_TWR';
-        } elseif ($request->position == 111) {
-            $ticket->position = 'CLT_TWR';
-        } elseif ($request->position == 114 || $request->position == 115) {
-            $ticket->position = 'ZTL_APP';
-        } elseif ($request->position == 116) {
-            $ticket->position = 'CLT_APP';
-        } elseif ($request->position == 117 || $request->position == 118 || $request->position == 119) {
-            $ticket->position = 'ATL_APP';
-        } elseif ($request->position == 120 || $request->position == 121) {
-            $ticket->position = 'ATL_CTR';
-        } elseif ($request->position == 122) {
-            $ticket->position = 'ZTL_RCR';
-        } elseif ($request->position == 123) {
-            $ticket->position = 'BHM_APP';
+        switch($request->position) {
+            case 100:
+            case 101: $ticket->position = 'ZTL_DEL';
+                break;
+            case 105: $ticket->position = 'ZTL_GND';
+                break;
+            case 109: $ticket->position = 'ZTL_TWR';
+                break;
+            case 115: $ticket->position = 'ZTL_APP';
+                break;
+            case 102: $ticket->position = 'CTL_DEL';
+                break;
+            case 106: $ticket->position = 'CLT_GND';
+                break;
+            case 111: $ticket->position = 'CLT_TWR';
+                break;
+            case 116: $ticket->position = 'CLT_APP';
+                break;
+            case 104: $ticket->position = 'ATL_DEL';
+                break;
+            case 108: $ticket->position = 'ATL_GND';
+                break;
+            case 113: $ticket->position = 'ATL_TWR';
+                break;
+            case 117:
+            case 118:
+            case 119: $ticket->position = 'ATL_APP';
+                break;
+            case 121: $ticket->position = 'ZTL_CTR';
+                break;
+            default: $ticket->position = null;
         }
 
         $req_params = [
@@ -347,10 +351,9 @@ class TrainingDash extends Controller {
             ],
             'http_errors' => false
         ];
-
-        $client = new Client();
-        $res = $client->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
-
+        if (!is_null($ticket->position)) {
+            (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
+        }
         if ($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
@@ -359,28 +362,6 @@ class TrainingDash extends Controller {
             $ots->status = 0;
             $ots->save();
             $extra = ' and the OTS recommendation has been added';
-        }
-        if ($request->monitor == 1) {
-            if ($request->position == 10) {
-                $controller->del = 88;
-            } elseif ($request->position == 13) {
-                $controller->del == 89;
-            } elseif ($request->position == 17) {
-                $controller->gnd = 88;
-            } elseif ($request->position == 21) {
-                $controller->gnd = 89;
-            } elseif ($request->position == 26) {
-                $controller->twr = 88;
-            } elseif ($request->position == 30) {
-                $controller->twr = 89;
-            } elseif ($request->position == 35) {
-                $controller->app = 88;
-            } elseif ($request->position == 41) {
-                $controller->app = 89;
-            } elseif ($request->position == 47) {
-                $controller->gnd = 89;
-            }
-            $controller->save();
         }
 
         $audit = new Audit;
@@ -401,9 +382,19 @@ class TrainingDash extends Controller {
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
+        $positions = $ticket->getPositionSelectAttribute();
+        if (!key_exists($ticket->position, $positions)) {
+            $positions[$ticket->position] = 'Legacy Category';
+        }
+        $sessions = $ticket->getSessionSelectAttribute();
+        if (!key_exists($ticket->session_id, $sessions)) {
+            $sessions[$ticket->session_id] = 'Legacy Session';
+        }
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-            return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers);
+            return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
+            ->with('positions', $positions)->with('session_ids', $sessions)
+            ->with('progress_types', $ticket->getProgressSelectAttribute());
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
@@ -582,37 +573,28 @@ class TrainingDash extends Controller {
 
     public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
         switch (true) {
-            case ($position > 6 && $position < 22):
+            case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;
-            case ($position > 99 && $position < 103):
+            case (in_array($position, [100, 101, 102, 105, 106])):
                 return 's1';
                 break;
-            case ($position > 104 && $position < 107):
-                return 's1';
-                break;
-            case ($position > 21 && $position < 31):
+            case ($position > 21 && $position < 31): // Legacy types
                 return 's2';
                 break;
-            case ($position > 102 && $position < 105):
+            case (in_array($position, [103, 104, 107, 108, 109, 110, 111, 113])):
                 return 's2';
                 break;
-            case ($position > 106 && $position < 114):
-                return 's2';
-                break;
-            case ($position > 30 && $position < 42):
+            case ($position > 30 && $position < 42): // Legacy types
                 return 's3';
                 break;
-            case ($position > 113 && $position < 120):
+            case (in_array($position, [112, 114, 115, 116, 117, 118, 119, 123])):
                 return 's3';
                 break;
-            case ($position == 123):
-                return 's3';
-                break;
-            case ($position > 41 && $position < 48):
+            case ($position > 41 && $position < 48): // Legacy types
                 return 'c1';
                 break;
-            case ($position > 119 && $position < 122):
+            case (in_array($position, [120, 121])):
                 return 'c1';
                 break;
             case ($position > 121 && $position != 123):
@@ -715,6 +697,8 @@ class TrainingDash extends Controller {
             }
         }
         $trainingStaffBelowMins = 0;
+        $ins = 0;
+        $mtr = 0;
         foreach ($trainers as $trainer) {
             $trainerStats = [];
             $trainerStats['name'] = explode(' ', $trainer->getFullNameAttribute())[1];
@@ -731,7 +715,14 @@ class TrainingDash extends Controller {
                 $trainingStaffBelowMins++;
             }
             $trainerSessions[] = $trainerStats;
+            if (User::find($trainer->id)->hasRole('ins')) {
+                $ins++;
+            } elseif (User::find($trainer->id)->hasRole('mtr')) {
+                $mtr++;
+            }
         }
+        $retArr['totalInstructors'] = $ins;
+        $retArr['totalMentors'] = $mtr;
         $retArr['trainerSessions'] = $trainerSessions;
         // Students requiring training
         if ($dataType == 'graph') {
@@ -770,48 +761,6 @@ class TrainingDash extends Controller {
             }
             $retArr['sessionDuration'] = $sessionDuration;
         }
-        // Number of student cancellations, no shows
-        if ($dataType == 'stats') {
-            $setmoreAccessToken = null;
-            $setmoreAppointments = [];
-            $studentCancel = $studentNoShow = 0;
-            $retArr['setmoreAPIFail'] = false;
-            $client = new Client();
-            try {
-                $res = $client->request('GET', Config::get('setmore.endpoint') . '/o/oauth2/token?refreshToken=' . Config::get('setmore.api_key'));
-                $setmoreAuthResp = (string) $res->getBody();
-                $setmoreAuthRespA = json_decode($setmoreAuthResp, true);
-            } catch (ClientErrorResponseException $exception) {
-                // Unused - don't throw an error
-            }
-            if (isset($setmoreAuthRespA) && isset($setmoreAuthRespA['response'])) {
-                if ($setmoreAuthRespA['response'] && isset($setmoreAuthRespA['data']['token'])) {
-                    $setmoreAccessToken = $setmoreAuthRespA['data']['token']['access_token'];
-                }
-            } else {
-                $retArr['setmoreAPIFail'] = true;
-            }
-            if ($setmoreAccessToken != null) {
-                $setmoreAppointments = $this->getSetmoreAppointments($setmoreAccessToken, $from, $to);
-                if ($setmoreAppointments == 'API_FAIL') {
-                    $retArr['setmoreAPIFail'] = true;
-                    $setmoreAppointments = [];
-                }
-                foreach ($setmoreAppointments as $setmoreAppointment) {
-                    if (isset($setmoreAppointment['label'])) {
-                        if ($setmoreAppointment['label'] == 'Cancel') {
-                            $studentCancel++;
-                        } elseif ($setmoreAppointment['label'] == 'No-Show') {
-                            $studentNoShow++;
-                        }
-                    }
-                }
-            } else {
-                $retArr['setmoreAPIFail'] = true;
-            }
-            $retArr['studentCancel'] = $studentCancel;
-            $retArr['studentNoShow'] = $studentNoShow;
-        }
         // Generate TA's monthly report
         if ($dataType == 'stats') {
             if ($retArr['sessionsPerMonth'] == 0) {
@@ -837,58 +786,6 @@ class TrainingDash extends Controller {
             $retArr['taMonthlyReport'] = "In the Month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . ", ZTL has offered " . $retArr['sessionsPerMonth'] . " training sessions (" . $percentSessionsChange . "% change from " . Carbon::createFromDate($retArr['date']['start_date'])->subMonths(1)->format('F') . "). " . $retArr['sessionsCompletePerMonth'] . " sessions were completed (" . $percentSessionsCompleteChange . "%), with " . $retArr['sessionsPerMonthNoShow'] . " known no-shows. " . $trainingStaffBelowMins . " Training Staff members did not meet monthly minimums.";
         }
         return $retArr;
-    }
-
-    private function getSetmoreAppointments($setmoreAccessToken, $from, $to) {
-        $setmoreAppointments = [];
-        $setmoreCursor = null;
-        do {
-            $appointmentBatch = $this->getAppointmentBatch($setmoreAccessToken, $from, $to, $setmoreCursor);
-            if (is_array($appointmentBatch)) {
-                $setmoreAppointments = array_merge($setmoreAppointments, $appointmentBatch);
-            } elseif ($appointmentBatch == 'API_FAIL') {
-                return $appointmentBatch;
-            }
-        } while (is_numeric($setmoreCursor));
-        return $setmoreAppointments;
-    }
-
-    private function getAppointmentBatch($setmoreAccessToken, $from, $to, &$cursor) {
-        $cursorStr = '';
-        if (!is_null($cursor)) {
-            $cursorStr = '&cursor=' . $cursor;
-        }
-        $fromDate = Carbon::createFromDate($from)->format('d-m-Y');
-        $toDate = Carbon::createFromDate($to)->format('d-m-Y');
-        $client = new Client();
-        $res = $client->request(
-            'GET',
-            Config::get('setmore.endpoint') . '/bookingapi/appointments?startDate=' . $fromDate . '&endDate=' . $toDate . $cursorStr,
-            [
-                'headers' =>
-                [
-                    'Content-type' => "application/json",
-                    'Authorization' => "Bearer {$setmoreAccessToken}"
-                ],
-                'http_errors' => false
-            ]
-        );
-        
-        if ($res->getStatusCode() == 200) {
-            $setmoreResp = (string) $res->getBody();
-            $setmoreRespA = json_decode($setmoreResp, true);
-            if (isset($setmoreRespA['data']['cursor'])) {
-                $cursor = $setmoreRespA['data']['cursor'];
-            } else {
-                $cursor = null;
-            }
-            if (isset($setmoreRespA['data']['appointments'])) {
-                return $setmoreRespA['data']['appointments'];
-            }
-        } else {
-            return 'API_FAIL';
-        }
-        return null;
     }
 
     public function generateGraphs(Request $request) {

@@ -79,7 +79,7 @@ Profile
     <hr>
     <div class="row">
         <div class="col">
-            <h4>My Setmore Reservations</h4>
+            <h4>My Training Appointments</h4>
             <div class="table">
                 <table class="table table-bordered text-center">
                     <thead>
@@ -88,33 +88,27 @@ Profile
                             <th scope="col">Start Time</th>
                             <th scope="col">Lesson Type</th>
                             <th scope="col">Instructor/Mentor</th>
+                            <th scope="col">View/Modify</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if($setmore_data_stale)
-                            <tr class="table-warning">
-                                <td colspan="4">
-                                    <i class="fas fa-exclamation-triangle"></i> Our connection with Setmore is malfunctioning - reservation data may be inaccurate <i class="fas fa-exclamation-triangle"></i>
-                                </td>
-                            </tr>
-                        @endif
-                        @if(count($setmore_appointments) > 0)
-                            @foreach($setmore_appointments as $sm_res)
+                        @if(count($ea_appointments) > 0)
+                            @foreach($ea_appointments as $ea_appointment)
                                 <tr>
-                                    <td scope="col">{{ $sm_res->res_date }}</td>
-                                    <td scope="col">{{ $sm_res->res_time }} ET</td>
-                                    <td scope="col">{{ $sm_res->service_description }}</td>
-                                    <td scope="col">{{ $sm_res->staff_name }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_date }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_time }} ET</td>
+                                    <td scope="col">{{ $ea_appointment->service_description }}</td>
+                                    <td scope="col">{{ $ea_appointment->staff_name }}</td>
+                                    <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/booking/reschedule/{{ $ea_appointment->link_token }}?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>
                                 </tr>   
                             @endforeach
                         @else
                             <tr>
-                                <td scope="col" colspan="4">No Setmore reservations found.</td>
+                                <td scope="col" colspan="5">No appointments found.</td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
-                <p>Appointments will show here approximately 30 minutes after booking.</p>
             </div>
         </div>
     </div>
