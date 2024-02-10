@@ -291,8 +291,46 @@ Update Controller
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="events">
-            @include('dashboard.admin.roster.profile_event')
-        </events>
+            <br>
+            <h5>Controler Event Participation Tracking</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>Date</th>
+                        <th>Event Name</th>
+                        <th>Position<br>Assigned</th>
+                        <th>Connection<br>Log</th>
+                        <th>Time Logged<br>(hours)</th>
+                        <th>No Show?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($events as $event)
+                        <tr class="text-center">
+                            <td>{{ $event->event_date }}</td>
+                            <td><a href="/dashboard/controllers/events/view/{{ $event->id }}" alt="Link to event" target="_blank"></a>{{ $event->event_name }}</td>
+                            <td>{{ $event->position_assigned }}</td>
+                            <td>
+                                @foreach ($event->connection as $connection)
+                                    {{ $connection->callsign }} ({{ $connection->start }}-{{ $connection->end }}) <br>
+                                @endforeach
+                            </td>
+                            <td>{{ $event->time_logged }}</td>
+                            <td>
+                                @if($event->no_show == 1)
+                                    <span class="text-danger" data-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    @if (count($events) == 0)
+                        <tr class="text-center">
+                            <td colspan="6">No event history found for this controller.</td>
+                        </tr>
+                    @endif        
+                </tbody>
+            </table>
+        </div>
     </div>
     {!! Form::close() !!}
 </div>
