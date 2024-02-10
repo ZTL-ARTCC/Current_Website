@@ -32,24 +32,24 @@ Visit Requests
         <div role="tabpanel" class="tab-pane active" id="new">
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">Name (CID)</th>
-                        <th scope="col" class="text-center">Rating</th>
-                        <th scope="col" class="text-center">Email</th>
-                        <th scope="col" class="text-center">Home ARTCC/Division</th>
-                        <th scope="col" class="text-center">Submitted at</th>
-                        <th scope="col" class="text-center" width="120px">Actions</th>
+                    <tr class="text-center">
+                        <th scope="col" class="text-left">Name (CID)</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Home ARTCC/Division</th>
+                        <th scope="col">Submitted at</th>
+                        <th scope="col" width="120px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($new)
                         @foreach($new as $v)
-                            <tr>
-                                <td data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td class="text-center">{{ $v->rating_short }}</td>
-                                <td class="text-center">{{ $v->email }}</td>
-                                <td class="text-center">{{ $v->home }}</td>
-                                <td class="text-center">{{ $v->updated_at }}</td>
+                            <tr class="text-center">
+                                <td class="text-left" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td>{{ $v->rating_short }}</td>
+                                <td>{{ $v->email }}</td>
+                                <td>{{ $v->home }}</td>
+                                <td>{{ $v->updated_at }}</td>
                                 <td>
                                     <a href="/dashboard/admin/roster/visit/accept/{{ $v->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept"><i class="fa fa-check"></i></a>
                                     <span data-toggle="modal" data-target="#reject{{ $v->id }}">
@@ -90,25 +90,25 @@ Visit Requests
         <div role="tabpanel" class="tab-pane" id="accepted">
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">Name (CID)</th>
-                        <th class="text-center" scope="col">Rating</th>
-                        <th class="text-center" scope="col">Email</th>
-                        <th class="text-center" scope="col">Home ARTCC/Division</th>
-                        <th class="text-center" scope="col">Accepted at</th>
-                        <th class="text-center" scope="col">Accepted by</th>
+                    <tr class="text-center">
+                        <th class="text-left" scope="col">Name (CID)</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Home ARTCC/Division</th>
+                        <th scope="col">Accepted at</th>
+                        <th scope="col">Accepted by</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($accepted)
                         @foreach($accepted as $v)
-                            <tr>
-                                <td class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td class="text-center">{{ $v->rating_short }}</td>
-                                <td class="text-center">{{ $v->email }}</td>
-                                <td class="text-center">{{ $v->home }}</td>
-                                <td class="text-center">{{ $v->updated_at }}</td>
-                                <td class="text-center">{{ App\User::find($v->updated_by)->full_name }}</td>
+                            <tr class="text-center">
+                                <td class="text-left" class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td>{{ $v->rating_short }}</td>
+                                <td>{{ $v->email }}</td>
+                                <td>{{ $v->home }}</td>
+                                <td>{{ $v->updated_at }}</td>
+                                <td>{{ App\User::find($v->updated_by)->full_name }}</td>
                             </tr>
                         @endforeach
                     @else
@@ -120,25 +120,25 @@ Visit Requests
         <div role="tabpanel" class="tab-pane" id="rejected">
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">Name (CID)</th>
-                        <th class="text-center" scope="col">Rating</th>
-                        <th class="text-center" scope="col">Email</th>
-                        <th class="text-center" scope="col">Home ARTCC/Division</th>
-                        <th class="text-center" scope="col">Rejected at</th>
-                        <th class="text-center" scope="col">Rejected by</th>
+                    <tr class="text-center">
+                        <th class="text-left" scope="col">Name (CID)</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Home ARTCC/Division</th>
+                        <th scope="col">Rejected at</th>
+                        <th scope="col">Rejected by</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if($rejected)
                         @foreach($rejected as $v)
-                            <tr>
-                                <td class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td class="text-center">{{ $v->rating_short }}</td>
-                                <td class="text-center">{{ $v->email }}</td>
-                                <td class="text-center">{{ $v->home }}</td>
-                                <td class="text-center">{{ $v->updated_at }}</td>
-                                <td class="text-center">{{ App\User::find($v->updated_by)->full_name }}</td>
+                            <tr class="text-center">
+                                <td class="text-left" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td>{{ $v->rating_short }}</td>
+                                <td>{{ $v->email }}</td>
+                                <td>{{ $v->home }}</td>
+                                <td>{{ $v->updated_at }}</td>
+                                <td>{{ App\User::find($v->updated_by)->full_name }}</td>
                             </tr>
                         @endforeach
                     @else
