@@ -23,7 +23,7 @@ Update Controller
         @endif
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
         <li class="nav-item">
-            <a class="nav-link disabled" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+            <a class="nav-link" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
         </li>
         @endif
     </ul>
@@ -291,6 +291,7 @@ Update Controller
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="events">
+            @include('dashboard.admin.roster.profile_event')
         </events>
     </div>
     {!! Form::close() !!}
