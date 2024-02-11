@@ -189,7 +189,7 @@ Update Controller
                                 $clt_del_gnd_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_DEL_GND')) ? null : 'disabled';
                                 $unres_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_TWR')) ? null : 'disabled';
                                 $clt_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_TWR')) ? null : 'disabled';
-                                $atl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL')) ? null : 'disabled';
+                                $atl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL_TWR')) ? null : 'disabled';
                                 $unres_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_APP')) ? null : 'disabled';
                                 $clt_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_APP')) ? null : 'disabled';
                                 $atl_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL_APP')) ? null : 'disabled';
