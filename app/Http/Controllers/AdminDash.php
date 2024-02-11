@@ -272,6 +272,9 @@ class AdminDash extends Controller {
         }
 
         $user_events = [];
+        $event_stats = new \stdClass();
+        $event_stats->events_total = $event_stats->events_total_12mo = $event_stats->hours_total = $event_stats->hours_total_12mo
+            = $event_stats->no_shows = $event_stats->no_shows_12mo = 0;
         $inclusive_hours = 2; //How many hours before/after event should we search for in the controller log?
         $event_registrations = EventRegistration::where('controller_id', $user->id)->get();
         foreach ($event_registrations as $event_registration) {
@@ -285,6 +288,8 @@ class AdminDash extends Controller {
             $user_event->time_logged = 0;
             $user_event->no_show = $event_registration->no_show;
             $user_event->connection = [];
+            $event_stats->events_total++;
+            $event_stats->no_shows += ($event_registration->no_show == 1) ? 1 : 0;
             $event_start = Carbon::createFromFormat('m/d/Y H:i:s', $event->date . ' ' . $event->start_time . ':00')->subHours($inclusive_hours);
             $next_day = 0;
             if ($event->start_time > $event->end_time) { // This is incapable of handling multi-day events due to database limitations
@@ -308,10 +313,16 @@ class AdminDash extends Controller {
                 $user_event->time_logged += $connection->duration / 60 / 60;
             }
             $user_event->time_logged = round($user_event->time_logged, 1);
+            $event_stats->hours_total += $user_event->time_logged;
+            if ($event_start > Carbon::now()->subYear(1)) {
+                $event_stats->events_total_12mo++;
+                $event_stats->hours_total_12mo += $user_event->time_logged;
+                $event_stats->no_shows_12mo += ($event_registration->no_show == 1) ? 1 : 0;
+            }
             $user_events[] = $user_event;
         }
 
-        return view('dashboard.admin.roster.edit')->with('user', $user)->with('events', $user_events);
+        return view('dashboard.admin.roster.edit')->with('user', $user)->with('events', $user_events)->with('event_stats', $event_stats);
     }
 
     public function updateController(Request $request, $id) {
