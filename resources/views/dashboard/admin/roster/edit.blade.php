@@ -300,7 +300,7 @@ Update Controller
                         <div class="card-body">
                             Event Participation: {{ $event_stats->events_total_12mo }}<br>
                             Event Hours Logged: {{ $event_stats->hours_total_12mo }}<br>
-                            Event No-Shows: {{ $event_stats->no_shows_12mo }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows_12mo }}
                         </div>
                     </div>
                 </div>
@@ -310,7 +310,7 @@ Update Controller
                         <div class="card-body">
                             Event Participation: {{ $event_stats->events_total }}<br>
                             Event Hours Logged: {{ $event_stats->hours_total }}<br>
-                            Event No-Shows: {{ $event_stats->no_shows }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows }}
                         </div>
                     </div>
                 </div>            
