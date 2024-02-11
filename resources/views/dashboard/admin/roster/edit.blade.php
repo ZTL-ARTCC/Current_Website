@@ -293,6 +293,28 @@ Update Controller
         <div role="tabpanel" class="tab-pane" id="events">
             <br>
             <h5>Controler Event Participation Tracking</h5>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <div class="card p-3">
+                        <h5 class="card-title">Stats Last 12-Months</h5>
+                        <div class="card-body">
+                            Event Participation: {{ $event_stats->events_total_12mo }}<br>
+                            Event Hours Logged: {{ $event_stats->hours_total_12mo }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows_12mo }}<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card p-3">
+                        <h5 class="card-title">Stats Lifetime</h5>
+                        <div class="card-body">
+                            Event Participation: {{ $event_stats->events_total }}<br>
+                            Event Hours Logged: {{ $event_stats->hours_total }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows }}<br>
+                        </div>
+                    </div>
+                </div>            
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr class="text-center">
