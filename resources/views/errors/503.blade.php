@@ -12,9 +12,8 @@ Under Maintenance
         &nbsp;
     </div>
 </span>
-<br>
 
-<div class="container">
+<div class="container mt-4 mb-4">
     <div class="card">
         <div class="card-body">
             <div class="row">
