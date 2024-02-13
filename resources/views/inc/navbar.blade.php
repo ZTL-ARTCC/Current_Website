@@ -65,7 +65,7 @@
                             <a class="dropdown-item" href="/controllers/files">Files</a>
                             <a class="dropdown-item" href="https://ids.ztlartcc.org">vIDS</a>
                             <a class="dropdown-item" href="/controllers/stats">Controller Stats</a>
-                            <a class="dropdown-item" href="/controllers/teamspeak">Teamspeak Information</a>
+                            <a class="dropdown-item" href="/controllers/teamspeak">TeamSpeak Information</a>
                         </div>
                     </li>
                     @if(Auth::guest())
