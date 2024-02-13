@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-Teamspeak
+TeamSpeak
 @endsection
 
 @section('content')
