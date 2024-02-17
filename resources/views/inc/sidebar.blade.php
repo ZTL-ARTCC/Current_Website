@@ -1,7 +1,3 @@
-@push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" />
-@endpush
-
 <div class="card bg-light card-body" id="pill-sidebar">
     <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
         <div class="dropdown-divider"></div>
