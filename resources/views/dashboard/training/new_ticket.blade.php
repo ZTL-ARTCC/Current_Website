@@ -61,11 +61,8 @@ New Training Ticket
 						$currentTimeET = $currentDateET->format('H:i');
 					@endphp
                     {!! Form::label('start', 'Start Time ET (now ' . $currentTimeET . ')', ['class' => 'form-label']) !!}
-                    <div class="input-group datedt_picker_time" id="datetimepicker2" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('start', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
-                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -74,9 +71,6 @@ New Training Ticket
                     {!! Form::label('end', 'End Time ET', ['class' => 'form-label']) !!}
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {!! Form::text('end', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
-                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -85,9 +79,6 @@ New Training Ticket
                     {!! Form::label('duration', 'Duration (hh:mm)', ['class' => 'form-label']) !!}
                     <div class="input-group date dt_picker_time" id="datetimepicker4" data-target-input="nearest">
                         {!! Form::text('duration', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
-                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
                     </div>
                 </div>
             </div>
