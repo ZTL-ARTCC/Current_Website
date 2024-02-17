@@ -270,7 +270,59 @@ class AdminDash extends Controller {
             $user->clt_app = 1;
             $user->atl_app = 1;
         }
-        return view('dashboard.admin.roster.edit')->with('user', $user);
+
+        $user_events = [];
+        $event_stats = new \stdClass();
+        $event_stats->events_total = $event_stats->events_total_12mo = $event_stats->hours_total = $event_stats->hours_total_12mo
+            = $event_stats->no_shows = $event_stats->no_shows_12mo = 0;
+        $inclusive_hours = 2; //How many hours before/after event should we search for in the controller log?
+        $event_registrations = EventRegistration::where('controller_id', $user->id)->get();
+        foreach ($event_registrations as $event_registration) {
+            $event = Event::find($event_registration->event_id);
+            $position = EventPosition::find($event_registration->position_id);
+            $user_event = new \stdClass();
+            $user_event->id = $event->id;
+            $user_event->event_date = $event->date;
+            $user_event->event_name = $event->name;
+            $user_event->position_assigned = $position->name;
+            $user_event->time_logged = 0;
+            $user_event->no_show = $event_registration->no_show;
+            $user_event->connection = [];
+            $event_stats->events_total++;
+            $event_stats->no_shows += ($event_registration->no_show == 1) ? 1 : 0;
+            $event_start = Carbon::createFromFormat('m/d/Y H:i:s', $event->date . ' ' . $event->start_time . ':00')->subHours($inclusive_hours);
+            $next_day = 0;
+            if ($event->start_time > $event->end_time) { // This is incapable of handling multi-day events due to database limitations
+                $next_day = 1;
+            }
+            $event_end = Carbon::createFromFormat('m/d/Y H:i:s', $event->date . ' ' . $event->end_time . ':00')->addDays($next_day)->addHours($inclusive_hours);
+            $connections = ControllerLog::where('cid', $user->id)
+                ->where(\DB::raw("STR_TO_DATE(date,'%m/%d/%Y')"), '>=', $event_start->format('Y-m-d'))
+                ->where(\DB::raw("STR_TO_DATE(date,'%m/%d/%Y')"), '<=', $event_end->format('Y-m-d'))
+                ->get();
+            foreach ($connections as $connection) {
+                $time_logoff = $connection->time_logon + $connection->duration;
+                if (($event_start->timestamp > $time_logoff)||($event_end->timestamp < $connection->time_logon)) {
+                    continue;
+                }
+                $event_connection = new \stdClass();
+                $event_connection->callsign = $connection->position;
+                $event_connection->start = Carbon::createFromTimestamp($connection->time_logon)->format('m/d H:i');
+                $event_connection->end = Carbon::createFromTimestamp($time_logoff)->format('m/d H:i');
+                $user_event->connection[] = $event_connection;
+                $user_event->time_logged += $connection->duration / 60 / 60;
+            }
+            $user_event->time_logged = round($user_event->time_logged, 1);
+            $event_stats->hours_total += $user_event->time_logged;
+            if ($event_start > Carbon::now()->subYear(1)) {
+                $event_stats->events_total_12mo++;
+                $event_stats->hours_total_12mo += $user_event->time_logged;
+                $event_stats->no_shows_12mo += ($event_registration->no_show == 1) ? 1 : 0;
+            }
+            $user_events[] = $user_event;
+        }
+
+        return view('dashboard.admin.roster.edit')->with('user', $user)->with('events', $user_events)->with('event_stats', $event_stats);
     }
 
     public function updateController(Request $request, $id) {
@@ -1511,6 +1563,22 @@ class AdminDash extends Controller {
         $position->save();
 
         return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
+    }
+
+    public function eventMarkNoShow($id) {
+        $position = EventRegistration::find($id);
+        $position->no_show = 1;
+        $position->save();
+
+        return redirect()->back()->with('success', 'Controller was marked as a no-show.');
+    }
+
+    public function eventUnMarkNoShow($id) {
+        $position = EventRegistration::find($id);
+        $position->no_show = 0;
+        $position->save();
+
+        return redirect()->back()->with('success', 'Controller was unmarked as a no-show.');
     }
 
     public function manualAssign(Request $request, $id) {

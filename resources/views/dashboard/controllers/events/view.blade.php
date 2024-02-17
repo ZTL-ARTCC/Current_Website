@@ -288,6 +288,17 @@ View Event
                                                         @endif
                                                         <b>
                                                             {{ $c->controller_name }}
+                                                            &nbsp;
+                                                            @if($c->no_show == 1)
+                                                                <a href="/dashboard/admin/events/noshow/unmark/{{ $c->id }}"
+                                                                    class="text-danger" data-toggle="tooltip"
+                                                                    title="Unmark No-Show"><i class="fas fa-user-tag"></i></a>
+                                                            @else
+                                                                <a href="/dashboard/admin/events/noshow/mark/{{ $c->id }}"
+                                                                    class="text-success" data-toggle="tooltip"
+                                                                    title="Mark No-Show"><i class="fas fa-user-check"></i></a>
+                                                            @endif
+                                                            <br>
                                                             <i>
                                                                 @if($c->start_time != null)
                                                                     ({{ $c->start_time }}

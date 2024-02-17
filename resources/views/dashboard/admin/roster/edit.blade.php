@@ -21,7 +21,7 @@ Update Controller
         @endif
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
         <li class="nav-item">
-            <a class="nav-link disabled" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+            <a class="nav-link" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
         </li>
         @endif
     </ul>
@@ -187,7 +187,7 @@ Update Controller
                                 $clt_del_gnd_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_DEL_GND')) ? null : 'disabled';
                                 $unres_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_TWR')) ? null : 'disabled';
                                 $clt_twr_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_TWR')) ? null : 'disabled';
-                                $atl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL')) ? null : 'disabled';
+                                $atl_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL_TWR')) ? null : 'disabled';
                                 $unres_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_UNRES_APP')) ? null : 'disabled';
                                 $clt_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_CLT_APP')) ? null : 'disabled';
                                 $atl_app_disable = (Auth::user()->max >= Auth::user()->getMagicNumber('TRAIN_ATL_APP')) ? null : 'disabled';
@@ -289,7 +289,68 @@ Update Controller
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="events">
-        </events>
+            <br>
+            <h5>Controler Event Participation Tracking</h5>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <div class="card p-3">
+                        <h5 class="card-title">Stats Last 12-Months</h5>
+                        <div class="card-body">
+                            Event Participation: {{ $event_stats->events_total_12mo }}<br>
+                            Event Hours Logged: {{ $event_stats->hours_total_12mo }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows_12mo }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card p-3">
+                        <h5 class="card-title">Stats Lifetime</h5>
+                        <div class="card-body">
+                            Event Participation: {{ $event_stats->events_total }}<br>
+                            Event Hours Logged: {{ $event_stats->hours_total }}<br>
+                            Event No-Shows: {{ $event_stats->no_shows }}
+                        </div>
+                    </div>
+                </div>            
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>Date</th>
+                        <th>Event Name</th>
+                        <th>Position<br>Assigned</th>
+                        <th>Connection<br>Log</th>
+                        <th>Time Logged<br>(hours)</th>
+                        <th>No Show?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($events as $event)
+                        <tr class="text-center">
+                            <td>{{ $event->event_date }}</td>
+                            <td><a href="/dashboard/controllers/events/view/{{ $event->id }}" alt="Link to event" target="_blank"></a>{{ $event->event_name }}</td>
+                            <td>{{ $event->position_assigned }}</td>
+                            <td>
+                                @foreach ($event->connection as $connection)
+                                    {{ $connection->callsign }} ({{ $connection->start }}-{{ $connection->end }}) <br>
+                                @endforeach
+                            </td>
+                            <td>{{ $event->time_logged }}</td>
+                            <td>
+                                @if($event->no_show == 1)
+                                    <span class="text-danger" data-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    @if (count($events) == 0)
+                        <tr class="text-center">
+                            <td colspan="6">No event history found for this controller.</td>
+                        </tr>
+                    @endif        
+                </tbody>
+            </table>
+        </div>
     </div>
     {!! Form::close() !!}
 </div>
