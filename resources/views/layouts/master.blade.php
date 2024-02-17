@@ -12,7 +12,7 @@
 
         {{-- Stylesheets --}}
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/Footer-white.css">
+        <link rel="stylesheet" href="/css/footer_white.css">
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
