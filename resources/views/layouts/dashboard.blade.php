@@ -36,6 +36,9 @@
         {{-- Custom Headers --}}
         @stack('custom_header')
 
+        {{-- Sidebar Menu Styles --}}
+        <link rel="stylesheet" href="/css/sidebar.css">
+
         {{-- Title --}}
         <title>
             @yield('title') | ZTL ARTCC
