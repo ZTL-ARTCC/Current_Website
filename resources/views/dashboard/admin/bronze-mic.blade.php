@@ -7,10 +7,8 @@ Award Management
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Award Management</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -115,7 +113,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                             @if($winner == null)
                                 {!! Form::open(['url' => '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id]) !!}
                                     @csrf
-                                    <button action="submit" class="btn btn-simple-tooltip" style="background-color:#C9AE5D" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
+                                    <button action="submit" class="btn btn-simple-tooltip bronze-bg" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                                 {!! Form::close() !!}
                             @elseif($winner->controller_id == $h->id)
                                 <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fa fa-microphone"></i></a>

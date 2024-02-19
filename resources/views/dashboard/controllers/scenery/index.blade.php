@@ -5,10 +5,8 @@ Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h3>Scenery</h3>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -34,13 +32,13 @@ Scenery
     {!! Form::close() !!}
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#fsx" role="tab" data-toggle="tab" style="color:black">FSX/P3D</a>
+            <a class="nav-link tab-link active" href="#fsx" role="tab" data-toggle="tab">FSX/P3D</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#xp" role="tab" data-toggle="tab" style="color:black">X-Plane</a>
+            <a class="nav-link tab-link" href="#xp" role="tab" data-toggle="tab">X-Plane</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#afcad" role="tab" data-toggle="tab" style="color:black">AFCADs</a>
+            <a class="nav-link tab-link" href="#afcad" role="tab" data-toggle="tab">AFCADs</a>
         </li>
     </ul>
 
@@ -61,7 +59,7 @@ Scenery
                                     @if($s->image1)
                                         <a href="/dashboard/controllers/scenery/view/{{ $s->id }}"><img src="{{ $s->image1 }}" width="100px"></img></a>
                                     @else
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="100px"></img>
+                                        <img src="/photos/No_image_available.svg" width="100px"></img>
                                     @endif
                                 </td>
                                 <td>{{ $s->airport }}</td>
@@ -99,7 +97,7 @@ Scenery
                                 @if($s->image1)
                                     <a href="/dashboard/controllers/scenery/view/{{ $s->id }}"><img src="{{ $s->image1 }}" width="100px"></img></a>
                                 @else
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" width="100px"></img>
+                                    <img src="/photos/No_image_available.svg" width="100px"></img>
                                 @endif
                             </td>
                             <td>{{ $s->airport }}</td>

@@ -5,11 +5,9 @@ Scenery
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>Scenery</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -36,13 +34,13 @@ Scenery
     {!! Form::close() !!}
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#fsx" role="tab" data-toggle="tab" style="color:black">FSX/P3D</a>
+            <a class="nav-link tab-link active" href="#fsx" role="tab" data-toggle="tab">FSX/P3D</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#xp" role="tab" data-toggle="tab" style="color:black">X-Plane</a>
+            <a class="nav-link tab-link" href="#xp" role="tab" data-toggle="tab">X-Plane</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#afcad" role="tab" data-toggle="tab" style="color:black">AFCADs</a>
+            <a class="nav-link tab-link" href="#afcad" role="tab" data-toggle="tab">AFCADs</a>
         </li>
     </ul>
 

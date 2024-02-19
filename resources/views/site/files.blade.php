@@ -5,11 +5,9 @@ Files
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>ARTCC Files</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -25,7 +23,7 @@ Files
                 @php ($activeMarker = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-toggle="tab" style="color:black">{{ $fileCategory }}</a>
+                <a class="nav-link tab-link {{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-toggle="tab">{{ $fileCategory }}</a>
             </li>
         @endforeach
     </ul>

@@ -9,11 +9,9 @@ Roster
 @endpush
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>Roster</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -21,10 +19,10 @@ Roster
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#hcontrollers" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
+            <a class="nav-link tab-link active" href="#hcontrollers" role="tab" data-toggle="tab"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#vcontrollers" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
+            <a class="nav-link tab-link" href="#vcontrollers" role="tab" data-toggle="tab"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
         </li>
     </ul>
     @php
