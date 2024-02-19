@@ -5,19 +5,17 @@ Feedback Management
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Feedback Management</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-toggle="tab" style="color:black">New Feedback</a>
+            <a class="nav-link tab-link active" href="#new" role="tab" data-toggle="tab">New Feedback</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#processed" role="tab" data-toggle="tab" style="color:black">Processed Feedback</a>
+            <a class="nav-link tab-link" href="#processed" role="tab" data-toggle="tab">Processed Feedback</a>
         </li>
     </ul>
 

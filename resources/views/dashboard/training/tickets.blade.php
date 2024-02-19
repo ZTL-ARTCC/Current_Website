@@ -5,10 +5,8 @@ Training Tickets
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Training Tickets</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -130,5 +128,4 @@ Training Tickets
     {!! $tickets->appends(['id' => $search_result->id])->render() !!}
     @endif
 </div>
-
 @endsection

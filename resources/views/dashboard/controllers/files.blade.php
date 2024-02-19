@@ -5,10 +5,8 @@ Files
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Files</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -94,7 +92,7 @@ Files
                                     <td>{{ $f->updated_at }}</td>
                                     <td>
 	    			    				<div class="btn-group">
-                                            <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download" download><i class="fas fa-download fa-fw"></i></a>
+                                            <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download" {{ ($fileCategory == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
                                             @if(Auth::user()->isAbleTo('files'))
                                                 <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
                                                 <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>

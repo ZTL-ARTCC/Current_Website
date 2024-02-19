@@ -9,10 +9,8 @@ Training Statistics
 @endpush
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Training Department Dashboard</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -90,5 +88,4 @@ Training Statistics
         </div>
     </div>
 </div>
-{{Html::script(asset('js/helpers.js'))}}
 @endsection

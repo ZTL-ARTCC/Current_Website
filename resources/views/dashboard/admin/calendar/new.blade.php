@@ -5,10 +5,8 @@ New Calendar Event/News
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>New Calendar Event/News</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -22,11 +20,21 @@ New Calendar Event/News
             <div class="row">
                 <div class="col-sm-6">
                     {!! Form::label('date', 'Date') !!}
-                    {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => 'MM/DD/YYYY (Required)']) !!}
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
+                        {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     {!! Form::label('time', 'Time') !!}
-                    {!! Form::text('time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM (Optional)']) !!}
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
+                        {!! Form::text('time', null, ['placeholder' => 'HH:MM (Optional)', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

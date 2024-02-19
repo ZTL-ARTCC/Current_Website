@@ -1,32 +1,3 @@
-$(function () {
-  $("#datetimepicker1").datetimepicker({
-    format: "L",
-  });
-});
-
-$(function () {
-  $("#datetimepicker2").datetimepicker({
-    format: "HH:mm",
-  });
-});
-
-$(function () {
-  $("#datetimepicker3").datetimepicker({
-    format: "HH:mm",
-  });
-});
-
-$(function () {
-  $("#datetimepicker4").datetimepicker({
-    format: "HH:mm",
-  });
-});
-$(document).ready(function ($) {
-  $("#timepicker").datetimepicker({
-    format: "hh:mm a",
-  });
-});
-
 $("#start,#end").on("change", function () {
   setTimeout(function () {
     autoCalcDuration(

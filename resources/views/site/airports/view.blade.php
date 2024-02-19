@@ -4,12 +4,14 @@
 View Airport ({{ $airport->ltr_4 }})
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/airports.css') }}" />
+@endpush
+
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>{{ $airport->name }} Airport ({{ $airport->ltr_3 }})</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -282,33 +284,5 @@ View Airport ({{ $airport->ltr_4 }})
         </div>
     </div>
 </div>
-
-<style>
-    .collapsible {
-    cursor: pointer;
-    }
-    .content {
-        overflow: hidden;
-        min-height: 0;
-        max-height: 0;
-        transition: max-height 0.5s ease-out;
-    }
-    </style>
-
-    <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight){
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    }
-</script>
+{{Html::script(asset('js/airports.js'))}}
 @endsection

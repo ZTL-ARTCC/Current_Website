@@ -5,11 +5,9 @@ Staffing Request
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>ZTL ARTCC Staffing Request</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -40,7 +38,7 @@ Staffing Request
             <div class="row">
                 <div class="col-sm-6">
                     {!! Form::label('date', 'Date of Staffing', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -49,8 +47,11 @@ Staffing Request
                 </div>
                 <div class="col-sm-6">
                     {!! Form::label('time', 'Time of Staffing (Zulu)', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('time', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +63,6 @@ Staffing Request
         <body>
             <form action="?" method="POST">
 				<div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
-                <!--<div class="g-recaptcha" data-sitekey="6Le7coMbAAAAAK9_THLgH0Y5pSzWHLqhDbB3fJlz"></div>-->
                 <br/>
                 <input class="btn btn-success" type="submit" value="Send Request">
             </form>
@@ -70,17 +70,4 @@ Staffing Request
         <br>
     {!! Form::close() !!}
 </div>
-
-<script type="text/javascript">
-$(function () {
-    $('#datetimepicker1').datetimepicker({
-        format: 'L'
-    });
-});
-$(function () {
-    $('#datetimepicker2').datetimepicker({
-        format: 'HH:mm'
-    });
-});
-</script>
 @endsection
