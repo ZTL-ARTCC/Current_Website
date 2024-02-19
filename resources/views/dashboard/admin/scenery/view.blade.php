@@ -5,10 +5,8 @@ View Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-        &nbsp;
+<div class="container-fluid view-header">
         <h2>Scenery for {{ $scenery->airport }}</h2>
-        &nbsp;
     </div>
     <br>
 
@@ -34,7 +32,7 @@ View Scenery
         </div>
         <div class="card-body">
             @if($scenery->image1 && $scenery->image2 && $scenery->image3)
-				<div align="center">
+				<div class="text-center">
 					<img src="{{ $scenery->image1 }}" width="600px">
 					<br><br>
 					<img src="{{ $scenery->image2 }}" width="600px">
@@ -42,13 +40,13 @@ View Scenery
 					<img src="{{ $scenery->image3 }}" width="600px">
 				</div>
             @elseif($scenery->image1 && $scenery->image2)
-				<div align="center">
+				<div class="text-center">
 					<img src="{{ $scenery->image1 }}" width="600px">
 					<br><br>
 					<img src="{{ $scenery->image2 }}" width="600px">
 				</div>
             @elseif($scenery->image1)
-				<div align="center">
+				<div class="text-center">
 					<img src="{{ $scenery->image1 }}" width="600px">
 				</div>
 			@else

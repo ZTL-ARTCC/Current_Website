@@ -5,10 +5,8 @@ Stats
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>ARTCC Controller Statistics</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -71,11 +69,6 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
         <li class="nav-item">
             <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
         </li>
-		<!--
-        <li class="nav-item">
-            <a class="nav-link" href="#agreevisit" role="tab" data-toggle="tab" style="color:black">ZHU/ZJX Controllers</a>
-        </li>
-		-->
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
@@ -99,9 +92,9 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td>{{ $stats[$h->id]->approach_hrs }}</td>
                             <td>{{ $stats[$h->id]->enroute_hrs }}</td>
                             @if($stats[$h->id]->total_hrs >= 1)
-                                <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-success black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @else
-                                <td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                                <td class="hours-danger black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
                             @endif
                         </tr>
                     @endforeach
@@ -122,71 +115,18 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 </thead>
                 <tbody>
                     @foreach($visit as $h)
-                        @if($h->visitor_from != "ZHU")
-                        @if($h->visitor_from != "ZJX")
-                            <tr>
-                                <td>{{ $h->full_name }}</td>
-                                <td>{{ $h->rating_short }}</td>
-                                <td>{{ $stats[$h->id]->local_hrs }}</td>
-                                <td>{{ $stats[$h->id]->approach_hrs }}</td>
-                                <td>{{ $stats[$h->id]->enroute_hrs }}</td>
-                                @if($stats[$h->id]->total_hrs >= 1)
-                                    <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @else
-                                    <td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @endif
-                            </tr>
-                       
-                        @endif
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="agreevisit">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Local</th>
-                        <th scope="col">TRACON</th>
-                        <th scope="col">Center</th>
-                        <th scope="col">Total This Month</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($agreevisit as $h)
-                        @if($h->visitor_from == "ZHU")
-                            <tr>
-                                <td>{{ $h->full_name }}</td>
-                                <td>{{ $h->rating_short }}</td>
-                                <td>{{ $stats[$h->id]->local_hrs }}</td>
-                                <td>{{ $stats[$h->id]->approach_hrs }}</td>
-                                <td>{{ $stats[$h->id]->enroute_hrs }}</td>
-                                @if($stats[$h->id]->total_hrs >= 1)
-                                    <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @else
-                                    <td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @endif
-                            </tr>
-                        @endif
-                    @endforeach
-                    @foreach($agreevisit as $h)
-                        @if($h->visitor_from == "ZJX")
-                            <tr>
-                                <td>{{ $h->full_name }}</td>
-                                <td>{{ $h->rating_short }}</td>
-                                <td>{{ $stats[$h->id]->local_hrs }}</td>
-                                <td>{{ $stats[$h->id]->approach_hrs }}</td>
-                                <td>{{ $stats[$h->id]->enroute_hrs }}</td>
-                                @if($stats[$h->id]->total_hrs >= 1)
-                                    <td bgcolor="#A9DFBF" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @else
-                                    <td bgcolor="#E6B0AA" class="black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
-                                @endif
-                            </tr>
-                        @endif
+                        <tr>
+                            <td>{{ $h->full_name }}</td>
+                            <td>{{ $h->rating_short }}</td>
+                            <td>{{ $stats[$h->id]->local_hrs }}</td>
+                            <td>{{ $stats[$h->id]->approach_hrs }}</td>
+                            <td>{{ $stats[$h->id]->enroute_hrs }}</td>
+                            @if($stats[$h->id]->total_hrs >= 1)
+                                <td class="hours-success black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                            @else
+                                <td class="hours-danger black"><b>{{ $stats[$h->id]->total_hrs }}</b></td>
+                            @endif
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

@@ -9,7 +9,7 @@ Realops
 @endpush
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container py-4">
         @if(auth()->guard('realops')->guest())
             <a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>
