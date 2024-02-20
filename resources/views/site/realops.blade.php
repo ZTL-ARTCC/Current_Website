@@ -12,7 +12,7 @@ Realops
 @if(auth()->guard('realops')->guest())
     @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>'])
 @else
-    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, {{ auth()->guard('realops')->user()->full_name }}</button>'])
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
 @endif
 
 <div class="container">

@@ -5,7 +5,7 @@ Update Controller
 @endsection
 
 @section('content')
-@include('inc.header', ['title' => '<i class="fas fa-user"></i>&nbsp;Update {{ $user->full_name }} ({{ $user->id }})'])
+@include('inc.header', ['title' => '<i class="fas fa-user"></i>&nbsp;Update ' . $user->full_name . ' (' . $user->id. ')'])
 
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">

@@ -9,7 +9,7 @@ View Airport ({{ $airport->ltr_4 }})
 @endpush
 
 @section('content')
-@include('inc.header', ['title' => '{{ $airport->name }} Airport ({{ $airport->ltr_3 }})', 'type' => 'external'])
+@include('inc.header', ['title' => $airport->name . ' Airport (' . $airport->ltr_3 . ')', 'type' => 'external'])
 
 <div class="container">
     <div class="row">

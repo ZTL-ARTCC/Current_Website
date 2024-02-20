@@ -5,7 +5,7 @@ View Training Ticket
 @endsection
 
 @section('content')
-@include('inc.header', ['title' => 'View Training Ticket for {{ $ticket->controller_name }}'])
+@include('inc.header', ['title' => 'View Training Ticket for ' .  $ticket->controller_name])
 
 <div class="container">
     <a class="btn btn-primary" href="/dashboard/controllers/profile"><i class="fas fa-arrow-left"></i> Back</a>

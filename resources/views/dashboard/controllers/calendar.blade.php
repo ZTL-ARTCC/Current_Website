@@ -6,9 +6,9 @@ View Calendar Event/News
 
 @section('content')
 @if($calendar->type == 1)
-    @include('inc.header', ['title' => 'Viewing Calendar Event, "{{ $calendar->title }}"'])
+    @include('inc.header', ['title' => 'Viewing Calendar Event, "' . $calendar->title . '"'])
 @else
-    @include('inc.header', ['title' => 'Viewing News Posting, "{{ $calendar->title }}"'])
+    @include('inc.header', ['title' => 'Viewing News Posting, "' . $calendar->title . '"'])
 @endif
 
 <div class="container">

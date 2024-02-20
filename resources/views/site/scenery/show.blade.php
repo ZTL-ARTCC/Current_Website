@@ -5,7 +5,7 @@ View Scenery
 @endsection
 
 @section('content')
-@include('inc.header', ['title' => 'Scenery for {{ $scenery->airport }}', 'type' => 'external'])
+@include('inc.header', ['title' => 'Scenery for ' . $scenery->airport, 'type' => 'external'])
 
 <div class="container">
     <a href="/pilots/scenery" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>

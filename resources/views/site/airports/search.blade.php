@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-@include('inc.header', ['title' => 'Search Result for {{ $apt_r }} Airport', 'type' => 'external'])
+@include('inc.header', ['title' => 'Search Result for ' . $apt_r . ' Airport', 'type' => 'external'])
 
 <div class="container">
     <div class="row">
