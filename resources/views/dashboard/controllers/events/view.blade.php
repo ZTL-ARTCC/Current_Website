@@ -5,10 +5,8 @@ View Event
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h3>Event Information and Signup</h3>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -291,14 +289,16 @@ View Event
                                                         <b>
                                                             {{ $c->controller_name }}
                                                             &nbsp;
-                                                            @if($c->no_show == 1)
-                                                                <a href="/dashboard/admin/events/noshow/unmark/{{ $c->id }}"
-                                                                    class="text-danger" data-toggle="tooltip"
-                                                                    title="Unmark No-Show"><i class="fas fa-user-tag"></i></a>
-                                                            @else
-                                                                <a href="/dashboard/admin/events/noshow/mark/{{ $c->id }}"
-                                                                    class="text-success" data-toggle="tooltip"
-                                                                    title="Mark No-Show"><i class="fas fa-user-check"></i></a>
+                                                            @if(Auth::user()->isAbleTo('events'))
+                                                                @if($c->no_show == 1)
+                                                                    <a href="/dashboard/admin/events/noshow/unmark/{{ $c->id }}"
+                                                                        class="text-danger" data-toggle="tooltip"
+                                                                        title="Unmark No-Show"><i class="fas fa-user-tag"></i></a>
+                                                                @else
+                                                                    <a href="/dashboard/admin/events/noshow/mark/{{ $c->id }}"
+                                                                        class="text-success" data-toggle="tooltip"
+                                                                        title="Mark No-Show"><i class="fas fa-user-check"></i></a>
+                                                                @endif
                                                             @endif
                                                             <br>
                                                             <i>

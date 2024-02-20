@@ -5,10 +5,8 @@ Staff
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Staff</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -23,7 +21,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:atm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:atm@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>The Air Traffic Manager is responsible to the Deputy Director - Air Traffic Services for the overall administration of the ARTCC. The ATM is responsible for appointing ARTCC staff members and delegation of authorities.</p>
     </div>
@@ -38,7 +36,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:datm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:datm@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>The Deputy Air Traffic Manager reports to the Air Traffic Manager and acts as Air Traffic Manager in their absence. The Deputy Air Traffic Manager is jointly responsible for administration and accuracy of the roster including visiting controllers.</p>
     </div>
@@ -53,7 +51,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:ta@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:ta@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>The Training Administrator works with the Air Traffic Manager and Deputy Air Traffic Manager to build training programmes, establish training procedures and recommend instructors and mentors. The Training Administrator works with Instructors and Mentors to develop knowledge and mentors to help develop teaching ability.</p>
     </div>
@@ -69,7 +67,7 @@ Staff
                         {{ $s->full_name }}
                     @endforeach
                 @endif
-                &nbsp;<a href="mailto:ata@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+                &nbsp;<a href="mailto:ata@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
             </h4>
         </div>
         <hr>
@@ -84,7 +82,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:wm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:wm@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, TeamSpeak and Email services and any other tasking as directed.</p>
     </div>
@@ -99,7 +97,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:ec@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:ec@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>The Events Coordinator is responsible to the Deputy Air Traffic Manager for the coordination, planning, dissemination and creation of events to neighboring facilities, virtual airlines, VATUSA and VATSIM.</p>
     </div>
@@ -115,7 +113,7 @@ Staff
                         {{ $s->full_name }}
                     @endforeach
                 @endif
-                &nbsp;<a href="mailto:aec@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+                &nbsp;<a href="mailto:aec@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
             </h4>
         </div>
         <hr>
@@ -130,7 +128,7 @@ Staff
                     {{ $s->full_name }}
                 @endforeach
             @endif
-            &nbsp;<a href="mailto:fe@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+            &nbsp;<a href="mailto:fe@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
         </h4>
         <p>The Facility Engineer is responsible to the Senior Staff for creation of sector files, radar client files, training scenarios, Letters of Agreement, Memorandums of Understanding, Standard Operating Procedures and other requests as directed and submission to the Air Traffic Manager for approval prior to dissemination.</p>
     </div>
@@ -146,7 +144,7 @@ Staff
                         {{ $s->full_name }}
                     @endforeach
                 @endif
-                &nbsp;<a href="mailto:afe@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
+                &nbsp;<a href="mailto:afe@ztlartcc.org" class="item-black"><i class="fa fa-envelope"></i></a>
             </h4>
         </div>
         <hr>

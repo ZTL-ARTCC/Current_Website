@@ -5,11 +5,9 @@ Privacy
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2><center>ZTL ARTCC Privacy Policy & Terms and Conditions</center></h2>
-        &nbsp;
     </div>
 </span>
 <div class="react-reveal">
@@ -107,7 +105,4 @@ Privacy
 </div>
 </div>
 </footer>
-
-
-
 @endsection

@@ -5,10 +5,8 @@ New Training Ticket
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Submit New Training Ticket</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -48,7 +46,7 @@ New Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('date', 'Date', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -63,7 +61,7 @@ New Training Ticket
 						$currentTimeET = $currentDateET->format('H:i');
 					@endphp
                     {!! Form::label('start', 'Start Time ET (now ' . $currentTimeET . ')', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {!! Form::text('start', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
                     </div>
                 </div>
@@ -71,7 +69,7 @@ New Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('end', 'End Time ET', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {!! Form::text('end', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
                     </div>
                 </div>
@@ -79,7 +77,7 @@ New Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     {!! Form::label('duration', 'Duration (hh:mm)', ['class' => 'form-label']) !!}
-                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-target-input="nearest">
                         {!! Form::text('duration', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
                     </div>
                 </div>

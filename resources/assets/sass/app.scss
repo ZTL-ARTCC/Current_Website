@@ -162,3 +162,51 @@ body {
 .textarea-no-resize {
   resize: none;
 }
+
+.view-header {
+  background-color: #f0f0f0;
+}
+
+.view-header::before,
+.view-header::after {
+  content: "\a";
+  white-space: pre;
+}
+
+.tab-link {
+  color: black;
+}
+
+.item-black {
+  color: black;
+}
+
+.bronze {
+  color: #c9ae5d;
+}
+
+div.bronze-bg {
+  background-color: #c9ae5d;
+}
+
+.pyrite {
+  color: #ffdf00;
+}
+
+div.pyrite-bg {
+  background-color: #ffdf00;
+}
+
+div.hours-danger,
+li.hours-danger {
+  background-color: #e6b0aa;
+}
+
+div.hours-success,
+li.hours-success {
+  background-color: #a9dfbf;
+}
+
+.navbar-brand img {
+  width: 100px;
+}

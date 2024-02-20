@@ -5,10 +5,8 @@ Update Controller
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2><i class="fas fa-user"></i>&nbsp;Update {{ $user->full_name }} ({{ $user->id }})</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">

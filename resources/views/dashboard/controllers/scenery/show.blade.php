@@ -5,7 +5,7 @@ View Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
+<div class="container-fluid view-header">
     &nbsp;
     <h3>Scenery for {{ $scenery->airport }}</h3>
     &nbsp;

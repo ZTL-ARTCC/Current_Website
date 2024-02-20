@@ -5,10 +5,8 @@ Edit Feature Toggle
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Edit Feature Toggle</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">

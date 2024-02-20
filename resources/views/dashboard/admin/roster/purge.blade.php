@@ -5,10 +5,8 @@ Roster Purge
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Roster Purge Assistant</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -35,13 +33,13 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#home" role="tab" data-toggle="tab" style="color:black">Home Controllers</a>
+            <a class="nav-link tab-link active" href="#home" role="tab" data-toggle="tab">Home Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#visit" role="tab" data-toggle="tab" style="color:black">Visiting Controllers</a>
+            <a class="nav-link tab-link" href="#visit" role="tab" data-toggle="tab">Visiting Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#train" role="tab" data-toggle="tab" style="color:black">Mentors/Instructors</a>
+            <a class="nav-link tab-link" href="#train" role="tab" data-toggle="tab">Mentors/Instructors</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -63,7 +61,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} ({{ $c->id }})</a></td>
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 1)
-                                <td bgcolor="#A9DFBF" class="black"><b>
+                                <td class="black purge-green"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
@@ -71,7 +69,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                     @endif
                                 </b></td>
                             @else
-                                <td bgcolor="#E6B0AA" class="black"><b>
+                                <td class="black purge-red"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
@@ -110,7 +108,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                             <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ $c->backwards_name }} ({{ $c->id }})</a></td>
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 2)
-                                <td bgcolor="#A9DFBF" class="black"><b>
+                                <td class="black hours-success"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
@@ -118,7 +116,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                                     @endif
                                 </b></td>
                             @else
-                                <td bgcolor="#E6B0AA" class="black"><b>
+                                <td class="black hours-danger"><b>
                                     @if($last_stats[$c->id]->total_hrs <= 1)
                                         **{{ $stats[$c->id]->total_hrs }}
                                     @else
@@ -170,5 +168,5 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <br>
     <p><i>**Controller did not control for at least 60 minutes in the previous month.</i></p>
 </div>
-
+{{Html::script(asset('js/roster.js'))}}
 @endsection

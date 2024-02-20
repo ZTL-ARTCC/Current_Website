@@ -5,11 +5,9 @@ Add Airport
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>Add Airport</h2>
-        &nbsp;
     </div>
 </span>
 <br>
