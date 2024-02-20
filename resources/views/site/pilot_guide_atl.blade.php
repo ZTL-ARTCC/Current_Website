@@ -25,7 +25,7 @@ $badge['frequency'] = "<span class=\"badge badge-secondary\">OFFLINE</span>";
 return $badge;
 }
 @endphp
-@include('inc.external_header', ['title' => 'Atlanta Pilot Guide'])
+@include('inc.header', ['title' => 'Atlanta Pilot Guide', 'type' => 'external'])
 
 <div class="container">
     <ul class="nav nav-tabs">

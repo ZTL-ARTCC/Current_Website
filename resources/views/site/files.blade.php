@@ -5,7 +5,7 @@ Files
 @endsection
 
 @section('content')
-@include('inc.external_header', ['title' => 'ARTCC Files'])
+@include('inc.header', ['title' => 'ARTCC Files', 'type' => 'external'])
 
 <div class="container">
     @php
