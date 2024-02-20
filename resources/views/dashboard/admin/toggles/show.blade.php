@@ -5,10 +5,8 @@ Feature Toggles
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Feature Toggles</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Feature Toggles'])
+
 <div class="container">
     <a href="/dashboard/admin/toggles/create" class="btn btn-primary mb-4">New Toggle</a>
     <table class="table table-outline">

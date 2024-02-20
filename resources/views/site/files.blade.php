@@ -5,12 +5,7 @@ Files
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>ARTCC Files</h2>
-    </div>
-</span>
-<br>
+@include('inc.external_header', ['title' => 'ARTCC Files'])
 
 <div class="container">
     @php

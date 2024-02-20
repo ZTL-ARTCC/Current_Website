@@ -5,10 +5,8 @@ New Event
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Event</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Event'])
+
 <div class="container">
     {!! Form::open(['action' => ['AdminDash@saveEvent', $event->id], 'files' => 'true']) !!}
         @csrf

@@ -5,10 +5,8 @@ Edit Calendar Event/News
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Edit Calendar Event/News</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Edit Calendar Event/News'])
+
 <div class="container">
     {!! Form::open(['action' => ['AdminDash@saveCalendarEvent', $calendar->id]]) !!}
     @csrf

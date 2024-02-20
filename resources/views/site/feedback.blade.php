@@ -5,12 +5,7 @@ New Feedback
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Leave New Feedback</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Leave New Feedback', 'type' => 'external'])
 
 <div class="container">
     {!! Form::open(['action' => 'FrontController@saveNewFeedback']) !!}

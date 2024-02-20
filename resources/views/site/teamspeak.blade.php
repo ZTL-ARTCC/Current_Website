@@ -5,12 +5,7 @@ Teamspeak
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>ZTL ARTCC Teamspeak Information</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'ZTL ARTCC Teamspeak Information', 'type' => 'external'])
 
 <div class="container">
     <center><h1><a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a> vZTL ARTCC Teamspeak Information <a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a></h1></center>

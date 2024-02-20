@@ -5,9 +5,6 @@ Training Tickets
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Training Tickets for {{ Auth::user()->full_name }}</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Training Tickets for {{ Auth::user()->full_name }}'])
 
 @endsection

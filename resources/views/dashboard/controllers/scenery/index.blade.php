@@ -5,10 +5,8 @@ Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h3>Scenery</h3>
-</div>
-<br>
+@include('inc.header', ['title' => 'Scenery'])
+
 <div class="container">
     {!! Form::open(['url' => '/dashboard/controllers/scenery/search']) !!}
         <div class="form-group inline">

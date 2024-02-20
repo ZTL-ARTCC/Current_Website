@@ -5,10 +5,8 @@ View Event
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h3>Event Information and Signup</h3>
-</div>
-<br>
+@include('inc.header', ['title' => 'Event Information and Signup'])
+
 <div class="container">
     @if($event->banner_path != null)
         <div class="jumbotron">

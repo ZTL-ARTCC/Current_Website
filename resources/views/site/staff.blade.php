@@ -5,12 +5,7 @@ Staff
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Staff</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Staff', 'type' => 'external'])
 
 <div class="container">
     <div class="block-heading-two">

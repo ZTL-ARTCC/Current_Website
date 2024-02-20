@@ -9,12 +9,8 @@
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Search Result for {{ $apt_r }} Airport</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Search Result for {{ $apt_r }} Airport', 'type' => 'external'])
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
