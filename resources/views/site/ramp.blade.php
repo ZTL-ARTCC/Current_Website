@@ -12,9 +12,9 @@
 
 @section('content')
 @if( $afld == 'ATL')
-  @include('inc.header', ['title' => '<center>Atlanta Hartsfield Jackson Int'l Airport (ATL) Ramp/Gate Status</center>', 'type' => 'external'])
+  @include('inc.header', ['title' => '<center>Atlanta Hartsfield Jackson Int\'l Airport (ATL) Ramp/Gate Status</center>', 'type' => 'external'])
 @elseif( $afld == 'CLT')
-  @include('inc.header', ['title' => '<center>Charlotte Douglas Int'l Airport (CLT) Ramp/Gate Status</center>', 'type' => 'external'])
+  @include('inc.header', ['title' => '<center>Charlotte Douglas Int\'l Airport (CLT) Ramp/Gate Status</center>', 'type' => 'external'])
 @endif
 
 <div class="container">
