@@ -81,7 +81,7 @@ Staff
             @endif
             &nbsp;<a href="mailto:wm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
         </h4>
-        <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, Teamspeak and Email services and any other tasking as directed.</p>
+        <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, TeamSpeak and Email services and any other tasking as directed.</p>
     </div>
     <hr>
     <div class="block-heading-two">
