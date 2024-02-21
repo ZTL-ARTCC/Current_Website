@@ -26,6 +26,8 @@ function realopsValidateAndSubmit() {
   }
 }
 
+window.realopsValidateAndSubmit = realopsValidateAndSubmit;
+
 function realopsFilterValidateAndSubmit() {
   let time_valid = true;
   let input_time = document.getElementById("time_filter").value;
@@ -52,6 +54,8 @@ function realopsFilterValidateAndSubmit() {
   }
 }
 
+window.realopsFilterValidateAndSubmit = realopsFilterValidateAndSubmit;
+
 function fixTime(el) {
   // Fixes times to HH:MM format
   let timeStr = document.getElementById(el).value;
@@ -76,6 +80,8 @@ function fixTime(el) {
   }
   return false;
 }
+
+window.fixTime = fixTime;
 
 function fixDate(el) {
   // Fixes dates to YYYY-MM-DD format
@@ -111,3 +117,5 @@ function fixDate(el) {
   }
   return false;
 }
+
+window.fixDate = fixDate;
