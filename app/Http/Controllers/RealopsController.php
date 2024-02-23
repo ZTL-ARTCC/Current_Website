@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RealopsExport;
 use App\Importers\RealopsFlightImporter;
 use App\RealopsFlight;
 use App\RealopsPilot;
@@ -259,5 +260,14 @@ class RealopsController extends Controller {
 
     private function emailSubIntro($flight_number) {
         return 'Realops Flight ' . $flight_number . ' - ';
+    }
+
+    public function exportData() {
+        //return Excel::download(new RealopsExport, 'ztl_realops.xlsx');
+        return Excel::download(new RealopsExport, 'ztl_realops_' . Carbon::now()->timestamp . '.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+            'Cache-Control' => 'no-cache, must-revalidate',
+            'Expires' => Carbon::now()->toRfc7231String()
+        ]);
     }
 }
