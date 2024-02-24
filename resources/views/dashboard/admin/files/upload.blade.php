@@ -5,10 +5,8 @@ Upload File
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Upload New File</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -23,13 +21,11 @@ Upload File
                 <div class="col-sm-6">
                     {!! Form::label('type', 'Type:') !!}
                     {!! Form::select('type', [
-                        0 => 'VRC',
-                        1 => 'vSTARS',
-                        2 => 'vERAM',
                         3 => 'vATIS',
                         4 => 'SOPs',
                         5 => 'LOAs',
-                        6 => 'Staff'
+                        6 => 'Staff',
+                        7 => 'Training'
                     ], null, ['class' => 'form-control']) !!}
                 </div>
             </div>

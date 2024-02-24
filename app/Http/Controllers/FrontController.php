@@ -398,6 +398,10 @@ class FrontController extends Controller {
 
     public function newFeedback($controllerSelected=null) {
         $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $feedbackCIDs = User::where('status', 1)->orderBy('id', 'ASC')->get()->pluck('id');
+        foreach ($feedbackCIDs as $feedbackCID) {
+            $feedbackOptions->put('c' . $feedbackCID, $feedbackCID);
+        }
         if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
             $controllerSelected = intval($controllerSelected);
         }
@@ -446,7 +450,7 @@ class FrontController extends Controller {
 
         //Continue Request
         $feedback = new Feedback;
-        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'ge');
+        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'gec');
         $feedback->position = $request->input('position');
         $feedback->service_level = $request->input('service');
         $feedback->callsign = $request->input('callsign');
@@ -461,14 +465,11 @@ class FrontController extends Controller {
     }
 
     public function showFiles() {
-        $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
-        $vstars = File::where('type', 1)->orderBy('disp_order', 'ASC')->get();
-        $veram = File::where('type', 2)->orderBy('disp_order', 'ASC')->get();
         $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
         $sop = File::where('type', 4)->orderBy('disp_order', 'ASC')->get();
         $loa = File::where('type', 5)->orderBy('disp_order', 'ASC')->get();
 
-        return view('site.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
+        return view('site.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa);
     }
     
     public function showPermalink($slug) {

@@ -22,6 +22,13 @@ class User extends Authenticatable {
         return $this->lname.', '.$this->fname;
     }
 
+    public function getBackwardsPublicNameAttribute() {
+        if ($this->name_privacy == 1) {
+            return $this->id.', '.$this->fname;
+        }
+        return $this->lname.', '.$this->fname;
+    }
+
     public function getBackwardsNameRatingAttribute() {
         return $this->backwards_name . ' - ' . $this->rating_short;
     }
@@ -98,10 +105,127 @@ class User extends Authenticatable {
     ];
 
     public static $StatusText = [
-        0 => 'LOA',
         1 => 'Active',
+        0 => 'LOA',
         2 => 'Inactive'
     ];
+
+    public static function getUserStatusAttribute() {
+        return array_filter(self::$StatusText);
+    }
+
+    protected const FACILITY_STAFF_POSITION_MAP = [
+        1 => 'ATM',
+        2 => 'DATM',
+        3 => 'TA',
+        4 => 'ATA',
+        5 => 'WM',
+        6 => 'AWM',
+        7 => 'FE',
+        8 => 'AFE',
+        9 => 'EC'
+    ];
+
+    protected static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
+
+    public static function getFacilityStaffAttribute() {
+        return array_filter(self::$FacilityStaff);
+    }
+
+    protected static $EventsStaff = [
+        0 => 'NONE',
+        1 => 'AEC',
+        2 => 'AEC (Ghost)',
+        3 => 'Events Team'
+    ];
+
+    public static function getEventsStaffAttribute() {
+        return array_filter(self::$EventsStaff);
+    }
+
+    protected static $TrainingStaff = [
+        0 => 'NONE',
+        1 => 'MTR',
+        2 => 'INS'
+    ];
+
+    public static function getTrainingStaffAttribute() {
+        return array_filter(self::$TrainingStaff);
+    }
+
+    protected const TRAIN_UNABLE = 0;
+    protected const TRAIN_UNRES_GND = 1;
+    protected const TRAIN_CLT_DEL_GND = 2;
+    protected const TRAIN_UNRES_TWR = 3;
+    protected const TRAIN_CLT_TWR = 4;
+    protected const TRAIN_ATL_TWR = 5;
+    protected const TRAIN_UNRES_APP = 6;
+    protected const TRAIN_CLT_APP = 7;
+    protected const TRAIN_ATL_APP = 8;
+    protected const TRAIN_CTR = 9;
+
+    protected static $TrainingLevel = [
+        self::TRAIN_UNABLE => 'Unable to Train',
+        self::TRAIN_UNRES_GND => 'Unrestricted DEL & GND',
+        self::TRAIN_CLT_DEL_GND => 'CLT DEL & GND',
+        self::TRAIN_UNRES_TWR => 'Unrestricted TWR',
+        self::TRAIN_CLT_TWR => 'CLT TWR',
+        self::TRAIN_ATL_TWR => 'ATL TWR',
+        self::TRAIN_UNRES_APP => 'Unrestricted Approach',
+        self::TRAIN_CLT_APP => 'CLT Approach',
+        self::TRAIN_ATL_APP => 'ATL (A80) Approach',
+        self::TRAIN_CTR => 'Center'
+    ];
+
+    public static function getTrainingLevelAttribute() {
+        return array_filter(self::$TrainingLevel);
+    }
+
+    protected const UNCERTIFIED = 0;
+    protected const CERTIFIED = 1;
+    protected const SOLO_CERTIFICATION = 99;
+    protected const TRACON_SAT_CERTIFIED = 90;
+    protected const TRACON_DR_CERTIFIED = 91;
+    protected const TRACON_TAR_CERTIFIED = 92;
+    protected const LEGACY_MINOR_CERTIFIED = 1;
+    protected const LEGACY_MAJOR_CERTIFIED = 2;
+
+    protected const SOLO_CERT_DURATION = 30; // Duration of solo certs in days
+
+    public static function getMagicNumber($const_name) {
+        return (defined('self::'.$const_name)) ? constant('self::'.$const_name) : null;
+    }
+
+    protected static $UncertifiedCertified = [
+        self::UNCERTIFIED => 'None',
+        self::CERTIFIED => 'Certified'
+    ];
+
+    public static function getUncertifiedCertifiedAttribute() {
+        return array_filter(self::$UncertifiedCertified);
+    }
+
+    protected static $UncertifiedSoloCertified = [
+        self::UNCERTIFIED => 'None',
+        self::SOLO_CERTIFICATION => 'Solo Certification',
+        self::CERTIFIED => 'Certified'
+    ];
+
+    public static function getUncertifiedSoloCertifiedAttribute() {
+        return array_filter(self::$UncertifiedSoloCertified);
+    }
+
+    protected static $UncertifiedCertifiedA80 = [
+        self::UNCERTIFIED => 'None',
+        self::TRACON_SAT_CERTIFIED => 'A80 SAT Certified',
+        self::TRACON_DR_CERTIFIED => 'A80 DR Certified',
+        self::TRACON_TAR_CERTIFIED => 'A80 TAR Certified',
+        self::CERTIFIED => 'Certified'
+    ];
+
+    public static function getUncertifiedCertifiedA80Attribute() {
+        return array_filter(self::$UncertifiedCertifiedA80);
+    }
 
     public function getStatusTextAttribute() {
         foreach (User::$StatusText as $id => $Status) {

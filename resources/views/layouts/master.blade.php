@@ -7,12 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="vZTL ARTCC Website. For entertainment purposes only. Do not use for real world purposes. Part of the VATSIM Network.">
         <meta name="keywords" content="ztl,vatusa,vatsim,atlanta,center,georgia,artcc,aviation,airplane,airport,charlotte,controller,atc,air,traffic,control,pilot">
-        <meta name="author" content="Ian Cowan">
+        <meta name="author" content="ZTL Web Team">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/Footer-white.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/footer_white.css">
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
@@ -25,6 +25,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+        {{-- Custom JS --}}
+        <script type="text/javascript" src="/js/app.js"></script>
+
         {{-- Bootstrap Date/Time Picker --}}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
@@ -33,8 +36,8 @@
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
-        {{-- Custom JS --}}
-        <script type="text/javascript" src="/js/app.js"></script>
+        {{-- Fontawesome --}}
+        <script src="https://kit.fontawesome.com/f3eeeb43e3.js" crossorigin="anonymous"></script>
 
         {{-- Custom Headers --}}
             @stack('custom_header')
@@ -43,13 +46,6 @@
         <title>
             @yield('title') | ZTL ARTCC
         </title>
-
-        {{-- Tooltips --}}
-        <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
-        </script>
     </head>
     <body>
 

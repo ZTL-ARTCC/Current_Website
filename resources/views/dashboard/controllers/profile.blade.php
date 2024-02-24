@@ -4,11 +4,13 @@
 Profile
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}" />
+@endpush
+
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>My Profile</h2>
-    &nbsp;
 </div>
 <br>
 
@@ -79,7 +81,7 @@ Profile
     <hr>
     <div class="row">
         <div class="col">
-            <h4>My Setmore Reservations</h4>
+            <h4>My Training Appointments</h4>
             <div class="table">
                 <table class="table table-bordered text-center">
                     <thead>
@@ -88,26 +90,27 @@ Profile
                             <th scope="col">Start Time</th>
                             <th scope="col">Lesson Type</th>
                             <th scope="col">Instructor/Mentor</th>
+                            <th scope="col">View/Modify</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($setmore_appointments) > 0)
-                            @foreach($setmore_appointments as $sm_res)
+                        @if(count($ea_appointments) > 0)
+                            @foreach($ea_appointments as $ea_appointment)
                                 <tr>
-                                    <td scope="col">{{ $sm_res->res_date }}</td>
-                                    <td scope="col">{{ $sm_res->res_time }} ET</td>
-                                    <td scope="col">{{ $sm_res->service_description }}</td>
-                                    <td scope="col">{{ $sm_res->staff_name }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_date }}</td>
+                                    <td scope="col">{{ $ea_appointment->res_time }} ET</td>
+                                    <td scope="col">{{ $ea_appointment->service_description }}</td>
+                                    <td scope="col">{{ $ea_appointment->staff_name }}</td>
+                                    <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/appointments/index/{{ $ea_appointment->link_token }}?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>
                                 </tr>   
                             @endforeach
                         @else
                             <tr>
-                                <td scope="col" colspan="4">No Setmore reservations found.</td>
+                                <td scope="col" colspan="5">No appointments found.</td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
-                <p>Appointments will show here approximately 30 minutes after booking.</p>
             </div>
         </div>
     </div>
@@ -119,17 +122,17 @@ Profile
             <p><b>CID:</b> {{ Auth::id() }}</p>
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
-            <p><b>Email:</b> {{ Auth::user()->email }} <a style="color:inherit" href="https://cert.vatsim.net/vatsimnet/newmail.php" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
             {!! Form::open(['action' => ['ControllerDash@updateInfo', Auth::id()]]) !!}
             @csrf
                 <div class="row">
-                    <div class="col-5"><b>TS3 UID: <a style="color:inherit" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{!! Form::text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-5">
-                        <b>Timezone: <a style="color:inherit" href="#" data-toggle="tooltip"
+                        <b>Timezone: <a class="info-tooltip" href="#" data-toggle="tooltip"
                                         title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
                                         class="fas fa-info-circle"></i></a></b>
                     </div>
@@ -173,7 +176,7 @@ Profile
                             <span class="slider round"></span>
                         </label>
                     </span>
-            @endif
+                @endif
         </div>
         <div class="col-sm-2">
         </div>
@@ -183,17 +186,17 @@ Profile
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         @if($personal_stats->total_hrs < 1)
-                            <li class="list-group-item" style="background-color:#E6B0AA">
+                            <li class="list-group-item hours-danger">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @else
-                            <li class="list-group-item" style="background-color:#A9DFBF">
+                            <li class="list-group-item hours-success">
                                 <h5>Hours this Month:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @endif
-                        <li class="list-group-item" style="background-color:aqua">
+                        <li class="list-group-item tng-received">
                             <h5>Last Training Session Received:</h5>
                             <p><b>
                                 @if($last_training != null)
@@ -204,7 +207,7 @@ Profile
                             </b></p>
                         </li>
                         @if(Auth::user()->isAbleTo('train'))
-                            <li class="list-group-item" style="background-color:lightgray">
+                            <li class="list-group-item tng-given">
                                 <h5>Last Training Session Given:</h5>
                                 <p><b>
                                     @if(isset($last_training_given))
@@ -249,7 +252,7 @@ Profile
             <br>
             <div class="container">
                 <p>Opting into emails will only affect the recieving of mass emails. If you elect to opt into emails, you agree to recieve mass emails sent to groups of members of the vZTL ARTCC. This selection will not affect the reception of personalized emails (both automated and issued by staff) for example, training ticket emails. If you have any questions, please contact the ATM at <a href="mailto:atm@ztlartcc.org">atm@ztlartcc.org</a>.</p>
-                <p>You may opt out at any time by using the slider shown at the top of the controller dashboard at all times.</p>
+                <p>You may opt out at any time by using the slider shown on the profile page.</p>
                 <br>
                 <i>Please check the following check boxes if you would like to continue.</i>
                 <hr>

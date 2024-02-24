@@ -5,11 +5,9 @@ Staff
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light view-header">
     <div class="container">
-        &nbsp;
         <h2>Staff</h2>
-        &nbsp;
     </div>
 </span>
 <br>
@@ -27,7 +25,7 @@ Staff
             @endif
             &nbsp;<a href="mailto:atm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
         </h4>
-        <p>The Air Traffic Manager is responsible to the VATUSA Southern Region Director for the overall administration of the ARTCC. The ATM is responsible for appointing ARTCC staff members and delegation of authorities.</p>
+        <p>The Air Traffic Manager is responsible to the Deputy Director - Air Traffic Services for the overall administration of the ARTCC. The ATM is responsible for appointing ARTCC staff members and delegation of authorities.</p>
     </div>
     <hr>
     <div class="block-heading-two">
@@ -88,7 +86,7 @@ Staff
             @endif
             &nbsp;<a href="mailto:wm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
         </h4>
-        <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, Teamspeak and Email services and any other tasking as directed.</p>
+        <p>Responsible to the Air Traffic Manager for the operation and maintenance of all IT services including, but not limited to, the Website, TeamSpeak and Email services and any other tasking as directed.</p>
     </div>
     <hr>
     <div class="block-heading-two">

@@ -4,11 +4,13 @@
     Realops Management
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/realops.css') }}" />
+@endpush
+
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Realops Management</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -21,7 +23,7 @@
         <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
     </span>
 </div>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped text-center">
     <thead>
         <tr>
             <th scope="col">Date</th>
@@ -39,7 +41,10 @@
         @foreach($flights as $f)
             <tr>
                 <td>{{ $f->flight_date_formatted }}</td>
-                <td>{{ $f->flight_number }}</td>
+                <td class="airline-cell">
+                    <img src="{{ $f->getImageDirectory() }}" class="airline-logo">
+                    {{ $f->flight_number }}
+                </td>
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>

@@ -9,10 +9,8 @@ Training Statistics
 @endpush
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Training Department Dashboard</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -34,6 +32,12 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
+                <div class="card-header">Staff Ins/Mtr</div>
+                <div class="card-body">
+                    <h2>{{ $stats['totalInstructors'] }} / {{ $stats['totalMentors'] }}</h2>
+                </div>
+            </div>
+            <div class="card text-center mt-2">
                 <div class="card-header">Unique Students</div>
                 <div class="card-body">
                     <h2>{{ $stats['uniqueStudents'] }}</h2>
@@ -46,15 +50,9 @@ Training Statistics
                 </div>
             </div>
             <div class="card text-center mt-2">
-                <div class="card-header">Student<br />Cancellations</div>
-                <div class="card-body">
-                    <h2>{{ $stats['studentCancel'] }}</h2>
-                </div>
-            </div>
-            <div class="card text-center mt-2">
                 <div class="card-header">Student<br />No-Shows</div>
                 <div class="card-body">
-                    <h2>{{ $stats['studentNoShow'] }}</h2>
+                    <h2>{{ $stats['sessionsPerMonthNoShow'] }}</h2>
                 </div>
             </div>
         </div>
@@ -90,5 +88,4 @@ Training Statistics
         </div>
     </div>
 </div>
-{{Html::script(asset('js/helpers.js'))}}
 @endsection

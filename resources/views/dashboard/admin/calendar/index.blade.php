@@ -5,10 +5,8 @@ Calendar/News
 @endsection
 
 @section('content')
-<div class="container-fluid" style="background-color:#F0F0F0;">
-    &nbsp;
+<div class="container-fluid view-header">
     <h2>Calendar/News</h2>
-    &nbsp;
 </div>
 <br>
 <div class="container">
@@ -16,10 +14,10 @@ Calendar/News
     <br><br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#calendar" role="tab" data-toggle="tab" style="color:black">Calendar</a>
+            <a class="nav-link tab-link active" href="#calendar" role="tab" data-toggle="tab">Calendar</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#news" role="tab" data-toggle="tab" style="color:black">News</a>
+            <a class="nav-link tab-link" href="#news" role="tab" data-toggle="tab">News</a>
         </li>
     </ul>
     <div class="tab-content">

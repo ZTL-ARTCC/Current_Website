@@ -54,11 +54,6 @@ Home
 					<span class="sr-only">Next</span>
 				</a>
 			</div>
-			<script>
-				$('.carousel').carousel({
-					interval: 5000 // delay time ms
-				})
-			</script>
 		</div>
 		<div class="col">
 			<div class="row px-2 pr-md-3 pl-md-0">
@@ -241,4 +236,5 @@ Home
 		</div>
 	</div>
 </div>
+{{Html::script(asset('js/home.js'))}}
 @endsection

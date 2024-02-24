@@ -198,6 +198,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/load-preset/{id}', 'AdminDash@retrievePositionPreset');
             Route::post('/delete-preset', 'AdminDash@deletePositionPreset');
             Route::get('/send-reminder/{id}', 'AdminDash@sendEventReminder');
+            Route::get('/noshow/mark/{id}', 'AdminDash@eventMarkNoShow');
+            Route::get('/noshow/unmark/{id}', 'AdminDash@eventUnMarkNoShow');
         });
         Route::prefix('roster')->middleware('permission:roster')->group(function () {
             Route::get('/visit/requests', 'AdminDash@showVisitRequests');
@@ -265,6 +267,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/', 'AdminDash@showFeatureToggles');
             Route::get('/create', 'AdminDash@showCreateFeatureToggle');
             Route::post('/create', 'AdminDash@createFeatureToggle');
+            Route::get('/delete/{toggle_name}', 'AdminDash@deleteFeatureToggle');
+            Route::get('/edit/{toggle_name}', 'AdminDash@showEditFeatureToggle');
+            Route::post('/edit', 'AdminDash@editFeatureToggle');
             Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
         });
     });

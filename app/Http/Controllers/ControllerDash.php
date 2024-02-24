@@ -22,17 +22,19 @@ use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
-use App\SetmoreAppointment;
 use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mail;
 use SimpleXMLElement;
 
 class ControllerDash extends Controller {
+    protected static $SHOW_BOOKINGS_AFTER_APPT = 6; // Show bookings for X hours after appt start time
+
     public function dash() {
         $now = Carbon::now();
 
@@ -211,13 +213,32 @@ class ControllerDash extends Controller {
             $last_training_given = null;
         }
 
-        $setmore_appointments = SetmoreAppointment::where('customer_cid', Auth::id())->get();
-        foreach ($setmore_appointments as &$setmore_appointment) {
-            $setmore_appointment->res_date = Carbon::parse($setmore_appointment->start_time)->format('m/d/Y');
-            $setmore_appointment->res_time = Carbon::parse($setmore_appointment->start_time)->format('H:i');
+        if (is_null(Auth::user()->ea_customer_id)) {
+            $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+            foreach ($ea_users as $u) {
+                $user = Auth::user();
+                $user->ea_customer_id = $u->id;
+                $user->save();
+            }
+        }
+        $ea_appointments = [];
+        if (!is_null(Auth::user()->ea_customer_id)) {
+            $ea_appointments = DB::connection('ea_mysql')
+                ->table('ea_appointments')
+                ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
+                ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
+                ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
+                ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
+                ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
+            foreach ($ea_appointments as &$ea_appointment) {
+                $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
+                $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
+                $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+            }
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('setmore_appointments', $setmore_appointments);
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
     }
 
     public function showTicket($id) {
@@ -234,36 +255,9 @@ class ControllerDash extends Controller {
         $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
  
         return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
-        /*
-                $vcontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->get();
-                $visagreecontrollers = User::where('status', '!=', 2)->where('visitor', '1')->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->orderBy('visitor_from', 'ASC')->orderBy('lname', 'ASC')->get();
-
-                return view('dashboard.controllers.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers)->with('visagreecontrollers', $visagreecontrollers);
-        */
     }
 
     public function showFiles() {
-        $vrc = File::where('type', 0)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($vrc);$x++) {
-            $file = File::find($vrc[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
-        $vstars = File::where('type', 1)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($vstars);$x++) {
-            $file = File::find($vstars[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
-        $veram = File::where('type', 2)->orderBy('disp_order', 'ASC')->get();
-        for ($x=0;$x<count($veram);$x++) {
-            $file = File::find($veram[$x]['id']);
-            $file->disp_order = $x;
-            $file->timestamps = false;
-            $file->save();
-        }
         $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
         for ($x=0;$x<count($vatis);$x++) {
             $file = File::find($vatis[$x]['id']);
@@ -293,8 +287,15 @@ class ControllerDash extends Controller {
             $file->timestamps = false;
             $file->save();
         }
+        $training = File::where('type', 7)->orderBy('disp_order', 'ASC')->get();
+        for ($x=0;$x<count($training);$x++) {
+            $file = File::find($training[$x]['id']);
+            $file->disp_order = $x;
+            $file->timestamps = false;
+            $file->save();
+        }
         
-        return view('dashboard.controllers.files')->with('vrc', $vrc)->with('vstars', $vstars)->with('veram', $veram)->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff);
+        return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
     }
 
     public function showTickets() {
@@ -504,9 +505,9 @@ class ControllerDash extends Controller {
 
         $apt_r = strtoupper($apt_s);
 
-        $client = new Client;
-        $response_metar = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
-        $response_taf = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $client = new Client(['http_errors' => false]);
+        $response_metar = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $response_taf = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
 
         $root_metar = new SimpleXMLElement($response_metar->getBody());
         $root_taf = new SimpleXMLElement($response_taf->getBody());
@@ -523,10 +524,8 @@ class ControllerDash extends Controller {
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
-        // VATEUD API is no longer accessible
         $pilots_a = $pilots_d = false;
         $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
-        //$res_a = $client->get('http://api.vateud.net/online/arrivals/'.$apt_s.'.json');
         $pilots_a = json_decode($res_a->getBody()->getContents(), true);
 
         if ($pilots_a) {
@@ -536,7 +535,6 @@ class ControllerDash extends Controller {
         }
 
         $res_d = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=departure');
-        //$res_d = $client->get('http://api.vateud.net/online/departures/'.$apt_s.'.json');
         $pilots_d = json_decode($res_d->getBody()->getContents(), true);
 
         if ($pilots_d) {
