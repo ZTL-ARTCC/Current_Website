@@ -5,12 +5,8 @@ Visit
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Visit ZTL ARTCC</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Visit ZTL ARTCC', 'type' => 'external'])
+
 <div class="d-flex justify-content-center mb-5">
 <div class="position-unset col-xl-6 col-10">
 <div class="fade position-unset m-0 undefined alert alert-primary show" role="alert">

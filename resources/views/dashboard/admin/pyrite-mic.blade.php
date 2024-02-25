@@ -5,10 +5,7 @@ Pyrite Mic
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Pyrite Mic Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Pyrite Mic Management'])
 
 <?php
 $nyr = $year + 1;

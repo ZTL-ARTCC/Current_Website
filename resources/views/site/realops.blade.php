@@ -9,17 +9,11 @@ Realops
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container py-4">
-        @if(auth()->guard('realops')->guest())
-            <a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>
-        @else
-            <button disabled class="btn btn-primary float-right">Welcome, {{ auth()->guard('realops')->user()->full_name }}</button>
-        @endif
-        <h2>Realops</h2>
-    </div>
-</span>
-<br>
+@if(auth()->guard('realops')->guest())
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>'])
+@else
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
+@endif
 
 <div class="container">
 <p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilots to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>

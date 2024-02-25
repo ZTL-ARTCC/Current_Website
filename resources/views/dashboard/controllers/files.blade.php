@@ -5,10 +5,7 @@ Files
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Files</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Files'])
 
 <div class="container">
     @if(Auth::user()->isAbleTo('files'))

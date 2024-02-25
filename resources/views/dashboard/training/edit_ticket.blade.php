@@ -5,10 +5,7 @@ Edit Training Ticket
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Edit Training Ticket</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Edit Training Ticket'])
 
 <div class="container">
     {!! Form::open(['action' => ['TrainingDash@saveTicket', $ticket->id]]) !!}

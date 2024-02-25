@@ -9,10 +9,7 @@ Profile
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>My Profile</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'My Profile'])
 
 <div class="container">
     <div class="row">

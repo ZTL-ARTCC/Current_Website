@@ -5,10 +5,8 @@ Airport Management
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Airport Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Airport Management'])
+
 <div class="container">
     <a href="/dashboard/admin/airports/new" class="btn btn-primary">New Airport</a>
     <br><br>

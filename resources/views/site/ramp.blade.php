@@ -11,20 +11,12 @@
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-  <div class="container">
-    @if( $afld == 'ATL')
-    <h2>
-      <center>Atlanta Hartsfield Jackson Int'l Airport (ATL) Ramp/Gate Status</center>
-    </h2>
-    @endif
-    @if( $afld == 'CLT')
-    <h2>
-      <center>Charlotte Douglas Int'l Airport (CLT) Ramp/Gate Status</center>
-    </h2>
-    @endif
-  </div>
-</span>
+@if( $afld == 'ATL')
+  @include('inc.header', ['title' => '<center>Atlanta Hartsfield Jackson Int\'l Airport (ATL) Ramp/Gate Status</center>', 'type' => 'external'])
+@elseif( $afld == 'CLT')
+  @include('inc.header', ['title' => '<center>Charlotte Douglas Int\'l Airport (CLT) Ramp/Gate Status</center>', 'type' => 'external'])
+@endif
+
 <div class="container">
   <div style="width:100%; height:70vh">
     <div id="map"></div>

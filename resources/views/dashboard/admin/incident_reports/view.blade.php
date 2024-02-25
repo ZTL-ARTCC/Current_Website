@@ -5,10 +5,8 @@ View Incident Report
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h3>View Incident Report</h3>
-</div>
-<br>
+@include('inc.header', ['title' => 'View Incident Report'])
+
 <div class="container">
     <a href="/dashboard/admin/incident" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
     <br><br>

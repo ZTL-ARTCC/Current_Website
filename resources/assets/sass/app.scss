@@ -167,12 +167,6 @@ body {
   background-color: #f0f0f0;
 }
 
-.view-header::before,
-.view-header::after {
-  content: "\a";
-  white-space: pre;
-}
-
 .tab-link {
   color: black;
 }

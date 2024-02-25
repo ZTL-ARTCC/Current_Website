@@ -5,10 +5,8 @@ Edit Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Edit Scenery</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Edit Scenery'])
+
 <div class="container">
     {!! Form::open(['action' => ['AdminDash@saveScenery', $scenery->id]]) !!}
         @csrf

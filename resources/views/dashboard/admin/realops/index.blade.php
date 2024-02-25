@@ -9,10 +9,8 @@
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Realops Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Realops Management'])
+
 <div class="container">
 <div class="mb-4">
     <a href="/dashboard/admin/realops/create" class="btn btn-success mr-2">Add Flight</a>

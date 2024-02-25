@@ -9,12 +9,7 @@ Roster
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Roster</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Roster', 'type' => 'external'])
 
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
