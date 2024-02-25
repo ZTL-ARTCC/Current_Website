@@ -5,10 +5,7 @@ Feedback Details
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Showing Feedback Details for {{ $feedback->controller_name }}</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Showing Feedback Details for ' . $feedback->controller_name])
 
 <div class="container">
     <a href="/dashboard/controllers/profile" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>

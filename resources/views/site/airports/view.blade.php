@@ -9,12 +9,8 @@ View Airport ({{ $airport->ltr_4 }})
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>{{ $airport->name }} Airport ({{ $airport->ltr_3 }})</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => $airport->name . ' Airport (' . $airport->ltr_3 . ')', 'type' => 'external'])
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6">

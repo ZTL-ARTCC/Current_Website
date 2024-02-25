@@ -33,3 +33,5 @@ function autoCalcDuration(time1, time2, target) {
     });
   }
 }
+
+window.autoCalcDuration = autoCalcDuration;

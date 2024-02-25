@@ -5,12 +5,7 @@ Stats
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>ARTCC Controller Statistics</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'ARTCC Controller Statistics', 'type' => 'external'])
 
 <?php
 $mname = date("F", mktime(0, 0, 0, $month, 1, $year));

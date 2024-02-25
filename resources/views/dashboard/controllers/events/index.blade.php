@@ -5,10 +5,7 @@ Events
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Events</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Events'])
 
 <div class="container">
     @if(Auth::user()->isAbleTo('events'))

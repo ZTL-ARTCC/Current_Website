@@ -5,10 +5,8 @@ Scenery Management
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Scenery Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Scenery Management'])
+
 <div class="container">
     <a href="/dashboard/admin/scenery/new" class="btn btn-primary">New Scenery</a>
     <br><br>

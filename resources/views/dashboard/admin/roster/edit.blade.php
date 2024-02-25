@@ -5,10 +5,8 @@ Update Controller
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2><i class="fas fa-user"></i>&nbsp;Update {{ $user->full_name }} ({{ $user->id }})</h2>
-</div>
-<br>
+@include('inc.header', ['title' => '<i class="fas fa-user"></i>&nbsp;Update ' . $user->full_name . ' (' . $user->id. ')'])
+
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">

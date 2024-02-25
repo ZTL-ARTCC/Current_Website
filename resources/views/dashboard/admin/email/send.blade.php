@@ -5,10 +5,8 @@
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Send New Email</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Send New Email'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@sendEmail']) !!}
         @csrf

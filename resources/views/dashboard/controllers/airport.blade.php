@@ -9,10 +9,8 @@
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>{{ $apt_r }} Airport Information</h2>
-</div>
-<br>
+@include('inc.header', ['title' => '{{ $apt_r }} Airport Information'])
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6">

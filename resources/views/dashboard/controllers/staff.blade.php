@@ -5,10 +5,7 @@ Staff
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Staff</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Staff'])
 
 <div class="container">
     <div class="block-heading-two">

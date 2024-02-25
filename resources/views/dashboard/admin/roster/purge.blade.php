@@ -5,10 +5,7 @@ Roster Purge
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Roster Purge Assistant</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Roster Purge Assistant'])
 
 <?php
 $mname = date("F", mktime(0, 0, 0, $month, 1, $year));

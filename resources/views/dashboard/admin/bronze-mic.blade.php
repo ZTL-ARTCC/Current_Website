@@ -7,10 +7,7 @@ Award Management
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Award Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Award Management'])
 
 <?php
 $mname = date("F", mktime(0, 0, 0, $month, 1, $year));

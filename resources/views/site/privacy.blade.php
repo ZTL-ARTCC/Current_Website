@@ -5,11 +5,8 @@ Privacy
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2><center>ZTL ARTCC Privacy Policy & Terms and Conditions</center></h2>
-    </div>
-</span>
+@include('inc.header', ['title' => '<center>ZTL ARTCC Privacy Policy & Terms and Conditions</center>', 'type' => 'external'])
+
 <div class="react-reveal">
 <div class="container-fluid">
 <div class="mb-4">
