@@ -36,19 +36,13 @@ New Event
                 <div class="col-sm-4">
                     {!! Form::label('start_time', 'Start Time (Zulu)', ['class' => 'form-label']) !!}
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
-                        {!! Form::text('start_time', $event->start_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
-                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
+                        {!! Form::text('start_time', $event->start_time, ['placeholder' => '00:00', 'class' => 'form-control', 'data-target' => '#datetimepicker2']) !!}
                     </div>
                 </div>
                 <div class="col-sm-4">
                     {!! Form::label('end_time', 'End Time (Zulu)', ['class' => 'form-label']) !!}
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
-                        {!! Form::text('end_time', $event->end_time, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
-                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
+                        {!! Form::text('end_time', $event->end_time, ['placeholder' => '00:00', 'class' => 'form-control', 'data-target' => '#datetimepicker3']) !!}
                     </div>
                 </div>
                 <div class="col-sm-4">
