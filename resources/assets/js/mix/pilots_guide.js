@@ -17,6 +17,8 @@ function resizeMap() {
   }, 500);
 }
 
+window.resizeMap = resizeMap;
+
 function updatePlanes() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -51,6 +53,8 @@ function updatePlanes() {
   );
   xhttp.send();
 }
+
+window.updatePlanes = updatePlanes;
 
 function createPlane(lat, lon, hdg, cs, actype, dep, arr, sel = false) {
   var color = null;

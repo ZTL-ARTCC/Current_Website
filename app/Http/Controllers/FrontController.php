@@ -163,9 +163,9 @@ class FrontController extends Controller {
 
         $apt_r = strtoupper($apt_s);
 
-        $client = new Client;
-        $response_metar = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
-        $response_taf = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $client = new Client(['http_errors' => false]);
+        $response_metar = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $response_taf = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
 
         $root_metar = new SimpleXMLElement($response_metar->getBody());
         $root_taf = new SimpleXMLElement($response_taf->getBody());
