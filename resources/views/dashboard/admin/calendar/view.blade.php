@@ -5,14 +5,12 @@ View Calendar Event/News
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    @if($calendar->type == 1)
-        <h4>Viewing Calendar Event, "{{ $calendar->title }}"</h4>
-    @else
-        <h4>Viewing News Posting, "{{ $calendar->title }}"</h4>
-    @endif
-</div>
-<br>
+@if($calendar->type == 1)
+    @include('inc.header', ['title' => 'Viewing Calendar Event, "{{ $calendar->title }}"'])
+@else
+    @include('inc.header', ['title' => 'Viewing News Posting, "{{ $calendar->title }}"'])
+@endif
+
 <div class="container">
     <a href="/dashboard/admin/calendar" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
     <br><br>

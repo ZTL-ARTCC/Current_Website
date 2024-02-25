@@ -5,10 +5,8 @@
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Edit Realops Flight</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Edit Realops Flight'])
+
 <div class="container">
     {!! Form::open(['action' => ['RealopsController@editFlight', $flight->id], 'method' => 'PUT', 'id' => 'realops_add_edit_flight']) !!}
         @csrf

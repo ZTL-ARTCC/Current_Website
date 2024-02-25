@@ -252,6 +252,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         });
         Route::prefix('realops')->middleware('toggle:realops')->middleware('permission:staff')->group(function () {
             Route::get('/', 'RealopsController@adminIndex');
+            Route::get('/export', 'RealopsController@exportData');
             Route::get('/create', 'RealopsController@showCreateFlight');
             Route::post('/create', 'RealopsController@createFlight');
             Route::post('/create/bulk', 'RealopsController@bulkUploadFlights');

@@ -5,12 +5,8 @@ Scenery
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Scenery</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Scenery', 'type' => 'external'])
+
 <div class="container">
     {!! Form::open(['url' => '/pilots/scenery/search']) !!}
         <div class="form-group inline">

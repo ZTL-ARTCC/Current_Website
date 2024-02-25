@@ -9,10 +9,7 @@ Dashboard
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Controller Dashboard</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Controller Dashboard'])
 
 <div class="container-fluid">
     @if($announcement->body != null)

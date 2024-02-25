@@ -9,10 +9,8 @@
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Realops Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Realops Management'])
+
 <div class="container">
 <div class="mb-4">
     <a href="/dashboard/admin/realops/create" class="btn btn-success mr-2">Add Flight</a>
@@ -20,8 +18,9 @@
         <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
     </span>
     <span data-toggle="modal" data-target="#dump">
-        <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
+        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Dump all Data</button>
     </span>
+    <a href="/dashboard/admin/realops/export" class="btn btn-success">Export Data</a>
 </div>
 <table class="table table-bordered table-striped text-center">
     <thead>

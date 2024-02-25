@@ -25,12 +25,7 @@ $badge['frequency'] = "<span class=\"badge badge-secondary\">OFFLINE</span>";
 return $badge;
 }
 @endphp
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Atlanta Pilot Guide</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Atlanta Pilot Guide', 'type' => 'external'])
 
 <div class="container">
     <ul class="nav nav-tabs">
@@ -247,7 +242,7 @@ return $badge;
             </div>
             <h3>Receiving a clearance</h3>
             <p> After filing a flight plan, you should receive your clearance from ATC. If you have not received a clearance after a reasonable
-                about of time, you should call {!! fetchBadge($del)['position'] !!} on {!! fetchBadge($del)['frequency'] !!} and request your
+                amount of time, you should call {!! fetchBadge($del)['position'] !!} on {!! fetchBadge($del)['frequency'] !!} and request your
                 clearance.</p>
             <p class="font-italic">Example: Atlanta Clearance, Delta 1234 clearance to Charlotte ready to copy.</p>
             <p>Aircraft with CPDLC capabilities should expect to receive a computerized pre-departure clearance from ATC. Because ATC sends this

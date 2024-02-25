@@ -5,10 +5,8 @@ New Visitor
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Visitor</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Visitor'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeVisitor']) !!}
         @csrf

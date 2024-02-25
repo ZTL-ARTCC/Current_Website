@@ -5,10 +5,7 @@ OTS Center
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>OTS Center</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'OTS Center'])
 
 <div class="container">
     <h5>OTS Exam Recommendations</h5>

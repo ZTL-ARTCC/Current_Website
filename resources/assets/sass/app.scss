@@ -167,12 +167,6 @@ body {
   background-color: #f0f0f0;
 }
 
-.view-header::before,
-.view-header::after {
-  content: "\a";
-  white-space: pre;
-}
-
 .tab-link {
   color: black;
 }
@@ -198,12 +192,14 @@ div.pyrite-bg {
 }
 
 div.hours-danger,
-li.hours-danger {
+li.hours-danger,
+td.hours-danger {
   background-color: #e6b0aa;
 }
 
 div.hours-success,
-li.hours-success {
+li.hours-success,
+td.hours-success {
   background-color: #a9dfbf;
 }
 

@@ -5,12 +5,8 @@ View Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    &nbsp;
-    <h3>Scenery for {{ $scenery->airport }}</h3>
-    &nbsp;
-</div>
-<br>
+@include('inc.header', ['title' => 'Scenery for {{ $scenery->airport }}'])
+
 <div class="container">
     <a href="/dashboard/controllers/scenery" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
     <br><br>

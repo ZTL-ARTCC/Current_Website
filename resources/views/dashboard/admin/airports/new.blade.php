@@ -5,10 +5,8 @@
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Airport</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Airport'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeAirport']) !!}
         @csrf

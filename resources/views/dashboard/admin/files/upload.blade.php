@@ -5,10 +5,8 @@ Upload File
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Upload New File</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Upload New File'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeFile', 'files' => true]) !!}
         @csrf

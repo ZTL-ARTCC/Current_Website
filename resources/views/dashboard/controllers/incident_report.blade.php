@@ -5,10 +5,7 @@ New Incident Report
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Incident Report</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Incident Report'])
 
 <div class="container">
     <p>Please use this to report incidents rather than sending an email. Please know that your ID and the controller's ID will be recorded for the sole reason of resolving any issues. Once any issues have been resolved, the incident will be archived without the controller/report ID.</p>

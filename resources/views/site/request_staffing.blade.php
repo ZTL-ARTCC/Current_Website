@@ -5,12 +5,7 @@ Staffing Request
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>ZTL ARTCC Staffing Request</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'ZTL ARTCC Staffing Request', 'type' => 'external'])
 
 <div class="container">
     {!! Form::open(['action' => 'FrontController@staffRequest']) !!}

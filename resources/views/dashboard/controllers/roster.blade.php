@@ -9,10 +9,8 @@ Roster
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Roster</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Roster'])
+
 <div class="container">
     @if(Auth::user()->isAbleTo('roster'))
     <a href="/dashboard/admin/roster/visit/requests" class="btn btn-warning">Visit Requests</a>

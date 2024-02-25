@@ -5,10 +5,7 @@ Website Activity
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Website Activity Audit</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Website Activity Audit'])
 
 <div class="container">
     <br>

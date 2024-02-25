@@ -5,10 +5,7 @@ ATCast
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>ATCast Videos</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'ATCast Videos'])
 
 <div class="container">
 
