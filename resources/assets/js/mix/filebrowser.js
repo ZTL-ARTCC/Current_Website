@@ -38,6 +38,8 @@ function itemReorder(id, pos, typ, act) {
   );
 }
 
+window.itemReorder = itemReorder;
+
 function fallbackCopyTextToClipboard(text) {
   var textArea = document.createElement("textarea");
   textArea.value = text;
@@ -72,6 +74,8 @@ function linkToClipboard(e) {
   copyTextToClipboard(path);
 }
 
+window.linkToClipboard = linkToClipboard;
+
 function getSiteRoot() {
   var rootPath = window.location.protocol + "//" + window.location.host + "/";
   if (window.location.hostname == "localhost") {
@@ -86,3 +90,5 @@ function getSiteRoot() {
   }
   return rootPath;
 }
+
+window.getSiteRoot = getSiteRoot;

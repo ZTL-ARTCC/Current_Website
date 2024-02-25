@@ -340,14 +340,13 @@ class AdminDash extends Controller {
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
-            if ($user->hasRole($staff_roles) == true) {
-                foreach ($staff_roles as $staff_role) {
-                    if ($user->hasRole($staff_role)) {
-                        $user->detachRole($staff_role);
-                    }
+            $staff_roles = $user->facility_staff;
+            foreach ($staff_roles as $staff_role) {
+                if ($user->hasRole(strtolower($staff_role))) {
+                    $user->detachRole(strtolower($staff_role));
                 }
             }
+            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
             foreach ($staff_roles as $role_id => $staff_role) {
                 if ($request->input('staff') == $role_id) {
                     $user->attachRole($staff_role);

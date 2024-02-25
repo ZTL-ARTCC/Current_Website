@@ -18,8 +18,9 @@
         <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
     </span>
     <span data-toggle="modal" data-target="#dump">
-        <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
+        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Dump all Data</button>
     </span>
+    <a href="/dashboard/admin/realops/export" class="btn btn-success">Export Data</a>
 </div>
 <table class="table table-bordered table-striped text-center">
     <thead>
