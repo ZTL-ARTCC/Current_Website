@@ -263,7 +263,6 @@ class RealopsController extends Controller {
     }
 
     public function exportData() {
-        //return Excel::download(new RealopsExport, 'ztl_realops.xlsx');
         return Excel::download(new RealopsExport, 'ztl_realops_' . Carbon::now()->timestamp . '.csv', \Maatwebsite\Excel\Excel::CSV, [
             'Content-Type' => 'text/csv',
             'Cache-Control' => 'no-cache, must-revalidate',
