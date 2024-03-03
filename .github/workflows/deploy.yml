@@ -45,12 +45,6 @@ jobs:
           tar -zxvf ${{ inputs.artifact-name }}.tar.gz
           rm ${{ inputs.artifact-name }}.tar.gz
 
-      - name: Setup composer and install packages
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          php_extensions: gd zip
-
       - name: put server in maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
