@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ckeditor/ckeditor": "^4.17",
         "devmarketer/easynav": "^1.0",
         "guzzlehttp/guzzle": "^7.4.5",
