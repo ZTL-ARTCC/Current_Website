@@ -33,7 +33,7 @@
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
-                    <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/login" target="_blank">Schedule Management</a>
+                    <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif
