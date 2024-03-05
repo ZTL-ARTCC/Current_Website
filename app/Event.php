@@ -12,6 +12,22 @@ class Event extends Model {
     protected $banner_base_path = 'event_banners/';
     protected $banner_reduced_base_path = 'reduced/';
 
+    public static $TYPES = [
+        "LOCAL" => 0,
+        "VERIFIED_SUPPORT" => 1,
+        "UNVERIFIED_SUPPORT" => 2
+    ];
+
+    public static $STATUSES = [
+        "HIDDEN" => 0,
+        "VISIBLE" => 1
+    ];
+
+    public static $REGS = [
+        "CLOSED" => 0,
+        "OPEN" => 1
+    ];
+
     public function getDateEditAttribute() {
         $date = new Carbon($this->date);
         $date = $date->format('Y-m-d');
