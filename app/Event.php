@@ -36,7 +36,7 @@ class Event extends Model {
 
     public static function fetchVisibleEvents() {
         $now = Carbon::now();
-        $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
+        $events = Event::where('status', Event::$STATUSES["VISIBLE"])->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
         })->sortBy(function ($e) {
             return strtotime($e->date);
