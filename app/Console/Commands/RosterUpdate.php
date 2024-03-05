@@ -14,7 +14,7 @@ class RosterUpdate extends Command {
      *
      * @var string
      */
-    protected $signature = 'RosterUpdate:UpdateRoster';
+    protected $signature = 'RosterUpdate:UpdateRoster {--local_email=none@email.com}';
 
     /**
      * The console command description.
@@ -74,7 +74,11 @@ class RosterUpdate extends Command {
             if ($user->initials == null) {
                 $user->initials = User::generateControllerInitials($user->fname, $user->lname);
             }
-            $user->email = $r->email;
+            if (Config::get('app.env') == 'local') {
+                $user->email = $this->option('local_email');
+            } else {
+                $user->email = $r->email;
+            }
             $user->rating_id = $r->rating;
             $user->visitor = 0;
             $user->status = 1;
