@@ -8,8 +8,12 @@ on:
         type: string
 
 jobs:
+  setup-variables:
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
+
   validate:
     runs-on: ubuntu-latest
+    needs: setup-variables
 
     steps:
       - name: checkout code
@@ -25,16 +29,20 @@ jobs:
           key: ${{ runner.os }}-ztl-validate-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
           restore-keys: |
             ${{ runner.os }}-ztl-validate-cached-
-      - name: Setup composer and install packages
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          php_extensions: gd zip
 
-      - name: Setup node
+      - name: setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ needs.setup-variables.outputs.php-version }}
+          extensions: gd,zip
+
+      - name: install php packages
+        run: composer install
+
+      - name: setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.2.0
+          node-version: ${{ needs.setup-variables.outputs.node-version }}
 
       - name: update node packages
         run: npm ci
@@ -44,7 +52,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: validate
+    needs: [setup-variables, validate]
 
     steps:
       - name: checkout code
@@ -60,18 +68,20 @@ jobs:
           key: ${{ runner.os }}-ztl-build-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
           restore-keys: |
             ${{ runner.os }}-ztl-build-cached-
-
-      - name: Setup composer and install packages
-        uses: php-actions/composer@v6
+          
+      - name: setup php
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
-          php_extensions: gd zip
-          dev: no
+          php-version: ${{ needs.setup-variables.outputs.php-version }}
+          extensions: gd,zip
+
+      - name: install php packages
+        run: composer install --no-dev
 
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.2.0
+          node-version: ${{ needs.setup-variables.outputs.node-version }}
 
       - name: update node packages
         run: npm ci
@@ -95,3 +105,4 @@ jobs:
         with:
           name: ${{ inputs.artifact-name }}
           path: ./${{ inputs.artifact-name }}.tar.gz
+

@@ -1,0 +1,31 @@
+name: setup variables
+
+on:
+  workflow_call:
+    outputs:
+      php-version:
+        value: ${{ jobs.get-versions.outputs.php-version }}
+      node-version:
+        value: ${{ jobs.get-versions.outputs.node-version }}
+
+jobs:
+  get-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      php-version: ${{ steps.get-php-version.outputs.php-version }}
+      node-version: ${{ steps.get-node-version.outputs.node-version }}
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - id: get-php-version
+        run: |
+          VERSION=$(cat .tool-versions | grep php | cut -d" " -f 2)
+          echo "php-version=$VERSION" >> $GITHUB_OUTPUT
+
+      - id: get-node-version
+        run: |
+          VERSION=$(cat .tool-versions | grep nodejs | cut -d" " -f 2)
+          echo "node-version=$VERSION" >> $GITHUB_OUTPUT
+

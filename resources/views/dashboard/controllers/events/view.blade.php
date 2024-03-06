@@ -35,16 +35,16 @@ View Event
                         </h5>
                         <h5><b>Type:</b>
                             @if(Auth::user()->isAbleTo('events'))
-                                @if($event->type == 0)
+                                @if($event->type == App\Event::$TYPES["LOCAL"])
                                     Local Event
-                                @elseif($event->type == 1)
+                                @elseif($event->type == App\Event::$TYPES["VERIFIED_SUPPORT"])
                                     Support Event
                                 @else
                                     Unverified Support Event
                                     <a style="color:inherit" href="#" data-toggle="tooltip" title="Verify by setting the Event Type to 'Support Event' on the Edit Event page."><i class="fas fa-info-circle"></i></a>
                                 @endif
                             @else
-                                @if($event->type == 0)
+                                @if($event->type == App\Event::$TYPES["LOCAL"])
                                     Local Event
                                 @else
                                     Support Event
@@ -362,7 +362,7 @@ View Event
                                     @if($your_registration1)
                                         {!! Form::hidden('yr1', $your_registration1->id) !!}
                                         <div class="row">
-                                            @if($your_registration1->status == 0)
+                                            @if($your_registration1->status == App\Event::$STATUSES["HIDDEN"])
                                                 <div class="col-sm-5">
                                                     {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['placeholder' => 'Position', 'class' => 'form-control']) !!}
                                                 </div>

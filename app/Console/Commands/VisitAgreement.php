@@ -38,128 +38,128 @@ class VisitAgreement extends Command {
      *
      * @return string
      */
-     public function genRandLetter() {
-         $fi_int = rand(1, 26);
+    public function genRandLetter() {
+        $fi_int = rand(1, 26);
 
-         if ($fi_int == 1) {
-             $fn_initial = 'A';
-         } elseif ($fi_int == 2) {
-             $fn_initial = 'B';
-         } elseif ($fi_int == 3) {
-             $fn_initial = 'C';
-         } elseif ($fi_int == 4) {
-             $fn_initial = 'D';
-         } elseif ($fi_int == 5) {
-             $fn_initial = 'E';
-         } elseif ($fi_int == 6) {
-             $fn_initial = 'F';
-         } elseif ($fi_int == 7) {
-             $fn_initial = 'G';
-         } elseif ($fi_int == 8) {
-             $fn_initial = 'H';
-         } elseif ($fi_int == 9) {
-             $fn_initial = 'I';
-         } elseif ($fi_int == 10) {
-             $fn_initial = 'J';
-         } elseif ($fi_int == 11) {
-             $fn_initial = 'K';
-         } elseif ($fi_int == 12) {
-             $fn_initial = 'L';
-         } elseif ($fi_int == 13) {
-             $fn_initial = 'M';
-         } elseif ($fi_int == 14) {
-             $fn_initial = 'N';
-         } elseif ($fi_int == 15) {
-             $fn_initial = 'O';
-         } elseif ($fi_int == 16) {
-             $fn_initial = 'P';
-         } elseif ($fi_int == 17) {
-             $fn_initial = 'Q';
-         } elseif ($fi_int == 18) {
-             $fn_initial = 'R';
-         } elseif ($fi_int == 19) {
-             $fn_initial = 'S';
-         } elseif ($fi_int == 20) {
-             $fn_initial = 'T';
-         } elseif ($fi_int == 21) {
-             $fn_initial = 'U';
-         } elseif ($fi_int == 22) {
-             $fn_initial = 'V';
-         } elseif ($fi_int == 23) {
-             $fn_initial = 'W';
-         } elseif ($fi_int == 24) {
-             $fn_initial = 'X';
-         } elseif ($fi_int == 25) {
-             $fn_initial = 'Y';
-         } elseif ($fi_int == 26) {
-             $fn_initial = 'Z';
-         }
+        if ($fi_int == 1) {
+            $fn_initial = 'A';
+        } elseif ($fi_int == 2) {
+            $fn_initial = 'B';
+        } elseif ($fi_int == 3) {
+            $fn_initial = 'C';
+        } elseif ($fi_int == 4) {
+            $fn_initial = 'D';
+        } elseif ($fi_int == 5) {
+            $fn_initial = 'E';
+        } elseif ($fi_int == 6) {
+            $fn_initial = 'F';
+        } elseif ($fi_int == 7) {
+            $fn_initial = 'G';
+        } elseif ($fi_int == 8) {
+            $fn_initial = 'H';
+        } elseif ($fi_int == 9) {
+            $fn_initial = 'I';
+        } elseif ($fi_int == 10) {
+            $fn_initial = 'J';
+        } elseif ($fi_int == 11) {
+            $fn_initial = 'K';
+        } elseif ($fi_int == 12) {
+            $fn_initial = 'L';
+        } elseif ($fi_int == 13) {
+            $fn_initial = 'M';
+        } elseif ($fi_int == 14) {
+            $fn_initial = 'N';
+        } elseif ($fi_int == 15) {
+            $fn_initial = 'O';
+        } elseif ($fi_int == 16) {
+            $fn_initial = 'P';
+        } elseif ($fi_int == 17) {
+            $fn_initial = 'Q';
+        } elseif ($fi_int == 18) {
+            $fn_initial = 'R';
+        } elseif ($fi_int == 19) {
+            $fn_initial = 'S';
+        } elseif ($fi_int == 20) {
+            $fn_initial = 'T';
+        } elseif ($fi_int == 21) {
+            $fn_initial = 'U';
+        } elseif ($fi_int == 22) {
+            $fn_initial = 'V';
+        } elseif ($fi_int == 23) {
+            $fn_initial = 'W';
+        } elseif ($fi_int == 24) {
+            $fn_initial = 'X';
+        } elseif ($fi_int == 25) {
+            $fn_initial = 'Y';
+        } elseif ($fi_int == 26) {
+            $fn_initial = 'Z';
+        }
 
-         return $fn_initial;
-     }
+        return $fn_initial;
+    }
 
-     /**
-      * Match a letter to a number
-      *
-      * @return string
-      */
-      public function letterFromNum($fi_int) {
-          if ($fi_int == 1) {
-              $fn_initial = 'A';
-          } elseif ($fi_int == 2) {
-              $fn_initial = 'B';
-          } elseif ($fi_int == 3) {
-              $fn_initial = 'C';
-          } elseif ($fi_int == 4) {
-              $fn_initial = 'D';
-          } elseif ($fi_int == 5) {
-              $fn_initial = 'E';
-          } elseif ($fi_int == 6) {
-              $fn_initial = 'F';
-          } elseif ($fi_int == 7) {
-              $fn_initial = 'G';
-          } elseif ($fi_int == 8) {
-              $fn_initial = 'H';
-          } elseif ($fi_int == 9) {
-              $fn_initial = 'I';
-          } elseif ($fi_int == 10) {
-              $fn_initial = 'J';
-          } elseif ($fi_int == 11) {
-              $fn_initial = 'K';
-          } elseif ($fi_int == 12) {
-              $fn_initial = 'L';
-          } elseif ($fi_int == 13) {
-              $fn_initial = 'M';
-          } elseif ($fi_int == 14) {
-              $fn_initial = 'N';
-          } elseif ($fi_int == 15) {
-              $fn_initial = 'O';
-          } elseif ($fi_int == 16) {
-              $fn_initial = 'P';
-          } elseif ($fi_int == 17) {
-              $fn_initial = 'Q';
-          } elseif ($fi_int == 18) {
-              $fn_initial = 'R';
-          } elseif ($fi_int == 19) {
-              $fn_initial = 'S';
-          } elseif ($fi_int == 20) {
-              $fn_initial = 'T';
-          } elseif ($fi_int == 21) {
-              $fn_initial = 'U';
-          } elseif ($fi_int == 22) {
-              $fn_initial = 'V';
-          } elseif ($fi_int == 23) {
-              $fn_initial = 'W';
-          } elseif ($fi_int == 24) {
-              $fn_initial = 'X';
-          } elseif ($fi_int == 25) {
-              $fn_initial = 'Y';
-          } elseif ($fi_int == 26) {
-              $fn_initial = 'Z';
-          }
+    /**
+     * Match a letter to a number
+     *
+     * @return string
+     */
+    public function letterFromNum($fi_int) {
+        if ($fi_int == 1) {
+            $fn_initial = 'A';
+        } elseif ($fi_int == 2) {
+            $fn_initial = 'B';
+        } elseif ($fi_int == 3) {
+            $fn_initial = 'C';
+        } elseif ($fi_int == 4) {
+            $fn_initial = 'D';
+        } elseif ($fi_int == 5) {
+            $fn_initial = 'E';
+        } elseif ($fi_int == 6) {
+            $fn_initial = 'F';
+        } elseif ($fi_int == 7) {
+            $fn_initial = 'G';
+        } elseif ($fi_int == 8) {
+            $fn_initial = 'H';
+        } elseif ($fi_int == 9) {
+            $fn_initial = 'I';
+        } elseif ($fi_int == 10) {
+            $fn_initial = 'J';
+        } elseif ($fi_int == 11) {
+            $fn_initial = 'K';
+        } elseif ($fi_int == 12) {
+            $fn_initial = 'L';
+        } elseif ($fi_int == 13) {
+            $fn_initial = 'M';
+        } elseif ($fi_int == 14) {
+            $fn_initial = 'N';
+        } elseif ($fi_int == 15) {
+            $fn_initial = 'O';
+        } elseif ($fi_int == 16) {
+            $fn_initial = 'P';
+        } elseif ($fi_int == 17) {
+            $fn_initial = 'Q';
+        } elseif ($fi_int == 18) {
+            $fn_initial = 'R';
+        } elseif ($fi_int == 19) {
+            $fn_initial = 'S';
+        } elseif ($fi_int == 20) {
+            $fn_initial = 'T';
+        } elseif ($fi_int == 21) {
+            $fn_initial = 'U';
+        } elseif ($fi_int == 22) {
+            $fn_initial = 'V';
+        } elseif ($fi_int == 23) {
+            $fn_initial = 'W';
+        } elseif ($fi_int == 24) {
+            $fn_initial = 'X';
+        } elseif ($fi_int == 25) {
+            $fn_initial = 'Y';
+        } elseif ($fi_int == 26) {
+            $fn_initial = 'Z';
+        }
 
-          return $fn_initial;
-      }
+        return $fn_initial;
+    }
 
     /**
      * Execute the console command.
