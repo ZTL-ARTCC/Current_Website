@@ -16,10 +16,12 @@ $config->setRules([
     'array_syntax' => ['syntax' => 'short'],
     'ordered_imports' => ['sort_algorithm' => 'alpha'],
     'no_unused_imports' => true,
-    'braces' => [
-        'position_after_functions_and_oop_constructs' => 'same',
-        'allow_single_line_closure' => true,
-    ],
+    'braces_position' => [
+        'classes_opening_brace' => 'same_line',
+        'control_structures_opening_brace' => 'same_line',
+        'functions_opening_brace' => 'same_line',
+        'allow_single_line_anonymous_functions' => true,
+    ]
 ])->setFinder($finder);
 
 return $config;

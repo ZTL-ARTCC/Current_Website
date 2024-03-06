@@ -51,11 +51,12 @@ class TeamspeakStuff extends Migration {
             $table->softDeletes();
         });
     }
-  /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
+    /**
+       * Reverse the migrations.
+       *
+       * @return void
+       */
     public function down() {
         Schema::dropIfExists('teamspeak_alias');
         Schema::dropIfExists('teamspeak_ban');
