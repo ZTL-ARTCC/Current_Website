@@ -108,14 +108,6 @@ class SupportEvents extends Command {
         }
 
         foreach ($result->data as $event) {
-            // If an even already exists associated with this myVATSIM event, skip it
-            // This won't filter out our events, but this is done shortly
-            $existing = Event::where('vatsim_id', $event->id)->first();
-            if ($existing !== null) {
-                $this->info("Skipping already processed event ".$event->id);
-                continue;
-            } // this event has already been processed
-
             $pull_this_event = false;
             $organizer = null;
 
@@ -158,6 +150,19 @@ class SupportEvents extends Command {
                 continue;
             }
 
+            $existing = Event::where('vatsim_id', $event->id)->first();
+            if ($existing !== null) {
+                if ($existing->type == Event::$TYPES["UNVERIFIED_SUPPORT"]) {
+                    $this->info("Updating support event with vatsim id ".$event->id);
+                    $this->updateEvent($existing, $event, $organizer, $start_time, $end_time);
+                    $existing->save();
+                } else {
+                    $this->info("Skipping support event with vatsim id ".$event->id);
+                }
+
+                continue;
+            }
+
             $this->info('Creating support event with vatsim id '.$event->id);
 
             // create the event in our database
@@ -165,18 +170,11 @@ class SupportEvents extends Command {
             $this->info($event->id.': Saving to database');
 
             $new_event = new Event;
-            $new_event->name = $event->name;
-            $new_event->host = $organizer;
-            $new_event->description = $event->description;
-            $new_event->date = $start_time->format("m/d/Y");
-            $new_event->start_time = $start_time->toTimeString('minute');
-            $new_event->end_time = $end_time->toTimeString('minute');
+            $this->updateEvent($new_event, $event, $organizer, $start_time, $end_time);
 
-            $new_event->banner_path = $event->banner;
-
-            $new_event->status = 0;
-            $new_event->reg = 0;
-            $new_event->type = 2; // auto - unverified
+            $new_event->status = Event::$STATUSES["HIDDEN"];
+            $new_event->reg = Event::$REGS["CLOSED"];
+            $new_event->type = Event::$TYPES["UNVERIFIED_SUPPORT"];
             $new_event->vatsim_id = $event->id;
             $new_event->save();
 
@@ -191,5 +189,15 @@ class SupportEvents extends Command {
 
             $this->info('Created ' . $event->id);
         }
+    }
+
+    private function updateEvent($event, $vatsim_data, $organizer, $start_time, $end_time) {
+        $event->name = $vatsim_data->name;
+        $event->host = $organizer;
+        $event->description = $vatsim_data->description;
+        $event->date = $start_time->format("m/d/Y");
+        $event->start_time = $start_time->toTimeString('minute');
+        $event->end_time = $end_time->toTimeString('minute');
+        $event->banner_path = $vatsim_data->banner;
     }
 }

@@ -26,9 +26,9 @@ Events
         <tbody>
             @if($events->count() > 0)
                 @foreach($events as $e)
-                    @if($e->type == 2 && Auth::user()->isAbleTo('events'))
+                    @if($e->type == App\Event::$TYPES["UNVERIFIED_SUPPORT"] && Auth::user()->isAbleTo('events'))
                         <tr class="alert-warning">
-                    @elseif($e->type == 1 && Auth::user()->isAbleTo('events'))
+                    @elseif($e->type == App\EVENT::$TYPES["VERIFIED_SUPPORT"] && Auth::user()->isAbleTo('events'))
                         <tr class="alert-info">
                     @else
                         <tr>
@@ -49,22 +49,22 @@ Events
                             <td>
 
                                 <div class="btn-group" role="group" aria-label="Actions">
-                                    @if($e->type == 2)
+                                    @if($e->type == App\Event::$TYPES["UNVERIFIED_SUPPORT"])
                                         <button disabled class="btn btn-success" title="This event has not been verified and cannot be made public"><i class="fas fa-check"></i></button>
                                     @else
-                                        @if($e->status == 0)
+                                        @if($e->status == App\Event::$STATUSES["HIDDEN"])
                                             <a href="/dashboard/admin/events/set-active/{{ $e->id }}" class="btn btn-success" data-toggle="tooltip" title="Unhide Event"><i class="fas fa-check fa-fw"></i></a>
-                                        @elseif($e->status == 1)
+                                        @elseif($e->status == App\Event::$STATUSES["VISIBLE"])
                                             <a href="/dashboard/admin/events/hide/{{ $e->id }}" class="btn btn-warning" data-toggle="tooltip" title="Hide Event"><i class="fas fa-ban fa-fw"></i></a>
                                         @endif
                                     @endif
                                         <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
                                         <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
                                 </div>
-                                    @if($e->type == 2)
+                                    @if($e->type == App\Event::$TYPES["UNVERIFIED_SUPPORT"])
                                         <p><small><i>Unverified</i></small></p>
                                     @else
-                                        @if($e->status == 0)
+                                        @if($e->status == App\Event::$STATUSES["HIDDEN"])
                                             <br>
                                             <p><small><i>Hidden</i></small></p>
                                         @endif
