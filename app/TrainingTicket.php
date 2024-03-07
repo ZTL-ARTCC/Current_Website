@@ -24,6 +24,11 @@ class TrainingTicket extends Model {
                                 241=>'ATL7', 244=>'ATL8', 245=>'A801', 246=>'A802', 247=>null, 248=>'A803', 249=>null, 250=>'A804',
                                 251=>null, 252=>'A805',253=>'A806',254=>'A807', 255=>'A808', 256=>null, 257=>'Other'];
 
+    public static $VATUSA_UPLOAD_STATUS = [
+        "PENDING" => 0,
+        "UPLOADED" => 1
+    ];
+
     public function getTrainerNameAttribute() {
         $user = User::find($this->trainer_id);
         if ($user != null) {
@@ -84,5 +89,9 @@ class TrainingTicket extends Model {
     public function getDateSortAttribute() {
         $date = strtodate($this->date.' '.$this->time);
         return $date;
+    }
+
+    public function getIsVatusaSyncedAttribute() {
+        return $this->vatusa_upload_status == $this::$VATUSA_UPLOAD_STATUS["UPLOADED"];
     }
 }
