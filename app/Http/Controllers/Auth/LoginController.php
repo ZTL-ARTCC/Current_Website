@@ -11,6 +11,7 @@ use Config;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 /**
@@ -67,20 +68,30 @@ class LoginController extends Controller {
 
     protected function vatusaAuth($resourceOwner, $accessToken) {
         $client = new Client();
+
+        if (App::environment('local')) {
+            $resourceOwner->data->cid = "10000002";
+            $resourceOwner->data->personal->email = "dev@ztl.local";
+        }
+
         $result = $client->request('GET', Config::get('vatusa.base').'/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
         $realops_toggle_enabled = toggleEnabled('realops');
 
         if (! $result || $result->getStatusCode() != 200) {
             if ($realops_toggle_enabled) {
-                return $this->externalRealopsLogin(
-                    $resourceOwner->data->cid,
-                    $resourceOwner->data->personal->name_first,
-                    $resourceOwner->data->personal->name_last,
-                    $resourceOwner->data->personal->email
-                );
+                if (!App::environment('local')) {
+                    return $this->externalRealopsLogin(
+                        $resourceOwner->data->cid,
+                        $resourceOwner->data->personal->name_first,
+                        $resourceOwner->data->personal->name_last,
+                        $resourceOwner->data->personal->email
+                    );
+                }
             }
 
-            return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            if (!App::environment('local')) {
+                return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            }
         }
 
         $resu = json_decode($result->getBody()->__toString(), true);
@@ -90,7 +101,33 @@ class LoginController extends Controller {
         }
 
         $res = $resu['data'];
-        $userstatuscheck = User::find($res['cid']);
+        $userstatuscheck = null;
+        if (App::environment('local')) {
+            $userstatuscheck = User::find(10000002);
+            if (!$userstatuscheck) {
+                $devUser = new User;
+                $devUser->id = 10000002;
+                $devUser->fname = "ZTL";
+                $devUser->lname = "Development";
+                $devUser->initials = "ZD";
+                $devUser->email = "dev@ztl.local";
+                $devUser->rating_id = 2;
+                $devUser->visitor = 0;
+                $devUser->status = 1;
+                $devUser->save();
+                $userstatuscheck = $devUser;
+            }
+            $userstatuscheck->attachRole('wm');
+            $userstatuscheck->save();
+
+            auth()->login($userstatuscheck, true);
+
+            $message = 'You have been logged in successfully via the dev mode login. A webmaster role has been automatically attached.';
+
+            return redirect()->intended('/dashboard')->with('success', $message);
+        } else {
+            $userstatuscheck = User::find($resu['cid']);
+        }
         
         if (! $realops_toggle_enabled && ! $userstatuscheck) {
             return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
