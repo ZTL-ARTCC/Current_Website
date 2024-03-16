@@ -78,15 +78,13 @@ class LoginController extends Controller {
         $realops_toggle_enabled = toggleEnabled('realops');
 
         if (! $result || $result->getStatusCode() != 200) {
-            if ($realops_toggle_enabled) {
-                if (!App::environment('local')) {
-                    return $this->externalRealopsLogin(
-                        $resourceOwner->data->cid,
-                        $resourceOwner->data->personal->name_first,
-                        $resourceOwner->data->personal->name_last,
-                        $resourceOwner->data->personal->email
-                    );
-                }
+            if ($realops_toggle_enabled && !App::environment('local')) {
+                return $this->externalRealopsLogin(
+                    $resourceOwner->data->cid,
+                    $resourceOwner->data->personal->name_first,
+                    $resourceOwner->data->personal->name_last,
+                    $resourceOwner->data->personal->email
+                );
             }
 
             if (!App::environment('local')) {
