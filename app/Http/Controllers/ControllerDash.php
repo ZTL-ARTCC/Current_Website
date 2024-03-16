@@ -214,27 +214,33 @@ class ControllerDash extends Controller {
         }
 
         if (is_null(Auth::user()->ea_customer_id)) {
-            $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
-            foreach ($ea_users as $u) {
-                $user = Auth::user();
-                $user->ea_customer_id = $u->id;
-                $user->save();
+            try {
+                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+                foreach ($ea_users as $u) {
+                    $user = Auth::user();
+                    $user->ea_customer_id = $u->id;
+                    $user->save();
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
             }
         }
         $ea_appointments = [];
         if (!is_null(Auth::user()->ea_customer_id)) {
-            $ea_appointments = DB::connection('ea_mysql')
-                ->table('ea_appointments')
-                ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
-                ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
-                ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
-                ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
-                ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
-                ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
-            foreach ($ea_appointments as &$ea_appointment) {
-                $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
-                $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
-                $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+            try {
+                $ea_appointments = DB::connection('ea_mysql')
+                    ->table('ea_appointments')
+                    ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
+                    ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
+                    ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                    ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
+                    ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
+                    ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
+                foreach ($ea_appointments as &$ea_appointment) {
+                    $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
+                    $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
+                    $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
             }
         }
 
