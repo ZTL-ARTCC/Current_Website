@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Laratrust\Models\LaratrustPermission;
+use Laratrust\Models\Permission as PermissionModel;
 
-class Permission extends LaratrustPermission {
+class Permission extends PermissionModel {
     //
 }

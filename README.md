@@ -38,7 +38,7 @@ This is the main website for the vZTL ARTCC, part of the VATSIM Network.
         ```php
         Route::get('/laratrust', function () {
             $user = App\User::find(1315134);
-            $user->attachRole('wm');
+            $user->addRole('wm');
         });
         ```
     1. Run the command `php artisan serve`
