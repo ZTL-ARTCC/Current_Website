@@ -305,7 +305,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 Route::get('/laratrust', function () {
     $user = App\User::find(1315134);
 
-    $user->attachRole('wm');
+    $user->addRole('wm');
 });
 */
 
