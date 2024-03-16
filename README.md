@@ -30,16 +30,25 @@ This is the main website for the vZTL ARTCC, part of the VATSIM Network.
     ```
    
 5. Update the `APP_STORAGE` variable in .env to be correct.
-6. Initialize the database:
+6. Go to https://auth-dev.vatsim.net and log in with the username and password `10000002`/`10000002`.
+7. Click "Manage OAuth Organizations"
+8. Next to "VATSIM Connect Demo", click "View"
+9. Open the "OAuth clients" tab
+10. Click "Add client"
+11. Under "Redirect URL", enter `http://127.0.0.1:8000/login`
+12. Scroll to the very bottom to see the new created client. The ID will be on the left, and the secret will be in the middle.
+13. In .env, set `VATSIM_OAUTH_CLIENT` to the client ID.
+14. In .env, set `VATSIM_OAUTH_SECRET` to the client secret.
+15. Initialize the database:
     ```bash
    php artisan migrate
    php artisan db:seed
     ```
-7. Start the website:
+16. Start the website:
     ```bash
    php artisan serve
     ```
-8. Finally, you can log in with the username and password `10000002` (it's the username and the password). You'll automatically have all permissions assigned to you.
+17. Finally, you can log in with the username and password `10000002` (it's the username and the password). You'll automatically have all permissions assigned to you.
 
 ### Helpful Commands
 | Command                                         | Action                  |
