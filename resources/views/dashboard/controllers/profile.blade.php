@@ -116,7 +116,8 @@ Profile
         <div class="col-sm-4">
             <h4>My Information</h4>
             <br>
-            <p><b>CID:</b> {{ Auth::id() }}</p>
+	    <p><b>CID:</b> {{ Auth::id() }}</p>
+	    <p><b>Name privacy:</b> {{ Auth:user()->name_privacy == 1 ? 'Enabled' : 'Disabled' }} <a class="info-tooltip" href="https://www.vatusa.net/my/profile" target="_blank" data-toggle="tooltip" title="Click here to update - link to VATUSA profile"><i class="fas fa-info-circle"></i></a></p>
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
             <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
