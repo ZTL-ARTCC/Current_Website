@@ -10,6 +10,6 @@
 <p><b>Departure Time: </b>{{ $flight->dep_time_formatted }}</p>
 <p><b>Departure Airport: </b>{{ $flight->dep_airport }}</p>
 <p><b>Arrival Airport: </b>{{ $flight->arr_airport }}</p>
-<p><b>Estimated Arrival Time: </b>@if($flight->est_arr_time) {{ $flight->est_arr_time_formatted }} @else N/A @endif</p>
+<p><b>Estimated Enroute Time: </b>@if($flight->est_time_enroute) {{ $flight->est_time_enroute_formatted }} @else N/A @endif</p>
 <p><b>Route: </b>@if($flight->route) {{ $flight->route }} @else N/A @endif</p>
 @endsection

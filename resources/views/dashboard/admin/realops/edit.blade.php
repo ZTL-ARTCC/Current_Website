@@ -42,8 +42,8 @@
                     {!! Form::text('arr_airport', $flight->arr_airport, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('est_arr_time', 'Estimated Arrival Time') !!}
-                    {!! Form::text('est_arr_time', $flight->est_arr_time_formatted, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional', 'id' => 'realops_add_edit_arr_time']) !!}
+                    {!! Form::label('est_time_enroute', 'Estimated Time Enroute (ETE)') !!}
+                    {!! Form::text('est_time_enroute', $flight->est_time_enroute_formatted, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional', 'id' => 'realops_add_edit_ete']) !!}
                 </div>
             </div>
         </div>

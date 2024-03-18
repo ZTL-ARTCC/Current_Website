@@ -78,13 +78,15 @@ class FlightawareImport extends Command {
             $deptime_parsed = Carbon::parse($deptime);
             $arrtime_parsed = Carbon::parse($arrtime);
 
+            $ete = $deptime_parsed->diff($arrtime_parsed);
+
             $new_flight->assigned_pilot_id = null;
             $new_flight->flight_number = $callsign;
             $new_flight->flight_date = $deptime_parsed->toDateString();
             $new_flight->dep_time = $deptime_parsed->toTimeString();
             $new_flight->dep_airport = $flight['origin'];
             $new_flight->arr_airport = $flight['destination'];
-            $new_flight->est_arr_time = $arrtime_parsed->toTimeString();
+            $new_flight->est_time_enroute = $ete->format("H:M:S");
             $new_flight->route = 'Pilot Choice';
 
             $new_flight->save();

@@ -42,8 +42,8 @@
                     {!! Form::text('arr_airport', null, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('est_arr_time', 'Estimated Arrival Time') !!}
-                    {!! Form::text('est_arr_time', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional', 'id' => 'realops_add_edit_arr_time']) !!}
+                    {!! Form::label('est_time_enroute', 'Estimated Enroute Time') !!}
+                    {!! Form::text('est_time_enroute', null, ['class' => 'form-control', 'placeholder' => 'HH:MM - Optional', 'id' => 'realops_add_edit_ete']) !!}
                 </div>
             </div>
         </div>

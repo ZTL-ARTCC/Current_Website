@@ -40,7 +40,7 @@ class RealopsExport implements FromCollection, WithHeadings, WithMapping {
             $flight->dep_time,
             $flight->dep_airport,
             $flight->arr_airport,
-            $flight->est_arr_time,
+            $flight->est_time_enroute,
             $flight->route,
             $pilot->full_name,
             $flight->assigned_pilot_id,
