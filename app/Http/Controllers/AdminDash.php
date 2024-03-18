@@ -1379,7 +1379,21 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
+        } 
+
+        else if ($request->filled('banner_url')) {
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
+        } 
+
+        else {
             $public_url = null;
         }
 
@@ -1441,7 +1455,19 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
+        } 
+        else if ($request->filled('banner_url')) {
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
+        } 
+        else {
             $public_url = $event->banner_path;
         }
 
