@@ -30,7 +30,7 @@
             <th scope="col">Departure Time (ET)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Enroute Time (ET)</th>
+            <th scope="col">Estimated Enroute Time (HH:MM)</th>
             <th scope="col">Route</th>
             <th scope="col" colspan="2">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
