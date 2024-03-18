@@ -124,7 +124,7 @@ class LoginController extends Controller {
 
             return redirect()->intended('/dashboard')->with('success', $message);
         } else {
-            $userstatuscheck = User::find($resu['cid']);
+            $userstatuscheck = User::find($res['cid']);
         }
         
         if (! $realops_toggle_enabled && ! $userstatuscheck) {
