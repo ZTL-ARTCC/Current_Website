@@ -48,7 +48,7 @@
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
                 @if($f->est_time_enroute)
-                    <td>TEST TEST {{ $f->est_time_enroute_formatted }}</td>
+                    <td>{{ $f->est_time_enroute_formatted }}</td>
                 @else
                     <td>N/A</td>
                 @endif
