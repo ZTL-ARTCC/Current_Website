@@ -74,8 +74,8 @@ Realops
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
-                @if($f->est_arr_time)
-                    <td>{{ $f->est_arr_time_formatted }}</td>
+                @if($f->est_time_enroute)
+                    <td>{{ $f->est_time_enroute_formatted }}</td>
                 @else
                     <td>N/A</td>
                 @endif

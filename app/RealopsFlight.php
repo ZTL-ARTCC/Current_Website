@@ -20,8 +20,8 @@ class RealopsFlight extends Model {
         return $this->formatTime($this->dep_time);
     }
 
-    public function getEstArrTimeFormattedAttribute() {
-        return $this->formatTime($this->est_arr_time);
+    public function getEstTimeEnrouteFormattedAttribute() {
+        return $this->formatTime($this->est_time_enroute);
     }
 
     public function assignPilotToFlight($pilot_id) {
