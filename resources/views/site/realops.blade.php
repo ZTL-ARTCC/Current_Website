@@ -55,7 +55,7 @@ Realops
             <th scope="col">Departure Time (ET)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Arrival Time (ET)</th>
+            <th scope="col">Estimated Enroute Time (HH:MM)</th>
             <th scope="col">Route</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
