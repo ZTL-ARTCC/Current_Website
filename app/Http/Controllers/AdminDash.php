@@ -1384,9 +1384,12 @@ class AdminDash extends Controller {
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } elseif ($request->filled('banner_url')) {
             try {
-                Http::get($request->banner_url);
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    return redirect()->back()->withErrors('The provided URL cannot be accessed')->withInput();
+                }
             } catch (\Exception $e) {
-                return redirect()->back()->withErrors('The provided URL does not exist')->withInput();
+                return redirect()->back()->withErrors('The provided URL is not valid')->withInput();
             }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
@@ -1462,9 +1465,12 @@ class AdminDash extends Controller {
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } elseif ($request->filled('banner_url')) {
             try {
-                Http::get($request->banner_url);
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    return redirect()->back()->withErrors('The provided URL cannot be accessed')->withInput();
+                }
             } catch (\Exception $e) {
-                return redirect()->back()->withErrors('The provided URL does not exist')->withInput();
+                return redirect()->back()->withErrors('The provided URL is not valid')->withInput();
             }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
