@@ -42,7 +42,7 @@ This is the main website for the vZTL ARTCC, part of the VATSIM Network.
 15. Initialize the database:
    ```php artisan migrate``` ```php artisan db:seed```
 16. Start the website:
-    ```bash php artisan serve```
+    ```php artisan serve```
 17. Finally, you can log in with the username and password `10000002` (it's the username and the password). You'll automatically have all permissions assigned to you.
 
 ### Helpful Commands
