@@ -33,6 +33,7 @@ use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -1370,8 +1371,10 @@ class AdminDash extends Controller {
             'end_time' => 'required',
             'description' => 'required'
         ]);
-
-        if ($request->file('banner') != null) {
+        
+        if ($request->file('banner') != null and $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        } elseif ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
@@ -1380,6 +1383,11 @@ class AdminDash extends Controller {
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } elseif ($request->filled('banner_url')) {
+            try {
+                Http::get($request->banner_url);
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors('The provided URL does not exist')->withInput();
+            }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
             if ($imageSize == false) {
@@ -1442,8 +1450,9 @@ class AdminDash extends Controller {
                 $event->banner_path = '/storage'.$public_url;
             }
         }
-
-        if ($request->file('banner') != null) {
+        if ($request->file('banner') != null and $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        } elseif ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
@@ -1452,6 +1461,11 @@ class AdminDash extends Controller {
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         } elseif ($request->filled('banner_url')) {
+            try {
+                Http::get($request->banner_url);
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors('The provided URL does not exist')->withInput();
+            }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
             if ($imageSize == false) {
