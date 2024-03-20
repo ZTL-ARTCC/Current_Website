@@ -105,5 +105,5 @@ jobs:
           --url https://api.cloudflare.com/client/v4/zones/${{ secrets.cf_ztl_zone }}/purge_cache \
           --header 'Content-Type: application/json' \
           --header 'Authorization: Bearer ${{ secrets.cf_cache_purge_token }}' \
-          --data '{ "files": [ "${{ secrets.url }}/css/app.css", "${{ secrets.url }}/js/app.js" ] }'
+          --data '{ "files": [ "${{ secrets.url }}/css/*.css", "${{ secrets.url }}/js/*.js" ] }'
 
