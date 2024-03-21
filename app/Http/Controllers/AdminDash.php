@@ -32,10 +32,10 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use  Illuminate\Http\Client\ConnectionException;
+use  Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -1377,7 +1377,7 @@ class AdminDash extends Controller {
         
         if ($request->file('banner') != null && $request->filled('banner_url')) {
             return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
-        } 
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1394,7 +1394,7 @@ class AdminDash extends Controller {
                 }
             } catch (RequestException | ConnectionException) {
                 return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
-            } 
+            }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
             if ($imageSize == false) {
@@ -1460,7 +1460,7 @@ class AdminDash extends Controller {
         }
         if ($request->file('banner') != null && $request->filled('banner_url')) {
             return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
-        } 
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
