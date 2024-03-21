@@ -9,6 +9,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 var planeLayer = new L.LayerGroup();
 planeLayer.addTo(map);
+window.planeLayer = planeLayer;
 
 function resizeMap() {
   setTimeout(function () {
