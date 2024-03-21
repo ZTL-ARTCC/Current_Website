@@ -31,9 +31,11 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use  Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -1369,12 +1371,14 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
         
-        if ($request->file('banner') != null and $request->filled('banner_url')) {
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
             return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
-        } elseif ($request->file('banner') != null) {
+        } 
+        if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
@@ -1386,11 +1390,11 @@ class AdminDash extends Controller {
             try {
                 $response = Http::get($request->banner_url);
                 if (!$response->successful()) {
-                    return redirect()->back()->withErrors('The provided URL cannot be accessed')->withInput();
+                    throw new ConnectionException;
                 }
-            } catch (\Exception $e) {
-                return redirect()->back()->withErrors('The provided URL is not valid')->withInput();
-            }
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
+            } 
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
             if ($imageSize == false) {
@@ -1438,7 +1442,8 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
 
         $event = Event::find($id);
@@ -1453,9 +1458,10 @@ class AdminDash extends Controller {
                 $event->banner_path = '/storage'.$public_url;
             }
         }
-        if ($request->file('banner') != null and $request->filled('banner_url')) {
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
             return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
-        } elseif ($request->file('banner') != null) {
+        } 
+        if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
             $path = $request->file('banner')->storeAs(
@@ -1467,10 +1473,10 @@ class AdminDash extends Controller {
             try {
                 $response = Http::get($request->banner_url);
                 if (!$response->successful()) {
-                    return redirect()->back()->withErrors('The provided URL cannot be accessed')->withInput();
+                    throw new ConnectionException;
                 }
-            } catch (\Exception $e) {
-                return redirect()->back()->withErrors('The provided URL is not valid')->withInput();
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
             }
             $imageContent = file_get_contents($request->banner_url);
             $imageSize = getimagesizefromstring($imageContent);
