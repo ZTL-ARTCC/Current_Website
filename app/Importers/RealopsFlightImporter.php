@@ -15,11 +15,11 @@ class RealopsFlightImporter implements ToModel, WithValidation {
         if (count($row) < 5) {
             throw new Exception("Invalid row: too few entries (expected at least 5, got " . count($row) . ")");
         }
-        $est_arr_time = null;
+        $est_time_enroute = null;
         $route = null;
 
         if (count($row) > 5) {
-            $est_arr_time = $row[5];
+            $est_time_enroute = $row[5];
         }
 
         if (count($row) > 6) {
@@ -32,7 +32,7 @@ class RealopsFlightImporter implements ToModel, WithValidation {
         $flight->dep_time = $row[2];
         $flight->dep_airport = $row[3];
         $flight->arr_airport = $row[4];
-        $flight->est_arr_time = $est_arr_time;
+        $flight->est_time_enroute = $est_time_enroute;
         $flight->route = $route;
 
         return $flight;
