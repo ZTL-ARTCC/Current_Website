@@ -1374,6 +1374,8 @@ class AdminDash extends Controller {
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
+
+        $public_url = null;
         
         if ($request->file('banner') != null && $request->filled('banner_url')) {
             return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
@@ -1404,8 +1406,6 @@ class AdminDash extends Controller {
             $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
             file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = null;
         }
 
         $event = new Event;
@@ -1447,6 +1447,7 @@ class AdminDash extends Controller {
         ]);
 
         $event = Event::find($id);
+        $public_url = $event->banner_path;
 
         if ($request->type == 1) { // if we are setting it to a verified support event, verify the banner
             if (starts_with($event->banner_path, "http://") || starts_with($event->banner_path, "https://")) {
@@ -1487,8 +1488,6 @@ class AdminDash extends Controller {
             $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
             file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = $event->banner_path;
         }
 
         $event->name = $request->name;
