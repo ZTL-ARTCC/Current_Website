@@ -49,7 +49,7 @@
         @include('inc.messages')
 
         {{-- Navbar --}}
-        @include('inc.dashboard-head')
+        @include('inc.dashboard_head')
 
         <div class="container-fluid">
             <div class="row">
