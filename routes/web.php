@@ -91,6 +91,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
         });
+        Route::prefix('bookings')->group(function() {
+            Route::get('/', 'AtcBookingController@viewBookings');
+        });
     });
 
     Route::prefix('opt')->group(function () {
