@@ -6,10 +6,7 @@ $(function () {
 
 function realopsValidateAndSubmit() {
   let valid = true;
-  let validateFields = [
-    "realops_add_edit_dep_time",
-    "realops_add_edit_arr_time",
-  ];
+  let validateFields = ["realops_add_edit_dep_time", "realops_add_edit_ete"];
   validateFields.forEach(function (field_id) {
     let dep_time = document.getElementById(field_id).value;
     if (!dep_time.match(/^\d{2}:\d{2}$/)) {

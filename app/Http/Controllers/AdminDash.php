@@ -31,8 +31,11 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use  Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -1368,9 +1371,15 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
 
+        $public_url = null;
+        
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1379,8 +1388,24 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = null;
+        } elseif ($request->filled('banner_url')) {
+            try {
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    throw new ConnectionException;
+                }
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
+            }
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         }
 
         $event = new Event;
@@ -1417,10 +1442,12 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
 
         $event = Event::find($id);
+        $public_url = $event->banner_path;
 
         if ($request->type == 1) { // if we are setting it to a verified support event, verify the banner
             if (starts_with($event->banner_path, "http://") || starts_with($event->banner_path, "https://")) {
@@ -1432,7 +1459,9 @@ class AdminDash extends Controller {
                 $event->banner_path = '/storage'.$public_url;
             }
         }
-
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1441,8 +1470,24 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = $event->banner_path;
+        } elseif ($request->filled('banner_url')) {
+            try {
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    throw new ConnectionException;
+                }
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
+            }
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         }
 
         $event->name = $request->name;

@@ -56,8 +56,10 @@ New Event
             {!! Form::textArea('description', null, ['class' => 'form-control text-editor']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('banner', 'Upload Banner') !!}
-            {!! Form::file('banner', ['class' => 'form-control']) !!}
+            {!! Form::label('banner', 'Upload Banner or Enter Banner URL') !!} 
+            {!! Form::file('banner', ['class' => 'form-control']) !!} 
+            <span>OR</span>
+            {!! Form::text('banner_url', null, ['class' => 'form-control', 'placeholder' => 'Enter URL for the banner image']) !!}
         </div>
         <button class="btn btn-success" type="submit">Save Event</button>
         <a class="btn btn-danger" href="/dashboard/controllers/events">Cancel</a>
