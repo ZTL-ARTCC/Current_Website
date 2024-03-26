@@ -86,7 +86,7 @@ class FlightawareImport extends Command {
             $new_flight->dep_time = $deptime_parsed->toTimeString();
             $new_flight->dep_airport = $flight['origin'];
             $new_flight->arr_airport = $flight['destination'];
-            $new_flight->est_time_enroute = $ete->format("H:M:S");
+            $new_flight->est_time_enroute = $ete->format('%H:%M:%S');
             $new_flight->route = 'Pilot Choice';
 
             $new_flight->save();
