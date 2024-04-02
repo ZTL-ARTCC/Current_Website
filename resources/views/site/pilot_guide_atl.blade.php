@@ -70,7 +70,7 @@ return $badge;
                 <div class="row">
                     <div class="col">
                         <ul>
-                            <li>Concourse T
+                            <li>Concourse T:
                                 <ul>
                                     <li>T1 - T8: Delta Air Lines. Only T1 may accommodate the A359</li>
                                     <li>T9 - T16: American Airlines</li>
@@ -85,7 +85,7 @@ return $badge;
                                     <li>C30 - C55: Delta Air Lines & Delta Connection</li>
                                 </ul>
                             </li>
-                            <li>Concourse D
+                            <li>Concourse D:
                                 <ul>
                                     <li>D1/D1A/D3: Frontier & Alaska [Common Use]</li>
                                     <li>D2/D4: Spirit [Common Use]</li>
@@ -99,7 +99,7 @@ return $badge;
                     </div>
                     <div class="col">
                         <ul>
-                            <li>Concourse E
+                            <li>Concourse E:
                                 <ul>
                                     <li>E1 - E6: Spirit/Frontier [Common Use]</li>
                                     <li>E7 - E33: Delta Air Lines [Common Use]</li>
@@ -107,7 +107,7 @@ return $badge;
                                     <li>E37: Southern Airways Express</li>
                                 </ul>
                             </li>
-                            <li>Concourse F
+                            <li>Concourse F:
                                 <ul>
                                     <li>F1: Korean Air & All Group VI (B747-8, A380) aircraft, Delta Air Lines [Common Use]</li>
                                     <li>F2 - F14: Common Use</li>
