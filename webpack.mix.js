@@ -32,7 +32,7 @@ Mix.listen('configReady', webpackConfig => {
 
 mix.webpackConfig({
   plugins: [
-    new CKEditorWebpackPlugin({
+    new CKEditorTranslationsPlugin({
       language: 'en',
       addMainLanguageTranslationsToAllAssets: true
     })
