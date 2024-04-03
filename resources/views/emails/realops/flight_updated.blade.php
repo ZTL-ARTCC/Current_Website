@@ -3,7 +3,7 @@
 @section('content')
 <p>Dear {{ $pilot->full_name }},</p>
 
-<p>This is an automated email to inform you Realops flight {{ $flight->flight_number }} has been updated. Please review the information below for the latest information and you can also view the latest information on the <a hret="https://www.ztlartcc.org/realops">Realops Dashboard</a>.</p>
+<p>This is an automated email to inform you Realops flight {{ $flight->flight_number }} has been updated. Please review the information below for the latest information and you can also view the latest information on the <a hret="https://www.ztlartcc.org/realops">Realops Dashboard</a>. Atlanta gate information and much more can be found in the <a hret="https://www.ztlartcc.org/pilots/guide/atl">ATL Pilot Guide</a>.</p>
 
 <p><b>Date: </b>{{ $flight->flight_date_formatted }}</p>
 <p><b>Flight Number: </b>{{ $flight->flight_number }}</p>
