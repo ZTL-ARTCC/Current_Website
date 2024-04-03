@@ -1423,8 +1423,7 @@ class AdminDash extends Controller {
             $event->banner_path = $public_url;
             $event->reduceEventBanner();
             $event->save();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
     
@@ -1463,8 +1462,7 @@ class AdminDash extends Controller {
                 $event->banner_path = $public_url;
                 try {
                     $event->reduceEventBanner();
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
                     return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
                 }
                 $event->banner_path = '/storage'.$public_url;
@@ -1514,8 +1512,7 @@ class AdminDash extends Controller {
             $event->banner_path = $public_url;
             $event->reduceEventBanner();
             $event->save();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
 
