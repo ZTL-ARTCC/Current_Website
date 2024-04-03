@@ -6,8 +6,12 @@ use App\User;
 
 class RosterController extends Controller {
     public function index() {
-        $hcontrollers = User::where('visitor', '0')->where('status', '1')->orderBy('lname', 'ASC')->get();
-        $vcontrollers = User::where('visitor', '1')->where('status', '1')->orderBy('lname', 'ASC')->get();
+        $hcontrollers_public = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $hcontrollers_private = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $hcontrollers = $hcontrollers_public->merge($hcontrollers_private);
+        $vcontrollers_public = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $vcontrollers_private = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $vcontrollers = $vcontrollers_public->merge($vcontrollers_private);
  
         return view('site.roster')->with('hcontrollers', $hcontrollers)->with('vcontrollers', $vcontrollers);
     }
