@@ -113,6 +113,8 @@ return $badge;
                                     <li>F2 - F14: Common Use</li>
                                 </ul>
                             </li>
+                        </div>   
+                        <div class = "row">   
                             <li>Additional notes:
                                 <ul>
                                     <li>Group V aircraft may only park on concourses E and F.</li>
