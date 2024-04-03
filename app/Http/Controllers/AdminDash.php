@@ -1415,13 +1415,19 @@ class AdminDash extends Controller {
         $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
-        $event->banner_path = $public_url;
-        $event->reduceEventBanner();
         $event->status = 0;
         $event->reg = 0;
         $event->type = $request->type;
         $event->save();
-
+        try {
+            $event->banner_path = $public_url;
+            $event->reduceEventBanner();
+            $event->save();
+        }
+        catch (\Exception $e) {
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+        }
+    
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
@@ -1455,7 +1461,12 @@ class AdminDash extends Controller {
                 $public_url = '/event_banners/vatsim_'.$event->vatsim_id.substr($event->banner_path, -4);
                 Storage::disk('public')->put($public_url, file_get_contents($event->banner_path));
                 $event->banner_path = $public_url;
-                $event->reduceEventBanner();
+                try {
+                    $event->reduceEventBanner();
+                }
+                catch (\Exception $e) {
+                    return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+                }
                 $event->banner_path = '/storage'.$public_url;
             }
         }
@@ -1496,11 +1507,17 @@ class AdminDash extends Controller {
         $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
-        $event->banner_path = $public_url;
-        $event->reduceEventBanner();
         $event->status = 0;
         $event->type = $request->type;
         $event->save();
+        try {
+            $event->banner_path = $public_url;
+            $event->reduceEventBanner();
+            $event->save();
+        }
+        catch (\Exception $e) {
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+        }
 
         $audit = new Audit;
         $audit->cid = Auth::id();
