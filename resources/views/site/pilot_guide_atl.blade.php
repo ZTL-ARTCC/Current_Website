@@ -112,9 +112,7 @@ return $badge;
                                     <li>F1: Korean Air & All Group VI (B747-8, A380) aircraft, Delta Air Lines [Common Use]</li>
                                     <li>F2 - F14: Common Use including British Airways, Korean Air, Virgin Atlantic, Delta, Lufthansa, Turkish, Qatar, KLM, Air France, Air Canada and others</li>
                                 </ul>
-                            </li>
-                        </div>   
-                        <div class = "row">   
+                            </li>   
                             <li>Additional notes:
                                 <ul>
                                     <li>Group V aircraft may only park on concourses E and F.</li>
