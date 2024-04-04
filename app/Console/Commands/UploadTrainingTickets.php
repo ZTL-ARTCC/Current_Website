@@ -70,7 +70,7 @@ class UploadTrainingTickets extends Command {
             case 105: return 'ZTL_GND';
             case 109: return 'ZTL_TWR';
             case 115: return 'ZTL_APP';
-            case 102: return 'CTL_DEL';
+            case 102: return 'CLT_DEL';
             case 106: return 'CLT_GND';
             case 111: return 'CLT_TWR';
             case 116: return 'CLT_APP';
