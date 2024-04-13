@@ -17,3 +17,8 @@ $(function () {
     format: "HH:mm",
   });
 });
+$(function () {
+  $(".dt_picker_datetime").datetimepicker({
+    format: "L HH:mm",
+  });
+});
