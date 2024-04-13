@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Airport;
 use App\ATC;
+use App\AtcBooking;
 use App\Calendar;
 use App\ControllerLog;
 use App\Event;
@@ -102,10 +103,19 @@ class FrontController extends Controller {
 
         $overflightCount = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->count();
 
+        $today = Carbon::today();
+        $bookings = AtcBooking::whereDate('start', '>=', $today)
+            ->whereDate('end', '<=', $today->addDays(14))
+            ->orderBy('start', 'ASC')
+            ->get();
+
+        $bookings = groupAtcBookingsByDate($bookings);
+
         return view('site.home')->with('center', $center)->with('fields', $fields)
                                 ->with('airports', $airports)->with('controllers', $controllers)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
-                                ->with('overflightCount', $overflightCount);
+                                ->with('overflightCount', $overflightCount)
+                                ->with('bookings', $bookings);
     }
 
     public function teamspeak() {
