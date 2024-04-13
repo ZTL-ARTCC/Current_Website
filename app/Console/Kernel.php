@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
+        '\App\Console\Commands\VatsimAtcBookingSync',
         '\App\Console\Commands\VATUSAEventsUpdate',
         '\App\Console\Commands\UploadTrainingTickets'
     ];
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('cache:prune-stale-tags')->hourlyAt(3);
         $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01');
         $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7);
+        $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12);
         $schedule->command('VATUSAEvents:Update')->hourlyAt(22);
         $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33);
         $schedule->command('Overflights:GetOverflights')->everyFourMinutes();
