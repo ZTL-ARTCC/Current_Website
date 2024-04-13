@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class AtcBooking extends Model {
     protected $table = 'atc_bookings';
 
+    protected $hidden = ['id', 'vatsim_id', 'created_at', 'updated_at'];
+
     public const TYPES = [
         "BOOKING" => "booking",
         "EVENT" => "event",
