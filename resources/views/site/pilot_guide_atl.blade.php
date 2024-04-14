@@ -70,51 +70,56 @@ return $badge;
                 <div class="row">
                     <div class="col">
                         <ul>
-                            <li>Concourse T
+                            <li>Concourse T:
                                 <ul>
-                                    <li>Gates T1-T8: Delta</li>
-                                    <li>Gates T10-T12: American</li>
-                                    <li>Gates T13-17: United</li>
+                                    <li>T1 - T8: Delta Air Lines. Only T1 may accommodate the A359</li>
+                                    <li>T9 - T16: American Airlines</li>
+                                    <li>T17 - T22: United Preferred, Frontier, Alaska, JetBlue [Common Use]</li>
                                 </ul>
                             </li>
-                            <li>Concourse A: Delta domestic</li>
-                            <li>Concourse B: Delta domestic</li>
-                            <li>Concourse C
+                            <li>Concourse A: Delta Air Lines</li>
+                            <li>Concourse B: Delta Air Lines</li>
+                            <li>Concourse C:
                                 <ul>
-                                    <li>Gates C1-C22: Southwest</li>
-                                    <li>Gates C30-C55: Delta</li>
+                                    <li>C1 - C22: Southwest</li>
+                                    <li>C30 - C55: Delta Air Lines & Delta Connection</li>
                                 </ul>
                             </li>
-                            <li>Concourse D
+                            <li>Concourse D:
                                 <ul>
-                                    <li>Gates D1/D1A/D3: Frontier</li>
-                                    <li>Gates D2/D4: Spirit</li>
-                                    <li>Gates D21/D23/D24/D25: American</li>
-                                    <li>All other gates: Delta connection</li>
+                                    <li>D1/D1A/D3: Frontier & Alaska [Common Use]</li>
+                                    <li>D2/D4: Spirit [Common Use]</li>
+                                    <li>D5 - D16: Delta Air Lines & Delta Connection</li>
+                                    <li>D21, D23, D25, D27, D29: American Airlines</li>
+                                    <li>D24, D26, D28: Delta Air Lines & Delta Connection</li>
+                                    <li>D30 - D46: Delta Connection</li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="col">
                         <ul>
-                            <li>Concourse E
+                            <li>Concourse E:
                                 <ul>
-                                    <li>Gates E1/E3: Spirit</li>
-                                    <li>Gate E2: Frontier</li>
-                                    <li>Gate E32: JetBlue</li>
-                                    <li>Gate E34: United</li>
-                                    <li>All other gates: Delta domestic/international</li>
+                                    <li>E1 - E6: Spirit/Frontier [Common Use]</li>
+                                    <li>E7 - E33: Delta Air Lines [Common Use]</li>
+                                    <li>E34 - E36: JetBlue, Delta Air Lines [Common Use]</li>
+                                    <li>E37: Southern Airways Express</li>
                                 </ul>
                             </li>
-                            <li>Concourse F
+                            <li>Concourse F:
                                 <ul>
-                                    <li>Gate F1: British Airways & Korean Air</li>
-                                    <li>Gate F2: Virgin Atlantic & Delta</li>
-                                    <li>Gate F3: Lufthansa, Turkish & Delta</li>
-                                    <li>Gates F4/F6/F8/F9/F10/F12: Delta</li>
-                                    <li>Gate F5: Qatar</li>
-                                    <li>Gate F7: KLM & Air France</li>
-                                    <li>Gate F14: Air Canada & Delta</li>
+                                    <li>F1: Korean Air & All Group VI (B747-8, A380) aircraft, Delta Air Lines [Common Use]</li>
+                                    <li>F2 - F14: Common Use including British Airways, Korean Air, Virgin Atlantic, Delta, Lufthansa, Turkish, Qatar, KLM, Air France, Air Canada and others</li>
+                                </ul>
+                            </li>   
+                            <li>Additional notes:
+                                <ul>
+                                    <li>Group V aircraft may only park on concourses E and F.</li>
+                                    <li>Delta does not park any B767 aircraft on Ramps 3, 4, and west side of Ramp 5.</li>
+                                    <li>The airport has mulitple "Gate Ownership" categories.</li>
+                                    <li>"Common Use" gates are those gates that any airline may park</li>
+                                    <li>"Common Use with Preferred User" gates are those gates that are managed by designated airlines.</li>
                                 </ul>
                             </li>
                         </ul>
