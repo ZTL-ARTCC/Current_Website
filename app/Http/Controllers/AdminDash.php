@@ -414,7 +414,7 @@ class AdminDash extends Controller {
                     $cert->status = 0;
                     $cert->save();
                     $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
-                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
+                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
                 }
             }
 
