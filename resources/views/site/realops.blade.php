@@ -52,7 +52,7 @@ Realops
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Flight Number</th>
-            <th scope="col">Departure Time (ET)</th>
+            <th scope="col">Departure Time (UTC)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
