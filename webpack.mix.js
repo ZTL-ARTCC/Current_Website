@@ -4,7 +4,7 @@ let mix = require('laravel-mix');
 * CKEditor Config
 */
 
-const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
+const { CKEditorTranslationsPlugin } = require( '@ckeditor/ckeditor5-dev-translations' );
 const {styles} = require('@ckeditor/ckeditor5-dev-utils');
 
 const CKERegex = {
@@ -32,7 +32,7 @@ Mix.listen('configReady', webpackConfig => {
 
 mix.webpackConfig({
   plugins: [
-    new CKEditorWebpackPlugin({
+    new CKEditorTranslationsPlugin({
       language: 'en',
       addMainLanguageTranslationsToAllAssets: true
     })
