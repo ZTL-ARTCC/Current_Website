@@ -74,7 +74,7 @@
                 @if(Auth::user()->isAbleTo('roster'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Award Management</a>
                 @endif
-                @if(Auth::user()->isAbleTo('staff'))
+                @if(Auth::user()->isAbleTo('staff') || Auth::user()->hasRole('events-team'))
                     @toggle('realops')
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
