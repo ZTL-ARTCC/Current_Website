@@ -10,7 +10,6 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        DB::table("realops_flights")->truncate();
         Schema::table('realops_flights', function (Blueprint $table) {
             $table->renameColumn('route', 'gate');
         });
