@@ -48,8 +48,8 @@
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('route', 'Route') !!}
-            {!! Form::text('route', null, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+            {!! Form::label('gate', 'Gate') !!}
+            {!! Form::text('gate', null, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
         </div>
         <button class="btn btn-success mr-2" type="button" onclick="realopsValidateAndSubmit();">Submit</button>
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>

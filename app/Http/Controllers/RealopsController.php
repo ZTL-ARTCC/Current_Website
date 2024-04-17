@@ -148,7 +148,7 @@ class RealopsController extends Controller {
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
-        $flight->route = $request->input('route');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         return redirect('/dashboard/admin/realops')->with('success', 'That flight was created successfully');
@@ -186,7 +186,7 @@ class RealopsController extends Controller {
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
-        $flight->route = $request->input('route');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         $pilot = $flight->assigned_pilot;

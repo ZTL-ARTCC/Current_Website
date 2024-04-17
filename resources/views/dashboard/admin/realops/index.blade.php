@@ -31,7 +31,7 @@
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Gate</th>
             <th scope="col" colspan="2">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
         </tr>
@@ -52,8 +52,8 @@
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif

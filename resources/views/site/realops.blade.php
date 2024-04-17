@@ -56,7 +56,7 @@ Realops
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Gate</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                 <th scope="col">Actions</th>
@@ -79,8 +79,8 @@ Realops
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif
