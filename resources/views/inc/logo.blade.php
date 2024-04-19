@@ -1,5 +1,5 @@
 @php
-    $logo_id = '0_ztl_logo_';
+    $logo_id = 'ztl_logo_';
     $logo_bg_color = 'white';
     if(isset($color)) {
         if(in_array($color, ['white','black'])) {
