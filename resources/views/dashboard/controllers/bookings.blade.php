@@ -90,11 +90,7 @@ ATC Bookings
                     </div>
                     <div class="form-group">
                         {!! Form::label('type', 'Booking Type') !!}
-                        @if(count($types) == 1)
-                            {!! Form::select('type', $types, 'booking', ['class' => 'form-control', 'disabled' => true]) !!}
-                        @else
-                            {!! Form::select('type', $types, 'booking', ['class' => 'form-control']) !!}
-                        @endif
+                        {!! Form::select('type', $types, 'booking', ['class' => 'form-control', 'disabled' => true]) !!}
                     </div>
                     <p><i><b>All times are in ZULU time</b></i></p>
                     <p><i>ZULU Time Now: {{ Carbon\Carbon::now()->format('H:i') }}</i></p>
