@@ -1,5 +1,5 @@
 @php
-    $logo_id = '0_ztl_logo_';
+    $logo_id = 'ztl_logo_';
     $logo_bg_color = 'white';
     if(isset($color)) {
         if(in_array($color, ['white','black'])) {
@@ -14,6 +14,8 @@
     @endphp
     @if(($month == 12 && $day == 31) || ($month == 1 && $day == 1))
         @php ($logo_id = 'ztl_logo_fireworks-')
+    @elseif($month == 4 && $day == 22)
+        @php ($logo_id = 'ztl_logo_tree-')
     @elseif(($month >= 3 && $day >= 20) && $month <= 4) 
         @php ($logo_id = 'ztl_logo_spring-')
     @elseif(($month == 1 && $day == 16) || ($month == 2 && $day == 20) || ($month == 5 && $day == 29) || ($month == 6 && $day == 19) || ($month == 7 && $day == 4) || ($month == 9 && $day == 4) || ($month == 10 && $day == 10))
