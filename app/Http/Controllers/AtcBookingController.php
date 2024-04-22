@@ -28,7 +28,7 @@ class AtcBookingController extends Controller {
             $types[AtcBooking::TYPES['MONITORING']] = "Monitoring";
         }
 
-        if (Auth::user()->hasRole('events-team') || Auth::user()->isAbleTo('snrStaff')) {
+        if (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team')) {
             $types[AtcBooking::TYPES['EVENT']] = "Event";
         }
 
@@ -69,8 +69,8 @@ class AtcBookingController extends Controller {
         }
 
         $type = $request->type;
-        if ($type == AtcBooking::TYPES["EVENT"] && ! (Auth::user()->hasRole('events-team') || Auth::user()->isAbleTo('snrStaff'))) {
-            return redirect()->back()->with('error', 'Only the EC can create event bookings')->withInput();
+        if ($type == AtcBooking::TYPES["EVENT"] && ! (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team'))) {
+            return redirect()->back()->with('error', 'Only the EC and events team can create event bookings')->withInput();
         }
 
         if ($type == AtcBooking::TYPES["EXAM"] && ! (Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))) {
