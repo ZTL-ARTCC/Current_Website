@@ -7,7 +7,6 @@ use App\ATC;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
-use App\ControllerLogUpdate;
 use App\Event;
 use App\EventPosition;
 use App\EventRegistration;
@@ -18,7 +17,6 @@ use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Opt;
 use App\Overflight;
-use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
@@ -146,8 +144,6 @@ class ControllerDash extends Controller {
 
         $controllers = ATC::get();
 
-        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
-        $controllers_update = substr($last_update->created_at, -8, 5);
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
         })->sortBy(function ($e) {
@@ -162,16 +158,15 @@ class ControllerDash extends Controller {
         $home = $home->take(5);
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
-        $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
-                                          ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
+                                          ->with('controllers', $controllers)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
-                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
+                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
     }
 
     public function showProfile($year = null, $month = null) {

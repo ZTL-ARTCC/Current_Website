@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Overflight;
-use App\OverflightUpdate;
 use Config;
 use DB;
 use GuzzleHttp\Client;
@@ -65,10 +64,5 @@ class ARTCCOverflights extends Command {
             $flight->route = $r->route;
             $flight->save();
         }
-
-        $update = OverflightUpdate::first();
-        $update->delete();
-        $u = new OverflightUpdate;
-        $u->save();
     }
 }

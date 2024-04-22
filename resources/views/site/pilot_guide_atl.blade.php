@@ -214,11 +214,6 @@ return $badge;
                             </td>
                         </tr>
                         @endif
-                        <tr>
-                            <td colspan="6">
-                                <div align="right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $controllers_update }}Z</div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

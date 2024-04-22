@@ -14,9 +14,7 @@ class DatabaseSeeder extends Seeder {
         $this->call([
             LaratrustSeeder::class,
             PositionPresetSeeder::class,
-            ControllerUpdateSeeder::class,
             AnnouncementSeeder::class,
-            OverflightUpdateSeeder::class
         ]);
     }
 }

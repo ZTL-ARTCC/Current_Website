@@ -91,6 +91,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
         });
+        Route::prefix('bookings')->group(function () {
+            Route::get('/', 'AtcBookingController@viewBookings');
+            Route::get('/delete/{id}', 'AtcBookingController@deleteBooking');
+            Route::post('/create', 'AtcBookingController@createBooking');
+        });
     });
 
     Route::prefix('opt')->group(function () {

@@ -158,9 +158,6 @@ Dashboard
                         <td class="text-center" colspan="6"><i>No Pilots in ZTL Airspace</i></td>
                     </tr>
                 @endif
-                <tr>
-                    <td colspan="6"><div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
-                </tr>
             </tbody>
         </table>
     </div>
