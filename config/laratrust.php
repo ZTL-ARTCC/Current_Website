@@ -46,7 +46,7 @@ return [
         | NOTE: Currently the database check does not use cache.
         |
         */
-        'enabled' => env('LARATRUST_ENABLE_CACHE', true),
+        'enabled' => env('LARATRUST_ENABLE_CACHE', env('APP_ENV') === 'production'),
 
         /*
         |--------------------------------------------------------------------------
@@ -270,6 +270,17 @@ return [
         */
         'register' => false,
 
+        /*
+        |--------------------------------------------------------------------------
+        | Laratrust Panel Domain
+        |--------------------------------------------------------------------------
+        |
+        | This is the Domain Laratrust panel for roles and permissions
+        | will be accessible from.
+        |
+        */
+        'domain' => env('LARATRUST_PANEL_DOMAIN', env('LARATRUST_PANEL_DOMAIN', (app()->runningInConsole() === false) ? request()->getHost() : 'localhost')),
+        
         /*
         |--------------------------------------------------------------------------
         | Laratrust Panel Path
