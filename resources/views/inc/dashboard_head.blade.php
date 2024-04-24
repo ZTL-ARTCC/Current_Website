@@ -4,13 +4,13 @@
             @include('inc.logo', ['color' => 'black'])
         </a>
             <ul class="navbar-nav">
-                {!! Form::open(['action' => 'ControllerDash@searchAirport']) !!}
+                {{ html()->form()->route('ControllerDash@searchAirport') }}
                     <div class="form-inline">
-                        {!! Form::text('apt', null, ['placeholder' => 'Search Airport ICAO', 'class' => 'form-control']) !!}
+                        {{ html()->text('apt', null)->placeholder('Search Airport ICAO')->class(['form-control']) }}
                         &nbsp;
                         <button class="btn btn-success" type="submit">Search</button>
                     </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </ul>
             &nbsp;&nbsp;&nbsp;
 

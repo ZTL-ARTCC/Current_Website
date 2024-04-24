@@ -24,26 +24,26 @@ Realops
         <p>Filter by any or all of these criteria</p>
     </div>
     <div class="col-md-12 mb-3 mx-3">
-       {!! Form::open(['action' => 'RealopsController@index', 'method' => 'GET', 'id' => 'realops_filter']) !!}
-       <div class="row">
+        {{ html()->form('GET')->route('RealopsController@index')->id('realops_filter') }}
+        <div class="row">
             <div class="col-sm-12 col-md p-1">
-               {!! Form::text('airport_filter', $airport_filter, ['class' => 'form-control', 'placeholder' => 'Airport (DEN)', 'id' => 'airport_filter']) !!}
+               {{ html()->text('airport_filter', $airport_filter)->class([]'form-control'])->placeholder('Airport (DEN)')->id('airport_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
-               {!! Form::text('flightno_filter', $flightno_filter, ['class' => 'form-control', 'placeholder' => 'Flight (DAL367)', 'id' => 'flightno_filter']) !!}
+               {{ html()->text('flightno_filter', $flightno_filter)->class(['form-control'])->placeholder('Flight (DAL367)')->'id'('flightno_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
-               {!! Form::text('date_filter', $date_filter, ['class' => 'form-control', 'placeholder' => 'Date (YYYY-MM-DD)', 'id' => 'date_filter']) !!}
+               {{ html()->text('date_filter', $date_filter)->class(['form-control'])->placeholder('Date (YYYY-MM-DD)')->id('date_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
-               {!! Form::text('time_filter', $time_filter, ['class' => 'form-control', 'placeholder' => 'Time (11:00)', 'id' => 'time_filter']) !!}
+               {{ html->text('time_filter', $time_filter)->class(['form-control'])->placeholder('Time (11:00)')->id->('time_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1 mr-2 text-center">
                 <button class="btn btn-success mr-2" type="button" onclick="realopsFilterValidateAndSubmit();" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
                 <a href="/realops" class="btn btn-warning" title="Clear"><i class="fas fa-redo"></i>&nbsp;Clear</a>
             </div>
-       </div>
-       {!! Form::close() !!}
+        </div>
+        {{ html()->form()->close() }}
     </div>
 </div>
 @if(count($flights) > 0)
@@ -133,5 +133,5 @@ Realops
     </div>
 @endif
 </div>
-{{Html::script(asset('js/realops.js'))}}
+<script src="{{asset('js/realops.js')}}">
 @endsection

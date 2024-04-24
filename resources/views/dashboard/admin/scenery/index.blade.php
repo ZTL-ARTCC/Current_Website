@@ -60,11 +60,10 @@ Scenery Management
                                             <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
                                         </div>
                                         <div class="col-sm-2">
-                                            {!! Form::open(['action' => ['AdminDash@deleteScenery', $s->id]]) !!}
+                                            {{ html()->form('DELETE')->route('AdminDash@deleteScenery', [$s->id]) }}
                                                 @csrf
-                                                {!! Form::hidden('_method', 'DELETE') !!}
                                                 <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
-                                            {!! Form::close() !!}
+                                            {{ html()->form()->close() }}
                                         </div>
                                     </div>
                                 </td>
@@ -113,9 +112,9 @@ Scenery Management
                                         <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
                                     </div>
                                     <div class="col-sm-2">
-                                        {!! Form::open(['action' => ['AdminDash@deleteScenery', $s->id]]) !!}
+                                        {{ html()->form('DELETE')->route('AdminDash@deleteScenery', [$s->id]) }}
                                             <button class="btn btn-danger simple-tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </td>
@@ -156,11 +155,10 @@ Scenery Management
                                             <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
                                         </div>
                                         <div class="col-sm-2">
-                                            {!! Form::open(['action' => ['AdminDash@deleteScenery', $s->id]]) !!}
+                                            {{ html()->form('DELETE')->route('AdminDash@deleteScenery', [$s->id]) }}
                                                 @csrf
-                                                {!! Form::hidden('_method', 'DELETE') !!}
                                                 <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
-                                            {!! Form::close() !!}
+                                            {{ html()->form()->close() }}
                                         </div>
                                     </div>
                                 </td>

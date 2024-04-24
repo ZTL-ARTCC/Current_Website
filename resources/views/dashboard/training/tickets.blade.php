@@ -15,27 +15,27 @@ Training Tickets
     @endif
     <br><br>
     <h5>Search Training Tickets:</h5>
-    {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
+    {{ html()->form('POST', '/dashboard/training/tickets/search') }}
     <div class="row">
         <div class="col-sm-3">
-            {!! Form::text('cid', null, ['placeholder' => 'Search by CID', 'class' => 'form-control']) !!}
+            {{ html()->text('cid', null)->placeholder('Search by CID')->class(['form-control']) }}
         </div>
         <div class="col-sm-1">
             <button class="btn btn-primary" action="submit">Search</button>
         </div>
         <div class="col-sm-1">
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
             <center>OR</center>
-            {!! Form::open(['url' => '/dashboard/training/tickets/search']) !!}
+            {{ html()->form('POST', '/dashboard/training/tickets/search') }}
         </div>
         <div class="col-sm-3">
-            {!! Form::select('cid', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+            {{ html()->select('cid', $controllers, null)->placeholder('Select Controller')->class(['form-control']) }}
         </div>
         <div class="col-sm-1">
             <button class="btn btn-primary" action="submit">Search</button>
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 
     @if($search_result != null)
         <hr>

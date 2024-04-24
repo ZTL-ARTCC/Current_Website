@@ -36,23 +36,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 0]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [0]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_gnd->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_minor_gnd->first()->new_numbers, $info_minor_gnd->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_minor_gnd->first()->new_numbers, $info_minor_gnd->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -83,23 +83,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 1]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [1]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_lcl->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_minor_lcl->first()->new_numbers, $info_minor_lcl->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_minor_lcl->first()->new_numbers, $info_minor_lcl->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -130,23 +130,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 2]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [2]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_app->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_minor_app->first()->new_numbers, $info_minor_app->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_minor_app->first()->new_numbers, $info_minor_app->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -178,23 +178,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 3]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [3]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_gnd->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_major_gnd->first()->new_numbers, $info_major_gnd->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_major_gnd->first()->new_numbers, $info_major_gnd->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -225,23 +225,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 4]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [4]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_lcl->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_major_lcl->first()->new_numbers, $info_major_lcl->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_major_lcl->first()->new_numbers, $info_major_lcl->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -272,23 +272,23 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {!! Form::open(['action' => ['TrainingDash@addInfo', 5]]) !!}
+                                    {{ html()->form()->route('TrainingDash@addInfo', [5]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_app->count() == 0)
-                                                {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                             @else
-                                                {!! Form::select('number', $info_major_app->first()->new_numbers, $info_major_app->first()->default_new_number, ['class' => 'form-control']) !!}
+                                                {{ html()->select('number', $info_major_app->first()->new_numbers, $info_major_app->first()->default_new_number)->class(['form-control']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
-                                        {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                        {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @endif
                             </ol>
                         </div>
@@ -321,23 +321,23 @@ Training Information
                         @endif
                         @if(Auth::user()->isAbleTo('snrStaff'))
                             <br>
-                            {!! Form::open(['action' => ['TrainingDash@addInfo', 6]]) !!}
+                            {{ html()->form()->route('TrainingDash@addInfo', [6]) }}
                             <div class="form-row">
                                 <div class="col-sm-2">
                                     @if($info_ctr->count() == 0)
-                                        {!! Form::select('number', [0 => '1'], null, ['class' => 'form-control']) !!}
+                                        {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
                                     @else
-                                        {!! Form::select('number', $info_ctr->first()->new_numbers, $info_ctr->first()->default_new_number, ['class' => 'form-control']) !!}
+                                        {{ html()->select('number', $info_ctr->first()->new_numbers, $info_ctr->first()->default_new_number)->class(['form-control']) }}
                                     @endif
                                 </div>
                                 <div class="col-sm-8">
-                                {!! Form::text('info', null, ['placeholder' => 'Add Information', 'class' => 'form-control']) !!}
+                                {{ html()->text('info', null)->placeholder('Add Information')->class(['form-control']) }}
                                 </div>
                                 <div class="col-sm-2">
                                     <button class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                         @endif
                     </ol>
                 </div>
@@ -359,20 +359,20 @@ Training Information
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {!! Form::open(['action' => ['TrainingDash@newPublicInfoSection']]) !!}
+                    {{ html()->form()->route('TrainingDash@newPublicInfoSection') }}
                     @csrf
                     <div class="modal-body">
-                        {!! Form::label('name', 'Section Name') !!}
-                        {!! Form::text('name', null, ['placeholder' => 'Section Name', 'class' => 'form-control']) !!}
+                        {{ html()->label('Section Name', 'name') }}
+                        {{ html()->text('name', null)->placeholder('Section Name')->class(['form-control']) }}
                         <br>
-                        {!! Form::label('order', 'Order') !!}
-                        {!! Form::select('order', $public_section_order, $public_section_next, ['placeholder' => 'Select Order', 'class' => 'form-control']) !!}
+                        {{ html()->label('Order', 'order') }}
+                        {{ html()->select('order', $public_section_order, $public_section_next)->placeholder('Select Order')->class(['form-control']) }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button action="submit" class="btn btn-success">Save Section</button>
                     </div>
-                    {!! Form::close() !!}
+                    {{ html()->form()->close() }}
                 </div>
             </div>
         </div>
@@ -399,17 +399,17 @@ Training Information
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            {!! Form::open(['action' => ['TrainingDash@editPublicSection', $p->id]]) !!}
+                                            {{ html()->form()->route('TrainingDash@editPublicSection', [$p->id]) }}
                                             @csrf
                                             <div class="modal-body">
-                                                {!! Form::label('name', 'Section Name') !!}
-                                                {!! Form::text('name', $p->name, ['placeholder' => 'Section Name', 'class' => 'form-control']) !!}
+                                                {{ html()->label('Section Name', 'name') }}
+                                                {{ html()->text('name', $p->name)->placeholder('Section Name')->class(['form-control']) }}
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button action="submit" class="btn btn-success">Save Section</button>
                                             </div>
-                                            {!! Form::close() !!}
+                                            {{ html()->form()->close() }}
                                         </div>
                                     </div>
                                 </div>
@@ -437,17 +437,17 @@ Training Information
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {!! Form::open(['action' => ['TrainingDash@addPublicPdf', $p->id], 'files' => true]) !!}
+                                    {{ html()->form()->route('TrainingDash@addPublicPdf', [$p->id])->acceptsFiles() }}
                                     @csrf
                                     <div class="modal-body">
-                                        {!! Form::label('pdf', 'Select a PDF to Upload') !!}
-                                        {!! Form::file('pdf', ['class' => 'form-control']) !!}
+                                        {{ html()->label('Select a PDF to Upload', 'pdf') }}
+                                        {{ html()->file('pdf')->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Upload PDF</button>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 </div>
                             </div>
                         </div>

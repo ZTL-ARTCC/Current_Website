@@ -65,32 +65,32 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['AdminDash@saveFeedback', $f->id]]) !!}
+                                        {{ html()->form()->route('AdminDash@saveFeedback', [$f->id]) }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
-                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
-                                                    {!! Form::hidden('event_id', $f->feedback_id) !!}
+                                                    {{ html()->label('Controller/Event', 'feedback_id') }}
+                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
+                                                    {{ html()->hidden('event_id', $f->feedback_id) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('position', 'Position') !!}
-                                                    {!! Form::text('position', $f->position, ['class' => 'form-control']) !!}
+                                                    {{ html()->label('Position', 'position') }}
+                                                    {{ html()->text('position', $f->position)->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {!! Form::label('pilot_comments', 'Pilot Comments') !!}
-                                            {!! Form::textArea('pilot_comments', $f->comments, ['class' => 'form-control']) !!}
+                                            {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                            {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                             <br>
-                                            {!! Form::label('staff_comments', 'Staff Comments') !!}
-                                            {!! Form::textArea('staff_comments', $f->staff_comments, ['class' => 'form-control']) !!}
+                                            {{ html()->label('Staff Comments', 'staff_comments') }}
+                                            {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button action="submit" class="btn btn-success">Save Feedback</button>
                                         </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>
@@ -103,31 +103,31 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['AdminDash@hideFeedback', $f->id]]) !!}
+                                        {{ html()->form()->route('AdminDash@hideFeedback', [$f->id]) }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('feedback_id', 'Controller/Event') !!}
-                                                    {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                    {{ html()->label('Controller/Event', 'feedback_id') }}
+                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('position', 'Position') !!}
-                                                    {!! Form::text('position', $f->position, ['class' => 'form-control']) !!}
+                                                    {{ html()->label('Position', 'position') }}
+                                                    {{ html()->text('position', $f->position)->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {!! Form::label('pilot_comments', 'Pilot Comments') !!}
-                                            {!! Form::textArea('pilot_comments', $f->comments, ['class' => 'form-control']) !!}
+                                            {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                            {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                             <br>
-                                            {!! Form::label('staff_comments', 'Staff Comments') !!}
-                                            {!! Form::textArea('staff_comments', $f->staff_comments, ['class' => 'form-control']) !!}
+                                            {{ html()->label('Staff Comments', 'staff_comments') }}
+                                            {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button action="submit" class="btn btn-success">Hide Feedback</button>
                                         </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>
@@ -141,31 +141,31 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['AdminDash@emailFeedback', $f->id]]) !!}
+                                        {{ html()->form()->route('AdminDash@emailFeedback', [$f->id]) }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('name', 'Your Name') !!}
-                                                    {!! Form::text('name', 'vZTL ARTCC Staff', ['class' => 'form-control']) !!}
+                                                    {{ html()->label('Your Name', 'name') }}
+                                                    {{ html()->text('name', 'vZTL ARTCC Staff')->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {!! Form::label('email', 'Your Email') !!}
-                                                    {!! Form::email('email', 'feedback@notams.ztlartcc.org', ['class' => 'form-control']) !!}
+                                                    {{ html()->label('Your Email', 'email') }}
+                                                    {{ html()->email('email', 'feedback@notams.ztlartcc.org')->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {!! Form::label('subject', 'Subject') !!}
-                                            {!! Form::text('subject', 'An email regarding your recent feedback', ['class' => 'form-control']) !!}
+                                            {{ html()->label('Subject', 'subject') }}
+                                            {{ html()->text('subject', 'An email regarding your recent feedback')->class(['form-control']) }}
                                             <br>
-                                            {!! Form::label('body', 'Message') !!}
-                                            {!! Form::textArea('body', null, ['placeholder' => 'Gander Center, Pass your message...', 'class' => 'form-control']) !!}
+                                            {{ html()->label('Message', 'body') }}
+                                            {{ html()->textarea('body', null)->placeholder('Gander Center, Pass your message...')->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button action="submit" class="btn btn-success">Send Email</button>
                                         </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>
@@ -223,36 +223,36 @@ Feedback Management
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {!! Form::open(['action' => ['AdminDash@updateFeedback', $f->id]]) !!}
+                                    {{ html()->form()->route('AdminDash@updateFeedback', [$f->id]) }}
                                     @csrf
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                {!! Form::label('feedback_id', 'Controller') !!}
-                                                {!! Form::select('feedback_id', $feedbackOptions, $f->feedback_id, ['class' => 'form-control']) !!}
+                                                {{ html()->label('Controller', 'feedback_id') }}
+                                                {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
                                             </div>
                                             <div class="col-sm-6">
-                                                {!! Form::label('position', 'Position') !!}
-                                                {!! Form::text('position', $f->position, ['class' => 'form-control']) !!}
+                                                {{ html()->label('Position', 'position') }}
+                                                {{ html()->text('position', $f->position)->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <br>
-                                        {!! Form::label('pilot_comments', 'Pilot Comments') !!}
-                                        {!! Form::textArea('pilot_comments', $f->comments, ['class' => 'form-control']) !!}
+                                        {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                        {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                         <br>
-                                        {!! Form::label('staff_comments', 'Staff Comments') !!}
-                                        {!! Form::textArea('staff_comments', $f->staff_comments, ['class' => 'form-control']) !!}
+                                        {{ html()->label('Staff Comments', 'staff_comments') }}
+                                        {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">
-                                        {!! Form::select('status', [
+                                        {{ html()->select('status', [
                                             0 => 'N/A',
                                             1 => 'Saved',
                                             2 => 'Hidden'
-                                        ], $f->status, ['class' => 'form-control']) !!}
+                                        ], $f->status)->class(['form-control']) }}
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Update Feedback</button>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 </div>
                             </div>
                         </div>
@@ -266,31 +266,31 @@ Feedback Management
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {!! Form::open(['action' => ['AdminDash@emailFeedback', $f->id]]) !!}
+                                    {{ html()->form()->route('AdminDash@emailFeedback', [$f->id]) }}
                                     @csrf
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                {!! Form::label('name', 'Your Name') !!}
-                                                {!! Form::text('name', 'vZTL ARTCC Staff', ['class' => 'form-control']) !!}
+                                                {{ html()->label('Your Name', 'name') }}
+                                                {{ html()->text('name', 'vZTL ARTCC Staff')->class(['form-control']) }}
                                             </div>
                                             <div class="col-sm-6">
-                                                {!! Form::label('email', 'Your Email') !!}
-                                                {!! Form::email('email', 'feedback@notams.ztlartcc.org', ['class' => 'form-control']) !!}
+                                                {{ html()->label('Your Email', 'email') }}
+                                                {{ html()->email('email', 'feedback@notams.ztlartcc.org')->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <br>
-                                        {!! Form::label('subject', 'Subject') !!}
-                                        {!! Form::text('subject', 'An email regarding your recent feedback', ['class' => 'form-control']) !!}
+                                        {{ html()->label('Subject', 'subject') }}
+                                        {{ html()->text('subject', 'An email regarding your recent feedback')->class(['form-control']) }}
                                         <br>
-                                        {!! Form::label('body', 'Message') !!}
-                                        {!! Form::textArea('body', null, ['placeholder' => 'Gander Center, Pass your message...', 'class' => 'form-control']) !!}
+                                        {{ html()->label('Message', 'body') }}
+                                        {{ html()->textarea('body', null)->placeholder('Gander Center, Pass your message...')->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Send Email</button>
                                     </div>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 </div>
                             </div>
                         </div>

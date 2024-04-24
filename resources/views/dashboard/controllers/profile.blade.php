@@ -121,11 +121,11 @@ Profile
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
             <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
             <p><b>Name Privacy:</b> {{ Auth::user()->name_privacy == 1 ? 'Enabled' : 'Disabled' }} <a class="info-tooltip" href="https://www.vatusa.net/my/profile" target="_blank" data-toggle="tooltip" title="Click Here to Update"><i class="fas fa-info-circle"></i></a></p>
-            {!! Form::open(['action' => ['ControllerDash@updateInfo', Auth::id()]]) !!}
+            {{ html()->form()->route('ControllerDash@updateInfo', [Auth::id()]) }}
             @csrf
                 <div class="row">
                     <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
-                    <div class="col-7">{!! Form::text('ts3', Auth::user()->ts3, ['class' => 'form-control']) !!}</div>
+                    <div class="col-7">{{ html()->text('ts3', Auth::user()->ts3)->class(['form-control']) }}</div>
                 </div>
 
                 <div class="row mt-2">
@@ -156,7 +156,7 @@ Profile
                         <button class="btn btn-success" type="submit">Save Profile</button>
                     </div>
                 </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
 
                 Receive Broadcast Emails?
                 &nbsp;
@@ -254,19 +254,19 @@ Profile
                 <br>
                 <i>Please check the following check boxes if you would like to continue.</i>
                 <hr>
-                {!! Form::open(['action' => 'ControllerDash@optIn']) !!}
+                {{ html()->form()->route('ControllerDash@optIn') }}
                 <div class="form-group">
-                    {!! Form::checkbox('opt', '1', false) !!}
-                    {!! Form::label('opt', 'I agree to recieve mass emails from the vZTL ARTCC.', ['class' => 'form-label']) !!}
+                    {{ html()->checkbox('opt', false, '1') }}
+                    {{ html()->label('I agree to recieve mass emails from the vZTL ARTCC.', 'opt')->class(['form-label']) }}
                     <br>
-                    {!! Form::checkbox('privacy', '1', false) !!}
-                    {!! Form::label('privacy', 'I have read and agree to the vZTL ARTCC Privacy Policy.', ['class' => 'form-label']) !!}
+                    {{ html()->checkbox('privacy', false, '1') }}
+                    {{ html()->label('I have read and agree to the vZTL ARTCC Privacy Policy.', 'privacy')->class(['form-label']) }}
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="{{ url()->current() }}" class="btn btn-secondary">Close</a>
                 <button type="submit" class="btn btn-success">Confirm Selection</button>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

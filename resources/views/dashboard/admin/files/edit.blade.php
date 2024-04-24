@@ -8,34 +8,34 @@ Upload File
 @include('inc.header', ['title' => 'Edit File'])
 
 <div class="container">
-    {!! Form::open(['action' => ['AdminDash@saveFile', $file->id]]) !!}
+    {{ html()->form()->route('AdminDash@saveFile', [$file->id]) }}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::label('title', 'Title:') !!}
-                    {!! Form::text('title', $file->name, ['class' => 'form-control', 'placeholder' => 'Required']) !!}
+                    {{ html()->label('Title:', 'title') }}
+                    {{ html()->text('title', $file->name)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('type', 'Type:') !!}
-                    {!! Form::select('type', [
+                    {{ html()->label('Type:', 'type') }}
+                    {{ html()->select('type', [
                         3 => 'vATIS',
                         4 => 'SOPs',
                         5 => 'LOAs',
                         6 => 'Staff',
                         7 => 'Training'
-                    ], $file->type, ['class' => 'form-control']) !!}
+                    ], $file->type)->class(['form-control']) }}
                 </div>
             </div>
         </div>
         @if(! $file->row_separator)
             <div class="form-group">
-                {!! Form::label('desc', 'Description:') !!}
-                {!! Form::textArea('desc', $file->desc, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+                {{ html()->label('Description:', 'desc') }}
+                {{ html()->textarea('desc', $file->desc)->class(['form-control'])->placeholder('Optional') }}
             </div>
             <div class="form-group">
-                {!! Form::label('desc', 'Permalink:') !!}
-                {!! Form::text('permalink', $file->permalink, ['class' => 'form-control', 'placeholder' => 'Optional, no spaces']) !!}
+                {{ html()->label('Permalink:', 'permalink') }}
+                {{ html()->text('permalink', $file->permalink)->class(['form-control'])->placeholder('Optional, no spaces') }}
             </div>
         @endif
         <div class="row">
@@ -46,6 +46,6 @@ Upload File
                 <a class="btn btn-danger" href="/dashboard/controllers/files">Cancel</a>
             </div>
         </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @endsection

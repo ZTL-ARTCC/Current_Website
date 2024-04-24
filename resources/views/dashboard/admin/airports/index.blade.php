@@ -31,11 +31,10 @@ Airport Management
                                 @endif
                             </div>
                             <div class="col-sm-2">
-                                {!! Form::open(['action' => ['AdminDash@deleteAirport', $a->id]]) !!}
+                                {{ html()->form('DELETE')->route('AdminDash@deleteAirport', [$a->id]) }}
                                     @csrf
-                                    {!! Form::hidden('_method', 'DELETE') !!}
                                     <button class="btn btn-danger simple-tooltip" action="submit" data-toggle="tooltip" title="Delete Airport"><i class="fas fa-times"></i></button>
-                                {!! Form::close() !!}
+                                {{ html()->form()->close() }}
                             </div>
                         </div>
                     </td>

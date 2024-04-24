@@ -39,5 +39,5 @@
   const minLatLon = [35.19999, -80.9676];
   @endif
 </script>
-{{Html::script(asset('js/pilots_guide.js'))}}
+<script src="{{asset('js/pilots_guide.js')}}">
 @endsection

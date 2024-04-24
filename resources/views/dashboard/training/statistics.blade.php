@@ -15,13 +15,13 @@ Training Statistics
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {!! Form::open(['action' => ['TrainingDash@statistics'], 'method' => 'get']) !!}
+                {{ html()->form('GET')->route('TrainingDash@statistics') }}
                 @php ($yearOfMonthsLookback = array())
                 @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
                 @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))
                 @endforeach
-                {!! Form::select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']), ['class' => 'form-control', 'onchange'=>"this.form.submit();"]) !!}
-                {!! Form::close() !!}
+                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['onchange'=>"this.form.submit();"]) }}
+                {{ html()->form()->close() }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>

@@ -175,38 +175,38 @@ View Event
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    {!! Form::open(['action' => ['AdminDash@assignPosition', $r->id]]) !!}
+                                                    {{ html()->form()->route('AdminDash@assignPosition', [$r->id]) }}
                                                     @csrf
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::label('controller_name', 'Controller Name') !!}
-                                                                    {!! Form::text('controller_name', $r->controller_name, ['class' => 'form-control', 'disabled']) !!}
+                                                                    {{ html()->label('Controller Name', 'controller_name') }}
+                                                                    {{ html()->text('controller_name', $r->controller_name)->class(['form-control'])->attributes(['disabled']) }}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::label('position', 'Position') !!}
-                                                                    {!! Form::select('position', $positions->pluck('name', 'id'), $r->position_id, ['class' => 'form-control']) !!}
+                                                                    {{ html()->label('Position', 'position') }}
+                                                                    {{ html()->select('position', $positions->pluck('name', 'id'), $r->position_id)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
-                                                                    {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
+                                                                    {{ html()->label('Position or sector ID assigned', 'position_detail') }}
+                                                                    {{ html()->text('position_detail', null)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::label('start_time', 'Start Time (Zulu)') !!}
-                                                                    {!! Form::text('start_time', $r->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                                    {{ html()->label('Start Time (Zulu)', 'start_time') }}
+                                                                    {{ html()->text('start_time', $r->start_time)->placeholder($event->start_time)->class(['form-control']) }}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::label('end_time', 'End Time (Zulu)') !!}
-                                                                    {!! Form::text('end_time', $r->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                                    {{ html()->label('End Time (Zulu)', 'end_time') }}
+                                                                    {{ html()->text('end_time', $r->end_time)->placeholder($event->end_time)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -219,7 +219,7 @@ View Event
                                                             Position
                                                         </button>
                                                     </div>
-                                                    {!! Form::close() !!}
+                                                    {{ html()->form()->close() }}
                                                 </div>
                                             </div>
                                         </div>
@@ -354,61 +354,61 @@ View Event
                     </table>
                     <hr>
                     @if($positions->count() > 0)
-                            {!! Form::open(['action' => 'ControllerDash@signupForEvent']) !!}
+                            {{ html()->form()->route('ControllerDash@signupForEvent') }}
                             @csrf
                             @if($event->reg == 1 && Auth::user()->canEvents == 1)
-                                {!! Form::hidden('event_id', $event->id) !!}
+                                {{ html()->hidden('event_id', $event->id) }}
                                 <div class="form-group">
                                     @if($your_registration1)
-                                        {!! Form::hidden('yr1', $your_registration1->id) !!}
+                                        {{ html()->hidden('yr1', $your_registration1->id) }}
                                         <div class="row">
                                             @if($your_registration1->status == App\Event::$STATUSES["HIDDEN"])
                                                 <div class="col-sm-5">
-                                                    {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['placeholder' => 'Position', 'class' => 'form-control']) !!}
+                                                    {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                    {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                    {{ html()->text('end_time1', $your_registration1->end_time)->placeholder($event->end_time)->class(['form-control']) }}
                                                 </div>
                                             @else
                                                 <div class="col-sm-5">
                                                     @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
-                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['disabled', 'placeholder' => 'Pending...', 'class' => 'form-control']) !!}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), null, ['disabled', 'placeholder' => 'Pending...', 'class' => 'form-control']) }}
                                                     @else
-                                                        {!! Form::select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) !!}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) }}
                                                     @endif
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('start_time1', $your_registration1->start_time, ['disabled', 'placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+                                                    {{ html()->text('start_time1', $your_registration1->start_time)->attributes(['disabled'])->placeholder($event->start_time)->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {!! Form::text('end_time1', $your_registration1->end_time, ['disabled', 'placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+                                                    {{ html()->text('end_time1', $your_registration1->end_time)->attributes(['disabled'])->placeholder($event->end_time)->class(['form-control']) }}
                                                 </div>
                                             @endif
                                         </div>
                                     @else
-                                        {!! Form::hidden('yr1', null) !!}
+                                        {{ html()->hidden('yr1', null) }}
                                         <div class="row mb-2">
                                             <div class="col-sm-5 mt-1">
-                                                {!! Form::select('num1', $positions->pluck('name', 'id'), null, ['autocomplete' => 'off', 'placeholder' => 'Desired Position', 'class' => 'form-control']) !!}
+                                                {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['autocomplete' => 'off'])->placeholder('Desired Position')->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <div class="form-inline">
-                                                    {!! Form::hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone), ['id' => 'timedata']) !!}
-                                                    {!! Form::label('start_time1', 'Available from:', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('start_time1', null, ['autocomplete' => 'off', 'placeholder' => $event->start_time, 'class' => 'form-control col-sm-2 mr-2']) !!}
-                                                    {!! Form::label('end_time1', '-', ['class' => 'form-label pr-2']) !!}
-                                                    {!! Form::text('end_time1', null, ['autocomplete' => 'off', 'placeholder' => $event->end_time, 'class' => 'form-control col-sm-2 mr-2']) !!}
-                                                    {!! Form::select('timezone', ['Zulu', 'Local'], 'Zulu', ['autocomplete' => 'off', 'class' => 'form-control col-sm-3', 'id' => 'timezone']) !!}
+                                                    {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone)->id('timedata') }}
+                                                    {{ html()->label('Available from:', 'start_time1')->class(['form-label', 'pr-2']) }}
+                                                    {{ html()->text('start_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'mr-2']) }}
+                                                    {{ html()->label('-', 'end_time1')->class(['form-label', 'pr-2']) }}
+                                                    {{ html()->text('end_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->end_time)->class(['form-control', 'col-sm-2', 'mr-2']) }}
+                                                    {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-control', 'col-sm-3'])->id('timezone') }}
 
                                                 </div>
                                             </div>
                                             <div class="col-sm-10 pt-2 pr-2">
-                                                {!! Form::textarea('remarks', null, ['placeholder' => 'Specific position requests/additional information (optional)', 'class' => 'form-control textarea-no-resize col-sm-11 pr-2', 'rows' => '3', 'maxlength' => '1024']) !!}
+                                                {{ html()->textarea('remarks', null)->placeholder('Specific position requests/additional information (optional)')->class(['form-control', 'textarea-no-resize', 'col-sm-11', 'pr-2'])->attributes(['rows' => '3', 'maxlength' => '1024']) }}
                                             </div>
                                         </div>
                                     @endif
@@ -433,7 +433,7 @@ View Event
                                     Event registration is currently closed.
                                 @endif
                             @endif
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                         @else
                             <p>No positions added.</p>
                         @endif
@@ -442,18 +442,18 @@ View Event
 
                         @if(Auth::user()->isAbleTo('events'))
                             <br>
-                            {!! Form::open(['action' => ['AdminDash@addPosition', $event->id]]) !!}
+                            {{ html()->form()->route('AdminDash@addPosition', [$event->id]) }}
                             @csrf
                             <div class="row">
                                 <div class="col-sm-10">
-                                    {!! Form::text('name', null, ['placeholder' => 'New Position', 'class' => 'form-control']) !!}
+                                    {{ html()->text('name', null)->placeholder('New Position')->class(['form-control']) }}
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="submit" class="btn btn-success simple-tooltip" data-toggle="tooltip"
                                             title="Add Position"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
-                            {!! Form::close() !!}
+                            {{ html()->form()->close() }}
                             <br>
                             <span data-toggle="modal" data-target="#savePreset">
                             <button type="button" class="btn btn-primary btn-sm" data-placement="top">Save as Position Preset</button>
@@ -506,17 +506,17 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) !!}
+					(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) }}
 					@csrf
 					<div class="modal-body">
-						{!! Form::label('name', 'Name') !!}
-						{!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
+						{{ html()->label('Name', 'name') }}
+						{{ html()->text('name', null)->placeholder('Name')->class(['form-control']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Save Position Preset</button>
 					</div>
-					{!! Form::close() !!}
+					{{ html()->form()->close() }}
 				</div>
 			</div>
 		</div>
@@ -529,17 +529,17 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@retrievePositionPreset', $event->id]]) !!}
+                    {{ html()->form()->route('AdminDash@retrievePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
-						{!! Form::label('p_id', 'Position Preset') !!}
-						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+						{{ html()->label('Position Preset', 'p_id') }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Load Position Preset</button>
 					</div>
-					{!! Form::close() !!}
+					{{ html()->form()->close() }}
 				</div>
 			</div>
 		</div>
@@ -552,17 +552,17 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@deletePositionPreset', $event->id]]) !!}
+                    {{ html()->form()->route('AdminDash@deletePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
-						{!! Form::label('p_id', 'Position Preset') !!}
-						{!! Form::select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) !!}
+						{{ html()->label('Position Preset', 'p_id') }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Remove Position Preset</button>
 					</div>
-					{!! Form::close() !!}
+					{{ html()->form()->close() }}
 				</div>
 			</div>
 		</div>
@@ -575,38 +575,38 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@manualAssign', $event->id]]) !!}
-					@csrf
+                    {{ html()->form()->route('AdminDash@manualAssign', [$event->id]) }}
+    				@csrf
 					<div class="modal-body">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{!! Form::label('controller', 'Controller Name') !!}
-									{!! Form::select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+									{{ html()->label('Controller Name', 'controller') }}
+									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) }}
 								</div>
 								<div class="col-sm-6">
-									{!! Form::label('position', 'Position') !!}
-									{!! Form::select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) !!}
+									{{ html()->label('Position', 'position') }}
+									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) }}
 								</div>
 							</div>
 						</div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    {!! Form::label('position_detail', 'Position or sector ID assigned') !!}
-                                    {!! Form::text('position_detail', null, ['class' => 'form-control']) !!}
+                                    {{ html()->label('Position or sector ID assigned', 'position_detail') }}
+                                    {{ html()->text('position_detail', null)->class(['form-control']) }}
                                 </div>
                             </div>
                         </div>
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{!! Form::label('start_time', 'Start Time (Zulu)') !!}
-									{!! Form::text('start_time', null, ['placeholder' => $event->start_time, 'class' => 'form-control']) !!}
+									{{ html()->label('Start Time (Zulu)', 'start_time') }}
+									{{ html()->text('start_time', null)->placeholder($event->start_time)->class(['form-control']) }}
 								</div>
 								<div class="col-sm-6">
-									{!! Form::label('end_time', 'End Time (Zulu)') !!}
-									{!! Form::text('end_time', null, ['placeholder' => $event->end_time, 'class' => 'form-control']) !!}
+									{{ html()->label('End Time (Zulu)', 'end_time') }}
+									{{ html()->text('end_time', null)->placeholder($event->end_time)->class(['form-control']) }}
 								</div>
 							</div>
 						</div>
@@ -615,11 +615,11 @@ View Event
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Assign Position</button>
 					</div>
-					{!! Form::close() !!}
+					{{ html()->form()->close() }}
 				</div>
 			</div>
 		</div>
 	@endif
 </div>
-    {{Html::script(asset("js/event_view.js"))}}
+<script src="{{asset('js/event_view.js')}}">
 @endsection

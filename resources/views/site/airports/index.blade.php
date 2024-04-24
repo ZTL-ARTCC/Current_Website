@@ -10,13 +10,13 @@ Airports
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            {!! Form::open(['action' => 'FrontController@searchAirport']) !!}
+            {{ html()->form()->route('FrontController@searchAirport') }}
                 <div class="form-inline">
-                    {!! Form::text('apt', null, ['placeholder' => 'Search Airport (ICAO)', 'class' => 'form-control']) !!}
+                    {{ html()->text('apt', null)->placeholder('Search Airport (ICAO)')->class(['form-control']) }}
                     &nbsp;
                     <button class="btn btn-success" type="submit">Search</button>
                 </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
         <div class="col-sm-4">
         </div>

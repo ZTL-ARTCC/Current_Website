@@ -9,27 +9,27 @@ New Incident Report
 
 <div class="container">
     <p>Please use this to report incidents rather than sending an email. Please know that your ID and the controller's ID will be recorded for the sole reason of resolving any issues. Once any issues have been resolved, the incident will be archived without the controller/report ID.</p>
-    {!! Form::open(['action' => 'ControllerDash@submitIncidentReport']) !!}
+    {{ html()->form()->route('ControllerDash@submitIncidentReport') }}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    {!! Form::label('controller_id', 'Controller', ['class' => 'form-label']) !!}
-                    {!! Form::select('controller_id', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+                    {{ html()->label('Controller', 'controller_id')->class(['form-label']) }}
+                    {{ html()->select('controller_id', $controllers, null)->placeholder('Select Controller')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('time', 'Time of Incident (Zulu)', ['class' => 'form-label']) !!}
+                    {{ html()->label('Time of Incident (Zulu)', 'time')->class(['form-label']) }}
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
-                        {!! Form::text('time', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        {{ html()->text('time', null)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-clock"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('date', 'Date of Incident', ['class' => 'form-label']) !!}
+                    {{ html()->label('Date of Incident', 'date')->class(['form-label']) }}
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input')->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -40,24 +40,24 @@ New Incident Report
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    {!! Form::label('controller_callsign', 'Controller Callsign', ['class' => 'form-label']) !!}
-                    {!! Form::text('controller_callsign', null, ['placeholder' => 'Callsign of the Controller', 'class' => 'form-control']) !!}
+                    {{ html()->label('Controller Callsign', 'controller_callsign')->class(['form-label']) }}
+                    {{ html()->text('controller_callsign', null)->placeholder('Callsign of the Controller')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('reporter_callsign', 'Your Callsign', ['class' => 'form-label']) !!}
-                    {!! Form::text('reporter_callsign', null, ['placeholder' => 'Your Callsign', 'class' => 'form-control']) !!}
+                    {{ html()->label('Your Callsign', 'reporter_callsign')->class(['form-label']) }}
+                    {{ html()->text('reporter_callsign', null)->placeholder('Your Callsign')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('aircraft_callsign', 'Aircraft Callsign (If Applicable)', ['class' => 'form-label']) !!}
-                    {!! Form::text('aircraft_callsign', null, ['placeholder' => 'Aircraft Involved (Optional)', 'class' => 'form-control']) !!}
+                    {{ html()->label('Aircraft Callsign (If Applicable)', 'aircraft_callsign')->class(['form-label']) }}
+                    {{ html()->text('aircraft_callsign', null)->placeholder('Aircraft Involved (Optional)')->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('description', 'Description of Incident', ['class' => 'form-label']) !!}
-            {!! Form::textArea('description', null, ['placeholder' => 'Please describe the incident as descriptively as possible.', 'class' => 'form-control']) !!}
+            {{ html()->label('Description of Incident', 'description')->class(['form-label']) }}
+            {{ html()->textarea('description', null)->placeholder('Please describe the incident as descriptively as possible.')->class(['form-control']) }}
         </div>
         <button action="submit" class="btn btn-success">Submit</button>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @endsection
