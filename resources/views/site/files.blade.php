@@ -67,5 +67,5 @@ Files
         @endforeach
     </div>
 </div>
-{{Html::script(asset('js/filebrowser.js'))}}
+<script src="{{asset('js/filebrowser.js')}}">
 @endsection

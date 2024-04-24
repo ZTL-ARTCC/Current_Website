@@ -280,31 +280,31 @@ Dashboard
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {!! Form::open(['action' => 'ControllerDash@reportBug']) !!}
+                {{ html()->form()->route('ControllerDash@reportBug') }}
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6">
-                                {!! Form::label('url', 'Intended URL') !!}
-                                {!! Form::text('url', null, ['placeholder' => 'Paste the Intended URL Here', 'class' => 'form-control']) !!}
+                                {{ html()->label('Intended URL', 'url') }}
+                                {{ html()->text('url', null)->placeholder(Paste the Intended URL Here)->class(['form-control']) }}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::label('error', 'Error Received (If Applicable)') !!}
-                                {!! Form::text('error', null, ['placeholder' => 'Paste Error Here, If Applicable', 'class' => 'form-control']) !!}
+                                {{ html()->label('Error Received (If Applicable)', 'error') }}
+                                {{ html()->text('error', null)->placeholder('Paste Error Here, If Applicable')->class(['form-control']) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        {!! Form::label('desc', 'Brief Description of Bug') !!}
-                        {!! Form::textArea('desc', null, ['placeholder' => 'Please be brief but specific with details regarding the bug.', 'class' => 'form-control']) !!}
+                        {{ html()->label('Brief Description of Bug', 'desc') }}
+                        {{ html()->textarea('desc', null)->placeholder('Please be brief but specific with details regarding the bug.')->class(['form-control']) }}
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button action="submit" class="btn btn-success">Send</button>
                 </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

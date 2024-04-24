@@ -99,19 +99,19 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         <div class="btn-toolbar">
                             @toggle('local-hero')
                                 @if($winner_local == null)
-                                    {!! Form::open(['url' => '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id]) !!}
+                                    {{ html()->form('POST', '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id) }}
                                         @csrf
                                         <button action="submit" class="btn btn-primary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
-                                    {!! Form::close() !!}
+                                    {{ html()->form()->close() }}
                                 @elseif($winner_local->controller_id == $h->id)
                                     <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
                                 @endif
                             @endtoggle
                             @if($winner == null)
-                                {!! Form::open(['url' => '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id]) !!}
+                                {{ html()->form('POST', '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id) }}
                                     @csrf
                                     <button action="submit" class="btn btn-simple-tooltip bronze-bg" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
-                                {!! Form::close() !!}
+                                {{ html()->form()->close() }}
                             @elseif($winner->controller_id == $h->id)
                                 <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fa fa-microphone"></i></a>
                             @endif
@@ -129,38 +129,38 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 </div>
-                {!! Form::open(['action' => ['AdminDash@updateLocalHeroChallenge', $challenge->id]]) !!}
+                {{ html()->form()->route('AdminDash@updateLocalHeroChallenge', [$challenge->id]) }}
                 @csrf
                 <div class="modal-body mx-2">
                     <div class="row mb-2">
-                        {!! Form::label('title', 'Name of the monthly challenge') !!}
-                        {!! Form::text('title', $challenge->title, ['class' => 'form-control']) !!}
+                        {{ html()->label('Name of the monthly challenge', 'title') }}
+                        {{ html()->text('title', $challenge->title)->class(['form-control']) }}
                     </div>
                     <div class="row mb-2">
-                        {!! Form::label('description', 'Description of the monthly challenge') !!}
-                        {!! Form::textArea('description', $challenge->description, ['class' => 'form-control', 'rows' => '5']) !!}
+                        {{ html()->label('Description of the monthly challenge', 'description') }}
+                        {{ html()->textarea('description', $challenge->description)->class(['form-control'])->attributes(['rows' => '5']) }}
                     </div>
                     <div class="row form-check mb-2">
                         @toggle('local-hero')
-                            {!! Form::checkbox('postToNews', 1, true, ['class' => 'form-check-input']) !!}
+                            {{ html()->checkbox('postToNews', true, 1)->class(['form-check-input']) }}
                         @else
-                            {!! Form::checkbox('postToNews', 1, false, ['class' => 'form-check-input', 'disabled' => 'disabled']) !!}
+                            {{ html()->checkbox('postToNews', false, 1)->class(['form-check-input'])->attributes(['disabled' => 'disabled']) }}
                         @endtoggle
-                        {!! Form::label('postToNews', 'Post challenge to site news feed?', ['class' => 'form-check-label']) !!}
+                        {{ html()->label('Post challenge to site news feed?', 'postToNews')->class(['form-check-label']) }}
                     </div>
                     <hr>
                     <div class="row">
-                        {!! Form::label('positions', 'Control Positions for this Challenge') !!}
-                        {!! Form::select('positions[]', $local_hero_challenge_positions, $challenge->positions, ['class' => 'form-control', 'multiple', 'size' => '5']) !!}
+                        {{ html()->label('Control Positions for this Challenge', 'positions') }}
+                        {{ html()->multiselect('positions', $local_hero_challenge_positions, $challenge->positions)->class(['form-control'])->attributes(['size' => '5']) }}
                         <div class="small text-secondary">Hold CTRL + click to select multiple positions</div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button action="submit" class="btn btn-success">Save Challenge</button>
                     </div>
-                    {!! Form::hidden('year', $year) !!}
-                    {!! Form::hidden('month', $month) !!}
-                {!! Form::close() !!}
+                    {{ html()->hidden('year', $year) }}
+                    {{ html()->hidden('month', $month) }}
+                {{ html()->form()->close() }}
                 </div>
             </div>
         </div>

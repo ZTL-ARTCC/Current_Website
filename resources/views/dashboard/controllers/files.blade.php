@@ -123,24 +123,24 @@ Files
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					{!! Form::open(['action' => ['AdminDash@fileSeparator']]) !!}
+                    {{ html()->form()->route('AdminDash@fileSeparator') }}
 					@csrf
 					<div class="modal-body">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{!! Form::label('title', 'File Separator Heading') !!}
-									{!! Form::text('title', null, ['placeholder' => 'Enter heading title', 'class' => 'form-control']) !!}
+									{{ html()->label('File Separator Heading', 'title') }}
+									{{ html()->text('title', null)->placeholder('Enter heading title')->class(['form-control']) }}
 								</div>
                                 <div class="col-sm-6">
-                                    {!! Form::label('type', 'Tab:') !!}
-                                    {!! Form::select('type', [
+                                    {{ html()->label('Tab:', 'type') }}
+                                    {{ html()->select('type', [
                                         3 => 'vATIS',
                                         4 => 'SOPs',
                                         5 => 'LOAs',
                                         6 => 'Staff',
                                         7 => 'Training'
-                                    ], null, ['class' => 'form-control']) !!}
+                                    ], null)->class(['form-control']) }}
                                 </div>
 							</div>
 						</div>
@@ -149,12 +149,12 @@ Files
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Save Separator</button>
 					</div>
-					{!! Form::close() !!}
+					{{ html()->form()->close() }}
 				</div>
 			</div>
 		</div>
         @endif
     </div>
 </div>
-{{Html::script(asset('js/filebrowser.js'))}}
+<script src="{{asset('js/filebrowser.js')}}">
 @endsection

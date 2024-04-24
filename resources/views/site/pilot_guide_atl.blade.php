@@ -12,7 +12,7 @@ ATL Pilot Guide
 
 @section('content')
 @php
-function fetchBadge($pos) {
+function fetch_badge($pos) {
 $badge = array('position','frequency');
 if($pos) {
 $badge['position'] = "<span class=\"badge badge-primary\">$pos->position</span>";
@@ -242,7 +242,7 @@ return $badge;
             </div>
             <h3>Receiving a clearance</h3>
             <p> After filing a flight plan, you should receive your clearance from ATC. If you have not received a clearance after a reasonable
-                amount of time, you should call {!! fetchBadge($del)['position'] !!} on {!! fetchBadge($del)['frequency'] !!} and request your
+                amount of time, you should call {!! fetch_badge($del)['position'] !!} on {!! fetch_badge($del)['frequency'] !!} and request your
                 clearance.</p>
             <p class="font-italic">Example: Atlanta Clearance, Delta 1234 clearance to Charlotte ready to copy.</p>
             <p>Aircraft with CPDLC capabilities should expect to receive a computerized pre-departure clearance from ATC. Because ATC sends this
@@ -274,8 +274,8 @@ return $badge;
             <p> ATL does not simulate ramp control. During non-event periods, push and start clearances are at your discretion and do not require
                 ATC clearance. For major events (example: cross the pond) where you have been issued an estimated departure clearance time (EDCT),
                 you may be required to call ground prior to push. Do not call ground for push/start unless the ATIS or your PDC advises you to do so.</p>
-            <p>Exception: If you must push onto an active taxiway, you are required to call {!! fetchBadge($gnd)['position'] !!} on
-                {!! fetchBadge($gnd)['frequency'] !!} and request clearance to do
+            <p>Exception: If you must push onto an active taxiway, you are required to call {!! fetch_badge($gnd)['position'] !!} on
+                {!! fetch_badge($gnd)['frequency'] !!} and request clearance to do
                 so. Gate E36 is the only gate at ATL that may require push back onto an active taxiway for Boeing 757 and larger aircraft.</p>
             <p>Make sure that you push the correct direction! If you are departing on runway 8R/26L, you want to face north. If you are departing
                 on runway 9L/27R you should be facing south.</p>
@@ -289,7 +289,7 @@ return $badge;
             <h3>Taxi</h3>
             <p> Check ATIS one more time prior to calling for taxi to ensure that nothing has changed. Ensure that your transponder is on with
                 the correct squawk code entered and in altitude mode. Taxi to the north or south hold point on the ramp and call
-                {!! fetchBadge($gnd)['position'] !!} on {!! fetchBadge($gnd)['frequency'] !!}. Inform the controller of your ramp location
+                {!! fetch_badge($gnd)['position'] !!} on {!! fetch_badge($gnd)['frequency'] !!}. Inform the controller of your ramp location
                 (see airfield diagram) and provide them with the ATIS code.</p>
             <p>*Note: If more than one ground controller is online at ATL, you should call GC-N/121.9 for taxi to runway 8R/26L or GC-C/121.75 for taxi
                 to runway 9L/27R.</p>
@@ -433,5 +433,5 @@ return $badge;
     const maxLatLon = [33.66, -84.39];
     const minLatLon = [33.61, -84.46];
 </script>
-{{Html::script(asset('js/pilots_guide.js'))}}
+<script src="{{asset('js/pilots_guide.js')}}">
 @endsection

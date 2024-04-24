@@ -52,35 +52,35 @@ ATC Bookings
                 <small class="d-block mb-3"><i>Bookings are limited by ZTL policy to TWR positions and above</i></small>
             </div>
             <div class="card-body">
-                {!! Form::open(['action' => 'AtcBookingController@createBooking']) !!}
+                {{ html()->form()->route('AtcBookingController@createBooking') }}
                     @csrf
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                {!! Form::label('facility', '3-Letter Facility Identifier') !!}
-                                {!! Form::text('facility', null, ['placeholder' => 'i.e. ATL, CLT, ZTL', 'class' => 'form-control']) !!}
+                                {{ html()->label('3-Letter Facility Identifier', 'facility') }}
+                                {{ html()->text('facility', null)->placeholder('i.e. ATL, CLT, ZTL')->class(['form-control']) }}
                             </div>
                             <div class="col-md-6">
-                                {!! Form::label('position', 'Position') !!}
-                                {!! Form::text('position', null, ['placeholder' => 'i.e. TWR, APP, CTR', 'class' => 'form-control']) !!}
+                                {{ html()->label('Position', 'position') }}
+                                {{ html()->text('position', null)->placeholder('i.e. TWR, APP, CTR')->class(['form-control']) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                {!! Form::label('start', 'Start Time (ZULU)') !!}
+                                {{ html()->label('Start Time (ZULU)', 'start') }}
                                 <div class="input-group date dt_picker_datetime" id="datetimepickerstart" data-target-input="nearest">
-                                    {!! Form::text('start', null, ['placeholder' => 'MM/DD/YYYY 00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepickerstart']) !!}
+                                    {{ html()->text('start', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerstart']) }}
                                     <div class="input-group-append" data-target="#datetimepickerstart" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                {!! Form::label('end', 'End Time (ZULU)') !!}
+                                {{ html()->label('End Time (ZULU)', 'end') }}
                                 <div class="input-group date dt_picker_datetime" id="datetimepickerend" data-target-input="nearest">
-                                    {!! Form::text('end', null, ['placeholder' => 'MM/DD/YYYY 00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepickerend']) !!}
+                                    {{ html()->text('end', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerend']) }}
                                     <div class="input-group-append" data-target="#datetimepickerend" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
@@ -90,10 +90,10 @@ ATC Bookings
                     </div>
                     <div class="form-group">
                         @if(count($types) == 1)
-                            {!! Form::hidden('type', 'booking') !!}
+                            {{ html()->hidden('type', 'booking') }}
                         @else
-                            {!! Form::label('type', 'Booking Type') !!}
-                            {!! Form::select('type', $types, 'booking', ['class' => 'form-control']) !!}
+                            {{ html()->label('Booking Type', 'type') }}
+                            {{ html()->select('type', $types, 'booking')->class(['form-control']) }}
                         @endif
                     </div>
                     <p><i><b>All times are in ZULU time</b></i></p>
@@ -102,7 +102,7 @@ ATC Bookings
                         <button class="btn btn-success float-left mr-2" type="submit">Create Booking</button>
                         <button class="btn btn-danger" type="submit">Cancel</button>
                     </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

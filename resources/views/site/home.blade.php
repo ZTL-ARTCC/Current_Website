@@ -256,5 +256,5 @@ Home
 		</div>
 	</div>
 </div>
-{{Html::script(asset('js/home.js'))}}
+<script src="{{asset('js/home.js')}}">
 @endsection

@@ -124,4 +124,4 @@
 	</div>
 </div>
 @endif
-{{Html::script(asset('js/sidebar.js'))}}
+<script src="{{asset('js/sidebar.js')}}">

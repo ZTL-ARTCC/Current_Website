@@ -178,14 +178,14 @@ Roster
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {!! Form::open(['action' => 'AdminDash@allowVisitReq']) !!}
+                    {{ html()->form()->route('AdminDash@allowVisitReq') }}
                     @csrf
                     <div class="modal-body">
                         <div class="container">
                             <div class="form-group">
                                 <div class="row">
-                                    {!! Form::label('cid', 'Controller CID') !!}
-                                    {!! Form::text('cid', null, ['placeholder' => 'Controller CID', 'class' => 'form-control']) !!}
+                                    {{ html()->label('Controller CID', 'cid') }}
+                                    {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                                 </div>
                             </div>
                         </div>
@@ -194,7 +194,7 @@ Roster
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button action="submit" class="btn btn-success">Allow Visitor</button>
                     </div>
-                    {!! Form::close() !!}
+                    {{ html()->form()->close() }}
                 </div>
             </div>
         </div>

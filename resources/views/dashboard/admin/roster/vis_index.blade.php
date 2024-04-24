@@ -64,16 +64,16 @@ Visit Requests
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['AdminDash@rejectVisitRequest', $v->id]]) !!}
+                                        {{ html()->form()->route('AdminDash@rejectVisitRequest', [$v->id]) }}
                                         @csrf
                                         <div class="modal-body">
-                                            {!! Form::label('reject_reason', 'Please specify why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.') !!}
-                                            {!! Form::textArea('reject_reason', 'Your visit request has been rejected.', ['placeholder' => 'Required', 'class' => 'form-control']) !!}
+                                            {{ html()->label('Please specify why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.', 'reject_reason') }}
+                                            {{ html()->textarea('reject_reason', 'Your visit request has been rejected.')->placeholder('Required')->class(['form-control']) }}
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                 <button action="submit" class="btn btn-success">Confirm</button>
                                             </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>
@@ -156,14 +156,14 @@ Visit Requests
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {!! Form::open(['action' => 'AdminDash@manualAddVisitor']) !!}
+                {{ html()->form()->route('AdminDash@manualAddVisitor') }}
                 @csrf
                 <div class="modal-body">
                     <div class="container">
                         <div class="form-group">
                             <div class="row">
-                                {!! Form::label('cid', 'Controller CID') !!}
-                                {!! Form::text('cid', null, ['placeholder' => 'Controller CID', 'class' => 'form-control']) !!}
+                                {{ html()->label('Controller CID', 'cid') }}
+                                {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ Visit Requests
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button action="submit" class="btn btn-success">Search CID</button>
                 </div>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

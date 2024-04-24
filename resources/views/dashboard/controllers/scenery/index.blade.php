@@ -8,13 +8,13 @@ Scenery
 @include('inc.header', ['title' => 'Scenery'])
 
 <div class="container">
-    {!! Form::open(['url' => '/dashboard/controllers/scenery/search']) !!}
+    {{ html()->form('POST', '/dashboard/controllers/scenery/search') }}
         <div class="form-group inline">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="row">
                         <div class="col-sm-9">
-                            {!! Form::text('search', null, ['placeholder' => 'Search for Airport/Developer', 'class' => 'form-control']) !!}
+                            {{ html()->text('search', null)->placeholder('Search for Airport/Developer')->class(['form-control']) }}
                         </div>
                         <div class="col-sm-3">
                             <button action="submit" class="btn btn-primary">Search</button>
@@ -27,7 +27,7 @@ Scenery
                 </div>
             </div>
         </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link tab-link active" href="#fsx" role="tab" data-toggle="tab">FSX/P3D</a>

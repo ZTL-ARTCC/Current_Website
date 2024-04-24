@@ -279,5 +279,5 @@
         </div>
     </div>
 </div>
-{{Html::script(asset('js/airports.js'))}}
+<script src="{{asset('js/airports.js')}}">
 @endsection

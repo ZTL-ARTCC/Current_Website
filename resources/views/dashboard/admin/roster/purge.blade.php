@@ -165,5 +165,5 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <br>
     <p><i>**Controller did not control for at least 60 minutes in the previous month.</i></p>
 </div>
-{{Html::script(asset('js/roster.js'))}}
+<script src="{{asset('js/roster.js')}}">
 @endsection
