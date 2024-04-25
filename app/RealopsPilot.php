@@ -11,7 +11,4 @@ class RealopsPilot extends Authenticatable {
         return $this->fname . ' ' . $this->lname;
     }
 
-    public function getAssignedFlightAttribute() {
-        return RealopsFlight::where('assigned_pilot_id', $this->id)->first();
-    }
 }
