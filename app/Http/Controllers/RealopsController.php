@@ -57,14 +57,16 @@ class RealopsController extends Controller {
         return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
     }
 
-    public function cancelBid() {
-        $pilot = auth()->guard('realops')->user();
-        $flight = $pilot->assigned_flight;
-
+    public function cancelBid($id) {
+        $flight = RealopsFlight::find($id);
         if (! $flight) {
-            return redirect()->back()->with('error', 'You have not yet bid for a flight');
+            return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
-        
+
+        $pilot = auth()->guard('realops')->user();
+        if ($pilot->id != $flight->assigned_pilot_id) {
+            return redirect()->back()->with('error', 'That flight isn\'t assigned to you');
+        }
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.cancel_bid', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
@@ -117,6 +119,8 @@ class RealopsController extends Controller {
         }
 
         $pilot = $flight->assigned_pilot;
+
+        
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.removed_from_flight', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {

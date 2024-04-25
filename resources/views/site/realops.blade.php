@@ -105,13 +105,9 @@ Realops
                 @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                     <td>
                         <center>
-                            @if(auth()->guard('realops')->user()->assigned_flight)
-                                @if(auth()->guard('realops')->user()->assigned_flight->id == $f->id)
-                                    <a href="/realops/cancel-bid" class="btn btn-danger btn-sm">Cancel Bid</a>
-                                @elseif(! $f->assigned_pilot)
-                                    <button class="btn btn-success btn-sm" disabled>Bid</button>
-                                @endif
-                            @elseif(! $f->assigned_pilot)
+                            @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
+                                <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
+                            @else
                                 <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
                             @endif
                         </center>
