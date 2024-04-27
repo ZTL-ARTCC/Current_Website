@@ -188,6 +188,7 @@ class LoginController extends Controller {
 
     public function realopsLogin() {
         if (! auth()->check()) {
+            session(['realops_redirect' =>  true]);
             return redirect('/login');
         }
 
@@ -225,6 +226,11 @@ class LoginController extends Controller {
 
     private function completeRealopsLogin($realops_pilot) {
         auth()->guard('realops')->login($realops_pilot);
-        return redirect('/realops');
+
+        if(session('realops_redirect')) {
+            return redirect('/realops');
+        }
+            
+        return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update. You are signed into our realops pilot bidding system.');
     }
 }
