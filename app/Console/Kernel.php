@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\VatsimAtcBookingSync',
         '\App\Console\Commands\VATUSAEventsUpdate',
         '\App\Console\Commands\UploadTrainingTickets',
-        '\App\Console\Commands\DBReset'
     ];
 
     /**
