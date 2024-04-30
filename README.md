@@ -54,3 +54,4 @@ This is the main website for the vZTL ARTCC, part of the VATSIM Network.
 | `php artisan migrate`                           | Run all new migrations  |
 | `php artisan make:migration [migration name]`   | Create a new migration  |
 | `php artisan make:controller [controller name]` | Create a new controller |
+| `composer reset`                                | Resets the DB (runs php artisan db:wipe, php artisan migrate, and php artisan db:seed)
