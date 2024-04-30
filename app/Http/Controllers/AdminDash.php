@@ -148,7 +148,7 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'FAA' => 'required|unique:airports,ltr_3',
-            'ICAO' => 'required'
+            'ICAO' => 'required|unique:airports,ltr_4'
         ]);
 
         $a = new Airport;
