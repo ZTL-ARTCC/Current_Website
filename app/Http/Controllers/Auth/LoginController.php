@@ -228,6 +228,7 @@ class LoginController extends Controller {
         auth()->guard('realops')->login($realops_pilot);
 
         if(session('realops_redirect')) {
+            session('realops_redirect')->forget();
             return redirect('/realops');
         }
             
