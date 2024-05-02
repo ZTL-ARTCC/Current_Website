@@ -57,7 +57,7 @@ Staffing Request
         </div>
         <body>
             <form action="?" method="POST">
-				<div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
+				<div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
                 <br/>
                 <input class="btn btn-success" type="submit" value="Send Request">
             </form>
