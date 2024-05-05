@@ -63,6 +63,13 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
+        if(session('realops_redirect')) {
+            return $this->externalRealopsLogin(
+                $resourceOwner->data->cid, 
+                $resourceOwner->data->personal->name_first, 
+                $resourceOwner->data->personal->name_last, 
+                $resourceOwner->data->personal->email);
+        }
         return $this->vatusaAuth($resourceOwner, $accessToken);
     }
 
@@ -127,12 +134,8 @@ class LoginController extends Controller {
             $userstatuscheck = User::find($res['cid']);
         }
         
-        if (! $realops_toggle_enabled && ! $userstatuscheck) {
+        if (! $userstatuscheck || $userstatuscheck->status == 2) {
             return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
-        } elseif (! $realops_toggle_enabled && $userstatuscheck->status == 2) {
-            return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
-        } elseif (! $userstatuscheck || $userstatuscheck->status == 2) {
-            return $this->externalRealopsLogin($res['cid'], $res['fname'], $res['lname'], $res['email']);
         }
 
         $userstatuscheck->fname = $res['fname'];
@@ -226,12 +229,7 @@ class LoginController extends Controller {
 
     private function completeRealopsLogin($realops_pilot) {
         auth()->guard('realops')->login($realops_pilot);
-
-        if(session('realops_redirect')) {
-            session('realops_redirect')->forget();
-            return redirect('/realops');
-        }
-            
-        return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update. You are signed into our realops pilot bidding system.');
+        session()->forget('realops_redirect');
+        return redirect('/realops');
     }
 }
