@@ -63,7 +63,8 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
-        if(session('realops_redirect')) {
+        $realops_toggle_enabled = toggleEnabled('realops');
+        if(session('realops_redirect') && $realops_toggle_enabled) {
             return $this->externalRealopsLogin(
                 $resourceOwner->data->cid,
                 $resourceOwner->data->personal->name_first,
