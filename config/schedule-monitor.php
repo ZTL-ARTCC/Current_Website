@@ -15,7 +15,7 @@ return [
      * The date format used for all dates displayed on the output of commands
      * provided by this package.
      */
-    'date_format' => 'Y-m-d H:i:s',
+    'date_format' => 'Y-m-d H:i',
 
     'models' => [
         /*
