@@ -29,19 +29,19 @@ class Kernel extends ConsoleKernel {
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void {
-        $schedule->command('cache:prune-stale-tags')->hourlyAt(3);
-        $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01');
-        $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7);
-        $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12);
-        $schedule->command('VATUSAEvents:Update')->hourlyAt(22);
-        $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33);
-        $schedule->command('queue:work --stop-when-empty')->everyFiveMinutes();
-        $schedule->command('Weather:UpdateWeather')->everyFourMinutes();
-        $schedule->command('Overflights:GetOverflights')->everyThreeMinutes();
-        $schedule->command('OnlineControllers:GetControllers')->everyMinute();
-        if (FeatureToggle::isEnabled("auto_support_events")) {
-            $schedule->command('Events:UpdateSupportEvents')->daily()->dailyAt('05:09');
-        }
+        $schedule->command('cache:prune-stale-tags')->hourlyAt(3)->doNotMonitor();
+        $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01')->monitorName('VATUSA Solo Cert Sync');
+        $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7)->monitorName('Roster Update');
+        $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
+        $schedule->command('VATUSAEvents:Update')->hourlyAt(22)->monitorName('VATUSA Events Sync');
+        $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33)->monitorName('VATUSA Training Ticket Sync');
+        $schedule->command('queue:work --stop-when-empty')->everyFiveMinutes()->monitorName('Queue Processing');
+        $schedule->command('Weather:UpdateWeather')->everyFourMinutes()->monitorName('Update Weather');
+        $schedule->command('Overflights:GetOverflights')->everyThreeMinutes()->monitorName('Sync Overflights');
+        $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
+        $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
+            return FeatureToggle::isEnabled('auto_support_events');
+        });
     }
 
     /**
