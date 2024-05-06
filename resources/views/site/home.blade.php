@@ -32,7 +32,7 @@ Home
                         <div class="my-3">
                             <strong>{{ $date }}</strong>
                             @foreach($date_bookings as $b)
-                                <div class="bg-secondary px-2 py-1 mx-2 my-1 clearfix">
+                                <div class="bg-secondary px-1 py-1 mx-0 my-1 clearfix">
                                     <p class="my-0 float-left">{{ $b->callsign }}</p>
                                     <p class="my-0 float-right">{{ $b->start_time_formatted }}-{{ $b->end_time_formatted }}Z</p>
                                 </div>
