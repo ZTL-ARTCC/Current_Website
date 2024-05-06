@@ -278,6 +278,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/edit', 'AdminDash@editFeatureToggle');
             Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
         });
+        Route::prefix('monitor')->middleware('permission:staff')->group(function () {
+            Route::get('/', 'AdminDash@backgroundMonitor');
+        });
     });
 });
 /*
