@@ -29,7 +29,6 @@ class Kernel extends ConsoleKernel {
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void {
-        $schedule->command('cache:prune-stale-tags')->hourlyAt(3)->doNotMonitor();
         $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01')->monitorName('VATUSA Solo Cert Sync');
         $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7)->monitorName('Roster Update');
         $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
