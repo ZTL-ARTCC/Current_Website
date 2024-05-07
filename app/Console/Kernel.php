@@ -35,8 +35,9 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12);
         $schedule->command('VATUSAEvents:Update')->hourlyAt(22);
         $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33);
-        $schedule->command('Overflights:GetOverflights')->everyFourMinutes();
-        $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
+        $schedule->command('queue:work --stop-when-empty')->everyFiveMinutes();
+        $schedule->command('Weather:UpdateWeather')->everyFourMinutes();
+        $schedule->command('Overflights:GetOverflights')->everyThreeMinutes();
         $schedule->command('OnlineControllers:GetControllers')->everyMinute();
         if (FeatureToggle::isEnabled("auto_support_events")) {
             $schedule->command('Events:UpdateSupportEvents')->daily()->dailyAt('05:09');
