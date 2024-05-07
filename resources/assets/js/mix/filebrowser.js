@@ -1,3 +1,5 @@
+import { copyTextToClipboard } from "./copy_to_clipboard";
+
 function itemReorder(id, pos, typ, act) {
   // Handles custom re-ordering of items in file browser
   var dType = "";
@@ -59,14 +61,6 @@ function fallbackCopyTextToClipboard(text) {
     //Do nothing
   }
   document.body.removeChild(textArea);
-}
-
-function copyTextToClipboard(text) {
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(text);
 }
 
 function linkToClipboard(e) {
