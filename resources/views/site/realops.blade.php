@@ -107,6 +107,8 @@ Realops
                         <center>
                             @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
                                 <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
+                            @elseif($f->assigned_pilot)
+                                    <button class="btn btn-success btn-sm" disabled>Bid</button>
                             @else
                                 <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
                             @endif
