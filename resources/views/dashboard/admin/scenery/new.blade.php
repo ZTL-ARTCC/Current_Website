@@ -13,11 +13,11 @@ New Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Airport Name', 'apt') }}
+                    <label for="apt">Airport Name</label>
                     {{ html()->text('apt', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Simulator/AFCAD', 'sim') }}
+                    <label for="sim">Simulator/AFCAD</label>
                     {{ html()->select('sim', [
                         0 => 'FSX/P3D',
                         1 => 'X-Plane',
@@ -29,11 +29,11 @@ New Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Price', 'price') }}
+                    <label for="price">Price</label>
                     {{ html()->text('price', null)->class(['form-control'])->placeholder('If it is free, put "0" (Required)') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Currency', 'currency') }}
+                    <label for="currency">Currency</label>
                     {{ html()->text('currency', 'USD')->class(['form-control'])->placeholder('Required') }}
                 </div>
             </div>
@@ -41,25 +41,25 @@ New Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Link to Scenery', 'url') }}
+                    <label for="url">Link to Scenery</label>
                     {{ html()->text('url', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Developer', 'dev') }}
+                    <label for="dev">Developer</label>
                     {{ html()->text('dev', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Image 1', 'image1') }}
+            <label for="image1">Image 1</label>
             {{ html()->text('image1', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {{ html()->label('Image 2', 'image2') }}
+            <label for="image2">Image 2</label>
             {{ html()->text('image2', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {{ html()->label('Image 3', 'image3') }}
+            <label for="image3">Image 3</label>
             {{ html()->text('image3', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="row">

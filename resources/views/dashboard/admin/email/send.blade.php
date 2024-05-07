@@ -13,31 +13,31 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    {{ html()->label('From', 'from') }}
+                    <label for="from">From</label>
                     {{ html()->text('from', 'info@notams.ztlartcc.org')->class(['form-control'])->attributes(['disabled']) }}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    {{ html()->label('Name', 'name') }}
+                    <label for="name">Name</label>
                     {{ html()->text('name', null)->placeholder('Name (Required)')->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-4">
-                {{ html()->label('Reply to Email', 'reply_to') }}
+                <label for="reply_to">Reply to Email</label>
                 {{ html()->text('reply_to', null)->placeholder('ex. youremail@ztlartcc.org (Required)')->class(['form-control']) }}
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    {{ html()->label('To (Single Person)', 'to') }}
+                    <label for="to">To (Single Person)</label>
                     {{ html()->select('to', $controllers, null, ['placeholder' => 'Select Controller')->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    {{ html()->label('Bulk Email', 'bulk') }}
+                    <label for="bulk">Bulk Email</label>
                     {{ html()->select('bulk', [
                         0 => 'All Controllers',
                         1 => 'Home Controllers',
@@ -55,11 +55,11 @@
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Subject', 'subject') }}
+            <label for="subject">Subject</label>
             {{ html()->text('subject', null)->placeholder('Subject (Required)')->class(['form-control']) }}
         </div>
         <div class="form-group">
-            {{ html()->label('Message', 'message') }}
+            <label for="message">Message</label>
             {{ html()->textarea('message', null)->placeholder('Message (Required)')->class(['form-control', 'text-editor']) }}
         </div>
         <button class="btn btn-success" type="submit">Send</button>

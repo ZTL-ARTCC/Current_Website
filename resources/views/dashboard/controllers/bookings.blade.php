@@ -57,11 +57,11 @@ ATC Bookings
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                {{ html()->label('3-Letter Facility Identifier', 'facility') }}
+                                <label for="facility">3-Letter Facility Identifier</label>
                                 {{ html()->text('facility', null)->placeholder('i.e. ATL, CLT, ZTL')->class(['form-control']) }}
                             </div>
                             <div class="col-md-6">
-                                {{ html()->label('Position', 'position') }}
+                                <label for="position">Position</label>
                                 {{ html()->text('position', null)->placeholder('i.e. TWR, APP, CTR')->class(['form-control']) }}
                             </div>
                         </div>
@@ -69,7 +69,7 @@ ATC Bookings
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                {{ html()->label('Start Time (ZULU)', 'start') }}
+                                <label for="start">Start Time (ZULU)</label>
                                 <div class="input-group date dt_picker_datetime" id="datetimepickerstart" data-target-input="nearest">
                                     {{ html()->text('start', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerstart']) }}
                                     <div class="input-group-append" data-target="#datetimepickerstart" data-toggle="datetimepicker">
@@ -78,7 +78,7 @@ ATC Bookings
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                {{ html()->label('End Time (ZULU)', 'end') }}
+                                <label for="end">End Time (ZULU)</label>
                                 <div class="input-group date dt_picker_datetime" id="datetimepickerend" data-target-input="nearest">
                                     {{ html()->text('end', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerend']) }}
                                     <div class="input-group-append" data-target="#datetimepickerend" data-toggle="datetimepicker">
@@ -92,7 +92,7 @@ ATC Bookings
                         @if(count($types) == 1)
                             {{ html()->hidden('type', 'booking') }}
                         @else
-                            {{ html()->label('Booking Type', 'type') }}
+                            <label for="type">Booking Type</label>
                             {{ html()->select('type', $types, 'booking')->class(['form-control']) }}
                         @endif
                     </div>

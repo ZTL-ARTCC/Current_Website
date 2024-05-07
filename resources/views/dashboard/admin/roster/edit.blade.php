@@ -45,11 +45,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('CID', 'cid') }}
+                        <label for="cid">CID</label>
                         {{ html()->text('cid', $user->id)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Rating', 'rating') }}
+                        <label for="rating">Rating</label>
                         {{ html()->text('rating', $user->rating_long)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
@@ -57,11 +57,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('First Name', 'fname') }}
+                        <label for="fname">First Name</label>
                         {{ html()->text('fname', $user->fname)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Last Name', 'lname') }}
+                        <label for="lname">Last Name</label>
                         {{ html()->text('lname', $user->lname)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
@@ -69,11 +69,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Email', 'email') }}
+                        <label for="email">Email</label>
                         {{ html()->text('email', $user->email)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Initials', 'initials') }}
+                        <label for="initials">Initials</label>
                         {{ html()->text('initials', $user->initials)->class(['form-control'])->attributes([$roster_disable]) }}
                     </div>
                 </div>
@@ -82,11 +82,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         @if($user->visitor == 1)
-                            {{ html()->label('Visitor From', 'visitor_from') }}
+                            <label for="visitor_from">Visitor From</label>
                             {{ html()->text('visitor_from', $user->visitor_from)->class(['form-control'])->attributes([$roster_disable]) }}
                             {{ html()->hidden('status', $user->status) }}
                         @else
-                            {{ html()->label('Status', 'status') }}
+                            <label for="status">Status</label>
                             {{ html()->select('status', $user->user_status, $user->status)->class(['form-control'])->attributes([$roster_disable]) }}
                         @endif
                     </div>
@@ -100,11 +100,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Facility Staff', 'staff') }}
+                        <label for="staff">Facility Staff</label>
                         {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-control')->attributes([$roster_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Events Staff', 'events_staff') }}
+                        <label for="events_staff">Events Staff</label>
                         {{ html()->select('events_staff', $user->events_staff, $user->events_position)->class(['form-control'])->attributes([$events_disable]) }}
                     </div>
                 </div>
@@ -112,12 +112,12 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Training Staff', 'training') }}
+                        <label for="training">Training Staff</label>
                         {{ html()->select('training', $user->training_staff, $user->train_position)->class(['form-control'])->attributes([$roster_disable]) }}
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
-                        {{ html()->label('Training Level', 'max') }}
+                        <label for="max">Training Level</label>
                         {{ html()->select('max', $user->training_level, $user->max)->class(['form-control'])->attributes([$train_config_disable]) }}
                     </div>
                     @endif
@@ -134,23 +134,23 @@ Update Controller
                             $allow_events = ($user->canEvents == 1) ? true : false;
                             $api_exempt = ($user->api_exempt == 1) ? true : false;
                         @endphp
-                        {{ html()->label('Allow Training?', 'canTrain') }}
+                        <label for="canTrain">Allow Training?</label>
                         {{ html()->checkbox('canTrain', $allow_training, 1)->attributes([$roster_disable]) }}
                     </div>
                     <div class="col-sm-10">
-                        {{ html()->label('Visitor?', 'visitor') }}
+                        <label for="visitor">Visitor?</label>
                         {{ html()->checkbox('visitor', $is_visitor, 1)->attributes(['disabled']) }}
                         @if($user->visitor == 1)
                             <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
                         @endif
                     </div>
                     <div class="col-sm-10">
-                        {{ html()->label('Allow Signing up for Events?', 'canEvents') }}
+                        <label for="canEvents">Allow Signing up for Events?</label>
                         {{ html()->checkbox('canEvents', $allow_events, 1)->attributes([$roster_disable]) }}
                     </div>
                     @if($user->visitor != 1)
                     <div class="col-sm-10">
-                        {{ html()->label('Exempt from VATUSA API Roster Update?', 'api_exempt') }}
+                        <label for="api_exempt">Exempt from VATUSA API Roster Update?</label>
                         {{ html()->checkbox('api_exempt', $api_exempt, 1)->attributes([$roster_disable]) }}
                     </div>
                     @endif
@@ -193,11 +193,11 @@ Update Controller
                             }
                         @endphp
                         {{ html()->hidden('del', $user->del) }}
-                        {{ html()->label('Unrestricted Ground/Clearance Delivery', 'gnd') }}
+                        <label for="gnd">Unrestricted Ground/Clearance Delivery</label>
                         {{ html()->select('gnd', $user->uncertified_certified, $user->gnd)->class(['form-control'])->attributes([$unres_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Unrestricted Tower', 'twr') }}
+                        <label for="twr">Unrestricted Tower</label>
                         {{ html()->select('twr', $user->Uncertified_solo_certified, $user->twr)->class(['form-control'])->attributes([$unres_twr_disable]) }}
                     </div>
                 </div>
@@ -205,11 +205,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Unrestricted Approach', 'app') }}
+                        <label for="app">Unrestricted Approach</label>
                         {{ html()->select('app', $user->uncertified_solo_certified, $user->app)->class(['form-control'])->attributes([$unres_app_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Center Certification', 'ctr') }}
+                        <label for="ctr">Center Certification</label>
                         {{ html()->select('ctr', $user->uncertified_solo_certified, $user->ctr)->class(['form-control'])->attributes([$center_disable]) }}
                     </div>
                 </div>
@@ -217,11 +217,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Unrestricted Solo Certifications (list facility IDs)', 'twr_solo_fields') }}
+                        <label for="twr_solo_fields">Unrestricted Solo Certifications (list facility IDs)</label>
                         {{ html()->text('twr_solo_fields', $user->twr_solo_fields)->class(['form-control'])->attributes(['maxlength' => 255, $solo_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Solo Expiration Date', 'twr_solo_expires')->class(['form-label']) }}
+                        <label for="twr_solo_expires" class="form-label">Solo Expiration Date</label>
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
@@ -231,11 +231,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Charlotte Clearance Delivery', 'clt_del') }}
+                        <label for="clt_del">Charlotte Clearance Delivery</label>
                         {{ html()->select('clt_del', $user->uncertified_certified, $user->clt_del)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Charlotte Ground', 'clt_gnd') }}
+                        <label for="clt_gnd">Charlotte Ground</label>
                         {{ html()->select('clt_gnd', $user->uncertified_certified, $user->clt_gnd)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                 </div>
@@ -243,11 +243,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Charlotte Tower', 'clt_twr') }}
+                        <label for="clt_twr">Charlotte Tower</label>
                         {{ html()->select('clt_twr', $user->uncertified_certified, $user->clt_twr)->class(['form-control'])->attributes([$clt_twr_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Charlotte Approach', 'clt_app') }}
+                        <label for="clt_app">Charlotte Approach</label>
                         {{ html()->select('clt_app', $user->uncertified_certified, $user->clt_app)->class(['form-control'])->attributes([$clt_app_disable]) }}
                     </div>
                 </div>
@@ -255,11 +255,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Atlanta Clearance Delivery', 'atl_del') }}
+                        <label for="atl_del">Atlanta Clearance Delivery</label>
                         {{ html()->select('atl_del', $user->uncertified_certified, $user->atl_del)->class(['form-control'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Atlanta Ground', 'atl_gnd') }}
+                        <label for="atl_gnd">Atlanta Ground</label>
                         {{ html()->select('atl_gnd', $user->uncertified_certified, $user->atl_gnd)->class(['form-control'])->attributes([$atl_disable]) }}
                     </div>
                 </div>
@@ -267,11 +267,11 @@ Update Controller
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Atlanta Tower', 'atl_twr') }}
+                        <label for="atl_twr">Atlanta Tower</label>
                         {{ html()->select('atl_twr', $user->uncertified_certified, $user->atl_twr)->class(['form-control'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Atlanta (A80) Approach', 'atl_app') }}
+                        <label for="atl_app">Atlanta (A80) Approach</label>
                         {{ html()->select('atl_app', $user->uncertified_certified_a80, $user->atl_app)->class(['form-control'])->attributes([$atl_app_disable]) }}
                     </div>
                 </div>

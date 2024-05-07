@@ -70,20 +70,20 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Controller/Event', 'feedback_id') }}
+                                                    <label for="feedback_id">Controller/Event</label>
                                                     {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
                                                     {{ html()->hidden('event_id', $f->feedback_id) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Position', 'position') }}
+                                                    <label for="position">Position</label>
                                                     {{ html()->text('position', $f->position)->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                            <label for="pilot_comments">Pilot Comments</label>
                                             {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                             <br>
-                                            {{ html()->label('Staff Comments', 'staff_comments') }}
+                                            <label for="staff_comments">Staff Comments</label>
                                             {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
@@ -108,19 +108,19 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Controller/Event', 'feedback_id') }}
+                                                    <label for="feedback_id">Controller/Event</label>
                                                     {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Position', 'position') }}
+                                                    <label for="position">Position</label>
                                                     {{ html()->text('position', $f->position)->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                            <label for="pilot_comments">Pilot Comments</label>
                                             {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                             <br>
-                                            {{ html()->label('Staff Comments', 'staff_comments') }}
+                                            <label for="staff_comments">Staff Comments</label>
                                             {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
@@ -146,19 +146,19 @@ Feedback Management
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Your Name', 'name') }}
+                                                    <label for="name">Your Name</label>
                                                     {{ html()->text('name', 'vZTL ARTCC Staff')->class(['form-control']) }}
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    {{ html()->label('Your Email', 'email') }}
+                                                    <label for="email">Your Email</label>
                                                     {{ html()->email('email', 'feedback@notams.ztlartcc.org')->class(['form-control']) }}
                                                 </div>
                                             </div>
                                             <br>
-                                            {{ html()->label('Subject', 'subject') }}
+                                            <label for="subject">Subject</label>
                                             {{ html()->text('subject', 'An email regarding your recent feedback')->class(['form-control']) }}
                                             <br>
-                                            {{ html()->label('Message', 'body') }}
+                                            <label for="body">Message</label>
                                             {{ html()->textarea('body', null)->placeholder('Gander Center, Pass your message...')->class(['form-control']) }}
                                         </div>
                                         <div class="modal-footer">
@@ -228,19 +228,19 @@ Feedback Management
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                {{ html()->label('Controller', 'feedback_id') }}
+                                                <label for="feedback_id">Controller</label>
                                                 {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
                                             </div>
                                             <div class="col-sm-6">
-                                                {{ html()->label('Position', 'position') }}
+                                                <label for="position">Position</label>
                                                 {{ html()->text('position', $f->position)->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <br>
-                                        {{ html()->label('Pilot Comments', 'pilot_comments') }}
+                                        <label for="pilot_comments">Pilot Comments</label>
                                         {{ html()->textarea('pilot_comments', $f->comments)->class(['form-control']) }}
                                         <br>
-                                        {{ html()->label('Staff Comments', 'staff_comments') }}
+                                        <label for="staff_comments">Staff Comments</label>
                                         {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">
@@ -271,19 +271,19 @@ Feedback Management
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                {{ html()->label('Your Name', 'name') }}
+                                                <label for="name">Your Name</label>
                                                 {{ html()->text('name', 'vZTL ARTCC Staff')->class(['form-control']) }}
                                             </div>
                                             <div class="col-sm-6">
-                                                {{ html()->label('Your Email', 'email') }}
+                                                <label for="email">Your Email</label>
                                                 {{ html()->email('email', 'feedback@notams.ztlartcc.org')->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <br>
-                                        {{ html()->label('Subject', 'subject') }}
+                                        <label for="subject">Subject</label>
                                         {{ html()->text('subject', 'An email regarding your recent feedback')->class(['form-control']) }}
                                         <br>
-                                        {{ html()->label('Message', 'body') }}
+                                        <label for="body">Message</label>
                                         {{ html()->textarea('body', null)->placeholder('Gander Center, Pass your message...')->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">

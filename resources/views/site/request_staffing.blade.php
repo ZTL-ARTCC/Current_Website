@@ -14,17 +14,17 @@ Staffing Request
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-6">
-                            {{ html()->label('Your Name:', 'name')->class(['control-label']) }}
+                            <label for="name" class="control-label">Your Name:</label>
                             {{ html()->text('name', null)->placeholder('Your Name')->class(['form-control']) }}
                         </div>
                         <div class="col-sm-6">
-                            {{ html()->label('Your Email:', 'email')->class(['control-label']) }}
+                            <label for="email" class="control-label">Your Email:</label>
                             {{ html()->email('email', null)->placeholder('Your Email')->class(['form-control']) }}
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Organization (If Applicable):', 'org')->class(['control-label']) }}
+                    <label for="org" class="control-label">Organization (If Applicable):</label>
                     {{ html()->text('org', null)->placeholder('Organization if applicable (Optional)')->class(['form-control']) }}
                 </div>
             </div>
@@ -32,7 +32,7 @@ Staffing Request
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Date of Staffing', 'date')->class(['form-label']) }}
+                    <label for="date" class="form-label">Date of Staffing</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -41,7 +41,7 @@ Staffing Request
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Time of Staffing (Zulu)', 'time')->class(['form-label']) }}
+                    <label for="time" class="form-label">Time of Staffing (Zulu)</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {{ html()->text('time', null)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
@@ -52,7 +52,7 @@ Staffing Request
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Additional Information:', 'additional_information')->class(['control-label']) }}
+            <label for="additional_information" class="control-label">Additional Information:</label>
             {{ html()->textarea('additional_information', null)->placeholder('Please include all additional relevant information regarding the need for staffing.')->class(['form-control']) }}
         </div>
         <body>

@@ -122,7 +122,7 @@
             {{ html()->form()->route('RealopsController@bulkUploadFlights')->acceptsFiles() }}
             @csrf
             <div class="modal-body">
-                {{ html()->label('Upload CSV File of Flights', 'file') }}
+                <label for="file">Upload CSV File of Flights</label>
                 {{ html()->file('file')->class(['form-control'])->attributes(['accept' => '.csv']) }}
             </div>
             <div class="modal-footer">

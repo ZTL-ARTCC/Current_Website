@@ -133,11 +133,11 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                 @csrf
                 <div class="modal-body mx-2">
                     <div class="row mb-2">
-                        {{ html()->label('Name of the monthly challenge', 'title') }}
+                        <label for="title">Name of the monthly challenge</label>
                         {{ html()->text('title', $challenge->title)->class(['form-control']) }}
                     </div>
                     <div class="row mb-2">
-                        {{ html()->label('Description of the monthly challenge', 'description') }}
+                        <label for="description">Description of the monthly challenge</label>
                         {{ html()->textarea('description', $challenge->description)->class(['form-control'])->attributes(['rows' => '5']) }}
                     </div>
                     <div class="row form-check mb-2">
@@ -146,11 +146,11 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         @else
                             {{ html()->checkbox('postToNews', false, 1)->class(['form-check-input'])->attributes(['disabled' => 'disabled']) }}
                         @endtoggle
-                        {{ html()->label('Post challenge to site news feed?', 'postToNews')->class(['form-check-label']) }}
+                        <label for="postToNews" class="form-check-label">Post challenge to site news feed?</label>
                     </div>
                     <hr>
                     <div class="row">
-                        {{ html()->label('Control Positions for this Challenge', 'positions') }}
+                        <label for="positions">Control Positions for this Challenge</label>
                         {{ html()->multiselect('positions', $local_hero_challenge_positions, $challenge->positions)->class(['form-control'])->attributes(['size' => '5']) }}
                         <div class="small text-secondary">Hold CTRL + click to select multiple positions</div>
                     </div>

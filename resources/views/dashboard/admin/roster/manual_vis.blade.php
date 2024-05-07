@@ -14,12 +14,12 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('CID', 'cid') }}
+                        <label for="cid">CID</label>
                         {{ html()->text('cid', $visitor->cid)->class(['form-control'])->attributes(['disabled']) }}
                         {{ html()->hidden('cid', $visitor->cid) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Rating', 'rating_id') }}
+                        <label for="rating_id">Rating</label>
                         {{ html()->select('rating_id', [
                             0 => 'Pilot',
                             1 => 'Observer (OBS)',
@@ -39,11 +39,11 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('First Name', 'fname') }}
+                        <label for="fname">First Name</label>
                         {{ html()->text('fname', $visitor->fname)->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Last Name', 'lname') }}
+                        <label for="lname">Last Name</label>
                         {{ html()->text('lname', $visitor->lname)->class(['form-control']) }}
                     </div>
                 </div>
@@ -51,11 +51,11 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Email', 'email') }}
+                        <label for="email">Email</label>
                         {{ html()->text('email', $visitor->email)->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Initials', 'initials') }}
+                        <label for="initials">Initials</label>
                         {{ html()->text('initials', $initials)->class(['form-control']) }}
                     </div>
                 </div>
@@ -64,10 +64,10 @@ New Visitor
                 <div class="row">
                     <div class="col-sm-6">
                         @if($visitor->facility == 'ZZN')
-                            {{ html()->label('Visiting From', 'visitor_from') }}
+                            <label for="visitor_from">Visiting From</label>
                             {{ html()->text('visitor_from', null)->placeholder('Home ARTCC/Division')->class(['form-control']) }}
                         @else
-                            {{ html()->label('Visiting From', 'visitor_from') }}
+                            <label for="visitor_from">Visiting From</label>
                             {{ html()->text('visitor_from', $visitor->facility)->class(['form-control']) }}
                         @endif
                     </div>
@@ -80,11 +80,11 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('CID', 'cid') }}
+                        <label for="cid">CID</label>
                         {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Rating', 'rating_id') }}
+                        <label for="rating_id">Rating</label>
                         {{ html()->select('rating_id', [
                             0 => 'Pilot',
                             1 => 'Observer (OBS)',
@@ -104,11 +104,11 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('First Name', 'fname') }}
+                        <label for="fname">First Name</label>
                         {{ html()->text('fname', null)->placeholder('First Name')->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Last Name', 'lname') }}
+                        <label for="lname">Last Name</label>
                         {{ html()->text('lname', null)->placeholder('Last Name')->class(['form-control']) }}
                     </div>
                 </div>
@@ -116,11 +116,11 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Email', 'email') }}
+                        <label for="email">Email</label>
                         {{ html()->text('email', null)->placeholder('Email')->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {{ html()->label('Initials', 'initials') }}
+                        <label for="initials">Initials</label>
                         {{ html()->text('initials', null)->placeholder('Initials')->class(['form-control']) }}
                     </div>
                 </div>
@@ -128,7 +128,7 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {{ html()->label('Visiting From', 'visitor_from') }}
+                        <label for="visitor_from">Visiting From</label>
                         {{ html()->text('visitor_from', null)->placeholder('Home ARTCC/Division')->class(['form-control']) }}
                     </div>
                 </div>

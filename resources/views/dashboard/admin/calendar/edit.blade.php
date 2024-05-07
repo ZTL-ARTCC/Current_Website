@@ -11,13 +11,13 @@ Edit Calendar Event/News
     {{ html()->form()->route('AdminDash@saveCalendarEvent', [$calendar->id]) }}
     @csrf
     <div class="form-group">
-    {{ html()->label('Title', 'title') }}
+    <label for="title">Title</label>
     {{ html()->text('title', $calendar->title)->class(['form-control'])->placeholder('Required') }}
     </div>
     <div class="form-group">
         <div class="row">
         <div class="col-sm-6">
-                    {{ html()->label('Date', 'date') }}
+                    <label for="date">Date</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {{ html()->text('date', $calendar->date)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -26,7 +26,7 @@ Edit Calendar Event/News
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Time', 'time') }}
+                    <label for="time">Time</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {{ html()->text('time', $calendar->time)->placeholder('HH:MM (Optional)')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
@@ -37,11 +37,11 @@ Edit Calendar Event/News
         </div>
     </div>
     <div class="form-group">
-        {{ html()->label('Additional Information', 'body') }}
+        <label for="body">Additional Information</label>
         {{ html()->textarea('body', $calendar->body)->class(['form-control', 'text-editor')->placeholder('Required') }}
     </div>
     <div class="form-group">
-        {{ html()->label('Type of Post', 'type') }}
+        <label for="type">Type of Post</label>
         {{ html()->select('type', [
             1 => 'Calendar Event',
             2 => 'News'

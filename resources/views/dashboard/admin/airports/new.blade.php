@@ -11,17 +11,17 @@
     {{ html()->form()->route('AdminDash@storeAirport') }}
         @csrf
         <div class="form-group">
-            {{ html()->label('Airport Name', 'name') }}
+            <label for="name">Airport Name</label>
             {{ html()->text('name', null)->class(['form-control']) }}
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('3-Letter Identifier (FAA)', 'FAA') }}
+                    <label for="FAA">3-Letter Identifier (FAA)</label>
                     {{ html()->text('FAA', null)->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('4-Letter Identifier (ICAO)', 'ICAO') }}
+                    <label for="ICAO">4-Letter Identifier</label>
                     {{ html()->text('ICAO', 'K')->class(['form-control']) }}
                 </div>
             </div>

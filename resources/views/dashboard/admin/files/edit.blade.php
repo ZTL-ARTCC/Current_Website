@@ -13,11 +13,11 @@ Upload File
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Title:', 'title') }}
+                    <label for="title">Title:</label>
                     {{ html()->text('title', $file->name)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Type:', 'type') }}
+                    <label for="type">Type:</label>
                     {{ html()->select('type', [
                         3 => 'vATIS',
                         4 => 'SOPs',
@@ -30,11 +30,11 @@ Upload File
         </div>
         @if(! $file->row_separator)
             <div class="form-group">
-                {{ html()->label('Description:', 'desc') }}
+                <label for="desc">Description:</label>
                 {{ html()->textarea('desc', $file->desc)->class(['form-control'])->placeholder('Optional') }}
             </div>
             <div class="form-group">
-                {{ html()->label('Permalink:', 'permalink') }}
+                <label for="permalink">Permalink:</label>
                 {{ html()->text('permalink', $file->permalink)->class(['form-control'])->placeholder('Optional, no spaces') }}
             </div>
         @endif

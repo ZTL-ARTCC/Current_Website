@@ -286,17 +286,17 @@ Dashboard
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6">
-                                {{ html()->label('Intended URL', 'url') }}
+                                <label for="url">Intended URL</label>
                                 {{ html()->text('url', null)->placeholder(Paste the Intended URL Here)->class(['form-control']) }}
                             </div>
                             <div class="col-sm-6">
-                                {{ html()->label('Error Received (If Applicable)', 'error') }}
+                                <label for="error">Error Received (If Applicable)</label>
                                 {{ html()->text('error', null)->placeholder('Paste Error Here, If Applicable')->class(['form-control']) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ html()->label('Brief Description of Bug', 'desc') }}
+                        <label for="desc">Brief Description of Bug</label>
                         {{ html()->textarea('desc', null)->placeholder('Please be brief but specific with details regarding the bug.')->class(['form-control']) }}
                     </div>
                 </div>
