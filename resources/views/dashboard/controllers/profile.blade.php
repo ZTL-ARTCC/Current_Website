@@ -257,10 +257,10 @@ Profile
                 {{ html()->form()->route('ControllerDash@optIn') }}
                 <div class="form-group">
                     {{ html()->checkbox('opt', false, '1') }}
-                    {{ html()->label('I agree to recieve mass emails from the vZTL ARTCC.', 'opt')->class(['form-label']) }}
+                    <label for="opt" class="form-label">I agree to recieve mass emails from the vZTL ARTCC.</label>
                     <br>
                     {{ html()->checkbox('privacy', false, '1') }}
-                    {{ html()->label('I have read and agree to the vZTL ARTCC Privacy Policy.', 'privacy')->class(['form-label']) }}
+                    <label for="privacy" class="form-label">I have read and agree to the vZTL ARTCC Privacy Policy.</label>
                 </div>
             </div>
             <div class="modal-footer">

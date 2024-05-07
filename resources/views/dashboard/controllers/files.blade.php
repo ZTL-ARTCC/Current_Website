@@ -129,11 +129,11 @@ Files
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{{ html()->label('File Separator Heading', 'title') }}
+                                    <label for="title">File Separator Heading</label>
 									{{ html()->text('title', null)->placeholder('Enter heading title')->class(['form-control']) }}
 								</div>
                                 <div class="col-sm-6">
-                                    {{ html()->label('Tab:', 'type') }}
+                                    <label for="type">Tab:</label>
                                     {{ html()->select('type', [
                                         3 => 'vATIS',
                                         4 => 'SOPs',

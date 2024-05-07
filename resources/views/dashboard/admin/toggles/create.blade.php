@@ -13,11 +13,11 @@ New Feature Toggle
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Toggle Name', 'toggle_name') }}
+                    <label for="toggle_name">Toggle Name</label>
                     {{ html()->text('toggle_name', null)->class(['form-control'])->placeholder('new_toggle_name') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Toggle Description', 'toggle_description') }}
+                    <label for="toggle_description">Toggle Description</label>
                     {{ html()->text('toggle_description', null)->class(['form-control'])->placeholder('Description') }}
                 </div>
             </div>

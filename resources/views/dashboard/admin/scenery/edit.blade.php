@@ -13,11 +13,11 @@ Edit Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Airport Name', 'apt') }}
+                    <label for="apt">Airport Name</label>
                     {{ html()->text('apt', $scenery->airport)->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Simulator/AFCAD', 'sim') }}
+                    <label for="sim">Simulator/AFCAD</label>
                     {{ html()->select('sim', [
                         0 => 'FSX/P3D',
                         1 => 'X-Plane',
@@ -29,25 +29,25 @@ Edit Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Link to Scenery', 'url') }}
+                    <label for="url">Link to Scenery</label>
                     {{ html()->text('url', $scenery->link)->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Developer', 'dev') }}
+                    <label for="dev">Developer</label>
                     {{ html()->text('dev', $scenery->developer)->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Image 1', 'image1') }}
+            <label for="image1">Image 1</label>
             {{ html()->text('image1', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {{ html()->label('Image 2', 'image2') }}
+            <label for="image2">Image 2</label>
             {{ html()->text('image2', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {{ html()->label('Image 3', 'image3') }}
+            <label for="image3">Image 3</label>
             {{ html()->text('image3', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="row">

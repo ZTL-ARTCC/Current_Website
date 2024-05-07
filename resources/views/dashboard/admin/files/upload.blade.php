@@ -13,11 +13,11 @@ Upload File
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Title (Please refrain from using slashes in the title):', 'title') }}
+                    <label for="title">Title (Please refrain from using slashes in the title):</label>
                     {{ html()->text('title', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Type:', 'type') }}
+                    <label for="type">Type:</label>
                     {{ html()->select('type', [
                         3 => 'vATIS',
                         4 => 'SOPs',
@@ -29,14 +29,14 @@ Upload File
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Description:', 'desc') }}
+            <label for="desc">Description:</label>
             {{ html()->textarea('desc', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
             {{ html()->file('file')->class(['form-control']) }}
         </div>
         <div class="form-group">
-            {{ html()->label('Permalink:', 'permalink') }}
+            <label for="permalink">Permalink:</label>
             {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces') }}
         </div>
         <div class="row">

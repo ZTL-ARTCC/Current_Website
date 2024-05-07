@@ -123,7 +123,7 @@ OTS Center
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                {{ html()->label('Result', 'result') }}
+                                                <label for="result">Result</label>
                                                 {{ html()->select('result', [2 => 'Pass', 3 => 'Fail'], null)->placeholder('Select Result')->class(['form-control']) }}
                                             </div>
                                         </div>

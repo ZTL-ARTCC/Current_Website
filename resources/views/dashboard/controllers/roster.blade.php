@@ -184,7 +184,7 @@ Roster
                         <div class="container">
                             <div class="form-group">
                                 <div class="row">
-                                    {{ html()->label('Controller CID', 'cid') }}
+                                    <label for="cid">Controller CID</label>
                                     {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                                 </div>
                             </div>

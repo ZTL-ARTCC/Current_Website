@@ -13,15 +13,15 @@ New Event
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    {{ html()->label('Event Name', 'name') }}
+                    <label for="name">Event Name</label>
                     {{ html()->text('name', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-4">
-                    {{ html()->label('Event Host', 'host') }}
+                    <label for="host">Event Host</label>
                     {{ html()->text('host', null)->class(['form-control'])->placeholder('Event Host') }}
                 </div>
                 <div class="col-sm-4">
-                    {{ html()->label('Date of Event', 'date')->class(['form-label']) }}
+                    <label for="date" class="form-label">Date of Event</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
                         {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
@@ -34,29 +34,29 @@ New Event
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    {{ html()->label('Start Time (Zulu)', 'start_time')->class(['form-label']) }}
+                    <label for="start_time" class="form-label">Start Time (Zulu)</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {{ html()->text('start_time', null)->placeholder('00:00')->class(['form-control'])->attributes(['data-target' => '#datetimepicker2']) }}
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    {{ html()->label('End Time (Zulu)', 'end_time')->class(['form-label']) }}
+                    <label for="end_time" class="form-label">End Time (Zulu)</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {{ html()->text('end_time', null)->placeholder('00:00')->class(['form-control'])->attributes(['data-target' => '#datetimepicker3']) }}
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    {{ html()->label('Event Type', 'type')->class(['form-label']) }}
+                    <label for="type" class="form-label">Event Type</label>
                     {{ html()->select('type', ['Local Event', 'Support Event', 'Support Event (unverified)'], 'Local Event')->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('Event Description', 'description') }}
+            <label for="description">Event Description</label>
             {{ html()->textarea('description', null)->class(['form-control', 'text-editor']) }}
         </div>
         <div class="form-group">
-            {{ html()->label('Upload Banner or Enter Banner URL', 'banner') }} 
+            <label for="banner">Upload Banner or Enter Banner URL</label>
             {{ html()->file('banner')->class(['form-control']) }} 
             <span>OR</span>
             {{ html()->text('banner_url', null)->class(['form-control'])->placeholder('Enter URL for the banner image') }}

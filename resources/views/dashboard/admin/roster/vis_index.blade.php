@@ -67,7 +67,7 @@ Visit Requests
                                         {{ html()->form()->route('AdminDash@rejectVisitRequest', [$v->id]) }}
                                         @csrf
                                         <div class="modal-body">
-                                            {{ html()->label('Please specify why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.', 'reject_reason') }}
+                                            <label for="reject_reason">Please specific why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.</label>
                                             {{ html()->textarea('reject_reason', 'Your visit request has been rejected.')->placeholder('Required')->class(['form-control']) }}
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -162,7 +162,7 @@ Visit Requests
                     <div class="container">
                         <div class="form-group">
                             <div class="row">
-                                {{ html()->label('Controller CID', 'cid') }}
+                                <label for="cid">Controller CID</label>
                                 {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                             </div>
                         </div>

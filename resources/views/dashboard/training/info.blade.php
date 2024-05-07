@@ -362,10 +362,10 @@ Training Information
                     {{ html()->form()->route('TrainingDash@newPublicInfoSection') }}
                     @csrf
                     <div class="modal-body">
-                        {{ html()->label('Section Name', 'name') }}
+                        <label for="name">Section Name</label>
                         {{ html()->text('name', null)->placeholder('Section Name')->class(['form-control']) }}
                         <br>
-                        {{ html()->label('Order', 'order') }}
+                        <label for="order">Order</label>
                         {{ html()->select('order', $public_section_order, $public_section_next)->placeholder('Select Order')->class(['form-control']) }}
                     </div>
                     <div class="modal-footer">
@@ -402,7 +402,7 @@ Training Information
                                             {{ html()->form()->route('TrainingDash@editPublicSection', [$p->id]) }}
                                             @csrf
                                             <div class="modal-body">
-                                                {{ html()->label('Section Name', 'name') }}
+                                                <label for="name">Section Name</label>
                                                 {{ html()->text('name', $p->name)->placeholder('Section Name')->class(['form-control']) }}
                                             </div>
                                             <div class="modal-footer">
@@ -440,7 +440,7 @@ Training Information
                                     {{ html()->form()->route('TrainingDash@addPublicPdf', [$p->id])->acceptsFiles() }}
                                     @csrf
                                     <div class="modal-body">
-                                        {{ html()->label('Select a PDF to Upload', 'pdf') }}
+                                        <label for="pdf">Select a PDF to Upload</label>
                                         {{ html()->file('pdf')->class(['form-control']) }}
                                     </div>
                                     <div class="modal-footer">

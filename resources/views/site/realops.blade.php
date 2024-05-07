@@ -27,7 +27,7 @@ Realops
         {{ html()->form('GET')->route('RealopsController@index')->id('realops_filter') }}
         <div class="row">
             <div class="col-sm-12 col-md p-1">
-               {{ html()->text('airport_filter', $airport_filter)->class([]'form-control'])->placeholder('Airport (DEN)')->id('airport_filter') }}
+               {{ html()->text('airport_filter', $airport_filter)->class(['form-control'])->placeholder('Airport (DEN)')->id('airport_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
                {{ html()->text('flightno_filter', $flightno_filter)->class(['form-control'])->placeholder('Flight (DAL367)')->'id'('flightno_filter') }}

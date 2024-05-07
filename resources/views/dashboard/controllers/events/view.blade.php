@@ -181,11 +181,11 @@ View Event
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {{ html()->label('Controller Name', 'controller_name') }}
+                                                                    <label for="controller_name">Controller Name</label>
                                                                     {{ html()->text('controller_name', $r->controller_name)->class(['form-control'])->attributes(['disabled']) }}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    {{ html()->label('Position', 'position') }}
+                                                                    <label for="position">Position</label>
                                                                     {{ html()->select('position', $positions->pluck('name', 'id'), $r->position_id)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
@@ -193,7 +193,7 @@ View Event
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-12">
-                                                                    {{ html()->label('Position or sector ID assigned', 'position_detail') }}
+                                                                    <label for="position_detail">Position or sector ID assigned</label>
                                                                     {{ html()->text('position_detail', null)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
@@ -201,11 +201,11 @@ View Event
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {{ html()->label('Start Time (Zulu)', 'start_time') }}
+                                                                    <label for="start_time">Start Time (Zulu)</label>
                                                                     {{ html()->text('start_time', $r->start_time)->placeholder($event->start_time)->class(['form-control']) }}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    {{ html()->label('End Time (Zulu)', 'end_time') }}
+                                                                <label for="end_time">End Time (Zulu)</label>
                                                                     {{ html()->text('end_time', $r->end_time)->placeholder($event->end_time)->class(['form-control']) }}
                                                                 </div>
                                                             </div>
@@ -399,9 +399,9 @@ View Event
                                             <div class="col-sm-10">
                                                 <div class="form-inline">
                                                     {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone)->id('timedata') }}
-                                                    {{ html()->label('Available from:', 'start_time1')->class(['form-label', 'pr-2']) }}
+                                                    <label for="start_time1" class="form-label pr-2">Available from:</label>
                                                     {{ html()->text('start_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'mr-2']) }}
-                                                    {{ html()->label('-', 'end_time1')->class(['form-label', 'pr-2']) }}
+                                                    <label for="end_time1" class="form-label pr-2">-</label>
                                                     {{ html()->text('end_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->end_time)->class(['form-control', 'col-sm-2', 'mr-2']) }}
                                                     {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-control', 'col-sm-3'])->id('timezone') }}
 
@@ -509,7 +509,7 @@ View Event
 					(['action' => ['AdminDash@setEventPositionPreset', $event->id]]) }}
 					@csrf
 					<div class="modal-body">
-						{{ html()->label('Name', 'name') }}
+                        <label for="name">Name</label>
 						{{ html()->text('name', null)->placeholder('Name')->class(['form-control']) }}
 					</div>
 					<div class="modal-footer">
@@ -532,7 +532,7 @@ View Event
                     {{ html()->form()->route('AdminDash@retrievePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
-						{{ html()->label('Position Preset', 'p_id') }}
+                        <label for="p_id">Position Preset</label>
 						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
 					</div>
 					<div class="modal-footer">
@@ -555,7 +555,7 @@ View Event
                     {{ html()->form()->route('AdminDash@deletePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
-						{{ html()->label('Position Preset', 'p_id') }}
+                        <label for="p_id">Position Preset</label>
 						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
 					</div>
 					<div class="modal-footer">
@@ -581,11 +581,11 @@ View Event
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{{ html()->label('Controller Name', 'controller') }}
+                                    <label for="controller">Controller Name</label>
 									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) }}
 								</div>
 								<div class="col-sm-6">
-									{{ html()->label('Position', 'position') }}
+                                    <label for="position">Position</label>
 									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) }}
 								</div>
 							</div>
@@ -593,7 +593,7 @@ View Event
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    {{ html()->label('Position or sector ID assigned', 'position_detail') }}
+                                    <label for="position_detail">Position or sector ID assigned</label>
                                     {{ html()->text('position_detail', null)->class(['form-control']) }}
                                 </div>
                             </div>
@@ -601,11 +601,11 @@ View Event
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-6">
-									{{ html()->label('Start Time (Zulu)', 'start_time') }}
+                                    <label for="start_time">Start Time (Zulu)</label>
 									{{ html()->text('start_time', null)->placeholder($event->start_time)->class(['form-control']) }}
 								</div>
 								<div class="col-sm-6">
-									{{ html()->label('End Time (Zulu)', 'end_time') }}
+                                    <label for="end_time">End Time (Zulu)</label>
 									{{ html()->text('end_time', null)->placeholder($event->end_time)->class(['form-control']) }}
 								</div>
 							</div>
