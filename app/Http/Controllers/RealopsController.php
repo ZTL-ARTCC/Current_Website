@@ -45,6 +45,10 @@ class RealopsController extends Controller {
         if (! $flight) {
             return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
+
+        if ( $flight->assigned_pilot_id ) {
+            return redirect()->back()->with('error', 'That flight already has a pilot assigned');
+        }
         
         $pilot = auth()->guard('realops')->user();
         $flight->assignPilotToFlight($pilot->id);
