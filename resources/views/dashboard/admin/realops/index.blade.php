@@ -75,7 +75,7 @@
                     @if(!$f->assigned_pilot)
                         <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
                     @else
-                        <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot" disabled><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn btn-success btn-sm float-left mr-2" disabled><i class="fas fa-plus"></i></button>
                     @endif
                 </span>
                 <a href="/dashboard/admin/realops/delete/{{ $f->id }}" class="btn btn-danger btn-sm float-left mr-2" title="Delete" data-toggle="tooltip"><i class="fas fa-times"></i></a>
