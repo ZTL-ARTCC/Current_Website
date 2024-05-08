@@ -9,7 +9,7 @@ New Incident Report
 
 <div class="container">
     <p>Please use this to report incidents rather than sending an email. Please know that your ID and the controller's ID will be recorded for the sole reason of resolving any issues. Once any issues have been resolved, the incident will be archived without the controller/report ID.</p>
-    {{ html()->form()->route('ControllerDash@submitIncidentReport') }}
+    {{ html()->form()->route('submitIncidentReport') }}
         @csrf
         <div class="form-group">
             <div class="row">

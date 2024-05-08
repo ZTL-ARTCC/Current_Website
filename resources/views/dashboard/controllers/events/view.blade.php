@@ -175,7 +175,7 @@ View Event
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    {{ html()->form()->route('AdminDash@assignPosition', [$r->id]) }}
+                                                    {{ html()->form()->route('assignPosition', [$r->id]) }}
                                                     @csrf
                                                     <div class="modal-body">
                                                         <div class="form-group">
@@ -354,7 +354,7 @@ View Event
                     </table>
                     <hr>
                     @if($positions->count() > 0)
-                            {{ html()->form()->route('ControllerDash@signupForEvent') }}
+                            {{ html()->form()->route('signupForEvent') }}
                             @csrf
                             @if($event->reg == 1 && Auth::user()->canEvents == 1)
                                 {{ html()->hidden('event_id', $event->id) }}
@@ -442,7 +442,7 @@ View Event
 
                         @if(Auth::user()->isAbleTo('events'))
                             <br>
-                            {{ html()->form()->route('AdminDash@addPosition', [$event->id]) }}
+                            {{ html()->form()->route('addPosition', [$event->id]) }}
                             @csrf
                             <div class="row">
                                 <div class="col-sm-10">
@@ -529,7 +529,7 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-                    {{ html()->form()->route('AdminDash@retrievePositionPreset', [$event->id]) }}
+                    {{ html()->form()->route('retrievePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
@@ -552,7 +552,7 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-                    {{ html()->form()->route('AdminDash@deletePositionPreset', [$event->id]) }}
+                    {{ html()->form()->route('deletePositionPreset', [$event->id]) }}
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
@@ -575,7 +575,7 @@ View Event
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-                    {{ html()->form()->route('AdminDash@manualAssign', [$event->id]) }}
+                    {{ html()->form()->route('manualAssign', [$event->id]) }}
     				@csrf
 					<div class="modal-body">
 						<div class="form-group">

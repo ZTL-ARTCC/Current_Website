@@ -59,7 +59,7 @@ OTS Center
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('TrainingDash@assignRecommendation', [$o->id]) }}
+                                        {{ html()->form()->route('assignRecommendation', [$o->id]) }}
                                         @csrf
                                         <div class="modal-body">
                                         {{ html()->select('ins', $instructors, null)->placeholder('Select Instructor')->class(['form-control']) }}
@@ -119,7 +119,7 @@ OTS Center
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('TrainingDash@completeOTS', [$o->id])->acceptsFiles() }}
+                                        {{ html()->form()->route('completeOTS', [$o->id])->acceptsFiles() }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group">

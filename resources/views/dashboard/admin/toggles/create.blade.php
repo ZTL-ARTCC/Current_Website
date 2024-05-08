@@ -8,7 +8,7 @@ New Feature Toggle
 @include('inc.header', ['title' => 'New Feature Toggle'])
 
 <div class="container">
-    {{ html()->form()->route('AdminDash@createFeatureToggle') }}
+    {{ html()->form()->route('createFeatureToggle') }}
         @csrf
         <div class="form-group">
             <div class="row">

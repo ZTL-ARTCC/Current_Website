@@ -52,7 +52,7 @@ ATC Bookings
                 <small class="d-block mb-3"><i>Bookings are limited by ZTL policy to TWR positions and above</i></small>
             </div>
             <div class="card-body">
-                {{ html()->form()->route('AtcBookingController@createBooking') }}
+                {{ html()->form()->route('createBooking') }}
                     @csrf
                     <div class="form-group">
                         <div class="row">

@@ -24,7 +24,7 @@ Realops
         <p>Filter by any or all of these criteria</p>
     </div>
     <div class="col-md-12 mb-3 mx-3">
-        {{ html()->form('GET')->route('RealopsController@index')->id('realops_filter') }}
+        {{ html()->form('GET')->route('realopsIndex')->id('realops_filter') }}
         <div class="row">
             <div class="col-sm-12 col-md p-1">
                {{ html()->text('airport_filter', $airport_filter)->class(['form-control'])->placeholder('Airport (DEN)')->id('airport_filter') }}

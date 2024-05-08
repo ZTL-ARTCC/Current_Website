@@ -10,7 +10,7 @@ Airports
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            {{ html()->form()->route('FrontController@searchAirport') }}
+            {{ html()->form()->route('searchAirport') }}
                 <div class="form-inline">
                     {{ html()->text('apt', null)->placeholder('Search Airport (ICAO)')->class(['form-control']) }}
                     &nbsp;

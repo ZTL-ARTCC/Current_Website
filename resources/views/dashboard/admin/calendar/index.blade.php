@@ -49,7 +49,7 @@ Calendar/News
                                     <td></td>
                                 @endif
                                 <td>
-                                    {{ html()->form('DELETE')->route('AdminDash@deleteCalendarEvent', [$c->id]) }}
+                                    {{ html()->form('DELETE')->route('deleteCalendarEvent', [$c->id]) }}
                                         @csrf
                                         <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
                                         <button class="btn btn-danger simple-tooltip" type="submit" data-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
@@ -94,7 +94,7 @@ Calendar/News
                                     <td></td>
                                 @endif
                                 <td>
-                                    {{ html()->form('DELETE')->route('AdminDash@deleteCalendarEvent', [$c->id]) }}
+                                    {{ html()->form('DELETE')->route('deleteCalendarEvent', [$c->id]) }}
                                         @csrf
                                         <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
                                         <button class="btn btn-danger simple-tooltip" type="submit" data-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
@@ -102,7 +102,7 @@ Calendar/News
                                 </td>
 
                                 <td>
-                                    {{ html()->form()->route('AdminDash@toggleCalenderEventVisibilty', [$c->id]) }}
+                                    {{ html()->form()->route('toggleCalenderEventVisibilty', [$c->id]) }}
                                     @csrf
                                     @if($c->visible == 0)
                                         <button class="btn btn-success" data-toggle="tooltip" title="Show News"><i class="far fa-eye"></i></button>

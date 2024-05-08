@@ -121,7 +121,7 @@ Profile
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
             <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
             <p><b>Name Privacy:</b> {{ Auth::user()->name_privacy == 1 ? 'Enabled' : 'Disabled' }} <a class="info-tooltip" href="https://www.vatusa.net/my/profile" target="_blank" data-toggle="tooltip" title="Click Here to Update"><i class="fas fa-info-circle"></i></a></p>
-            {{ html()->form()->route('ControllerDash@updateInfo', [Auth::id()]) }}
+            {{ html()->form()->route('updateInfo', [Auth::id()]) }}
             @csrf
                 <div class="row">
                     <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
@@ -254,7 +254,7 @@ Profile
                 <br>
                 <i>Please check the following check boxes if you would like to continue.</i>
                 <hr>
-                {{ html()->form()->route('ControllerDash@optIn') }}
+                {{ html()->form()->route('optIn') }}
                 <div class="form-group">
                     {{ html()->checkbox('opt', false, '1') }}
                     <label for="opt" class="form-label">I agree to recieve mass emails from the vZTL ARTCC.</label>

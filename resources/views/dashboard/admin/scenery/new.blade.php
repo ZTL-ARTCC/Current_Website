@@ -8,7 +8,7 @@ New Scenery
 @include('inc.header', ['title' => 'New Scenery'])
 
 <div class="container">
-    {{ html()->form()->route('AdminDash@storeScenery') }}
+    {{ html()->form()->route('storeScenery') }}
         @csrf
         <div class="form-group">
             <div class="row">
