@@ -38,7 +38,7 @@ New Calendar Event/News
         </div>
         <div class="form-group">
             <label for="body">Additional Information</label>
-            {{ html()->textarea('body', null)->class(['form-control', 'text-editor'])->placeholder('Required]) }}
+            {{ html()->textarea('body', null)->class(['form-control', 'text-editor'])->placeholder('Required') }}
         </div>
         <div class="form-group">
             <label for="type">Type of Post</label>

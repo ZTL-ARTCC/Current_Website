@@ -287,7 +287,7 @@ Dashboard
                         <div class="row">
                             <div class="col-sm-6">
                                 <label for="url">Intended URL</label>
-                                {{ html()->text('url', null)->placeholder(Paste the Intended URL Here)->class(['form-control']) }}
+                                {{ html()->text('url', null)->placeholder('Paste the Intended URL Here')->class(['form-control']) }}
                             </div>
                             <div class="col-sm-6">
                                 <label for="error">Error Received (If Applicable)</label>

@@ -97,7 +97,7 @@ New Visitor
                             10 => 'Senior Instructor (I3)',
                             11 => 'Supervisor (SUP)',
                             12 => 'Admin (ADM)',
-                        ], null)->placeholder(' => 'Select Rating')->class(['form-control']) }}
+                        ], null)->placeholder(' => Select Rating')->class(['form-control']) }}
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@ Visit
                         </td>
                     </tr>
                     <tr>
-                        <td class="d-none d-md-table">&nbsp;</td>
+                        <td class="d-none d-md-table w-75">&nbsp;</td>
                         <td colspan="2">
                             <li class="m-0">You must have a home facility.</li>
                             <li class="m-0">Prospective visitors are required to consolidate their current rating by performing at least 50 controlling hours at their current rating in the ARTCC where the rating was granted prior to visiting.</li>
@@ -36,7 +36,7 @@ Visit
 </div>
 
 <div class="container">
-    {{ html()->form()->route('storeVisit') }}
+    {{ html()->form()->route('storeVisit')->open() }}
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">

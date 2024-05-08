@@ -32,7 +32,7 @@ Edit Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="type" class="form-label">Session Type</label>
-                    {{ html()->select('type', $progress_types, $ticket->type)->placeholder(Select Session Type')->class(['form-control']) }}
+                    {{ html()->select('type', $progress_types, $ticket->type)->placeholder('Select Session Type')->class(['form-control']) }}
                 </div>
             </div>
         </div>
