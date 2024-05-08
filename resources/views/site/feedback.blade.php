@@ -23,7 +23,7 @@ New Feedback
                         2 => 'Fair',
                         3 => 'Poor',
                         4 => 'Unsatisfactory'
-                    ], null)->placeholder(Select Level)->class(['form-control']) }}
+                    ], null)->placeholder('Select Level')->class(['form-control']) }}
                 </div>
                 <div class="form-group">
                     <div class="row">
