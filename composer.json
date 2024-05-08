@@ -72,6 +72,9 @@
         ],
         "setup-git-hooks": [
             "cp .git-hooks/* .git/hooks/."
+        ],
+        "reset": [
+            "@php artisan db:wipe", "@php artisan migrate", "@php artisan db:seed"
         ]
     },
     "config": {
