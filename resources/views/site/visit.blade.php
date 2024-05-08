@@ -36,15 +36,15 @@ Visit
 </div>
 
 <div class="container">
-    {{ html()->form()->route('FrontController@storeVisit') }}
+    {{ html()->form()->route('storeVisit') }}
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('CID', 'cid') }}
+                    <label for="cid">CID</label>
                     {{ html()->text('cid', null)->placeholder('Required')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {{ html()->label('Full Name', 'name') }}
+                    <label for="name">Full Name</label>
                     {{ html()->text('name', null)->placeholder('Required')->class(['form-control']) }}
                 </div>
             </div>
@@ -52,11 +52,11 @@ Visit
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {{ html()->label('Email', 'email') }}
+                    <label for="email">Email</label>
                     {{ html()->email('email', null)->placeholder('Required')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-3">
-                    {{ html()->label('rating', 'Rating') }}
+                    <label for="rating">Rating</label>
                     {{ html()->select('rating', [
                         1 => 'Observer (OBS)', 2 => 'Student 1 (S1)',
                         3 => 'Student 2 (S2)', 4 => 'Senior Student (S3)',
@@ -65,13 +65,13 @@ Visit
                     ], null)->placeholder('Select Rating')->class(['form-control']) }}
                 </div>
                 <div class="col-sm-3">
-                    {{ html()->label('home', 'Home ARTCC') }}
+                    <label for="home">Home ARTCC</label>
                     {{ html()->text('home', null)->placeholder('Required')->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {{ html()->label('reason', 'Explanation of Why You Want to Visit the ZTL ARTCC') }}
+            <label for="reason">Explanation of Why You Want to Visit the ZTL ARTCC</label>
             {{ html()->textarea('reason', null)->placeholder('Required')->class(['form-control']) }}
         </div>
         <div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
