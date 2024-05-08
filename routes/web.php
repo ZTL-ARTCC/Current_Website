@@ -19,7 +19,7 @@ Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
 Route::get('/privacy', 'FrontController@privacy');
 Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
-Route::post('/visit/save', 'FrontController@storeVisit');
+Route::post('/visit/save', 'FrontController@storeVisit')->name('storeVisit');
 Route::get('/pilots/airports', 'FrontController@airportIndex');
 Route::post('/pilots/airports', 'FrontController@searchAirport');
 Route::get('/pilots/airports/search', 'FrontController@searchAirportResult');
