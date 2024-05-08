@@ -65,7 +65,7 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('saveFeedback', [$f->id]) }}
+                                        {{ html()->form()->route('saveFeedback', [$f->id])->open() }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
@@ -103,7 +103,7 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('hideFeedback', [$f->id]) }}
+                                        {{ html()->form()->route('hideFeedback', [$f->id])->open() }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
@@ -141,7 +141,7 @@ Feedback Management
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('emailFeedback', [$f->id]) }}
+                                        {{ html()->form()->route('emailFeedback', [$f->id])->open() }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
@@ -223,7 +223,7 @@ Feedback Management
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {{ html()->form()->route('updateFeedback', [$f->id]) }}
+                                    {{ html()->form()->route('updateFeedback', [$f->id])->open() }}
                                     @csrf
                                     <div class="modal-body">
                                         <div class="row">
@@ -266,7 +266,7 @@ Feedback Management
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {{ html()->form()->route('emailFeedback', [$f->id]) }}
+                                    {{ html()->form()->route('emailFeedback', [$f->id])->open() }}
                                     @csrf
                                     <div class="modal-body">
                                         <div class="row">

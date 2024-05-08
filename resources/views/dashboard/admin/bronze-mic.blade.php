@@ -99,7 +99,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         <div class="btn-toolbar">
                             @toggle('local-hero')
                                 @if($winner_local == null)
-                                    {{ html()->form('POST', '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id) }}
+                                    {{ html()->form('POST', '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id)->open() }}
                                         @csrf
                                         <button action="submit" class="btn btn-primary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
                                     {{ html()->form()->close() }}
@@ -108,7 +108,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                                 @endif
                             @endtoggle
                             @if($winner == null)
-                                {{ html()->form('POST', '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id) }}
+                                {{ html()->form('POST', '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id)->open() }}
                                     @csrf
                                     <button action="submit" class="btn btn-simple-tooltip bronze-bg" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                                 {{ html()->form()->close() }}
@@ -129,7 +129,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 </div>
-                {{ html()->form()->route('updateLocalHeroChallenge', [$challenge->id]) }}
+                {{ html()->form()->route('updateLocalHeroChallenge', [$challenge->id])->open() }}
                 @csrf
                 <div class="modal-body mx-2">
                     <div class="row mb-2">

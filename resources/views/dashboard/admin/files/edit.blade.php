@@ -8,7 +8,7 @@ Upload File
 @include('inc.header', ['title' => 'Edit File'])
 
 <div class="container">
-    {{ html()->form()->route('saveFile', [$file->id]) }}
+    {{ html()->form()->route('saveFile', [$file->id])->open() }}
         @csrf
         <div class="form-group">
             <div class="row">

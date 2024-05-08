@@ -8,7 +8,7 @@
 @include('inc.header', ['title' => 'Send New Email'])
 
 <div class="container">
-    {{ html()->form()->route('sendEmail') }}
+    {{ html()->form()->route('sendEmail')->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-4">

@@ -8,7 +8,7 @@ Announcement
 @include('inc.header', ['title' => 'Announcement'])
 
 <div class="container">
-    {{ html()->form()->route('saveAnnouncement') }}
+    {{ html()->form()->route('saveAnnouncement')->open() }}
         @csrf
         <div class="form-group">
             <label for="body" class="control-label">Announcement (Leave Blank to Remove the Announcement)</label>

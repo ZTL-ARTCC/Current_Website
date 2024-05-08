@@ -8,7 +8,7 @@ Staffing Request
 @include('inc.header', ['title' => 'ZTL ARTCC Staffing Request', 'type' => 'external'])
 
 <div class="container">
-    {{ html()->form()->route('staffRequest') }}
+    {{ html()->form()->route('staffRequest')->open() }}
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">

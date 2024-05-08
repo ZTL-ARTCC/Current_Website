@@ -15,7 +15,7 @@ Training Tickets
     @endif
     <br><br>
     <h5>Search Training Tickets:</h5>
-    {{ html()->form('POST', '/dashboard/training/tickets/search') }}
+    {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
     <div class="row">
         <div class="col-sm-3">
             {{ html()->text('cid', null)->placeholder('Search by CID')->class(['form-control']) }}
@@ -26,7 +26,7 @@ Training Tickets
         <div class="col-sm-1">
             {{ html()->form()->close() }}
             <center>OR</center>
-            {{ html()->form('POST', '/dashboard/training/tickets/search') }}
+            {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
         </div>
         <div class="col-sm-3">
             {{ html()->select('cid', $controllers, null)->placeholder('Select Controller')->class(['form-control']) }}

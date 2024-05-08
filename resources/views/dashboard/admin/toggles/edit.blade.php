@@ -8,7 +8,7 @@ Edit Feature Toggle
 @include('inc.header', ['title' => 'Edit Feature Toggle'])
 
 <div class="container">
-    {{ html()->form()->route('editFeatureToggle') }}
+    {{ html()->form()->route('editFeatureToggle')->open() }}
         @csrf
         <div class="form-group">
             <div class="row">

@@ -23,7 +23,7 @@ Update Controller
         </li>
         @endif
     </ul>
-    {{ html()->form()->route('updateController', [$user->id]) }}
+    {{ html()->form()->route('updateController', [$user->id])->open() }}
     @csrf
     @php
         $roster_disable = 'disabled';

@@ -90,7 +90,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        {{ html()->form('PUT')->route('assignPilotToFlight', [$f->id]) }}
+                        {{ html()->form('PUT')->route('assignPilotToFlight', [$f->id])->open() }}
                         @csrf
                         <div class="modal-body">
                         {{ html()->select('pilot', $pilots, null)->placeholder('Select Pilot')->class(['form-control']) }}
@@ -119,7 +119,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {{ html()->form()->route('bulkUploadFlights')->acceptsFiles() }}
+            {{ html()->form()->route('bulkUploadFlights')->acceptsFiles()->open() }}
             @csrf
             <div class="modal-body">
                 <label for="file">Upload CSV File of Flights</label>
@@ -143,7 +143,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {{ html()->form()->route('dumpData') }}
+            {{ html()->form()->route('dumpData')->open() }}
             @csrf
             <div class="modal-body">
                 <p>Danger zone! This will dump all realops data and there is no way to reverse this action. Type <b>confirm - dump all</b> to proceed.</p>

@@ -36,7 +36,7 @@ Visit
 </div>
 
 <div class="container">
-    {{ html()->form()->route('storeVisit')->open() }}
+    {{ html()->form()->route('storeVisit')->open()->open() }}
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">

@@ -280,7 +280,7 @@ Dashboard
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {{ html()->form()->route('reportBug') }}
+                {{ html()->form()->route('reportBug')->open() }}
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">

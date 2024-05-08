@@ -15,7 +15,7 @@ Training Statistics
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {{ html()->form('GET')->route('statistics') }}
+                {{ html()->form('GET')->route('statistics')->open() }}
                 @php ($yearOfMonthsLookback = array())
                 @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
                 @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))

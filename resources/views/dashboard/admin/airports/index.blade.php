@@ -31,7 +31,7 @@ Airport Management
                                 @endif
                             </div>
                             <div class="col-sm-2">
-                                {{ html()->form('DELETE')->route('deleteAirport', [$a->id]) }}
+                                {{ html()->form('DELETE')->route('deleteAirport', [$a->id])->open() }}
                                     @csrf
                                     <button class="btn btn-danger simple-tooltip" action="submit" data-toggle="tooltip" title="Delete Airport"><i class="fas fa-times"></i></button>
                                 {{ html()->form()->close() }}
