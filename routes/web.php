@@ -199,7 +199,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/toggle-show-assignments/{id}', 'AdminDash@toggleShowAssignments')->middleware('toggle:event_assignment_toggle');
             Route::get('/set-active/{id}', 'AdminDash@setEventActive');
             Route::get('/hide/{id}', 'AdminDash@hideEvent');
-            Route::post('/save-preset/{id}', 'AdminDash@setEventPositionPreset');
+            Route::post('/save-preset/{id}', 'AdminDash@setEventPositionPreset')->name('setEventPositionPreset');
             Route::post('/load-preset/{id}', 'AdminDash@retrievePositionPreset')->name('retrievePositionPreset');
             Route::post('/delete-preset', 'AdminDash@deletePositionPreset')->name('deletePositionPreset');
             Route::get('/send-reminder/{id}', 'AdminDash@sendEventReminder');
