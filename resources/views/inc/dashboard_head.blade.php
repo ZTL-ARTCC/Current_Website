@@ -4,7 +4,7 @@
             @include('inc.logo', ['color' => 'black'])
         </a>
             <ul class="navbar-nav">
-                {{ html()->form()->route('ControllerDash@searchAirport') }}
+                {{ html()->form()->route('searchAirport') }}
                     <div class="form-inline">
                         {{ html()->text('apt', null)->placeholder('Search Airport ICAO')->class(['form-control']) }}
                         &nbsp;

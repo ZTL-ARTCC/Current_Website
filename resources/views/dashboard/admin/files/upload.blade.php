@@ -8,7 +8,7 @@ Upload File
 @include('inc.header', ['title' => 'Upload New File'])
 
 <div class="container">
-    {{ html()->form()->route('AdminDash@storeFile')->acceptsFiles() }}
+    {{ html()->form()->route('storeFile')->acceptsFiles() }}
         @csrf
         <div class="form-group">
             <div class="row">

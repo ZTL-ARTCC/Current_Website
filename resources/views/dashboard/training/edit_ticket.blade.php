@@ -8,7 +8,7 @@ Edit Training Ticket
 @include('inc.header', ['title' => 'Edit Training Ticket'])
 
 <div class="container">
-    {{ html()->form()->route('TrainingDash@saveTicket', [$ticket->id]) }}
+    {{ html()->form()->route('saveTicket', [$ticket->id]) }}
         @csrf
         <div class="row">
             <div class="col-sm-3">

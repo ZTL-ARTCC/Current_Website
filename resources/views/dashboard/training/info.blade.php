@@ -36,7 +36,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [0]) }}
+                                    {{ html()->form()->route('addInfo', [0]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_gnd->count() == 0)
@@ -83,7 +83,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [1]) }}
+                                    {{ html()->form()->route('addInfo', [1]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_lcl->count() == 0)
@@ -130,7 +130,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [2]) }}
+                                    {{ html()->form()->route('addInfo', [2]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_minor_app->count() == 0)
@@ -178,7 +178,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [3]) }}
+                                    {{ html()->form()->route('addInfo', [3]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_gnd->count() == 0)
@@ -225,7 +225,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [4]) }}
+                                    {{ html()->form()->route('addInfo', [4]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_lcl->count() == 0)
@@ -272,7 +272,7 @@ Training Information
                                 @endif
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
-                                    {{ html()->form()->route('TrainingDash@addInfo', [5]) }}
+                                    {{ html()->form()->route('addInfo', [5]) }}
                                     <div class="form-row">
                                         <div class="col-sm-2">
                                             @if($info_major_app->count() == 0)
@@ -321,7 +321,7 @@ Training Information
                         @endif
                         @if(Auth::user()->isAbleTo('snrStaff'))
                             <br>
-                            {{ html()->form()->route('TrainingDash@addInfo', [6]) }}
+                            {{ html()->form()->route('addInfo', [6]) }}
                             <div class="form-row">
                                 <div class="col-sm-2">
                                     @if($info_ctr->count() == 0)
@@ -359,7 +359,7 @@ Training Information
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {{ html()->form()->route('TrainingDash@newPublicInfoSection') }}
+                    {{ html()->form()->route('newPublicInfoSection') }}
                     @csrf
                     <div class="modal-body">
                         <label for="name">Section Name</label>
@@ -399,7 +399,7 @@ Training Information
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            {{ html()->form()->route('TrainingDash@editPublicSection', [$p->id]) }}
+                                            {{ html()->form()->route('editPublicSection', [$p->id]) }}
                                             @csrf
                                             <div class="modal-body">
                                                 <label for="name">Section Name</label>
@@ -437,7 +437,7 @@ Training Information
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    {{ html()->form()->route('TrainingDash@addPublicPdf', [$p->id])->acceptsFiles() }}
+                                    {{ html()->form()->route('addPublicPdf', [$p->id])->acceptsFiles() }}
                                     @csrf
                                     <div class="modal-body">
                                         <label for="pdf">Select a PDF to Upload</label>

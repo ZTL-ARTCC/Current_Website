@@ -8,7 +8,7 @@ Edit Scenery
 @include('inc.header', ['title' => 'Edit Scenery'])
 
 <div class="container">
-    {{ html()->form()->route('AdminDash@saveScenery', [$scenery->id]) }}
+    {{ html()->form()->route('saveScenery', [$scenery->id]) }}
         @csrf
         <div class="form-group">
             <div class="row">

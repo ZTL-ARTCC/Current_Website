@@ -123,7 +123,7 @@ Files
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-                    {{ html()->form()->route('AdminDash@fileSeparator') }}
+                    {{ html()->form()->route('fileSeparator') }}
 					@csrf
 					<div class="modal-body">
 						<div class="form-group">

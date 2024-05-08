@@ -129,7 +129,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 </div>
-                {{ html()->form()->route('AdminDash@updateLocalHeroChallenge', [$challenge->id]) }}
+                {{ html()->form()->route('updateLocalHeroChallenge', [$challenge->id]) }}
                 @csrf
                 <div class="modal-body mx-2">
                     <div class="row mb-2">

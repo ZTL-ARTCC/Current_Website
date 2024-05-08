@@ -8,7 +8,7 @@ New Training Ticket
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
 <div class="container">
-    {{ html()->form()->route('TrainingDash@saveNewTicket') }}
+    {{ html()->form()->route('saveNewTicket') }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
