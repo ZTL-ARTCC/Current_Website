@@ -8,7 +8,7 @@ Scenery
 @include('inc.header', ['title' => 'Scenery'])
 
 <div class="container">
-    {{ html()->form('POST', '/dashboard/controllers/scenery/search') }}
+    {{ html()->form('POST', '/dashboard/controllers/scenery/search')->open() }}
         <div class="form-group inline">
             <div class="row">
                 <div class="col-sm-4">

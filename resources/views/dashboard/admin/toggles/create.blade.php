@@ -8,7 +8,7 @@ New Feature Toggle
 @include('inc.header', ['title' => 'New Feature Toggle'])
 
 <div class="container">
-    {{ html()->form()->route('createFeatureToggle') }}
+    {{ html()->form()->route('createFeatureToggle')->open() }}
         @csrf
         <div class="form-group">
             <div class="row">

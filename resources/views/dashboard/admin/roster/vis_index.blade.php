@@ -64,7 +64,7 @@ Visit Requests
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ html()->form()->route('rejectVisitRequest', [$v->id]) }}
+                                        {{ html()->form()->route('rejectVisitRequest', [$v->id])->open() }}
                                         @csrf
                                         <div class="modal-body">
                                             <label for="reject_reason">Please specific why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.</label>
@@ -156,7 +156,7 @@ Visit Requests
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {{ html()->form()->route('manualAddVisitor') }}
+                {{ html()->form()->route('manualAddVisitor')->open() }}
                 @csrf
                 <div class="modal-body">
                     <div class="container">

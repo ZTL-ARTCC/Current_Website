@@ -8,7 +8,7 @@
 @include('inc.header', ['title' => 'New Airport'])
 
 <div class="container">
-    {{ html()->form()->route('storeAirport') }}
+    {{ html()->form()->route('storeAirport')->open() }}
         @csrf
         <div class="form-group">
             <label for="name">Airport Name</label>

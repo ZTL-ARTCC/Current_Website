@@ -8,7 +8,7 @@ Scenery
 @include('inc.header', ['title' => 'Scenery', 'type' => 'external'])
 
 <div class="container">
-    {{ html()->form('POST', '/pilots/scenery/search') }}
+    {{ html()->form('POST', '/pilots/scenery/search')->open() }}
         <div class="form-group inline">
             <div class="row">
                 <div class="col-sm-4">

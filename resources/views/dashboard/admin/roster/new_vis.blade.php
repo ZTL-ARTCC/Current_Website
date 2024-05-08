@@ -8,7 +8,7 @@ New Visitor
 @include('inc.header', ['title' => 'New Visitor'])
 
 <div class="container">
-    {{ html()->form()->route('storeVisitor') }}
+    {{ html()->form()->route('storeVisitor')->open() }}
         @csrf
         <div class="form-group">
             <div class="row">

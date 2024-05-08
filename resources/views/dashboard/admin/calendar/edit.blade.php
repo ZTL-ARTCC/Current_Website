@@ -8,7 +8,7 @@ Edit Calendar Event/News
 @include('inc.header', ['title' => 'Edit Calendar Event/News'])
 
 <div class="container">
-    {{ html()->form()->route('saveCalendarEvent', [$calendar->id]) }}
+    {{ html()->form()->route('saveCalendarEvent', [$calendar->id])->open() }}
     @csrf
     <div class="form-group">
     <label for="title">Title</label>

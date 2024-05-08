@@ -8,7 +8,7 @@ New Calendar Event/News
 @include('inc.header', ['title' => 'New Calendar Event/News'])
 
 <div class="container">
-    {{ html()->form()->route('storeCalendarEvent') }}
+    {{ html()->form()->route('storeCalendarEvent')->open() }}
         @csrf
         <div class="form-group">
         <label for="title">Title</label>

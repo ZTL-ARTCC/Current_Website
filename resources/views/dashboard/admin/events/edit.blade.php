@@ -8,7 +8,7 @@ New Event
 @include('inc.header', ['title' => 'New Event'])
 
 <div class="container">
-    {{ html()->form()->route('saveEvent', [$event->id])->acceptsFiles() }}
+    {{ html()->form()->route('saveEvent', [$event->id])->acceptsFiles()->open() }}
         @csrf
         <div class="form-group">
             <div class="row">

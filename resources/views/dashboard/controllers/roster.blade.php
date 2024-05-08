@@ -178,7 +178,7 @@ Roster
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    {{ html()->form()->route('allowVisitReq') }}
+                    {{ html()->form()->route('allowVisitReq')->open() }}
                     @csrf
                     <div class="modal-body">
                         <div class="container">

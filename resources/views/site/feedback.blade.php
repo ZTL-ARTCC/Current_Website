@@ -8,7 +8,7 @@ New Feedback
 @include('inc.header', ['title' => 'Leave New Feedback', 'type' => 'external'])
 
 <div class="container">
-    {{ html()->form()->route('saveNewFeedback') }}
+    {{ html()->form()->route('saveNewFeedback')->open() }}
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">

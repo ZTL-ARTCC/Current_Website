@@ -35,7 +35,7 @@ $nyr = $year + 1;
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td>
                         @if($winner == null)
-                            {{ html()->form('POST', '/dashboard/admin/pyrite-mic/'.$year.'/'.$year_stats[$h->id]->bronze_hrs.'/'.$h->id) }}
+                            {{ html()->form('POST', '/dashboard/admin/pyrite-mic/'.$year.'/'.$year_stats[$h->id]->bronze_hrs.'/'.$h->id)->open() }}
                                 @csrf
                                 <button action="submit" class="btn btn-success btn-simple-tooltip" data-toggle="tooltip" title="Set as Winner for 20<?=$year?>"><i class="fas fa-check"></i></button>
                             {{ html()->form()->close() }}
