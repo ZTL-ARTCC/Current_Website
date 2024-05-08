@@ -469,12 +469,14 @@ class AdminDash extends Controller {
     }
 
     public function allowVisitReq(Request $request) {
-        $id = $request->cid;
-        $visitrej = VisitRej::where('cid', $id)->first();
-
         $validator = $request->validate([
             'cid' => 'required'
         ]);
+
+        $id = $request->cid;
+        $visitrej = VisitRej::where('cid', $id)->first();
+
+
         if ($visitrej == null) {
             return redirect('/dashboard/controllers/roster')->with('error', 'Controller not found.');
         }
