@@ -83,6 +83,9 @@
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
                 @endif
+                @if(Auth::user()->isAbleTo('staff'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
+                @endif
             </div>
         @endif
         <div class="dropdown-divider"></div>

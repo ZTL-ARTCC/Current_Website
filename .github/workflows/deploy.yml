@@ -82,6 +82,15 @@ jobs:
           username: ${{ secrets.user }}
           privateKey: ${{ secrets.key }}
 
+      - name: sync schedule for monitoring
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan schedule-monitor:sync
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
+
       - name: take server out of maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
