@@ -124,4 +124,4 @@
 	</div>
 </div>
 @endif
-<script src="{{asset('js/sidebar.js')}}">
+<script src="{{asset('js/sidebar.js')}}"></script>

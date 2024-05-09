@@ -107,5 +107,5 @@ New Training Ticket
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js')}}">
+<script src="{{asset('js/trainingticket.js')}}"></script>
 @endsection

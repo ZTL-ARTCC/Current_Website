@@ -280,5 +280,5 @@ View Airport ({{ $airport->ltr_4 }})
         </div>
     </div>
 </div>
-<script src="{{asset('js/airports.js')}}">
+<script src="{{asset('js/airports.js')}}"></script>
 @endsection
