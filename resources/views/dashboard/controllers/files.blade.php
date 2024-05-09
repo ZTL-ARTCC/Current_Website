@@ -156,5 +156,5 @@ Files
         @endif
     </div>
 </div>
-<script src="{{asset('js/filebrowser.js')}}">
+<script src="{{asset('js/filebrowser.js')}}"></script>
 @endsection

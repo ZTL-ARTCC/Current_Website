@@ -433,5 +433,5 @@ return $badge;
     const maxLatLon = [33.66, -84.39];
     const minLatLon = [33.61, -84.46];
 </script>
-<script src="{{asset('js/pilots_guide.js')}}">
+<script src="{{asset('js/pilots_guide.js')}}"></script>
 @endsection

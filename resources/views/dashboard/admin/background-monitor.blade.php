@@ -40,5 +40,5 @@ Background Task Monitor
     </tbody>
 </table>
 
-{{Html::script(asset('js/copy_to_clipboard.js'))}}
+<script src="{{asset('js/copy_to_clipboard.js')}}"></script>
 @endsection

@@ -133,5 +133,5 @@ Realops
     </div>
 @endif
 </div>
-<script src="{{asset('js/realops.js')}}">
+<script src="{{asset('js/realops.js')}}"></script>
 @endsection
