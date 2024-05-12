@@ -480,7 +480,6 @@ class AdminDash extends Controller {
         $id = $request->cid;
         $visitrej = VisitRej::where('cid', $id)->first();
 
-
         if ($visitrej == null) {
             return redirect('/dashboard/controllers/roster')->with('error', 'Controller not found.');
         }
