@@ -42,7 +42,7 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/', 'RealopsController@index');
     Route::get('/login', 'Auth\LoginController@realopsLogin')->middleware('guest:realops');
     Route::get('/bid/{id}', 'RealopsController@bid')->middleware('auth:realops')->middleware('toggle:realops_bidding');
-    Route::get('/cancel-bid', 'RealopsController@cancelBid')->middleware('auth:realops');
+    Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
 /*
 *   End Front Page Stuff
@@ -277,6 +277,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{toggle_name}', 'AdminDash@showEditFeatureToggle');
             Route::post('/edit', 'AdminDash@editFeatureToggle');
             Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
+        });
+        Route::prefix('monitor')->middleware('permission:staff')->group(function () {
+            Route::get('/', 'AdminDash@backgroundMonitor');
         });
     });
 });

@@ -56,7 +56,7 @@ Realops
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Gate</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                 <th scope="col">Actions</th>
@@ -79,8 +79,8 @@ Realops
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif
@@ -105,13 +105,11 @@ Realops
                 @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                     <td>
                         <center>
-                            @if(auth()->guard('realops')->user()->assigned_flight)
-                                @if(auth()->guard('realops')->user()->assigned_flight->id == $f->id)
-                                    <a href="/realops/cancel-bid" class="btn btn-danger btn-sm">Cancel Bid</a>
-                                @elseif(! $f->assigned_pilot)
+                            @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
+                                <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
+                            @elseif($f->assigned_pilot)
                                     <button class="btn btn-success btn-sm" disabled>Bid</button>
-                                @endif
-                            @elseif(! $f->assigned_pilot)
+                            @else
                                 <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
                             @endif
                         </center>

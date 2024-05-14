@@ -271,10 +271,12 @@ class FrontController extends Controller {
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
-        $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
-        $agreevisitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
-       
+        $hcontrollers_public = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $hcontrollers_private = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $homec = $hcontrollers_public->merge($hcontrollers_private);
+        $vcontrollers_public = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $vcontrollers_private = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $visitc = $vcontrollers_public->merge($vcontrollers_private);
         
         $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->total_hrs;
@@ -284,13 +286,9 @@ class FrontController extends Controller {
             return $stats[$user->id]->total_hrs;
         });
 
-        $agreevisit = $agreevisitc->sortByDesc(function ($user) use ($stats) {
-            return $stats[$user->id]->total_hrs;
-        });
-
         return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
                                  ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+                                 ->with('home', $home)->with('visit', $visit);
     }
 
     public function visit() {

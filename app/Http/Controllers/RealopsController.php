@@ -45,6 +45,10 @@ class RealopsController extends Controller {
         if (! $flight) {
             return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
+
+        if ($flight->assigned_pilot_id) {
+            return redirect()->back()->with('error', 'That flight already has a pilot assigned');
+        }
         
         $pilot = auth()->guard('realops')->user();
         $flight->assignPilotToFlight($pilot->id);
@@ -57,14 +61,16 @@ class RealopsController extends Controller {
         return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
     }
 
-    public function cancelBid() {
-        $pilot = auth()->guard('realops')->user();
-        $flight = $pilot->assigned_flight;
-
+    public function cancelBid($id) {
+        $flight = RealopsFlight::find($id);
         if (! $flight) {
-            return redirect()->back()->with('error', 'You have not yet bid for a flight');
+            return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
-        
+
+        $pilot = auth()->guard('realops')->user();
+        if ($pilot->id != $flight->assigned_pilot_id) {
+            return redirect()->back()->with('error', 'That flight isn\'t assigned to you');
+        }
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.cancel_bid', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
@@ -117,6 +123,8 @@ class RealopsController extends Controller {
         }
 
         $pilot = $flight->assigned_pilot;
+
+        
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.removed_from_flight', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
@@ -148,7 +156,7 @@ class RealopsController extends Controller {
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
-        $flight->route = $request->input('route');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         return redirect('/dashboard/admin/realops')->with('success', 'That flight was created successfully');
@@ -186,7 +194,7 @@ class RealopsController extends Controller {
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
-        $flight->route = $request->input('route');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         $pilot = $flight->assigned_pilot;

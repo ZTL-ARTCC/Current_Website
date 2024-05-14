@@ -31,7 +31,7 @@
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Gate</th>
             <th scope="col" colspan="2">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
         </tr>
@@ -52,8 +52,8 @@
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif
@@ -72,7 +72,11 @@
                 <td>
                 <a href="/dashboard/admin/realops/edit/{{ $f->id }}" class="btn btn-warning btn-sm float-left mr-2" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
                 <span data-toggle="modal" data-target="#assign{{ $f->id }}">
-                    <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
+                    @if(!$f->assigned_pilot)
+                        <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
+                    @else
+                        <button type="button" class="btn btn-success btn-sm float-left mr-2" disabled><i class="fas fa-plus"></i></button>
+                    @endif
                 </span>
                 <a href="/dashboard/admin/realops/delete/{{ $f->id }}" class="btn btn-danger btn-sm float-left mr-2" title="Delete" data-toggle="tooltip"><i class="fas fa-times"></i></a>
                 </td>

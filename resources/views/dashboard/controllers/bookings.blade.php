@@ -31,7 +31,7 @@ ATC Bookings
                                 <td>
                                     <strong>{{ $b->callsign }}</strong>
                                     &emsp;
-                                    <span>{{ $b->start_time_formatted }} - {{ $b->end_time_formatted }}</span>
+                                    <span>{{ $b->start_time_formatted }} - {{ $b->end_time_formatted }}Z</span>
                                     @if($b->cid == Auth::id() || Auth::user()->can('snrStaff'))
                                         <span class="float-right"><a href="/dashboard/controllers/bookings/delete/{{ $b->id }}" class="btn btn-sm btn-danger">Cancel</a></span>
                                     @endif

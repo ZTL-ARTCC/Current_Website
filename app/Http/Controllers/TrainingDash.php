@@ -476,23 +476,13 @@ class TrainingDash extends Controller {
 
     public function completeOTS(Request $request, $id) {
         $validator = $request->validate([
-            'result' => 'required',
-            'ots_report' => 'required'
+            'result' => 'required'
         ]);
 
         $ots = Ots::find($id);
 
         if ($ots->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff')) {
-            $ext = $request->file('ots_report')->getClientOriginalExtension();
-            $time = Carbon::now()->timestamp;
-            $path = $request->file('ots_report')->storeAs(
-                'public/ots_reports',
-                $time . '.' . $ext
-            );
-            $public_url = '/storage/ots_reports/' . $time . '.' . $ext;
-
             $ots->status = $request->result;
-            $ots->report = $public_url;
             $ots->save();
 
             $audit = new Audit;

@@ -74,7 +74,7 @@ Visit
         {!! Form::label('reason', 'Explanation of Why You Want to Visit the ZTL ARTCC') !!}
         {!! Form::textArea('reason', null, ['placeholder' => 'Required', 'class' => 'form-control']) !!}
     </div>
-    <div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
+    <div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
     <br>
     <button class="btn btn-success" type="submit">Submit</button>
     {!! Form::close() !!}

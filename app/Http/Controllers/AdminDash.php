@@ -22,6 +22,7 @@ use App\PositionPreset;
 use App\PresetPosition;
 use App\Pyrite;
 use App\Scenery;
+use App\ScheduleMonitorTasks;
 use App\SoloCert;
 use App\User;
 use App\Visitor;
@@ -35,7 +36,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use  Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -1833,5 +1834,11 @@ class AdminDash extends Controller {
         } else {
             return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
         }
+    }
+
+    public function backgroundMonitor() {
+        $tasks = ScheduleMonitorTasks::getTasks();
+        $format = Config::get('schedule-monitor.date_format');
+        return view('dashboard.admin.background-monitor')->with('tasks', $tasks)->with('format', $format);
     }
 }
