@@ -5,10 +5,7 @@ OTS Center
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>OTS Center</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'OTS Center'])
 
 <div class="container">
     <h5>OTS Exam Recommendations</h5>
@@ -129,9 +126,6 @@ OTS Center
                                                 {!! Form::label('result', 'Result') !!}
                                                 {!! Form::select('result', [2 => 'Pass', 3 => 'Fail'], null, ['placeholder' => 'Select Result', 'class' => 'form-control']) !!}
                                             </div>
-                                            <div class="form-group">
-                                                {!! Form::file('ots_report', ['class' => 'form-control']) !!}
-                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -169,7 +163,7 @@ OTS Center
                                 <td>{{ $o->recommender_name }}</td>
                                 <td>{{ $o->ins_name }}</td>
                                 <td>{{ $o->position_name }}</td>
-                                <td>{{ $o->result }}@if($o->result == 'Pass') <i class="fas fa-check"></i>@else <i class="fas fa-times"></i>@endif <a href="{{ $o->report }}" target="_blank">(View Report)</a></td>
+                                <td>{{ $o->result }}@if($o->result == 'Pass') <i class="fas fa-check"></i>@else <i class="fas fa-times"></i>@endif</td>
                             </tr>
                         @endforeach
                     @else

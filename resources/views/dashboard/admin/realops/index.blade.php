@@ -9,10 +9,8 @@
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Realops Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Realops Management'])
+
 <div class="container">
 <div class="mb-4">
     <a href="/dashboard/admin/realops/create" class="btn btn-success mr-2">Add Flight</a>
@@ -20,19 +18,20 @@
         <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
     </span>
     <span data-toggle="modal" data-target="#dump">
-        <button type="button" class="btn btn-danger" data-toggle="tooltip">Dump all Data</button>
+        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Dump all Data</button>
     </span>
+    <a href="/dashboard/admin/realops/export" class="btn btn-success">Export Data</a>
 </div>
 <table class="table table-bordered table-striped text-center">
     <thead>
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Flight Number</th>
-            <th scope="col">Departure Time (ET)</th>
+            <th scope="col">Departure Time (UTC)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Arrival Time (ET)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Estimated Enroute Time (HH:MM)</th>
+            <th scope="col">Gate</th>
             <th scope="col" colspan="2">Assigned Pilot</th>
             <th scope="col" style="width: 15%">Actions</th>
         </tr>
@@ -48,13 +47,13 @@
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
-                @if($f->est_arr_time)
-                    <td>{{ $f->est_arr_time_formatted }}</td>
+                @if($f->est_time_enroute)
+                    <td>{{ $f->est_time_enroute_formatted }}</td>
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif
@@ -73,7 +72,11 @@
                 <td>
                 <a href="/dashboard/admin/realops/edit/{{ $f->id }}" class="btn btn-warning btn-sm float-left mr-2" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
                 <span data-toggle="modal" data-target="#assign{{ $f->id }}">
-                    <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
+                    @if(!$f->assigned_pilot)
+                        <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
+                    @else
+                        <button type="button" class="btn btn-success btn-sm float-left mr-2" disabled><i class="fas fa-plus"></i></button>
+                    @endif
                 </span>
                 <a href="/dashboard/admin/realops/delete/{{ $f->id }}" class="btn btn-danger btn-sm float-left mr-2" title="Delete" data-toggle="tooltip"><i class="fas fa-times"></i></a>
                 </td>

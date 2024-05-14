@@ -5,12 +5,7 @@ Staffing Request
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>ZTL ARTCC Staffing Request</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'ZTL ARTCC Staffing Request', 'type' => 'external'])
 
 <div class="container">
     {!! Form::open(['action' => 'FrontController@staffRequest']) !!}
@@ -62,7 +57,7 @@ Staffing Request
         </div>
         <body>
             <form action="?" method="POST">
-				<div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
+				<div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
                 <br/>
                 <input class="btn btn-success" type="submit" value="Send Request">
             </form>

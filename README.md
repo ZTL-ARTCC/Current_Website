@@ -17,42 +17,41 @@ This is the main website for the vZTL ARTCC, part of the VATSIM Network.
     git clone https://github.com/ZTL-ARTCC/Current_Website.git
     ```
 
-1.  Change directory into the repository
+2.  Change directory into the repository
     ```bash
     cd Current_Website
     ```
+    
+3. Copy `.env.example` to `.env`
 
-1. Run the setup script
+4. Generate the application key
     ```bash
-    ./scripts/setup.sh
+   php artisan key:generate
     ```
-
-    > 💡 The docker MySQL database container is configured to always start when the docker daemon starts. If it does not start automatically, you can manually start it with the following script
-    > ```bash
-    > ./scripts/start-db.sh
-
-1. Finish configuring environment variables in `.env` (Note that the database configuration is set properly for the MySQL database created in Docker)
-
-1.  To give yourself admin privileges in the local environment, follow these instructions
-    1. In `routes/web.php`, uncomment the following lines (at the bottom of the file) and replace the default CID with your CID
-        ```php
-        Route::get('/laratrust', function () {
-            $user = App\User::find(1315134);
-            $user->attachRole('wm');
-        });
-        ```
-    1. Run the command `php artisan serve`
-    1. Navigate to `http://localhost:8000/laratrust`
-    1. Stop the server and re-comment out those lines
-
-1. Start the local environment with `php artisan serve` and the website will be running locally on `http://localhost:8000`!
+   
+5. Update the `APP_STORAGE` variable in .env to be correct.
+6. Go to https://auth-dev.vatsim.net and log in with the username and password `10000002`/`10000002`.
+7. Click "Manage OAuth Organizations"
+8. Next to "VATSIM Connect Demo", click "View"
+9. Open the "OAuth clients" tab
+10. Click "Add client"
+11. Under "Redirect URL", enter `http://127.0.0.1:8000/login`
+12. Scroll to the very bottom to see the new created client. The ID will be on the left, and the secret will be in the middle.
+13. In .env, set `VATSIM_OAUTH_CLIENT` to the client ID.
+14. In .env, set `VATSIM_OAUTH_SECRET` to the client secret.
+15. Initialize the database:
+   ```php artisan migrate``` ```php artisan db:seed```
+16. Start the website:
+    ```php artisan serve```
+17. Finally, you can log in with the username and password `10000002` (it's the username and the password). You'll automatically have all permissions assigned to you.
 
 ### Helpful Commands
-| Command                                          | Action                   |
-| ------------------------------------------------ | ------------------------ |
-| `composer format`                                | Formats all PHP files    |
-| `npm run format`                                 | Formats all JS files     |
-| `php artisan serve`                              | Start the local server   |
-| `php artisan migrate`                            | Run all new migrations   |
-| `php artisan make:migration [migration name]`    | Create a new migration   |
-| `php artisan make:controller [controller name]`  | Create a new controller  |
+| Command                                         | Action                  |
+|-------------------------------------------------|-------------------------|
+| `composer format`                               | Formats all PHP files   |
+| `npm run format`                                | Formats all JS files    |
+| `php artisan serve`                             | Start the local server  |
+| `php artisan migrate`                           | Run all new migrations  |
+| `php artisan make:migration [migration name]`   | Create a new migration  |
+| `php artisan make:controller [controller name]` | Create a new controller |
+| `composer reset`                                | Resets the DB           |

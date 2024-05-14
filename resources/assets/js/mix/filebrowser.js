@@ -1,3 +1,5 @@
+import { copyTextToClipboard } from "./copy_to_clipboard";
+
 function itemReorder(id, pos, typ, act) {
   // Handles custom re-ordering of items in file browser
   var dType = "";
@@ -38,6 +40,8 @@ function itemReorder(id, pos, typ, act) {
   );
 }
 
+window.itemReorder = itemReorder;
+
 function fallbackCopyTextToClipboard(text) {
   var textArea = document.createElement("textarea");
   textArea.value = text;
@@ -59,18 +63,12 @@ function fallbackCopyTextToClipboard(text) {
   document.body.removeChild(textArea);
 }
 
-function copyTextToClipboard(text) {
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(text);
-}
-
 function linkToClipboard(e) {
   var path = getSiteRoot() + e.dataset.title;
   copyTextToClipboard(path);
 }
+
+window.linkToClipboard = linkToClipboard;
 
 function getSiteRoot() {
   var rootPath = window.location.protocol + "//" + window.location.host + "/";
@@ -86,3 +84,5 @@ function getSiteRoot() {
   }
   return rootPath;
 }
+
+window.getSiteRoot = getSiteRoot;

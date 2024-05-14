@@ -305,55 +305,6 @@ class TrainingDash extends Controller {
             Log::info('Unable to send training ticket email: ' . $e);
         }
 
-        // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
-        switch($request->position) {
-            case 100:
-            case 101: $ticket->position = 'ZTL_DEL';
-                break;
-            case 105: $ticket->position = 'ZTL_GND';
-                break;
-            case 109: $ticket->position = 'ZTL_TWR';
-                break;
-            case 115: $ticket->position = 'ZTL_APP';
-                break;
-            case 102: $ticket->position = 'CTL_DEL';
-                break;
-            case 106: $ticket->position = 'CLT_GND';
-                break;
-            case 111: $ticket->position = 'CLT_TWR';
-                break;
-            case 116: $ticket->position = 'CLT_APP';
-                break;
-            case 104: $ticket->position = 'ATL_DEL';
-                break;
-            case 108: $ticket->position = 'ATL_GND';
-                break;
-            case 113: $ticket->position = 'ATL_TWR';
-                break;
-            case 117:
-            case 118:
-            case 119: $ticket->position = 'ATL_APP';
-                break;
-            case 121: $ticket->position = 'ZTL_CTR';
-                break;
-            default: $ticket->position = null;
-        }
-
-        $req_params = [
-            'form_params' =>
-            [
-                'instructor_id' => Auth::id(),
-                'session_date' => $date . ' ' . $request->start,
-                'position' => $ticket->position,
-                'duration' => $request->duration,
-                'notes' => $request->comments,
-                'location' => 1
-            ],
-            'http_errors' => false
-        ];
-        if (!is_null($ticket->position)) {
-            (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/' . $request->controller . '/training/record?apikey=' . Config::get('vatusa.api_key'), $req_params);
-        }
         if ($request->ots == 1) {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
@@ -525,23 +476,13 @@ class TrainingDash extends Controller {
 
     public function completeOTS(Request $request, $id) {
         $validator = $request->validate([
-            'result' => 'required',
-            'ots_report' => 'required'
+            'result' => 'required'
         ]);
 
         $ots = Ots::find($id);
 
         if ($ots->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff')) {
-            $ext = $request->file('ots_report')->getClientOriginalExtension();
-            $time = Carbon::now()->timestamp;
-            $path = $request->file('ots_report')->storeAs(
-                'public/ots_reports',
-                $time . '.' . $ext
-            );
-            $public_url = '/storage/ots_reports/' . $time . '.' . $ext;
-
             $ots->status = $request->result;
-            $ots->report = $public_url;
             $ots->save();
 
             $audit = new Audit;

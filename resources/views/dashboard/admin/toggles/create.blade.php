@@ -5,10 +5,8 @@ New Feature Toggle
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Feature Toggle</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Feature Toggle'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@createFeatureToggle']) !!}
         @csrf

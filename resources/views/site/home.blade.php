@@ -22,7 +22,27 @@ Home
 </div>
 <div class="container-fluid bg-secondary">
 	<div class="row">
-		<div class="col-sm-9">
+        <div class="col-lg-2 pr-md-2 pb-3 pb-lg-0 d-flex">
+            <div class="col mt-lg-0 mt-3 mb-1 mx-1 p-2 rounded bg-dark text-white">
+                <h5 class="pb-0 mb-0">Planned ATC Coverage</h5><span class="text-secondary pt-0 mt-0">ZULU Time Now: {{ Carbon\Carbon::now()->format('H:i') }}</span>
+                @if(count($bookings) == 0)
+                    <p class="my-3"><i class="fa fa-clock"></i> No coverage currently planned for the next 14 days. Please check back soon!</p>
+                @else
+                    @foreach($bookings as $date => $date_bookings)
+                        <div class="my-3">
+                            <strong>{{ $date }}</strong>
+                            @foreach($date_bookings as $b)
+                                <div class="bg-secondary px-2 py-1 mx-2 my-1 clearfix">
+                                    <p class="my-0 float-left">{{ $b->callsign }}</p>
+                                    <p class="my-0 float-right">{{ $b->start_time_formatted }}-{{ $b->end_time_formatted }}Z</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+		<div class="col-lg-6">
 			<div id="eventCarousel" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)

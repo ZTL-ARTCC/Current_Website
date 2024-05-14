@@ -9,10 +9,8 @@ Training Statistics
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Training Department Dashboard</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Training Department Dashboard'])
+
 <div class="container">
     <div class="row">
         <div class="col-sm-2 col-xs-12">

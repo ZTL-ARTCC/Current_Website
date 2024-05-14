@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Airport;
 use App\ATC;
+use App\AtcBooking;
 use App\Calendar;
 use App\ControllerLog;
-use App\ControllerLogUpdate;
 use App\Event;
 use App\Feedback;
 use App\File;
-use App\Metar;
 use App\Overflight;
 use App\Scenery;
 use App\User;
@@ -27,11 +26,6 @@ class FrontController extends Controller {
     public function home() {
         $atc = ATC::get();
 
-        // For each facility (i.e. ATL), we want:
-        // Approach
-        // Departure
-        // Tower (T, G, D, A)
-
         $fields = [];
         $center = 0;
         $field =null;
@@ -43,15 +37,7 @@ class FrontController extends Controller {
                         'online' => 0
                     ],
                     'online' => 0,
-                    'subfields' => [
-                        /*
-                             * [
-                             *   'online' => 1,
-                             *   'short' => 'T',
-                             *   'color' => 'bg-tower'
-                             * ]
-                             */
-                    ]
+                    'subfields' => []
                 ];
             }
 
@@ -65,14 +51,14 @@ class FrontController extends Controller {
 
                 if ($field == 'ATL' && $position == 'CTR') {
                     $center = 1;
-                    continue; // Atlanta Center is not a 'field' persay, so it gets it's own variable.
+                    continue;
                 }
 
                 if ($position == 'APP' || $position == 'DEP') {
                     $fields[$field]['approach'] = [
                         'online' => 1
                     ];
-                    continue; // approach and departure
+                    continue;
                 }
 
                 if ($position == 'TWR' || $position == 'GND' || $position == 'DEL') {
@@ -90,16 +76,7 @@ class FrontController extends Controller {
         }
 
         $airports = Airport::where('front_pg', 1)->orderBy('ltr_4', 'ASC')->get();
-        $metar_update = Metar::first();
-        if ($metar_update != null) {
-            $metar_last_updated = substr($metar_update, -18, 5);
-        } else {
-            $metar_last_updated = null;
-        }
-
         $controllers = ATC::get();
-        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
-        $controllers_update = substr($last_update->created_at, -8, 5);
 
         $now = Carbon::now();
 
@@ -126,20 +103,28 @@ class FrontController extends Controller {
 
         $overflightCount = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->count();
 
+        $today = Carbon::today();
+        $bookings = AtcBooking::whereDate('start', '>=', $today)
+            ->whereDate('end', '<=', $today->addDays(14))
+            ->orderBy('start', 'ASC')
+            ->get();
+
+        $bookings = groupAtcBookingsByDate($bookings);
+
         return view('site.home')->with('center', $center)->with('fields', $fields)
-                                ->with('airports', $airports)->with('metar_last_updated', $metar_last_updated)
-                                ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
+                                ->with('airports', $airports)->with('controllers', $controllers)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
-                                ->with('overflightCount', $overflightCount);
+                                ->with('overflightCount', $overflightCount)
+                                ->with('bookings', $bookings);
     }
 
     public function teamspeak() {
         return view('site.teamspeak');
     }
     
-     public function privacy() {
-         return view('site.privacy');
-     }
+    public function privacy() {
+        return view('site.privacy');
+    }
 
     public function airportIndex() {
         $airports = Airport::orderBy('ltr_3', 'ASC')->get();
@@ -163,9 +148,9 @@ class FrontController extends Controller {
 
         $apt_r = strtoupper($apt_s);
 
-        $client = new Client;
-        $response_metar = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
-        $response_taf = $client->request('GET', 'https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $client = new Client(['http_errors' => false]);
+        $response_metar = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $response_taf = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
 
         $root_metar = new SimpleXMLElement($response_metar->getBody());
         $root_taf = new SimpleXMLElement($response_taf->getBody());
@@ -286,10 +271,12 @@ class FrontController extends Controller {
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
-        $homec = User::where('visitor', 0)->where('status', 1)->get();
-        $visitc = User::where('visitor', 1)->where('status', 1)->get();
-        $agreevisitc = User::where('visitor', 1)->where('visitor_from', 'ZHU')->orWhere('visitor_from', 'ZJX')->where('status', 1)->get();
-       
+        $hcontrollers_public = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $hcontrollers_private = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $homec = $hcontrollers_public->merge($hcontrollers_private);
+        $vcontrollers_public = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
+        $vcontrollers_private = User::where('visitor', '1')->where('status', '1')->where('name_privacy', '1')->orderBy('id', 'ASC')->get();
+        $visitc = $vcontrollers_public->merge($vcontrollers_private);
         
         $home = $homec->sortByDesc(function ($user) use ($stats) {
             return $stats[$user->id]->total_hrs;
@@ -299,13 +286,9 @@ class FrontController extends Controller {
             return $stats[$user->id]->total_hrs;
         });
 
-        $agreevisit = $agreevisitc->sortByDesc(function ($user) use ($stats) {
-            return $stats[$user->id]->total_hrs;
-        });
-
         return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
                                  ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+                                 ->with('home', $home)->with('visit', $visit);
     }
 
     public function visit() {
@@ -557,8 +540,6 @@ class FrontController extends Controller {
                 $lcl_controllers = $ctr_controllers;
             }
         }
-        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
-        $controllers_update = substr($last_update->created_at, -8, 5);
 
         $client = new Client(['http_errors' => false]);
         $icao_id = 'KATL';
@@ -584,7 +565,7 @@ class FrontController extends Controller {
             $charts = null;
         }
         
-        return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)->with('controllers_update', $controllers_update)
+        return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)
         ->with('diag', $diag)->with('aaup', $aaup);
     }
 }

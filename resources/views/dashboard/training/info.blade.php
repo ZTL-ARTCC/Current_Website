@@ -5,10 +5,7 @@ Training Information
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Training Information</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Training Information'])
 
 <div class="container">
     <br><br>

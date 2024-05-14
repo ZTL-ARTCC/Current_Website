@@ -5,10 +5,8 @@ Announcement
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Announcement</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Announcement'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@saveAnnouncement']) !!}
         @csrf

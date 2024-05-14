@@ -9,17 +9,11 @@ Realops
 @endpush
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container py-4">
-        @if(auth()->guard('realops')->guest())
-            <a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>
-        @else
-            <button disabled class="btn btn-primary float-right">Welcome, {{ auth()->guard('realops')->user()->full_name }}</button>
-        @endif
-        <h2>Realops</h2>
-    </div>
-</span>
-<br>
+@if(auth()->guard('realops')->guest())
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>'])
+@else
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
+@endif
 
 <div class="container">
 <p>Welcome to the main page for ZTL's Realops event! Realops events simulate actual traffic flow by encouraging pilots to fly real-world routes flown by actual airlines on a real time schedule. Use the controls below to bid on a flight and manage your event participation. Thanks for flying with ZTL!</p>
@@ -58,11 +52,11 @@ Realops
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Flight Number</th>
-            <th scope="col">Departure Time (ET)</th>
+            <th scope="col">Departure Time (UTC)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
-            <th scope="col">Estimated Arrival Time (ET)</th>
-            <th scope="col">Route</th>
+            <th scope="col">Estimated Enroute Time (HH:MM)</th>
+            <th scope="col">Gate</th>
             <th scope="col">Bidding Status</th>
             @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                 <th scope="col">Actions</th>
@@ -80,13 +74,13 @@ Realops
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
-                @if($f->est_arr_time)
-                    <td>{{ $f->est_arr_time_formatted }}</td>
+                @if($f->est_time_enroute)
+                    <td>{{ $f->est_time_enroute_formatted }}</td>
                 @else
                     <td>N/A</td>
                 @endif
-                @if($f->route)
-                    <td>{{ $f->route }}</td>
+                @if($f->gate)
+                    <td>{{ $f->gate }}</td>
                 @else
                     <td>N/A</td>
                 @endif
@@ -111,13 +105,11 @@ Realops
                 @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
                     <td>
                         <center>
-                            @if(auth()->guard('realops')->user()->assigned_flight)
-                                @if(auth()->guard('realops')->user()->assigned_flight->id == $f->id)
-                                    <a href="/realops/cancel-bid" class="btn btn-danger btn-sm">Cancel Bid</a>
-                                @elseif(! $f->assigned_pilot)
+                            @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
+                                <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
+                            @elseif($f->assigned_pilot)
                                     <button class="btn btn-success btn-sm" disabled>Bid</button>
-                                @endif
-                            @elseif(! $f->assigned_pilot)
+                            @else
                                 <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
                             @endif
                         </center>

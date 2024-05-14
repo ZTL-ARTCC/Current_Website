@@ -9,6 +9,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 var planeLayer = new L.LayerGroup();
 planeLayer.addTo(map);
+window.planeLayer = planeLayer;
 
 function resizeMap() {
   setTimeout(function () {
@@ -16,6 +17,8 @@ function resizeMap() {
     updatePlanes();
   }, 500);
 }
+
+window.resizeMap = resizeMap;
 
 function updatePlanes() {
   var xhttp = new XMLHttpRequest();
@@ -51,6 +54,8 @@ function updatePlanes() {
   );
   xhttp.send();
 }
+
+window.updatePlanes = updatePlanes;
 
 function createPlane(lat, lon, hdg, cs, actype, dep, arr, sel = false) {
   var color = null;

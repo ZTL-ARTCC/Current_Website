@@ -5,10 +5,8 @@ Calendar/News
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Calendar/News</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Calendar/News'])
+
 <div class="container">
     <a class="btn btn-primary" href="/dashboard/admin/calendar/new">New Calendar Event/News</a>
     <br><br>

@@ -11,6 +11,7 @@ use Config;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 /**
@@ -62,16 +63,31 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
+        $realops_toggle_enabled = toggleEnabled('realops');
+        if(session('realops_redirect') && $realops_toggle_enabled) {
+            return $this->externalRealopsLogin(
+                $resourceOwner->data->cid,
+                $resourceOwner->data->personal->name_first,
+                $resourceOwner->data->personal->name_last,
+                $resourceOwner->data->personal->email
+            );
+        }
         return $this->vatusaAuth($resourceOwner, $accessToken);
     }
 
     protected function vatusaAuth($resourceOwner, $accessToken) {
         $client = new Client();
+
+        if (App::environment('local')) {
+            $resourceOwner->data->cid = "10000002";
+            $resourceOwner->data->personal->email = "dev@ztl.local";
+        }
+
         $result = $client->request('GET', Config::get('vatusa.base').'/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
         $realops_toggle_enabled = toggleEnabled('realops');
 
         if (! $result || $result->getStatusCode() != 200) {
-            if ($realops_toggle_enabled) {
+            if ($realops_toggle_enabled && !App::environment('local')) {
                 return $this->externalRealopsLogin(
                     $resourceOwner->data->cid,
                     $resourceOwner->data->personal->name_first,
@@ -80,7 +96,9 @@ class LoginController extends Controller {
                 );
             }
 
-            return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            if (!App::environment('local')) {
+                return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            }
         }
 
         $resu = json_decode($result->getBody()->__toString(), true);
@@ -90,14 +108,36 @@ class LoginController extends Controller {
         }
 
         $res = $resu['data'];
-        $userstatuscheck = User::find($res['cid']);
+        $userstatuscheck = null;
+        if (App::environment('local')) {
+            $userstatuscheck = User::find(10000002);
+            if (!$userstatuscheck) {
+                $devUser = new User;
+                $devUser->id = 10000002;
+                $devUser->fname = "ZTL";
+                $devUser->lname = "Development";
+                $devUser->initials = "ZD";
+                $devUser->email = "dev@ztl.local";
+                $devUser->rating_id = 2;
+                $devUser->visitor = 0;
+                $devUser->status = 1;
+                $devUser->save();
+                $userstatuscheck = $devUser;
+            }
+            $userstatuscheck->attachRole('wm');
+            $userstatuscheck->save();
+
+            auth()->login($userstatuscheck, true);
+
+            $message = 'You have been logged in successfully via the dev mode login. A webmaster role has been automatically attached.';
+
+            return redirect()->intended('/dashboard')->with('success', $message);
+        } else {
+            $userstatuscheck = User::find($res['cid']);
+        }
         
-        if (! $realops_toggle_enabled && ! $userstatuscheck) {
+        if (! $userstatuscheck || $userstatuscheck->status == 2) {
             return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
-        } elseif (! $realops_toggle_enabled && $userstatuscheck->status == 2) {
-            return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
-        } elseif (! $userstatuscheck || $userstatuscheck->status == 2) {
-            return $this->externalRealopsLogin($res['cid'], $res['fname'], $res['lname'], $res['email']);
         }
 
         $userstatuscheck->fname = $res['fname'];
@@ -153,6 +193,7 @@ class LoginController extends Controller {
 
     public function realopsLogin() {
         if (! auth()->check()) {
+            session(['realops_redirect' =>  true]);
             return redirect('/login');
         }
 
@@ -190,6 +231,7 @@ class LoginController extends Controller {
 
     private function completeRealopsLogin($realops_pilot) {
         auth()->guard('realops')->login($realops_pilot);
+        session()->forget('realops_redirect');
         return redirect('/realops');
     }
 }

@@ -6,10 +6,7 @@ $(function () {
 
 function realopsValidateAndSubmit() {
   let valid = true;
-  let validateFields = [
-    "realops_add_edit_dep_time",
-    "realops_add_edit_arr_time",
-  ];
+  let validateFields = ["realops_add_edit_dep_time", "realops_add_edit_ete"];
   validateFields.forEach(function (field_id) {
     let dep_time = document.getElementById(field_id).value;
     if (!dep_time.match(/^\d{2}:\d{2}$/)) {
@@ -25,6 +22,8 @@ function realopsValidateAndSubmit() {
     document.getElementById("realops_add_edit_flight").submit();
   }
 }
+
+window.realopsValidateAndSubmit = realopsValidateAndSubmit;
 
 function realopsFilterValidateAndSubmit() {
   let time_valid = true;
@@ -52,6 +51,8 @@ function realopsFilterValidateAndSubmit() {
   }
 }
 
+window.realopsFilterValidateAndSubmit = realopsFilterValidateAndSubmit;
+
 function fixTime(el) {
   // Fixes times to HH:MM format
   let timeStr = document.getElementById(el).value;
@@ -76,6 +77,8 @@ function fixTime(el) {
   }
   return false;
 }
+
+window.fixTime = fixTime;
 
 function fixDate(el) {
   // Fixes dates to YYYY-MM-DD format
@@ -111,3 +114,5 @@ function fixDate(el) {
   }
   return false;
 }
+
+window.fixDate = fixDate;

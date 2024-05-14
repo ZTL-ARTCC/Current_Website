@@ -20,27 +20,28 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
-        '\App\Console\Commands\VATUSAEventsUpdate'
+        '\App\Console\Commands\VatsimAtcBookingSync',
+        '\App\Console\Commands\VATUSAEventsUpdate',
+        '\App\Console\Commands\UploadTrainingTickets'
     ];
 
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void {
-        $schedule->command('cache:prune-stale-tags')->hourly();
-        $schedule->command('SoloCerts:UpdateSoloCerts')->daily();
-        $schedule->command('RosterUpdate:UpdateRoster')->hourly();
-        $schedule->command('VATUSAEvents:Update')->hourly();
-        $schedule->command('Overflights:GetOverflights')->everyFiveMinutes();
-        $schedule->command('Weather:UpdateWeather')->everyFiveMinutes();
-        if (FeatureToggle::isEnabled('online_controller_debug')) {
-            $schedule->command('OnlineControllers:GetControllers')->everyMinute()->appendOutputTo('storage/logs/online-controllers.log')->emailOutputOnFailure('wm@ztlartcc.org');
-        } else {
-            $schedule->command('OnlineControllers:GetControllers')->everyMinute();
-        }
-        if (FeatureToggle::isEnabled("auto_support_events")) {
-            $schedule->command('Events:UpdateSupportEvents')->daily();
-        }
+        $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01')->monitorName('VATUSA Solo Cert Sync');
+        $schedule->command('model:prune', ['--model' => MonitoredScheduledTaskLogItem::class])->dailyAt('05:17')->monitorName('Prune Task Monitor Database');
+        $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7)->monitorName('Roster Update');
+        $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
+        $schedule->command('VATUSAEvents:Update')->hourlyAt(22)->monitorName('VATUSA Events Sync');
+        $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33)->monitorName('VATUSA Training Ticket Sync');
+        $schedule->command('queue:work --stop-when-empty')->everyFiveMinutes()->monitorName('Queue Processing');
+        $schedule->command('Weather:UpdateWeather')->everyFourMinutes()->monitorName('Update Weather');
+        $schedule->command('Overflights:GetOverflights')->everyThreeMinutes()->monitorName('Sync Overflights');
+        $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
+        $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
+            return FeatureToggle::isEnabled('auto_support_events');
+        });
     }
 
     /**

@@ -45,12 +45,6 @@ jobs:
           tar -zxvf ${{ inputs.artifact-name }}.tar.gz
           rm ${{ inputs.artifact-name }}.tar.gz
 
-      - name: Setup composer and install packages
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          php_extensions: gd zip
-
       - name: put server in maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
@@ -88,6 +82,15 @@ jobs:
           username: ${{ secrets.user }}
           privateKey: ${{ secrets.key }}
 
+      - name: sync schedule for monitoring
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.dir }} && ${{ secrets.php_path }} artisan schedule-monitor:sync
+          host: ${{ secrets.host }}
+          port: ${{ secrets.port }}
+          username: ${{ secrets.user }}
+          privateKey: ${{ secrets.key }}
+
       - name: take server out of maintenance mode
         uses: garygrossgarten/github-action-ssh@release
         with:
@@ -111,5 +114,5 @@ jobs:
           --url https://api.cloudflare.com/client/v4/zones/${{ secrets.cf_ztl_zone }}/purge_cache \
           --header 'Content-Type: application/json' \
           --header 'Authorization: Bearer ${{ secrets.cf_cache_purge_token }}' \
-          --data '{ "files": [ "${{ secrets.url }}/css/app.css", "${{ secrets.url }}/js/app.js" ] }'
+          --data '{ "files": [ "${{ secrets.url }}/css/*.css", "${{ secrets.url }}/js/*.js" ] }'
 

@@ -5,10 +5,8 @@ New Scenery
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>New Scenery</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'New Scenery'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@storeScenery']) !!}
         @csrf

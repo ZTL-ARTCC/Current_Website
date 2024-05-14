@@ -5,10 +5,8 @@ Visit Requests
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Visit Requests</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Visit Requests'])
+
 <div class="container">
     <div class="form-group inline">
         <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>

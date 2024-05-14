@@ -5,12 +5,7 @@ New Feedback
 @endsection
 
 @section('content')
-<span class="border border-light view-header">
-    <div class="container">
-        <h2>Leave New Feedback</h2>
-    </div>
-</span>
-<br>
+@include('inc.header', ['title' => 'Leave New Feedback', 'type' => 'external'])
 
 <div class="container">
     {!! Form::open(['action' => 'FrontController@saveNewFeedback']) !!}
@@ -62,7 +57,7 @@ New Feedback
             {!! Form::label('comments', 'Additional Comments:', ['class' => 'control-label']) !!}
             {!! Form::textArea('comments', null, ['placeholder' => 'Additional Comments', 'class' => 'form-control']) !!}
         </div>
-        <div class="g-recaptcha" data-sitekey="6LcC3XoUAAAAAG8ST6HXqS3_reIZRLcA09sDdodw"></div>
+        <div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
         <br>
         <button class="btn btn-success mb-2" type="submit">Send Feedback</button>
     {!! Form::close() !!}

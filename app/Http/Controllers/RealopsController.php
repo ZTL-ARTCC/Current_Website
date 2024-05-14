@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RealopsExport;
 use App\Importers\RealopsFlightImporter;
 use App\RealopsFlight;
 use App\RealopsPilot;
@@ -17,9 +18,16 @@ class RealopsController extends Controller {
         $flightno_filter = $request->get('flightno_filter');
         $date_filter = $request->get('date_filter');
         $time_filter = $request->get('time_filter');
-        $flights = RealopsFlight::where('flight_date', 'like', '%' . $date_filter . '%')
-                                ->where('flight_number', 'like', '%' . $flightno_filter . '%')
-                                ->where('dep_time', 'like', '%' . $time_filter . '%')
+        
+        $flights = RealopsFlight::where('flight_number', 'like', '%' . $flightno_filter . '%')
+                                ->when(! is_null($time_filter), function ($query) use ($time_filter) {
+                                    $times = $this->timeBetween($time_filter, 15, 45);
+                                    $query->whereTime('dep_time', ">=", Carbon::parse($times[0]))
+                                        ->whereTime('dep_time', "<=", Carbon::parse($times[1]));
+                                })
+                                ->when(! is_null($date_filter), function ($query) use ($date_filter) {
+                                    $query->where('flight_date', $date_filter);
+                                })
                                 ->where(function ($query) use ($airport_filter) {
                                     $query->where('dep_airport', 'like', '%' . $airport_filter . '%')
                                           ->orWhere('arr_airport', 'like', '%' . $airport_filter . '%');
@@ -37,6 +45,10 @@ class RealopsController extends Controller {
         if (! $flight) {
             return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
+
+        if ($flight->assigned_pilot_id) {
+            return redirect()->back()->with('error', 'That flight already has a pilot assigned');
+        }
         
         $pilot = auth()->guard('realops')->user();
         $flight->assignPilotToFlight($pilot->id);
@@ -49,14 +61,16 @@ class RealopsController extends Controller {
         return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
     }
 
-    public function cancelBid() {
-        $pilot = auth()->guard('realops')->user();
-        $flight = $pilot->assigned_flight;
-
+    public function cancelBid($id) {
+        $flight = RealopsFlight::find($id);
         if (! $flight) {
-            return redirect()->back()->with('error', 'You have not yet bid for a flight');
+            return redirect()->back()->with('error', 'That flight doesn\'t exist');
         }
-        
+
+        $pilot = auth()->guard('realops')->user();
+        if ($pilot->id != $flight->assigned_pilot_id) {
+            return redirect()->back()->with('error', 'That flight isn\'t assigned to you');
+        }
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.cancel_bid', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
@@ -109,6 +123,8 @@ class RealopsController extends Controller {
         }
 
         $pilot = $flight->assigned_pilot;
+
+        
         $flight->removeAssignedPilot();
 
         Mail::send('emails.realops.removed_from_flight', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
@@ -130,7 +146,7 @@ class RealopsController extends Controller {
             'dep_time' => 'required|date_format:H:i',
             'dep_airport' => 'required',
             'arr_airport' => 'required',
-            'est_arr_time' => 'date_format:H:i|nullable',
+            'est_time_enroute' => 'date_format:H:i|nullable',
         ]);
 
         $flight = new RealopsFlight;
@@ -139,8 +155,8 @@ class RealopsController extends Controller {
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
-        $flight->est_arr_time = $request->input('est_arr_time');
-        $flight->route = $request->input('route');
+        $flight->est_time_enroute = $request->input('est_time_enroute');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         return redirect('/dashboard/admin/realops')->with('success', 'That flight was created successfully');
@@ -169,7 +185,7 @@ class RealopsController extends Controller {
             'dep_time' => 'required|date_format:H:i',
             'dep_airport' => 'required',
             'arr_airport' => 'required',
-            'est_arr_time' => 'date_format:H:i|nullable',
+            'est_time_enroute' => 'date_format:H:i|nullable',
         ]);
 
         $flight->flight_number = $request->input('flight_number');
@@ -177,8 +193,8 @@ class RealopsController extends Controller {
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
         $flight->arr_airport = $request->input('arr_airport');
-        $flight->est_arr_time = $request->input('est_arr_time');
-        $flight->route = $request->input('route');
+        $flight->est_time_enroute = $request->input('est_time_enroute');
+        $flight->gate = $request->input('gate');
         $flight->save();
 
         $pilot = $flight->assigned_pilot;
@@ -259,5 +275,40 @@ class RealopsController extends Controller {
 
     private function emailSubIntro($flight_number) {
         return 'Realops Flight ' . $flight_number . ' - ';
+    }
+
+    public function exportData() {
+        return Excel::download(new RealopsExport, 'ztl_realops_' . Carbon::now()->timestamp . '.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+            'Cache-Control' => 'no-cache, must-revalidate',
+            'Expires' => Carbon::now()->toRfc7231String()
+        ]);
+    }
+
+    private function timeBetween($time, $min_before, $min_after) {
+        $time_split = explode(':', $time);
+        $hour = intval($time_split[0]);
+        $min = intval($time_split[1]);
+
+        $hour_first = $hour;
+        $min_first = $min - $min_before;
+
+        if ($min_first < 0) {
+            $hour_first = $hour_first == 0 ? 23 : $hour_first - 1;
+            $min_first += 60;
+        }
+
+        $hour_last = $hour;
+        $min_last = $min + $min_after;
+
+        if ($min_last >= 60) {
+            $hour_last = $hour_last == 23 ? 0 : $hour_last + 1;
+            $min_last -= 60;
+        }
+
+        return [
+            sprintf('%02d', $hour_first) . ':' . sprintf('%02d', $min_first),
+            sprintf('%02d', $hour_last) . ':' . sprintf('%02d', $min_last)
+        ];
     }
 }

@@ -5,10 +5,8 @@ Edit Feature Toggle
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Edit Feature Toggle</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Edit Feature Toggle'])
+
 <div class="container">
     {!! Form::open(['action' => 'AdminDash@editFeatureToggle']) !!}
         @csrf

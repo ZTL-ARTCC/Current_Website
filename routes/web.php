@@ -42,7 +42,7 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/', 'RealopsController@index');
     Route::get('/login', 'Auth\LoginController@realopsLogin')->middleware('guest:realops');
     Route::get('/bid/{id}', 'RealopsController@bid')->middleware('auth:realops')->middleware('toggle:realops_bidding');
-    Route::get('/cancel-bid', 'RealopsController@cancelBid')->middleware('auth:realops');
+    Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
 /*
 *   End Front Page Stuff
@@ -90,6 +90,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('incident')->group(function () {
             Route::get('/report', 'ControllerDash@incidentReport');
             Route::post('/report', 'ControllerDash@submitIncidentReport');
+        });
+        Route::prefix('bookings')->group(function () {
+            Route::get('/', 'AtcBookingController@viewBookings');
+            Route::get('/delete/{id}', 'AtcBookingController@deleteBooking');
+            Route::post('/create', 'AtcBookingController@createBooking');
         });
     });
 
@@ -252,6 +257,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         });
         Route::prefix('realops')->middleware('toggle:realops')->middleware('permission:staff')->group(function () {
             Route::get('/', 'RealopsController@adminIndex');
+            Route::get('/export', 'RealopsController@exportData');
             Route::get('/create', 'RealopsController@showCreateFlight');
             Route::post('/create', 'RealopsController@createFlight');
             Route::post('/create/bulk', 'RealopsController@bulkUploadFlights');
@@ -271,6 +277,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{toggle_name}', 'AdminDash@showEditFeatureToggle');
             Route::post('/edit', 'AdminDash@editFeatureToggle');
             Route::get('/toggle/{toggle_name}', 'AdminDash@toggleFeatureToggle');
+        });
+        Route::prefix('monitor')->middleware('permission:staff')->group(function () {
+            Route::get('/', 'AdminDash@backgroundMonitor');
         });
     });
 });

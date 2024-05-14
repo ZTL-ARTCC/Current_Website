@@ -5,10 +5,7 @@ View Training Ticket
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>View Training Ticket for {{ $ticket->controller_name }}</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'View Training Ticket for ' . $ticket->controller_name])
 
 <div class="container">
     <a class="btn btn-primary" href="/dashboard/training/tickets?id={{ $ticket->controller_id }}"><i class="fas fa-arrow-left"></i> Back</a>
@@ -24,6 +21,13 @@ View Training Ticket
             <h3>Training Ticket for {{ $ticket->controller_name }} on {{ $ticket->position_name }}</h3>
         </div>
         <div class="card-body">
+            <div class="float-right">
+                @if($ticket->is_vatusa_synced)
+                    <span class="badge badge-success">Synced with VATUSA</span>
+                @else
+                    <span class="badge badge-danger">Pending Sync with VATUSA</span>
+                @endif
+            </div>
             <p><b>Trainer Name:</b> {{ $ticket->trainer_name }}</p>
             <p><b>Session Name/Type:</b> {{ $ticket->type_name }} on {{ $ticket->position_name }}</p>
             <p><b>Session Date:</b> {{ $ticket->date }}</p>

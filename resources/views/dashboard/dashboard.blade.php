@@ -9,10 +9,7 @@ Dashboard
 @endpush
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Controller Dashboard</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Controller Dashboard'])
 
 <div class="container-fluid">
     @if($announcement->body != null)
@@ -161,9 +158,6 @@ Dashboard
                         <td class="text-center" colspan="6"><i>No Pilots in ZTL Airspace</i></td>
                     </tr>
                 @endif
-                <tr>
-                    <td colspan="6"><div class="text-right"><i class="fas fa-sync-alt fa-spin"></i> Last Updated {{ $flights_update }}Z</div></td>
-                </tr>
             </tbody>
         </table>
     </div>

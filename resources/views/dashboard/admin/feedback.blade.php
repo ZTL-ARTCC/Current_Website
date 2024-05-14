@@ -5,10 +5,8 @@ Feedback Management
 @endsection
 
 @section('content')
-<div class="container-fluid view-header">
-    <h2>Feedback Management</h2>
-</div>
-<br>
+@include('inc.header', ['title' => 'Feedback Management'])
+
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">

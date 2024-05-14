@@ -7,7 +7,6 @@ use App\ATC;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
-use App\ControllerLogUpdate;
 use App\Event;
 use App\EventPosition;
 use App\EventRegistration;
@@ -18,7 +17,6 @@ use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Opt;
 use App\Overflight;
-use App\OverflightUpdate;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
@@ -146,8 +144,6 @@ class ControllerDash extends Controller {
 
         $controllers = ATC::get();
 
-        $last_update = ControllerLogUpdate::orderBy('id', 'desc')->first();
-        $controllers_update = substr($last_update->created_at, -8, 5);
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
         })->sortBy(function ($e) {
@@ -162,16 +158,15 @@ class ControllerDash extends Controller {
         $home = $home->take(5);
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
-        $flights_update = substr(OverflightUpdate::first()->updated_at, -8, 5);
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
-                                          ->with('controllers', $controllers)->with('controllers_update', $controllers_update)
+                                          ->with('controllers', $controllers)
                                           ->with('events', $events)
                                           ->with('pyrite', $pyrite)->with('lyear', $lyear)
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
-                                          ->with('flights', $flights)->with('flights_update', $flights_update)->with('stats', $stats)->with('home', $home);
+                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
     }
 
     public function showProfile($year = null, $month = null) {
@@ -214,27 +209,33 @@ class ControllerDash extends Controller {
         }
 
         if (is_null(Auth::user()->ea_customer_id)) {
-            $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
-            foreach ($ea_users as $u) {
-                $user = Auth::user();
-                $user->ea_customer_id = $u->id;
-                $user->save();
+            try {
+                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+                foreach ($ea_users as $u) {
+                    $user = Auth::user();
+                    $user->ea_customer_id = $u->id;
+                    $user->save();
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
             }
         }
         $ea_appointments = [];
         if (!is_null(Auth::user()->ea_customer_id)) {
-            $ea_appointments = DB::connection('ea_mysql')
-                ->table('ea_appointments')
-                ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
-                ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
-                ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
-                ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
-                ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
-                ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
-            foreach ($ea_appointments as &$ea_appointment) {
-                $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
-                $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
-                $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+            try {
+                $ea_appointments = DB::connection('ea_mysql')
+                    ->table('ea_appointments')
+                    ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
+                    ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
+                    ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                    ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
+                    ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
+                    ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
+                foreach ($ea_appointments as &$ea_appointment) {
+                    $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
+                    $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
+                    $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
             }
         }
 

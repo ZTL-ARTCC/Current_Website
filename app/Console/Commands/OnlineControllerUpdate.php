@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\ATC;
 use App\ControllerLog;
-use App\ControllerLogUpdate;
 use App\User;
 use Carbon\Carbon;
 use DB;
@@ -55,13 +54,7 @@ class OnlineControllerUpdate extends Command {
      */
     public function handle() {
         $statsData = $this->getStatsData();
-        $last_update_log = ControllerLogUpdate::get()->first();
-        $last_update_log->delete();
-        $update_now = new ControllerLogUpdate;
-        $update_now->save();
-
         DB::table('online_atc')->truncate();
-
         
         foreach ($statsData->controllers as $line) {
             $position = $line->callsign;
@@ -110,11 +103,11 @@ class OnlineControllerUpdate extends Command {
                         'duration' => $duration,
                         'date' => date('n/j/y'),
                         'time_logon' => $time_logon,
-                        'streamupdate' => strtotime($update_now->created_at),
+                        'streamupdate' => $time_now,
                     ]);
                 } else {
                     $MostRecentLog->duration = $duration;
-                    $MostRecentLog->streamupdate = strtotime($update_now->created_at);
+                    $MostRecentLog->streamupdate = $time_now;
                     $MostRecentLog->save();
                 }
             }

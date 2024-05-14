@@ -22,6 +22,7 @@ use App\PositionPreset;
 use App\PresetPosition;
 use App\Pyrite;
 use App\Scenery;
+use App\ScheduleMonitorTasks;
 use App\SoloCert;
 use App\User;
 use App\Visitor;
@@ -31,8 +32,11 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
 
@@ -340,14 +344,13 @@ class AdminDash extends Controller {
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
 
-            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
-            if ($user->hasRole($staff_roles) == true) {
-                foreach ($staff_roles as $staff_role) {
-                    if ($user->hasRole($staff_role)) {
-                        $user->detachRole($staff_role);
-                    }
+            $staff_roles = $user->facility_staff;
+            foreach ($staff_roles as $staff_role) {
+                if ($user->hasRole(strtolower($staff_role))) {
+                    $user->detachRole(strtolower($staff_role));
                 }
             }
+            $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
             foreach ($staff_roles as $role_id => $staff_role) {
                 if ($request->input('staff') == $role_id) {
                     $user->attachRole($staff_role);
@@ -381,7 +384,7 @@ class AdminDash extends Controller {
             }
         }
         if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
-            $positions = ['gnd','twr','app','ctr','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
+            $positions = ['gnd','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
             foreach ($positions as $position) {
                 $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
             }
@@ -412,10 +415,11 @@ class AdminDash extends Controller {
                     $cert->status = 0;
                     $cert->save();
                     $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
-                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/user/'.$request->cid.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
+                    (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
+                } else {
+                    $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
                 }
             }
-
             $user->twr_solo_fields = $request->input('twr_solo_fields');
             $user->save();
         }
@@ -1377,9 +1381,15 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
 
+        $public_url = null;
+        
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1388,8 +1398,24 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = null;
+        } elseif ($request->filled('banner_url')) {
+            try {
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    throw new ConnectionException;
+                }
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
+            }
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         }
 
         $event = new Event;
@@ -1399,13 +1425,18 @@ class AdminDash extends Controller {
         $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
-        $event->banner_path = $public_url;
-        $event->reduceEventBanner();
         $event->status = 0;
         $event->reg = 0;
         $event->type = $request->type;
         $event->save();
-
+        try {
+            $event->banner_path = $public_url;
+            $event->reduceEventBanner();
+            $event->save();
+        } catch (\Exception $e) {
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+        }
+    
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
@@ -1426,10 +1457,12 @@ class AdminDash extends Controller {
             'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'banner_url' => 'nullable|url'
         ]);
 
         $event = Event::find($id);
+        $public_url = $event->banner_path;
 
         if ($request->type == 1) { // if we are setting it to a verified support event, verify the banner
             if (starts_with($event->banner_path, "http://") || starts_with($event->banner_path, "https://")) {
@@ -1437,11 +1470,17 @@ class AdminDash extends Controller {
                 $public_url = '/event_banners/vatsim_'.$event->vatsim_id.substr($event->banner_path, -4);
                 Storage::disk('public')->put($public_url, file_get_contents($event->banner_path));
                 $event->banner_path = $public_url;
-                $event->reduceEventBanner();
+                try {
+                    $event->reduceEventBanner();
+                } catch (\Exception $e) {
+                    return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+                }
                 $event->banner_path = '/storage'.$public_url;
             }
         }
-
+        if ($request->file('banner') != null && $request->filled('banner_url')) {
+            return redirect()->back()->withErrors('Please ensure you submit only one of the following: a URL or a file for the banner.')->withInput();
+        }
         if ($request->file('banner') != null) {
             $ext = $request->file('banner')->getClientOriginalExtension();
             $time = Carbon::now()->timestamp;
@@ -1450,8 +1489,24 @@ class AdminDash extends Controller {
                 $time.'.'.$ext
             );
             $public_url = '/storage/event_banners/'.$time.'.'.$ext;
-        } else {
-            $public_url = $event->banner_path;
+        } elseif ($request->filled('banner_url')) {
+            try {
+                $response = Http::get($request->banner_url);
+                if (!$response->successful()) {
+                    throw new ConnectionException;
+                }
+            } catch (RequestException | ConnectionException) {
+                return redirect()->back()->withErrors('The provided URL is not valid or unreachable')->withInput();
+            }
+            $imageContent = file_get_contents($request->banner_url);
+            $imageSize = getimagesizefromstring($imageContent);
+            if ($imageSize == false) {
+                return redirect()->back()->withErrors('The provided URL does not point to an image.')->withInput();
+            }
+            $time = Carbon::now()->timestamp;
+            $ext = pathinfo($request->banner_url, PATHINFO_EXTENSION);
+            file_put_contents(storage_path('app/public/event_banners/'.$time.'.'.$ext), $imageContent);
+            $public_url = '/storage/event_banners/'.$time.'.'.$ext;
         }
 
         $event->name = $request->name;
@@ -1460,11 +1515,16 @@ class AdminDash extends Controller {
         $event->date = $request->date;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
-        $event->banner_path = $public_url;
-        $event->reduceEventBanner();
         $event->status = 0;
         $event->type = $request->type;
         $event->save();
+        try {
+            $event->banner_path = $public_url;
+            $event->reduceEventBanner();
+            $event->save();
+        } catch (\Exception $e) {
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+        }
 
         $audit = new Audit;
         $audit->cid = Auth::id();
@@ -1782,5 +1842,11 @@ class AdminDash extends Controller {
         } else {
             return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
         }
+    }
+
+    public function backgroundMonitor() {
+        $tasks = ScheduleMonitorTasks::getTasks();
+        $format = Config::get('schedule-monitor.date_format');
+        return view('dashboard.admin.background-monitor')->with('tasks', $tasks)->with('format', $format);
     }
 }
