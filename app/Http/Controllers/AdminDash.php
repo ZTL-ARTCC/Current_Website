@@ -152,7 +152,7 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'FAA' => 'required|unique:airports,ltr_3',
-            'ICAO' => 'required'
+            'ICAO' => 'required|unique:airports,ltr_4'
         ]);
 
         $a = new Airport;
@@ -473,8 +473,16 @@ class AdminDash extends Controller {
     }
 
     public function allowVisitReq(Request $request) {
+        $validator = $request->validate([
+            'cid' => 'required'
+        ]);
+
         $id = $request->cid;
         $visitrej = VisitRej::where('cid', $id)->first();
+
+        if ($visitrej == null) {
+            return redirect('/dashboard/controllers/roster')->with('error', 'Controller not found.');
+        }
         $visitrej->delete();
 
         $audit = new Audit;
