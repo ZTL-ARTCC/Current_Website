@@ -29,7 +29,7 @@ New Incident Report
                 <div class="col-sm-4">
                     <label for="date" class="form-label">Date of Incident</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input')->attributes(['data-target' => '#datetimepicker1']) }}
+                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>

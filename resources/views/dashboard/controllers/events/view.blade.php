@@ -398,7 +398,7 @@ View Event
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <div class="form-inline">
-                                                    {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone)->id('timedata') }}
+                                                    {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone)->id('timedata')) }}
                                                     <label for="start_time1" class="form-label pr-2">Available from:</label>
                                                     {{ html()->text('start_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'mr-2']) }}
                                                     <label for="end_time1" class="form-label pr-2">-</label>
