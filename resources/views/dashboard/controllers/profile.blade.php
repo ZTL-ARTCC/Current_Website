@@ -137,7 +137,6 @@ Profile
 
                     <div class="col-7">
                         <p>
-                            <!-- Form::select default isn't working (because it doesn't set autocomplete=off), so I'm doing it manually -->
                             <select autocomplete="off" name="timezone" class="form-control">
                                 @foreach (DateTimeZone::listIdentifiers() as $timezone)
                                     <option autocomplete="off" value="{{ $timezone }}"
