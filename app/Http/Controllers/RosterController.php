@@ -17,7 +17,7 @@ class RosterController extends Controller {
     }
 
     public function staffIndex() {
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->where('status', '1')->get();
 
         $atm = $users->filter(function ($user) {
             return $user->hasRole('atm');
