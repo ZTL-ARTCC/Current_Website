@@ -129,6 +129,12 @@ class RosterUpdate extends Command {
 
         $users = User::where('status', 2)->get();
         foreach ($users as $u) {
+            if ($u->hasRole('ins')) {
+                $u->detachRole('ins');
+            }
+            if ($u->hasRole('mtr')) {
+                $u->detachRole('mtr');
+            }
             $u->initials = null;
             $u->save();
         }
