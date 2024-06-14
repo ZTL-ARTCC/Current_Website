@@ -306,7 +306,7 @@ class ControllerDash extends Controller {
         $event->banner_path = $event->displayBannerPath();
         $positions = EventPosition::where('event_id', $event->id)->orderBy('created_at', 'ASC')->get();
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
-            $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
+            $registrations = EventRegistration::where('event_id', $event->id)->where('status', EventRegistration::STATUSES['UNASSIGNED'])->orderBy('created_at', 'ASC')->get();
             $presets = PositionPreset::get()->pluck('name', 'id');
             $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name_rating', 'id');
         } else {
@@ -367,7 +367,7 @@ class ControllerDash extends Controller {
             $reg->position_id = $request->num1;
             $reg->start_time = $request->start_time1;
             $reg->end_time = $request->end_time1;
-            $reg->status = 0;
+            $reg->status = EventRegistration::STATUSES['UNASSIGNED'];
             $reg->choice_number = 1;
             $reg->remarks = $request->remarks;
             $reg->save();
