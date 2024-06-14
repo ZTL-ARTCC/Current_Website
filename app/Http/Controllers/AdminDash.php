@@ -1611,7 +1611,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->save();
 
         return redirect()->back()->with('success', 'The position has been assigned successfully.');
@@ -1619,7 +1619,7 @@ class AdminDash extends Controller {
 
     public function unassignPosition($id) {
         $position = EventRegistration::find($id);
-        $position->status = 0;
+        $position->status = EventRegistration::STATUSES['UNASSIGNED'];
         $position->save();
 
         return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
@@ -1654,7 +1654,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->reminder = 1;
         $reg->choice_number = 0;
         $reg->save();
