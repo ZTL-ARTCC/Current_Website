@@ -8,6 +8,11 @@ class EventRegistration extends Model {
     protected $table = 'event_registration';
     protected $fillable = ['id', 'event_id', 'controller_id', 'position_id', 'start_time', 'end_time', 'status', 'choice_number', 'comments', 'created_at', 'updated_at', 'reminder'];
 
+    public const STATUSES = [
+        "UNASSIGNED" => 0,
+        "ASSIGNED" => 1,
+    ];
+
     public function getControllerNameAttribute() {
         $controller = User::find($this->controller_id);
         if (isset($controller)) {
