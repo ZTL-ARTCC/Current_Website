@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model {
@@ -27,6 +28,10 @@ class Event extends Model {
         "CLOSED" => 0,
         "OPEN" => 1
     ];
+
+    public function eventStat(): HasOne {
+        return $this->hasOne(EventStat::class);
+    }
 
     public function getDateEditAttribute() {
         $date = new Carbon($this->date);
