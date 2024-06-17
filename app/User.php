@@ -5,11 +5,12 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
 
-class User extends Authenticatable {
+class User extends Authenticatable implements LaratrustUser {
     use Notifiable;
-    use LaratrustUserTrait;
+    use HasRolesAndPermissions;
     protected $table = 'roster';
     protected $guarded = [];
     protected $hidden = ['remember_token', 'json_token'];

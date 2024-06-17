@@ -101,7 +101,7 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="staff">Facility Staff</label>
-                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-control')->attributes([$roster_disable]) }}
+                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-control'])->attributes([$roster_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="events_staff">Events Staff</label>

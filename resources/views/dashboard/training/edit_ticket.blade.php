@@ -106,5 +106,5 @@ Edit Training Ticket
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js}}')"></script>
+<script src="{{asset('js/trainingticket.js')}}"></script>
 @endsection

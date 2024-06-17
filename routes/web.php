@@ -242,7 +242,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/', 'AdminDash@showFeedback');
             Route::post('/save/{id}', 'AdminDash@saveFeedback')->name('saveFeedback');
             Route::post('/hide/{id}', 'AdminDash@hideFeedback')->name('hideFeedback');
-            Route::post('/update/{id}', 'AdminDash@updateFeedback')->name('updateFeedbackAdminDash@storeAirport');
+            Route::post('/update/{id}', 'AdminDash@updateFeedback')->name('updateFeedback');
             Route::post('/email/{id}', 'AdminDash@emailFeedback')->name('emailFeedback');
         });
         Route::prefix('email')->middleware('permission:email')->group(function () {
@@ -305,7 +305,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 Route::get('/laratrust', function () {
     $user = App\User::find(1315134);
 
-    $user->attachRole('wm');
+    $user->addRole('wm');
 });
 */
 
