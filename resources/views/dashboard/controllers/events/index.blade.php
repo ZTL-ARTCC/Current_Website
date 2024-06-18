@@ -10,7 +10,13 @@ Events
 <div class="container">
     @if(Auth::user()->isAbleTo('events'))
         <a href="/dashboard/admin/events/new" class="btn btn-primary">New Event</a>
-        <br><br>
+    @endif
+
+
+    @if(Auth::user()->ability(['events-team'], ['staff', 'events']))
+         @toggle('realops')
+            <a href="/dashboard/admin/realops" class="btn btn-primary">Realops Admin</a>
+         @endtoggle
     @endif
     <table class="table table-bordered">
         <thead>
