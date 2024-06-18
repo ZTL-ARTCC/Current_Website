@@ -7,6 +7,8 @@ on:
         value: ${{ jobs.get-versions.outputs.php-version }}
       node-version:
         value: ${{ jobs.get-versions.outputs.node-version }}
+      tag-name:
+        value: ${{ jobs.generate-tag-name.outputs.tag-name }}
 
 jobs:
   get-versions:
@@ -28,4 +30,15 @@ jobs:
         run: |
           VERSION=$(cat .tool-versions | grep nodejs | cut -d" " -f 2)
           echo "node-version=$VERSION" >> $GITHUB_OUTPUT
+
+  generate-tag-name:
+    runs-on: ubuntu-latest
+    outputs:
+      tag-name: ${{ steps.generate-tag-name.outputs.tag-name }}
+
+    steps:
+      - id: generate-tag-name
+        run: |
+          DATE=$(date '+%Y.%m.%d')
+          echo "tag-name=v$DATE" >> $GITHUB_OUTPUT
 
