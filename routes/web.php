@@ -255,9 +255,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/archive/{id}', 'AdminDash@archiveIncident');
             Route::get('/delete/{id}', 'AdminDash@deleteIncident');
         });
-        Route::prefix('realops')->middleware('toggle:realops')->middleware('permission:staff')->group(function () {
+        Route::prefix('realops')->middleware('toggle:realops')->middleware('ability:events-team,staff,false')->group(function () {
             Route::get('/', 'RealopsController@adminIndex');
-            Route::get('/export', 'RealopsController@exportData');
             Route::get('/create', 'RealopsController@showCreateFlight');
             Route::post('/create', 'RealopsController@createFlight')->name('createFlight');
             Route::post('/create/bulk', 'RealopsController@bulkUploadFlights')->name('bulkUploadFlights');
@@ -267,8 +266,12 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::put('/assign-pilot/{id}', 'RealopsController@assignPilotToFlight')->name('assignPilotToFlight');
             Route::get('/remove-pilot/{id}', 'RealopsController@removePilotFromFlight');
             Route::get('/delete/{id}', 'RealopsController@deleteFlight');
+        Route::middleware('permission:staff')->group(function () {
+            Route::get('/export', 'RealopsController@exportData');
             Route::post('/dump-data', 'RealopsController@dumpData')->name('dumpData');
+            });
         });
+        
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@showFeatureToggles');
             Route::get('/create', 'AdminDash@showCreateFeatureToggle');
