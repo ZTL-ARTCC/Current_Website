@@ -1,4 +1,4 @@
-version: '3'
+name: 'ztl-local'
 services:
   mysql:
     image: mysql:latest
