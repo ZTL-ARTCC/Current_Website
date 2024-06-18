@@ -266,9 +266,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::put('/assign-pilot/{id}', 'RealopsController@assignPilotToFlight')->name('assignPilotToFlight');
             Route::get('/remove-pilot/{id}', 'RealopsController@removePilotFromFlight');
             Route::get('/delete/{id}', 'RealopsController@deleteFlight');
-        Route::middleware('permission:staff')->group(function () {
-            Route::get('/export', 'RealopsController@exportData');
-            Route::post('/dump-data', 'RealopsController@dumpData')->name('dumpData');
+            Route::middleware('permission:staff')->group(function () {
+                Route::get('/export', 'RealopsController@exportData');
+                Route::post('/dump-data', 'RealopsController@dumpData')->name('dumpData');
             });
         });
         
