@@ -286,29 +286,3 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 /*
 *   End Controller Dashboard
 */
-
-/*
-*   Cron Jobs
-*   URL: https://ztlv2.team-stringer.com/cron-job/run?j=[Cron Job]&t=[Token]
-*/
-//Route::get('/cron-job/run', 'CronController@index');
-/*
-*   End Cron Job
-*/
-
-/*
-*	Webmaster Permission Grant
-*	Use this to grant yourself webmaster privileges. Should be disabled for security reasons.
-*/
-
-/*
-Route::get('/laratrust', function () {
-    $user = App\User::find(1315134);
-
-    $user->addRole('wm');
-});
-*/
-
-/*
-*	End Webmaster Permission Grant
-*/
