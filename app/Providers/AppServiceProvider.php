@@ -20,6 +20,30 @@ class AppServiceProvider extends ServiceProvider {
         Blade::if('toggle', function ($toggle_name) {
             return toggleEnabled($toggle_name);
         });
+
+        /**
+         * Paginate a standard Laravel Collection.
+         *
+         * @param int $perPage
+         * @param int $total
+         * @param int $page
+         * @param string $pageName
+         * @return array
+         */
+        Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
+            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
+
+            return new LengthAwarePaginator(
+                $this->forPage($page, $perPage)->values(),
+                $total ?: $this->count(),
+                $perPage,
+                $page,
+                [
+                    'path' => LengthAwarePaginator::resolveCurrentPath(),
+                    'pageName' => $pageName,
+                ]
+            );
+        });
     }
 
     /**
@@ -28,6 +52,5 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register(): void {
-        //
     }
 }
