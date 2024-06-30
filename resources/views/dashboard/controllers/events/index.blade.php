@@ -86,5 +86,8 @@ Events
             @endif
         </tbody>
     </table>
+    @if(method_exists($events,'links'))
+       {!! $events->links() !!}
+    @endif
 </div>
 @endsection
