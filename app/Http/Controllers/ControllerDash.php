@@ -362,7 +362,6 @@ class ControllerDash extends Controller {
     public function showEvents() {
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $events = Event::all()->sortByDesc('date_stamp')->paginate(10);
-
         } else {
             $events = Event::where('status', 1)->get()->sortByDesc('date_stamp');
         }
