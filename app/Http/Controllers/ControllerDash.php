@@ -361,13 +361,10 @@ class ControllerDash extends Controller {
 
     public function showEvents() {
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
-            $events = Event::where('status', 0)->orWhere('status', 1)->get()->sortByDesc(function ($e) {
-                return strtotime($e->date);
-            });
+            $events = Event::all()->sortByDesc('date_stamp')->paginate(10);
+
         } else {
-            $events = Event::where('status', 1)->get()->sortByDesc(function ($e) {
-                return strtotime($e->date);
-            });
+            $events = Event::where('status', 1)->get()->sortByDesc('date_stamp');
         }
         foreach ($events as $e) {
             $e->banner_path = $e->displayBannerPath();
