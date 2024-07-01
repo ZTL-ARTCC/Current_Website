@@ -48,97 +48,19 @@ class ControllerDash extends Controller {
         });
         $announcement = Announcement::find(1);
 
-        $now = Carbon::now();
-        $last = Carbon::now()->subYear(1);
+        $last_month = Carbon::now()->subMonth(1);
+        $prev_month = Carbon::now()->subMonth(2);
+        $last_year = Carbon::now()->subYear(1);
 
-        $nmonth = $now->month;
-        $year = substr($now->year, -2);
-        $lyear = substr($last->year, -2);
-        $month = $nmonth - '1';
-        $pmonth = $month - '1';
-
-        if ($month == 1) {
-            $month_words = 'January';
-        } elseif ($month == 2) {
-            $month_words = 'Febuary';
-        } elseif ($month == 3) {
-            $month_words = 'March';
-        } elseif ($month == 4) {
-            $month_words = 'April';
-        } elseif ($month == 5) {
-            $month_words = 'May';
-        } elseif ($month == 6) {
-            $month_words = 'June';
-        } elseif ($month == 7) {
-            $month_words = 'July';
-        } elseif ($month == 8) {
-            $month_words = 'August';
-        } elseif ($month == 9) {
-            $month_words = 'September';
-        } elseif ($month == 10) {
-            $month_words = 'October';
-        } elseif ($month == 11) {
-            $month_words = 'November';
-        } elseif ($month == 12 || $month == 0) {
-            $month_words = 'December';
-        }
-
-        if ($pmonth == 1) {
-            $pmonth_words = 'January';
-        } elseif ($pmonth == 2) {
-            $pmonth_words = 'Febuary';
-        } elseif ($pmonth == 3) {
-            $pmonth_words = 'March';
-        } elseif ($pmonth == 4) {
-            $pmonth_words = 'April';
-        } elseif ($pmonth == 5) {
-            $pmonth_words = 'May';
-        } elseif ($pmonth == 6) {
-            $pmonth_words = 'June';
-        } elseif ($pmonth == 7) {
-            $pmonth_words = 'July';
-        } elseif ($pmonth == 8) {
-            $pmonth_words = 'August';
-        } elseif ($pmonth == 9) {
-            $pmonth_words = 'September';
-        } elseif ($pmonth == 10) {
-            $pmonth_words = 'October';
-        } elseif ($pmonth == 11 || $pmonth == -1) {
-            $pmonth_words = 'November';
-        } elseif ($pmonth == 12 || $pmonth == 0) {
-            $pmonth_words = 'December';
-        }
-
-        if ($month < 1) {
-            $year = substr($now->year, -2) - '1';
-            if ($month == -1) {
-                $month = 11;
-            } elseif ($month == 0) {
-                $month = 12;
-            }
-        } else {
-            $year = substr($now->year, -2);
-        }
-        $winner = Bronze::where('month', $month)->where('year', $year)->first();
-        $winner_local = LocalHero::where('month', $month)->where('year', $year)->first();
-
-        if ($pmonth < 1) {
-            $pyear = substr($now->year, -2) - '1';
-            if ($pmonth == -1) {
-                $pmonth = 11;
-            } elseif ($pmonth == 0) {
-                $pmonth = 12;
-            }
-        } else {
-            $pyear = substr($now->year, -2);
-        }
-        $pwinner = Bronze::where('month', $pmonth)->where('year', $pyear)->first();
-        $pwinner_local = LocalHero::where('month', $pmonth)->where('year', $pyear)->first();
-        $pyrite = Pyrite::where('year', $lyear)->first();
+        $winner_bronze = Bronze::where('month', $last_month->format('n'))->where('year', $last_month->format('y'))->first();
+        $winner_local = LocalHero::where('month', $last_month->format('n'))->where('year', $last_month->format('y'))->first();
+        $prev_winner_bronze = Bronze::where('month', $prev_month->format('n'))->where('year', $prev_month->format('y'))->first();
+        $prev_winner_local = LocalHero::where('month', $prev_month->format('n'))->where('year', $prev_month->format('y'))->first();
+        $pyrite = Pyrite::where('year', $last_year->format('y'))->first();
 
         $default_challenge_description = "Control any field/any position other than ATL, CLT, and ZTL";
-        $local_hero_challenge_this_month = LocalHeroChallenges::where('year', $year)->where('month', $month)->first();
-        $local_hero_challenge_prev_month = LocalHeroChallenges::where('year', $pyear)->where('month', $pmonth)->first();
+        $local_hero_challenge_this_month = LocalHeroChallenges::where('year', $last_month->format('y'))->where('month', $prev_month->format('n'))->first();
+        $local_hero_challenge_prev_month = LocalHeroChallenges::where('year', $prev_month->format('y'))->where('month', $prev_month->format('n'))->first();
         $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->title : $default_challenge_description;
         $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->title : $default_challenge_description;
 
@@ -160,11 +82,11 @@ class ControllerDash extends Controller {
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
-                                          ->with('winner', $winner)->with('pwinner', $pwinner)->with('month_words', $month_words)->with('pmonth_words', $pmonth_words)
+                                          ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
                                           ->with('events', $events)
-                                          ->with('pyrite', $pyrite)->with('lyear', $lyear)
-                                          ->with('winner_local', $winner_local)->with('pwinner_local', $pwinner_local)
+                                          ->with('pyrite', $pyrite)->with('lyear', $last_year->format('Y'))
+                                          ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
                                           ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
     }
