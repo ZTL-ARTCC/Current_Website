@@ -103,6 +103,8 @@ class AdminDash extends Controller {
             'apt' => 'required',
             'url' => 'required',
             'sim' => 'required',
+            'price' => 'required',
+            'currency' => 'required',
             'dev' => 'required'
         ]);
 
@@ -111,6 +113,8 @@ class AdminDash extends Controller {
         $scenery->developer = $request->input('dev');
         $scenery->sim = $request->input('sim');
         $scenery->link = $request->input('url');
+        $scenery->price = $request->input('price');
+        $scenery->currency = $request->input('currency');
         $scenery->image1 = $request->input('image1');
         $scenery->image2 = $request->input('image2');
         $scenery->image3 = $request->input('image3');
