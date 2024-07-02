@@ -45,8 +45,8 @@ class TrainingReminderEmails extends Command {
                 ->join('ea_users AS customer_user', 'ea_appointments.id_users_customer', '=', 'customer_user.id')
                 ->join('ea_users AS staff_user', 'ea_appointments.id_users_provider', '=', 'staff_user.id')
                 ->select('customer_user.first_name AS first_name', 'customer_user.last_name AS last_name', 'customer_user.email AS email', 'ea_appointments.start_datetime AS start_datetime', 'ea_services.name AS service_description', 'staff_user.first_name AS staff_first_name', 'staff_user.last_name AS staff_last_name')
-                ->where('ea_appointments.start_datetime', '>', Carbon::now('America/New_York')->format('Y-m-d H:i:s'))
-//                ->where('ea_appointments.start_datetime', '<', Carbon::now('America/New_York')->subHours(1)->format('Y-m-d H:i:s'))
+                ->where('ea_appointments.start_datetime', '>', Carbon::now('America/New_York')->subHours(23)->format('Y-m-d H:i:s'))
+                ->where('ea_appointments.start_datetime', '<', Carbon::now('America/New_York')->subHours(24)->format('Y-m-d H:i:s'))
                 ->get();
             foreach ($ea_appointments as $ea_appointment) {
                 $this->info('Sending email reminder to ' . $ea_appointment->first_name . ' ' . $ea_appointment->last_name . ' for ' . $ea_appointment->service_description . ' with ' . $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name . ' on ' . Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y') . ' ' . Carbon::parse($ea_appointment->start_datetime)->format('H:i') . ' ET');
