@@ -268,7 +268,7 @@ return [
         | Turn this value to false if you don't want to use Laratrust admin panel
         |
         */
-        'register' => false,
+        'register' => true,
 
         /*
         |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
         | The route where the go back link should point
         |
         */
-        'go_back_route' => '/',
+        'go_back_route' => '/dashboard',
 
         /*
         |--------------------------------------------------------------------------
@@ -310,7 +310,7 @@ return [
         | These middleware will get attached onto each Laratrust panel route.
         |
         */
-        'middleware' => ['web'],
+        'middleware' => ['web', 'role:wm,awm'],
 
         /*
         |--------------------------------------------------------------------------
@@ -320,7 +320,7 @@ return [
         | Enable/Disable the permissions assignment to the users.
         |
         */
-        'assign_permissions_to_user' => true,
+        'assign_permissions_to_user' => false,
 
         /*
         |--------------------------------------------------------------------------
