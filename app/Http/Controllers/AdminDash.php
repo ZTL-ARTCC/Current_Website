@@ -152,7 +152,7 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'FAA' => 'required|unique:airports,ltr_3',
-            'ICAO' => 'required'
+            'ICAO' => 'required|unique:airports,ltr_4'
         ]);
 
         $a = new Airport;
@@ -347,35 +347,35 @@ class AdminDash extends Controller {
             $staff_roles = $user->facility_staff;
             foreach ($staff_roles as $staff_role) {
                 if ($user->hasRole(strtolower($staff_role))) {
-                    $user->detachRole(strtolower($staff_role));
+                    $user->removeRole(strtolower($staff_role));
                 }
             }
             $staff_roles = $user->getMagicNumber('FACILITY_STAFF_POSITION_MAP');
             foreach ($staff_roles as $role_id => $staff_role) {
                 if ($request->input('staff') == $role_id) {
-                    $user->attachRole($staff_role);
+                    $user->addRole($staff_role);
                 }
             }
 
             if ($user->hasRole(['mtr', 'ins']) == true) {
                 if ($user->hasRole('mtr')) {
-                    $user->detachRole('mtr');
+                    $user->removeRole('mtr');
                     $user->save();
                 } elseif ($user->hasRole('ins')) {
-                    $user->detachRole('ins');
+                    $user->removeRole('ins');
                     $user->save();
                 }
             }
 
             if ($request->input('training') == 1) {
-                $user->attachRole('mtr');
+                $user->addRole('mtr');
                 if ($user->train_pwr == null) {
                     $user->train_pwr = 1;
                     $user->monitor_pwr = 1;
                     $user->save();
                 }
             } elseif ($request->input('training') == 2) {
-                $user->attachRole('ins');
+                $user->addRole('ins');
                 if ($user->train_pwr == null) {
                     $user->train_pwr = 6;
                     $user->monitor_pwr = 6;
@@ -384,7 +384,10 @@ class AdminDash extends Controller {
             }
         }
         if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
-            $positions = ['gnd','twr','app','ctr','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
+            $positions = ['gnd','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
+            foreach ($positions as $position) {
+                $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
+            }
             $positions = ['twr','app','ctr'];
             $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
                 'twr' => 'GSO',
@@ -413,10 +416,9 @@ class AdminDash extends Controller {
                     $cert->save();
                     $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
                     (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
+                } else {
+                    $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
                 }
-            }
-            foreach ($positions as $position) {
-                $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
             }
             $user->twr_solo_fields = $request->input('twr_solo_fields');
             $user->save();
@@ -424,20 +426,20 @@ class AdminDash extends Controller {
         if (Auth::user()->isAbleTo('roster') || Auth::user()->hasRole('ec')) { // Update events team
             if ($user->hasRole(['aec','aec-ghost','events-team']) == true) {
                 if ($user->hasRole('aec')) {
-                    $user->detachRole('aec');
+                    $user->removeRole('aec');
                 } elseif ($user->hasRole('aec-ghost')) {
-                    $user->detachRole('aec-ghost');
+                    $user->removeRole('aec-ghost');
                 } elseif ($user->hasRole('events-team')) {
-                    $user->detachRole('events-team');
+                    $user->removeRole('events-team');
                 }
             }
 
             if ($request->input('events_staff') == 1) {
-                $user->attachRole('aec');
+                $user->addRole('aec');
             } elseif ($request->input('events_staff') == 2) {
-                $user->attachRole('aec-ghost');
+                $user->addRole('aec-ghost');
             } elseif ($request->input('events_staff') == 3) {
-                $user->attachRole('events-team');
+                $user->addRole('events-team');
             }
             $user->save();
         }
@@ -471,8 +473,16 @@ class AdminDash extends Controller {
     }
 
     public function allowVisitReq(Request $request) {
+        $validator = $request->validate([
+            'cid' => 'required'
+        ]);
+
         $id = $request->cid;
         $visitrej = VisitRej::where('cid', $id)->first();
+
+        if ($visitrej == null) {
+            return redirect('/dashboard/controllers/roster')->with('error', 'Controller not found.');
+        }
         $visitrej->delete();
 
         $audit = new Audit;

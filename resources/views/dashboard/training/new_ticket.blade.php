@@ -8,43 +8,43 @@ New Training Ticket
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
 <div class="container">
-    {!! Form::open(['action' => 'TrainingDash@saveNewTicket']) !!}
+    {{ html()->form()->route('saveNewTicket')->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('controller', 'Controller', ['class' => 'form-label']) !!}
+                    <label for="controller" class="form-label">Controller</label>
                     @php
                         $c = (is_null($c)) ? null : $c;
                     @endphp
-                    {!! Form::select('controller', $controllers, $c, ['placeholder' => 'Select Controller', 'class' => 'form-control']) !!}
+                    {{ html()->select('controller', $controllers, $c)->placeholder('Select Controller')->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('position', 'Session Category', ['class' => 'form-label']) !!}
-                    {!! Form::select('position', $positions, null, ['placeholder' => 'Select Training Session', 'class' => 'form-control']) !!}
+                    <label for="position" class="form-label">Session Category</label>
+                    {{ html()->select('position', $positions, null)->placeholder('Select Training Session')->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('session_id', 'Session ID', ['class' => 'form-label']) !!}
-                    {!! Form::select('session_id', $session_ids, null, ['placeholder' => 'Select Session ID', 'class' => 'form-control']) !!}
+                    <label for="session_id" class="form-label">Session ID</label>
+                    {{ html()->select('session_id', $session_ids, null)->placeholder('Select Session ID')->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('type', 'Progress', ['class' => 'form-label']) !!}
-                    {!! Form::select('type', $progress_types, null, ['placeholder' => 'Select Progress Type', 'class' => 'form-control']) !!}
+                    <label for="type" class="form-label">Progress</label>
+                    {{ html()->select('type', $progress_types, null)->placeholder('Select Progress Type')->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('date', 'Date', ['class' => 'form-label']) !!}
+                    <label for="date" class="form-label">Date</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {!! Form::text('date', null, ['placeholder' => 'MM/DD/YYYY', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker1']) !!}
+                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -57,25 +57,25 @@ New Training Ticket
 						$currentDateET = new DateTime("now", new DateTimeZone('America/New_York') ); 
 						$currentTimeET = $currentDateET->format('H:i');
 					@endphp
-                    {!! Form::label('start', 'Start Time ET (now ' . $currentTimeET . ')', ['class' => 'form-label']) !!}
+                    <label for="start" class="form-label">Start Time ET (now {{ $currentTimeET }})</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
-                        {!! Form::text('start', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker2']) !!}
+                        {{ html()->text('start', null)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('end', 'End Time ET', ['class' => 'form-label']) !!}
+                    <label for="end" class="form-label">End Time ET</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
-                        {!! Form::text('end', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker3']) !!}
+                        {{ html()->text('end', null)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker3']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    {!! Form::label('duration', 'Duration (hh:mm)', ['class' => 'form-label']) !!}
+                    <label for="duration" class="form-label">Duration (hh:mm)</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker4" data-target-input="nearest">
-                        {!! Form::text('duration', null, ['placeholder' => '00:00', 'class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker4']) !!}
+                        {{ html()->text('duration', null)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker4']) }}
                     </div>
                 </div>
             </div>
@@ -83,29 +83,29 @@ New Training Ticket
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    {!! Form::label('comments', 'Comments (Visible to Controller and other Trainers)', ['class' => 'form-label']) !!}
-                    {!! Form::textArea('comments', null, ['class' => 'form-control']) !!}
+                    <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>
+                    {{ html()->textarea('comments', null)->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    {!! Form::label('trainer_comments', 'Trainer Comments (Visible to Only Other Trainers)', ['class' => 'form-label']) !!}
-                    {!! Form::textArea('trainer_comments', null, ['class' => 'form-control']) !!}
+                    <label for="trainer_comments" class="form-label">Trainer Comments (Visible to Only Other Trainers)</label>
+                    {{ html()->textarea('trainer_comments', null)->class(['form-control']) }}
                 </div>
             </div>
         </div>
-        {!! Form::label('ots', 'Recommend for OTS?', ['class' => 'form-label']) !!}
-        {!! Form::checkBox('ots', '1') !!}
+        <label for="ots" class="form-label">Recommend for OTS?</label>
+        {{ html()->checkbox('ots', false, '1') }}
         <br>
-		{!! Form::label('monitor', 'Can be monitored', ['class' => 'form-label']) !!}
-		{!! Form::checkBox('monitor', '1') !!}
+        <label for="monitor" class="form-label">Can be monitored</label>
+		{{ html()->checkbox('monitor', false, '1') }}
 		<br>
-	    {!! Form::label('cert', 'Certification or Solo Issued', ['class' => 'form-label']) !!}
-		{!! Form::checkBox('cert', 1) !!}
+        <label for="cert" class="form-label">Certification or Solo Issued</label>
+		{{ html()->checkbox('cert', false, 1) }}
 		<br>
         <button class="btn btn-success" action="submit">Submit Ticket</button>
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
-{{Html::script(asset('js/trainingticket.js'))}}
+<script src="{{asset('js/trainingticket.js')}}"></script>
 @endsection

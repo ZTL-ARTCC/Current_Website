@@ -124,7 +124,7 @@ class LoginController extends Controller {
                 $devUser->save();
                 $userstatuscheck = $devUser;
             }
-            $userstatuscheck->attachRole('wm');
+            $userstatuscheck->addRole('wm');
             $userstatuscheck->save();
 
             auth()->login($userstatuscheck, true);

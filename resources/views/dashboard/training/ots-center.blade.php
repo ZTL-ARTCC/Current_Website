@@ -59,15 +59,15 @@ OTS Center
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['TrainingDash@assignRecommendation', $o->id]]) !!}
+                                        {{ html()->form()->route('assignRecommendation', [$o->id])->open() }}
                                         @csrf
                                         <div class="modal-body">
-                                        {!! Form::select('ins', $instructors, null, ['placeholder' => 'Select Instructor', 'class' => 'form-control']) !!}
+                                        {{ html()->select('ins', $instructors, null)->placeholder('Select Instructor')->class(['form-control']) }}
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                             <button action="submit" class="btn btn-success">Assign</button>
                                         </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>
@@ -119,19 +119,19 @@ OTS Center
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {!! Form::open(['action' => ['TrainingDash@completeOTS', $o->id], 'files' => 'true']) !!}
+                                        {{ html()->form()->route('completeOTS', [$o->id])->acceptsFiles()->open() }}
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                {!! Form::label('result', 'Result') !!}
-                                                {!! Form::select('result', [2 => 'Pass', 3 => 'Fail'], null, ['placeholder' => 'Select Result', 'class' => 'form-control']) !!}
+                                                <label for="result">Result</label>
+                                                {{ html()->select('result', [2 => 'Pass', 3 => 'Fail'], null)->placeholder('Select Result')->class(['form-control']) }}
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button action="submit" class="btn btn-success">Set Complete</button>
                                         </div>
-                                        {!! Form::close() !!}
+                                        {{ html()->form()->close() }}
                                     </div>
                                 </div>
                             </div>

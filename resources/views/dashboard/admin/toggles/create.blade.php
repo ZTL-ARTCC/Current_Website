@@ -8,21 +8,21 @@ New Feature Toggle
 @include('inc.header', ['title' => 'New Feature Toggle'])
 
 <div class="container">
-    {!! Form::open(['action' => 'AdminDash@createFeatureToggle']) !!}
+    {{ html()->form()->route('createFeatureToggle')->open() }}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::label('toggle_name', 'Toggle Name') !!}
-                    {!! Form::text('toggle_name', null, ['class' => 'form-control', 'placeholder' => 'new_toggle_name']) !!}
+                    <label for="toggle_name">Toggle Name</label>
+                    {{ html()->text('toggle_name', null)->class(['form-control'])->placeholder('new_toggle_name') }}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('toggle_description', 'Toggle Description') !!}
-                    {!! Form::text('toggle_description', null, ['class' => 'form-control', 'placeholder' => 'Description']) !!}
+                    <label for="toggle_description">Toggle Description</label>
+                    {{ html()->text('toggle_description', null)->class(['form-control'])->placeholder('Description') }}
                 </div>
             </div>
         </div>
         <button class="btn btn-success" type="submit">Add</button>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @endsection

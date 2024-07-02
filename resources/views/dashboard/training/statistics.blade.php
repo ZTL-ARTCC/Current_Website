@@ -15,13 +15,13 @@ Training Statistics
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {!! Form::open(['action' => ['TrainingDash@statistics'], 'method' => 'get']) !!}
+                {{ html()->form('GET')->route('statistics')->open() }}
                 @php ($yearOfMonthsLookback = array())
                 @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
                 @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))
                 @endforeach
-                {!! Form::select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']), ['class' => 'form-control', 'onchange'=>"this.form.submit();"]) !!}
-                {!! Form::close() !!}
+                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['onchange'=>"this.form.submit();"]) }}
+                {{ html()->form()->close() }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>
@@ -56,20 +56,20 @@ Training Statistics
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ Html::image('/dashboard/training/statistics/graph?id=1&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions per month') }}
+                {{ html()->img('/dashboard/training/statistics/graph?id=1&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions per month') }}
             </div>
             <br />
             <div class="card">
-                {{ Html::image('/dashboard/training/statistics/graph?id=2&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions by instructor and type') }}
+                {{ html()->img('/dashboard/training/statistics/graph?id=2&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions by instructor and type') }}
             </div>
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ Html::image('/dashboard/training/statistics/graph?id=3&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Average session duration') }}
+                {{ html()->img('/dashboard/training/statistics/graph?id=3&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Average session duration') }}
             </div>
             <br />
             <div class="card">
-                {{ Html::image('/dashboard/training/statistics/graph?id=4&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Students requiring training') }}
+                {{ html()->img('/dashboard/training/statistics/graph?id=4&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Students requiring training') }}
             </div>
         </div>
     </div>

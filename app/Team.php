@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Laratrust\Models\LaratrustTeam;
+use Laratrust\Models\Team as TeamModel;
 
-class Team extends LaratrustTeam {
+class Team extends TeamModel {
     //
 }

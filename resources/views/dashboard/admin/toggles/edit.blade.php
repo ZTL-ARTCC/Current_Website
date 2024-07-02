@@ -8,22 +8,22 @@ Edit Feature Toggle
 @include('inc.header', ['title' => 'Edit Feature Toggle'])
 
 <div class="container">
-    {!! Form::open(['action' => 'AdminDash@editFeatureToggle']) !!}
+    {{ html()->form()->route('editFeatureToggle')->open() }}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::label('toggle_name', 'Toggle Name') !!}
-                    {!! Form::text('toggle_name', $t->toggle_name, ['class' => 'form-control', 'placeholder' => 'new_toggle_name']) !!}
-                    {!! Form::hidden('toggle_name_orig', $t->toggle_name) !!}
+                    <label for="toggle_name">Toggle Name</label>
+                    {{ html()->text('toggle_name', $t->toggle_name)->class(['form-control'])->placeholder('new_toggle_name') }}
+                    {{ html()->hidden('toggle_name_orig', $t->toggle_name) }}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('toggle_description', 'Toggle Description') !!}
-                    {!! Form::text('toggle_description', $t->toggle_description, ['class' => 'form-control', 'placeholder' => 'Description']) !!}
+                    <label for="toggle_description">Toggle Description</label>
+                    {{ html()->text('toggle_description', $t->toggle_description)->class(['form-control'])->placeholder('Description') }}
                 </div>
             </div>
         </div>
         <button class="btn btn-success" type="submit">Save</button>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 </div>
 @endsection

@@ -17,10 +17,14 @@
     <span data-toggle="modal" data-target="#upload">
         <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
     </span>
+
+@if (Auth::user()->isAbleTo('staff'))
     <span data-toggle="modal" data-target="#dump">
         <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Dump all Data</button>
     </span>
     <a href="/dashboard/admin/realops/export" class="btn btn-success">Export Data</a>
+@endif
+
 </div>
 <table class="table table-bordered table-striped text-center">
     <thead>
@@ -90,15 +94,15 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        {!! Form::open(['action' => ['RealopsController@assignPilotToFlight', $f->id], 'method' => 'PUT']) !!}
+                        {{ html()->form('PUT')->route('assignPilotToFlight', [$f->id])->open() }}
                         @csrf
                         <div class="modal-body">
-                        {!! Form::select('pilot', $pilots, null, ['placeholder' => 'Select Pilot', 'class' => 'form-control']) !!}
+                        {{ html()->select('pilot', $pilots, null)->placeholder('Select Pilot')->class(['form-control']) }}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button action="submit" class="btn btn-success">Assign</button>
                         </div>
-                        {!! Form::close() !!}
+                        {{ html()->form()->close() }}
                     </div>
                 </div>
             </div>
@@ -119,17 +123,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['action' => 'RealopsController@bulkUploadFlights', 'files' => 'true']) !!}
+            {{ html()->form()->route('bulkUploadFlights')->acceptsFiles()->open() }}
             @csrf
             <div class="modal-body">
-                {!! Form::label('file', 'Upload CSV File of Flights') !!}
-                {!! Form::file('file', ['class' => 'form-control', 'accept' => '.csv']) !!}
+                <label for="file">Upload CSV File of Flights</label>
+                {{ html()->file('file')->class(['form-control'])->attributes(['accept' => '.csv']) }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-success">Upload</button>
             </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
@@ -143,17 +147,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['action' => 'RealopsController@dumpData']) !!}
+            {{ html()->form()->route('dumpData')->open() }}
             @csrf
             <div class="modal-body">
                 <p>Danger zone! This will dump all realops data and there is no way to reverse this action. Type <b>confirm - dump all</b> to proceed.</p>
-                {!! Form::text('confirm_text', null, ['class' => 'form-control', 'placeholder' => 'confirm - dump all']) !!}
+                {{ html()->text('confirm_text', null)->class(['form-control'])->placeholder('confirm - dump all') }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-danger">Continue</button>
             </div>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

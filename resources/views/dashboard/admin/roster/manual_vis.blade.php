@@ -8,19 +8,19 @@ New Visitor
 @include('inc.header', ['title' => 'New Visitor'])
 
 <div class="container">
-    {!! Form::open(['action' => 'AdminDash@storeVisitor']) !!}
+    {{ html()->form()->route('storeVisitor')->open() }}
         @csrf
         @if($visitor != null)
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('cid', 'CID') !!}
-                        {!! Form::text('cid', $visitor->cid, ['class' => 'form-control', 'disabled']) !!}
-                        {!! Form::hidden('cid', $visitor->cid) !!}
+                        <label for="cid">CID</label>
+                        {{ html()->text('cid', $visitor->cid)->class(['form-control'])->attributes(['disabled']) }}
+                        {{ html()->hidden('cid', $visitor->cid) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('rating_id', 'Rating') !!}
-                        {!! Form::select('rating_id', [
+                        <label for="rating_id">Rating</label>
+                        {{ html()->select('rating_id', [
                             0 => 'Pilot',
                             1 => 'Observer (OBS)',
                             2 => 'Student 1 (S1)',
@@ -32,31 +32,31 @@ New Visitor
                             10 => 'Senior Instructor (I3)',
                             11 => 'Supervisor (SUP)',
                             12 => 'Admin (ADM)',
-                        ], $visitor->rating, ['class' => 'form-control']) !!}
+                        ], $visitor->rating)->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('fname', 'First Name') !!}
-                        {!! Form::text('fname', $visitor->fname, ['class' => 'form-control']) !!}
+                        <label for="fname">First Name</label>
+                        {{ html()->text('fname', $visitor->fname)->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('lname', 'Last Name') !!}
-                        {!! Form::text('lname', $visitor->lname, ['class' => 'form-control']) !!}
+                        <label for="lname">Last Name</label>
+                        {{ html()->text('lname', $visitor->lname)->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('email', 'Email') !!}
-                        {!! Form::text('email', $visitor->email, ['class' => 'form-control']) !!}
+                        <label for="email">Email</label>
+                        {{ html()->text('email', $visitor->email)->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('initials', 'Initials') !!}
-                        {!! Form::text('initials', $initials, ['class' => 'form-control']) !!}
+                        <label for="initials">Initials</label>
+                        {{ html()->text('initials', $initials)->class(['form-control']) }}
                     </div>
                 </div>
             </div>
@@ -64,11 +64,11 @@ New Visitor
                 <div class="row">
                     <div class="col-sm-6">
                         @if($visitor->facility == 'ZZN')
-                            {!! Form::label('visitor_from', 'Visiting From') !!}
-                            {!! Form::text('visitor_from', null, ['placeholder' => 'Home ARTCC/Division', 'class' => 'form-control']) !!}
+                            <label for="visitor_from">Visiting From</label>
+                            {{ html()->text('visitor_from', null)->placeholder('Home ARTCC/Division')->class(['form-control']) }}
                         @else
-                            {!! Form::label('visitor_from', 'Visiting From') !!}
-                            {!! Form::text('visitor_from', $visitor->facility, ['class' => 'form-control']) !!}
+                            <label for="visitor_from">Visiting From</label>
+                            {{ html()->text('visitor_from', $visitor->facility)->class(['form-control']) }}
                         @endif
                     </div>
                 </div>
@@ -80,12 +80,12 @@ New Visitor
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('cid', 'CID') !!}
-                        {!! Form::text('cid', null, ['placeholder' => 'Controller CID', 'class' => 'form-control']) !!}
+                        <label for="cid">CID</label>
+                        {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('rating_id', 'Rating') !!}
-                        {!! Form::select('rating_id', [
+                        <label for="rating_id">Rating</label>
+                        {{ html()->select('rating_id', [
                             0 => 'Pilot',
                             1 => 'Observer (OBS)',
                             2 => 'Student 1 (S1)',
@@ -97,39 +97,39 @@ New Visitor
                             10 => 'Senior Instructor (I3)',
                             11 => 'Supervisor (SUP)',
                             12 => 'Admin (ADM)',
-                        ], null, ['placeholder' => 'Select Rating', 'class' => 'form-control']) !!}
+                        ], null)->placeholder(' => Select Rating')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('fname', 'First Name') !!}
-                        {!! Form::text('fname', null, ['placeholder' => 'First Name', 'class' => 'form-control']) !!}
+                        <label for="fname">First Name</label>
+                        {{ html()->text('fname', null)->placeholder('First Name')->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! Form::label('lname', 'Last Name') !!}
-                        {!! Form::text('lname', null, ['placeholder' => 'Last Name', 'class' => 'form-control']) !!}
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6">
-                        {!! Form::label('email', 'Email') !!}
-                        {!! Form::text('email', null, ['placeholder' => 'Email', 'class' => 'form-control']) !!}
-                    </div>
-                    <div class="col-sm-6">
-                        {!! Form::label('initials', 'Initials') !!}
-                        {!! Form::text('initials', null, ['placeholder' => 'Initials', 'class' => 'form-control']) !!}
+                        <label for="lname">Last Name</label>
+                        {{ html()->text('lname', null)->placeholder('Last Name')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Form::label('visitor_from', 'Visiting From') !!}
-                        {!! Form::text('visitor_from', null, ['placeholder' => 'Home ARTCC/Division', 'class' => 'form-control']) !!}
+                        <label for="email">Email</label>
+                        {{ html()->text('email', null)->placeholder('Email')->class(['form-control']) }}
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="initials">Initials</label>
+                        {{ html()->text('initials', null)->placeholder('Initials')->class(['form-control']) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="visitor_from">Visiting From</label>
+                        {{ html()->text('visitor_from', null)->placeholder('Home ARTCC/Division')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@ New Visitor
             <button class="btn btn-success" type="submit">Save</button>
             <a class="btn btn-danger" href="/dashboard/admin/roster/visit/requests">Cancel</a>
         </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
         </div>
 </div>
 @endsection

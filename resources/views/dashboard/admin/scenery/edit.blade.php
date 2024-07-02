@@ -8,53 +8,53 @@ Edit Scenery
 @include('inc.header', ['title' => 'Edit Scenery'])
 
 <div class="container">
-    {!! Form::open(['action' => ['AdminDash@saveScenery', $scenery->id]]) !!}
+    {{ html()->form()->route('saveScenery', [$scenery->id])->open() }}
         @csrf
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::label('apt', 'Airport Name') !!}
-                    {!! Form::text('apt', $scenery->airport, ['class' => 'form-control']) !!}
+                    <label for="apt">Airport Name</label>
+                    {{ html()->text('apt', $scenery->airport)->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('sim', 'Simulator/AFCAD') !!}
-                    {!! Form::select('sim', [
+                    <label for="sim">Simulator/AFCAD</label>
+                    {{ html()->select('sim', [
                         0 => 'FSX/P3D',
                         1 => 'X-Plane',
                         2 => 'AFCAD'
-                    ], $scenery->sim, ['class' => 'form-control']) !!}
+                    ], $scenery->sim)->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
-                    {!! Form::label('url', 'Link to Scenery') !!}
-                    {!! Form::text('url', $scenery->link, ['class' => 'form-control']) !!}
+                    <label for="url">Link to Scenery</label>
+                    {{ html()->text('url', $scenery->link)->class(['form-control']) }}
                 </div>
                 <div class="col-sm-6">
-                    {!! Form::label('dev', 'Developer') !!}
-                    {!! Form::text('dev', $scenery->developer, ['class' => 'form-control']) !!}
+                    <label for="dev">Developer</label>
+                    {{ html()->text('dev', $scenery->developer)->class(['form-control']) }}
                 </div>
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('image1', 'Image 1') !!}
-            {!! Form::text('image1', $scenery->image1, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+            <label for="image1">Image 1</label>
+            {{ html()->text('image1', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {!! Form::label('image2', 'Image 2') !!}
-            {!! Form::text('image2', $scenery->image1, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+            <label for="image2">Image 2</label>
+            {{ html()->text('image2', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
-            {!! Form::label('image3', 'Image 3') !!}
-            {!! Form::text('image3', $scenery->image1, ['class' => 'form-control', 'placeholder' => 'Optional']) !!}
+            <label for="image3">Image 3</label>
+            {{ html()->text('image3', $scenery->image1)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="row">
             <div class="col-sm-1">
                 <button class="btn btn-success" type="submit">Save</button>
             </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
             <div class="col-sm-1">
                 <a href="/dashboard/admin/scenery" class="btn btn-danger">Cancel</a>
             </div>
