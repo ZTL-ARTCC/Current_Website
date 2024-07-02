@@ -86,6 +86,9 @@
                 @if(Auth::user()->isAbleTo('staff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
                 @endif
+                @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
+                    <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
+                @endif
             </div>
         @endif
         <div class="dropdown-divider"></div>
