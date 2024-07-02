@@ -22,7 +22,8 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\RosterRemovalWarn',
         '\App\Console\Commands\VatsimAtcBookingSync',
         '\App\Console\Commands\VATUSAEventsUpdate',
-        '\App\Console\Commands\UploadTrainingTickets'
+        '\App\Console\Commands\UploadTrainingTickets',
+        '\App\Console\Commands\TrainingReminderEmails'
     ];
 
     /**
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule): void {
         $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01')->monitorName('VATUSA Solo Cert Sync');
         $schedule->command('model:prune', ['--model' => MonitoredScheduledTaskLogItem::class])->dailyAt('05:17')->monitorName('Prune Task Monitor Database');
+        $schedule->command('Training:SendReminderEmails')->hourlyAt(3)->monitorName('Send Training Session Reminder Emails');
         $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7)->monitorName('Roster Update');
         $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
         $schedule->command('VATUSAEvents:Update')->hourlyAt(22)->monitorName('VATUSA Events Sync');
