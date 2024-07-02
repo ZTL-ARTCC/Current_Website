@@ -269,6 +269,7 @@ class FrontController extends Controller {
         }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $qtr_stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
         $hcontrollers_public = User::where('visitor', '0')->where('status', '1')->where('name_privacy', '0')->orderBy('lname', 'ASC')->get();
@@ -287,8 +288,8 @@ class FrontController extends Controller {
         });
 
         return view('site.stats')->with('all_stats', $all_stats)->with('year', $year)
-                                 ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit);
+                                 ->with('month', $month)->with('stats', $stats)->with('qtr_stats', $qtr_stats)
+                                 ->with('home', $home)->with('visiting', $visit);
     }
 
     public function visit() {

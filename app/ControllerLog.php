@@ -106,6 +106,38 @@ class ControllerLog extends Model {
         }, []);
     }
 
+    public static function aggregateAllControllersByPosAndQuarter($year = null, $month = null) {
+        $query = static::query()
+            ->rightJoin('roster', function ($join) use ($year, $month) {
+                $join->on('roster.id', '=', 'controller_log.cid');
+                if ($year != null) {
+                    $join->where(DB::Raw("date_format(STR_TO_DATE(`date`, '%m/%d/%Y'), '%y')"), 'like', $year);
+                }
+                if ($month != null) {
+                    $join->where(function ($query) use ($month) {
+                        $quarter = ceil($month / 3);
+                        $first_month_of_qtr = $quarter * 3 - 2;
+                        $query->where(DB::Raw("date_format(STR_TO_DATE(`date`, '%m/%d/%Y'), '%c')"), 'like', $first_month_of_qtr)
+                          ->orWhere(DB::Raw("date_format(STR_TO_DATE(`date`, '%m/%d/%Y'), '%c')"), 'like', $first_month_of_qtr + 1)
+                          ->orWhere(DB::Raw("date_format(STR_TO_DATE(`date`, '%m/%d/%Y'), '%c')"), 'like', $first_month_of_qtr + 2);
+                    });
+                }
+            })
+            ->selectRaw("
+				roster.id `cid`,
+				SUM(IF(position LIKE '%_DEL' OR position LIKE '%_GND' OR position LIKE '%_TWR', duration, 0)) / 3600 `local_hrs`,
+				SUM(IF(position LIKE '%_APP' OR position LIKE '%_DEP', duration, 0)) / 3600 `approach_hrs`,
+				SUM(IF(position LIKE '%_CTR', duration, 0)) / 3600 `enroute_hrs`,
+				SUM(duration) / 3600 `total_hrs`
+                ")
+            ->groupBy('roster.id');
+
+        return $query->get()->reduce(function ($m, $r) {
+            $m[$r->cid] = $r;
+            return $m;
+        }, []);
+    }
+
     public static function aggregateAllControllersByPosAndYear($year = null) {
         $query = static::query()
             ->rightJoin('roster', function ($join) use ($year) {

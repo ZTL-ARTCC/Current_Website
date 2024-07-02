@@ -179,7 +179,7 @@ class ControllerDash extends Controller {
         }
 
         $user_id = Auth::id();
-        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $personal_stats = $stats[$user_id];
         $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function ($t) {
@@ -321,6 +321,7 @@ class ControllerDash extends Controller {
         }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $qtr_stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
@@ -340,8 +341,8 @@ class ControllerDash extends Controller {
         });
 
         return view('dashboard.controllers.stats')->with('all_stats', $all_stats)->with('year', $year)
-                                 ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+                                 ->with('month', $month)->with('stats', $stats)->with('qtr_stats', $qtr_stats)
+                                 ->with('home', $home)->with('visiting', $visit)->with('agreevisit', $agreevisit);
     }
 
     public function showCalendarEvent($id) {
