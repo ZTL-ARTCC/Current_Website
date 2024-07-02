@@ -1,0 +1,36 @@
+name: create-release
+
+on: workflow_dispatch
+
+jobs:
+  setup-variables:
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
+
+  tag:
+    name: tag and release main
+    runs-on: "ubuntu-latest"
+    needs: setup-variables
+
+    steps:
+      - name: tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ needs.setup-variables.outputs.release-tag }}",
+              sha: context.sha
+            })
+
+      - name: release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: "${{ needs.setup-variables.outputs.release-tag }}",
+              name: "${{ needs.setup-variables.outputs.release-tag }}"
+            })
+
