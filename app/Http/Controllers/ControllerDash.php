@@ -149,6 +149,9 @@ class ControllerDash extends Controller {
         })->sortBy(function ($e) {
             return strtotime($e->date);
         });
+        foreach ($events as $e) {
+            $e->banner_path = $e->displayBannerPath();
+        }
         
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
