@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Event;
 use App\EventPosition;
+use App\EventDenylist;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -144,6 +145,12 @@ class SupportEvents extends Command {
                         break;
                     }
                 }
+            }
+
+            // Check if in the denylist
+            if (EventDenylist::where('vatsim_id', $event->id)->exists()) {
+                $this->info('Event with ID ' . $event->id . ' found in denylist. Skipping...');
+                $pull_this_event = false;
             }
 
             if (!$pull_this_event) {
