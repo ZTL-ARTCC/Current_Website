@@ -29,6 +29,18 @@ Edit Scenery
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
+                    <label for="price">Price</label>
+                    {{ html()->text('price', $scenery->price)->class(['form-control'])->placeholder('If it is free, put "0" (Required)') }}
+                </div>
+                <div class="col-sm-6">
+                    <label for="currency">Currency</label>
+                    {{ html()->text('currency', $scenery->currency)->class(['form-control'])->placeholder('Required') }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
                     <label for="url">Link to Scenery</label>
                     {{ html()->text('url', $scenery->link)->class(['form-control']) }}
                 </div>
