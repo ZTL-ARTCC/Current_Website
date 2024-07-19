@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_denylist', function (Blueprint $table) {
+        Schema::create('event_denylists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('vatsim_id');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_denylist');
+        Schema::dropIfExists('event_denylists');
     }
 };
