@@ -1,15 +1,24 @@
-@extends('layouts.dashboard')
-
-@section('title')
-Scenery Management
-@endsection
-
-@section('content')
-@include('inc.header', ['title' => 'Scenery Management'])
-
 <div class="container">
-    <a href="/dashboard/admin/scenery/new" class="btn btn-primary">New Scenery</a>
-    <br><br>
+    {{ html()->form('POST', '/pilots/scenery/search')->open() }}
+        <div class="form-group inline">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            {{ html()->text('search', null)->placeholder('Search for Airport/Developer')->class(['form-control']) }}
+                        </div>
+                        <div class="col-sm-3">
+                            <button action="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+        </div>
+    {{ html()->form()->close() }}
     @php ($sceneryCategories = array('fsx' => 'FSX', 'xp' => 'X-Plane', 'afcad' => 'AFCADs'))
     <ul class="nav nav-tabs nav-justified" role="tablist">
         @foreach($sceneryCategories as $sceneryCategory => $sceneryDescription)
@@ -37,7 +46,6 @@ Scenery Management
                             <th scope="col">Scenery Airport</th>
                             <th scope="col">Developer</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Actions</th>
                         </tr>
                         @foreach($$sceneryCategory as $s)
                             <tr>
@@ -59,19 +67,6 @@ Scenery Management
                                         {{ $s->price }} {{ $s->currency }}
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            {{ html()->form('DELETE')->route('deleteScenery', [$s->id])->open() }}
-                                                @csrf
-                                                <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
-                                            {{ html()->form()->close() }}
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
                         @endforeach
                     </thead>
@@ -83,4 +78,3 @@ Scenery Management
         @endforeach
     </div>
 </div>
-@endsection
