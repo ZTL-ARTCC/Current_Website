@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Event;
-use App\EventPosition;
 use App\EventDenylist;
+use App\EventPosition;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
