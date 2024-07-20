@@ -65,7 +65,11 @@ Events
                                         @endif
                                     @endif
                                         <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
-                                        <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                        @if($e->vatsim_id)
+                                            <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" rel="tooltip" data-toggle="modal" data-target="#denylistEvent" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                        @else
+                                            <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                        @endif
                                 </div>
                                     @if($e->type == App\Event::$TYPES["UNVERIFIED_SUPPORT"])
                                         <p><small><i>Unverified</i></small></p>
@@ -78,6 +82,27 @@ Events
                             </td>
                         @endif
                     </tr>
+                    <div class="modal fade" id="denylistEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Denylist Event</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Would you like to denylist this event?</p>
+                                    <p>This will prevent this event from being reinstated on the next update command.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger">Delete</a>
+                                    <a href="/dashboard/admin/events/delete/{{ $e->id }}?denylist=true" class="btn btn-danger">Delete and Denylist Event</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             @else
                 <tr>
