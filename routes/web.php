@@ -205,6 +205,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/send-reminder/{id}', 'AdminDash@sendEventReminder');
             Route::get('/noshow/mark/{id}', 'AdminDash@eventMarkNoShow');
             Route::get('/noshow/unmark/{id}', 'AdminDash@eventUnMarkNoShow');
+            Route::get('/denylist', 'AdminDash@viewEventDenylist');
+            Route::get('/denylist/delete/{id}', 'AdminDash@deleteEventDenylist');
         });
         Route::prefix('roster')->middleware('permission:roster')->group(function () {
             Route::get('/visit/requests', 'AdminDash@showVisitRequests');
