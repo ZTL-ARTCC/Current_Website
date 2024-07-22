@@ -1574,7 +1574,7 @@ class AdminDash extends Controller {
     public function denylistEvent($event) {
         $event_denylist = new EventDenylist();
         $event_denylist->vatsim_id = $event->vatsim_id;
-        $event_denylist->name = $event->name;
+        $event_denylist->event_name = $event->name;
         $event_denylist->save();
 
         $audit = new Audit;
