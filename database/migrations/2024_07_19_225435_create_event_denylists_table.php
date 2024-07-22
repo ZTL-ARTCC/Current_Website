@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('event_denylists', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->integer('vatsim_id');
             $table->timestamps();
         });

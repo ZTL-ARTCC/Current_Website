@@ -1550,7 +1550,7 @@ class AdminDash extends Controller {
         $denylist = $request->query('denylist', 'false');
 
         if ($vatsim_id && $denylist === 'true') {
-            $this->denylistEvent($vatsim_id);
+            $this->denylistEvent($event);
         }
 
         foreach ($reg as $r) {
@@ -1571,15 +1571,16 @@ class AdminDash extends Controller {
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
     }
 
-    public function denylistEvent($vatsim_id) {
+    public function denylistEvent($event) {
         $event_denylist = new EventDenylist();
-        $event_denylist->vatsim_id = $vatsim_id;
+        $event_denylist->vatsim_id = $event->vatsim_id;
+        $event_denylist->name = $event->name;
         $event_denylist->save();
 
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' denylisted the event with id '.$vatsim_id.'.';
+        $audit->what = Auth::user()->full_name.' denylisted event with name '.$event->name.'.';
         $audit->save();
     }
 
