@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventDenylist extends Model {
     protected $table = 'event_denylists';
-    protected $fillable = ['id', 'vatsim_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'event_name', 'vatsim_id', 'created_at', 'updated_at'];
 }
