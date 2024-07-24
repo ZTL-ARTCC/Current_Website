@@ -59,7 +59,7 @@ class Event extends Model {
                     throw new ConnectionException;
                 }
             } catch (RequestException | ConnectionException) {
-                return "/photos/no_image.jpg";
+                return "/photos/placeholder_banner.png";
             }
         }
         $disk = Storage::disk('public');
@@ -69,7 +69,7 @@ class Event extends Model {
         } elseif ($disk->exists($this->banner_base_path . $filename)) {
             return $disk->url($this->banner_base_path . $filename);
         }
-        return "/photos/no_image.jpg";
+        return "/photos/placeholder_banner.png";
     }
 
     public function reduceEventBanner() {
