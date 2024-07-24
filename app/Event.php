@@ -57,6 +57,7 @@ class Event extends Model {
             } catch (RequestException | ConnectionException) {
                 return "/photos/placeholder_banner.png";
             }
+            return $this->banner_path;
         }
         $disk = Storage::disk('public');
         $filename = basename($this->banner_path);
