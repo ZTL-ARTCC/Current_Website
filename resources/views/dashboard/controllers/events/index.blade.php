@@ -66,7 +66,7 @@ Events
                                     @endif
                                         <a href="/dashboard/admin/events/edit/{{ $e->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
                                         @if($e->vatsim_id)
-                                            <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" rel="tooltip" data-toggle="modal" data-target="#denylistEvent" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                            <a href="#" class="btn btn-danger simple-tooltip" rel="tooltip" data-toggle="modal" data-target="#denylistEvent" data-id="{{ $e->id }}" title="Delete"><i class="fas fa-times fa-fw"></i></a>
                                         @else
                                             <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger simple-tooltip" toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
                                         @endif
@@ -82,6 +82,7 @@ Events
                             </td>
                         @endif
                     </tr>
+                @endforeach
                     <div class="modal fade" id="denylistEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -97,13 +98,12 @@ Events
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href="/dashboard/admin/events/delete/{{ $e->id }}" class="btn btn-danger">Delete</a>
-                                    <a href="/dashboard/admin/events/delete/{{ $e->id }}?denylist=true" class="btn btn-danger">Delete and Denylist Event</a>
+                                    <a href="#" id=deleteLink class="btn btn-danger">Delete</a>
+                                    <a href="#" id=denylistLink class="btn btn-danger">Delete and Denylist Event</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
             @else
                 <tr>
                     <td colspan="4">No events found.</td>
@@ -115,4 +115,5 @@ Events
        {!! $events->links() !!}
     @endif
 </div>
+<script src="{{asset('js/event_index.js')}}"></script>
 @endsection

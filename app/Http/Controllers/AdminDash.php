@@ -1600,7 +1600,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' deleted the event denylist with id '.$vatsim_id.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been deleted successfully.');
+        return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
     }
 
     public function addPosition(Request $request, $id) {
