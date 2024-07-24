@@ -112,9 +112,7 @@ Dashboard
 					    @endforeach
 					@else
 					    <div class="carousel-item active">
-						    <div class="d-block w-100 h-100 d-flex align-items-center bg-dark rounded" style="min-height:200px">
-							    <h5 class="text-light w-100 text-center">No events scheduled</br>Please check back soon!</h5>
-						    </div>
+							<img src="/photos/placeholder_banner.png" class="d-block w-100 rounded" alt="placeholder" />
 					    </div>
 					@endif
 				</div>
