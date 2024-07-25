@@ -251,7 +251,7 @@ Dashboard
         </div>
     @endtoggle
     <hr>
-    <h2 class="text-center"><i class="fa fa-microphone pyrite"></i> Pyrite Mic Award for 20{{ $lyear }} <i class="fa fa-microphone pyrite"></i></h2>
+    <h2 class="text-center"><i class="fa fa-microphone pyrite"></i> Pyrite Mic Award for {{ $lyear }} <i class="fa fa-microphone pyrite"></i></h2>
     <div class="row text-center">
         <div class="col-sm-4">
         </div>

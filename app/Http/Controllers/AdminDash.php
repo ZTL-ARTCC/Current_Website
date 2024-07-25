@@ -9,6 +9,7 @@ use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
 use App\Event;
+use App\EventDenylist;
 use App\EventPosition;
 use App\EventRegistration;
 use App\FeatureToggle;
@@ -103,6 +104,8 @@ class AdminDash extends Controller {
             'apt' => 'required',
             'url' => 'required',
             'sim' => 'required',
+            'price' => 'required',
+            'currency' => 'required',
             'dev' => 'required'
         ]);
 
@@ -111,6 +114,8 @@ class AdminDash extends Controller {
         $scenery->developer = $request->input('dev');
         $scenery->sim = $request->input('sim');
         $scenery->link = $request->input('url');
+        $scenery->price = $request->input('price');
+        $scenery->currency = $request->input('currency');
         $scenery->image1 = $request->input('image1');
         $scenery->image2 = $request->input('image2');
         $scenery->image3 = $request->input('image3');
@@ -1535,11 +1540,18 @@ class AdminDash extends Controller {
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been edited successfully.');
     }
 
-    public function deleteEvent($id) {
+    public function deleteEvent($id, Request $request) {
         $event = Event::find($id);
         $name = $event->name;
         $positions = EventPosition::where('event_id', $event->id)->get();
         $reg = EventRegistration::where('event_id', $event->id)->get();
+
+        $vatsim_id = $event->vatsim_id;
+        $denylist = $request->query('denylist', 'false');
+
+        if ($vatsim_id && $denylist === 'true') {
+            $this->denylistEvent($event);
+        }
 
         foreach ($reg as $r) {
             $r->delete();
@@ -1557,6 +1569,38 @@ class AdminDash extends Controller {
         $audit->save();
 
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
+    }
+
+    public function denylistEvent($event) {
+        $event_denylist = new EventDenylist();
+        $event_denylist->vatsim_id = $event->vatsim_id;
+        $event_denylist->event_name = $event->name;
+        $event_denylist->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' denylisted event with name '.$event->name.'.';
+        $audit->save();
+    }
+
+    public function viewEventDenylist() {
+        $event_denylists = EventDenylist::orderBy('created_at', 'desc')->get();
+        return view('dashboard.admin.events.denylist')->with('event_denylists', $event_denylists);
+    }
+
+    public function deleteEventDenylist($id) {
+        $event_denylists = EventDenylist::find($id);
+        $vatsim_id = $event_denylists->vatim_id;
+        $event_denylists->delete();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' deleted the event denylist with id '.$vatsim_id.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
     }
 
     public function addPosition(Request $request, $id) {

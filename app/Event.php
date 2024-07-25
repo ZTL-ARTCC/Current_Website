@@ -37,6 +37,10 @@ class Event extends Model {
         return $date;
     }
 
+    public function getDateStampAttribute() {
+        return strtotime($this->date);
+    }
+
     public static function fetchVisibleEvents() {
         $now = Carbon::now();
         $events = Event::where('status', Event::$STATUSES["VISIBLE"])->get()->filter(function ($e) use ($now) {
