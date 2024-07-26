@@ -135,7 +135,10 @@ class ControllerDash extends Controller {
 
         if (is_null(Auth::user()->ea_customer_id)) {
             try {
-                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where(function ($query) {
+                    $query->where('email', Auth::user()->email)
+                          ->orWhere('custom_field_1', Auth::user()->id);
+                })->where('id_roles', '3')->limit(1)->get();
                 foreach ($ea_users as $u) {
                     $user = Auth::user();
                     $user->ea_customer_id = $u->id;
