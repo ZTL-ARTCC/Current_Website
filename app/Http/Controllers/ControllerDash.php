@@ -71,6 +71,9 @@ class ControllerDash extends Controller {
         })->sortBy(function ($e) {
             return strtotime($e->date);
         });
+        foreach ($events as $e) {
+            $e->banner_path = $e->displayBannerPath();
+        }
         
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
@@ -295,6 +298,7 @@ class ControllerDash extends Controller {
 
     public function viewEvent($id) {
         $event = Event::find($id);
+        $event->banner_path = $event->displayBannerPath();
         $positions = EventPosition::where('event_id', $event->id)->orderBy('created_at', 'ASC')->get();
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
