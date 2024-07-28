@@ -493,7 +493,11 @@ View Event
     <a href="/dashboard/controllers/events" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
     @if(Auth::user()->isAbleTo('events'))
         <a href="/dashboard/admin/events/edit/{{ $event->id }}" class="btn btn-success">Edit</a>
-        <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
+        @if($event->vatsim_id)
+            <button data-toggle="modal" data-target="#denylistEvent" class="btn btn-danger">Delete</button>
+        @else
+            <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
+        @endif
     @endif
 
 	@if(Auth::user()->isAbleTo('events'))
@@ -620,6 +624,27 @@ View Event
 			</div>
 		</div>
 	@endif
+    <div class="modal fade" id="denylistEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Denylist Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Would you like to denylist this event?</p>
+                    <p>This will prevent this event from being reinstated on the next update command.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="/dashboard/admin/events/delete/{{ $event->id }}" class="btn btn-danger">Delete</a>
+                    <a href="/dashboard/admin/events/delete/{{ $event->id }}?denylist=true" class="btn btn-danger">Delete and Denylist Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="{{asset('js/event_view.js')}}"></script>
 @endsection
