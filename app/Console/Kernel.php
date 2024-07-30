@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\FetchMetar',
         '\App\Console\Commands\OnlineControllerUpdate',
         '\App\Console\Commands\RosterUpdate',
-        '\App\Console\Commands\VisitAgreement',
         '\App\Console\Commands\EventEmails',
         '\App\Console\Commands\ARTCCOverflights',
         '\App\Console\Commands\RosterRemovalWarn',
