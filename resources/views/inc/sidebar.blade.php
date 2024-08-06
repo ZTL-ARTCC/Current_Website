@@ -29,7 +29,7 @@
                 <b id="caret-train" class="float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                <a class="nav-link" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
+                <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->isAbleTo('train'))
@@ -86,6 +86,13 @@
                 @if(Auth::user()->isAbleTo('staff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
                 @endif
+                @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
+                    <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
+                @endif
+                @if(Auth::user()->isAbleTo('events'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/events/denylist') }}" href="/dashboard/admin/events/denylist">Event Denylist</a>
+                @endif
+
             </div>
         @endif
         <div class="dropdown-divider"></div>

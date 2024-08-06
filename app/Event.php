@@ -3,7 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model {
@@ -34,6 +37,10 @@ class Event extends Model {
         return $date;
     }
 
+    public function getDateStampAttribute() {
+        return strtotime($this->date);
+    }
+
     public static function fetchVisibleEvents() {
         $now = Carbon::now();
         $events = Event::where('status', Event::$STATUSES["VISIBLE"])->get()->filter(function ($e) use ($now) {
@@ -46,6 +53,14 @@ class Event extends Model {
 
     public function displayBannerPath() {
         if (starts_with($this->banner_path, "http://") || starts_with($this->banner_path, "https://")) {
+            try {
+                $response = Http::head($this->banner_path);
+                if (!$response->successful()) {
+                    throw new ConnectionException;
+                }
+            } catch (RequestException | ConnectionException) {
+                return "/photos/placeholder_banner.png";
+            }
             return $this->banner_path;
         }
         $disk = Storage::disk('public');
@@ -55,7 +70,7 @@ class Event extends Model {
         } elseif ($disk->exists($this->banner_base_path . $filename)) {
             return $disk->url($this->banner_base_path . $filename);
         }
-        return null;
+        return "/photos/placeholder_banner.png";
     }
 
     public function reduceEventBanner() {
