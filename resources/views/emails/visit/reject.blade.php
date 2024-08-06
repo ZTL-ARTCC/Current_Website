@@ -9,5 +9,5 @@
     <br>
 
     <p>Best regards,</p>
-    <p>ZTL Visiting Staff</p>
+    <p>ZTL Staff</p>
 @endsection
