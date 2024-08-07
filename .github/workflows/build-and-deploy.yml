@@ -54,7 +54,7 @@ jobs:
       dir: ${{ secrets.DIR }}
       host: ${{ secrets.SSH_HOST }}
       port: ${{ secrets.SSH_PORT }}
-      user: ${{ secrets.SSH_USER }}
+      user: ${{ secrets.SSH_USER_QA2 }}
       key: ${{ secrets.SSH_KEY }}
       php_path: ${{ secrets.PHP_PATH }}
       cf_cache_purge_token: ${{ secrets.CF_CACHE_PURGE_TOKEN }}
