@@ -7,6 +7,7 @@ use App\TrainingTicket;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Mail;
 
 class RosterRemovalWarn extends Command {
     /**

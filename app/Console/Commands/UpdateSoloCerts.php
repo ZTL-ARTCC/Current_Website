@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\SoloCert;
 use App\User;
 use Carbon\Carbon;
+use Config;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Mail;
