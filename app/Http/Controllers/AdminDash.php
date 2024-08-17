@@ -1390,6 +1390,14 @@ class AdminDash extends Controller {
             'banner_url' => 'nullable|url'
         ]);
 
+        $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
+        if (!preg_match($valid_time_expr, $request->start_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+        if (!preg_match($valid_time_expr, $request->end_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+
         $public_url = null;
         
         if ($request->file('banner') != null && $request->filled('banner_url')) {
@@ -1465,6 +1473,14 @@ class AdminDash extends Controller {
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
+
+        $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
+        if (!preg_match($valid_time_expr, $request->start_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
+        if (!preg_match($valid_time_expr, $request->end_time1)) {
+            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
+        }
 
         $event = Event::find($id);
         $public_url = $event->banner_path;
