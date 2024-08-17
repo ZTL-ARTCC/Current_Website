@@ -5,7 +5,7 @@ New Event
 @endsection
 
 @section('content')
-@include('inc.header', ['title' => 'New Event'])
+@include('inc.header', ['title' => 'Edit Event'])
 
 <div class="container">
     {{ html()->form()->route('saveEvent', [$event->id])->acceptsFiles()->open() }}
