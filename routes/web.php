@@ -75,6 +75,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
         Route::get('/profile', 'ControllerDash@showProfile');
         Route::post('/profile', 'ControllerDash@updateInfo')->name('updateInfo');
+        Route::get('/profile/discord', 'ControllerDash@updateDiscordRoles');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
