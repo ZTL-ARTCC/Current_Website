@@ -599,6 +599,8 @@ class ControllerDash extends Controller {
 
         if ($response->notFound()) {
             return redirect()->back()->with('error', 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
+        } elseif (!$response->successful()) {
+            return redirect()->back()->with('error', 'An error occurred while updating your roles. Please try again later.');
         }
 
         return redirect()->back()->with('success', 'Your roles have been updated successfully.');
