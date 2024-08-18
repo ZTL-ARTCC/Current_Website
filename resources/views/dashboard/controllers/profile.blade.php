@@ -129,6 +129,11 @@ Profile
                 </div>
 
                 <div class="row mt-2">
+                    <div class="col-5"><b>Discord UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="Enable Developer Mode in Discord under Settings -> Advanced. Then right-click your profile picture, select 'Copy ID,' and paste it here."><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-7">{{ html()->text('discord', Auth::user()->discord)->class(['form-control']) }}</div>
+                </div>
+
+                <div class="row mt-2">
                     <div class="col-5">
                         <b>Timezone: <a class="info-tooltip" href="#" data-toggle="tooltip"
                                         title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
@@ -151,11 +156,15 @@ Profile
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <button class="btn btn-success" type="submit">Save Profile</button>
+                    </div>
+                    <div class="col-4">
+                        <a href="/dashboard/controllers/profile/discord" class="btn btn-success" type="button">Update Discord Role</a>
                     </div>
                 </div>
                 {{ html()->form()->close() }}
+
 
                 Receive Broadcast Emails?
                 &nbsp;
