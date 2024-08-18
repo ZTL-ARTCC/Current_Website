@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Mail;
 use SimpleXMLElement;
 
@@ -578,8 +579,28 @@ class ControllerDash extends Controller {
     public function updateInfo(Request $request) {
         $user = Auth::user();
         $user->ts3 = $request->ts3;
+        $user->discord = $request->discord;
         $user->timezone = $request->timezone;
         $user->save();
         return redirect()->back()->with('success', 'Your profile has been updated successfully.');
+    }
+
+    public function updateDiscordRoles(Request $request) {
+        $user = Auth::user();
+        $user_id = $user->discord;
+
+        if (!$user_id) {
+            return redirect()->back()->with('error', 'You must have a Discord UID set in order to update your roles.');
+        }
+
+        $response = Http::get('http://bot.ztlartcc.org:3000/assignRoles', [
+            'userId' => $user_id,
+        ]);
+
+        if ($response->notFound()) {
+            return redirect()->back()->with('error', 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
+        }
+
+        return redirect()->back()->with('success', 'Your roles have been updated successfully.');
     }
 }
