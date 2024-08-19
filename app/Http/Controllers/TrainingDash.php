@@ -269,7 +269,8 @@ class TrainingDash extends Controller {
             'date' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'duration' => 'required'
+            'duration' => 'required',
+            'score' => ['required', 'digits_between:1,5']
         ]);
 
         $ticket = new TrainingTicket;
@@ -287,6 +288,8 @@ class TrainingDash extends Controller {
         $ticket->ins_comments = $request->trainer_comments;
         $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
         $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+        $ticket->score = $request->score;
+        $ticket->movements = $request->movements;
         $ticket->save();
         $extra = null;
 
@@ -362,7 +365,8 @@ class TrainingDash extends Controller {
                 'date' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'duration' => 'required'
+                'duration' => 'required',
+                'score' => ['required', 'integer', 'between:1,5']
             ]);
 
             $ticket->controller_id = $request->controller;
@@ -378,6 +382,8 @@ class TrainingDash extends Controller {
             $ticket->ins_comments = $request->trainer_comments;
             $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
             $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+            $ticket->score = $request->score;
+            $ticket->movements = $request->movements;
             $ticket->save();
 
             $audit = new Audit;

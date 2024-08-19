@@ -40,6 +40,8 @@ class UploadTrainingTickets extends Command {
                     'position' => $vatusa_position,
                     'duration' => $ticket->duration,
                     'notes' => $ticket->comments,
+                    'movements' => $ticket->movements,
+                    'score' => $ticket->score,
                     'location' => 1
                 ],
                 'http_errors' => false
