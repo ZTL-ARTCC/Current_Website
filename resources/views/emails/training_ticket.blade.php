@@ -10,6 +10,8 @@
     <li><b>Position:</b> {{ $ticket->position_name }}</li>
     <li><b>Date and Time:</b> {{ $ticket->date }} from {{ $ticket->start_time }} to {{ $ticket->end_time }} ET</li>
 	<li><b>Duration:</b> {{ $ticket->duration }}</li>
+	<li><b>Score (1-5):</b> {{ $ticket->score }}</li>
+	<li><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</li>
     <li><b>Comments:</b> <br>
         {!! nl2br(e($ticket->comments)) !!}
     </li>
