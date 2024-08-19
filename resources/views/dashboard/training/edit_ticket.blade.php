@@ -74,6 +74,24 @@ Edit Training Ticket
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="score" class="form-label">Score (Visible to Controller)</label>
+                    <div class="input-group">
+                        {{ html()->text('score', $ticket->score)->placeholder('1-5')->class('form-control') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="movements" class="form-label">Movements (Optional)</label>
+                    <div class="input-group">
+                        {{ html()->text('movements', $ticket->movements)->class('form-control') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>
