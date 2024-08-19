@@ -34,7 +34,7 @@ View Training Ticket
             <p><b>Start Time:</b> {{ $ticket->start_time }} ET</p>
             <p><b>End Time:</b> {{ $ticket->end_time }} ET</p>
             <p><b>Duration:</b> {{ $ticket->duration }}</p>
-	        <p><b>Score (1-5):</b> {{ $ticket->score }}</p>
+	        <p><b>Score (1-5):</b> @if($ticket->score) {{ $ticket->score }} @else N/A @endif</p>
 	        <p><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</p>
 
             <p><b>Comments:</b></p>

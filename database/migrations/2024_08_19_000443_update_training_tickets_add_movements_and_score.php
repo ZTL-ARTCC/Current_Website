@@ -9,7 +9,7 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::table('training_tickets', function ($table) {
-            $table->tinyInteger('score');
+            $table->tinyInteger('score')->nullable();
             $table->integer('movements')->nullable();
         });
     }
