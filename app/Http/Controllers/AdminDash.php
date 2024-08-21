@@ -764,7 +764,7 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
 
-    public function toggleCalenderEventVisibilty($id) {
+    public function toggleCalendarEventVisibility($id) {
         $calendar = Calendar::find($id);
         $type = '';
 

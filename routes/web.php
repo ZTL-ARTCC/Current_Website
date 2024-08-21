@@ -156,7 +156,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editCalendarEvent');
             Route::post('/edit/{id}/save', 'AdminDash@saveCalendarEvent')->name('saveCalendarEvent');
             Route::delete('/delete/{id}', 'AdminDash@deleteCalendarEvent')->name('deleteCalendarEvent');
-            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalenderEventVisibilty')->name('toggleCalendarEventVisibility');
+            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalendarEventVisibility')->name('toggleCalendarEventVisibility');
         });
         Route::prefix('scenery')->middleware('permission:scenery')->group(function () {
             Route::get('/', 'AdminDash@showScenery');
