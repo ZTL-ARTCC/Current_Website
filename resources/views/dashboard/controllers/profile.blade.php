@@ -127,11 +127,6 @@ Profile
                     <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{{ html()->text('ts3', Auth::user()->ts3)->class(['form-control']) }}</div>
                 </div>
-                
-                <div class="row mt-2">
-                    <div class="col-5"><b>Discord UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="Enable Developer Mode in Discord under Settings -> Advanced. Then right-click your profile picture, select 'Copy ID,' and paste it here."><i class="fas fa-info-circle"></i></a></b></div>
-                    <div class="col-7">{{ html()->text('discord', Auth::user()->discord)->class(['form-control']) }}</div>
-                </div>
 
                 <div class="row mt-2">
                     <div class="col-5">
