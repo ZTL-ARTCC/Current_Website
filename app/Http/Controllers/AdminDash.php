@@ -1384,19 +1384,11 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
-
-        $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
-        if (!preg_match($valid_time_expr, $request->start_time)) {
-            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
-        }
-        if (!preg_match($valid_time_expr, $request->end_time)) {
-            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
-        }
 
         $public_url = null;
         
@@ -1468,19 +1460,11 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
-
-        $valid_time_expr = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]/';
-        if (!preg_match($valid_time_expr, $request->start_time)) {
-            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
-        }
-        if (!preg_match($valid_time_expr, $request->end_time)) {
-            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
-        }
 
         $event = Event::find($id);
         $public_url = $event->banner_path;
