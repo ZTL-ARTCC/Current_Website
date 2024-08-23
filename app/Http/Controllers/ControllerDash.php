@@ -578,7 +578,6 @@ class ControllerDash extends Controller {
     public function updateInfo(Request $request) {
         $user = Auth::user();
         $user->ts3 = $request->ts3;
-        $user->discord = $request->discord;
         $user->timezone = $request->timezone;
         $user->save();
         return redirect()->back()->with('success', 'Your profile has been updated successfully.');
