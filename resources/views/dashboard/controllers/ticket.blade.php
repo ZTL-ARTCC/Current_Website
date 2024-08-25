@@ -26,17 +26,15 @@ View Training Ticket
             <p><b>End Time:</b> {{ $ticket->end_time }}</p>
             <p><b>Duration:</b> {{ $ticket->duration }}</p>
 	        <p><b>Score:</b> 
-                @if($ticket->score) 
-                    <div id="stars" data-rating="{{ $ticket->score }}"> 
-                        <span>&star;</span>
-                        <span>&star;</span>
-                        <span>&star;</span>
-                        <span>&star;</span>
-                        <span>&star;</span>
-                    </div>
-                @else 
-                    N/A 
-                @endif
+            @if($ticket->score) 
+                <div id="stars"> 
+                    @for($i = 0; $i < 5; $i++)
+                        <span>{!! $i<$ticket->score ? html_entity_decode('&starf;') : html_entity_decode('&star;') !!}</span>
+                    @endfor
+                </div>
+            @else 
+                N/A 
+            @endif
             </p>
             <p><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</p>
             <p><b>Comments:</b></p>
@@ -48,5 +46,4 @@ View Training Ticket
         </div>
     </div>
 </div>
-<script src="{{asset('js/trainingticket_view.js')}}"></script>
 @endsection
