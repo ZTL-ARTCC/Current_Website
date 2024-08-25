@@ -85,6 +85,29 @@ class ControllerDash extends Controller {
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
 
+        $training_metrics = $top_trainers = [];
+        $training_stats = TrainingDash::generateTrainingStats($now->format('y'), $now->format('n'), 'stats');
+        $training_metrics[] = (object)['title' => 'Total', 'metric' => $training_stats['sessionsCompletePerMonth']];
+        $training_metrics[] = (object)['title' => 'S1', 'metric' => $training_stats['sessionsByType']['S1']];
+        $training_metrics[] = (object)['title' => 'S2', 'metric' => $training_stats['sessionsByType']['S2']];
+        $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
+        $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
+        $trainer_by_total = $trainer_by_cid = [];
+        foreach($training_stats['trainerSessions'] as $t) {
+            $trainer_by_total[] = [$t['cid']] = $t['total'];
+            $trainer_by_cid[] = [$t['cid']] = $t['name'];
+        }
+        rsort($trainer_by_total);
+        foreach($trainer_by_total as $tt) {
+            if($tt == 0) {
+                break;
+            }
+            $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'session_given' => $tt];
+            if(count($top_trainers) == 3) {
+                break;
+            }
+        }
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
@@ -92,6 +115,7 @@ class ControllerDash extends Controller {
                                           ->with('pyrite', $pyrite)->with('lyear', $last_year->format('Y'))
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
+                                          ->with('training_metrics', $training_metrics)->with('top_trainers', $top_trainers)
                                           ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
     }
 
