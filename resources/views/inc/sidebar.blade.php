@@ -118,6 +118,42 @@
 <br/>
 <div class="card">
 	<div class="card-body p-2">
+		<h5 class="card-title">
+            {{ Carbon\Carbon::now()->translatedFormat('F') }} Training&nbsp;<i class="fa-solid fa-graduation-cap"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($training_metrics) > 0)
+            @foreach($training_metrics as $t)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $t->title }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $t->metric }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>Unavailable</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+<div class="card">
+	<div class="card-body p-2">
+		<h5 class="card-title">
+            Top Trainers&nbsp;<i class="fa-solid fa-person-chalkboard"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($top_trainers) > 0)
+            @foreach($top_trainers as $m)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $m->name }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $m->sessions_given }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>So empty...</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+<div class="card">
+	<div class="card-body p-2">
 		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
 		<table class="table table-sm table-borderless table-striped pb-0 mb-0">
         @if($controllers->count() > 0)
