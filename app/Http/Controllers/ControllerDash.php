@@ -102,7 +102,7 @@ class ControllerDash extends Controller {
             if($tt == 0) {
                 break;
             }
-            $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'session_given' => $tt];
+            $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'sessions_given' => $tt];
             if(count($top_trainers) == 3) {
                 break;
             }
