@@ -1,9 +1,9 @@
 <div class="card bg-light card-body" id="pill-sidebar">
     <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
         <div class="dropdown-divider"></div>
-        <p class="collapsible-controllers" style="margin-left:-20px; cursor:pointer">
+        <p class="collapsible" name="controllers" style="margin-left:-20px; cursor:pointer">
             ZTL CONTROLLERS
-            <b id="caret-controllers" class="float-right fas fa-caret-left"></b>
+            <b class="caret float-right fas fa-caret-left"></b>
         </p>
         <div class="content">
             @if(Auth::user()->rating_id == 1)
@@ -24,9 +24,9 @@
         </div>
         @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-train" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible" name="training" style="margin-left:-20px; cursor:pointer">
                 TRAINING
-                <b id="caret-train" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
@@ -46,9 +46,9 @@
         @endif
         @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-admin" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible" name="administration" style="margin-left:-20px; cursor:pointer">
                 ADMINISTRATION
-                <b id="caret-admin" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 @if(Auth::user()->isAbleTo('staff'))
@@ -130,5 +130,6 @@
 		</table>
 	</div>
 </div>
+
 @endif
 <script src="{{asset('js/sidebar.js')}}"></script>
