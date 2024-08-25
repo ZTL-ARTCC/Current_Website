@@ -1,74 +1,24 @@
-var coll = document.getElementsByClassName("collapsible-controllers");
-var i;
-var iconc = document.getElementById("caret-controllers");
-
+var coll = document.getElementsByClassName("collapsible");
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function () {
-    iconc.classList.toggle("open");
+    this.getElementsByClassName("caret")[0].classList.toggle("open");
     this.classList.toggle("active");
-
-    var content = this.nextElementSibling;
-
+    let content = this.nextElementSibling;
     if (content.style.maxHeight) {
       content.style.maxHeight = null;
     } else {
       content.style.maxHeight = content.scrollHeight + "px";
     }
-  });
-
-  for (i = 0; i < coll.length; i++) {
-    if (coll[i].nextElementSibling.innerHTML.indexOf("active") !== -1) {
-      coll[i].click();
-    }
-  }
-}
-
-var coll = document.getElementsByClassName("collapsible-train");
-var i;
-var icont = document.getElementById("caret-train");
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function () {
-    icont.classList.toggle("open");
-    this.classList.toggle("active");
-
-    var content = this.nextElementSibling;
-
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
+    for (j = 0; j < coll.length; j++) {
+      let e = coll[j];
+      if (
+        e.getAttribute("name") !== this.getAttribute("name") &&
+        e.classList.contains("active")
+      ) {
+        e.getElementsByClassName("caret")[0].classList.toggle("open");
+        e.classList.toggle("active");
+        e.nextElementSibling.style.maxHeight = null;
+      }
     }
   });
-
-  for (i = 0; i < coll.length; i++) {
-    if (coll[i].nextElementSibling.innerHTML.indexOf("active") !== -1) {
-      coll[i].click();
-    }
-  }
-}
-
-var coll = document.getElementsByClassName("collapsible-admin");
-var i;
-var icona = document.getElementById("caret-admin");
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function () {
-    icona.classList.toggle("open");
-    this.classList.toggle("active");
-
-    var content = this.nextElementSibling;
-
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  });
-
-  for (i = 0; i < coll.length; i++) {
-    if (coll[i].nextElementSibling.innerHTML.indexOf("active") !== -1) {
-      coll[i].click();
-    }
-  }
 }
