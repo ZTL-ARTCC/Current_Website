@@ -4,6 +4,10 @@
 Edit Training Ticket
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+@endpush
+
 @section('content')
 @include('inc.header', ['title' => 'Edit Training Ticket'])
 
@@ -77,8 +81,13 @@ Edit Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
-                    <div class="input-group">
-                        {{ html()->text('score', $ticket->score)->placeholder('1-5')->class('form-control') }}
+                    <div id="stars" class="star-input input-group">
+                        <span data-rating="1">&star;</span>
+                        <span data-rating="2">&star;</span>
+                        <span data-rating="3">&star;</span>
+                        <span data-rating="4">&star;</span>
+                        <span data-rating="5">&star;</span>
+                        {{ html()->text('score', $ticket->score)->attribute('hidden') }}
                     </div>
                 </div>
             </div>
