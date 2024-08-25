@@ -4,6 +4,10 @@
 View Training Ticket
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+@endpush
+
 @section('content')
 @include('inc.header', ['title' => 'View Training Ticket for ' . $ticket->controller_name])
 
@@ -34,7 +38,19 @@ View Training Ticket
             <p><b>Start Time:</b> {{ $ticket->start_time }} ET</p>
             <p><b>End Time:</b> {{ $ticket->end_time }} ET</p>
             <p><b>Duration:</b> {{ $ticket->duration }}</p>
-	        <p><b>Score (1-5):</b> @if($ticket->score) {{ $ticket->score }} @else N/A @endif</p>
+	        <p><b>Score:</b> 
+                @if($ticket->score) 
+                    <div id="stars" data-rating="{{ $ticket->score }}"> 
+                        <span>&star;</span>
+                        <span>&star;</span>
+                        <span>&star;</span>
+                        <span>&star;</span>
+                        <span>&star;</span>
+                    </div>
+                @else 
+                    N/A 
+                @endif
+            </p>
 	        <p><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</p>
 
             <p><b>Comments:</b></p>
@@ -52,5 +68,5 @@ View Training Ticket
         </div>
     </div>
 </div>
-
+<script src="{{asset('js/trainingticket_view.js')}}"></script>
 @endsection

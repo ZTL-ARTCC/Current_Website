@@ -88,7 +88,7 @@ Training Tickets
                                 <th scope="col">Session ID</th>
                                 <th scope="col">Start Time</th>
                                 <th scope="col">End Time</th>
-                                <th scope="col">Score(1-5)</th>
+                                <th scope="col">Score<br>(1-5)</th>
                                 <th scope="col">Movements</th>
                                 <th scope="col">INS/MTR Comments</th>
                             </tr>
