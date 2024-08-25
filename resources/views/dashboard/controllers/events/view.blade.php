@@ -375,9 +375,9 @@ View Event
                                             @else
                                                 <div class="col-sm-5">
                                                     @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
-                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), null, ['disabled', 'placeholder' => 'Pending...', 'class' => 'form-control']) }}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['disabled'])->placeholder('Pending...')->class(['form-control']) }}
                                                     @else
-                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id, ['disabled', 'placeholder' => 'Choice 1', 'class' => 'form-control']) }}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->attributes(['disabled'])->placeholder('Choice 1')->class(['form-control']) }}
                                                     @endif
                                                 </div>
                                                 <div class="col-sm-3">
@@ -386,6 +386,8 @@ View Event
                                                 <div class="col-sm-3">
                                                     {{ html()->text('end_time1', $your_registration1->end_time)->attributes(['disabled'])->placeholder($event->end_time)->class(['form-control']) }}
                                                 </div>
+                                                {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone))->id('timedata') }}
+                                                {{ html()->hidden('timezone', 'Zulu')->attributes(['autocomplete' => 'off'])->id('timezone') }}
                                             @endif
                                         </div>
                                     @else

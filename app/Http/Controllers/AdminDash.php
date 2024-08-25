@@ -221,7 +221,7 @@ class AdminDash extends Controller {
             $month = date('n');
         }
 
-        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $homec = User::where('visitor', 0)->where('status', 1)->orderBy('lname', 'ASC')->get();
         $visitc = User::where('visitor', 1)->where('status', 1)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
         $trainc = User::orderBy('lname', 'ASC')->get()->filter(function ($user) {
@@ -242,7 +242,7 @@ class AdminDash extends Controller {
 
         $last_stats = ControllerLog::aggregateAllControllersByPosAndMonth($last_year, $last_month);
 
-        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('last_stats', $last_stats)->with('homec', $homec)->with('visitc', $visitc)
+        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('last_stats', $last_stats)->with('home', $homec)->with('visiting', $visitc)
                                                    ->with('trainc', $trainc)->with('month', $month)->with('year', $year);
     }
 
@@ -1384,8 +1384,8 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
@@ -1460,8 +1460,8 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);

@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Mail;
 use SimpleXMLElement;
 
@@ -104,7 +105,7 @@ class ControllerDash extends Controller {
         }
 
         $user_id = Auth::id();
-        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $personal_stats = $stats[$user_id];
         $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function ($t) {
@@ -249,6 +250,7 @@ class ControllerDash extends Controller {
         }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $qtr_stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
@@ -268,8 +270,8 @@ class ControllerDash extends Controller {
         });
 
         return view('dashboard.controllers.stats')->with('all_stats', $all_stats)->with('year', $year)
-                                 ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+                                 ->with('month', $month)->with('stats', $stats)->with('qtr_stats', $qtr_stats)
+                                 ->with('home', $home)->with('visiting', $visit)->with('agreevisit', $agreevisit);
     }
 
     public function showCalendarEvent($id) {
@@ -580,5 +582,26 @@ class ControllerDash extends Controller {
         $user->timezone = $request->timezone;
         $user->save();
         return redirect()->back()->with('success', 'Your profile has been updated successfully.');
+    }
+
+    public function updateDiscordRoles(Request $request) {
+        $user = Auth::user();
+        $user_id = $user->discord;
+
+        if (!$user_id) {
+            return redirect()->back()->with('error', 'You must have a Discord UID set in order to update your roles.');
+        }
+
+        $response = Http::get('http://bot.ztlartcc.org:3000/assignRoles', [
+            'userId' => $user_id,
+        ]);
+
+        if ($response->notFound()) {
+            return redirect()->back()->with('error', 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
+        } elseif (!$response->successful()) {
+            return redirect()->back()->with('error', 'An error occurred while updating your roles. Please try again later.');
+        }
+
+        return redirect()->back()->with('success', 'Your roles have been updated successfully.');
     }
 }
