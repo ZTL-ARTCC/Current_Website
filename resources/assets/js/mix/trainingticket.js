@@ -26,39 +26,39 @@ stars.each(function () {
 });
 
 $("#start,#end").on("change", function () {
-  settimeout(function () {
-    autocalcduration(
-      document.getelementbyid("start").value,
-      document.getelementbyid("end").value,
-      document.getelementbyid("duration").value
+  setTimeout(function () {
+    autoCalcDuration(
+      document.getElementById("start").value,
+      document.getElementById("end").value,
+      document.getElementById("duration").value
     );
   }, 100);
 });
 
-function autocalcduration(time1, time2, target) {
+function autoCalcDuration(time1, time2, target) {
   if (time1 != "" && time2 != "") {
     var start = time1.split(":");
     var end = time2.split(":");
-    var startdeci = parseint(start[0]) + parseint(start[1]) / 60;
-    var enddeci = parseint(end[0]) + parseint(end[1]) / 60;
-    if (startdeci > enddeci) {
-      enddeci += 24;
+    var startDeci = parseInt(start[0]) + parseInt(start[1]) / 60;
+    var endDeci = parseInt(end[0]) + parseInt(end[1]) / 60;
+    if (startDeci > endDeci) {
+      endDeci += 24;
     }
-    var duration = enddeci - startdeci;
-    var duration_hours = parseint(duration);
-    var duration_minutes = math.round((duration - duration_hours) * 60);
+    var duration = endDeci - startDeci;
+    var duration_hours = parseInt(duration);
+    var duration_minutes = Math.round((duration - duration_hours) * 60);
     if (duration_hours < 10) {
       duration_hours = "0" + duration_hours;
     }
     if (duration_minutes < 10) {
       duration_minutes = "0" + duration_minutes;
     }
-    document.getelementbyid("duration").value =
+    document.getElementById("duration").value =
       duration_hours + ":" + duration_minutes;
     $("#datetimepicker4").datetimepicker({
-      format: "hh:mm",
+      format: "HH:mm",
     });
   }
 }
 
-window.autocalcduration = autocalcduration;
+window.autoCalcDuration = autoCalcDuration;
