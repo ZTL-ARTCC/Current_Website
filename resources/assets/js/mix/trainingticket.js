@@ -1,37 +1,64 @@
+var stars = $("#stars span");
+
+// Needed for if you submit and get redirected back the stars will now still be highlighted
+var rating = $("#stars input[name='score']").val();
+if (rating) {
+  for (var i = 0; i < rating; i++) {
+    stars.eq(i).text("\u2605");
+  }
+}
+
+stars.each(function () {
+  $(this).hover(
+    function () {
+      $(this).prevAll().addBack().addClass("star-hover");
+    },
+    function () {
+      $(this).prevAll().addBack().removeClass("star-hover");
+    }
+  );
+  $(this).on("click", function () {
+    // Different format from the blade beacause JS internally only supports UTF-16
+    stars.text("\u2606");
+    $(this).prevAll().addBack().text("\u2605");
+    $("#stars input[name='score']").val($(this).data("rating"));
+  });
+});
+
 $("#start,#end").on("change", function () {
-  setTimeout(function () {
-    autoCalcDuration(
-      document.getElementById("start").value,
-      document.getElementById("end").value,
-      document.getElementById("duration").value
+  settimeout(function () {
+    autocalcduration(
+      document.getelementbyid("start").value,
+      document.getelementbyid("end").value,
+      document.getelementbyid("duration").value
     );
   }, 100);
 });
 
-function autoCalcDuration(time1, time2, target) {
+function autocalcduration(time1, time2, target) {
   if (time1 != "" && time2 != "") {
     var start = time1.split(":");
     var end = time2.split(":");
-    var startDeci = parseInt(start[0]) + parseInt(start[1]) / 60;
-    var endDeci = parseInt(end[0]) + parseInt(end[1]) / 60;
-    if (startDeci > endDeci) {
-      endDeci += 24;
+    var startdeci = parseint(start[0]) + parseint(start[1]) / 60;
+    var enddeci = parseint(end[0]) + parseint(end[1]) / 60;
+    if (startdeci > enddeci) {
+      enddeci += 24;
     }
-    var duration = endDeci - startDeci;
-    var duration_hours = parseInt(duration);
-    var duration_minutes = Math.round((duration - duration_hours) * 60);
+    var duration = enddeci - startdeci;
+    var duration_hours = parseint(duration);
+    var duration_minutes = math.round((duration - duration_hours) * 60);
     if (duration_hours < 10) {
       duration_hours = "0" + duration_hours;
     }
     if (duration_minutes < 10) {
       duration_minutes = "0" + duration_minutes;
     }
-    document.getElementById("duration").value =
+    document.getelementbyid("duration").value =
       duration_hours + ":" + duration_minutes;
     $("#datetimepicker4").datetimepicker({
-      format: "HH:mm",
+      format: "hh:mm",
     });
   }
 }
 
-window.autoCalcDuration = autoCalcDuration;
+window.autocalcduration = autocalcduration;
