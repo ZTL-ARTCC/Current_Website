@@ -41,6 +41,10 @@ class Event extends Model {
         return strtotime($this->date);
     }
 
+    public function getHasStatReportRunAttribute() {
+        return $this->eventStat()->exists();
+    }
+
     public static function fetchVisibleEvents() {
         $now = Carbon::now();
         $events = Event::where('status', Event::$STATUSES["VISIBLE"])->get()->filter(function ($e) use ($now) {

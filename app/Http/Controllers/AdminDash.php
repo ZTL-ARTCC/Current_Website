@@ -1760,6 +1760,14 @@ class AdminDash extends Controller {
         return redirect()->back()->with('success', 'Event reminder sent');
     }
 
+    public function updateTrackingAirports(Request $request, $id) {
+        $event = Event::find($id);
+        $event->tracking_airports = $request->tracking_airports;
+        $event->save();
+
+        return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
+    }
+
     public function retrievePositionPreset(Request $request, $id) {
         $preset = PositionPreset::find($request->p_id);
         $first = $preset->first_position;
