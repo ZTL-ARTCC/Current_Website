@@ -271,7 +271,7 @@ class TrainingDash extends Controller {
             'end' => 'required',
             'duration' => 'required',
             'movements' => ['nullable',' integer'],
-            'score' => ['required', 'integer', 'digits_between:1,5']
+            'score' => ['nullable', 'integer', 'digits_between:1,5']
         ]);
 
         $ticket = new TrainingTicket;
@@ -368,7 +368,7 @@ class TrainingDash extends Controller {
                 'end' => 'required',
                 'duration' => 'required',
                 'movements' => ['nullable',' integer'],
-                'score' => ['required', 'integer', 'between:1,5']
+                'score' => ['nullable', 'integer', 'between:1,5']
             ]);
 
             $ticket->controller_id = $request->controller;
