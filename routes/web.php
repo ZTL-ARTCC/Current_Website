@@ -75,6 +75,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
         Route::get('/profile', 'ControllerDash@showProfile');
         Route::post('/profile', 'ControllerDash@updateInfo')->name('updateInfo');
+        Route::get('/profile/discord', 'ControllerDash@updateDiscordRoles');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
@@ -156,7 +157,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editCalendarEvent');
             Route::post('/edit/{id}/save', 'AdminDash@saveCalendarEvent')->name('saveCalendarEvent');
             Route::delete('/delete/{id}', 'AdminDash@deleteCalendarEvent')->name('deleteCalendarEvent');
-            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalenderEventVisibilty')->name('toggleCalendarEventVisibility');
+            Route::post('/edit/vis/{id}', 'AdminDash@toggleCalendarEventVisibility')->name('toggleCalendarEventVisibility');
         });
         Route::prefix('scenery')->middleware('permission:scenery')->group(function () {
             Route::get('/', 'AdminDash@showScenery');

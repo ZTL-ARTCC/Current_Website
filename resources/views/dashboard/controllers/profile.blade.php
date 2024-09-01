@@ -30,7 +30,7 @@ Profile
                                 <tr>
                                     <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
                                     <td><center>{{ $f->service_level_text }}</center></td>
-                                    <td><center>{{ str_limit($f->comments, 50, '...') }}</center></td>
+                                    <td><center>{{ str_limit($f->comments, 25, '...') }}</center></td>
                                 </tr>
                             @endforeach
                     </tbody>
@@ -151,11 +151,24 @@ Profile
                 </div>
 
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <button class="btn btn-success" type="submit">Save Profile</button>
                     </div>
+
+                    @toggle('discord_role_updater')
+                        @if(Auth::user()->discord)
+                            <div class="col-4">
+                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success" type="button">Update Discord Roles</a>
+                            </div>profile.
+                        @else
+                            <div class="col-4">
+                                <a href="#" data-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
+                            </div>
+                        @endif
+                    @endtoggle
                 </div>
                 {{ html()->form()->close() }}
+
 
                 Receive Broadcast Emails?
                 &nbsp;
@@ -182,14 +195,14 @@ Profile
                 <h4>My Recent Activity:</h4>
                 <div class="card">
                     <ul class="list-group list-group-flush">
-                        @if($personal_stats->total_hrs < 1)
+                        @if($personal_stats->total_hrs < 3)
                             <li class="list-group-item hours-danger">
-                                <h5>Hours this Month:</h5>
+                                <h5>Hours this Quarter:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @else
                             <li class="list-group-item hours-success">
-                                <h5>Hours this Month:</h5>
+                                <h5>Hours this Quarter:</h5>
                                 <p><b>{{ $personal_stats->total_hrs }}</b></p>
                             </li>
                         @endif
