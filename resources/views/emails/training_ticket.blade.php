@@ -14,7 +14,7 @@
     @if($ticket->score) 
         <div id="stars"> 
             @for($i = 0; $i < 5; $i++)
-                <span>{!! $i<$ticket->score ? html_entity_decode('&starf;') : html_entity_decode('&star;') !!}</span>
+                <span>{!! $i<$ticket->score ? '&#9733;' : '&#9734;' !!}</span>
             @endfor
         </div>
     @else 
