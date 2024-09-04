@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -30,6 +31,10 @@ class Event extends Model {
         "CLOSED" => 0,
         "OPEN" => 1
     ];
+
+    public function eventStat(): HasOne {
+        return $this->hasOne(EventStat::class);
+    }
 
     public function getDateEditAttribute() {
         $date = new Carbon($this->date);
