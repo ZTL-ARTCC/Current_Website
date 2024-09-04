@@ -150,7 +150,7 @@ Profile
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-4">
                         <button class="btn btn-success" type="submit">Save Profile</button>
                     </div>
