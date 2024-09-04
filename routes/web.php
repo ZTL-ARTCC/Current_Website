@@ -208,6 +208,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/noshow/unmark/{id}', 'AdminDash@eventUnMarkNoShow');
             Route::get('/denylist', 'AdminDash@viewEventDenylist');
             Route::get('/denylist/delete/{id}', 'AdminDash@deleteEventDenylist');
+            Route::get('/statistics/{id}', 'AdminDash@viewEventStats');
+            Route::get('/statistics/rerun/{id}', 'AdminDash@rerunEventStats');
             Route::post('/statistics/update/{id}', 'AdminDash@updateTrackingAirports')->name('updateEventTrackingAirports');
         });
         Route::prefix('roster')->middleware('permission:roster')->group(function () {
