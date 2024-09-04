@@ -496,10 +496,11 @@ View Event
                     </h3>
                 </div>
                 <div class="card-body">
-                    @if(!$event->has_stat_report_run)
+                    @if($event->has_stat_report_run)
                         {{ html()->text('tracking_airports', $event->tracking_airports)->class(['form-control', 'mb-3'])->disabled()->placeholder('Airports for Tracking for Event Statistics') }}
                         <div class="text-center">
                             <a href="/dashboard/admin/events/statistics/{{ $event->id }}" class="btn btn-success">Report Ready</a>
+                            <a href="/dashboard/admin/events/statistics/rerun/{{ $event->id }}" class="btn btn-danger">Delete Report and Rerun</a>
                         </div>
                     @else
                         {{ html()->form()->route('updateEventTrackingAirports', [$event->id])->open() }}

@@ -1768,6 +1768,31 @@ class AdminDash extends Controller {
         return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
     }
 
+    public function viewEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        return view('dashboard.admin.events.report')->with('event_stat', $event_stat);
+    }
+
+    public function rerunEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        $event_stat->delete();
+
+        return redirect()->back()->with('success', 'The report for this event has been deleted and a new report will be available within 24 hours');
+
+    }
+
     public function retrievePositionPreset(Request $request, $id) {
         $preset = PositionPreset::find($request->p_id);
         $first = $preset->first_position;
