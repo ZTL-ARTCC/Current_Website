@@ -25,6 +25,6 @@ for (i = 0; i < coll.length; i++) {
     if (coll[j].nextElementSibling.innerHTML.indexOf("active") !== -1) {
       coll[j].click();
       break;
-    }  
+    }
   }
 }
