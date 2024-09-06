@@ -21,4 +21,10 @@ for (i = 0; i < coll.length; i++) {
       }
     }
   });
+  for (j = 0; j < coll.length; j++) {
+    if (coll[j].nextElementSibling.innerHTML.indexOf("active") !== -1) {
+      coll[j].click();
+      break;
+    }  
+  }
 }
