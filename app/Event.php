@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -31,6 +32,10 @@ class Event extends Model {
         "OPEN" => 1
     ];
 
+    public function eventStat(): HasOne {
+        return $this->hasOne(EventStat::class);
+    }
+
     public function getDateEditAttribute() {
         $date = new Carbon($this->date);
         $date = $date->format('Y-m-d');
@@ -39,6 +44,10 @@ class Event extends Model {
 
     public function getDateStampAttribute() {
         return strtotime($this->date);
+    }
+
+    public function getHasStatReportRunAttribute() {
+        return $this->eventStat()->exists();
     }
 
     public static function fetchVisibleEvents() {

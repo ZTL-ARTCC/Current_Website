@@ -88,6 +88,8 @@ Training Tickets
                                 <th scope="col">Session ID</th>
                                 <th scope="col">Start Time</th>
                                 <th scope="col">End Time</th>
+                                <th scope="col">Score<br>(1-5)</th>
+                                <th scope="col">Movements</th>
                                 <th scope="col">INS/MTR Comments</th>
                             </tr>
                         </thead>
@@ -109,6 +111,8 @@ Training Tickets
                                     <td>{{ $t->session_name }}</td>
                                     <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                                     <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
+                                    <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
+	                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
                                     <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                                 </tr>
                                 @endif

@@ -1655,7 +1655,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->save();
 
         return redirect()->back()->with('success', 'The position has been assigned successfully.');
@@ -1663,7 +1663,7 @@ class AdminDash extends Controller {
 
     public function unassignPosition($id) {
         $position = EventRegistration::find($id);
-        $position->status = 0;
+        $position->status = EventRegistration::STATUSES['UNASSIGNED'];
         $position->save();
 
         return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
@@ -1698,7 +1698,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->reminder = 1;
         $reg->choice_number = 0;
         $reg->save();
@@ -1758,6 +1758,39 @@ class AdminDash extends Controller {
     public function sendEventReminder($id) {
         Artisan::call('Event:SendEventReminder ' . $id);
         return redirect()->back()->with('success', 'Event reminder sent');
+    }
+
+    public function updateTrackingAirports(Request $request, $id) {
+        $event = Event::find($id);
+        $event->tracking_airports = $request->tracking_airports;
+        $event->save();
+
+        return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
+    }
+
+    public function viewEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        return view('dashboard.admin.events.report')->with('event_stat', $event_stat);
+    }
+
+    public function rerunEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        $event_stat->delete();
+
+        return redirect()->back()->with('success', 'The report for this event has been deleted and a new report will be available within 24 hours');
+
     }
 
     public function retrievePositionPreset(Request $request, $id) {

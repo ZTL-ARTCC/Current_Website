@@ -488,6 +488,43 @@ View Event
                     </p>
                 </div>
             </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        Event Statistics Report
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if($event->has_stat_report_run)
+                        {{ html()->text('tracking_airports', $event->tracking_airports)->class(['form-control', 'mb-3'])->disabled()->placeholder('Airports for Tracking for Event Statistics') }}
+                        <div class="text-center">
+                            <a href="/dashboard/admin/events/statistics/{{ $event->id }}" class="btn btn-success">Report Ready</a>
+                            <a href="/dashboard/admin/events/statistics/rerun/{{ $event->id }}" class="btn btn-danger">Delete Report and Rerun</a>
+                        </div>
+                    @else
+                        {{ html()->form()->route('updateEventTrackingAirports', [$event->id])->open() }}
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    {{ html()->text('tracking_airports', $event->tracking_airports)->class(['form-control'])->placeholder('Airports for Tracking for Event Statistics') }}
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-success simple-tooltip" data-toggle="tooltip"
+                                            title="Update Airports"><i class="fas fa-check"></i></button>
+                                </div>
+                            </div>
+                        {{ html()->form()->close() }}
+                        <p class="small mb-3">Enter the FAA identifier of the airports to include in the statistics report separated by commas with no spaces. Example: "ATL,CLT,BHM"</p>
+                        <div class="text-center">
+                            @if(is_null($event->tracking_airports))
+                                <button class="btn btn-danger" disabled>No Airports Listed for Report</button>
+                            @else
+                                <button class="btn btn-success" disabled>Report Available 24 Hours After Event Ends</button>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            </div>
             @endif
         </div>
     </div>
