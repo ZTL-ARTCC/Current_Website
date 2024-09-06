@@ -58,7 +58,7 @@ Training Tickets
                     @endforeach
             </div>
             <div class="row">
-                <div class="col-sm-12">Date of last promotion: <strong>{{ $search_result->last_promotion }}</strong></div>
+                <div class="col-sm-12">Date of Last Promotion: <strong>{{ $search_result->last_promotion_date }}</strong></div>
             </div>
         <hr>
         @php ($trainingCategories = array('s1', 's2', 's3', 'c1', 'other'))
