@@ -359,4 +359,11 @@ class User extends Authenticatable implements LaratrustUser {
 
         return $date;
     }
+
+    public function getLastPromotionDateAttribute() {
+        if(is_null($this->last_promotion)) {
+            return 'No date';
+        }
+        return Carbon::create($this->last_promotion)->format('m/d/Y');
+    }
 }
