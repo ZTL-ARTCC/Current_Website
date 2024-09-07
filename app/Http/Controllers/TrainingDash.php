@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Mail\OtsAssignment;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
@@ -374,11 +375,7 @@ class TrainingDash extends Controller {
             $ins = User::find($ots->ins_id);
             $controller = User::find($ots->controller_id);
 
-            Mail::send('emails.ots_assignment', ['ots' => $ots, 'controller' => $controller, 'ins' => $ins], function ($m) use ($ins, $controller) {
-                $m->from('ots-center@notams.ztlartcc.org', 'vZTL ARTCC OTS Center')->replyTo($controller->email, $controller->full_name);
-                $m->subject('You Have Been Assigned an OTS for ' . $controller->full_name);
-                $m->to($ins->email)->cc('training@ztlartcc.org');
-            });
+            Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
 
             $audit = new Audit;
             $audit->cid = Auth::id();
