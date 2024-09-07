@@ -15,6 +15,7 @@ use App\File;
 use App\Incident;
 use App\LocalHero;
 use App\LocalHeroChallenges;
+use App\Mail\BugReport;
 use App\Opt;
 use App\Overflight;
 use App\PositionPreset;
@@ -592,11 +593,7 @@ class ControllerDash extends Controller {
         $error = $request->error;
         $desc = $request->desc;
 
-        Mail::send('emails.bug', ['reporter' => $reporter, 'url' => $url, 'error' => $error, 'desc' => $desc], function ($m) use ($reporter) {
-            $m->from('bugs@notams.ztlartcc.org', 'vZTL ARTCC Bugs')->replyTo($reporter->email, $reporter->full_name);
-            $m->subject('New Bug Report');
-            $m->to('wm@ztlartcc.org');
-        });
+        Mail::to('wm@ztlartcc.org')->send(new BugReport($reporter, $url, $error, $desc));
 
         return redirect()->back()->with('success', 'Your bug has been reported successfully.');
     }
