@@ -23,9 +23,7 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 for (j = 0; j < coll.length; j++) {
-  console.log('checking: ' + coll[j].getAttribute('name'));
   if (coll[j].nextElementSibling.innerHTML.indexOf("active") !== -1) {
-    console.log('found active!');
     coll[j].click();
     break;
   }
