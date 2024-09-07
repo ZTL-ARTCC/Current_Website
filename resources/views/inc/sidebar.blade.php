@@ -1,7 +1,7 @@
 <div class="card bg-light card-body" id="pill-sidebar">
-    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
+    <div class="nav flex-column nav-pills sidebar-container" role="tablist" aria-orientation="vertical">
         <div class="dropdown-divider"></div>
-        <p class="collapsible-sidebar" name="controllers" style="margin-left:-20px; cursor:pointer">
+        <p class="collapsible-sidebar" name="controllers">
             ZTL CONTROLLERS
             <b class="caret float-right fas fa-caret-left"></b>
         </p>
@@ -24,14 +24,14 @@
         </div>
         @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-sidebar" name="training" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="training">
                 TRAINING
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
-                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
+                <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
                     <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
@@ -46,7 +46,7 @@
         @endif
         @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-sidebar" name="administration" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="administration">
                 ADMINISTRATION
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>

@@ -1,5 +1,13 @@
+.sidebar-container {
+  margin-left:20px;
+}
+
 [class^="collapsible"] {
   cursor: pointer;
+}
+
+.collapsible-sidebar {
+  margin-left:-20px;
 }
 
 .content {
