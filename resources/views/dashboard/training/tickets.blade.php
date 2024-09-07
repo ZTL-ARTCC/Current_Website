@@ -57,6 +57,9 @@ Training Tickets
                         </div>
                     @endforeach
             </div>
+            <div class="row">
+                <div class="col-sm-12">Date of Last Promotion: <strong>{{ $search_result->last_promotion_date }}</strong></div>
+            </div>
         <hr>
         @php ($trainingCategories = array('s1', 's2', 's3', 'c1', 'other'))
         <ul class="nav nav-tabs nav-justified" role="tablist">
