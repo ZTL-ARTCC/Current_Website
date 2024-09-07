@@ -1,7 +1,7 @@
 <div class="card bg-light card-body" id="pill-sidebar">
     <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
         <div class="dropdown-divider"></div>
-        <p class="collapsible" name="controllers" style="margin-left:-20px; cursor:pointer">
+        <p class="collapsible-sidebar" name="controllers" style="margin-left:-20px; cursor:pointer">
             ZTL CONTROLLERS
             <b class="caret float-right fas fa-caret-left"></b>
         </p>
@@ -24,7 +24,7 @@
         </div>
         @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible" name="training" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="training" style="margin-left:-20px; cursor:pointer">
                 TRAINING
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
@@ -46,7 +46,7 @@
         @endif
         @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible" name="administration" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="administration" style="margin-left:-20px; cursor:pointer">
                 ADMINISTRATION
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
