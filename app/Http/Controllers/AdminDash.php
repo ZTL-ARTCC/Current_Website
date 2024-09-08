@@ -19,6 +19,7 @@ use App\Incident;
 use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Mail\NewFeedback;
+use App\Mail\PilotFeedback;
 use App\Mail\VisitorRemove;
 use App\Metar;
 use App\PositionPreset;
@@ -1031,7 +1032,7 @@ class AdminDash extends Controller {
         ]);
 
         $feedback = Feedback::find($id);
-        $replyTo = $request->email;
+        $replyToAddress = $request->email;
         $replyToName = $request->name;
         $subject = $request->subject;
         $body = $request->body;
@@ -1043,11 +1044,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' emailed the pilot for feedback '.$feedback->id.'.';
         $audit->save();
 
-        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function ($m) use ($feedback, $subject, $replyTo, $replyToName) {
-            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
-            $m->subject($subject);
-            $m->to($feedback->pilot_email);
-        });
+        Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
         return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
     }
