@@ -18,6 +18,7 @@ use App\File;
 use App\Incident;
 use App\LocalHero;
 use App\LocalHeroChallenges;
+use App\Mail\NewFeedback;
 use App\Mail\VisitorRemove;
 use App\Metar;
 use App\PositionPreset;
@@ -980,11 +981,7 @@ class AdminDash extends Controller {
 
         $controller = User::find($feedback->feedback_id);
         if (isset($controller)) {
-            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
-                $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
-                $m->subject('You Have New Feedback!');
-                $m->to($controller->email);
-            });
+            Mail::to($controller->email)->send(new NewFeedback($feedback, $controller));
         }
         return redirect()->back()->with('success', 'The feedback has been saved.');
     }
