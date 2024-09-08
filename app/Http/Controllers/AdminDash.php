@@ -20,6 +20,7 @@ use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Mail\NewFeedback;
 use App\Mail\PilotFeedback;
+use App\Mail\SendEmail;
 use App\Mail\VisitorRemove;
 use App\Metar;
 use App\PositionPreset;
@@ -1116,29 +1117,13 @@ class AdminDash extends Controller {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
 
-        //Sends to all recipients
         foreach ($emails as $e) {
             if ($e != 'No email') {
-                try {
-                    Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
-                        $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-                        $m->subject('[vZTL ARTCC] '.$subject);
-                        $m->to($e);
-                    });
-                } catch(\Exception $except) {
-                    // If they have a bad email, change it to no email
-                    $bad = User::where('email', $e)->first();
-                    $bad->email = 'No email';
-                    $bad->save();
-                }
+                Mail::to($e)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
             }
         }
-        //Copies to the sender
-        Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $sender, $reply_to) {
-            $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-            $m->subject('[vZTL ARTCC] '.$subject);
-            $m->to($sender->email);
-        });
+
+        Mail::to($sender->email)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
 
         $audit = new Audit;
         $audit->cid = Auth::id();
