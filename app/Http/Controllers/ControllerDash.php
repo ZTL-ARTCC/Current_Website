@@ -87,12 +87,13 @@ class ControllerDash extends Controller {
 
         $training_metrics = $top_trainers = [];
         $training_stats = TrainingDash::generateTrainingStats($now->format('Y'), $now->format('m'), 'stats');
-        $training_metrics[] = (object)['title' => 'Total', 'metric' => $training_stats['sessionsCompletePerMonth']];
         $training_metrics[] = (object)['title' => 'S1', 'metric' => $training_stats['sessionsByType']['S1']];
         $training_metrics[] = (object)['title' => 'S2', 'metric' => $training_stats['sessionsByType']['S2']];
         $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
         $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
-        $trainer_by_total = $trainer_by_cid = [];
+        $total_sessions = $training_stats['sessionsByType']['S1'] + $training_stats['sessionsByType']['S2'] + $training_stats['sessionsByType']['S3'] + $training_stats>
+        $training_metrics[] = (object)['title' => 'Total', 'metric' => $total_sessions];
+         $trainer_by_total = $trainer_by_cid = [];
         foreach($training_stats['trainerSessions'] as $t) {
             $trainer_by_total[$t['cid']] = $t['total'];
             $trainer_by_cid[$t['cid']] = $t['name'];
