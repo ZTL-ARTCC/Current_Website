@@ -5,7 +5,7 @@ Realops
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/realops.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/realops.css') }}" />
 @endpush
 
 @section('content')
@@ -133,5 +133,5 @@ Realops
     </div>
 @endif
 </div>
-<script src="{{asset('js/realops.js')}}"></script>
+<script src="{{mix('js/realops.js')}}"></script>
 @endsection

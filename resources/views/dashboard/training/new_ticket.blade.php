@@ -5,7 +5,7 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
@@ -134,5 +134,5 @@ New Training Ticket
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js')}}"></script>
+<script src="{{mix('js/trainingticket.js')}}"></script>
 @endsection
