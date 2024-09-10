@@ -93,7 +93,7 @@ class ControllerDash extends Controller {
         $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
         $total_sessions = $training_stats['sessionsByType']['S1'] + $training_stats['sessionsByType']['S2'] + $training_stats['sessionsByType']['S3'] + $training_stats>
         $training_metrics[] = (object)['title' => 'Total', 'metric' => $total_sessions];
-         $trainer_by_total = $trainer_by_cid = [];
+        $trainer_by_total = $trainer_by_cid = [];
         foreach($training_stats['trainerSessions'] as $t) {
             $trainer_by_total[$t['cid']] = $t['total'];
             $trainer_by_cid[$t['cid']] = $t['name'];
