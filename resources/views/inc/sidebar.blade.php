@@ -168,4 +168,4 @@
 </div>
 
 @endif
-<script src="{{asset('js/sidebar.js')}}"></script>
+<script src="{{mix('js/sidebar.js')}}"></script>
