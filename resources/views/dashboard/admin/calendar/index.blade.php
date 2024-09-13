@@ -102,7 +102,7 @@ Calendar/News
                                 </td>
 
                                 <td>
-                                    {{ html()->form()->route('toggleCalenderEventVisibilty', [$c->id])->open() }}
+                                    {{ html()->form()->route('toggleCalendarEventVisibility', [$c->id])->open() }}
                                     @csrf
                                     @if($c->visible == 0)
                                         <button class="btn btn-success" data-toggle="tooltip" title="Show News"><i class="far fa-eye"></i></button>

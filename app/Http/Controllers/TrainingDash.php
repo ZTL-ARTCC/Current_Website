@@ -269,7 +269,9 @@ class TrainingDash extends Controller {
             'date' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'duration' => 'required'
+            'duration' => 'required',
+            'movements' => ['nullable',' integer'],
+            'score' => ['nullable', 'integer', 'digits_between:1,5']
         ]);
 
         $ticket = new TrainingTicket;
@@ -287,6 +289,8 @@ class TrainingDash extends Controller {
         $ticket->ins_comments = $request->trainer_comments;
         $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
         $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+        $ticket->score = $request->score;
+        $ticket->movements = $request->movements;
         $ticket->save();
         $extra = null;
 
@@ -362,7 +366,9 @@ class TrainingDash extends Controller {
                 'date' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'duration' => 'required'
+                'duration' => 'required',
+                'movements' => ['nullable',' integer'],
+                'score' => ['nullable', 'integer', 'between:1,5']
             ]);
 
             $ticket->controller_id = $request->controller;
@@ -378,6 +384,8 @@ class TrainingDash extends Controller {
             $ticket->ins_comments = $request->trainer_comments;
             $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
             $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+            $ticket->score = $request->score;
+            $ticket->movements = $request->movements;
             $ticket->save();
 
             $audit = new Audit;
@@ -597,7 +605,7 @@ class TrainingDash extends Controller {
         return view('dashboard.training.statistics')->with('stats', $stats);
     }
 
-    private function generateTrainingStats($year, $month, $dataType) {
+    public static function generateTrainingStats($year, $month, $dataType) {
         $retArr = [];
         $retArr['dateSelect'] = ['month' => $month, 'year' => $year];
         // Set date range
@@ -621,7 +629,7 @@ class TrainingDash extends Controller {
             $retArr['sessionsCompletePreviousMonth'] = $sessionsPrevious->where('type', 12)->count();
         }
         // Training sessions per month by type
-        if ($dataType == 'graph') {
+        if (($dataType == 'graph')||($dataType == 'stats')) {
             $sessionsS1 = $sessions->where('position', '<', 105)->count();
             $sessionsS2 = $sessions->where('position', '>', 105)->where('position', '<', 115)->count();
             $sessionsS3 = $sessions->whereIn('position', [115, 116, 117, 118, 119, 123])->count();
@@ -642,6 +650,7 @@ class TrainingDash extends Controller {
         $mtr = 0;
         foreach ($trainers as $trainer) {
             $trainerStats = [];
+            $trainerStats['cid'] = $trainer->id;
             $trainerStats['name'] = explode(' ', $trainer->getFullNameAttribute())[1];
             $trainerSesh = $sessions->where('trainer_id', $trainer->id);
             $trainerStats['total'] = $trainerSesh->count();

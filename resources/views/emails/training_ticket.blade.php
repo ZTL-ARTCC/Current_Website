@@ -10,6 +10,17 @@
     <li><b>Position:</b> {{ $ticket->position_name }}</li>
     <li><b>Date and Time:</b> {{ $ticket->date }} from {{ $ticket->start_time }} to {{ $ticket->end_time }} ET</li>
 	<li><b>Duration:</b> {{ $ticket->duration }}</li>
+	<li><b>Score (1 = Poor, 5 = Excellent):</b> 
+    @if($ticket->score) 
+        <div id="stars"> 
+            @for($i = 0; $i < 5; $i++)
+                <span>{!! $i<$ticket->score ? '&#9733;' : '&#9734;' !!}</span>
+            @endfor
+        </div>
+    @else 
+        N/A 
+    @endif</li>
+	<li><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</li>
     <li><b>Comments:</b> <br>
         {!! nl2br(e($ticket->comments)) !!}
     </li>

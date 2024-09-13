@@ -4,6 +4,10 @@
 New Training Ticket
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+@endpush
+
 @section('content')
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
@@ -76,6 +80,29 @@ New Training Ticket
                     <label for="duration" class="form-label">Duration (hh:mm)</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker4" data-target-input="nearest">
                         {{ html()->text('duration', null)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker4']) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="score" class="form-label">Score (Visible to Controller)</label>
+                    <div id="stars" class="star-input input-group">
+                        <span data-rating="1">&star;</span>
+                        <span data-rating="2">&star;</span>
+                        <span data-rating="3">&star;</span>
+                        <span data-rating="4">&star;</span>
+                        <span data-rating="5">&star;</span>
+                        {{ html()->text('score', null)->attribute('hidden') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="movements" class="form-label">Movements (Optional)</label>
+                    <div class="input-group">
+                        {{ html()->text('movements', null)->class('form-control') }}
                     </div>
                 </div>
             </div>

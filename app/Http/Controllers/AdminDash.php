@@ -9,6 +9,7 @@ use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
 use App\Event;
+use App\EventDenylist;
 use App\EventPosition;
 use App\EventRegistration;
 use App\FeatureToggle;
@@ -220,7 +221,7 @@ class AdminDash extends Controller {
             $month = date('n');
         }
 
-        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $homec = User::where('visitor', 0)->where('status', 1)->orderBy('lname', 'ASC')->get();
         $visitc = User::where('visitor', 1)->where('status', 1)->where('visitor_from', '!=', 'ZHU')->where('visitor_from', '!=', 'ZJX')->orderBy('lname', 'ASC')->get();
         $trainc = User::orderBy('lname', 'ASC')->get()->filter(function ($user) {
@@ -241,7 +242,7 @@ class AdminDash extends Controller {
 
         $last_stats = ControllerLog::aggregateAllControllersByPosAndMonth($last_year, $last_month);
 
-        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('last_stats', $last_stats)->with('homec', $homec)->with('visitc', $visitc)
+        return view('dashboard.admin.roster.purge')->with('stats', $stats)->with('last_stats', $last_stats)->with('home', $homec)->with('visiting', $visitc)
                                                    ->with('trainc', $trainc)->with('month', $month)->with('year', $year);
     }
 
@@ -763,7 +764,7 @@ class AdminDash extends Controller {
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
 
-    public function toggleCalenderEventVisibilty($id) {
+    public function toggleCalendarEventVisibility($id) {
         $calendar = Calendar::find($id);
         $type = '';
 
@@ -1383,8 +1384,8 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
@@ -1459,8 +1460,8 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
             'description' => 'required',
             'banner_url' => 'nullable|url'
         ]);
@@ -1539,11 +1540,18 @@ class AdminDash extends Controller {
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been edited successfully.');
     }
 
-    public function deleteEvent($id) {
+    public function deleteEvent($id, Request $request) {
         $event = Event::find($id);
         $name = $event->name;
         $positions = EventPosition::where('event_id', $event->id)->get();
         $reg = EventRegistration::where('event_id', $event->id)->get();
+
+        $vatsim_id = $event->vatsim_id;
+        $denylist = $request->query('denylist', 'false');
+
+        if ($vatsim_id && $denylist === 'true') {
+            $this->denylistEvent($event);
+        }
 
         foreach ($reg as $r) {
             $r->delete();
@@ -1561,6 +1569,38 @@ class AdminDash extends Controller {
         $audit->save();
 
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
+    }
+
+    public function denylistEvent($event) {
+        $event_denylist = new EventDenylist();
+        $event_denylist->vatsim_id = $event->vatsim_id;
+        $event_denylist->event_name = $event->name;
+        $event_denylist->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' denylisted event with name '.$event->name.'.';
+        $audit->save();
+    }
+
+    public function viewEventDenylist() {
+        $event_denylists = EventDenylist::orderBy('created_at', 'desc')->get();
+        return view('dashboard.admin.events.denylist')->with('event_denylists', $event_denylists);
+    }
+
+    public function deleteEventDenylist($id) {
+        $event_denylists = EventDenylist::find($id);
+        $vatsim_id = $event_denylists->vatim_id;
+        $event_denylists->delete();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' deleted the event denylist with id '.$vatsim_id.'.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
     }
 
     public function addPosition(Request $request, $id) {
@@ -1615,7 +1655,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->save();
 
         return redirect()->back()->with('success', 'The position has been assigned successfully.');
@@ -1623,7 +1663,7 @@ class AdminDash extends Controller {
 
     public function unassignPosition($id) {
         $position = EventRegistration::find($id);
-        $position->status = 0;
+        $position->status = EventRegistration::STATUSES['UNASSIGNED'];
         $position->save();
 
         return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
@@ -1658,7 +1698,7 @@ class AdminDash extends Controller {
         $reg->position_id_detail = $request->position_detail;
         $reg->start_time = $request->start_time;
         $reg->end_time = $request->end_time;
-        $reg->status = 1;
+        $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->reminder = 1;
         $reg->choice_number = 0;
         $reg->save();
@@ -1718,6 +1758,39 @@ class AdminDash extends Controller {
     public function sendEventReminder($id) {
         Artisan::call('Event:SendEventReminder ' . $id);
         return redirect()->back()->with('success', 'Event reminder sent');
+    }
+
+    public function updateTrackingAirports(Request $request, $id) {
+        $event = Event::find($id);
+        $event->tracking_airports = $request->tracking_airports;
+        $event->save();
+
+        return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
+    }
+
+    public function viewEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        return view('dashboard.admin.events.report')->with('event_stat', $event_stat);
+    }
+
+    public function rerunEventStats($id) {
+        $event = Event::find($id);
+        $event_stat = $event->eventStat;
+
+        if (is_null($event_stat)) {
+            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+        }
+
+        $event_stat->delete();
+
+        return redirect()->back()->with('success', 'The report for this event has been deleted and a new report will be available within 24 hours');
+
     }
 
     public function retrievePositionPreset(Request $request, $id) {

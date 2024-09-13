@@ -4,6 +4,10 @@
 View Training Ticket
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+@endpush
+
 @section('content')
 @include('inc.header', ['title' => 'View Training Ticket for ' .  $ticket->controller_name])
 
@@ -21,6 +25,18 @@ View Training Ticket
             <p><b>Start Time:</b> {{ $ticket->start_time }}</p>
             <p><b>End Time:</b> {{ $ticket->end_time }}</p>
             <p><b>Duration:</b> {{ $ticket->duration }}</p>
+	        <p><b>Score:</b> 
+            @if($ticket->score) 
+                <div id="stars"> 
+                    @for($i = 0; $i < 5; $i++)
+                        <span>{!! $i<$ticket->score ? html_entity_decode('&starf;') : html_entity_decode('&star;') !!}</span>
+                    @endfor
+                </div>
+            @else 
+                N/A 
+            @endif
+            </p>
+            <p><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</p>
             <p><b>Comments:</b></p>
             @if($ticket->comments != null)
                 <p>{!! nl2br(e($ticket->comments)) !!}</p>
@@ -30,5 +46,4 @@ View Training Ticket
         </div>
     </div>
 </div>
-
 @endsection

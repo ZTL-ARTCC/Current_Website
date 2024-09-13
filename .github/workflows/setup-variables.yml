@@ -7,6 +7,8 @@ on:
         value: ${{ jobs.get-versions.outputs.php-version }}
       node-version:
         value: ${{ jobs.get-versions.outputs.node-version }}
+      tag-name:
+        value: ${{ jobs.generate-tag-name.outputs.tag-name }}
 
 jobs:
   get-versions:
@@ -17,7 +19,7 @@ jobs:
 
     steps:
       - name: checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - id: get-php-version
         run: |
@@ -28,4 +30,31 @@ jobs:
         run: |
           VERSION=$(cat .tool-versions | grep nodejs | cut -d" " -f 2)
           echo "node-version=$VERSION" >> $GITHUB_OUTPUT
+
+  generate-tag-name:
+    runs-on: ubuntu-latest
+    outputs:
+      tag-name: ${{ steps.generate-tag-name.outputs.tag-name }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: generate-tag-name
+        run: |
+          LATEST=$(git describe --tags $(git rev-list --tags --max-count=1))
+          LATEST_DATE=$(echo "$LATEST" | cut -f 1 -d"-")
+          LATEST_NUM=$(echo "$LATEST" | cut -f 2 -d"-")
+
+          BASE_TAG=v$(date '+%Y.%m.%d')
+
+          if [[ $BASE_TAG == $LATEST_DATE ]] ; then
+            NEXT_NUM=$(($LATEST_NUM + 1))
+          else
+            NEXT_NUM=1
+          fi
+
+          echo "tag-name=$BASE_TAG-$NEXT_NUM" >> $GITHUB_OUTPUT
 

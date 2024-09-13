@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Mail;
 use SimpleXMLElement;
 
@@ -71,6 +72,9 @@ class ControllerDash extends Controller {
         })->sortBy(function ($e) {
             return strtotime($e->date);
         });
+        foreach ($events as $e) {
+            $e->banner_path = $e->displayBannerPath();
+        }
         
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth(date('y'), date('n'));
         $homec = User::where('visitor', 0)->where('status', 1)->get();
@@ -81,6 +85,29 @@ class ControllerDash extends Controller {
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
 
+        $training_metrics = $top_trainers = [];
+        $training_stats = TrainingDash::generateTrainingStats($now->format('y'), $now->format('n'), 'stats');
+        $training_metrics[] = (object)['title' => 'Total', 'metric' => $training_stats['sessionsCompletePerMonth']];
+        $training_metrics[] = (object)['title' => 'S1', 'metric' => $training_stats['sessionsByType']['S1']];
+        $training_metrics[] = (object)['title' => 'S2', 'metric' => $training_stats['sessionsByType']['S2']];
+        $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
+        $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
+        $trainer_by_total = $trainer_by_cid = [];
+        foreach($training_stats['trainerSessions'] as $t) {
+            $trainer_by_total[] = [$t['cid']] = $t['total'];
+            $trainer_by_cid[] = [$t['cid']] = $t['name'];
+        }
+        rsort($trainer_by_total);
+        foreach($trainer_by_total as $tt) {
+            if($tt == 0) {
+                break;
+            }
+            $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'sessions_given' => $tt];
+            if(count($top_trainers) == 3) {
+                break;
+            }
+        }
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
@@ -88,6 +115,7 @@ class ControllerDash extends Controller {
                                           ->with('pyrite', $pyrite)->with('lyear', $last_year->format('Y'))
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
+                                          ->with('training_metrics', $training_metrics)->with('top_trainers', $top_trainers)
                                           ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
     }
 
@@ -101,7 +129,7 @@ class ControllerDash extends Controller {
         }
 
         $user_id = Auth::id();
-        $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $personal_stats = $stats[$user_id];
         $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function ($t) {
@@ -132,7 +160,10 @@ class ControllerDash extends Controller {
 
         if (is_null(Auth::user()->ea_customer_id)) {
             try {
-                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where('email', Auth::user()->email)->where('id_roles', '3')->limit(1)->get();
+                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where(function ($query) {
+                    $query->where('email', Auth::user()->email)
+                          ->orWhere('custom_field_1', Auth::user()->id);
+                })->where('id_roles', '3')->limit(1)->get();
                 foreach ($ea_users as $u) {
                     $user = Auth::user();
                     $user->ea_customer_id = $u->id;
@@ -243,6 +274,7 @@ class ControllerDash extends Controller {
         }
 
         $stats = ControllerLog::aggregateAllControllersByPosAndMonth($year, $month);
+        $qtr_stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $all_stats = ControllerLog::getAllControllerStats();
 
         $homec = User::where('visitor', 0)->where('status', 1)->get();
@@ -262,8 +294,8 @@ class ControllerDash extends Controller {
         });
 
         return view('dashboard.controllers.stats')->with('all_stats', $all_stats)->with('year', $year)
-                                 ->with('month', $month)->with('stats', $stats)
-                                 ->with('home', $home)->with('visit', $visit)->with('agreevisit', $agreevisit);
+                                 ->with('month', $month)->with('stats', $stats)->with('qtr_stats', $qtr_stats)
+                                 ->with('home', $home)->with('visiting', $visit)->with('agreevisit', $agreevisit);
     }
 
     public function showCalendarEvent($id) {
@@ -295,9 +327,10 @@ class ControllerDash extends Controller {
 
     public function viewEvent($id) {
         $event = Event::find($id);
+        $event->banner_path = $event->displayBannerPath();
         $positions = EventPosition::where('event_id', $event->id)->orderBy('created_at', 'ASC')->get();
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
-            $registrations = EventRegistration::where('event_id', $event->id)->where('status', 0)->orderBy('created_at', 'ASC')->get();
+            $registrations = EventRegistration::where('event_id', $event->id)->where('status', EventRegistration::STATUSES['UNASSIGNED'])->orderBy('created_at', 'ASC')->get();
             $presets = PositionPreset::get()->pluck('name', 'id');
             $controllers = User::orderBy('lname', 'ASC')->get()->pluck('backwards_name_rating', 'id');
         } else {
@@ -358,7 +391,7 @@ class ControllerDash extends Controller {
             $reg->position_id = $request->num1;
             $reg->start_time = $request->start_time1;
             $reg->end_time = $request->end_time1;
-            $reg->status = 0;
+            $reg->status = EventRegistration::STATUSES['UNASSIGNED'];
             $reg->choice_number = 1;
             $reg->remarks = $request->remarks;
             $reg->save();
@@ -573,5 +606,26 @@ class ControllerDash extends Controller {
         $user->timezone = $request->timezone;
         $user->save();
         return redirect()->back()->with('success', 'Your profile has been updated successfully.');
+    }
+
+    public function updateDiscordRoles(Request $request) {
+        $user = Auth::user();
+        $user_id = $user->discord;
+
+        if (!$user_id) {
+            return redirect()->back()->with('error', 'You must have a Discord UID set in order to update your roles.');
+        }
+
+        $response = Http::get('http://bot.ztlartcc.org:3000/assignRoles', [
+            'userId' => $user_id,
+        ]);
+
+        if ($response->notFound()) {
+            return redirect()->back()->with('error', 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
+        } elseif (!$response->successful()) {
+            return redirect()->back()->with('error', 'An error occurred while updating your roles. Please try again later.');
+        }
+
+        return redirect()->back()->with('success', 'Your roles have been updated successfully.');
     }
 }

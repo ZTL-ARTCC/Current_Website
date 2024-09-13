@@ -1,9 +1,9 @@
 <div class="card bg-light card-body" id="pill-sidebar">
-    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
+    <div class="nav flex-column nav-pills sidebar-container" role="tablist" aria-orientation="vertical">
         <div class="dropdown-divider"></div>
-        <p class="collapsible-controllers" style="margin-left:-20px; cursor:pointer">
+        <p class="collapsible-sidebar" name="controllers">
             ZTL CONTROLLERS
-            <b id="caret-controllers" class="float-right fas fa-caret-left"></b>
+            <b class="caret float-right fas fa-caret-left"></b>
         </p>
         <div class="content">
             @if(Auth::user()->rating_id == 1)
@@ -24,14 +24,14 @@
         </div>
         @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-train" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="training">
                 TRAINING
-                <b id="caret-train" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                <a class="nav-link" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
+                <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
-                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
+                <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
                     <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
@@ -46,9 +46,9 @@
         @endif
         @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-admin" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="administration">
                 ADMINISTRATION
-                <b id="caret-admin" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 @if(Auth::user()->isAbleTo('staff'))
@@ -89,6 +89,10 @@
                 @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
                     <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
                 @endif
+                @if(Auth::user()->isAbleTo('events'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/events/denylist') }}" href="/dashboard/admin/events/denylist">Event Denylist</a>
+                @endif
+
             </div>
         @endif
         <div class="dropdown-divider"></div>
@@ -114,6 +118,42 @@
 <br/>
 <div class="card">
 	<div class="card-body p-2">
+		<h5 class="card-title">
+            {{ Carbon\Carbon::now()->translatedFormat('F') }} Training&nbsp;<i class="fa-solid fa-graduation-cap"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($training_metrics) > 0)
+            @foreach($training_metrics as $t)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $t->title }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $t->metric }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>Unavailable</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+<div class="card">
+	<div class="card-body p-2">
+		<h5 class="card-title">
+            Top Trainers&nbsp;<i class="fa-solid fa-person-chalkboard"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($top_trainers) > 0)
+            @foreach($top_trainers as $m)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $m->name }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $m->sessions_given }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>So empty...</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+<div class="card">
+	<div class="card-body p-2">
 		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
 		<table class="table table-sm table-borderless table-striped pb-0 mb-0">
         @if($controllers->count() > 0)
@@ -126,5 +166,6 @@
 		</table>
 	</div>
 </div>
+
 @endif
 <script src="{{asset('js/sidebar.js')}}"></script>

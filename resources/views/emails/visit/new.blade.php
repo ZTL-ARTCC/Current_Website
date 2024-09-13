@@ -12,5 +12,5 @@
 <p>You will have seven (7) days to complete the exams and you must pass each with a score of 80% or better. If you have any questions or 
     concerns, please email the DATM at <a href="mailto:datm@ztlartcc.org">datm@ztlartcc.org</a>.</p>
 <p>Best regards,</p>
-<p>ZTL Visiting Staff</p>
+<p>ZTL Staff</p>
 @endsection
