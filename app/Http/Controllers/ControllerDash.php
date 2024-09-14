@@ -13,6 +13,7 @@ use App\EventRegistration;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Opt;
@@ -627,5 +628,10 @@ class ControllerDash extends Controller {
         }
 
         return redirect()->back()->with('success', 'Your roles have been updated successfully.');
+    }
+
+    public function showLiveEventInfo() {
+        $live_event = LiveEvent::find(1);
+        return view('dashboard.controllers.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

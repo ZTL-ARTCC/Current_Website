@@ -16,6 +16,7 @@ use App\FeatureToggle;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Metar;
@@ -1925,5 +1926,27 @@ class AdminDash extends Controller {
         $tasks = ScheduleMonitorTasks::getTasks();
         $format = Config::get('schedule-monitor.date_format');
         return view('dashboard.admin.background-monitor')->with('tasks', $tasks)->with('format', $format);
+    }
+
+    public function setLiveEventInfo() {
+        $live_event_info = LiveEvent::find(1);
+        return view('dashboard.admin.live')->with('liveInfo', $live_event_info);
+    }
+
+    public function saveLiveEventInfo(Request $request) {
+        $live_event_info = LiveEvent::find(1);
+        $live_event_info->event_title = $request->event_title;
+        $live_event_info->body_public = $request->body_public;
+        $live_event_info->body_private = $request->body_private;
+        $live_event_info->staff_member = Auth::id();
+        $live_event_info->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated the live event info.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
     }
 }

@@ -78,7 +78,7 @@
                     @toggle('realops')
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
-                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/live') }}" href="/dashboard/admin/live">Live Event Info</a>
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
@@ -87,6 +87,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
                 @endif
                 @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
                     <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
                 @endif
                 @if(Auth::user()->isAbleTo('events'))

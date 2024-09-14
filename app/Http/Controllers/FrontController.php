@@ -10,6 +10,7 @@ use App\ControllerLog;
 use App\Event;
 use App\Feedback;
 use App\File;
+use App\LiveEvent;
 use App\Overflight;
 use App\Scenery;
 use App\User;
@@ -111,11 +112,15 @@ class FrontController extends Controller {
 
         $bookings = groupAtcBookingsByDate($bookings);
 
+        $live_event = LiveEvent::find(1);
+        $live_event_name = ($live_event->isEmpty()) ? 'Live Event' : $live_event->event_title;
+
         return view('site.home')->with('center', $center)->with('fields', $fields)
                                 ->with('airports', $airports)->with('controllers', $controllers)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('overflightCount', $overflightCount)
-                                ->with('bookings', $bookings);
+                                ->with('bookings', $bookings)
+                                ->with('liveEventName', $live_event_name);
     }
 
     public function teamspeak() {
@@ -568,5 +573,10 @@ class FrontController extends Controller {
         
         return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)
         ->with('diag', $diag)->with('aaup', $aaup);
+    }
+
+    public function showLiveEventInfo() {
+        $live_event = LiveEvent::find(1);
+        return view('site.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

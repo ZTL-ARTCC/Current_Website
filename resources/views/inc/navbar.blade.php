@@ -12,6 +12,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    @toggle('live_event')
+                        <li class="nav-item">
+                            <a class="nav-link" href="/live">{{ $liveEventName }}</a>
+                        </li>
+                    @endtoggle
                     @toggle('realops')
                         <li class="nav-item">
                             <a class="nav-link" href="/realops">Realops</a>

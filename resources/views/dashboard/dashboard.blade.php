@@ -20,6 +20,12 @@ Dashboard
         </div>
         <hr>
     @endif
+    @toggle('live_event')
+        <div class="alert alert-warning text-center">
+            <a href="/dashboard/controllers/live" alt="{!! $liveInfo->event_title !!} Information">{!! $liveInfo->event_title !!} Information</a>
+        </div>
+        <hr>
+    @endtoggle
     <div class="row clocks">
         <div class="col-sm-3">
             <div class="card card-body">

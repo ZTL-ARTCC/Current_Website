@@ -44,6 +44,10 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/bid/{id}', 'RealopsController@bid')->middleware('auth:realops')->middleware('toggle:realops_bidding');
     Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
+
+Route::prefix('live')->middleware('toggle:live_event')->group(function () {
+    Route::get('/', 'FrontController@showLiveEventInfo');
+});
 /*
 *   End Front Page Stuff
 */
@@ -96,6 +100,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/', 'AtcBookingController@viewBookings');
             Route::get('/delete/{id}', 'AtcBookingController@deleteBooking');
             Route::post('/create', 'AtcBookingController@createBooking')->name('createBooking');
+        });
+        Route::prefix('live')->middleware('toggle:live_event')->group(function () {
+            Route::get('/', 'ControllerDash@showLiveEventInfo');
         });
     });
 
@@ -276,6 +283,10 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
                 Route::get('/export', 'RealopsController@exportData');
                 Route::post('/dump-data', 'RealopsController@dumpData')->name('dumpData');
             });
+        });
+        Route::prefix('live')->middleware('ability:events-team,staff,false')->group(function () {
+            Route::get('/', 'AdminDash@setLiveEventInfo');
+            Route::post('/', 'AdminDash@saveLiveEventInfo')->name('saveLiveInfo');
         });
         
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {
