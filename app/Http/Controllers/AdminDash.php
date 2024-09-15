@@ -21,7 +21,7 @@ use App\LocalHeroChallenges;
 use App\Mail\NewFeedback;
 use App\Mail\PilotFeedback;
 use App\Mail\SendEmail;
-use App\Mail\VisitorRemove;
+use App\Mail\VisitorMail;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -517,10 +517,7 @@ class AdminDash extends Controller {
         $visitor->status = 1;
         $visitor->save();
 
-        Mail::send('emails.visit.accept', ['visitor' => $visitor], function ($message) use ($visitor) {
-            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Accepted');
-            $message->to($visitor->email)->cc('datm@ztlartcc.org');
-        });
+        Mail::to($visitor->email)->send(new VisitorMail('accept', $visitor));
 
         $parts = explode(" ", $visitor->name);
         $fname = $parts[0];
@@ -566,10 +563,7 @@ class AdminDash extends Controller {
         $visitor->reject_reason = $request->reject_reason;
         $visitor->save();
 
-        Mail::send(['html' => 'emails.visit.reject'], ['visitor' => $visitor], function ($message) use ($visitor) {
-            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Rejected');
-            $message->to($visitor->email)->cc('datm@ztlartcc.org');
-        });
+        Mail::to($visitor->email)->send(new VisitorMail('reject', $visitor));
 
         $audit = new Audit;
         $audit->cid = Auth::id();
@@ -655,10 +649,10 @@ class AdminDash extends Controller {
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
             $audit->save();
-            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
-                Mail::to($user->email)->send(new VisitorRemove());
+            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
-            // Remove on the VATUSA roster
+
             $client = new Client();
             $req_params = [ 'form_params' =>
                 [
