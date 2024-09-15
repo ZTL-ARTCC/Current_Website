@@ -10,6 +10,7 @@ use App\ControllerLog;
 use App\Event;
 use App\Feedback;
 use App\File;
+use App\Mail\ReqStaffing;
 use App\Mail\VisitorMail;
 use App\Overflight;
 use App\Scenery;
@@ -483,10 +484,7 @@ class FrontController extends Controller {
         $time = $request->time;
         $exp = $request->additional_information;
 
-        Mail::send('emails.request_staff', ['name' => $name, 'email' => $email, 'org' => $org, 'date' => $date, 'time' => $time, 'exp' => $exp], function ($message) use ($email, $name, $date) {
-            $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staffing Requests')->subject('New Staffing Request for '.$date);
-            $message->to('ec@ztlartcc.org')->replyTo($email, $name);
-        });
+        Mail::to('ec@ztlartcc.org')->send(new ReqStaffing($name, $email, $org, $date, $time, $exp));
 
         return redirect('/')->with('success', 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
     }
