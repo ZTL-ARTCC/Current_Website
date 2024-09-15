@@ -10,6 +10,7 @@ use App\ControllerLog;
 use App\Event;
 use App\Feedback;
 use App\File;
+use App\Mail\VisitorMail;
 use App\Overflight;
 use App\Scenery;
 use App\User;
@@ -328,18 +329,6 @@ class FrontController extends Controller {
         }
         
         if ($request->rating != 1) {
-            //Continue Request
-            /*  $visit = new Visitor;
-
-              $visit->cid = $request->cid;
-              $visit->name = $request->name;
-              $visit->email = $request->email;
-              $visit->rating = $request->rating;
-              $visit->home = $request->home;
-              $visit->reason = $request->reason;
-              $visit->status = 0;
-              $visit->save();*/
-            
             $expireDate = new DateTime($request->updated_at);
             $expireDate->modify('+ 90 days');
             if (date_create() > $expireDate) {
@@ -351,7 +340,7 @@ class FrontController extends Controller {
                         'home' => $request->home,
                         'reason'=> $request->reason,
                         'status'=> 0
-                    ]//
+                    ]
                 );
             } else {
                 $visit = Visitor::updateOrCreate(
@@ -367,12 +356,7 @@ class FrontController extends Controller {
                 );
             }
                     
-        
-
-            Mail::send('emails.visit.new', ['visit' => $visit], function ($message) use ($visit) {
-                $message->from('visitors@notams.ztlartcc.org', 'ZTL Visiting Department')->subject('New Visitor Request Submitted');
-                $message->to($visit->email)->cc('datm@ztlartcc.org');
-            });
+            Mail::to($visit->email)->cc('datm@ztlartcc.org')->send(new VisitorMail('new', $visit));
         
             return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
         } else {

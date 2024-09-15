@@ -6,17 +6,25 @@ use App\Mail\Package\ZTLAddress;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VisitorRemove extends Mailable implements ShouldQueue {
+class VisitorMail extends Mailable implements ShouldQueue {
     use Queueable, SerializesModels;
+
+    private static $SUBJECTS = [
+        'new' => 'New Visitor Request Submitted',
+        'accept' => 'Visitor Request Accepted',
+        'reject' => 'Visitor Request Rejected',
+        'remove' => 'Notification of ZTL Roster Removal'
+    ];
 
     /**
      * Create a new message instance.
      */
-    public function __construct() {
+    public function __construct(public $type, public $visitor) {
     }
 
     /**
@@ -24,8 +32,11 @@ class VisitorRemove extends Mailable implements ShouldQueue {
      */
     public function envelope(): Envelope {
         return new Envelope(
-            from: new ZTLAddress('info', 'vZTL ARTCC Staff'),
-            subject: 'Notification of ZTL Roster Removal',
+            from: new ZTLAddress('visitors', 'vZTL ARTCC Visiting Department'),
+            replyTo: [
+                new Address('datm@ztlartcc.org', 'vZTL ARTCC DATM')
+            ],
+            subject: $this::$SUBJECTS[$this->type]
         );
     }
 
@@ -34,7 +45,7 @@ class VisitorRemove extends Mailable implements ShouldQueue {
      */
     public function content(): Content {
         return new Content(
-            view: 'emails.remove_visitor',
+            view: 'emails.visit.' . $this->type,
         );
     }
 
