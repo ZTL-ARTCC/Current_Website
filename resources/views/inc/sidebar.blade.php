@@ -134,6 +134,7 @@
 	</div>
 </div>
 <br/>
+@if(Auth::user()->isAbleTo('train'))
 <div class="card">
 	<div class="card-body p-2">
 		<h5 class="card-title">
@@ -152,6 +153,7 @@
 	</div>
 </div>
 <br/>
+@endif
 <div class="card">
 	<div class="card-body p-2">
 		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
@@ -168,4 +170,4 @@
 </div>
 
 @endif
-<script src="{{asset('js/sidebar.js')}}"></script>
+<script src="{{mix('js/sidebar.js')}}"></script>

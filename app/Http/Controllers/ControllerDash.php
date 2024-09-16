@@ -86,23 +86,24 @@ class ControllerDash extends Controller {
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
 
         $training_metrics = $top_trainers = [];
-        $training_stats = TrainingDash::generateTrainingStats($now->format('y'), $now->format('n'), 'stats');
-        $training_metrics[] = (object)['title' => 'Total', 'metric' => $training_stats['sessionsCompletePerMonth']];
+        $training_stats = TrainingDash::generateTrainingStats($now->format('Y'), $now->format('m'), 'stats');
         $training_metrics[] = (object)['title' => 'S1', 'metric' => $training_stats['sessionsByType']['S1']];
         $training_metrics[] = (object)['title' => 'S2', 'metric' => $training_stats['sessionsByType']['S2']];
         $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
         $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
+        $total_sessions = $training_stats['sessionsByType']['S1'] + $training_stats['sessionsByType']['S2'] + $training_stats['sessionsByType']['S3'] + $training_stats>
+        $training_metrics[] = (object)['title' => 'Total', 'metric' => $total_sessions];
         $trainer_by_total = $trainer_by_cid = [];
         foreach($training_stats['trainerSessions'] as $t) {
-            $trainer_by_total[] = [$t['cid']] = $t['total'];
-            $trainer_by_cid[] = [$t['cid']] = $t['name'];
+            $trainer_by_total[$t['cid']] = $t['total'];
+            $trainer_by_cid[$t['cid']] = $t['name'];
         }
-        rsort($trainer_by_total);
-        foreach($trainer_by_total as $tt) {
+        arsort($trainer_by_total);
+        foreach($trainer_by_total as $trainer_cid => $tt) {
             if($tt == 0) {
                 break;
             }
-            $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'sessions_given' => $tt];
+            $top_trainers[] = (object)['name' => $trainer_by_cid[$trainer_cid], 'sessions_given' => $tt];
             if(count($top_trainers) == 3) {
                 break;
             }
