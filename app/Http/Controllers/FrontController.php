@@ -315,7 +315,7 @@ class FrontController extends Controller {
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if ($r != true) {
+        if ($r != true && Config::get('app.env') != 'local') {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
         
@@ -428,7 +428,7 @@ class FrontController extends Controller {
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if ($r != true) {
+        if ($r != true && Config::get('app.env') != 'local') {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
 
@@ -487,7 +487,7 @@ class FrontController extends Controller {
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if ($r != true) {
+        if ($r != true && Config::get('app.env') != 'local') {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
 
