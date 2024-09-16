@@ -31,8 +31,10 @@ Route::get('/pilots/request-staffing', 'FrontController@showStaffRequest');
 Route::post('/pilots/request-staffing', 'FrontController@staffRequest')->name('staffRequest');
 Route::get('/pilots/guide/atl', 'FrontController@pilotGuideAtl');
 Route::get('/feedback/new', 'FrontController@newFeedback');
-Route::get('/feedback/new/{slug}', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback')->name('saveNewFeedback');
+Route::get('/trainer_feedback/new', 'FrontController@newTrainerFeedback');
+Route::get('/trainer_feedback/new/{slug}', 'FrontController@newTrainerFeedback');
+Route::post('/trainer_feedback/new', 'FrontController@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
@@ -116,6 +118,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::post('/save/{id}', 'TrainingDash@saveTicket')->name('saveTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
+            Route::get('/trainer_feedback/new', 'TrainingDash@newTrainerFeedback');
+            Route::get('/trainer_feedback/new/{slug}', 'TrainingDash@newTrainerFeedback');
+            Route::post('/trainer_feedback/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function () {
             Route::get('/', 'TrainingDash@otsCenter');
