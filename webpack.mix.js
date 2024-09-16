@@ -84,6 +84,8 @@ mix.webpackConfig({
  |
  */
 
+mix.version(); // Version all compiled assets - autobusts cache!
+
 mix.setPublicPath('public')
    .js('resources/assets/js/app.js', 'js')
    .sass('resources/assets/sass/app.scss', 'css');

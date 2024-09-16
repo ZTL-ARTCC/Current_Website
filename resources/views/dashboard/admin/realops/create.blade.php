@@ -55,5 +55,5 @@
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/realops.js')}}"></script>
+<script src="{{mix('js/realops.js')}}"></script>
 @endsection

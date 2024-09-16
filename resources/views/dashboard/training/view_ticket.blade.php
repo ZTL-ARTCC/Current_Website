@@ -5,7 +5,7 @@ View Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
