@@ -18,7 +18,7 @@ return new class extends Migration {
      */
     public function down(): void {
         Schema::table('realops_flights', function ($table) {
-            $table->dropColumn('string');
+            $table->dropColumn('callsign');
         });
     }
 };
