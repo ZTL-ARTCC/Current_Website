@@ -190,11 +190,14 @@ class TrainingDash extends Controller {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
+        $drafts = false;
+
         if ($request->id != null) {
             $search_result = User::find($request->id);
         } else {
             $search_result = null;
         }
+
         if ($search_result != null) {
             $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
@@ -203,9 +206,11 @@ class TrainingDash extends Controller {
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
-                $t->sort_category = $this->getTicketSortCategory($t->position);
+                $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
+
+                $drafts = $drafts || $t->draft;
             }
-            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) { // Hide inactive users with no tickets from this view
+            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
             $exams = $this->getAcademyExamTranscript($request->id);
@@ -214,7 +219,7 @@ class TrainingDash extends Controller {
             $exams = null;
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams);
+        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts);
     }
 
     public function getAcademyExamTranscript($cid) {
@@ -423,8 +428,11 @@ class TrainingDash extends Controller {
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+    public function getTicketSortCategory($position, $draft) {
         switch (true) {
+            case ($draft):
+                return 'drafts';
+                break;
             case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;

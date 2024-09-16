@@ -12,6 +12,9 @@ Edit Training Ticket
 @include('inc.header', ['title' => 'Edit Training Ticket'])
 
 <div class="container">
+    @if($ticket->draft)
+        <span class="badge badge-warning mb-3">DRAFT</span>
+    @endif
     {{ html()->form()->route('saveTicket', [$ticket->id])->open() }}
         @csrf
         <div class="row">
