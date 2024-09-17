@@ -10,10 +10,10 @@ class LiveEvent extends Model {
     public static function getAnnouncement(): object {
         $announcement = LiveEvent::first();
         if (!$announcement) {
-          $announcement = new LiveEvent;
+            $announcement = new LiveEvent;
         }
         return $announcement;
-      }
+    }
 
     public function getStaffNameAttribute(): string {
         $editor = User::find($this->staff_member);
