@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -14,8 +15,8 @@ return new class extends Migration {
         Schema::create('live_event', function (Blueprint $table) {
             $table->increments('id');
             $table->string('event_title');
-            $table->text('body_public')->nullable();
-            $table->text('body_private')->nullable();
+            $table->text('body_public');
+            $table->text('body_private');
             $table->integer('staff_member');
             $table->timestamps();
         });
