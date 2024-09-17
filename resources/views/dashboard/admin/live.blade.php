@@ -21,6 +21,16 @@ Live Event Information
             {{ html()->textarea('body_private', $liveInfo->body_private)->placeholder('Leave blank for no info')->class(['form-control text-editor']) }}
         </div>
         <p class="small"><i>Last edited by {{ $liveInfo->staff_name }} on {{ $liveInfo->update_time }}</i></p>
+        Publish this view?
+        &nbsp;
+        <?php
+            $pub = ($liveInfo->publish) ? 'checked' : '';
+        ?>
+        <label class="switch">
+            <input type="checkbox" name="publish" value="1" {{ $pub }}>
+            <span class="slider round"></span>
+        </label>
+        <br>
         <button class="btn btn-success" type="submit">Save Live Event Info</button>
     {{ html()->form()->close() }}
 </div>
