@@ -22,7 +22,7 @@ Dashboard
     @endif
     @toggle('live_event')
         <div class="alert alert-warning text-center">
-            <a href="/dashboard/controllers/live" alt="{!! $liveInfo->event_title !!} Information">{!! $liveInfo->event_title !!} Information</a>
+            <strong><a href="/dashboard/controllers/live" alt="{{ $liveEventTitle }} Information">{{ $liveEventTitle }} Information</a></strong>
         </div>
         <hr>
     @endtoggle

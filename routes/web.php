@@ -286,7 +286,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         });
         Route::prefix('live')->middleware('ability:events-team,staff,false')->group(function () {
             Route::get('/', 'AdminDash@setLiveEventInfo');
-            Route::post('/', 'AdminDash@saveLiveEventInfo')->name('saveLiveInfo');
+            Route::post('/', 'AdminDash@saveLiveEventInfo')->name('saveLiveEventInfo');
         });
         
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {

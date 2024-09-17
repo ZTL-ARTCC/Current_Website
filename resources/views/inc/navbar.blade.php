@@ -14,7 +14,7 @@
                     </li>
                     @toggle('live_event')
                         <li class="nav-item">
-                            <a class="nav-link" href="/live">{{ $liveEventName }}</a>
+                            <a class="nav-link" href="/live">Live Event Info!</a>
                         </li>
                     @endtoggle
                     @toggle('realops')

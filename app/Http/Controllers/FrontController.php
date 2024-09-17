@@ -112,15 +112,11 @@ class FrontController extends Controller {
 
         $bookings = groupAtcBookingsByDate($bookings);
 
-        $live_event = LiveEvent::find(1);
-        $live_event_name = ($live_event->isEmpty()) ? 'Live Event' : $live_event->event_title;
-
         return view('site.home')->with('center', $center)->with('fields', $fields)
                                 ->with('airports', $airports)->with('controllers', $controllers)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('overflightCount', $overflightCount)
-                                ->with('bookings', $bookings)
-                                ->with('liveEventName', $live_event_name);
+                                ->with('bookings', $bookings);
     }
 
     public function teamspeak() {

@@ -109,6 +109,9 @@ class ControllerDash extends Controller {
             }
         }
 
+        $live_event = LiveEvent::find(1);
+        $live_event_title = (strlen($live_event) == 0) ? 'Live Event' : $live_event->event_title;
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
@@ -117,7 +120,8 @@ class ControllerDash extends Controller {
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
                                           ->with('training_metrics', $training_metrics)->with('top_trainers', $top_trainers)
-                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
+                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home)
+                                          ->with('liveEventTitle', $live_event_title);
     }
 
     public function showProfile($year = null, $month = null) {
