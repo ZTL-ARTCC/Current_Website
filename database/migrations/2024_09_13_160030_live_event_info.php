@@ -17,7 +17,10 @@ return new class extends Migration {
             $table->text('body_public');
             $table->text('body_private');
             $table->integer('staff_member');
+            $table->boolean('publish')->default(false);
             $table->timestamps();
+
+            $table->foreign('staff_member')->references('id')->on('roster')->cascadeOnDelete();
         });
     }
 
