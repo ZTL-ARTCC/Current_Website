@@ -5,14 +5,14 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
 <div class="container">
-    {{ html()->form()->route('saveNewTicket')->open() }}
+    {{ html()->form()->route('saveTicket')->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
@@ -130,9 +130,10 @@ New Training Ticket
         <label for="cert" class="form-label">Certification or Solo Issued</label>
 		{{ html()->checkbox('cert', false, 1) }}
 		<br>
-        <button class="btn btn-success" action="submit">Submit Ticket</button>
+        <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
+        <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js')}}"></script>
+<script src="{{mix('js/trainingticket.js')}}"></script>
 @endsection

@@ -5,13 +5,16 @@ Edit Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
 @include('inc.header', ['title' => 'Edit Training Ticket'])
 
 <div class="container">
+    @if($ticket->draft)
+        <span class="badge badge-warning mb-3">DRAFT</span>
+    @endif
     {{ html()->form()->route('saveTicket', [$ticket->id])->open() }}
         @csrf
         <div class="row">
@@ -129,9 +132,14 @@ Edit Training Ticket
         @endif		
 		<br>
         <br>
-        <button class="btn btn-success" action="submit">Save Ticket</button>
+        @if ($ticket->draft)
+            <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
+            <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
+        @else
+            <button class="btn btn-success" type="submit" name="action" value="save">Update Ticket</button>
+        @endif
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js')}}"></script>
+<script src="{{mix('js/trainingticket.js')}}"></script>
 @endsection

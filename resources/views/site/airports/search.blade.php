@@ -5,7 +5,7 @@
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/airports.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/airports.css') }}" />
 @endpush
 
 @section('content')
@@ -279,5 +279,5 @@
         </div>
     </div>
 </div>
-<script src="{{asset('js/airports.js')}}"></script>
+<script src="{{mix('js/airports.js')}}"></script>
 @endsection

@@ -15,7 +15,7 @@
                 <div class="col-sm-4">
                     <label for="flight_date" class="form-label">Date</label>
                     <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                        {{ html()->text('flight_date', $flight->flight_date_formatted)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker') }}
+                        {{ html()->text('flight_date', $flight->flight_date_formatted)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker']) }}
                         <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -55,5 +55,5 @@
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/realops.js')}}"></script>
+<script src="{{mix('js/realops.js')}}"></script>
 @endsection
