@@ -110,8 +110,8 @@ class ControllerDash extends Controller {
             }
         }
 
-        $live_event = LiveEvent::find(1);
-        $live_event_title = (strlen($live_event) == 0) ? 'Live Event' : $live_event->event_title;
+        $live_event = LiveEvent::getAnnouncement();
+        $live_event_title = ($live_event->publish) ? $live_event->event_title : false;
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
@@ -636,7 +636,7 @@ class ControllerDash extends Controller {
     }
 
     public function showLiveEventInfo() {
-        $live_event = LiveEvent::find(1);
+        $live_event = LiveEvent::getAnnouncement();
         return view('dashboard.controllers.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

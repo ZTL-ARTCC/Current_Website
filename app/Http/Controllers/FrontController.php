@@ -572,7 +572,7 @@ class FrontController extends Controller {
     }
 
     public function showLiveEventInfo() {
-        $live_event = LiveEvent::find(1);
+        $live_event = LiveEvent::getAnnouncement();
         return view('site.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

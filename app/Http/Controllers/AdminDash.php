@@ -1929,16 +1929,17 @@ class AdminDash extends Controller {
     }
 
     public function setLiveEventInfo() {
-        $live_event_info = LiveEvent::find(1);
+        $live_event_info = LiveEvent::getAnnouncement();
         return view('dashboard.admin.live')->with('liveInfo', $live_event_info);
     }
 
     public function saveLiveEventInfo(Request $request) {
-        $live_event_info = LiveEvent::find(1);
+        $live_event_info = LiveEvent::getAnnouncement();
         $live_event_info->event_title = $request->event_title;
         $live_event_info->body_public = $request->body_public;
         $live_event_info->body_private = $request->body_private;
         $live_event_info->staff_member = Auth::id();
+        $live_event_info->publish = ($request->publish == '1') ? true : false;
         $live_event_info->save();
 
         $audit = new Audit;
