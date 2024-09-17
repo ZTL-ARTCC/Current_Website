@@ -7,17 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class LiveEvent extends Model {
     protected $table = 'live_event';
 
-    public function getStaffNameAttribute() {
+    public static function getAnnouncement(): object {
+        $announcement = LiveEvent::first();
+        if (!$announcement) {
+          $announcement = new LiveEvent;
+        }
+        return $announcement;
+      }
+
+    public function getStaffNameAttribute(): string {
         $editor = User::find($this->staff_member);
-        if (is_null($editor)) {
+        if (!$editor) {
             return 'Unknown';
         }
         return $editor->full_name;
     }
 
-    public function getUpdateTimeAttribute() {
+    public function getUpdateTimeAttribute(): string {
         $date = $this->updated_at;
-        if (is_null($date)) {
+        if (!$date) {
             return 'Never';
         }
         return $date->format('D M d, Y').' at '.substr($date, 11).'z';
