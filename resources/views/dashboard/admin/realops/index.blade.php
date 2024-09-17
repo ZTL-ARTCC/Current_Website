@@ -30,7 +30,7 @@
     <thead>
         <tr>
             <th scope="col">Date</th>
-            <th scope="col">Flight Number<br>Callsign</th>
+            <th scope="col">Callsign<br><small class="text-muted">Flight Number</small></th>
             <th scope="col">Departure Time (UTC)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
@@ -46,9 +46,9 @@
                 <td>{{ $f->flight_date_formatted }}</td>
                 <td class="airline-cell">
                     <img src="{{ $f->getImageDirectory() }}" class="airline-logo">
-                    {{ $f->flight_number }}
-                    <br>
                     {{ $f->callsign }}
+                    <br>
+                    <small class="text-muted">{{ $f->flight_number }}</small>
                 </td>
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
