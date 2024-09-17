@@ -37,6 +37,7 @@ Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
 Route::get('/asset/{slug}', 'FrontController@showPermalink');
+Route::get('/live', 'FrontController@showLiveEventInfo');
 
 Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/', 'RealopsController@index')->name('realopsIndex');
@@ -45,9 +46,6 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
 
-Route::prefix('live')->middleware('toggle:live_event')->group(function () {
-    Route::get('/', 'FrontController@showLiveEventInfo');
-});
 /*
 *   End Front Page Stuff
 */
@@ -101,9 +99,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/delete/{id}', 'AtcBookingController@deleteBooking');
             Route::post('/create', 'AtcBookingController@createBooking')->name('createBooking');
         });
-        Route::prefix('live')->middleware('toggle:live_event')->group(function () {
-            Route::get('/', 'ControllerDash@showLiveEventInfo');
-        });
+        Route::get('/live', 'ControllerDash@showLiveEventInfo');
     });
 
     Route::prefix('opt')->group(function () {
