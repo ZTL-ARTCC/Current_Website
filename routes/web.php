@@ -69,7 +69,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
         Route::get('/files', 'ControllerDash@showFiles');
-        Route::get('/view-my-tickets', 'ControllerDash@showTickets');
         Route::get('/suggestions', 'ControllerDash@showSuggestions');
         Route::get('/atcast', 'ControllerDash@showatcast');
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
