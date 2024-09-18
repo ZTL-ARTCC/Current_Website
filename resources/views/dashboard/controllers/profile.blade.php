@@ -58,7 +58,17 @@ Profile
                         @if(isset($tickets))
                             @foreach($tickets as $t)
                                 <tr>
-                                    <td><center><a href="/dashboard/controllers/ticket/{{ $t->id }}">{{ $t->date }}</a></center></td>
+                                    <td>
+                                        <center>
+                                            <a href="/dashboard/controllers/ticket/{{ $t->id }}">{{ $t->date }}</a>
+                                            <br />
+                                            @if(!$t->student_comments)
+                                                <span class="badge badge-danger">Awaiting Your Comments</span>
+                                            @else
+                                                <span class="badge badge-success">Comments Submitted</span>
+                                            @endif
+                                        </center>
+                                    </td>
                                     <td><center>{{ $t->trainer_name }}</center></td>
                                     <td><center>{{ $t->position_name }}</center></td>
                                 </tr>

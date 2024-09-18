@@ -281,6 +281,23 @@ class TrainingDash extends Controller {
         return redirect()->back()->with('error', 'Invalid way to save training tickets. Please report this to the webmaster.');
     }
 
+    public function addStudentComments(Request $request, $id) {
+        $validator = $request->validate([
+            'student_comments' => 'required'
+        ]);
+
+        $ticket = TrainingTicket::find($id);
+
+        if (Auth::id() != $ticket->controller_id) {
+            return redirect()->back()->with('error', 'Not your training ticket');
+        }
+
+        $ticket->student_comments = $request->student_comments;
+        $ticket->save();
+
+        return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
+    }
+
     public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
