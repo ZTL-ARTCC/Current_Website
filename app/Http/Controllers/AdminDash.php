@@ -25,6 +25,7 @@ use App\Pyrite;
 use App\Scenery;
 use App\ScheduleMonitorTasks;
 use App\SoloCert;
+use App\TrainerFeedback;
 use App\User;
 use App\Visitor;
 use App\VisitRej;
@@ -1055,6 +1056,107 @@ class AdminDash extends Controller {
         });
 
         return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
+    }
+
+    public function showTrainerFeedback() {
+        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $feedbackOptions->prepend('General Trainer Feedback', '0');
+
+        $feedback = TrainerFeedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
+        $feedback_p = TrainerFeedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
+        return view('dashboard.admin.feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', $feedbackOptions);
+    }
+
+    public function saveTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->feedback_id = $request->feedback_id;
+        $feedback->position = $request->position;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->comments = $request->pilot_comments;
+        $feedback->status = 1;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        $controller = User::find($feedback->feedback_id);
+        if (isset($controller)) {
+            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
+                $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
+                $m->subject('You Have New Feedback!');
+                $m->to($controller->email);
+            });
+        }
+        return redirect()->back()->with('success', 'The feedback has been saved.');
+    }
+
+    public function hideTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->feedback_id = $request->feedback_id;
+        $feedback->position = $request->position;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->comments = $request->pilot_comments;
+        $feedback->status = 2;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The feedback has been hidden.');
+    }
+
+    public function updateTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->feedback_id = $request->feedback_id;
+        $feedback->position = $request->position;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->comments = $request->pilot_comments;
+        $feedback->status = $request->status;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The feedback has been updated.');
+    }
+
+    public function emailTrainerFeedback(Request $request, $id) {
+        $validator = $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'subject' => 'required',
+            'body' => 'required'
+        ]);
+
+        $feedback = TrainerFeedback::find($id);
+        $replyTo = $request->email;
+        $replyToName = $request->name;
+        $subject = $request->subject;
+        $body = $request->body;
+        $sender = Auth::user();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
+        $audit->save();
+
+        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function ($m) use ($feedback, $subject, $replyTo, $replyToName) {
+            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
+            $m->subject($subject);
+            $m->to($feedback->pilot_email);
+        });
+
+        return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
 
     public function sendNewEmail() {

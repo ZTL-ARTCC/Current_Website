@@ -31,6 +31,7 @@ Route::get('/pilots/request-staffing', 'FrontController@showStaffRequest');
 Route::post('/pilots/request-staffing', 'FrontController@staffRequest')->name('staffRequest');
 Route::get('/pilots/guide/atl', 'FrontController@pilotGuideAtl');
 Route::get('/feedback/new', 'FrontController@newFeedback');
+Route::get('/feedback/new/{slug}', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback')->name('saveNewFeedback');
 Route::get('/trainer_feedback/new', 'FrontController@newTrainerFeedback');
 Route::get('/trainer_feedback/new/{slug}', 'FrontController@newTrainerFeedback');
@@ -255,6 +256,13 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/hide/{id}', 'AdminDash@hideFeedback')->name('hideFeedback');
             Route::post('/update/{id}', 'AdminDash@updateFeedback')->name('updateFeedback');
             Route::post('/email/{id}', 'AdminDash@emailFeedback')->name('emailFeedback');
+        });
+        Route::prefix('trainer_feedback')->middleware('role:atm|datm|ta|ata|wm')->group(function () {
+            Route::get('/', 'AdminDash@showTrainerFeedback');
+            Route::post('/save/{id}', 'AdminDash@saveTrainerFeedback')->name('saveTrainerFeedback');
+            Route::post('/hide/{id}', 'AdminDash@hideTrainerFeedback')->name('hideTrainerFeedback');
+            Route::post('/update/{id}', 'AdminDash@updateTrainerFeedback')->name('updateTrainerFeedback');
+            Route::post('/email/{id}', 'AdminDash@emailTrainerFeedback')->name('emailTrainerFeedback');
         });
         Route::prefix('email')->middleware('permission:email')->group(function () {
             Route::get('/send', 'AdminDash@sendNewEmail');
