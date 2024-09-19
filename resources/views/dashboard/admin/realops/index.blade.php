@@ -46,7 +46,11 @@
                 <td>{{ $f->flight_date_formatted }}</td>
                 <td class="airline-cell">
                     <img src="{{ $f->getImageDirectory() }}" class="airline-logo">
-                    {{ $f->callsign }}
+                    @if($f->callsign)
+                       {{ $f->callsign }}
+                    @else
+                        {{ $f->flight_number }}
+                    @endif
                     <br>
                     <small class="text-muted">{{ $f->flight_number }}</small>
                 </td>
