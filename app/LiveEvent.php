@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LiveEvent extends Model {
     protected $table = 'live_event';
 
-    private function __construct(array $attributes = array()) {
+    private function __construct(array $attributes = []) {
         parent::__construct($attributes);
     }
 
