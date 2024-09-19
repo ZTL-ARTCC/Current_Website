@@ -22,12 +22,17 @@ View Training Ticket
     <br><br>
     <div class="card">
         <div class="card-header">
+            @if ($ticket->draft)
+                <span class="badge badge-warning">DRAFT</span>
+            @endif
             <h3>Training Ticket for {{ $ticket->controller_name }} on {{ $ticket->position_name }}</h3>
         </div>
         <div class="card-body">
             <div class="float-right">
                 @if($ticket->is_vatusa_synced)
                     <span class="badge badge-success">Synced with VATUSA</span>
+                @elseif ($ticket->draft)
+                    <span class="badge badge-warning">This ticket is currently a draft. Edit ticket to finalize</span>
                 @else
                     <span class="badge badge-danger">Pending Sync with VATUSA</span>
                 @endif
