@@ -8,7 +8,7 @@
 @include('inc.header', ['title' => 'Add Realops Flight'])
 
 <div class="container">
-    {{ html()->form()->route('createFlight', ['id' => 'realops_add_edit_flight'])->open() }}
+    {{ html()->form()->route('createFlight')->attributes(['id' => 'realops_add_edit_flight'])->open() }}
         @csrf
         <div class="form-group">
             <div class="row">
