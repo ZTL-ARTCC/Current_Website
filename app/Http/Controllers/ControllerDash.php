@@ -111,7 +111,7 @@ class ControllerDash extends Controller {
         }
 
         $live_event = LiveEvent::getAnnouncement();
-        $live_event_title = ($live_event->publish) ? $live_event->event_title : false;
+        $live_event_title = ($live_event->publish) ? $live_event->event_title : 'Live Event';
 
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
