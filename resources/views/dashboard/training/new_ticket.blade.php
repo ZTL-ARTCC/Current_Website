@@ -12,7 +12,7 @@ New Training Ticket
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
 <div class="container">
-    {{ html()->form()->route('saveNewTicket')->open() }}
+    {{ html()->form()->route('saveTicket')->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
@@ -130,7 +130,8 @@ New Training Ticket
         <label for="cert" class="form-label">Certification or Solo Issued</label>
 		{{ html()->checkbox('cert', false, 1) }}
 		<br>
-        <button class="btn btn-success" action="submit">Submit Ticket</button>
+        <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
+        <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
