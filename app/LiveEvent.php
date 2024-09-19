@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LiveEvent extends Model {
     protected $table = 'live_event';
 
-    private function __construct(array $attributes = []) {
+    protected function __construct(array $attributes = []) {
         parent::__construct($attributes);
     }
 
@@ -17,6 +17,11 @@ class LiveEvent extends Model {
             $announcement = new LiveEvent;
         }
         return $announcement;
+    }
+
+    public static function getPublishEvent(): bool {
+        $e = self::getAnnouncement();
+        return $e->publish;
     }
 
     public function getStaffNameAttribute(): string {
