@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class LiveEvent extends Model {
     protected $table = 'live_event';
 
-    public static function getAnnouncement(): object {
+    private function __construct(array $attributes = array()) {
+        parent::__construct($attributes);
+    }
+
+    public static function getAnnouncement(): LiveEvent {
         $announcement = LiveEvent::first();
         if (!$announcement) {
             $announcement = new LiveEvent;
