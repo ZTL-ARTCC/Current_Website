@@ -20,7 +20,7 @@ Dashboard
         </div>
         <hr>
     @endif
-    @if($liveEventTitle)
+    @if(\App\LiveEvent::getPublishEvent())
         <div class="alert alert-warning text-center">
             <strong><a href="/dashboard/controllers/live" alt="{{ $liveEventTitle }} Information">{{ $liveEventTitle }} Information</a></strong>
         </div>
