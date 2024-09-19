@@ -170,7 +170,7 @@ class FlightawareImport extends Command {
         $start_time = Carbon::parse(Config::get('flightaware.start_date'));
         $end_time = Carbon::parse(Config::get('flightaware.end_date'));
 
-        $duration = $end_time->diffInSeconds($start_time);
+        $duration = abs($end_time->diffInSeconds($start_time));
 
         $this->info('[CollectInformation] Event duration ' . $duration . ' seconds.');
 
@@ -182,7 +182,8 @@ class FlightawareImport extends Command {
 
         // Next, how many chunks can we have before we hit our configured flight limit?
         $target_flights = intval(Config::get('flightaware.max_flights'));
-        $chunk_count = floor($target_flights / $flights_per_chunk);
+        // Conditional protects against division by zero error in chunk length calc when target_flights is a low number
+        $chunk_count = (floor($target_flights / $flights_per_chunk) > 0) ? floor($target_flights / $flights_per_chunk) : 1;
 
         // Based on all of that, third, what is the optimal chunk length to maximize flight count?
         $optimal_chunk_len_seconds = floor($duration / $chunk_count);
