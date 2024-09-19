@@ -13,9 +13,9 @@ return new class extends Migration {
     public function up() {
         Schema::create('live_event', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('event_title');
-            $table->text('body_public');
-            $table->text('body_private');
+            $table->string('event_title')->nullable();
+            $table->text('body_public')->nullable();
+            $table->text('body_private')->nullable();
             $table->integer('staff_member');
             $table->boolean('publish')->default(false);
             $table->timestamps();
