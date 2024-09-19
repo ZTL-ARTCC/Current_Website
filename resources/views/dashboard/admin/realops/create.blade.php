@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="est_time_enroute">Estimated Time Enroute (ETE)</label>
-                    {{ html()->text('est_time_enroute', null)->class(['form-control'])->placeholder('HH:MM - Optional')->id('realops_add_edit_ete') }}
+                    {{ html()->text('est_time_enroute', null)->class(['form-control'])->placeholder('HH:MM - Required')->id('realops_add_edit_ete') }}
                 </div>
             </div>
         </div>
