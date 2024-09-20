@@ -14,11 +14,15 @@ class Feedback extends Migration {
         Schema::create('trainer_feedback', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('trainer_id');
-            $table->string('date_of_training')->nullable();
-            $table->string('lesson_id')->nullable();
+            $table->string('feedback_date')->nullable();
             $table->integer('service_level');
+            $table->string('position_trained')->nullable();
+            $table->integer('booking_method');
+            $table->integer('training_method');
+            $table->text('comments');
+            $table->string('student_name')->nullable();
+            $table->string('student_email')->nullable();
             $table->integer('student_cid')->nullable();
-            $table->text('comments')->nullable();
             $table->text('staff_comments')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
