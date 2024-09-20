@@ -6,6 +6,7 @@ use App\Audit;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
+use App\TrainerFeedback;
 use App\TrainingInfo;
 use App\TrainingTicket;
 use App\User;
@@ -825,4 +826,65 @@ class TrainingDash extends Controller {
         $response->header('Content-type', 'image/png');
         return $response;
     }
+
+    public function newTrainerFeedback() {
+        $users = User::with('roles')->where('status', '1')->get();
+        $ins = $users->filter(function ($user) {
+            return $user->hasRole('ins');
+        });
+
+        $mtr = $users->filter(function ($user) {
+            return $user->hasRole('mtr');
+        });
+        $feedbackOptions = $ins->merge($mtr);
+        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
+        $feedbackOptions->prepend('General Trainer Feedback', '0');
+
+        return view('dashboard.training.trainer_feedback')->with('feedbackOptions', $feedbackOptions);
+    }
+
+    public function saveNewTrainerFeedback(Request $request) {
+        $validatedData = $request->validate([
+            'student_name' => 'string',
+            'student_email' => 'email',
+            'student_cid' => 'integer',
+            'feedback_id' => 'required|integer',
+            'feedback_date' => 'required|date',
+            'service_level' => 'required|digits_between:1,5',
+            'position_trained' => 'required|string',
+            'booking_method' => 'required|integer',
+            'training_method' => 'required|integer',
+            'comments' => 'required'
+        ]);
+
+        //Google reCAPTCHA Verification
+        $client = new Client;
+        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'secret' => Config::get('google.recaptcha'),
+                'response' => $request->input('g-recaptcha-response'),
+            ]
+        ]);
+        $r = json_decode($response->getBody())->success;
+        if ($r != true && Config::get('app.env') != 'local') {
+            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+        }
+
+        //Continue Request
+        $feedback = new TrainerFeedback;
+        $feedback->trainer_id = ltrim($request->input('feedback_id'), 'gec');
+        $feedback->feedback_date = $request->input('feedback_date');
+        $feedback->service_level = $request->input('service_level');
+        $feedback->position_trained = $request->input('position_trained');
+        $feedback->booking_method = $request->input('booking_method');
+        $feedback->training_method = $request->input('training_method');
+        $feedback->student_name = $request->input('student_name');
+        $feedback->student_email = $request->input('student_email');
+        $feedback->student_cid = $request->input('student_cid');
+        $feedback->comments = $request->input('comments');
+        $feedback->status = 0;
+        $feedback->save();
+
+        return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
+    }    
 }
