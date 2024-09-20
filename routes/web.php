@@ -34,8 +34,6 @@ Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::get('/feedback/new/{slug}', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback')->name('saveNewFeedback');
 Route::get('/trainer_feedback/new', 'FrontController@newTrainerFeedback');
-Route::get('/trainer_feedback/new/{slug}', 'FrontController@newTrainerFeedback');
-Route::post('/trainer_feedback/new', 'FrontController@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
