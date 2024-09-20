@@ -99,12 +99,13 @@ class FlightawareImport extends Command {
         // First, load as many pages of departures as is configured
         for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
             // If we hit the ratelimit, pause for a bit.
-            if ($flights_count > $ratelimit_max_flights) {
+            // Commenting out the ratelimit timeout logic - this needs to be rebuilt to consider a chunk returning zero flights
+            //if ($flights_count > $ratelimit_max_flights) {
                 $pbar->setMessage('Ratelimit timeout');
                 $pbar->advance();
                 $flights_count = 0;
                 sleep($ratelimit_timeout);
-            }
+            //}
 
             // Generate the URL for the HTTP client.
             // Format: %BASE/schedules/FROM/TO/?origin=KATL
