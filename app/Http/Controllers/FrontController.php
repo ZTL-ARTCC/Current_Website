@@ -448,73 +448,21 @@ class FrontController extends Controller {
         return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
 
-    public function newTrainerFeedback($controllerSelected=null) {
-        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
-        $feedbackCIDs = User::where('status', 1)->orderBy('id', 'ASC')->get()->pluck('id');
-        foreach ($feedbackCIDs as $feedbackCID) {
-            $feedbackOptions->put('c' . $feedbackCID, $feedbackCID);
-        }
-        if (!is_null($controllerSelected)&&array_key_exists($controllerSelected, $feedbackOptions->all())) {
-            $controllerSelected = intval($controllerSelected);
-        }
-        $events = Event::all()->pluck('date', 'id');
-        $eventsList = [];
-        foreach ($events as $evId => $event) {
-            $eventDate = Carbon::createFromFormat('m/d/Y', substr($event, 0, 10));
-            if ((Carbon::today() >= $eventDate) && (Carbon::today() <= $eventDate->copy()->addDays(30))) {
-                $eventsList[] = $evId;
-            }
-        }
-        unset($events);
-        $events = Event::whereIn('id', $eventsList)->orderBy('name', 'DESC')->get()->pluck('name', 'id');
-        foreach ($events as $evId => $event) {
-            $events['e' . $evId] = $event;
-            unset($events[$evId]);
-            $feedbackOptions->prepend('Event: ' . $event, 'e' . $evId);
-        }
-        $feedbackOptions->prepend('General ATC Feedback', 'g0');
-        return view('site.feedback')->with('feedbackOptions', $feedbackOptions)->with('controllerSelected', $controllerSelected);
+    public function newTrainerFeedback() {
+        $users = User::with('roles')->where('status', '1')->get();
+        $ins = $users->filter(function ($user) {
+            return $user->hasRole('ins');
+        });
+
+        $mtr = $users->filter(function ($user) {
+            return $user->hasRole('mtr');
+        });
+        $feedbackOptions = $ins->merge($mtr);
+        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
+        $feedbackOptions->prepend('General Trainer Feedback', '0');
+
+        return view('site.trainer_feedback')->with('feedbackOptions', $feedbackOptions);
     }
-
-    public function saveNewTrainerFeedback(Request $request) {
-        $validatedData = $request->validate([
-            'feedback_id' => 'required',
-            'position' => 'required',
-            'callsign' => 'required',
-            'pilot_name' => 'required',
-            'pilot_email' => 'required',
-            'pilot_cid' => 'required',
-            'comments' => 'required'
-        ]);
-
-        //Google reCAPTCHA Verification
-        $client = new Client;
-        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
-            'form_params' => [
-                'secret' => Config::get('google.recaptcha'),
-                'response' => $request->input('g-recaptcha-response'),
-            ]
-        ]);
-        $r = json_decode($response->getBody())->success;
-        if ($r != true) {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
-        }
-
-        //Continue Request
-        $feedback = new Feedback;
-        $feedback->feedback_id = ltrim($request->input('feedback_id'), 'gec');
-        $feedback->position = $request->input('position');
-        $feedback->service_level = $request->input('service');
-        $feedback->callsign = $request->input('callsign');
-        $feedback->pilot_name = $request->input('pilot_name');
-        $feedback->pilot_email = $request->input('pilot_email');
-        $feedback->pilot_cid = $request->input('pilot_cid');
-        $feedback->comments = $request->input('comments');
-        $feedback->status = 0;
-        $feedback->save();
-
-        return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
-    }    
 
     public function showFiles() {
         $vatis = File::where('type', 3)->orderBy('disp_order', 'ASC')->get();
