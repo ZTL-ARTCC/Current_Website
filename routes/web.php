@@ -117,9 +117,10 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::post('/save/{id}', 'TrainingDash@saveTicket')->name('saveTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
-            Route::get('/trainer_feedback/new', 'TrainingDash@newTrainerFeedback');
-            Route::get('/trainer_feedback/new/{slug}', 'TrainingDash@newTrainerFeedback');
-            Route::post('/trainer_feedback/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
+        });
+        Route::prefix('trainer_feedback')->middleware('permission:train')->group(function () {
+            Route::get('/new', 'TrainingDash@newTrainerFeedback');
+            Route::post('/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function () {
             Route::get('/', 'TrainingDash@otsCenter');
