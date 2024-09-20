@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Mail\OtsAssignment;
+use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
@@ -12,10 +14,8 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Config;
-use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Mail;
 use mitoteam\jpgraph\MtJpGraph;
@@ -374,11 +374,7 @@ class TrainingDash extends Controller {
             $ins = User::find($ots->ins_id);
             $controller = User::find($ots->controller_id);
 
-            Mail::send('emails.ots_assignment', ['ots' => $ots, 'controller' => $controller, 'ins' => $ins], function ($m) use ($ins, $controller) {
-                $m->from('ots-center@notams.ztlartcc.org', 'vZTL ARTCC OTS Center')->replyTo($controller->email, $controller->full_name);
-                $m->subject('You Have Been Assigned an OTS for ' . $controller->full_name);
-                $m->to($ins->email)->cc('training@ztlartcc.org');
-            });
+            Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
 
             $audit = new Audit;
             $audit->cid = Auth::id();
@@ -782,15 +778,7 @@ class TrainingDash extends Controller {
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 
-        try {
-            Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
-                $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
-                $m->subject('New Training Ticket Submitted');
-                $m->to($controller->email)->cc('training@ztlartcc.org');
-            });
-        } catch (Exception $e) {
-            Log::info('Unable to send training ticket email: ' . $e);
-        }
+        Mail::to($controller->email)->cc('training@ztlartcc.org')->send(new TrainingTicketMail($ticket, $controller, $trainer));
 
         if ($request->ots == 1) {
             $ots = new Ots;

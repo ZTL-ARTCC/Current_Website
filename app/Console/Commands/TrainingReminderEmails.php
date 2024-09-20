@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\TrainingReminder;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
@@ -54,20 +55,17 @@ class TrainingReminderEmails extends Command {
                 $trainer_full_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
                 $appointment_date_time = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y') . ' ' . Carbon::parse($ea_appointment->start_datetime)->format('H:i') . ' ET';
                 $this->info('Sending email reminder to ' . $student_full_name . ' for ' . $ea_appointment->service_description . ' with ' . $trainer_full_name . ' on ' . $appointment_date_time);
-                Mail::send(
-                    'emails.training_reminder',
-                    [
-                        'trainee_name' => $student_full_name,
-                        'session_type' => $ea_appointment->service_description,
-                        'mentor_name' => $trainer_full_name,
-                        'session_date_time' => $appointment_date_time
-                    ],
-                    function ($message) use ($ea_appointment, $trainer_full_name, $appointment_date_time) {
-                        $message->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department')
-                            ->subject('Reminder: ' . $ea_appointment->service_description . ' with ' . $trainer_full_name . ' on ' . $appointment_date_time)
-                            ->to($ea_appointment->email);
-                    }
+
+                Mail::to($ea_appointment->email)->send(
+                    new TrainingReminder(
+                        $student_full_name,
+                        $ea_appointment->service_description,
+                        $trainer_full_name,
+                        $appointment_date_time,
+                        $ea_appointment
+                    )
                 );
+
                 $notes = (strlen($ea_appointment->appointment_notes) > 0) ?  $ea_appointment->appointment_notes . ' ' : '';
                 $notes .= '[Notified ' . Carbon::now('UTC')->format('m-d-Y H:i:s') . 'Z]';
                 DB::connection('ea_mysql')
