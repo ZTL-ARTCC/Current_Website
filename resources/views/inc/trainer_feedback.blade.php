@@ -22,7 +22,7 @@
                         <span data-rating="3">&star;</span>
                         <span data-rating="4">&star;</span>
                         <span data-rating="5">&star;</span>
-                        {{ html()->text('service', null)->attribute('hidden') }}
+                        {{ html()->text('service_level', null)->attribute('hidden') }}
                     </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <div class="col-sm-12">
                 <p class="strong text-danger"><i class="fa-solid fa-shield-halved"></i>&nbsp;&nbsp;This feedback is anonymous if you do not fill out your personal information. You will not be 
                     identified and we will be unable to follow-up with you regarding your comments. For additional privacy, you may
-                    access this form while logged-out at <a href="https://ztlartcc.org/trainer_feedback/new" alt="external link" target="_blank">https://ztlartcc.org/trainer_feedback/new</a></p>
+                    access this form while logged-out at <a href="{{ URL::to('/trainer_feedback/new') }}" alt="external link" target="_blank">{{ URL::to('/trainer_feedback/new') }}</a></p>
             </div>
         </div>
         <div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
@@ -72,4 +72,4 @@
         <button class="btn btn-success mb-2" type="submit">Send Feedback</button>
     {{ html()->form()->close() }}
 </div>
-<script src="{{mix('js/trainingticket.js')}}"></script>
+<script src="{{mix('js/trainerfeedback.js')}}"></script>
