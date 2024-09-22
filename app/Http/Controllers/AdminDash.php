@@ -1084,17 +1084,12 @@ class AdminDash extends Controller {
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
-/*
-        // NOTE: This must be updated to conform to the new async mailer
+
         $trainer = User::find($feedback->feedback_id);
         if (isset($trainer)) {
-            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $trainer], function ($m) use ($feedback, $trainer) {
-                $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
-                $m->subject('You Have New Feedback!');
-                $m->to($trainer->email);
-            });
+            Mail::to($trainer->email)->send(new NewFeedback($feedback, $trainer));
         }
-*/
+
         return redirect()->back()->with('success', 'The trainer feedback has been saved.');
     }
 
@@ -1147,8 +1142,6 @@ class AdminDash extends Controller {
     }
 
     public function emailTrainerFeedback(Request $request, $id) {
-        // NOTE: This must be updated to conform to the new async email standard
-/*
         $validator = $request->validate([
             'email' => 'required',
             'name' => 'required',
@@ -1156,8 +1149,8 @@ class AdminDash extends Controller {
             'body' => 'required'
         ]);
 
-        $feedback = TrainerFeedback::find($id);
-        $replyTo = $request->email;
+        $feedback = Feedback::find($id);
+        $replyToAddress = $request->email;
         $replyToName = $request->name;
         $subject = $request->subject;
         $body = $request->body;
@@ -1169,12 +1162,8 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
         $audit->save();
 
-        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function ($m) use ($feedback, $subject, $replyTo, $replyToName) {
-            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
-            $m->subject($subject);
-            $m->to($feedback->pilot_email);
-        });
-*/
+        Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
+
         return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
 
