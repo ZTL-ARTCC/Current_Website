@@ -1,12 +1,3 @@
-@extends('layouts.master')
-
-@section('title')
-New Feedback
-@endsection
-
-@section('content')
-@include('inc.header', ['title' => 'Leave New Training Team Feedback', 'type' => 'external'])
-
 <div class="container">
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
         <div class="row border border-danger rounded">
