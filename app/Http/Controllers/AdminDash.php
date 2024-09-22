@@ -1059,77 +1059,108 @@ class AdminDash extends Controller {
     }
 
     public function showTrainerFeedback() {
-        $feedbackOptions = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $users = User::with('roles')->where('status', '1')->get();
+        $ins = $users->filter(function ($user) {
+            return $user->hasRole('ins');
+        });
+
+        $mtr = $users->filter(function ($user) {
+            return $user->hasRole('mtr');
+        });
+        $feedbackOptions = $ins->merge($mtr);
+        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
         $feedbackOptions->prepend('General Trainer Feedback', '0');
 
         $feedback = TrainerFeedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
         $feedback_p = TrainerFeedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
-        return view('dashboard.admin.feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', $feedbackOptions);
+        return view('dashboard.admin.trainer_feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', $feedbackOptions);
     }
 
     public function saveTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->feedback_id = $request->feedback_id;
-        $feedback->position = $request->position;
-        $feedback->staff_comments = $request->staff_comments;
-        $feedback->comments = $request->pilot_comments;
+        $feedback->trainer_id = $request->feedback_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
         $feedback->status = 1;
         $feedback->save();
 
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->what = Auth::user()->full_name.' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
-
-        $controller = User::find($feedback->feedback_id);
-        if (isset($controller)) {
-            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
+/*
+        // NOTE: This must be updated to conform to the new async mailer
+        $trainer = User::find($feedback->feedback_id);
+        if (isset($trainer)) {
+            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $trainer], function ($m) use ($feedback, $trainer) {
                 $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
                 $m->subject('You Have New Feedback!');
-                $m->to($controller->email);
+                $m->to($trainer->email);
             });
         }
-        return redirect()->back()->with('success', 'The feedback has been saved.');
+*/
+        return redirect()->back()->with('success', 'The trainer feedback has been saved.');
     }
 
     public function hideTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->feedback_id = $request->feedback_id;
-        $feedback->position = $request->position;
-        $feedback->staff_comments = $request->staff_comments;
-        $feedback->comments = $request->pilot_comments;
+        $feedback->trainer_id = $request->feedback_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
         $feedback->status = 2;
         $feedback->save();
 
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->what = Auth::user()->full_name.' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The feedback has been hidden.');
+        return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
     }
 
     public function updateTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->feedback_id = $request->feedback_id;
-        $feedback->position = $request->position;
-        $feedback->staff_comments = $request->staff_comments;
-        $feedback->comments = $request->pilot_comments;
+        $feedback->trainer_id = $request->feedback_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
         $feedback->status = $request->status;
         $feedback->save();
 
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->what = Auth::user()->full_name.' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The feedback has been updated.');
+        return redirect()->back()->with('success', 'The trainer feedback has been updated.');
     }
 
     public function emailTrainerFeedback(Request $request, $id) {
+        // NOTE: This must be updated to conform to the new async email standard
+/*
         $validator = $request->validate([
             'email' => 'required',
             'name' => 'required',
@@ -1155,7 +1186,7 @@ class AdminDash extends Controller {
             $m->subject($subject);
             $m->to($feedback->pilot_email);
         });
-
+*/
         return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
 
