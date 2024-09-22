@@ -12,7 +12,7 @@ Live Event Information
         @csrf
         <div class="form-group">
             <label for="event_title" class="control-label">Live Event Name</label>
-            {{ html()->text('event_title', $liveInfo->event_title)->placeholder('Required')->class(['form-control']) }}
+            {{ html()->text('event_title', $liveInfo->event_title)->placeholder('Leave blank for no info')->class(['form-control']) }}
             <br>
             <label for="body_public" class="control-label">Set Live Event Public Info (visible to everyone)</label>
             {{ html()->textarea('body_public', $liveInfo->body_public)->placeholder('Leave blank for no info')->class(['form-control text-editor']) }}
