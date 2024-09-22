@@ -1,6 +1,6 @@
 <div class="container">
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
-        <div class="row border border-danger rounded">
+        <div class="row border border-danger rounded p-2">
             <div class="col-sm-4 form-group">
                 <label for="student_name" class="control-label">Your Name: (optional)</label>
                 {{ html()->text('student_name', null)->placeholder('Your Name')->class(['form-control']) }}
