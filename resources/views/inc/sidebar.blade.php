@@ -1,9 +1,9 @@
 <div class="card bg-light card-body" id="pill-sidebar">
-    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="margin-left:20px;">
+    <div class="nav flex-column nav-pills sidebar-container" role="tablist" aria-orientation="vertical">
         <div class="dropdown-divider"></div>
-        <p class="collapsible-controllers" style="margin-left:-20px; cursor:pointer">
+        <p class="collapsible-sidebar" name="controllers">
             ZTL CONTROLLERS
-            <b id="caret-controllers" class="float-right fas fa-caret-left"></b>
+            <b class="caret float-right fas fa-caret-left"></b>
         </p>
         <div class="content">
             @if(Auth::user()->rating_id == 1)
@@ -24,9 +24,9 @@
         </div>
         @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-train" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="training">
                 TRAINING
-                <b id="caret-train" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
@@ -48,9 +48,9 @@
         @endif
         @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
             <div class="dropdown-divider"></div>
-            <p class="collapsible-admin" style="margin-left:-20px; cursor:pointer">
+            <p class="collapsible-sidebar" name="administration">
                 ADMINISTRATION
-                <b id="caret-admin" class="float-right fas fa-caret-left"></b>
+                <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
                 @if(Auth::user()->isAbleTo('staff'))
@@ -80,7 +80,7 @@
                     @toggle('realops')
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
-                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/live') }}" href="/dashboard/admin/live">Live Event Info</a>
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
@@ -89,6 +89,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
                 @endif
                 @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
                     <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
                 @endif
                 @if(Auth::user()->isAbleTo('events'))
@@ -120,6 +121,44 @@
 <br/>
 <div class="card">
 	<div class="card-body p-2">
+		<h5 class="card-title">
+            {{ Carbon\Carbon::now()->translatedFormat('F') }} Training&nbsp;<i class="fa-solid fa-graduation-cap"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($training_metrics) > 0)
+            @foreach($training_metrics as $t)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $t->title }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $t->metric }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>Unavailable</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+@if(Auth::user()->isAbleTo('train'))
+<div class="card">
+	<div class="card-body p-2">
+		<h5 class="card-title">
+            Top Trainers&nbsp;<i class="fa-solid fa-person-chalkboard"></i><br>
+            <small class="text-muted">Sessions Given</small>
+        </h5>
+		<table class="table table-sm table-borderless table-striped pb-0 mb-0">		
+		@if(count($top_trainers) > 0)
+            @foreach($top_trainers as $m)
+				<tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><strong>{{ $m->name }}</strong></td><td class="py-0 px-2 m-0">&nbsp;{{ $m->sessions_given }}</td></tr>
+            @endforeach
+        @else
+            <tr class="p-3 m-0"><td class="py-0 pl-1 pr-2 m-0"><i>So empty...</i></td></tr>
+        @endif
+		</table>
+	</div>
+</div>
+<br/>
+@endif
+<div class="card">
+	<div class="card-body p-2">
 		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
 		<table class="table table-sm table-borderless table-striped pb-0 mb-0">
         @if($controllers->count() > 0)
@@ -132,5 +171,6 @@
 		</table>
 	</div>
 </div>
+
 @endif
-<script src="{{asset('js/sidebar.js')}}"></script>
+<script src="{{mix('js/sidebar.js')}}"></script>

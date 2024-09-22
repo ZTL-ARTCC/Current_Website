@@ -13,8 +13,10 @@ use App\EventRegistration;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
+use App\Mail\BugReport;
 use App\Opt;
 use App\Overflight;
 use App\PositionPreset;
@@ -85,6 +87,33 @@ class ControllerDash extends Controller {
 
         $flights = Overflight::where('dep', '!=', '')->where('arr', '!=', '')->take(15)->get();
 
+        $training_metrics = $top_trainers = [];
+        $training_stats = TrainingDash::generateTrainingStats($now->format('Y'), $now->format('m'), 'stats');
+        $training_metrics[] = (object)['title' => 'S1', 'metric' => $training_stats['sessionsByType']['S1']];
+        $training_metrics[] = (object)['title' => 'S2', 'metric' => $training_stats['sessionsByType']['S2']];
+        $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
+        $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
+        $total_sessions = $training_stats['sessionsByType']['S1'] + $training_stats['sessionsByType']['S2'] + $training_stats['sessionsByType']['S3'] + $training_stats['sessionsByType']['C1'];
+        $training_metrics[] = (object)['title' => 'Total', 'metric' => $total_sessions];
+        $trainer_by_total = $trainer_by_cid = [];
+        foreach($training_stats['trainerSessions'] as $t) {
+            $trainer_by_total[$t['cid']] = $t['total'];
+            $trainer_by_cid[$t['cid']] = $t['name'];
+        }
+        arsort($trainer_by_total);
+        foreach($trainer_by_total as $trainer_cid => $tt) {
+            if($tt == 0) {
+                break;
+            }
+            $top_trainers[] = (object)['name' => $trainer_by_cid[$trainer_cid], 'sessions_given' => $tt];
+            if(count($top_trainers) == 3) {
+                break;
+            }
+        }
+
+        $live_event = LiveEvent::getAnnouncement();
+        $live_event_title = ($live_event->publish) ? $live_event->event_title : 'Live Event';
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
@@ -92,7 +121,9 @@ class ControllerDash extends Controller {
                                           ->with('pyrite', $pyrite)->with('lyear', $last_year->format('Y'))
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
-                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
+                                          ->with('training_metrics', $training_metrics)->with('top_trainers', $top_trainers)
+                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home)
+                                          ->with('liveEventTitle', $live_event_title);
     }
 
     public function showProfile($year = null, $month = null) {
@@ -226,10 +257,6 @@ class ControllerDash extends Controller {
         }
         
         return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
-    }
-
-    public function showTickets() {
-        return view('dashboard.controllers.tickets');
     }
 
     public function showSuggestions() {
@@ -567,11 +594,7 @@ class ControllerDash extends Controller {
         $error = $request->error;
         $desc = $request->desc;
 
-        Mail::send('emails.bug', ['reporter' => $reporter, 'url' => $url, 'error' => $error, 'desc' => $desc], function ($m) use ($reporter) {
-            $m->from('bugs@notams.ztlartcc.org', 'vZTL ARTCC Bugs')->replyTo($reporter->email, $reporter->full_name);
-            $m->subject('New Bug Report');
-            $m->to('wm@ztlartcc.org');
-        });
+        Mail::to('wm@ztlartcc.org')->send(new BugReport($reporter, $url, $error, $desc));
 
         return redirect()->back()->with('success', 'Your bug has been reported successfully.');
     }
@@ -603,5 +626,10 @@ class ControllerDash extends Controller {
         }
 
         return redirect()->back()->with('success', 'Your roles have been updated successfully.');
+    }
+
+    public function showLiveEventInfo() {
+        $live_event = LiveEvent::getAnnouncement();
+        return view('dashboard.controllers.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

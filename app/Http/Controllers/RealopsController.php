@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\RealopsExport;
 use App\Importers\RealopsFlightImporter;
+use App\Mail\Realops;
 use App\RealopsFlight;
 use App\RealopsPilot;
 use Carbon\Carbon;
@@ -53,10 +54,7 @@ class RealopsController extends Controller {
         $pilot = auth()->guard('realops')->user();
         $flight->assignPilotToFlight($pilot->id);
 
-        Mail::send('emails.realops.bid', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-            $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Bid Confirmation');
-            $message->to($pilot->email);
-        });
+        Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'bid'));
 
         return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
     }
@@ -73,10 +71,7 @@ class RealopsController extends Controller {
         }
         $flight->removeAssignedPilot();
 
-        Mail::send('emails.realops.cancel_bid', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-            $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Bid Cancelled');
-            $message->to($pilot->email);
-        });
+        Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'cancel_bid'));
 
         return redirect()->back()->with('success', 'You have removed your bid successfully');
     }
@@ -107,10 +102,7 @@ class RealopsController extends Controller {
         $pilot = RealopsPilot::find($request->input('pilot'));
         $flight->assignPilotToFlight($pilot->id);
 
-        Mail::send('emails.realops.assigned_flight', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-            $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Assignment Confirmation');
-            $message->to($pilot->email);
-        });
+        Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'assigned_flight'));
 
         return redirect()->back()->with('success', 'That pilot was assigned successfully');
     }
@@ -127,10 +119,7 @@ class RealopsController extends Controller {
         
         $flight->removeAssignedPilot();
 
-        Mail::send('emails.realops.removed_from_flight', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-            $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Unassignment Confirmation');
-            $message->to($pilot->email);
-        });
+        Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'removed_from_flight'));
 
         return redirect()->back()->with('success', 'Pilot unassigned successfully');
     }
@@ -200,10 +189,7 @@ class RealopsController extends Controller {
         $pilot = $flight->assigned_pilot;
 
         if ($pilot) {
-            Mail::send('emails.realops.flight_updated', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-                $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Flight Updated');
-                $message->to($pilot->email);
-            });
+            Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'flight_updated'));
         }
 
         return redirect('/dashboard/admin/realops')->with('success', 'That flight was edited successfully');
@@ -248,10 +234,7 @@ class RealopsController extends Controller {
         $flight->delete();
 
         if ($pilot) {
-            Mail::send('emails.realops.flight_cancelled', ['flight' => $flight, 'pilot' => $pilot], function ($message) use ($pilot, $flight) {
-                $message->from('realops@notams.ztlartcc.org', 'ZTL Realops')->subject($this->emailSubIntro($flight->flight_number) . 'Flight Cancelled');
-                $message->to($pilot->email);
-            });
+            Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'flight_cancelled'));
         }
 
         return redirect()->back()->with('success', 'That flight has been deleted successfully');
@@ -271,10 +254,6 @@ class RealopsController extends Controller {
         }
 
         return redirect()->back()->with('success', 'The realops data has been dumped successfully');
-    }
-
-    private function emailSubIntro($flight_number) {
-        return 'Realops Flight ' . $flight_number . ' - ';
     }
 
     public function exportData() {

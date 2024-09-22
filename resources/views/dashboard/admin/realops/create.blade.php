@@ -8,7 +8,7 @@
 @include('inc.header', ['title' => 'Add Realops Flight'])
 
 <div class="container">
-    {{ html()->form()->route('createFlight', ['id' => 'realops_add_edit_flight'])->open() }}
+    {{ html()->form()->route('createFlight')->attributes(['id' => 'realops_add_edit_flight'])->open() }}
         @csrf
         <div class="form-group">
             <div class="row">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="est_time_enroute">Estimated Time Enroute (ETE)</label>
-                    {{ html()->text('est_time_enroute', null)->class(['form-control'])->placeholder('HH:MM - Optional')->id('realops_add_edit_ete') }}
+                    {{ html()->text('est_time_enroute', null)->class(['form-control'])->placeholder('HH:MM - Required')->id('realops_add_edit_ete') }}
                 </div>
             </div>
         </div>
@@ -55,5 +55,5 @@
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/realops.js')}}"></script>
+<script src="{{mix('js/realops.js')}}"></script>
 @endsection
