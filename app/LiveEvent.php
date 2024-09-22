@@ -21,7 +21,7 @@ class LiveEvent extends Model {
 
     public static function getPublishEvent(): bool {
         $e = self::getAnnouncement();
-        return $e->publish;
+        return boolval($e->publish);
     }
 
     public function getStaffNameAttribute(): string {
