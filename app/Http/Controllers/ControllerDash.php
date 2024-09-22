@@ -259,10 +259,6 @@ class ControllerDash extends Controller {
         return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
     }
 
-    public function showTickets() {
-        return view('dashboard.controllers.tickets');
-    }
-
     public function showSuggestions() {
         return view('dashboard.controllers.suggestions');
     }
