@@ -794,7 +794,7 @@ class TrainingDash extends Controller {
         $feedback->save();
 
         return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
-    }    
+    }
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',
