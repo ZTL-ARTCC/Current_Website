@@ -1,23 +1,5 @@
 <div class="container">
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
-        <div class="row border border-danger rounded p-2">
-            <div class="col-sm-4 form-group">
-                <label for="student_name" class="control-label">Your Name: (optional)</label>
-                {{ html()->text('student_name', null)->placeholder('Your Name')->class(['form-control']) }}
-            </div>
-            <div class="col-sm-4 form-group">
-                <label for="student_email" class="control-label">Your Email: (optional)</label>
-                {{ html()->email('pilot_email', null)->placeholder('Your Email')->class(['form-control']) }}
-            </div>
-            <div class="col-sm-4 form-group">
-                <label for="student_cid" class="control-label">Your VATSIM CID: (optional)</label>
-                {{ html()->text('pilot_cid', null)->placeholder('Your VATSIM CID')->class(['form-control']) }}
-            </div>
-            <p class="strong text-danger"><i class="fa-solid fa-shield-halved"></i>&nbsp;&nbsp;This feedback is anonymous if you do not fill out your personal information. You will not be 
-                identified and we will be unable to follow-up with you regarding your comments. For additional privacy, you may
-                access this form while logged-out at <a href="https://ztlartcc.org/trainer_feedback/new" alt="external link" target="_blank">https://ztlartcc.org/trainer_feedback/new</a></p>
-        </div>
-        <br>
         <div class="row">
             <div class="col-sm-4 form-group">
                 <label for="feedback_id" class="control-label">Training Team Member:</label>
@@ -64,8 +46,30 @@
                 {{ html()->textarea('comments', null)->placeholder('Type your comments here. This will be reviewed by the facility TA and ATA.')->class(['form-control']) }}
             </div>
         </div>
+        <div class="row border border-danger rounded p-2">
+            <div class="col-sm-4 form-group">
+                <label for="student_name" class="control-label">Your Name: (optional)</label>
+                {{ html()->text('student_name', null)->placeholder('Your Name')->class(['form-control']) }}
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="student_email" class="control-label">Your Email: (optional)</label>
+                {{ html()->email('pilot_email', null)->placeholder('Your Email')->class(['form-control']) }}
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="student_cid" class="control-label">Your VATSIM CID: (optional)</label>
+                {{ html()->text('pilot_cid', null)->placeholder('Your VATSIM CID')->class(['form-control']) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="strong text-danger"><i class="fa-solid fa-shield-halved"></i>&nbsp;&nbsp;This feedback is anonymous if you do not fill out your personal information. You will not be 
+                    identified and we will be unable to follow-up with you regarding your comments. For additional privacy, you may
+                    access this form while logged-out at <a href="https://ztlartcc.org/trainer_feedback/new" alt="external link" target="_blank">https://ztlartcc.org/trainer_feedback/new</a></p>
+            </div>
+        </div>
         <div class="g-recaptcha" data-sitekey="{{ config('google.site_key') }}"></div>
         <br>
         <button class="btn btn-success mb-2" type="submit">Send Feedback</button>
     {{ html()->form()->close() }}
 </div>
+<script src="{{mix('js/trainingticket.js')}}"></script>
