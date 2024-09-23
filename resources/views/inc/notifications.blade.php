@@ -86,7 +86,7 @@
 
     @endif
 
-    @if(count(App\TrainingFeedback::where('status', 0)->get()) > 0 && (Auth::user()->hasRole('ta') || Auth::user()->hasRole('ata')))
+    @if(count(App\TrainerFeedback::where('status', 0)->get()) > 0 && (Auth::user()->hasRole('ta') || Auth::user()->hasRole('ata')))
 
         <br>
 
