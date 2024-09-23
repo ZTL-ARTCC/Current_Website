@@ -22,6 +22,7 @@ use App\Overflight;
 use App\PositionPreset;
 use App\Pyrite;
 use App\Scenery;
+use App\TrainerFeedback;
 use App\TrainingTicket;
 use App\User;
 use Auth;
