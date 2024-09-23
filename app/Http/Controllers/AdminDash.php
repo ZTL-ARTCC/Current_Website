@@ -1149,7 +1149,7 @@ class AdminDash extends Controller {
             'body' => 'required'
         ]);
 
-        $feedback = Feedback::find($id);
+        $feedback = TrainerFeedback::find($id);
         $replyToAddress = $request->email;
         $replyToName = $request->name;
         $subject = $request->subject;
@@ -1162,7 +1162,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
         $audit->save();
 
-        Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
+        Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
         return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
