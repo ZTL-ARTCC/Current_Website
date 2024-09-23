@@ -9,17 +9,17 @@ class TrainerFeedback extends Model {
 
     public function getServiceLevelTextAttribute() {
         $level = $this->service_level;
-        if ($level == 0) {
+        if ($level == 5) {
             return 'Excellent';
-        } elseif ($level == 1) {
-            return 'Good';
-        } elseif ($level == 2) {
-            return 'Fair';
-        } elseif ($level == 3) {
-            return 'Poor';
         } elseif ($level == 4) {
+            return 'Good';
+        } elseif ($level == 3) {
+            return 'Fair';
+        } elseif ($level == 2) {
+            return 'Poor';
+        } elseif ($level == 1) {
             return 'Unsatisfactory';
-        } elseif ($level == 5) {
+        } elseif ($level == 0) {
             return 'N/A';
         } else {
             return 'Value not Found';
