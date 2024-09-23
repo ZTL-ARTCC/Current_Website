@@ -802,6 +802,17 @@ class TrainingDash extends Controller {
         $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
         return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
+
+    public function handleSchedule() {
+        $user = Auth::user();
+
+        if (!$user->onboarding_complete) {
+            return redirect()->back()->with('error', 'ZTL Onboarding must be complete before scheduling a training session. Please refer to the onboarding course on VATUSA before continuing. Contact the TA at ta@ztlartcc.org with questions or concerns.');
+        }
+
+        return redirect("https://scheduling.ztlartcc.org?first_name={$user->fname}&last_name={$user->lname}&email={$user->email}&cid={$user->id}");
+    }
+
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',
