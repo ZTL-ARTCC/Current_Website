@@ -37,6 +37,7 @@ Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
 Route::get('/asset/{slug}', 'FrontController@showPermalink');
+Route::get('/live', 'FrontController@showLiveEventInfo');
 
 Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/', 'RealopsController@index')->name('realopsIndex');
@@ -44,6 +45,7 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/bid/{id}', 'RealopsController@bid')->middleware('auth:realops')->middleware('toggle:realops_bidding');
     Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
+
 /*
 *   End Front Page Stuff
 */
@@ -69,7 +71,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/calendar/view/{id}', 'ControllerDash@showCalendarEvent');
         Route::get('/roster', 'ControllerDash@showRoster');
         Route::get('/files', 'ControllerDash@showFiles');
-        Route::get('/view-my-tickets', 'ControllerDash@showTickets');
         Route::get('/suggestions', 'ControllerDash@showSuggestions');
         Route::get('/atcast', 'ControllerDash@showatcast');
         Route::get('/stats/{year?}/{month?}', 'ControllerDash@showStats');
@@ -97,6 +98,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/delete/{id}', 'AtcBookingController@deleteBooking');
             Route::post('/create', 'AtcBookingController@createBooking')->name('createBooking');
         });
+        Route::get('/live', 'ControllerDash@showLiveEventInfo');
     });
 
     Route::prefix('opt')->group(function () {
@@ -275,6 +277,10 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
                 Route::get('/export', 'RealopsController@exportData');
                 Route::post('/dump-data', 'RealopsController@dumpData')->name('dumpData');
             });
+        });
+        Route::prefix('live')->middleware('ability:events-team,staff,false')->group(function () {
+            Route::get('/', 'AdminDash@setLiveEventInfo');
+            Route::post('/', 'AdminDash@saveLiveEventInfo')->name('saveLiveEventInfo');
         });
         
         Route::prefix('toggles')->middleware('permission:staff')->group(function () {
