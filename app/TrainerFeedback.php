@@ -27,20 +27,17 @@ class TrainerFeedback extends Model {
     }
 
     public function getFeedbackIdAttribute() {
-        return $this->controller_id;
+        return $this->trainer_id;
     }
 
     public function setFeedbackIdAttribute($value) {
-        $this->controller_id = $value;
+        $this->trainer_id = $value;
     }
 
     public function getFeedbackNameAttribute() {
         $controller = User::find($this->feedback_id);
-        $event = Event::find($this->feedback_id);
         if (isset($controller)) {
             $name = $controller->full_name;
-        } elseif (isset($event)) {
-            $name = $event->name;
         } elseif ($this->feedback_id == 0) {
             $name = 'General ATC Feedback';
         } else {
