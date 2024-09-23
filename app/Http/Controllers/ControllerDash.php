@@ -322,7 +322,7 @@ class ControllerDash extends Controller {
 
     public function showTrainerFeedbackDetails($id) {
         $feedback = TrainerFeedback::find($id);
-        if ($feedback->controller_id != Auth::id()) {
+        if ($feedback->trainer_id != Auth::id()) {
             return redirect('dashboard/controllers/profile')->with('error', 'You\'re not allowed to see this!');
         }
             
