@@ -121,7 +121,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
         });
         Route::prefix('trainer_feedback')->middleware('permission:train')->group(function () {
-            Route::get('/new', 'TrainingDash@newTrainerFeedback');
+            Route::get('/new', 'TrainingDash@newTrainerFeedback')->name('internalTrainerFeedback');
             Route::post('/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function () {

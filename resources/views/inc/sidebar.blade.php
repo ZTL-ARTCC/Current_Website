@@ -32,7 +32,7 @@
                 <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
-                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback">Leave INS/MTR Feedback</a>
+                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback/new">Leave INS/MTR Feedback</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
                     <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
