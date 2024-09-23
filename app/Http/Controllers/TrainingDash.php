@@ -753,9 +753,9 @@ class TrainingDash extends Controller {
 
     public function saveNewTrainerFeedback(Request $request) {
         $validatedData = $request->validate([
-            'student_name' => 'string',
-            'student_email' => 'email',
-            'student_cid' => 'integer',
+            'student_name' => 'string|null',
+            'student_email' => 'email|null',
+            'student_cid' => 'integer|null',
             'feedback_id' => 'required|integer',
             'feedback_date' => 'required|date',
             'service_level' => 'required|digits_between:1,5',
