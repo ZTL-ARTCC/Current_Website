@@ -774,7 +774,7 @@ class TrainingDash extends Controller {
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 && 
+        if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 &&
             app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
