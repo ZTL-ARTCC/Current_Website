@@ -4,6 +4,10 @@
 Training Team Feedback Management
 @endsection
 
+@push('custom_header')
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
+@endpush
+
 @section('content')
 @include('inc.header', ['title' => 'Training Team Feedback Management'])
 
@@ -18,7 +22,7 @@ $tabs[] = (object) $t;
 $t = [
     'active' => '',
     'id' => 'processed',
-    'data_var' => 'p_feedback'
+    'data_var' => 'feedback_p'
 ];
 $tabs[] = (object) $t;
 ?>
@@ -34,7 +38,8 @@ $tabs[] = (object) $t;
     <div class="tab-content">
         @foreach($tabs as $t)
         <div role="tabpanel" class="tab-pane {{ $t->active }}" id="{{ $t->id }}">
-            @if($$t->data_var->count() > 0)
+            @php $d = (string)$t->data_var; @endphp
+            @if($$d->count() > 0)
             <table class="table table-outline">
                 <thead>
                     <tr>
@@ -46,19 +51,23 @@ $tabs[] = (object) $t;
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($$t->data_var as $f)
+                    @foreach($$d as $f)
                     <tr>
                         <td>{{ $f->feedback_name }}</td>
                         <td>{{$f->student_name}} ({{$f->student_cid}}), {{$f->student_email}}</td>
                         <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                         <td>{{ $f->created_at }}</td>
                         <td>
+                            @if($t->id == 'new')
                             <span data-toggle="modal" data-target="#saveFeedback{{ $f->id }}">
                                 <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Save Feedback"><i class="fas fa-check"></i></button>
                             </span>
-                            @if($t->id == 'new')
                             <span data-toggle="modal" data-target="#hideFeedback{{ $f->id }}">
                                 <button type="button" class="btn btn-danger simple-tooltip" data-placement="top" data-toggle="tooltip" title="Hide Feedback"><i class="fas fa-times"></i></button>
+                            </span>
+                            @else
+                            <span data-toggle="modal" data-target="#updateFeedback{{ $f->id }}">
+                                <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
                             </span>
                             @endif
                             @if($f->student_email != null)
@@ -68,22 +77,9 @@ $tabs[] = (object) $t;
                             @endif
                         </td>
                     </tr>
-
-                    @endforeach
-                </tbody>
-            </table>
-            @else
-            <p>No {{ $t->id }} feedback.</p>
-            @endif
-            @if($t->id == 'processed')
-            {!! $$t->data_var->links() !!}
-            @endif
-        </div>
-        @endforeach
-    </div>
-</div>
-<!-- MODALS -->
-<div class="modal fade" id="saveFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="feedbackSaveDetail" aria-hidden="true">
+                    <!-- MODALS -->
+                    @if($t->id == 'new')
+                    <div class="modal fade" id="saveFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="feedbackSaveDetail" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,23 +114,23 @@ $tabs[] = (object) $t;
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="feedback_id">Booking Method</label>
-                        {{ html()->text('booking_method', $f->booking_method)->class(['form-control']) }}
+                        {{ html()->select('booking_method', [0=>'Easy!Appointments', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="position">Training Method</label>
-                        {{ html()->text('training_method', $f->training_method)->class(['form-control']) }}
+                        {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-control']) }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <label for="feedback_id">Student Name</label>
                         {{ html()->text('student_name', $f->student_name)->class(['form-control']) }}
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <label for="position">Student CID</label>
                         {{ html()->text('student_cid', $f->student_cid)->class(['form-control']) }}
                     </div>
-                    <p class="text-danger">*Student information is not shared with the training team member</p>
+                    <p class="text-danger mx-2">*Student information is not shared with the training team member</p>
                 </div>
                 <br>
                 <label for="pilot_comments">Student Comments</label>
@@ -219,7 +215,7 @@ $tabs[] = (object) $t;
         </div>
     </div>
 </div>
-
+@else
 <div class="modal fade" id="updateFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -262,8 +258,8 @@ $tabs[] = (object) $t;
         </div>
     </div>
 </div>
-
-
+@endif
+@if($f->student_email != null)
 <div class="modal fade" id="emailFeedback{{ $f->id }}" tabindex="-1" role="dialog" aria-labelledby="feedbackDetailEmail" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -301,4 +297,19 @@ $tabs[] = (object) $t;
         </div>
     </div>
 </div>
+@endif
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <p>No {{ $t->id }} feedback.</p>
+            @endif
+            @if($t->id == 'processed')
+            {!! $$d->links() !!}
+            @endif
+        </div>
+        @endforeach
+    </div>
+</div>
+<script src="{{mix('js/trainerfeedback.js')}}"></script>
 @endsection
