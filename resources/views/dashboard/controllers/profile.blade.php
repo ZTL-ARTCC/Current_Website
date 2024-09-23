@@ -75,7 +75,7 @@ Profile
             @endif
         </div>
     </div>
-    @if(Auth::hasRole('INS') || Auth::hasRole('MTR'))
+    @if(Auth::user()->isAbleTo('train'))
     <div class="row">
         <div class="col-sm-12">
             <center><h4>My Training Team Feedback:</h4></center>
