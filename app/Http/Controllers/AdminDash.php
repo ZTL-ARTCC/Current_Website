@@ -1066,7 +1066,7 @@ class AdminDash extends Controller {
 
     public function saveTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->trainer_id = $request->feedback_id;
+        $feedback->trainer_id = $request->trainer_id;
         $feedback->feedback_date = $request->feedback_date;
         $feedback->service_level = $request->service_level;
         $feedback->position_trained = $request->position_trained;
@@ -1095,7 +1095,7 @@ class AdminDash extends Controller {
 
     public function hideTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->trainer_id = $request->feedback_id;
+        $feedback->trainer_id = $request->trainer_id;
         $feedback->feedback_date = $request->feedback_date;
         $feedback->service_level = $request->service_level;
         $feedback->position_trained = $request->position_trained;
@@ -1119,7 +1119,7 @@ class AdminDash extends Controller {
 
     public function updateTrainerFeedback(Request $request, $id) {
         $feedback = TrainerFeedback::find($id);
-        $feedback->trainer_id = $request->feedback_id;
+        $feedback->trainer_id = $request->trainer_id;
         $feedback->feedback_date = $request->feedback_date;
         $feedback->service_level = $request->service_level;
         $feedback->position_trained = $request->position_trained;
