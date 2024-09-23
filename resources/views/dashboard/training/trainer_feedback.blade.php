@@ -6,7 +6,6 @@ Training Team Feedback
 
 @push('custom_header')
 <link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
-<script src="{{mix('js/trainingticket.js')}}"></script>
 @endpush
 
 @section('content')
