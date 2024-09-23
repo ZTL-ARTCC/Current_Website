@@ -753,9 +753,9 @@ class TrainingDash extends Controller {
 
     public function saveNewTrainerFeedback(Request $request) {
         $validatedData = $request->validate([
-            'student_name' => 'string|null',
-            'student_email' => 'email|null',
-            'student_cid' => 'integer|null',
+            'student_name' => 'nullable|string',
+            'student_email' => 'nullable|email',
+            'student_cid' => 'nullable|integer',
             'feedback_id' => 'required|integer',
             'feedback_date' => 'required|date',
             'service_level' => 'required|digits_between:1,5',
@@ -774,7 +774,8 @@ class TrainingDash extends Controller {
             ]
         ]);
         $r = json_decode($response->getBody())->success;
-        if ($r != true && Config::get('app.env') != 'local') {
+        if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 && 
+            app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
             return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
         }
 
