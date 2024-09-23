@@ -138,6 +138,7 @@ class ControllerDash extends Controller {
         $user_id = Auth::id();
         $stats = ControllerLog::aggregateAllControllersByPosAndQuarter($year, $month);
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
+        $training_feedback = TrainingFeedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $personal_stats = $stats[$user_id];
         $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function ($t) {
             return strtotime($t->date.' '.$t->start_time);
@@ -199,7 +200,9 @@ class ControllerDash extends Controller {
             }
         }
 
-        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)->with('tickets', $tickets)->with('last_training', $last_training)->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
+        return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)
+            ->with('training_feedback', $training_feedback)->with('tickets', $tickets)->with('last_training', $last_training)
+            ->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
     }
 
     public function showTicket($id) {
@@ -314,6 +317,15 @@ class ControllerDash extends Controller {
         }
             
         return view('dashboard.controllers.feedback')->with('feedback', $feedback);
+    }
+
+    public function showTrainerFeedbackDetails($id) {
+        $feedback = TrainerFeedback::find($id);
+        if ($feedback->controller_id != Auth::id()) {
+            return redirect('dashboard/controllers/profile')->with('error', 'You\'re not allowed to see this!');
+        }
+            
+        return view('dashboard.controllers.trainer_feedback')->with('feedback', $feedback);
     }
 
     public function showEvents() {

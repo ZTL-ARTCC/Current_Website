@@ -80,6 +80,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/profile/discord', 'ControllerDash@updateDiscordRoles');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
+        Route::get('/profile/trainer-feedback-details/{id}', 'ControllerDash@showTrainerFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
         Route::get('/events/view/{id}', 'ControllerDash@viewEvent');
         Route::post('/events/view/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
