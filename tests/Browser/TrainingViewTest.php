@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
+use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class TrainingViewTest extends DuskTestCase {
@@ -12,10 +13,7 @@ class TrainingViewTest extends DuskTestCase {
     */
     public function test_does_view_load(): void {
         $this->browse(function (Browser $browser) {
-            $browser->visit('https://scheduling.ztlartcc.org')
-                    ->pause(1000)
-                    ->assetPathIs('https://scheduling.ztlartcc.org')
-                    ->assertDontSee('404');
+            Authentication::login($browser);
             $browser->visit('/dashboard/training/info')
                     ->assertSee('Training Information');
             $browser->visit('/dashboard/training/atcast')
@@ -24,14 +22,19 @@ class TrainingViewTest extends DuskTestCase {
                     ->assertSee('Training Tickets');
             $browser->visit('/dashboard/training/tickets/new')
                     ->assertSee('Submit New Training Ticket');
-            $browser->visit('https://scheduling.ztlartcc.org/index.php/user/login')
-                    ->pause(1000)
-                    ->assetPathIs('https://scheduling.ztlartcc.org/index.php/user/login')
-                    ->assertDontSee('404');
             $browser->visit('/dashboard/training/ots-center')
                     ->assertSee('OTS Center');
             $browser->visit('/dashboard/training/statistics')
                     ->assertSee('Training Department Dashboard');
+        });
+    }
+
+    public function test_external_links(): void {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('https://scheduling.ztlartcc.org')
+                ->assertDontSee('404');
+            $browser->visit('https://scheduling.ztlartcc.org/index.php/user/login')
+                ->assertDontSee('404');
         });
     }
 }
