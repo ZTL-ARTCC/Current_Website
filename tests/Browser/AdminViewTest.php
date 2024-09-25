@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
+use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class AdminViewTest extends DuskTestCase {
@@ -12,7 +13,9 @@ class AdminViewTest extends DuskTestCase {
     */
     public function test_does_view_load(): void {
         $this->browse(function (Browser $browser) {
+            Authentication::login($browser);
             $browser->visit('/dashboard/admin/calendar')
+                    ->screenshot('cal.png')
                     ->assertSee('Calendar/News');
             $browser->visit('/dashboard/admin/calendar')
                     ->assertSee('New Calendar Event/News');
@@ -24,10 +27,6 @@ class AdminViewTest extends DuskTestCase {
                     ->assertSee('New Scenery');
             $browser->visit('/dashboard/admin/feedback')
                     ->assertSee('Feedback Management');
-            $browser->visit('https://accounts.zoho.in/')
-                    ->pause(1000)
-                    ->assetPathIs('https://accounts.zoho.in/')
-                    ->assertDontSee('404');
             $browser->visit('/dashboard/admin/email/send')
                     ->assertSee('Send New Email');
             $browser->visit('/dashboard/admin/announcement')
@@ -52,6 +51,13 @@ class AdminViewTest extends DuskTestCase {
                     ->assertSee('Visit Requests');
             $browser->visit('/dashboard/admin/roster/purge-assistant')
                     ->assertSee('Roster Purge Assistant');
+        });
+    }
+
+    public function test_external_links(): void {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('https://accounts.zoho.in/')
+            ->assertDontSee('404');
         });
     }
 }

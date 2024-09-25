@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use Laravel\Dusk\Browser;
+use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class ControllersViewTest extends DuskTestCase {
@@ -12,6 +13,7 @@ class ControllersViewTest extends DuskTestCase {
     */
     public function test_does_view_load(): void {
         $this->browse(function (Browser $browser) {
+            Authentication::login($browser);
             $browser->visit('/dashboard')
                     ->assertSee('Controller Dashboard');
             $browser->visit('/dashboard/controllers/search-airport/search?apt=KATL')
