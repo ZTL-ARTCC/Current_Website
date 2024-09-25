@@ -1047,21 +1047,9 @@ class AdminDash extends Controller {
     }
 
     public function showTrainerFeedback() {
-        $users = User::with('roles')->where('status', '1')->get();
-        $ins = $users->filter(function ($user) {
-            return $user->hasRole('ins');
-        });
-
-        $mtr = $users->filter(function ($user) {
-            return $user->hasRole('mtr');
-        });
-        $feedbackOptions = $ins->merge($mtr);
-        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
-        $feedbackOptions->prepend('General Trainer Feedback', '0');
-
         $feedback = TrainerFeedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
         $feedback_p = TrainerFeedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
-        return view('dashboard.admin.trainer_feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', $feedbackOptions);
+        return view('dashboard.admin.trainer_feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
     }
 
     public function saveTrainerFeedback(Request $request, $id) {

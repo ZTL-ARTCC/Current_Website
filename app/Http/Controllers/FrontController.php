@@ -435,19 +435,7 @@ class FrontController extends Controller {
     }
 
     public function newTrainerFeedback() {
-        $users = User::with('roles')->where('status', '1')->get();
-        $ins = $users->filter(function ($user) {
-            return $user->hasRole('ins');
-        });
-
-        $mtr = $users->filter(function ($user) {
-            return $user->hasRole('mtr');
-        });
-        $feedbackOptions = $ins->merge($mtr);
-        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
-        $feedbackOptions->prepend('General Trainer Feedback', '0');
-
-        return view('site.trainer_feedback')->with('feedbackOptions', $feedbackOptions);
+        return view('site.trainer_feedback')->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
     }
 
     public function showFiles() {

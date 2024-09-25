@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class TrainerFeedback extends Model {
@@ -44,5 +45,15 @@ class TrainerFeedback extends Model {
             $name = '[This controller is no longer a member]';
         }
         return $name;
+    }
+
+    public static function getFeedbackOptions() {
+        $users = User::with('roles')->where('status', '1')->get();
+        $feedbackOptions = $users->filter(function ($user) {
+            return $user->hasRole('ins') || $user->hasRole('mtr');
+        });
+        $feedbackOptions = $feedbackOptions->sortBy('lname')->pluck('backwards_name', 'id');
+        $feedbackOptions->prepend('General Trainer Feedback', '0');
+        return $feedbackOptions;
     }
 }
