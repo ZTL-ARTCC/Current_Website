@@ -2,17 +2,14 @@
 
 namespace Tests;
 
-use Config;
 use App\User;
-use Laravel\Dusk\Browser;
+use Config;
 
-class Authentication
-{
+class Authentication {
     /**
      * Handles authentication and user for test case.
      */
-    public static function checkTestUser(): void
-    {
+    public static function checkTestUser(): void {
         if (!User::where('id', Config::get('vatsim.auth_dev_credential'))->exists()) {
             $u = new User;
             $u->id = Config::get('vatsim.auth_dev_credential');
@@ -26,8 +23,7 @@ class Authentication
         }
     }
 
-    public static function login(&$browser): void
-    {
+    public static function login(&$browser): void {
         SELF::checkTestUser();
         $browser->loginAs(User::find(Config::get('vatsim.auth_dev_credential')));
     }
