@@ -4,7 +4,6 @@ var draft = $("#draft");
 
 if (newForm.length || (editForm.length && draft.length)) {
   var form = newForm.length ? newForm : editForm;
-  var idField = form.find("input[name='id']");
   var ajaxUrl = form.attr("action");
 
   setInterval(function () {
@@ -20,7 +19,7 @@ if (newForm.length || (editForm.length && draft.length)) {
       data: $.param(formData),
       success: function (result) {
         if (newForm.length) {
-          idField.val(result);
+          window.location.replace(result);
         }
         // Using device time opposed to database
         $("#autosaveIndicator").text(

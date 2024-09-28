@@ -130,7 +130,6 @@ New Training Ticket
         <label for="cert" class="form-label">Certification or Solo Issued</label>
 		{{ html()->checkbox('cert', false, 1) }}
 		<br>
-        {{ html()->text('id', null)->attribute('hidden') }}
         <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
         <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
         <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
