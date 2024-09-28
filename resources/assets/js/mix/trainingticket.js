@@ -1,3 +1,36 @@
+var newForm = $("#newTrainingTicket");
+var editForm = $("#editTrainingTicket");
+var draft = $("#draft");
+
+if (newForm.length || (editForm.length && draft.length)) {
+  var form = newForm.length ? newForm : editForm;
+  var idField = form.find("input[name='id']");
+  var ajaxUrl = form.attr("action");
+
+  setInterval(function () {
+    var formData = form.serializeArray();
+    formData.push(
+      { name: "action", value: "draft" },
+      { name: "automated", value: true }
+    );
+
+    $.ajax({
+      type: "POST",
+      url: ajaxUrl,
+      data: $.param(formData),
+      success: function (result) {
+        if (newForm.length) {
+          idField.val(result);
+        }
+        // Using device time opposed to database
+        $("#autosaveIndicator").text(
+          "Last autosaved at: " + new Date().toLocaleTimeString()
+        );
+      },
+    });
+  }, 60000);
+}
+
 var stars = $("#stars span");
 
 // Needed for if you submit and get redirected back the stars will now still be highlighted
