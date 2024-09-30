@@ -68,6 +68,12 @@ View Training Ticket
             @else
                 <p>No trainer comments for this ticket.</p>
             @endif
+            <p><b>Student Comments:</b></p>
+            @if($ticket->student_comments != null)
+                <p>{{ $ticket->student_comments }}</p>
+            @else
+                <p>No student comments for this ticket.</p>
+            @endif
         </div>
     </div>
 </div>
