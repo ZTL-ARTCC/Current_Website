@@ -1093,6 +1093,7 @@ class AdminDash extends Controller {
         $feedback->student_email = $request->student_email;
         $feedback->student_cid = $request->student_cid;
         $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
         $feedback->status = 2;
         $feedback->save();
 
@@ -1117,6 +1118,7 @@ class AdminDash extends Controller {
         $feedback->student_email = $request->student_email;
         $feedback->student_cid = $request->student_cid;
         $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
         $feedback->status = $request->status;
         $feedback->save();
 
