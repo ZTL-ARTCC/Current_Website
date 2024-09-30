@@ -782,7 +782,8 @@ class TrainingDash extends Controller {
         $feedback->status = 0;
         $feedback->save();
 
-        return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
+        $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
+        return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
