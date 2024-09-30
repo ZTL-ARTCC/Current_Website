@@ -15,6 +15,7 @@ use App\Mail\ReqStaffing;
 use App\Mail\VisitorMail;
 use App\Overflight;
 use App\Scenery;
+use App\TrainerFeedback;
 use App\User;
 use App\Visitor;
 use Carbon\Carbon;
