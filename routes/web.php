@@ -34,6 +34,7 @@ Route::get('/feedback/new', 'FrontController@newFeedback');
 Route::get('/feedback/new/{slug}', 'FrontController@newFeedback');
 Route::post('/feedback/new', 'FrontController@saveNewFeedback')->name('saveNewFeedback');
 Route::get('/trainer_feedback/new', 'FrontController@newTrainerFeedback');
+Route::post('/trainer_feedback/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
 Route::get('controllers/files', 'FrontController@showFiles');
 Route::get('/ramp-status/atl', 'FrontController@showAtlRamp');
 Route::get('/ramp-status/clt', 'FrontController@showCltRamp');
@@ -120,9 +121,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
         });
-        Route::prefix('trainer_feedback')->middleware('permission:train')->group(function () {
+        Route::prefix('trainer_feedback')->group(function () {
             Route::get('/new', 'TrainingDash@newTrainerFeedback')->name('internalTrainerFeedback');
-            Route::post('/new', 'TrainingDash@saveNewTrainerFeedback')->name('saveNewTrainerFeedback');
         });
         Route::prefix('ots-center')->middleware('role:ins|atm|datm|ta|wm')->group(function () {
             Route::get('/', 'TrainingDash@otsCenter');
