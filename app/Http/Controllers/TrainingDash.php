@@ -875,6 +875,7 @@ class TrainingDash extends Controller {
         ]);
 
         $ticket = TrainingTicket::find($id);
+
         if (! $ticket) {
             $ticket = new TrainingTicket;
         }
@@ -897,6 +898,10 @@ class TrainingDash extends Controller {
         $ticket->movements = $request->movements;
         $ticket->draft = true;
         $ticket->save();
+
+        if ($request->automated) {
+            return response(url('/dashboard/training/tickets/edit/' . $ticket->id));
+        }
 
         return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with('success', 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
     }
