@@ -10,6 +10,7 @@ use App\ControllerLog;
 use App\Event;
 use App\Feedback;
 use App\File;
+use App\LiveEvent;
 use App\Mail\ReqStaffing;
 use App\Mail\VisitorMail;
 use App\Overflight;
@@ -550,5 +551,10 @@ class FrontController extends Controller {
         
         return view('site.pilot_guide_atl')->with('controllers', $lcl_controllers)
         ->with('diag', $diag)->with('aaup', $aaup);
+    }
+
+    public function showLiveEventInfo() {
+        $live_event = LiveEvent::getAnnouncement();
+        return view('site.live_event_info')->with('liveEventInfo', $live_event);
     }
 }

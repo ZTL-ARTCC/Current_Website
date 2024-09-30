@@ -13,6 +13,7 @@ use App\EventRegistration;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Mail\BugReport;
@@ -110,6 +111,9 @@ class ControllerDash extends Controller {
             }
         }
 
+        $live_event = LiveEvent::getAnnouncement();
+        $live_event_title = ($live_event->publish) ? $live_event->event_title : 'Live Event';
+
         return view('dashboard.dashboard')->with('calendar', $calendar)->with('news', $news)->with('announcement', $announcement)
                                           ->with('winner', $winner_bronze)->with('pwinner', $prev_winner_bronze)->with('month_words', $last_month->format('F'))->with('pmonth_words', $prev_month->format('F'))
                                           ->with('controllers', $controllers)
@@ -118,7 +122,8 @@ class ControllerDash extends Controller {
                                           ->with('winner_local', $winner_local)->with('pwinner_local', $prev_winner_local)
                                           ->with('month_challenge_description', $month_challenge_description)->with('pmonth_challenge_description', $pmonth_challenge_description)
                                           ->with('training_metrics', $training_metrics)->with('top_trainers', $top_trainers)
-                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home);
+                                          ->with('flights', $flights)->with('stats', $stats)->with('home', $home)
+                                          ->with('liveEventTitle', $live_event_title);
     }
 
     public function showProfile($year = null, $month = null) {
@@ -252,10 +257,6 @@ class ControllerDash extends Controller {
         }
         
         return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
-    }
-
-    public function showTickets() {
-        return view('dashboard.controllers.tickets');
     }
 
     public function showSuggestions() {
@@ -625,5 +626,10 @@ class ControllerDash extends Controller {
         }
 
         return redirect()->back()->with('success', 'Your roles have been updated successfully.');
+    }
+
+    public function showLiveEventInfo() {
+        $live_event = LiveEvent::getAnnouncement();
+        return view('dashboard.controllers.live_event_info')->with('liveEventInfo', $live_event);
     }
 }
