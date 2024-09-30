@@ -85,6 +85,42 @@ Profile
             @endif
         </div>
     </div>
+    @if(Auth::user()->isAbleTo('train'))
+    <div class="row">
+        <div class="col-sm-12">
+            <center><h4>My Training Team Feedback:</h4></center>
+            <div class="table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col"><center>Date</center></th>
+                            <th scope="col"><center>Lesson/Position</center></th>
+                            <th scope="col"><center>Service Level</center></th>
+                            <th scope="col"><center>Comments</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($training_feedback->count() >=1 )
+                            @foreach($training_feedback as $f)
+                                <tr>
+                                    <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/trainer-feedback-details/{{ $f->id }}">{{ $f->feedback_date }}</a></center></td>
+                                    <td><center>{{ $f->position_trained }}</center></td>
+                                    <td><center>{{ $f->service_level_text }}</center></td>
+                                    <td><center>{{ str_limit($f->comments, 80, '...') }}</center></td>
+                                </tr>
+                            @endforeach
+                    </tbody>
+                </table>
+                        @else
+                    </tbody>
+                </table>
+                            <p>No training team feedback found.</p>
+                        @endif
+               {!! $training_feedback->links() !!}         
+            </div>
+        </div>
+    </div>
+    @endif
     <hr>
     <div class="row">
         <div class="col">

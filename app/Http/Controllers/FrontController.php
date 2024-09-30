@@ -15,6 +15,7 @@ use App\Mail\ReqStaffing;
 use App\Mail\VisitorMail;
 use App\Overflight;
 use App\Scenery;
+use App\TrainerFeedback;
 use App\User;
 use App\Visitor;
 use Carbon\Carbon;
@@ -432,6 +433,10 @@ class FrontController extends Controller {
         $feedback->save();
 
         return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
+    }
+
+    public function newTrainerFeedback() {
+        return view('site.trainer_feedback')->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
     }
 
     public function showFiles() {

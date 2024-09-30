@@ -30,6 +30,7 @@ use App\Pyrite;
 use App\Scenery;
 use App\ScheduleMonitorTasks;
 use App\SoloCert;
+use App\TrainerFeedback;
 use App\User;
 use App\Visitor;
 use App\VisitRej;
@@ -1043,6 +1044,118 @@ class AdminDash extends Controller {
         Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
         return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
+    }
+
+    public function showTrainerFeedback() {
+        $feedback = TrainerFeedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
+        $feedback_p = TrainerFeedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
+        return view('dashboard.admin.trainer_feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
+    }
+
+    public function saveTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = 1;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        $trainer = User::find($feedback->feedback_id);
+        if (isset($trainer)) {
+            Mail::to($trainer->email)->send(new NewFeedback($feedback, $trainer));
+        }
+
+        return redirect()->back()->with('success', 'The trainer feedback has been saved.');
+    }
+
+    public function hideTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = 2;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
+    }
+
+    public function updateTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = $request->status;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The trainer feedback has been updated.');
+    }
+
+    public function emailTrainerFeedback(Request $request, $id) {
+        $validator = $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'subject' => 'required',
+            'body' => 'required'
+        ]);
+
+        $feedback = TrainerFeedback::find($id);
+        $replyToAddress = $request->email;
+        $replyToName = $request->name;
+        $subject = $request->subject;
+        $body = $request->body;
+        $sender = Auth::user();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
+        $audit->save();
+
+        Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
+
+        return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
 
     public function sendNewEmail() {
