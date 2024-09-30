@@ -54,7 +54,16 @@ $tabs[] = (object) $t;
                     @foreach($$d as $f)
                     <tr>
                         <td>{{ $f->feedback_name }}</td>
-                        <td>{{$f->student_name}} ({{$f->student_cid}}), {{$f->student_email}}</td>
+                        @php
+                            $student_info = 'Anonymous';
+                            if ($f->student_name != '' || $f->student_cid != '' || $f->student_email != '') {
+                                $name = ($f->student_name != '') ? $f->student_name : 'No Name';
+                                $cid = ($f->student_cid != '') ? '(' . $f->student_cid . ')' : '';
+                                $email = ($f->student_email != '') ? ', ' . $f->student_email : '';
+                                $student_info = $name . ' ' . $cid . ' ' . $email;
+                            }
+                        @endphp
+                        <td>{{$student_info}}</td>
                         <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                         <td>{{ $f->created_at }}</td>
                         <td>
@@ -136,7 +145,7 @@ $tabs[] = (object) $t;
                                             <label for="position">Student CID</label>
                                             {{ html()->text('student_cid', $f->student_cid)->class(['form-control']) }}
                                         </div>
-                                        <p class="text-danger mp-2">*Student Name/CID are not shared with the training team member</p>
+                                        <p class="text-danger mx-3">*Student Name/CID are not shared with the training team member</p>
                                     </div>
                                     <br>
                                     <label for="pilot_comments">Student Comments</label>
@@ -237,7 +246,7 @@ $tabs[] = (object) $t;
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                {{ html()->form()->route('updateFeedback', [$f->id])->open() }}
+                                {{ html()->form()->route('updateTrainerFeedback', [$f->id])->open() }}
                                 @csrf
                                 <div class="modal-body">
                                     <div class="row">
@@ -285,7 +294,7 @@ $tabs[] = (object) $t;
                                             <label for="position">Student CID</label>
                                             {{ html()->text('student_cid', $f->student_cid)->class(['form-control']) }}
                                         </div>
-                                        <p class="text-danger mp-2">*Student Name/CID are not shared with the training team member</p>
+                                        <p class="text-danger mx-3">*Student Name/CID are not shared with the training team member</p>
                                     </div>
                                     <br>
                                     <label for="pilot_comments">Student Comments</label>
