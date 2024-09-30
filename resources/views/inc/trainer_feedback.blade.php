@@ -1,5 +1,7 @@
 <div class="container">
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
+        @php ($redirect_to = (isset($redirect)) ? $redirect : 'external')
+        {{ html()->text('redirect_to', $redirect_to)->attribute('hidden') }}
         <div class="row">
             <div class="col-sm-4 form-group">
                 <label for="feedback_id" class="control-label">Training Team Member: (required)</label>

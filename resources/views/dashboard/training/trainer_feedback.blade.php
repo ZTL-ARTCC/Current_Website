@@ -10,5 +10,5 @@ Training Team Feedback
 
 @section('content')
 @include('inc.header', ['title' => 'Leave New Training Team Feedback'])
-@include('inc.trainer_feedback')
+@include('inc.trainer_feedback', ['redirect' => 'internal'])
 @endsection
