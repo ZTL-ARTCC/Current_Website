@@ -31,15 +31,17 @@
             <div class="content">
                 <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
-                <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
+                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
+                <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback/new">Leave INS/MTR Feedback</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
                     <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif
-                    @if(Auth::user()->isAbleTo('snrStaff'))
+                    @if(Auth::user()->hasRole('ata') || Auth::user()->isAbleTo('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/statistics') }}" href="/dashboard/training/statistics">TA Dashboard</a>
+                        <a class="nav-link {{ Nav::urlDoesContain('/dashboard/admin/trainer_feedback') }}" href="/dashboard/admin/trainer_feedback">Manage Training Feedback</a>
                     @endif
                 @endif
             </div>
@@ -78,7 +80,7 @@
                     @toggle('realops')
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
-                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/live') }}" href="/dashboard/admin/live">Live Event Info</a>
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
@@ -87,6 +89,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/monitor') }}" href="/dashboard/admin/monitor">Background Task Monitor</a>
                 @endif
                 @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
                     <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
                 @endif
                 @if(Auth::user()->isAbleTo('events'))
@@ -134,6 +137,7 @@
 	</div>
 </div>
 <br/>
+@if(Auth::user()->isAbleTo('train'))
 <div class="card">
 	<div class="card-body p-2">
 		<h5 class="card-title">
@@ -152,6 +156,7 @@
 	</div>
 </div>
 <br/>
+@endif
 <div class="card">
 	<div class="card-body p-2">
 		<h5 class="card-title">Online Now&nbsp;<i class="fas fa-broadcast-tower"></i></h5>
@@ -168,4 +173,4 @@
 </div>
 
 @endif
-<script src="{{asset('js/sidebar.js')}}"></script>
+<script src="{{mix('js/sidebar.js')}}"></script>

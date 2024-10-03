@@ -16,8 +16,13 @@ use App\FeatureToggle;
 use App\Feedback;
 use App\File;
 use App\Incident;
+use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
+use App\Mail\NewFeedback;
+use App\Mail\PilotFeedback;
+use App\Mail\SendEmail;
+use App\Mail\VisitorMail;
 use App\Metar;
 use App\PositionPreset;
 use App\PresetPosition;
@@ -25,6 +30,7 @@ use App\Pyrite;
 use App\Scenery;
 use App\ScheduleMonitorTasks;
 use App\SoloCert;
+use App\TrainerFeedback;
 use App\User;
 use App\Visitor;
 use App\VisitRej;
@@ -513,10 +519,7 @@ class AdminDash extends Controller {
         $visitor->status = 1;
         $visitor->save();
 
-        Mail::send('emails.visit.accept', ['visitor' => $visitor], function ($message) use ($visitor) {
-            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Accepted');
-            $message->to($visitor->email)->cc('datm@ztlartcc.org');
-        });
+        Mail::to($visitor->email)->send(new VisitorMail('accept', $visitor));
 
         $parts = explode(" ", $visitor->name);
         $fname = $parts[0];
@@ -562,10 +565,7 @@ class AdminDash extends Controller {
         $visitor->reject_reason = $request->reject_reason;
         $visitor->save();
 
-        Mail::send(['html' => 'emails.visit.reject'], ['visitor' => $visitor], function ($message) use ($visitor) {
-            $message->from('visitors@notams.ztlartcc.org', 'vZTL ARTCC Visiting Department')->subject('Visitor Request Rejected');
-            $message->to($visitor->email)->cc('datm@ztlartcc.org');
-        });
+        Mail::to($visitor->email)->send(new VisitorMail('reject', $visitor));
 
         $audit = new Audit;
         $audit->cid = Auth::id();
@@ -651,13 +651,10 @@ class AdminDash extends Controller {
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
             $audit->save();
-            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) { // Added this to deal with case when user does not have an email address on file
-                Mail::send('emails.remove_visitor', ['user' => $user], function ($message) use ($user) {
-                    $message->from('info@notams.ztlartcc.org', 'vZTL ARTCC Staff')->subject('Notification of ZTL Roster Removal');
-                    $message->to($user->email)->cc('datm@ztlartcc.org');
-                });
+            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
-            // Remove on the VATUSA roster
+
             $client = new Client();
             $req_params = [ 'form_params' =>
                 [
@@ -982,11 +979,7 @@ class AdminDash extends Controller {
 
         $controller = User::find($feedback->feedback_id);
         if (isset($controller)) {
-            Mail::send(['html' => 'emails.new_feedback'], ['feedback' => $feedback, 'controller' => $controller], function ($m) use ($feedback, $controller) {
-                $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department');
-                $m->subject('You Have New Feedback!');
-                $m->to($controller->email);
-            });
+            Mail::to($controller->email)->send(new NewFeedback($feedback, $controller));
         }
         return redirect()->back()->with('success', 'The feedback has been saved.');
     }
@@ -1036,7 +1029,7 @@ class AdminDash extends Controller {
         ]);
 
         $feedback = Feedback::find($id);
-        $replyTo = $request->email;
+        $replyToAddress = $request->email;
         $replyToName = $request->name;
         $subject = $request->subject;
         $body = $request->body;
@@ -1048,13 +1041,121 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' emailed the pilot for feedback '.$feedback->id.'.';
         $audit->save();
 
-        Mail::send('emails.feedback_email', ['feedback' => $feedback, 'body' => $body, 'sender' => $sender], function ($m) use ($feedback, $subject, $replyTo, $replyToName) {
-            $m->from('feedback@notams.ztlartcc.org', 'vZTL ARTCC Feedback Department')->replyTo($replyTo, $replyToName);
-            $m->subject($subject);
-            $m->to($feedback->pilot_email);
-        });
+        Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
         return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
+    }
+
+    public function showTrainerFeedback() {
+        $feedback = TrainerFeedback::where('status', 0)->orderBy('created_at', 'ASC')->get();
+        $feedback_p = TrainerFeedback::where('status', 1)->orwhere('status', 2)->orderBy('updated_at', 'DESC')->paginate(25);
+        return view('dashboard.admin.trainer_feedback')->with('feedback', $feedback)->with('feedback_p', $feedback_p)->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
+    }
+
+    public function saveTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = 1;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        $trainer = User::find($feedback->feedback_id);
+        if (isset($trainer)) {
+            Mail::to($trainer->email)->send(new NewFeedback($feedback, $trainer));
+        }
+
+        return redirect()->back()->with('success', 'The trainer feedback has been saved.');
+    }
+
+    public function hideTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = 2;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
+    }
+
+    public function updateTrainerFeedback(Request $request, $id) {
+        $feedback = TrainerFeedback::find($id);
+        $feedback->trainer_id = $request->trainer_id;
+        $feedback->feedback_date = $request->feedback_date;
+        $feedback->service_level = $request->service_level;
+        $feedback->position_trained = $request->position_trained;
+        $feedback->booking_method = $request->booking_method;
+        $feedback->training_method = $request->training_method;
+        $feedback->student_name = $request->student_name;
+        $feedback->student_email = $request->student_email;
+        $feedback->student_cid = $request->student_cid;
+        $feedback->comments = $request->comments;
+        $feedback->staff_comments = $request->staff_comments;
+        $feedback->status = $request->status;
+        $feedback->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
+        $audit->save();
+
+        return redirect()->back()->with('success', 'The trainer feedback has been updated.');
+    }
+
+    public function emailTrainerFeedback(Request $request, $id) {
+        $validator = $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'subject' => 'required',
+            'body' => 'required'
+        ]);
+
+        $feedback = TrainerFeedback::find($id);
+        $replyToAddress = $request->email;
+        $replyToName = $request->name;
+        $subject = $request->subject;
+        $body = $request->body;
+        $sender = Auth::user();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
+        $audit->save();
+
+        Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
+
+        return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
     }
 
     public function sendNewEmail() {
@@ -1124,29 +1225,13 @@ class AdminDash extends Controller {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
 
-        //Sends to all recipients
         foreach ($emails as $e) {
             if ($e != 'No email') {
-                try {
-                    Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
-                        $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-                        $m->subject('[vZTL ARTCC] '.$subject);
-                        $m->to($e);
-                    });
-                } catch(\Exception $except) {
-                    // If they have a bad email, change it to no email
-                    $bad = User::where('email', $e)->first();
-                    $bad->email = 'No email';
-                    $bad->save();
-                }
+                Mail::to($e)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
             }
         }
-        //Copies to the sender
-        Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $sender, $reply_to) {
-            $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-            $m->subject('[vZTL ARTCC] '.$subject);
-            $m->to($sender->email);
-        });
+
+        Mail::to($sender->email)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
 
         $audit = new Audit;
         $audit->cid = Auth::id();
@@ -1925,5 +2010,28 @@ class AdminDash extends Controller {
         $tasks = ScheduleMonitorTasks::getTasks();
         $format = Config::get('schedule-monitor.date_format');
         return view('dashboard.admin.background-monitor')->with('tasks', $tasks)->with('format', $format);
+    }
+
+    public function setLiveEventInfo() {
+        $live_event_info = LiveEvent::getAnnouncement();
+        return view('dashboard.admin.live')->with('liveInfo', $live_event_info);
+    }
+
+    public function saveLiveEventInfo(Request $request) {
+        $live_event_info = LiveEvent::getAnnouncement();
+        $live_event_info->event_title = $request->event_title;
+        $live_event_info->body_public = $request->body_public;
+        $live_event_info->body_private = $request->body_private;
+        $live_event_info->staff_member = Auth::id();
+        $live_event_info->publish = ($request->publish == '1') ? true : false;
+        $live_event_info->save();
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' updated the live event info.';
+        $audit->save();
+
+        return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
     }
 }

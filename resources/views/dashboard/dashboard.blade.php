@@ -5,7 +5,7 @@ Dashboard
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/dashboard.css') }}" />
 @endpush
 
 @section('content')
@@ -17,6 +17,12 @@ Dashboard
             {!! $announcement->body !!}
             <hr>
             <p class="small"><i>Last updated by {{ $announcement->staff_name }} on {{ $announcement->update_time }}</i></p>
+        </div>
+        <hr>
+    @endif
+    @if(\App\LiveEvent::getPublishEvent())
+        <div class="alert alert-warning text-center">
+            <strong><a href="/dashboard/controllers/live" alt="{{ $liveEventTitle }} Information">{{ $liveEventTitle }} Information</a></strong>
         </div>
         <hr>
     @endif

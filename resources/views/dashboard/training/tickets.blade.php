@@ -61,13 +61,16 @@ Training Tickets
                 <div class="col-sm-12">Date of Last Promotion: <strong>{{ $search_result->last_promotion_date }}</strong></div>
             </div>
         <hr>
-        @php ($trainingCategories = array('s1', 's2', 's3', 'c1', 'other'))
+        @php ($trainingCategories = array('drafts', 's1', 's2', 's3', 'c1', 'other'))
         <ul class="nav nav-tabs nav-justified" role="tablist">
             @foreach($trainingCategories as $trainingCategory)
+                @if ($trainingCategory == 'drafts' && !$drafts)
+                    @continue
+                @endif
                 @php ($active = '')
-                @if ($loop->first)
+                @if ($loop->first || (!$drafts && $loop->iteration == 2))
                     @php ($active = ' active')
-               @endif
+                @endif
                 <li class="nav-item">
                     <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
                 </li>
@@ -76,14 +79,18 @@ Training Tickets
         <div class="tab-content">
             @php($transition_date = \Carbon\Carbon::parse('11/12/2021')) {{-- ticket dates eastern timezone after this date --}}
             @foreach($trainingCategories as $trainingCategory)
+                @if ($trainingCategory == 'drafts' && !$drafts)
+                    @continue
+                @endif
                 @php ($active = '')
-                @if ($loop->first)
+                @if ($loop->first || (!$drafts && $loop->iteration == 2))
                     @php ($active = ' active')
                @endif
                 <div role="tabpanel" class="tab-pane{{ $active }}" id="{{ $trainingCategory }}">
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">View</th>
                                 <th scope="col">Training Date</th>
                                 <th scope="col">Trainer Name</th>
                                 <th scope="col">Position</th>
@@ -107,7 +114,12 @@ Training Tickets
                                     @else
                                         <tr>
                                     @endif
-                                    <td><a href="/dashboard/training/tickets/view/{{ $t->id }}">{{ $t->date }}</a></td>
+                                    <td>
+                                        <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td>{{ $t->date }}</td>
                                     <td>{{ $t->trainer_name }}</td>
                                     <td>{{ $t->position_name }}</td>
                                     <td>{{ $t->type_name }}</td>

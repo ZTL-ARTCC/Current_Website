@@ -1,7 +1,7 @@
 @extends('layouts.email')
 
 @section('content')
-<p>Dear {{ $visit->name }},</p>
+<p>Dear {{ $visitor->name }},</p>
 
 <p>Your visitor application has been successfully submitted. In the next 24 hours, you will be assigned the ZTL Visitor Exam through the 
     VATUSA Academy. Please visit the <a href="https://academy.vatusa.net/">VATUSA Academy</a> and under "Academy Courses" select "All 

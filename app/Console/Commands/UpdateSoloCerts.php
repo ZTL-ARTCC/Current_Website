@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\SoloCertExpiration;
 use App\SoloCert;
 use App\User;
 use Carbon\Carbon;
@@ -87,25 +88,22 @@ class UpdateSoloCerts extends Command {
         $today = substr($today, 0, 10);
         $certs = SoloCert::get();
 
-        foreach ($certs as $c) {
-            if ($c->expiration <= $today && $c->status == 0) {
-                Mail::send('emails.solo_expire', ['c' => $c], function ($message) {
-                    $message->from('solocerts@notams.ztlartcc.org', 'ZTL Solo Certifications')->subject('Solo Certification Expired');
-                    $message->to('ta@ztlartcc.org');
-                });
-                $c->status = 1;
+        foreach ($certs as $cert) {
+            if ($cert->expiration <= $today && $cert->status == 0) {
+                Mail::to('ta@ztlartcc.org')->send(new SoloCertExpiration($cert));
+                $cert->status = 1;
 
-                $user = User::find($c->cid);
+                $user = User::find($cert->cid);
 
-                if ($c->pos == 0) {
+                if ($cert->pos == 0) {
                     $user->twr = 0;
-                } elseif ($c->pos == 1) {
+                } elseif ($cert->pos == 1) {
                     $user->app = 0;
-                } elseif ($c->pos == 2) {
+                } elseif ($cert->pos == 2) {
                     $user->ctr = 0;
                 }
                 $user->save();
-                $c->save();
+                $cert->save();
             }
         }
     }

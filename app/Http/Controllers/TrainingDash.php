@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Mail\OtsAssignment;
+use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
+use App\TrainerFeedback;
 use App\TrainingInfo;
 use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
 use Config;
-use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Mail;
 use mitoteam\jpgraph\MtJpGraph;
@@ -190,11 +191,14 @@ class TrainingDash extends Controller {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
+        $drafts = false;
+
         if ($request->id != null) {
             $search_result = User::find($request->id);
         } else {
             $search_result = null;
         }
+
         if ($search_result != null) {
             $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
@@ -203,9 +207,11 @@ class TrainingDash extends Controller {
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
-                $t->sort_category = $this->getTicketSortCategory($t->position);
+                $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
+
+                $drafts = $drafts || $t->draft;
             }
-            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) { // Hide inactive users with no tickets from this view
+            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
             $exams = $this->getAcademyExamTranscript($request->id);
@@ -214,7 +220,7 @@ class TrainingDash extends Controller {
             $exams = null;
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams);
+        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts);
     }
 
     public function getAcademyExamTranscript($cid) {
@@ -260,72 +266,37 @@ class TrainingDash extends Controller {
             ->with('progress_types', $ticket->getProgressSelectAttribute());
     }
 
-    public function saveNewTicket(Request $request) {
-        $request->validate([
-            'controller' => 'required',
-            'position' => 'required',
-            'session_id' => 'required',
-            'type' => 'required',
-            'date' => 'required',
-            'start' => 'required',
-            'end' => 'required',
-            'duration' => 'required',
-            'movements' => ['nullable',' integer'],
-            'score' => ['nullable', 'integer', 'digits_between:1,5']
+    public function handleSaveTicket(Request $request, $id = null) {
+        if ($request->action == 'new') {
+            return $this->saveNewTicket($request, $id);
+        }
+
+        if ($request->action == 'save') {
+            return $this->saveTicket($request, $id);
+        }
+        
+        if ($request->action == 'draft') {
+            return $this->draftNewTicket($request, $id);
+        }
+
+        return redirect()->back()->with('error', 'Invalid way to save training tickets. Please report this to the webmaster.');
+    }
+
+    public function addStudentComments(Request $request, $id) {
+        $validator = $request->validate([
+            'student_comments' => 'required'
         ]);
 
-        $ticket = new TrainingTicket;
-        $ticket->controller_id = $request->controller;
-        $ticket->trainer_id = Auth::id();
-        $ticket->position = $request->position;
-        $ticket->session_id = $request->session_id;
-        $ticket->type = $request->type;
-        $ticket->date = $request->date;
-        $ticket->start_date = Carbon::createFromFormat('m/d/Y', $request->date)->toDateString();
-        $ticket->start_time = $request->start;
-        $ticket->end_time = $request->end;
-        $ticket->duration = $request->duration;
-        $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
-        $ticket->ins_comments = $request->trainer_comments;
-        $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-        $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
-        $ticket->score = $request->score;
-        $ticket->movements = $request->movements;
+        $ticket = TrainingTicket::find($id);
+
+        if (Auth::id() != $ticket->controller_id) {
+            return redirect()->back()->with('error', 'Not your training ticket');
+        }
+
+        $ticket->student_comments = $request->student_comments;
         $ticket->save();
-        $extra = null;
 
-        $date = $ticket->date;
-        $date = date("Y-m-d");
-        $controller = User::find($ticket->controller_id);
-        $trainer = User::find($ticket->trainer_id);
-
-        try {
-            Mail::send(['html' => 'emails.training_ticket'], ['ticket' => $ticket, 'controller' => $controller, 'trainer' => $trainer], function ($m) use ($controller, $ticket) {
-                $m->from('training@notams.ztlartcc.org', 'vZTL ARTCC Training Department');
-                $m->subject('New Training Ticket Submitted');
-                $m->to($controller->email)->cc('training@ztlartcc.org');
-            });
-        } catch (Exception $e) {
-            Log::info('Unable to send training ticket email: ' . $e);
-        }
-
-        if ($request->ots == 1) {
-            $ots = new Ots;
-            $ots->controller_id = $ticket->controller_id;
-            $ots->recommender_id = $ticket->trainer_id;
-            $ots->position = $request->position;
-            $ots->status = 0;
-            $ots->save();
-            $extra = ' and the OTS recommendation has been added';
-        }
-
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
-        $audit->save();
-
-        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
+        return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
     }
 
     public function viewTicket($id) {
@@ -350,51 +321,6 @@ class TrainingDash extends Controller {
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
             ->with('positions', $positions)->with('session_ids', $sessions)
             ->with('progress_types', $ticket->getProgressSelectAttribute());
-        } else {
-            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
-        }
-    }
-
-    public function saveTicket(Request $request, $id) {
-        $ticket = TrainingTicket::find($id);
-        if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
-            $request->validate([
-                'controller' => 'required',
-                'position' => 'required',
-                'session_id' => 'required',
-                'type' => 'required',
-                'date' => 'required',
-                'start' => 'required',
-                'end' => 'required',
-                'duration' => 'required',
-                'movements' => ['nullable',' integer'],
-                'score' => ['nullable', 'integer', 'between:1,5']
-            ]);
-
-            $ticket->controller_id = $request->controller;
-            $ticket->position = $request->position;
-            $ticket->session_id = $request->session_id;
-            $ticket->type = $request->type;
-            $ticket->date = $request->date;
-            $ticket->start_date = Carbon::createFromFormat('m/d/Y', $request->date)->toDateString();
-            $ticket->start_time = $request->start;
-            $ticket->end_time = $request->end;
-            $ticket->duration = $request->duration;
-            $ticket->comments = $request->comments;
-            $ticket->ins_comments = $request->trainer_comments;
-            $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
-            $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
-            $ticket->score = $request->score;
-            $ticket->movements = $request->movements;
-            $ticket->save();
-
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
-            $audit->save();
-
-            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
@@ -466,11 +392,7 @@ class TrainingDash extends Controller {
             $ins = User::find($ots->ins_id);
             $controller = User::find($ots->controller_id);
 
-            Mail::send('emails.ots_assignment', ['ots' => $ots, 'controller' => $controller, 'ins' => $ins], function ($m) use ($ins, $controller) {
-                $m->from('ots-center@notams.ztlartcc.org', 'vZTL ARTCC OTS Center')->replyTo($controller->email, $controller->full_name);
-                $m->subject('You Have Been Assigned an OTS for ' . $controller->full_name);
-                $m->to($ins->email)->cc('training@ztlartcc.org');
-            });
+            Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
 
             $audit = new Audit;
             $audit->cid = Auth::id();
@@ -520,8 +442,11 @@ class TrainingDash extends Controller {
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position) { // Takes a position id and returns the sort category (ex. S1, S2, S3, C1, Other)
+    public function getTicketSortCategory($position, $draft) {
         switch (true) {
+            case ($draft):
+                return 'drafts';
+                break;
             case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;
@@ -825,5 +750,204 @@ class TrainingDash extends Controller {
         $response = Response::make($graph->Stroke());
         $response->header('Content-type', 'image/png');
         return $response;
+    }
+
+    public function newTrainerFeedback() {
+        return view('dashboard.training.trainer_feedback')->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
+    }
+
+    public function saveNewTrainerFeedback(Request $request) {
+        $validatedData = $request->validate([
+            'student_name' => 'nullable|string',
+            'student_email' => 'nullable|email',
+            'student_cid' => 'nullable|integer',
+            'feedback_id' => 'required|integer',
+            'feedback_date' => 'required|date',
+            'service_level' => 'required|digits_between:1,5',
+            'position_trained' => 'required|string',
+            'booking_method' => 'required|integer',
+            'training_method' => 'required|integer',
+            'comments' => 'required'
+        ]);
+
+        //Google reCAPTCHA Verification
+        $client = new Client;
+        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'secret' => Config::get('google.recaptcha'),
+                'response' => $request->input('g-recaptcha-response'),
+            ]
+        ]);
+        $r = json_decode($response->getBody())->success;
+        if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 &&
+            app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
+            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+        }
+
+        //Continue Request
+        $feedback = new TrainerFeedback;
+        $feedback->trainer_id = ltrim($request->input('feedback_id'), 'gec');
+        $feedback->feedback_date = $request->input('feedback_date');
+        $feedback->service_level = $request->input('service_level');
+        $feedback->position_trained = $request->input('position_trained');
+        $feedback->booking_method = $request->input('booking_method');
+        $feedback->training_method = $request->input('training_method');
+        $feedback->student_name = $request->input('student_name');
+        $feedback->student_email = $request->input('student_email');
+        $feedback->student_cid = $request->input('student_cid');
+        $feedback->comments = $request->input('comments');
+        $feedback->status = 0;
+        $feedback->save();
+
+        $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
+        return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
+    }
+    private function saveNewTicket(Request $request, $id) {
+        $request->validate([
+            'controller' => 'required',
+            'position' => 'required',
+            'session_id' => 'required',
+            'type' => 'required',
+            'date' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'duration' => 'required',
+            'movements' => ['nullable',' integer'],
+            'score' => ['nullable', 'integer', 'digits_between:1,5']
+        ]);
+
+        $ticket = TrainingTicket::find($id);
+        if (! $ticket) {
+            $ticket = new TrainingTicket;
+        }
+
+        $ticket->controller_id = $request->controller;
+        $ticket->trainer_id = Auth::id();
+        $ticket->position = $request->position;
+        $ticket->session_id = $request->session_id;
+        $ticket->type = $request->type;
+        $ticket->date = $request->date;
+        $ticket->start_date = Carbon::createFromFormat('m/d/Y', $request->date)->toDateString();
+        $ticket->start_time = $request->start;
+        $ticket->end_time = $request->end;
+        $ticket->duration = $request->duration;
+        $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
+        $ticket->ins_comments = $request->trainer_comments;
+        $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
+        $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+        $ticket->score = $request->score;
+        $ticket->movements = $request->movements;
+        $ticket->draft = false;
+        $ticket->save();
+        $extra = null;
+
+        $date = $ticket->date;
+        $date = date("Y-m-d");
+        $controller = User::find($ticket->controller_id);
+        $trainer = User::find($ticket->trainer_id);
+
+        Mail::to($controller->email)->cc('training@ztlartcc.org')->send(new TrainingTicketMail($ticket, $controller, $trainer));
+
+        if ($request->ots == 1) {
+            $ots = new Ots;
+            $ots->controller_id = $ticket->controller_id;
+            $ots->recommender_id = $ticket->trainer_id;
+            $ots->position = $request->position;
+            $ots->status = 0;
+            $ots->save();
+            $extra = ' and the OTS recommendation has been added';
+        }
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
+        $audit->save();
+
+        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
+    }
+
+    private function draftNewTicket(Request $request, $id) {
+        $request->validate([
+            'controller' => 'required',
+            'movements' => ['nullable',' integer'],
+            'score' => ['nullable', 'integer', 'digits_between:1,5']
+        ]);
+
+        $ticket = TrainingTicket::find($id);
+
+        if (! $ticket) {
+            $ticket = new TrainingTicket;
+        }
+
+        $ticket->controller_id = $request->controller;
+        $ticket->trainer_id = Auth::id();
+        $ticket->position = $request->position;
+        $ticket->session_id = $request->session_id;
+        $ticket->type = $request->type;
+        $ticket->date = $request->date;
+        $ticket->start_date = $request->date ? Carbon::createFromFormat('m/d/Y', $request->date)->toDateString() : null;
+        $ticket->start_time = $request->start;
+        $ticket->end_time = $request->end;
+        $ticket->duration = $request->duration;
+        $ticket->comments = mb_convert_encoding($request->comments, 'UTF-8'); // character encoding added to protect save method
+        $ticket->ins_comments = $request->trainer_comments;
+        $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
+        $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+        $ticket->score = $request->score;
+        $ticket->movements = $request->movements;
+        $ticket->draft = true;
+        $ticket->save();
+
+        if ($request->automated) {
+            return response(url('/dashboard/training/tickets/edit/' . $ticket->id));
+        }
+
+        return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with('success', 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
+    }
+
+    private function saveTicket(Request $request, $id) {
+        $ticket = TrainingTicket::find($id);
+        if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
+            $request->validate([
+                'controller' => 'required',
+                'position' => 'required',
+                'session_id' => 'required',
+                'type' => 'required',
+                'date' => 'required',
+                'start' => 'required',
+                'end' => 'required',
+                'duration' => 'required',
+                'movements' => ['nullable',' integer'],
+                'score' => ['nullable', 'integer', 'between:1,5']
+            ]);
+
+            $ticket->controller_id = $request->controller;
+            $ticket->position = $request->position;
+            $ticket->session_id = $request->session_id;
+            $ticket->type = $request->type;
+            $ticket->date = $request->date;
+            $ticket->start_date = Carbon::createFromFormat('m/d/Y', $request->date)->toDateString();
+            $ticket->start_time = $request->start;
+            $ticket->end_time = $request->end;
+            $ticket->duration = $request->duration;
+            $ticket->comments = $request->comments;
+            $ticket->ins_comments = $request->trainer_comments;
+            $ticket->cert = (is_null($request->cert)) ? 0 : $request->cert;
+            $ticket->monitor = (is_null($request->monitor)) ? 0 : $request->monitor;
+            $ticket->score = $request->score;
+            $ticket->movements = $request->movements;
+            $ticket->save();
+
+            $audit = new Audit;
+            $audit->cid = Auth::id();
+            $audit->ip = $_SERVER['REMOTE_ADDR'];
+            $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
+            $audit->save();
+
+            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
+        }
     }
 }
