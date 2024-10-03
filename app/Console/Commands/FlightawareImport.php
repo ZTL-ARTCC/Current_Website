@@ -101,10 +101,10 @@ class FlightawareImport extends Command {
             // If we hit the ratelimit, pause for a bit.
             // Commenting out the ratelimit timeout logic - this needs to be rebuilt to consider a chunk returning zero flights
             //if ($flights_count > $ratelimit_max_flights) {
-                $pbar->setMessage('Ratelimit timeout');
-                $pbar->advance();
-                $flights_count = 0;
-                sleep($ratelimit_timeout);
+            $pbar->setMessage('Ratelimit timeout');
+            $pbar->advance();
+            $flights_count = 0;
+            sleep($ratelimit_timeout);
             //}
 
             // Generate the URL for the HTTP client.
