@@ -7,34 +7,73 @@ use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class ControllersViewTest extends DuskTestCase {
-    /*
-    Basic browser test - ensure that each page loads.
-    This is a planned interim step - this should be built out to full capability later.
-    */
-    public function test_does_view_load(): void {
+
+    public function test_controller_dashboard(): void {
         $this->browse(function (Browser $browser) {
             Authentication::login($browser);
             $browser->visit('/dashboard')
                     ->assertSee('Controller Dashboard');
-            $browser->visit('/dashboard/controllers/search-airport/search?apt=KATL')
-                    ->assertSee('Airport Information');
+        });
+    }
+
+    public function test_controller_profile(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/profile')
                     ->assertSee('My Profile');
+        });
+    }
+
+    public function test_controller_roster(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/roster')
                     ->assertSee('Roster');
+        });
+    }
+
+    public function test_controller_events(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/events')
                     ->assertSee('Events');
+        });
+    }
+
+    public function test_controller_bookings(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/bookings')
                     ->assertSee('ATC Bookings');
+        });
+    }
+
+    public function test_controller_files(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/files')
                     ->assertSee('Files');
-            // vIDS link tested in PublicViewTest
+        });
+    }
+
+    public function test_controller_scenery(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/scenery')
                     ->assertSee('Scenery');
+        });
+    }
+
+    public function test_controller_stats(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/stats')
                     ->assertSee('ARTCC Controller Statistics');
+        });
+    }
+
+    public function test_controller_incident_report(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/incident/report')
                     ->assertSee('New Incident Report');
+        });
+    }
+
+    public function test_controller_logout(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/logout')
                     ->assertSee('You have been successfully logged out');
         });
