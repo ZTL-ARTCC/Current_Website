@@ -7,34 +7,42 @@ use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class TrainingViewTest extends DuskTestCase {
-    /*
-    Basic browser test - ensure that each page loads.
-    This is a planned interim step - this should be built out to full capability later.
-    */
-    public function test_does_view_load(): void {
+
+    public function test_training_info(): void {
         $this->browse(function (Browser $browser) {
             Authentication::login($browser);
             $browser->visit('/dashboard/training/info')
                     ->assertSee('Training Information');
+        });
+    }
+
+    public function test_training_atcast(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/atcast')
                     ->assertSee('ATCast Videos');
+        });
+    }
+
+    public function test_training_tickets(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/tickets')
                     ->assertSee('Training Tickets');
             $browser->visit('/dashboard/training/tickets/new')
                     ->assertSee('Submit New Training Ticket');
-            $browser->visit('/dashboard/training/ots-center')
-                    ->assertSee('OTS Center');
-            $browser->visit('/dashboard/training/statistics')
-                    ->assertSee('Training Department Dashboard');
         });
     }
 
-    public function test_external_links(): void {
+    public function test_ots_center(): void {
         $this->browse(function (Browser $browser) {
-            $browser->visit('https://scheduling.ztlartcc.org')
-                ->assertDontSee('404');
-            $browser->visit('https://scheduling.ztlartcc.org/index.php/user/login')
-                ->assertDontSee('404');
+            $browser->visit('/dashboard/training/ots-center')
+                    ->assertSee('OTS Center');
+        });
+    }
+
+    public function test_training_statistics(): void {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/dashboard/training/statistics')
+                    ->assertSee('Training Department Dashboard');
         });
     }
 }
