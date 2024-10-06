@@ -43,6 +43,17 @@ View Training Ticket
             @else
                 <p>No comments for this ticket.</p>
             @endif
+            <p><b>Your Comments:</b></p>
+            @if($ticket->student_comments != null)
+                <p>{{ $ticket->student_comments }}</p>
+            @else
+                {{ html()->form()->route('addStudentComments', [$ticket->id])->open() }}
+                    <div class="form-group">
+                        {{ html()->textarea('student_comments', null)->placeholder('Enter your comments here. Please note these can be seen by all training staff and yourself. Once these are submitted, they cannot be changed')->class(['form-control']) }}
+                    </div>
+                    <button class="btn btn-success" action="submit">Save Comments</button>
+                {{ html()->form()->close() }}
+            @endif
         </div>
     </div>
 </div>

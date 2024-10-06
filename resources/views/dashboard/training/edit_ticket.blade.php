@@ -13,9 +13,9 @@ Edit Training Ticket
 
 <div class="container">
     @if($ticket->draft)
-        <span class="badge badge-warning mb-3">DRAFT</span>
+        <span id="draft" class="badge badge-warning mb-3">DRAFT</span>
     @endif
-    {{ html()->form()->route('saveTicket', [$ticket->id])->open() }}
+    {{ html()->form()->route('saveTicket', [$ticket->id])->attributes(['id'=>'editTrainingTicket'])->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
@@ -133,6 +133,7 @@ Edit Training Ticket
 		<br>
         <br>
         @if ($ticket->draft)
+            <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
             <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
             <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
         @else

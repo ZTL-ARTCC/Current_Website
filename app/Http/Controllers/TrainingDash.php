@@ -8,6 +8,7 @@ use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
+use App\TrainerFeedback;
 use App\TrainingInfo;
 use App\TrainingTicket;
 use App\User;
@@ -279,6 +280,23 @@ class TrainingDash extends Controller {
         }
 
         return redirect()->back()->with('error', 'Invalid way to save training tickets. Please report this to the webmaster.');
+    }
+
+    public function addStudentComments(Request $request, $id) {
+        $validator = $request->validate([
+            'student_comments' => 'required'
+        ]);
+
+        $ticket = TrainingTicket::find($id);
+
+        if (Auth::id() != $ticket->controller_id) {
+            return redirect()->back()->with('error', 'Not your training ticket');
+        }
+
+        $ticket->student_comments = $request->student_comments;
+        $ticket->save();
+
+        return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
     }
 
     public function viewTicket($id) {
@@ -734,6 +752,56 @@ class TrainingDash extends Controller {
         return $response;
     }
 
+    public function newTrainerFeedback() {
+        return view('dashboard.training.trainer_feedback')->with('feedbackOptions', TrainerFeedback::getFeedbackOptions());
+    }
+
+    public function saveNewTrainerFeedback(Request $request) {
+        $validatedData = $request->validate([
+            'student_name' => 'nullable|string',
+            'student_email' => 'nullable|email',
+            'student_cid' => 'nullable|integer',
+            'feedback_id' => 'required|integer',
+            'feedback_date' => 'required|date',
+            'service_level' => 'required|digits_between:1,5',
+            'position_trained' => 'required|string',
+            'booking_method' => 'required|integer',
+            'training_method' => 'required|integer',
+            'comments' => 'required'
+        ]);
+
+        //Google reCAPTCHA Verification
+        $client = new Client;
+        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'secret' => Config::get('google.recaptcha'),
+                'response' => $request->input('g-recaptcha-response'),
+            ]
+        ]);
+        $r = json_decode($response->getBody())->success;
+        if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 &&
+            app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
+            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+        }
+
+        //Continue Request
+        $feedback = new TrainerFeedback;
+        $feedback->trainer_id = ltrim($request->input('feedback_id'), 'gec');
+        $feedback->feedback_date = $request->input('feedback_date');
+        $feedback->service_level = $request->input('service_level');
+        $feedback->position_trained = $request->input('position_trained');
+        $feedback->booking_method = $request->input('booking_method');
+        $feedback->training_method = $request->input('training_method');
+        $feedback->student_name = $request->input('student_name');
+        $feedback->student_email = $request->input('student_email');
+        $feedback->student_cid = $request->input('student_cid');
+        $feedback->comments = $request->input('comments');
+        $feedback->status = 0;
+        $feedback->save();
+
+        $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
+        return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
+    }
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',
@@ -807,6 +875,7 @@ class TrainingDash extends Controller {
         ]);
 
         $ticket = TrainingTicket::find($id);
+
         if (! $ticket) {
             $ticket = new TrainingTicket;
         }
@@ -829,6 +898,10 @@ class TrainingDash extends Controller {
         $ticket->movements = $request->movements;
         $ticket->draft = true;
         $ticket->save();
+
+        if ($request->automated) {
+            return response(url('/dashboard/training/tickets/edit/' . $ticket->id));
+        }
 
         return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with('success', 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
     }
