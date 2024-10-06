@@ -86,6 +86,7 @@ class RosterUpdate extends Command {
             $user->added_to_facility = substr($r->facility_join, 0, 10) . ' ' . substr($r->facility_join, 11, 8);
             $user->discord = $r->discord_id;
             $user->last_promotion = $r->last_promotion;
+            $user->onboarding_complete = $user->getAcademyExamTranscript()['BASIC']['success'] == 1;
 
             $user->save();
         }
