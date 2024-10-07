@@ -13,6 +13,12 @@ class AdminViewTest extends DuskTestCase {
             Authentication::login($browser);
             $browser->visit('/dashboard/admin/calendar')
                     ->assertSee('Calendar/News');
+        });
+    }
+
+    public function test_admin_new_calendar(): void {
+        $this->browse(function (Browser $browser) {
+            Authentication::login($browser);
             $browser->visit('/dashboard/admin/calendar/new')
                     ->assertSee('New Calendar Event/News');
         });
@@ -29,6 +35,12 @@ class AdminViewTest extends DuskTestCase {
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/admin/scenery')
                     ->assertSee('Scenery Management');
+        });
+    }
+
+    public function test_admin_new_scenery(): void {
+        $this->browse(function (Browser $browser) {
+
             $browser->visit('/dashboard/admin/scenery/new')
                     ->assertSee('New Scenery');
         });
@@ -94,6 +106,11 @@ class AdminViewTest extends DuskTestCase {
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/admin/toggles')
                     ->assertSee('Feature Toggles');
+        });
+    }
+
+    public function test_admin_create_feature_toggles(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/admin/toggles/create')
                     ->assertSee('New Feature Toggle');
         });
