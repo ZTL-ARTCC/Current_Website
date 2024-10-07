@@ -23,10 +23,15 @@ class TrainingViewTest extends DuskTestCase {
         });
     }
 
-    public function test_training_tickets(): void {
+    public function test_training_list_tickets(): void {
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/tickets')
                     ->assertSee('Training Tickets');
+        });
+    }
+
+    public function test_training_new_ticket(): void {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/tickets/new')
                     ->assertSee('Submit New Training Ticket');
         });
