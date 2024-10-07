@@ -283,7 +283,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/create/bulk', 'RealopsController@bulkUploadFlights')->name('bulkUploadFlights');
             Route::get('/edit/{id}', 'RealopsController@showEditFlight');
             Route::put('/edit/{id}', 'RealopsController@editFlight')->name('editFlight');
-            Route::get('/{id}', 'RealopsController@deleteFlight');
             Route::put('/assign-pilot/{id}', 'RealopsController@assignPilotToFlight')->name('assignPilotToFlight');
             Route::get('/remove-pilot/{id}', 'RealopsController@removePilotFromFlight');
             Route::get('/delete/{id}', 'RealopsController@deleteFlight');
