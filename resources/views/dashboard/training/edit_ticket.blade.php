@@ -125,13 +125,14 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
-        <label for="ots" class="form-label">Recommend for OTS?</label>
         @if($ticket->draft)
+            <label for="ots" class="form-label">Recommend for OTS?</label>
             @if($ticket->ots == 1)
                 {{ html()->checkbox('ots', false, '1') }}
             @else
                 {{ html()->checkbox('ots', false, '1') }}
             @endif
+            <br>
         @endif
         <label for="monitor" class="form-label">Can be monitored</label>
         @if($ticket->monitor == 1)
