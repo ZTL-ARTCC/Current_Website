@@ -181,7 +181,7 @@ class ControllerDash extends Controller {
             } catch (\Illuminate\Database\QueryException $e) {
             }
         }
-        $ea_appointments = [];
+        $ea_appointments = $ea_appointments_filtered = [];
         if (!is_null(Auth::user()->ea_customer_id)) {
             try {
                 $ea_appointments = DB::connection('ea_mysql')
@@ -199,7 +199,6 @@ class ControllerDash extends Controller {
                     ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
                     ->where('ea_appointments.start_datetime', '>=', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
                     ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
-                $ea_appointments_filtered = [];
                 foreach ($ea_appointments as $ea_appointment) {
                     if (Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone) >= Carbon::now()->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)) {
                         $appt_start_datetime = Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone)->setTimezone(Auth::user()->timezone);
