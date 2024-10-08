@@ -38,7 +38,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="type" class="form-label">Session Type</label>
+                    <label for="type" class="form-label">Progress</label>
                     {{ html()->select('type', $progress_types, $ticket->type)->placeholder('Select Session Type')->class(['form-control']) }}
                 </div>
             </div>
@@ -57,7 +57,15 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="start" class="form-label">Start Time in Eastern</label>
+                    @if($ticket->draft)
+                        @php 
+						    $currentDateET = new DateTime("now", new DateTimeZone('America/New_York') ); 
+						    $currentTimeET = $currentDateET->format('H:i');
+					    @endphp
+                        <label for="start" class="form-label">Start Time ET (now {{ $currentTimeET }})</label>
+                    @else
+                        <label for="start" class="form-label">Start Time ET</label>
+                    @endif
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                     </div>
@@ -65,7 +73,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="end" class="form-label">End Time in Eastern</label>
+                    <label for="end" class="form-label">End Time ET</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker3']) }}
                     </div>
@@ -117,6 +125,15 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
+        @if($ticket->draft)
+            <label for="ots" class="form-label">Recommend for OTS?</label>
+            @if($ticket->ots == 1)
+                {{ html()->checkbox('ots', false, '1') }}
+            @else
+                {{ html()->checkbox('ots', false, '1') }}
+            @endif
+            <br>
+        @endif
         <label for="monitor" class="form-label">Can be monitored</label>
         @if($ticket->monitor == 1)
 			{{ html()->checkbox('monitor', true, 1) }}

@@ -20,6 +20,7 @@ use App\LiveEvent;
 use App\LocalHero;
 use App\LocalHeroChallenges;
 use App\Mail\NewFeedback;
+use App\Mail\NewTrainerFeedback;
 use App\Mail\PilotFeedback;
 use App\Mail\SendEmail;
 use App\Mail\VisitorMail;
@@ -1076,7 +1077,7 @@ class AdminDash extends Controller {
 
         $trainer = User::find($feedback->feedback_id);
         if (isset($trainer)) {
-            Mail::to($trainer->email)->send(new NewFeedback($feedback, $trainer));
+            Mail::to($trainer->email)->send(new NewTrainerFeedback($feedback, $trainer));
         }
 
         return redirect()->back()->with('success', 'The trainer feedback has been saved.');

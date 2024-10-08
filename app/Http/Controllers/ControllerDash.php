@@ -141,7 +141,7 @@ class ControllerDash extends Controller {
         $feedback = Feedback::where('controller_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $training_feedback = TrainerFeedback::where('trainer_id', $user_id)->where('status', 1)->orderBy('updated_at', 'ASC')->paginate(10);
         $personal_stats = $stats[$user_id];
-        $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->get()->sortByDesc(function ($t) {
+        $tickets_sort = TrainingTicket::where('controller_id', Auth::id())->where('draft', 0)->get()->sortByDesc(function ($t) {
             return strtotime($t->date.' '.$t->start_time);
         })->pluck('id');
         if ($tickets_sort->count() != 0) {
