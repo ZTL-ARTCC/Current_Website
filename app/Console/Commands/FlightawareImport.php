@@ -62,9 +62,8 @@ class FlightawareImport extends Command {
     public function save_flights($pbar, $flights) {
         for ($i = 0; $i < sizeof($flights); $i++) {
             $flight = $flights[$i];
-            $pbar->setMessage('Saving ' . $flight['ident']);
-
             $flight_number = $flight['ident'];
+            $pbar->setMessage('Saving ' . $flight_number);
 
             $existing = RealopsFlight::where('flight_number', $flight_number)->first();
             if ($existing !== null) {
@@ -82,7 +81,7 @@ class FlightawareImport extends Command {
 
             $new_flight->assigned_pilot_id = null;
             $new_flight->flight_number = $flight_number;
-            $new_flight->callsign = $this->parse_regionals($flight['actual_ident']);
+            $new_flight->callsign = $this->parse_regionals($flight_number);
             $new_flight->flight_date = $deptime_parsed->toDateString();
             $new_flight->dep_time = $deptime_parsed->toTimeString();
             $new_flight->dep_airport = $flight['origin'];
@@ -109,7 +108,7 @@ class FlightawareImport extends Command {
 
             // Generate the URL for the HTTP client.
             // Format: %BASE/schedules/FROM/TO/?origin=KATL
-            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL?include_codeshares=FALSE&include_regional=FALSE';
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL&include_codeshares=false';
             $pbar->setMessage($url);
 
             if (!Config::get('flightaware.dryrun')) {
@@ -137,7 +136,7 @@ class FlightawareImport extends Command {
 
             // Generate the URL for the HTTP client.
             // Format: %BASE/schedules/FROM/TO/?destination=KATL
-            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL?include_codeshares=FALSE&include_regional=FALSE';
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL&include_codeshares=false';
             $pbar->setMessage($url);
 
             if (!Config::get('flightaware.dryrun')) {
