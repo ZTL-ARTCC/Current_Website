@@ -12,26 +12,27 @@ class RealopsFlightImporter implements ToModel, WithValidation {
      * @throws Exception
      */
     public function model($row) {
-        if (count($row) < 5) {
-            throw new Exception("Invalid row: too few entries (expected at least 5, got " . count($row) . ")");
+        if (count($row) < 6) {
+            throw new Exception("Invalid row: too few entries (expected at least 6, got " . count($row) . ")");
         }
         $est_time_enroute = null;
         $gate = null;
 
-        if (count($row) > 5) {
-            $est_time_enroute = $row[5];
+        if (count($row) > 6) {
+            $est_time_enroute = $row[6];
         }
 
-        if (count($row) > 6) {
-            $gate = $row[6];
+        if (count($row) > 7) {
+            $gate = $row[7];
         }
 
         $flight = new RealopsFlight;
         $flight->flight_number = $row[0];
-        $flight->flight_date = $row[1];
-        $flight->dep_time = $row[2];
-        $flight->dep_airport = $row[3];
-        $flight->arr_airport = $row[4];
+        $flight->callsign = $row[1];
+        $flight->flight_date = $row[2];
+        $flight->dep_time = $row[3];
+        $flight->dep_airport = $row[4];
+        $flight->arr_airport = $row[5];
         $flight->est_time_enroute = $est_time_enroute;
         $flight->gate = $gate;
 
@@ -41,11 +42,11 @@ class RealopsFlightImporter implements ToModel, WithValidation {
     public function rules(): array {
         return [
             '0' => 'required',
-            '1' => ['required', 'date_format:Y-m-d'],
-            '2' => ['required', 'date_format:H:i'],
-            '3' => 'required',
+            '2' => ['required', 'date_format:Y-m-d'],
+            '3' => ['required', 'date_format:H:i'],
             '4' => 'required',
-            '5' => ['date_format:H:i']
+            '5' => 'required',
+            '6' => ['date_format:H:i']
         ];
     }
 }

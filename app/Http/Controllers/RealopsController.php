@@ -140,6 +140,7 @@ class RealopsController extends Controller {
 
         $flight = new RealopsFlight;
         $flight->flight_number = $request->input('flight_number');
+        $flight->callsign = $request->input('callsign');
         $flight->flight_date = Carbon::parse($request->input('flight_date'))->format('Y-m-d');
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
@@ -178,6 +179,7 @@ class RealopsController extends Controller {
         ]);
 
         $flight->flight_number = $request->input('flight_number');
+        $flight->callsign = $request->input('callsign');
         $flight->flight_date = Carbon::parse($request->input('flight_date'))->format('Y-m-d');
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
