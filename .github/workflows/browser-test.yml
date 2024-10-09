@@ -42,8 +42,17 @@ jobs:
       - name: Start Chrome Driver
         run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
+      - name: Run Migrations
+        run: php artisan migrate
+
+      - name: Change permissions to dusk
+        run: chmod -R 0755 vendor/laravel/dusk/bin/ 
+
       - name: Run Laravel Server
         run: php artisan serve --no-reload &
+
+      - name: Verify Server is Online
+        run: curl localhost:8000 &
 
       - name: Execute tests
         run: php artisan dusk
