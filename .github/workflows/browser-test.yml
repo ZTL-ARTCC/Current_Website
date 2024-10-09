@@ -48,6 +48,9 @@ jobs:
       - name: Change permissions to dusk
         run: chmod -R 0755 vendor/laravel/dusk/bin/ 
 
+      - name: Create storage symlink
+        run: php artisan storage:link
+
       - name: Run Laravel Server
         run: php artisan serve --no-reload &
 
