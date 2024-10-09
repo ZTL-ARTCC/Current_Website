@@ -2,6 +2,11 @@ name: browser test
 
 on: [pull_request, workflow_dispatch]
 jobs:
+  build:
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
+    with:
+      artifact-name: 'ztl-deploy-artifact-v1'
+
   dusk:
     runs-on: ubuntu-latest
 
@@ -20,7 +25,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: ${{ needs.setup-variables.outputs.php-version }}
 
       - name: Copy .env
         run: cp .env.test .env
@@ -36,9 +41,6 @@ jobs:
 
       - name: Start Chrome Driver
         run: ./vendor/laravel/dusk/bin/chromedriver-linux &
-
-      - name: Build assets
-        run: npm install && npm run build
 
       - name: Run Laravel Server
         run: php artisan serve --no-reload &
