@@ -20,7 +20,7 @@ Training Team Feedback Details
         <div class="card-body">
             <p><b>Lesson ID or Position Trained:</b> {{ $feedback->position_trained }}</p>
             <p><b>Service Level:</b> {{ $feedback->service_level_text }}</p>
-            <p><b>Training Method:</b> {{ $feedback->training_method }}</p>
+            <p><b>Training Method:</b> {{ $feedback->training_method_text }}</p>
             <p><b>Student Comments:</b></p>
             @if($feedback->comments != null)
                 <p>{!! nl2br(e($feedback->comments)) !!}</p>
