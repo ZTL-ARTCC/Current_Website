@@ -153,6 +153,9 @@ Edit Training Ticket
             <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
             <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
             <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
+            @if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff'))
+                <a class="btn btn-danger" href="/dashboard/training/tickets/delete/{{ $ticket->id }}">Delete Ticket</a>
+            @endif
         @else
             <button class="btn btn-success" type="submit" name="action" value="save">Update Ticket</button>
         @endif

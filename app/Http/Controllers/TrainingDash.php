@@ -303,19 +303,22 @@ class TrainingDash extends Controller {
 
     public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if (Auth::user()->isAbleTo('snrStaff')) {
+        $draft = $ticket->draft;
+        if (Auth::user()->isAbleTo('snrStaff') || (Auth::id() == $ticket->trainer_id && $draft)) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
-            $audit->save();
+            if (! $draft) {
+                $audit = new Audit;
+                $audit->cid = Auth::id();
+                $audit->ip = $_SERVER['REMOTE_ADDR'];
+                $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
+                $audit->save();
+            }
 
             return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Only the TA can delete training tickets.');
+            return redirect()->back()->with('error', 'Only the TA can delete non-draft training tickets.');
         }
     }
 
