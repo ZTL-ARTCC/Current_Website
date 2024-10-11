@@ -5,7 +5,8 @@ jobs:
   build:
     name: Build website assets
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
-
+    with:
+      artifact-name: 'ztl-deploy-artifact-v1'
 
   dusk:
     name: Execute browser tests
@@ -31,7 +32,7 @@ jobs:
         run: | 
           composer install --no-progress --prefer-dist --optimize-autoloader
           npm install
-          
+
       - name: Generate key
         run: php artisan key:generate
 
