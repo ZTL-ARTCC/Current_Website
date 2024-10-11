@@ -29,9 +29,27 @@ jobs:
         run: cp .env.test .env
 
       - name: Install Dependencies
-        run: | 
-          composer install --no-progress --prefer-dist --optimize-autoloader
-          npm install
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ needs.setup-variables.outputs.php-version }}
+          extensions: gd,zip
+
+      - name: install php packages
+        run: composer install --no-dev
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.setup-variables.outputs.node-version }}
+
+      - name: update node packages
+        run: npm ci
+
+      - name: build assets
+        run: npm run prod
 
       - name: Generate key
         run: php artisan key:generate
