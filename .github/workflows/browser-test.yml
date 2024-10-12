@@ -62,7 +62,7 @@ jobs:
         run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
       - name: Run Migrations
-        run: php artisan migrate --no-interaction --force
+        run: php artisan migrate --no-interaction --force && php artisan db:seed
 
       - name: Change permissions to dusk
         run: chmod -R 0755 vendor/laravel/dusk/bin/ 
