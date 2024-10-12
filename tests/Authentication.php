@@ -19,6 +19,7 @@ class Authentication {
             $u->rating_id = 7;
             $u->visitor = 0;
             $u->status = 1;
+            $u->addRole('wm');
             $u->save();
         }
     }
