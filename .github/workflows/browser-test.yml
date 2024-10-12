@@ -30,7 +30,7 @@ jobs:
           extensions: gd,zip
 
       - name: Install php packages
-        run: composer install --no-dev
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Setup node
         uses: actions/setup-node@v4
