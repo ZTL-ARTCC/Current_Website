@@ -9,7 +9,7 @@ on:
       browser-test:
         required: false
         type: boolean
-        default : 'false'
+        default : false
 
 jobs:
   setup-variables:
