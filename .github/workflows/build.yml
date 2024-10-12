@@ -8,6 +8,7 @@ on:
         type: string
       browser-test:
         required: false
+        type: boolean
         default : 'false'
 
 jobs:
@@ -78,10 +79,12 @@ jobs:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-      - name: install php packages
-        if: ${{ !inputs.browser-test }}
+      - if: ${{ !inputs.browser-test }}
+        name: install php packages (prod)
         run: composer install --no-dev
-        if: ${{ inputs.browser-test }}
+
+      - if: ${{ inputs.browser-test }}
+        name: install php packages (dev)
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Setup node
