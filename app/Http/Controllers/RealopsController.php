@@ -21,6 +21,7 @@ class RealopsController extends Controller {
         $time_filter = $request->get('time_filter');
         
         $flights = RealopsFlight::where('flight_number', 'like', '%' . $flightno_filter . '%')
+                                ->orWhere('callsign', 'like', '%' . $flightno_filter . '%')
                                 ->when(! is_null($time_filter), function ($query) use ($time_filter) {
                                     $times = $this->timeBetween($time_filter, 15, 45);
                                     $query->whereTime('dep_time', ">=", Carbon::parse($times[0]))
