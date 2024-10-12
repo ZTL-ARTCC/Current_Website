@@ -1,6 +1,6 @@
 name: browser test
 
-on: [workflow_dispatch]
+on: [workflow_dispatch, push, pull, pull_request]
 jobs:
 #  setup-variables:
 #    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
