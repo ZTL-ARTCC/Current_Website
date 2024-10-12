@@ -22,6 +22,9 @@ class Authentication {
             $u->addRole('wm');
             $u->save();
         }
+        $u = User::find(Config::get('vatsim.auth_dev_credential'));
+        $u->addRole('wm');
+        $u->save();
     }
 
     public static function login(&$browser): void {
