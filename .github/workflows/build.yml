@@ -6,6 +6,9 @@ on:
       artifact-name:
         required: true
         type: string
+      browser-test:
+        required: false
+        default : 'false'
 
 jobs:
   setup-variables:
@@ -76,7 +79,10 @@ jobs:
           extensions: gd,zip
 
       - name: install php packages
+        if: ${{ !inputs.browser-test }}
         run: composer install --no-dev
+        if: ${{ inputs.browser-test }}
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -95,12 +101,14 @@ jobs:
       - name: remove scripts
         run: rm -r scripts
 
-      - name: archive for artifact
+      - if: ${{ !inputs.browser-test }}
+        name: archive for artifact
         run: |
           touch ${{ inputs.artifact-name }}.tar.gz
           tar --exclude=${{ inputs.artifact-name }}.tar.gz -zcvf ${{ inputs.artifact-name }}.tar.gz .
 
-      - name: create artifact for deploy
+      - if: ${{ !inputs.browser-test }}
+        name: create artifact for deploy
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.artifact-name }}
