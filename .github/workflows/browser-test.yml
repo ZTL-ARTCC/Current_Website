@@ -2,42 +2,34 @@ name: browser test
 
 on: [pull_request, workflow_dispatch]
 jobs:
-  build:
-    name: Build website assets
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
-    with:
-      artifact-name: 'ztl-deploy-artifact-v1'
+  setup-variables:
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
 
   dusk:
     name: Execute browser tests
-    needs: [build]
     runs-on: ubuntu-latest
+    needs: setup-variables
 
     env:
       VATSIM_OAUTH_CLIENT: ${{ secrets.VATSIM_DEV_OAUTH_CLIENT }}
       VATSIM_OAUTH_SECRET: ${{ secrets.VATSIM_DEV_OAUTH_SECRET }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up MySQL
         run: |
           sudo systemctl start mysql
           mysql --user="root" --password="root" -e "CREATE DATABASE \`ztl_test\` character set UTF8mb4 collate utf8mb4_bin;"
 
-      - name: Copy .env
-        run: cp .env.test .env
-
-      - name: Install Dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
-
-      - name: setup php
+      - name: Setup php
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-      - name: install php packages
+      - name: Install php packages
         run: composer install --no-dev
 
       - name: Setup node
@@ -45,11 +37,20 @@ jobs:
         with:
           node-version: ${{ needs.setup-variables.outputs.node-version }}
 
-      - name: update node packages
+      - name: Update node packages
         run: npm ci
 
-      - name: build assets
+      - name: Build assets
         run: npm run prod
+
+      - name: Uninstall node dev dependencies
+        run: npm prune --omit=dev
+
+      - name: Remove scripts
+        run: rm -r scripts
+
+      - name: Copy .env
+        run: cp .env.test .env
 
       - name: Generate key
         run: php artisan key:generate
@@ -61,7 +62,7 @@ jobs:
         run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
       - name: Run Migrations
-        run: php artisan migrate
+        run: php artisan migrate --no-interaction --force
 
       - name: Change permissions to dusk
         run: chmod -R 0755 vendor/laravel/dusk/bin/ 
