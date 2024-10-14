@@ -32,7 +32,6 @@ jobs:
           echo "node-version=$VERSION" >> $GITHUB_OUTPUT
 
   generate-tag-name:
-    if: ${{ !inputs.browser-test }}
     runs-on: ubuntu-latest
     outputs:
       tag-name: ${{ steps.generate-tag-name.outputs.tag-name }}
