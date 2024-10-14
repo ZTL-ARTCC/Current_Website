@@ -32,6 +32,8 @@ jobs:
       VATSIM_OAUTH_SECRET: ${{ secrets.VATSIM_DEV_OAUTH_SECRET }}
 
     steps:
+      - name: Variable
+        run: echo ${{ env.BUILD_ARTIFACT }}
       - name: Checkout code
         uses: actions/checkout@v4
 
