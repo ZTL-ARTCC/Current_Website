@@ -78,8 +78,8 @@ jobs:
 
       - name: Extract artifact
         run: |
-          tar -zxvf ${{ BUILD_ARTIFACT }}.tar.gz
-          rm ${{ BUILD_ARTIFACT }}.tar.gz
+          tar -zxvf ${{ env.BUILD_ARTIFACT }}.tar.gz
+          rm ${{ env.BUILD_ARTIFACT }}.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
