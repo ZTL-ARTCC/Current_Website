@@ -7,10 +7,9 @@ on:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
-    inputs:
-      artifact-name:
-        default: 'ztl-test-artifact-v1'
-        type: string
+
+env:
+  BUILD-ARTIFACT: ztl-test-artifact-v1
 
 jobs:
 #  setup-variables:
@@ -19,7 +18,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: ${{ inputs.artifact-name }}
+      artifact-name: ztl-test-artifact-v1
       browser-test: true
 
   dusk:
@@ -27,8 +26,6 @@ jobs:
     runs-on: ubuntu-latest
 #    needs: [setup-variables]
     needs: [build]
-    with:
-      artifact-name: ${{ inputs.artifact-name }}
 
     env:
       VATSIM_OAUTH_CLIENT: ${{ secrets.VATSIM_DEV_OAUTH_CLIENT }}
@@ -74,15 +71,15 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.build_artifact }}
+          name: ${{ env.BUILD-ARTIFACT }}
 
       - name: Get directory
         run: ls -l
 
       - name: Extract artifact
         run: |
-          tar -zxvf ztl-test-artifact-v1.tar.gz
-          rm ztl-test-artifact-v1.tar.gz
+          tar -zxvf ${{ env.BUILD-ARTIFACT }}.tar.gz
+          rm ${{ env.BUILD-ARTIFACT }}.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
