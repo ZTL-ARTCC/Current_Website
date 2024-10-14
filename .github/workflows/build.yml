@@ -40,13 +40,8 @@ jobs:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-      - if: ${{ !inputs.browser-test }}
-        name: install php packages (prod)
+      - name: install php packages
         run: composer install
-
-      - if: ${{ inputs.browser-test }}
-        name: install php packages (dev)
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: setup node
         uses: actions/setup-node@v4
@@ -84,8 +79,13 @@ jobs:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-      - name: install php packages
-        run: composer install --no-dev
+      - if: ${{ !inputs.browser-test }}
+        name: install php packages (prod)
+        run: composer install
+
+      - if: ${{ inputs.browser-test }}
+        name: install php packages (dev)
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Setup node
         uses: actions/setup-node@v4
