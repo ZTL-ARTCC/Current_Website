@@ -7,6 +7,10 @@ on:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
+
+env:
+  BUILD_ARTIFACT: ztl-test-artifact-v1
+
 jobs:
 #  setup-variables:
 #    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
@@ -14,7 +18,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: 'ztl-test-artifact-v1'
+      artifact-name: $BUILD_ARTIFACT
       browser-test: true
 
   dusk:
@@ -67,15 +71,15 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ztl-test-artifact-v1
+          name: $BUILD_ARTIFACT
 
       - name: Get directory
         run: ls -l
 
       - name: Extract artifact
         run: |
-          tar -zxvf artifact/ztl-test-artifact-v1.tar.gz
-          rm ztl-test-artifact-v1.tar.gz
+          tar -zxvf ${{ BUILD_ARTIFACT }}.tar.gz
+          rm ${{ BUILD_ARTIFACT }}.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
