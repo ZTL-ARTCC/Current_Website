@@ -12,8 +12,6 @@ env:
   BUILD-ARTIFACT: ztl-test-artifact-v1
 
 jobs:
-#  setup-variables:
-#    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
   build:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
@@ -24,7 +22,6 @@ jobs:
   dusk:
     name: Execute browser tests
     runs-on: ubuntu-latest
-#    needs: [setup-variables]
     needs: [build]
 
     env:
@@ -46,28 +43,11 @@ jobs:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-#      - name: Install php packages
-#        run: composer install --no-progress --prefer-dist --optimize-autoloader
-
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ needs.setup-variables.outputs.node-version }}
 
-# REMOVED - BUILD SCRIPT STUFF
-#      - name: Update node packages
-#        run: npm ci
-
-#      - name: Build assets
-#        run: npm run prod
-
-#      - name: Uninstall node dev dependencies
-#        run: npm prune --omit=dev
-
-#      - name: Remove scripts
-#        run: rm -r scripts
-
-# DEPLOY TO GH ENVIRONMENT
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
