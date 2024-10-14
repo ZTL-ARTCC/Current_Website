@@ -20,6 +20,7 @@ class RealopsController extends Controller {
         $time_filter = $request->get('time_filter');
         
         $flights = RealopsFlight::where('flight_number', 'like', '%' . $flightno_filter . '%')
+                                ->orWhere('callsign', 'like', '%' . $flightno_filter . '%')
                                 ->when(! is_null($time_filter), function ($query) use ($time_filter) {
                                     $times = $this->timeBetween($time_filter, 15, 45);
                                     $query->whereTime('dep_time', ">=", Carbon::parse($times[0]))
@@ -151,6 +152,7 @@ class RealopsController extends Controller {
 
         $flight = new RealopsFlight;
         $flight->flight_number = $request->input('flight_number');
+        $flight->callsign = $request->input('callsign');
         $flight->flight_date = Carbon::parse($request->input('flight_date'))->format('Y-m-d');
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');
@@ -189,6 +191,7 @@ class RealopsController extends Controller {
         ]);
 
         $flight->flight_number = $request->input('flight_number');
+        $flight->callsign = $request->input('callsign');
         $flight->flight_date = Carbon::parse($request->input('flight_date'))->format('Y-m-d');
         $flight->dep_time = $request->input('dep_time');
         $flight->dep_airport = $request->input('dep_airport');

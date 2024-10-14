@@ -7,6 +7,7 @@
 
 <p><b>Date: </b>{{ $flight->flight_date_formatted }}</p>
 <p><b>Flight Number: </b>{{ $flight->flight_number }}</p>
+<p><b>Callsign (if different from flight number): </b>{{ $flight->callsign }}</p>
 <p><b>Departure Time: </b>{{ $flight->dep_time_formatted }}</p>
 <p><b>Departure Airport: </b>{{ $flight->dep_airport }}</p>
 <p><b>Arrival Airport: </b>{{ $flight->arr_airport }}</p>

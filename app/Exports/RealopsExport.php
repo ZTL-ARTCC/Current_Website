@@ -15,6 +15,7 @@ class RealopsExport implements FromCollection, WithHeadings, WithMapping {
     public function headings(): array {
         return [
             'Flight Number',
+            'Callsign',
             'Flight Date',
             'Departure Time',
             'Point of Departure',
@@ -36,6 +37,7 @@ class RealopsExport implements FromCollection, WithHeadings, WithMapping {
         }
         return [
             $flight->flight_number,
+            $flight->callsign,
             $flight->flight_date,
             $flight->dep_time,
             $flight->dep_airport,
