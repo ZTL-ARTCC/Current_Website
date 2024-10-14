@@ -13,7 +13,8 @@ on:
 
 jobs:
   setup-variables:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
+  # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@Browser-testing
 
   validate:
     runs-on: ubuntu-latest
