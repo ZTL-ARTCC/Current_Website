@@ -7,9 +7,10 @@ on:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
-
-env:
-  BUILD_ARTIFACT: ztl-test-artifact-v1
+    inputs:
+      build_artifact:
+        default: 'ztl-test-artifact-v1'
+        type: string
 
 jobs:
 #  setup-variables:
@@ -18,7 +19,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: ${{ BUILD_ARTIFACT }}
+      artifact-name: ${{ inputs.build_artifact }}
       browser-test: true
 
   dusk:
@@ -71,7 +72,7 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.BUILD_ARTIFACT }}
+          name: ${{ inputs.build_artifact }}
 
       - name: Get directory
         run: ls -l
