@@ -42,8 +42,8 @@ jobs:
           php-version: ${{ needs.setup-variables.outputs.php-version }}
           extensions: gd,zip
 
-      - name: Install php packages
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+#      - name: Install php packages
+#        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -70,12 +70,12 @@ jobs:
           name: ${{ inputs.artifact-name }}
 
       - name: Get directory
-        run: ls
+        run: ls -l
 
-#      - name: Extract artifact
-#        run: |
-#          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
-#          rm ${{ inputs.artifact-name }}.tar.gz
+      - name: Extract artifact
+        run: |
+          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
+          rm ${{ inputs.artifact-name }}.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
