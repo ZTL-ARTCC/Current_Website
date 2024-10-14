@@ -18,7 +18,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: ztl-test-artifact-v1
+      artifact-name: $BUILD_ARTIFACT
       browser-test: true
 
   dusk:
@@ -71,7 +71,7 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ztl-test-artifact-v1
+          name: $BUILD_ARTIFACT
 
       - name: Get directory
         run: ls -l
