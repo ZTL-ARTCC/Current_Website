@@ -2,6 +2,11 @@ name: setup variables
 
 on:
   workflow_call:
+    inputs:
+      browser-test:
+        required: false
+        type: boolean
+        default : false
     outputs:
       php-version:
         value: ${{ jobs.get-versions.outputs.php-version }}
