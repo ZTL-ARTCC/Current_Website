@@ -64,17 +64,17 @@ jobs:
 #        run: rm -r scripts
 
 # DEPLOY TO GH ENVIRONMENT
-#      - name: Retrieve artifact for deploy
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: ${{ inputs.artifact-name }}
+      - name: Retrieve artifact for deploy
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
 
       - name: Get directory
         run: ls -l
 
       - name: Extract artifact
         run: |
-          tar -zxvf ${{ inputs.artifact-name }}
+          tar -zxvf ${{ inputs.artifact-name }} -
           rm ${{ inputs.artifact-name }}
 
       - name: Copy .env
