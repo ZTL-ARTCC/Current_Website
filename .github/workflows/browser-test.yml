@@ -18,7 +18,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: ${{ env.BUILD_ARTIFACT }}
+      artifact-name: ztl-test-artifact-v1
       browser-test: true
 
   dusk:
@@ -32,8 +32,6 @@ jobs:
       VATSIM_OAUTH_SECRET: ${{ secrets.VATSIM_DEV_OAUTH_SECRET }}
 
     steps:
-      - name: Variable
-        run: echo ${{ env.BUILD_ARTIFACT }}
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -73,15 +71,15 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.BUILD_ARTIFACT }}
+          name: ztl-test-artifact-v1
 
       - name: Get directory
         run: ls -l
 
       - name: Extract artifact
         run: |
-          tar -zxvf ${{ env.BUILD_ARTIFACT }}.tar.gz
-          rm ${{ env.BUILD_ARTIFACT }}.tar.gz
+          tar -zxvf ztl-test-artifact-v1.tar.gz
+          rm ztl-test-artifact-v1.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
