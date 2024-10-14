@@ -18,7 +18,7 @@ jobs:
     # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
     uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
     with:
-      artifact-name: $BUILD_ARTIFACT
+      artifact-name: ${{ env.BUILD_ARTIFACT }}
       browser-test: true
 
   dusk:
