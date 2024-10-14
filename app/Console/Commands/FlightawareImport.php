@@ -62,11 +62,10 @@ class FlightawareImport extends Command {
     public function save_flights($pbar, $flights) {
         for ($i = 0; $i < sizeof($flights); $i++) {
             $flight = $flights[$i];
-            $pbar->setMessage('Saving ' . $flight['ident']);
+            $flight_number = $flight['ident'];
+            $pbar->setMessage('Saving ' . $flight_number);
 
-            $callsign = $flight['ident'];
-
-            $existing = RealopsFlight::where('flight_number', $callsign)->first();
+            $existing = RealopsFlight::where('flight_number', $flight_number)->first();
             if ($existing !== null) {
                 continue;
             }
@@ -81,7 +80,8 @@ class FlightawareImport extends Command {
             $ete = $deptime_parsed->diff($arrtime_parsed);
 
             $new_flight->assigned_pilot_id = null;
-            $new_flight->flight_number = $callsign;
+            $new_flight->flight_number = $flight_number;
+            $new_flight->callsign = $this->parse_regionals($flight_number);
             $new_flight->flight_date = $deptime_parsed->toDateString();
             $new_flight->dep_time = $deptime_parsed->toTimeString();
             $new_flight->dep_airport = $flight['origin'];
@@ -98,16 +98,17 @@ class FlightawareImport extends Command {
         // First, load as many pages of departures as is configured
         for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
             // If we hit the ratelimit, pause for a bit.
-            if ($flights_count > $ratelimit_max_flights) {
-                $pbar->setMessage('Ratelimit timeout');
-                $pbar->advance();
-                $flights_count = 0;
-                sleep($ratelimit_timeout);
-            }
+            // Commenting out the ratelimit timeout logic - this needs to be rebuilt to consider a chunk returning zero flights
+            //if ($flights_count > $ratelimit_max_flights) {
+            $pbar->setMessage('Ratelimit timeout');
+            $pbar->advance();
+            $flights_count = 0;
+            sleep($ratelimit_timeout);
+            //}
 
             // Generate the URL for the HTTP client.
             // Format: %BASE/schedules/FROM/TO/?origin=KATL
-            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL?include_codeshares=FALSE&include_regional=FALSE';
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL&include_codeshares=false';
             $pbar->setMessage($url);
 
             if (!Config::get('flightaware.dryrun')) {
@@ -135,7 +136,7 @@ class FlightawareImport extends Command {
 
             // Generate the URL for the HTTP client.
             // Format: %BASE/schedules/FROM/TO/?destination=KATL
-            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL?include_codeshares=FALSE&include_regional=FALSE';
+            $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL&include_codeshares=false';
             $pbar->setMessage($url);
 
             if (!Config::get('flightaware.dryrun')) {
@@ -169,7 +170,7 @@ class FlightawareImport extends Command {
         $start_time = Carbon::parse(Config::get('flightaware.start_date'));
         $end_time = Carbon::parse(Config::get('flightaware.end_date'));
 
-        $duration = $end_time->diffInSeconds($start_time);
+        $duration = abs($end_time->diffInSeconds($start_time));
 
         $this->info('[CollectInformation] Event duration ' . $duration . ' seconds.');
 
@@ -181,7 +182,8 @@ class FlightawareImport extends Command {
 
         // Next, how many chunks can we have before we hit our configured flight limit?
         $target_flights = intval(Config::get('flightaware.max_flights'));
-        $chunk_count = floor($target_flights / $flights_per_chunk);
+        // Conditional protects against division by zero error in chunk length calc when target_flights is a low number
+        $chunk_count = (floor($target_flights / $flights_per_chunk) > 0) ? floor($target_flights / $flights_per_chunk) : 1;
 
         // Based on all of that, third, what is the optimal chunk length to maximize flight count?
         $optimal_chunk_len_seconds = floor($duration / $chunk_count);
@@ -247,5 +249,28 @@ class FlightawareImport extends Command {
         }
 
         $this->info("Import task finished. No errors.");
+    }
+
+    /**
+     * Parse Delta Connection flight numbers to regional carrier callsigns.
+     */
+    public function parse_regionals($callsign): string|null {
+        if (!preg_match('/^DAL|DL\d{4}/', $callsign)) {
+            return $callsign;
+        }
+        $flight_id = (int)filter_var($callsign, FILTER_SANITIZE_NUMBER_INT);
+        if (($flight_id >= 3500) && ($flight_id <= 4338)) {
+            return 'SKW' . $flight_id;
+        }
+        if (($flight_id >= 4439) && ($flight_id <= 4627)) {
+            return 'SKW' . $flight_id;
+        }
+        if (($flight_id >= 4628) && ($flight_id <= 5589)) {
+            return 'EDV' . $flight_id;
+        }
+        if (($flight_id >= 5590) && ($flight_id <= 5910)) {
+            return 'RPA' . $flight_id;
+        }
+        return $callsign;
     }
 }
