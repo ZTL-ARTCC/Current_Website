@@ -74,8 +74,8 @@ jobs:
 
       - name: Extract artifact
         run: |
-          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
-          rm ${{ inputs.artifact-name }}.tar.gz
+          tar -zxvf ${{ inputs.artifact-name }}
+          rm ${{ inputs.artifact-name }}
 
       - name: Copy .env
         run: cp .env.test .env
