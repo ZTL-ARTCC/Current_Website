@@ -67,17 +67,15 @@ jobs:
       - name: Retrieve artifact for deploy
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.artifact-name }}
-          path: artifact
+          name: ztl-test-artifact-v1
 
       - name: Get directory
         run: ls -l
 
       - name: Extract artifact
         run: |
-          tar -zxvf artifact/${{ inputs.artifact-name }}.tar.gz
-          rm ${{ inputs.artifact-name }}.tar.gz
-          rmdir artifact
+          tar -zxvf artifact/ztl-test-artifact-v1.tar.gz
+          rm ztl-test-artifact-v1.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
