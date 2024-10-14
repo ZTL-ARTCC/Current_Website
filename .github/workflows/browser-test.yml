@@ -7,6 +7,7 @@ on:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
+jobs:
 #  setup-variables:
 #    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
   build:
