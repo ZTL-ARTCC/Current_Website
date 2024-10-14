@@ -68,14 +68,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifact-name }}
-          
+
       - name: Get directory
         run: ls
 
-      - name: Extract artifact
-        run: |
-          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
-          rm ${{ inputs.artifact-name }}.tar.gz
+#      - name: Extract artifact
+#        run: |
+#          tar -zxvf ${{ inputs.artifact-name }}.tar.gz
+#          rm ${{ inputs.artifact-name }}.tar.gz
 
       - name: Copy .env
         run: cp .env.test .env
