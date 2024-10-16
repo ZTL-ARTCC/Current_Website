@@ -1133,7 +1133,7 @@ class AdminDash extends Controller {
                         $m->subject('[vZTL ARTCC] '.$subject);
                         $m->to($e);
                     });
-                } catch(\Exception $except) {
+                } catch (\Exception $except) {
                     // If they have a bad email, change it to no email
                     $bad = User::where('email', $e)->first();
                     $bad->email = 'No email';

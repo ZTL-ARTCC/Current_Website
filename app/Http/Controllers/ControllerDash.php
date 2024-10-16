@@ -93,17 +93,17 @@ class ControllerDash extends Controller {
         $training_metrics[] = (object)['title' => 'S3', 'metric' => $training_stats['sessionsByType']['S3']];
         $training_metrics[] = (object)['title' => 'C1', 'metric' => $training_stats['sessionsByType']['C1']];
         $trainer_by_total = $trainer_by_cid = [];
-        foreach($training_stats['trainerSessions'] as $t) {
+        foreach ($training_stats['trainerSessions'] as $t) {
             $trainer_by_total[] = [$t['cid']] = $t['total'];
             $trainer_by_cid[] = [$t['cid']] = $t['name'];
         }
         rsort($trainer_by_total);
-        foreach($trainer_by_total as $tt) {
-            if($tt == 0) {
+        foreach ($trainer_by_total as $tt) {
+            if ($tt == 0) {
                 break;
             }
             $top_trainers[] = (object)['name' => $trainer_by_cid[key($trainer_by_total)], 'sessions_given' => $tt];
-            if(count($top_trainers) == 3) {
+            if (count($top_trainers) == 3) {
                 break;
             }
         }
