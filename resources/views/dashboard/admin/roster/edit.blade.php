@@ -352,5 +352,5 @@ Update Controller
     </div>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/roster.js')}}"></script>
+<script src="{{mix('js/roster.js')}}"></script>
 @endsection

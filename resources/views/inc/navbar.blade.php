@@ -12,6 +12,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    @if(\App\LiveEvent::getPublishEvent())
+                        <li class="nav-item">
+                            <a class="nav-link" href="/live">Live Event Info!</a>
+                        </li>
+                    @endif
                     @toggle('realops')
                         <li class="nav-item">
                             <a class="nav-link" href="/realops">Realops</a>

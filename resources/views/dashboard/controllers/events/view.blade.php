@@ -685,5 +685,5 @@ View Event
         </div>
     </div>
 </div>
-<script src="{{asset('js/event_view.js')}}"></script>
+<script src="{{mix('js/event_view.js')}}"></script>
 @endsection

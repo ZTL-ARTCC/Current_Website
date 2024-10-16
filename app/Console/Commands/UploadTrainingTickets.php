@@ -27,7 +27,9 @@ class UploadTrainingTickets extends Command {
      * Execute the console command.
      */
     public function handle() {
-        $tickets = TrainingTicket::where('vatusa_upload_status', TrainingTicket::$VATUSA_UPLOAD_STATUS["PENDING"])->get();
+        $tickets = TrainingTicket::where('vatusa_upload_status', TrainingTicket::$VATUSA_UPLOAD_STATUS["PENDING"])
+            ->where('draft', false)
+            ->get();
 
         foreach ($tickets as $ticket) {
             $vatusa_position = $this->vatusaizePosition($ticket);

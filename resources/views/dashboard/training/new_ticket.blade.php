@@ -5,9 +5,7 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/43.2.0/ckeditor5-premium-features.css" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
@@ -16,7 +14,7 @@ New Training Ticket
 
 
 <div class="container">
-    {{ html()->form()->route('saveNewTicket')->open() }}
+    {{ html()->form()->route('saveTicket')->attributes(['id'=>'newTrainingTicket'])->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
@@ -142,5 +140,4 @@ New Training Ticket
     {{ html()->form()->close() }}
 </div>
 <script src="{{mix('js/trainingticket.js')}}"></script>
-
 @endsection

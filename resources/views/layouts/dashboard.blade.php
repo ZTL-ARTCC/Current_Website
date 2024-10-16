@@ -11,10 +11,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
-        <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/dashboard.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/footer_white.css">
+        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/main.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/footer_white.css') }}">
 
         {{-- Bootstrap --}}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -23,7 +23,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
         {{-- Custom JS --}}
-        <script type="text/javascript" src="/js/app.js"></script>
+        <script type="text/javascript" src="{{ mix('/js/app.js') }}"></script>
 
         {{-- Bootstrap Date/Time Picker --}}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -37,7 +37,7 @@
         @stack('custom_header')
 
         {{-- Sidebar Menu Styles --}}
-        <link rel="stylesheet" href="/css/sidebar.css">
+        <link rel="stylesheet" href="{{ mix('/css/sidebar.css') }}">
 
         {{-- Title --}}
         <title>

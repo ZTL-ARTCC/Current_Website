@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\ControllerLog;
+use App\Mail\InactiveController;
 use App\TrainingTicket;
 use App\User;
 use Carbon\Carbon;
@@ -58,10 +59,7 @@ class RosterRemovalWarn extends Command {
                 $last_training = null;
             }
             if ($last_training == null || strtotime($t->date.' '.$t->start_time) < strtotime($last_month)) {
-                Mail::send('emails.inactive.obs', ['s' => $s], function ($message) use ($s) {
-                    $message->from('activity@notams.ztlartcc.org', 'vZTL ARTCC Activity Department')->subject('You have not met the activity requirement in the last 30 days');
-                    $message->to($s->email);
-                });
+                Mail::to($s->email)->send(new InactiveController($s, 'obs'));
             }
         }
 
@@ -76,20 +74,14 @@ class RosterRemovalWarn extends Command {
                 $last_training = null;
             }
             if ($last_training == null || strtotime($t->date.' '.$t->start_time) < strtotime($last_month)) {
-                Mail::send('emails.inactive.student', ['s' => $s], function ($message) use ($s) {
-                    $message->from('activity@notams.ztlartcc.org', 'vZTL ARTCC Activity Department')->subject('You have not met the activity requirement in the last 30 days');
-                    $message->to($s->email);
-                });
+                Mail::to($s->email)->send(new InactiveController($s, 'student'));
             }
         }
 
         foreach ($controller as $c) {
             $time = $stats[$c->id]->total_hrs;
             if ($time == '--' || $time < 1) {
-                Mail::send('emails.inactive.controller', ['s' => $s], function ($message) use ($s) {
-                    $message->from('activity@notams.ztlartcc.org', 'vZTL ARTCC Activity Department')->subject('You have not met the activity requirement in the last 30 days');
-                    $message->to($s->email);
-                });
+                Mail::to($s->email)->send(new InactiveController($s, 'controller'));
             }
         }
     }

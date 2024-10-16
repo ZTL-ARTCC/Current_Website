@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Event;
 use App\EventRegistration;
+use App\Mail\EventRemind;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -71,10 +72,7 @@ class EventEmails extends Command {
                         $re->save();
                     }
 
-                    Mail::send('emails.event_reminder', ['user' => $user, 'event' => $event, 'positions' => $positions], function ($message) use ($user) {
-                        $message->from('events@notams.ztlartcc.org', 'vZTL ARTCC Events Department')->subject('Upcoming Event Reminder');
-                        $message->to($user->email);
-                    });
+                    Mail::to($user->email)->send(new EventRemind($user, $event, $positions));
                 }
             }
         }

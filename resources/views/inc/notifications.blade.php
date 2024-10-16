@@ -10,6 +10,8 @@
 
     count(App\Feedback::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff') ||
 
+    count(App\TrainerFeedback::where('status', 0)->get()) > 0 && (Auth::user()->hasRole('ta') || Auth::user()->hasRole('ata')) ||
+
     count(App\Visitor::where('status', 0)->get()) > 0 && Auth::user()->isAbleTo('snrStaff')
 
     )
@@ -79,6 +81,18 @@
         <div class="alert alert-success">
 
             There is <b>new feedback awaiting review</b>. Visit <a href="/dashboard/admin/feedback">feedback</a> to view more information.
+
+        </div>
+
+    @endif
+
+    @if(count(App\TrainerFeedback::where('status', 0)->get()) > 0 && (Auth::user()->hasRole('ta') || Auth::user()->hasRole('ata')))
+
+        <br>
+
+        <div class="alert alert-success">
+
+            There is <b>new training team feedback awaiting review</b>. Visit <a href="/dashboard/admin/trainer_feedback">training feedback</a> to view more information.
 
         </div>
 

@@ -102,7 +102,7 @@ class RosterUpdate extends Command {
                 $visitor->visitor_from = $v->data->facility;
                 $visitor->name_privacy = ($v->data->flag_nameprivacy == 'true') ? 1 : 0;
                 $visitor->discord = $v->data->discord_id;
-                $user->last_promotion = $r->data->last_promotion;
+                $visitor->last_promotion = $v->data->last_promotion;
                 $visitor->save();
             } else {
                 continue;

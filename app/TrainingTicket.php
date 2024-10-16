@@ -52,7 +52,15 @@ class TrainingTicket extends Model {
     }
 
     public function getTypeNameAttribute() { // Lookup for session types (now progress type)
-        return (key_exists($this->type, self::$progress_types)) ? self::$progress_types[$this->type] : 'Legacy';
+        if (key_exists($this->type, self::$progress_types)) {
+            return self::$progress_types[$this->type];
+        }
+
+        if ($this->draft) {
+            return null;
+        }
+
+        return 'Legacy';
     }
 
     public static function getProgressSelectAttribute() { // Returns array of progress types for the new/edit ticket views
@@ -60,7 +68,15 @@ class TrainingTicket extends Model {
     }
 
     public function getPositionNameAttribute() { // Lookup for session categories
-        return (key_exists($this->position, self::$position_types)) ? self::$position_types[$this->position] : 'Legacy';
+        if (key_exists($this->position, self::$position_types)) {
+            return self::$position_types[$this->position];
+        }
+
+        if ($this->draft) {
+            return null;
+        }
+
+        return 'Legacy';
     }
 
     public static function getPositionSelectAttribute() { // Returns array of sessions for the new ticket view
@@ -68,7 +84,15 @@ class TrainingTicket extends Model {
     }
 
     public function getSessionNameAttribute() { // Lookup for training session name ex: 'ATL1'
-        return (key_exists($this->session_id, self::$session_ids)) ? self::$session_ids[$this->session_id] : 'Legacy';
+        if (key_exists($this->session_id, self::$session_ids)) {
+            return self::$session_ids[$this->session_id];
+        }
+
+        if ($this->draft) {
+            return null;
+        }
+
+        return 'Legacy';
     }
 
     public static function getSessionSelectAttribute() { // Returns array of sessions for the new ticket view

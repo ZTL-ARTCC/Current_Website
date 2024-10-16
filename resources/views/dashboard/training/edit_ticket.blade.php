@@ -5,14 +5,17 @@ Edit Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
 @include('inc.header', ['title' => 'Edit Training Ticket'])
 
 <div class="container">
-    {{ html()->form()->route('saveTicket', [$ticket->id])->open() }}
+    @if($ticket->draft)
+        <span id="draft" class="badge badge-warning mb-3">DRAFT</span>
+    @endif
+    {{ html()->form()->route('saveTicket', [$ticket->id])->attributes(['id'=>'editTrainingTicket'])->open() }}
         @csrf
         <div class="row">
             <div class="col-sm-3">
@@ -35,7 +38,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="type" class="form-label">Session Type</label>
+                    <label for="type" class="form-label">Progress</label>
                     {{ html()->select('type', $progress_types, $ticket->type)->placeholder('Select Session Type')->class(['form-control']) }}
                 </div>
             </div>
@@ -54,7 +57,15 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="start" class="form-label">Start Time in Eastern</label>
+                    @if($ticket->draft)
+                        @php 
+						    $currentDateET = new DateTime("now", new DateTimeZone('America/New_York') ); 
+						    $currentTimeET = $currentDateET->format('H:i');
+					    @endphp
+                        <label for="start" class="form-label">Start Time ET (now {{ $currentTimeET }})</label>
+                    @else
+                        <label for="start" class="form-label">Start Time ET</label>
+                    @endif
                     <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
                         {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
                     </div>
@@ -62,7 +73,7 @@ Edit Training Ticket
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="end" class="form-label">End Time in Eastern</label>
+                    <label for="end" class="form-label">End Time ET</label>
                     <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
                         {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker3']) }}
                     </div>
@@ -116,6 +127,15 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
+        @if($ticket->draft)
+            <label for="ots" class="form-label">Recommend for OTS?</label>
+            @if($ticket->ots == 1)
+                {{ html()->checkbox('ots', false, '1') }}
+            @else
+                {{ html()->checkbox('ots', false, '1') }}
+            @endif
+            <br>
+        @endif
         <label for="monitor" class="form-label">Can be monitored</label>
         @if($ticket->monitor == 1)
 			{{ html()->checkbox('monitor', true, 1) }}
@@ -131,9 +151,15 @@ Edit Training Ticket
         @endif		
 		<br>
         <br>
-        <button class="btn btn-success" action="submit">Save Ticket</button>
+        @if ($ticket->draft)
+            <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
+            <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
+            <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
+        @else
+            <button class="btn btn-success" type="submit" name="action" value="save">Update Ticket</button>
+        @endif
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{asset('js/trainingticket.js')}}"></script>
+<script src="{{mix('js/trainingticket.js')}}"></script>
 @endsection

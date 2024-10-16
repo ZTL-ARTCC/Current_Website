@@ -5,7 +5,7 @@ Roster
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/roster.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/roster.css') }}" />
 @endpush
 
 @section('content')

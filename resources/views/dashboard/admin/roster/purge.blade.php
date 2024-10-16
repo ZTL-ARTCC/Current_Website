@@ -139,5 +139,5 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <br>
     <p><i>**Controller did not meet 3 hours activity requirement during the previous quarter.</i></p>
 </div>
-<script src="{{asset('js/roster.js')}}"></script>
+<script src="{{mix('js/roster.js')}}"></script>
 @endsection

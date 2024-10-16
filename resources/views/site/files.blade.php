@@ -67,5 +67,5 @@ Files
         @endforeach
     </div>
 </div>
-<script src="{{asset('js/filebrowser.js')}}"></script>
+<script src="{{mix('js/filebrowser.js')}}"></script>
 @endsection

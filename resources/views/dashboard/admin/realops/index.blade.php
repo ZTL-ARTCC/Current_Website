@@ -5,7 +5,7 @@
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/realops.css') }}" />
+<link rel="stylesheet" href="{{ mix('css/realops.css') }}" />
 @endpush
 
 @section('content')
