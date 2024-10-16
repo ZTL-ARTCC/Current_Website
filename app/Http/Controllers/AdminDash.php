@@ -1226,7 +1226,7 @@ class AdminDash extends Controller {
             return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
         }
 
-       foreach ($emails as $e) {
+        foreach ($emails as $e) {
             if ($e != 'No email') {
                 Mail::to($e)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
             }
