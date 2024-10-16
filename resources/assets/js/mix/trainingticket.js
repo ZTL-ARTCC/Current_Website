@@ -1,3 +1,4 @@
+
 var stars = $("#stars span");
 
 // Needed for if you submit and get redirected back the stars will now still be highlighted
