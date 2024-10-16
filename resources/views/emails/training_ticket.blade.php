@@ -22,7 +22,7 @@
     @endif</li>
 	<li><b>Movements:</b> @if($ticket->movements) {{ $ticket->movements }} @else N/A @endif</li>
     <li><b>Comments:</b> <br>
-        {!! nl2br(e($ticket->comments)) !!}
+        {!! nl2br($ticket->comments) !!}
     </li>
 </ul>
 
