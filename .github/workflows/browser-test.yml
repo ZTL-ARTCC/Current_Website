@@ -13,8 +13,7 @@ env:
 
 jobs:
   build:
-    # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@Browser-testing
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
     with:
       artifact-name: ztl-test-artifact-v1
       browser-test: true

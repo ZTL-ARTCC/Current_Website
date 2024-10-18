@@ -13,8 +13,7 @@ on:
 
 jobs:
   setup-variables:
-  # REMINDER - CHANGE BRANCH TO MAIN ON THE FOLLOWING STATEMENT BEFORE DEPLOYING!
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@Browser-testing
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/setup-variables.yml@main
     with:
       browser-test: ${{ inputs.browser-test }}
 
