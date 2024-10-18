@@ -128,8 +128,7 @@ Training Tickets
                                     <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                                     <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
 	                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
-                                    <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                                </tr>
+                                    <td>{!! $t->ins_comments !!}</td>
                                 @endif
                             @endforeach
                         @else
