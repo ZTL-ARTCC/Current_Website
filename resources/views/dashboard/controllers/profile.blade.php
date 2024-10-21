@@ -141,7 +141,7 @@ Profile
                             @foreach($ea_appointments as $ea_appointment)
                                 <tr>
                                     <td scope="col">{{ $ea_appointment->res_date }}</td>
-                                    <td scope="col">{{ $ea_appointment->res_time }} ET</td>
+                                    <td scope="col">{{ $ea_appointment->res_time }} {{ Auth::user()->timezone_abbr }}</td>
                                     <td scope="col">{{ $ea_appointment->service_description }}</td>
                                     <td scope="col">{{ $ea_appointment->staff_name }}</td>
                                     <td scope="col"><a href="https://scheduling.ztlartcc.org/index.php/booking/reschedule/{{ $ea_appointment->link_token }}?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td>

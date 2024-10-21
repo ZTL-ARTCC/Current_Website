@@ -2,6 +2,11 @@ name: setup variables
 
 on:
   workflow_call:
+    inputs:
+      browser-test:
+        required: false
+        type: boolean
+        default : false
     outputs:
       php-version:
         value: ${{ jobs.get-versions.outputs.php-version }}
@@ -32,6 +37,7 @@ jobs:
           echo "node-version=$VERSION" >> $GITHUB_OUTPUT
 
   generate-tag-name:
+    if: ${{ !inputs.browser-test }}
     runs-on: ubuntu-latest
     outputs:
       tag-name: ${{ steps.generate-tag-name.outputs.tag-name }}
