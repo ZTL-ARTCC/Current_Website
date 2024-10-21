@@ -21,17 +21,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
+                    <label for="dep_time">Departure Time</label>
+                    {{ html()->text('dep_time', null)->class(['form-control'])->placeholder('HH:MM - Required')->id('realops_add_edit_dep_time') }}
+                </div>
+                <div class="col-sm-4">
+                    <label for="est_time_enroute">Estimated Time Enroute (ETE)</label>
+                    {{ html()->text('est_time_enroute', null)->class(['form-control'])->placeholder('HH:MM - Optional')->id('realops_add_edit_ete') }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
                     <label for="flight_number">Flight Number</label>
                     {{ html()->text('flight_number', null)->class(['form-control'])->placeholder('Required') }}
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
+                    <label for="callsign">Callsign</label>
+                    {{ html()->text('callsign', null)->class(['form-control'])->placeholder('Optional') }}
+                </div>
+                <div class="col-sm-4">
                     <label for="gate">Gate</label>
                     {{ html()->text('gate', null)->class(['form-control'])->placeholder('Optional') }}
-                </div>
-                <div class="col-sm-3">
-                    <label for="dep_time">Departure Time</label>
-                    {{ html()->text('dep_time', null)->class(['form-control'])->placeholder('HH:MM - Required')->id('realops_add_edit_dep_time') }}
                 </div>
             </div>
         </div>
