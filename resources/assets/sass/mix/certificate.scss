@@ -1,0 +1,47 @@
+@page { 
+    margin: 0px; 
+}
+
+@font-face {
+    font-family: daniel;
+    src: url('/font/daniel.ttf');
+}
+
+h2 {
+    font-size: 50px;
+}
+
+h4 {
+    font-size: 30px;
+}
+
+h6 {
+    font-size: 15px;
+}
+
+.signature-field {
+    font-family: daniel;
+    text-decoration: underline;
+    font-size: 20px;
+    display: block;
+}
+
+.medal-block {
+    position: fixed;
+    top: 400px;
+    margin-left: 80px;
+}
+
+.signature-block {
+    float: right;
+    margin-right: 100px;
+}
+
+.identification-block {
+    font-size: 20px;
+}
+
+.certificate-text {
+    text-align: center;
+    margin-top: 120px;
+}
