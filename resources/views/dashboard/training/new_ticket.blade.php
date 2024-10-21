@@ -11,6 +11,8 @@ New Training Ticket
 @section('content')
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
+
+
 <div class="container">
     {{ html()->form()->route('saveTicket')->attributes(['id'=>'newTrainingTicket'])->open() }}
         @csrf
@@ -90,7 +92,7 @@ New Training Ticket
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
                     <div id="stars" class="star-input input-group">
                         <span data-rating="1">&star;</span>
-                        <span data-rating="2">&star;</span>
+                        <span data-rat ing="2">&star;</span>
                         <span data-rating="3">&star;</span>
                         <span data-rating="4">&star;</span>
                         <span data-rating="5">&star;</span>
@@ -111,13 +113,14 @@ New Training Ticket
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>
-                    {{ html()->textarea('comments', null)->class(['form-control']) }}
+                    <!-- {{ html()->textarea('comments', null)->class(['form-control']) }} -->
+                    <textarea name="comments" class="form-control text-editor" id="comments"></textarea>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="trainer_comments" class="form-label">Trainer Comments (Visible to Only Other Trainers)</label>
-                    {{ html()->textarea('trainer_comments', null)->class(['form-control']) }}
+                    <textarea name="trainer_comments" class="form-control text-editor" id="trainer_comments"></textarea>
                 </div>
             </div>
         </div>
