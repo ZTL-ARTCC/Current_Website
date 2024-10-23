@@ -9,7 +9,7 @@ ZTL Pilot Passport Challenge
 
 @section('content')
 @if(auth()->guard('realops')->guest())
-@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<a href="/pilot_passport/login" class="btn btn-primary float-right">Login as Pilot</a>'])
+@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<a href="/pilot_passport/login" class="btn btn-primary float-right" dusk="login">Login as Pilot</a>'])
 @else
 @include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
 @endif
@@ -41,7 +41,7 @@ ZTL Pilot Passport Challenge
     </ul>
     <div class="tab-content">
         @php $active = ($tab == 'information') ? ' active' : ''; @endphp
-        <div role="tabpanel" class="tab-pane p-2 mb-4{{ $active }}" id="information">
+        <div role="tabpanel" class="tab-pane p-2 mb-4{{ $active }}" id="information" dusk="info">
             <div class="row">
                 <div class="col-sm-8">
                     <h5>What is the ZTL Pilot Passport Challenge?</h5>
@@ -105,7 +105,7 @@ ZTL Pilot Passport Challenge
                     @endforeach
                     {{ html()->form()->route('pilotPassportEnroll')->open() }}
                     @if(!$enrolled)
-                        <button class="btn btn-primary" type="submit" name="challenge_id" value="{{ $c->id }}">Enroll</button>
+                        <button class="btn btn-primary" type="submit" name="challenge_id" value="{{ $c->id }}" dusk="enroll_{{ $c->id }}">Enroll</button>
                     @else
                         <button class="btn btn-secondary" disabled>Enrolled</button>
                     @endif
@@ -143,7 +143,7 @@ ZTL Pilot Passport Challenge
                 {{ html()->form()->close() }}
             @endif
             @foreach($enrollments as $enrollment)
-                @if($enrollment->challenge_id != $view_challenge)
+                @if($enrollment->challenge_id != $view_challenge && !is_null($view_challenge))
                     @php continue; @endphp
                 @endif
                 @php ($closed = false) @endphp
@@ -244,7 +244,7 @@ ZTL Pilot Passport Challenge
             <div class="row">
                 <div class="col-sm-2">
                     <div class="form-check form-check-inline">
-                        {{ html()->radio('privacy')->value(2)->class(['form-check-input'])->checked(old('privacy', $privacy == 2)) }}
+                        {{ html()->radio('privacy')->value(2)->class(['form-check-input'])->checked(old('privacy', $privacy == 2))->attributes(['dusk' => 'privacy']) }}
                         <label class="form-check-label">CID only</label>
                     </div>
                 </div>
@@ -276,7 +276,7 @@ ZTL Pilot Passport Challenge
             <div class="row">
                 <div class="col-sm-2">
                     <span data-toggle="modal" data-target="#purge">
-                        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Disenroll /<br>Purge Data</button>
+                        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip" dusk="purge_data">Disenroll /<br>Purge Data</button>
                     </span>
                 </div>
                 <div class="col-sm-10">
@@ -306,7 +306,7 @@ ZTL Pilot Passport Challenge
             @csrf
             <div class="modal-body">
                 <p>Danger! This will permanently delete your pilot record with us to include your progress in the Pilot Passport program and Realops bids. Type <b>confirm - purge all</b> to proceed.</p>
-                {{ html()->text('confirm_text', null)->class(['form-control'])->placeholder('confirm - purge all') }}
+                {{ html()->text('confirm_text', null)->class(['form-control'])->placeholder('confirm - purge all')->attributes(['dusk' => 'confirm']) }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
