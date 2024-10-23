@@ -6,9 +6,9 @@ use App\Mail\PilotPassportMail;
 use App\PilotPassport;
 use App\PilotPassportAward;
 use App\PilotPassportEnrollment;
+use App\PilotPassportLog;
 use App\RealopsPilot;
 use App\User;
-use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ use Mail;
 class PilotPassportController extends Controller {
     public function index(Request $request) {
         if ($request) {
-            $tab = (in_array($request->tab, ['information', 'enrollments', 'passport_book', 'achievements', 'settings'])) ? $request->tab : null;
+            $tab = (in_array($request->tab, ['information', 'enrollments', 'passport_book', 'achievements', 'settings'])) ? $request->tab : 'information';
             $pg = (is_numeric($request->pg)) ? $request->pg : null;
         }
         $challenges = $enrollments = $achievements = [];
@@ -86,7 +86,7 @@ class PilotPassportController extends Controller {
         foreach($logs as $l) {
             $l->delete();
         }
-        return redirect('/logout')->with('success', 'Your personal data has been removed from our system.');
+        return redirect('/logout');
     }
 
     public function generateCertificate($id) {
@@ -126,7 +126,7 @@ class PilotPassportController extends Controller {
         imagefill($gd, 0, 0, $transparency);
         imagesavealpha($gd, true);
         $red = imagecolorallocate($gd, 255, 0, 0);
-        $font = 'font/trebuc.ttf';        
+        $font = 'font/trebuc.ttf';
         $font_size = 200;
         $x_start = $this->getGdTextCenter($gd, $font_size, $font, $id);
         imagettftext($gd, $font_size, 0, $x_start, 650, $red, $font, $id);
