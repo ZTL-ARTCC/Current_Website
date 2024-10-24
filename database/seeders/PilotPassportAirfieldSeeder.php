@@ -18,11 +18,12 @@ class PilotPassportAirfieldSeeder extends Seeder {
              'longitude' => -84.427863888889,
              'elevation' => 1026,
              'name' => 'Hartsfield/Jackson Atlanta International Airport',
-             'description' => 'Located in Atlanta Georgia, Hartsfield/Jackson is the worlds busiest airport by 
-                aircraft movements and is home to Delta Air Lines. The airport is named after former Atlanta 
-                Mayors William B. Hartsfield and Maynard Jackson who were both champions of the airport and 
-                played a major role into growing it into the hub that it is today. ATL is also home to the Delta
-                Flight Museum; a must-see attraction for aviation enthusiasts.'
+             'description' => "Located in Atlanta Georgia, Hartsfield/Jackson is the world's busiest airport by 
+             both aircraft movements and passenger enplanements, and is home to Delta Air Lines. The airport is named 
+             after former Atlanta Mayors William B. Hartsfield and Maynard Jackson who were both champions of the 
+             airport and played a major role into growing it into the hub that it is today. ATL is also home to the 
+             Delta Flight Museum; a must-see attraction for aviation enthusiasts."
+
          ]);
          DB::table('pilot_passport_airfield')->insert([
             'id' => 'CLT',
@@ -42,8 +43,8 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'elevation' => 221,
             'name' => 'Montgomery Regional Airport (Dannelly Field)',
             'description' => 'Dannelly Field located in Montgomery Alabama originally opened as Gunter Army Air
-                Field Auxillary #6 in 1943 and functioned as a base for military pilot training and as a 
-                commerical airport served by Eastern Airlines. Ensign Clarence Moore Dannelly Jr, a Montgomery
+                Field Auxiliary #6 in 1943 and functioned as a base for military pilot training and as a 
+                commercial airport served by Eastern Airlines. Ensign Clarence Moore Dannelly Jr, a Montgomery
                 native, was a US Navy pilot killed in a training accident. The tradition of civil and military
                 operations continues at Dannelly Field today with Delta and American commercial air service and 
                 the Alabama Air National Guard 187th Fighter Wing operating F-16s and F-35As.'
@@ -117,7 +118,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'description' => "Lovell Field is named after John Lovell, a local Kiwanis Club and American Red Cross
                 leader who advocated for the construction of the airport. The local geography makes Chattanooga an 
                 interesting airport to operate and control with many rolling hills and the city/airport nestled in 
-                a valley. The GQO 'Choo Choo VOR' pays homage to the city's important role as a regional railroad 
+                a valley. The GQO 'Choo Choo DME' pays homage to the city's important role as a regional railroad 
                 depot."
         ]);
         DB::table('pilot_passport_airfield')->insert([
@@ -147,7 +148,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'elevation' => 986,
             'name' => 'McGhee Tyson Airport',
             'description' => 'McGhee Tyson Airport serves the Knoxville, TN area and is named after 
-                Charles McGhee Tyson, a US Naval Aviatior killed in World War II. In addition to its 
+                Charles McGhee Tyson, a US Naval Aviator killed in World War II. In addition to its 
                 commercial terminal, TYS is home to McGhee Tyson Air National Guard Base and the 134th 
                 Aerial Refueling Wing operating the KC-135. TYS is a short flight or drive to the 
                 Great Smoky Mountains - a beautiful section of Appalachia.'
@@ -209,7 +210,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'name' => 'Piedmont Triad International Airport',
             'description' => 'GSO airport serves the greater Greensboro and Winston-Salem North 
                 Carolina region. GSO is home to the Honda Aircraft Company manufacturing the HondaJet 
-                and the airport is a FedEx hub. The name Piedmont Triad refers to the metropolitain area 
+                and the airport is a FedEx hub. The name Piedmont Triad refers to the metropolitan area 
                 encompassing Greensboro, Winston-Salem, and High Point North Carolina in the Piedmont 
                 geographical region of the state.'
         ]);
@@ -290,7 +291,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'name' => 'Augusta Regional Airport at Bush Field',
             'description' => "Bush Field traces its roots to World War II as an Army Air Corps pilot 
                 training facility. In modern times, it serves as an important regional airport for the 
-                city of Augusta. During The Master's golf tournament, AGS is an extremely busy airport 
+                city of Augusta. During The Masters golf tournament, AGS is an extremely busy airport 
                 with some commercial carriers switching from regional to mainline equipment to support 
                 the increase in passenger traffic." 
         ]);
@@ -301,9 +302,9 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'elevation' => 422,
             'name' => 'Daniel Field Airport',
             'description' => "Augusta's general aviation airport is named Daniel Field after the 1920s 
-                mayor Raleigh Daniel. Like many other airifields in the region, Daniel was used by the 
+                mayor Raleigh Daniel. Like many other airfields in the region, Daniel was used by the 
                 Army Air Corps in World War II. Despite its relatively short runways, Daniel Field is 
-                a very busy airport during The Master's golf tournament."
+                a very busy airport during The Masters golf tournament."
         ]);
         DB::table('pilot_passport_airfield')->insert([
             'id' => 'AUO',
@@ -503,7 +504,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
                 30 miles to the north of Abingdon, Virginia. An employee of the company building the 
                 plant wanted to live in the Abingdon, VA area and fly to the construction site at 
                 Carbo. At the time there were no nearby landing strips in the area so some farm land 
-                was leased from what was know as the St. John farm, located about 2 miles west of 
+                was leased from what was known as the St. John farm, located about 2 miles west of 
                 Abingdon next to US Highway #11. A small dirt strip was graded out of the pasture 
                 field and that was the beginning of the airport. '
         ]);
@@ -983,7 +984,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'longitude' => -85.073205555556,
             'elevation' => 694,
             'name' => 'LaGrange-Callaway Airport',
-            'description' => 'LaGrange-Callaway Aiport derrives its name from nearby LaGrange Georgia 
+            'description' => 'LaGrange-Callaway Airport derives its name from nearby LaGrange Georgia 
                 and Callaway Gardens - a popular get-away spot. This airport was developed in the 1950s
                 and had scheduled DC-3 service. It is now a general aviation airport serving beautiful 
                 west Georgia.'
@@ -1214,7 +1215,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'name' => "Heaven's Landing Airport",
             'description' => "Heaven's landing is a unique field in our challenge as the only private 
                 airfield and the only estate airpark. Nestled on a ridgeline, this airport offers 
-                great views, an intersting approach, and an experience unlike any other."
+                great views, an interesting approach, and an experience unlike any other."
         ]);
         DB::table('pilot_passport_airfield')->insert([
             'id' => '14A',
