@@ -25,13 +25,13 @@ class PilotPassportAirfieldSeeder extends Seeder {
              Delta Flight Museum; a must-see attraction for aviation enthusiasts."
 
          ]);
-         DB::table('pilot_passport_airfield')->insert([
-            'id' => 'CLT',
-            'latitude' => 35.21375,
-            'longitude' => -80.949055555556,
-            'elevation' => 748,
-            'name' => 'Charlotte/Douglas International Airport',
-            'description' => 'Located in Charlotte North Carolina, CLT is named after former Charlotte Mayor Ben 
+        DB::table('pilot_passport_airfield')->insert([
+           'id' => 'CLT',
+           'latitude' => 35.21375,
+           'longitude' => -80.949055555556,
+           'elevation' => 748,
+           'name' => 'Charlotte/Douglas International Airport',
+           'description' => 'Located in Charlotte North Carolina, CLT is named after former Charlotte Mayor Ben 
                 Elbert Douglas. CLT is home to an American Airlines (formerly US Airways) hub and is the home of
                 the regional carrier Piedmont Airlines. CLT is also home to the North Carolina Air National Guard
                 145th Airlift Wing currently operating C-17s.'
@@ -293,7 +293,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
                 training facility. In modern times, it serves as an important regional airport for the 
                 city of Augusta. During The Masters golf tournament, AGS is an extremely busy airport 
                 with some commercial carriers switching from regional to mainline equipment to support 
-                the increase in passenger traffic." 
+                the increase in passenger traffic."
         ]);
         DB::table('pilot_passport_airfield')->insert([
             'id' => 'DNL',
