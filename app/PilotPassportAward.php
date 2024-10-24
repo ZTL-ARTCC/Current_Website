@@ -9,7 +9,7 @@ class PilotPassportAward extends Model {
     protected $table = "pilot_passport_award";
 
     public function getChallengeTitleAttribute() {
-        $c = PilotPassport::find($this->phase_id);
+        $c = PilotPassport::find($this->challenge_id);
         return $c->title;
     }
 

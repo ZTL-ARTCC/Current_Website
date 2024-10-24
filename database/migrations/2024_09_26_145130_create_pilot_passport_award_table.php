@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('pilot_passport_award', function (Blueprint $table) {
             $table->id();
             $table->integer('cid');
-            $table->integer('phase_id');
+            $table->integer('challenge_id');
             $table->dateTime('awarded_on');
             $table->timestamps();
         });

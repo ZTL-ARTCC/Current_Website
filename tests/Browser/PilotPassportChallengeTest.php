@@ -137,7 +137,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
             $a = new PilotPassportAward;
             $a->id = 1;
             $a->cid = $cid;
-            $a->phase_id = self::TEST_CHALLENGE_ID;
+            $a->challenge_id = self::TEST_CHALLENGE_ID;
             $a->awarded_on = date('Y-m-d H:i:s');
             $a->save();
         }

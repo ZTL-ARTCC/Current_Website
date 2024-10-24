@@ -114,7 +114,7 @@ class PilotPassportController extends Controller {
             'atm_name' => $atm->full_name
         ];
         $pdf = Pdf::loadView('pdf.pilot_passport_certificate', $params)->setPaper('letter', 'landscape');
-        return $pdf->download('ztl_pilot_passport_challenge_' . $a->phase_id . '.pdf');
+        return $pdf->download('ztl_pilot_passport_challenge_' . $a->challenge_id . '.pdf');
     }
 
     public function generateStamp($id) {
