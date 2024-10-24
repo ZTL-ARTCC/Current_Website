@@ -81,6 +81,7 @@
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/live') }}" href="/dashboard/admin/live">Live Event Info</a>
+                    
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/audits') }}" href="/dashboard/admin/audits">Website Activity</a>
