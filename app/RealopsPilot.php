@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\PilotPassportEnrollment;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class RealopsPilot extends Authenticatable {
     protected $table = 'realops_pilots';

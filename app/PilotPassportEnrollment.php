@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\PilotPassportLog;
-use App\RealopsPilot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -26,8 +24,7 @@ class PilotPassportEnrollment extends Model {
         return $pilot->email;
     }
 
-    public function pilot(): BelongsTo
-    {
+    public function pilot(): BelongsTo {
         return $this->belongsTo(RealopsPilot::class, 'cid');
     }
 

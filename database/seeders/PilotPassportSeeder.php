@@ -17,10 +17,10 @@ class PilotPassportSeeder extends Seeder {
             'title' => 'Airline Captain',
             'description' => 'The airline path features airports served by part 121 commercial carriers.'
          ]);
-         DB::table('pilot_passport')->insert([
-            'id' => 2,
-            'title' => 'Corporate Pilot',
-            'description' => 'The business aviator path features airports commonly frequented by part 135 operators flying private jets and turboprops.'
+        DB::table('pilot_passport')->insert([
+           'id' => 2,
+           'title' => 'Corporate Pilot',
+           'description' => 'The business aviator path features airports commonly frequented by part 135 operators flying private jets and turboprops.'
         ]);
         DB::table('pilot_passport')->insert([
             'id' => 3,

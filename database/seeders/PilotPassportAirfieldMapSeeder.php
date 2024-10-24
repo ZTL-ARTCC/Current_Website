@@ -16,9 +16,9 @@ class PilotPassportAirfieldMapSeeder extends Seeder {
              'airfield' => 'ATL',
              'mapped_to' => 1
          ]);
-         DB::table('pilot_passport_airfield_map')->insert([
-            'airfield' => 'CLT',
-            'mapped_to' => 1
+        DB::table('pilot_passport_airfield_map')->insert([
+           'airfield' => 'CLT',
+           'mapped_to' => 1
         ]);
         DB::table('pilot_passport_airfield_map')->insert([
             'airfield' => 'GSO',

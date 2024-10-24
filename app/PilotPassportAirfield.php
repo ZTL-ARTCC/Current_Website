@@ -34,8 +34,7 @@ class PilotPassportAirfield extends Model {
         return $a;
         */
     }
-    public function mapping(): BelongsTo
-    {
+    public function mapping(): BelongsTo {
         return $this->belongsTo(PilotPassportAirfieldMap::class, 'airfield', 'id');
     }
 

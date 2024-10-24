@@ -64,7 +64,7 @@ class PilotPassportActivityUpdate extends Command {
 
             $ppos = new LatLng($p->latitude, $p->longitude);
             $airports = PilotPassportAirfield::get();
-            foreach ($airports as $a) { 
+            foreach ($airports as $a) {
                 if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) {
                     continue;
                 }
@@ -80,7 +80,7 @@ class PilotPassportActivityUpdate extends Command {
                 $passport->visited_on = date('Y-m-d H:i:s');
                 $passport->callsign = $p->callsign;
                 $passport->aircraft_type = (property_exists($p, 'flight_plan')) ? $p->flight_plan->aircraft_faa : null;
-                $passport->save(); 
+                $passport->save();
                 // Send congratulatory email
                 $pilot = PilotPassportEnrollment::find($p->cid);
                 Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $a));
@@ -101,13 +101,13 @@ class PilotPassportActivityUpdate extends Command {
                 if (!in_array($c_a, $pilot_has_visited)) {
                     $challenge_complete = false;
                     break;
-                } 
+                }
             }
             if ($challenge_complete) {
                 // If yes, add the award in the table
                 $award = new PilotPassportAward;
                 $award->cid = $pilot->cid;
-                $award->phase_id = $c->id;
+                $award->challenge_id = $c->id;
                 $award->awarded_on = date('Y-m-d H:i:s');
                 $award->save();
             }
@@ -124,8 +124,8 @@ class PilotPassportActivityUpdate extends Command {
     }
 
     public static function calcDistance($point1, $point2) { // Returns the distance in NM between two lat/lon points
-        $dist = acos(sin($point1->toRadian()->latitude) * sin($point2->toRadian()->latitude) + cos($point1->toRadian()->latitude) 
+        $dist = acos(sin($point1->toRadian()->latitude) * sin($point2->toRadian()->latitude) + cos($point1->toRadian()->latitude)
             * cos($point2->toRadian()->latitude) * cos($point1->toRadian()->longitude - $point2->toRadian()->longitude)); // Haversine formula
         return (((180 * 60) / pi()) * $dist); // Convert radians to NM
-     }
+    }
 }
