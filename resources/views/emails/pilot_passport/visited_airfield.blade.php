@@ -1,7 +1,7 @@
 @extends('layouts.email')
 
 @section('content')
-<p>Dear {{ $p->full_name }},</p>
+<p>Dear {{ $pilot->full_name }},</p>
 
 <p>Congratulations on your visit to {{ $data->name }}! You've earned a stamp in your pilot passport book, visible at: 
     <a href="https://www.ztlartcc.org/pilot_passport" alt="Website">https://www.ztlartcc.org/pilot_passport</a>.</p>

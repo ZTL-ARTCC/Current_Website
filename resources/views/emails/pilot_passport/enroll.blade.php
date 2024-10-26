@@ -1,7 +1,7 @@
 @extends('layouts.email')
 
 @section('content')
-<p>Dear {{ $p->full_name }},</p>
+<p>Dear {{ $pilot->full_name }},</p>
 
 <p>Thank you for enrolling in the vZTL Pilot Passport {{ $data->title }} Challenge! You can view program requirements and track your progress on
     our website at <a href="https://www.ztlartcc.org/pilot_passport" alt="Website">https://www.ztlartcc.org/pilot_passport</a>.</p>
