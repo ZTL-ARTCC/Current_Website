@@ -102,8 +102,8 @@ class ControllerDash extends Controller {
             $trainer_by_cid[$t['cid']] = $t['name'];
         }
         arsort($trainer_by_total);
-        foreach ($trainer_by_total as $trainer_cid => $tt) {
-            if ($tt == 0) {
+        foreach($trainer_by_total as $trainer_cid => $tt) {
+            if($tt == 0) {
                 break;
             }
             $top_trainers[] = (object)['name' => $trainer_by_cid[$trainer_cid], 'sessions_given' => $tt];

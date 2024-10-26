@@ -142,8 +142,5 @@ New Training Ticket
     {{ html()->form()->close() }}
 </div>
 <script src="{{mix('js/trainingticket.js')}}"></script>
-<<<<<<< HEAD
-=======
 
->>>>>>> a6337f13 (Edited the blade files for training tickets on the trainer end to allow use of markup editing.)
 @endsection
