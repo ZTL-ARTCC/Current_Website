@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PilotPassportAirfield extends Model {
     protected $table = "pilot_passport_airfield";
+    protected $casts = ['id' => 'string'];
+    public $incrementing = false;
 
     public function fetchLatLng(): LatLng {
         return new LatLng($this->latitude, $this->longitude);

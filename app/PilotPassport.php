@@ -9,12 +9,12 @@ class PilotPassport extends Model {
     protected $table = "pilot_passport";
 
     public static function airfieldInPilotChallenge($airfield, $cid): bool {
-        $enrollments = PilotPassportEnrollment::where('id', $cid)->get();
+        $enrollments = PilotPassportEnrollment::where('cid', $cid)->get();
         if ($enrollments->isEmpty()) {
             return false;
         }
         foreach ($enrollments as $e) {
-            if (PilotPassportAirfieldMap::where('airfield', $airfield)->where('mapped_to', $e->id)->isNotEmpty()) {
+            if (!PilotPassportAirfieldMap::where('airfield', $airfield)->where('mapped_to', $e->challenge_id)->get()->isEmpty()) {
                 return true;
             }
         }

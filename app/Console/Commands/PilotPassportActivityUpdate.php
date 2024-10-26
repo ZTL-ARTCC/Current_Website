@@ -10,6 +10,7 @@ use App\PilotPassportAirfieldMap;
 use App\PilotPassportAward;
 use App\PilotPassportEnrollment;
 use App\PilotPassportLog;
+use App\RealopsPilot;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Mail;
@@ -54,48 +55,58 @@ class PilotPassportActivityUpdate extends Command {
         $statsData = $this->getStatsData();
         
         foreach ($statsData->pilots as $p) {
-            if (!PilotPassportEnrollment::where('cid', $p->cid)->get()) {
+            if (PilotPassportEnrollment::where('cid', $p->cid)->get()->isEmpty()) {
                 continue;
             }
+            $this->info('Enrolled pilot found connected: ' . $p->cid);
             if ($p->groundspeed > SELF::SPEED_LIMIT) {
+                $this->info('- [Speed Limit] - too fast to log');
                 continue;
             }
 
             $ppos = new LatLng($p->latitude, $p->longitude);
-            $airports = PilotPassportAirfield::get();
+            $airports = PilotPassportAirfield::all();
             foreach ($airports as $a) {
+                $this->info('- Checking ' . $a->id);
+                if (!PilotPassport::airfieldInPilotChallenge($a->id, $p->cid)) {
+                    $this->info('- [Enrollment Limit] - airfield not part of an enrolled challenge');
+                    continue;
+                }
                 if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) {
+                    $this->info('- [Altitude Limit] - too high log');
                     continue;
                 }
                 if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
+                    $this->info('- [Radius Limit] - too far away to log');
                     continue;
                 }
-                if (!PilotPassport::airfieldInPilotChallenge($a->icao_id, $p->cid)) {
-                    continue;
+                if (!PilotPassportLog::where('cid', $p->cid)->where('airfield', $a->id)->get()->isEmpty()) {
+                    $this->info('- [Visited Limit] - airfield has already been logged');
+                    break;
                 }
+                $this->info('- [At Airport Now] - logging the visit!');
 
                 $passport = new PilotPassportLog;
                 $passport->cid = $p->cid;
-                $passport->airfield = $a->icao_id;
+                $passport->airfield = $a->id;
                 $passport->visited_on = date('Y-m-d H:i:s');
                 $passport->callsign = $p->callsign;
-                $passport->aircraft_type = (property_exists($p, 'flight_plan')) ? $p->flight_plan->aircraft_faa : null;
-                dd($passport);
+                $passport->aircraft_type = (is_null($p->flight_plan)) ? '' : $p->flight_plan->aircraft_faa;
                 $passport->save();
-                // Send congratulatory email
-                $pilot = PilotPassportEnrollment::find($p->cid);
+
+                $pilot = RealopsPilot::find($p->cid);
                 Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $a));
-                $this->checkPhaseComplete($p);
+                $this->checkPhaseComplete($pilot);
                 break;
             }
         }
     }
 
-    public static function checkPhaseComplete(RealopsPilot $pilot): void {
-        $pilot_has_visited = PilotPassportLog::where('cid', $pilot->cid)->orderBy('airfield', 'asc')->pluck('airfield');
+    public static function checkPhaseComplete(RealopsPilot $pilot): bool {
+        $pilot_has_visited = PilotPassportLog::where('cid', $pilot->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
         $challenges = PilotPassport::get();
         foreach ($challenges as $c) {
-            $challenge_airfields = PilotPassportAirfieldMap::where('mapped_to', $c->id)->orderBy('airfield', 'asc')->pluck('airfield');
+            $challenge_airfields = PilotPassportAirfieldMap::where('mapped_to', $c->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
             $challenge_complete = true;
             foreach ($challenge_airfields as $c_a) {
                 if (!in_array($c_a, $pilot_has_visited)) {
@@ -105,13 +116,14 @@ class PilotPassportActivityUpdate extends Command {
             }
             if ($challenge_complete) {
                 $award = new PilotPassportAward;
-                $award->cid = $pilot->cid;
+                $award->cid = $pilot->id;
                 $award->challenge_id = $c->id;
                 $award->awarded_on = date('Y-m-d H:i:s');
                 $award->save();
             }
         }
         Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $c));
+        return true;
     }
 
     public function getStatsData() {
