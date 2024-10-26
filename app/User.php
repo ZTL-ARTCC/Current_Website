@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Contracts\LaratrustUser;
@@ -365,5 +366,10 @@ class User extends Authenticatable implements LaratrustUser {
             return 'No date';
         }
         return Carbon::create($this->last_promotion)->format('m/d/Y');
+    }
+
+    public function getTimezoneAbbrAttribute() {
+        $tz = new CarbonTimeZone($this->timezone);
+        return strtoupper($tz->getAbbr());
     }
 }

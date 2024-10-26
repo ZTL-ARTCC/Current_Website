@@ -181,21 +181,32 @@ class ControllerDash extends Controller {
             } catch (\Illuminate\Database\QueryException $e) {
             }
         }
-        $ea_appointments = [];
+        $ea_appointments = $ea_appointments_filtered = [];
         if (!is_null(Auth::user()->ea_customer_id)) {
             try {
                 $ea_appointments = DB::connection('ea_mysql')
                     ->table('ea_appointments')
                     ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
                     ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
-                    ->select('ea_appointments.start_datetime AS start_datetime', 'ea_appointments.hash AS link_token', 'ea_services.name AS service_description', 'ea_users.first_name AS staff_first_name', 'ea_users.last_name AS staff_last_name')
+                    ->select(
+                        'ea_appointments.start_datetime AS start_datetime',
+                        'ea_appointments.hash AS link_token',
+                        'ea_services.name AS service_description',
+                        'ea_users.first_name AS staff_first_name',
+                        'ea_users.last_name AS staff_last_name',
+                        'ea_users.timezone AS booking_timezone'
+                    )
                     ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
-                    ->where('ea_appointments.start_datetime', '>=', Carbon::now('America/New_York')->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)->format('Y-m-d H:i:s'))
+                    ->where('ea_appointments.start_datetime', '>=', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
                     ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
-                foreach ($ea_appointments as &$ea_appointment) {
-                    $ea_appointment->res_date = Carbon::parse($ea_appointment->start_datetime)->format('m/d/Y');
-                    $ea_appointment->res_time = Carbon::parse($ea_appointment->start_datetime)->format('H:i');
-                    $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+                foreach ($ea_appointments as $ea_appointment) {
+                    if (Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone) >= Carbon::now()->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)) {
+                        $appt_start_datetime = Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone)->setTimezone(Auth::user()->timezone);
+                        $ea_appointment->res_date = $appt_start_datetime->format('m/d/Y');
+                        $ea_appointment->res_time = $appt_start_datetime->format('H:i');
+                        $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
+                        $ea_appointments_filtered[] = $ea_appointment;
+                    }
                 }
             } catch (\Illuminate\Database\QueryException $e) {
             }
@@ -203,7 +214,7 @@ class ControllerDash extends Controller {
 
         return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)
             ->with('training_feedback', $training_feedback)->with('tickets', $tickets)->with('last_training', $last_training)
-            ->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments);
+            ->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments_filtered);
     }
 
     public function showTicket($id) {
