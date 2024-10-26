@@ -94,7 +94,7 @@ New Training Ticket
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
                     <div id="stars" class="star-input input-group">
                         <span data-rating="1">&star;</span>
-                        <span data-rat ing="2">&star;</span>
+                        <span data-rating="2">&star;</span>
                         <span data-rating="3">&star;</span>
                         <span data-rating="4">&star;</span>
                         <span data-rating="5">&star;</span>
