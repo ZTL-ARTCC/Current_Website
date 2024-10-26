@@ -214,38 +214,13 @@ class TrainingDash extends Controller {
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
-            $exams = $this->getAcademyExamTranscript($request->id);
+            $exams = User::getAcademyExamTranscriptByCid($request->id);
         } else {
             $tickets = null;
             $exams = null;
         }
 
         return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts);
-    }
-
-    public function getAcademyExamTranscript($cid) {
-        $req_params = [
-            'form_params' => [],
-            'http_errors' => false
-        ];
-        $client = new Client();
-        $res = $client->request('GET', Config::get('vatusa.base').'/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
-        $academy = (string) $res->getBody();
-        $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
-        $academy = json_decode($academy, true);
-        $exam_names = array_keys($exams);
-        foreach ($exam_names as $exam) {
-            if (isset($academy['data'][$exam])) {
-                foreach ($academy['data'][$exam] as $exam_attempt) {
-                    if (is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
-                        $exams[$exam]['date'] = date("m/d/y", $exam_attempt['time_finished']);
-                        $exams[$exam]['success'] = ($exam_attempt['grade'] >= 80) ? 1 : 0;
-                        $exams[$exam]['grade'] = $exam_attempt['grade'];
-                    }
-                }
-            }
-        }
-        return $exams;
     }
 
     public function searchTickets(Request $request) {
@@ -328,19 +303,22 @@ class TrainingDash extends Controller {
 
     public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if (Auth::user()->isAbleTo('snrStaff')) {
+        $draft = $ticket->draft;
+        if (Auth::user()->isAbleTo('snrStaff') || (Auth::id() == $ticket->trainer_id && $draft)) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
-            $audit->save();
+            if (! $draft) {
+                $audit = new Audit;
+                $audit->cid = Auth::id();
+                $audit->ip = $_SERVER['REMOTE_ADDR'];
+                $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
+                $audit->save();
+            }
 
             return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Only the TA can delete training tickets.');
+            return redirect()->back()->with('error', 'Only the TA can delete non-draft training tickets.');
         }
     }
 
@@ -802,6 +780,17 @@ class TrainingDash extends Controller {
         $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
         return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
+
+    public function handleSchedule() {
+        $user = Auth::user();
+
+        if ($user->rating_id == 1 && !$user->onboarding_complete) {
+            return redirect()->back()->with('error', 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
+        }
+
+        return redirect("https://scheduling.ztlartcc.org?first_name={$user->fname}&last_name={$user->lname}&email={$user->email}&cid={$user->id}");
+    }
+
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',
