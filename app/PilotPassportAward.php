@@ -17,4 +17,8 @@ class PilotPassportAward extends Model {
         $d = Carbon::parse($this->awarded_on);
         return $d->format('n/j/Y');
     }
+
+    public function getPilotPublicNameAttribute() {
+        return RealopsPilot::getPublicName($this->cid);
+    }
 }
