@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PilotPassport extends Model {
     protected $table = "pilot_passport";
 
-    /*
-     * Validates that $airfield is included in a challenge that the pilot is enrolled in
-    */
-    public function airfieldInPilotChallenge($airfield, $cid): bool {
+    public static function airfieldInPilotChallenge($airfield, $cid): bool {
         $enrollments = PilotPassportEnrollment::where('id', $cid)->get();
         if ($enrollments->isEmpty()) {
             return false;
