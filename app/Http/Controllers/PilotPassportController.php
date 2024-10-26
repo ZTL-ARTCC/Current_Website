@@ -90,7 +90,6 @@ class PilotPassportController extends Controller {
     }
 
     public static function fetchRecentPilotAccomplishments() {
-        // Fetch accomplishments from last 90 days. If more than 10, randomly pick 10
         $accomplishments = PilotPassportAward::where('awarded_on', '>', now()->subDays(90)->endOfDay())
             ->orderByRaw('RAND()')->take(10)->get();
         $ret = null;
@@ -133,7 +132,6 @@ class PilotPassportController extends Controller {
     }
 
     public function generateStamp($id) {
-        //$a = PilotPassportAirfield::find($id);
         $img_path = 'photos/pilot_passport/pilot_passport_stamp.png';
         $gd = imagecreatefrompng($img_path);
         imagealphablending($gd, false);
