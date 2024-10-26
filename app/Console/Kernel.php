@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
             return FeatureToggle::isEnabled('auto_support_events');
         });
-        $schedule->command('PilotPassport:ActivityUpdate')->everyFiveMinute()->monitorName('Update Pilot Passport Activity');
+        $schedule->command('PilotPassport:ActivityUpdate')->everyFiveMinutes()->monitorName('Update Pilot Passport Activity');
     }
 
     /**

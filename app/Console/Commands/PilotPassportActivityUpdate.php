@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Classes\LatLng;
+use App\Class\LatLng;
 use App\Mail\PilotPassportMail;
 use App\PilotPassport;
 use App\PilotPassportAirfield;
@@ -54,32 +54,23 @@ class PilotPassportActivityUpdate extends Command {
         $statsData = $this->getStatsData();
         
         foreach ($statsData->pilots as $p) {
-            if (PilotPassportEnrollment::where('id', $p->cid)->isEmpty()) { // Parse through pilots for CIDs that have registered
-                continue;
-            }
-            // Check if flight meets parameters (location, airspeed)
-            if ($p->groundspeed > SELF::SPEED_LIMIT) {
-                continue;
-            }
+            if (!PilotPassportEnrollment::where('cid', $p->cid)->get()) continue;
+            if ($p->groundspeed > SELF::SPEED_LIMIT) continue;
 
             $ppos = new LatLng($p->latitude, $p->longitude);
             $airports = PilotPassportAirfield::get();
             foreach ($airports as $a) {
-                if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) {
-                    continue;
-                }
-                if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
-                    continue;
-                }
-                if (PilotPassport::airfieldInPilotChallenge($a->icao_id, $p->cid)) { // Check to ensure this airport is part of a challenge the pilot is enrolled in.
-                    continue;
-                }
+                if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) continue;
+                if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) continue;
+                if (!PilotPassport::airfieldInPilotChallenge($a->icao_id, $p->cid)) continue;
+
                 $passport = new PilotPassportLog;
                 $passport->cid = $p->cid;
                 $passport->airfield = $a->icao_id;
                 $passport->visited_on = date('Y-m-d H:i:s');
                 $passport->callsign = $p->callsign;
                 $passport->aircraft_type = (property_exists($p, 'flight_plan')) ? $p->flight_plan->aircraft_faa : null;
+                dd($passport);
                 $passport->save();
                 // Send congratulatory email
                 $pilot = PilotPassportEnrollment::find($p->cid);
@@ -91,7 +82,6 @@ class PilotPassportActivityUpdate extends Command {
     }
 
     public static function checkPhaseComplete(RealopsPilot $pilot): void {
-        // Check to see if the pilot completed any phases
         $pilot_has_visited = PilotPassportLog::where('cid', $pilot->cid)->orderBy('airfield', 'asc')->pluck('airfield');
         $challenges = PilotPassport::get();
         foreach ($challenges as $c) {
@@ -104,7 +94,6 @@ class PilotPassportActivityUpdate extends Command {
                 }
             }
             if ($challenge_complete) {
-                // If yes, add the award in the table
                 $award = new PilotPassportAward;
                 $award->cid = $pilot->cid;
                 $award->challenge_id = $c->id;
@@ -112,7 +101,6 @@ class PilotPassportActivityUpdate extends Command {
                 $award->save();
             }
         }
-        // Send congratulatory email
         Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $c));
     }
 
@@ -123,9 +111,9 @@ class PilotPassportActivityUpdate extends Command {
         return $data;
     }
 
-    public static function calcDistance($point1, $point2) { // Returns the distance in NM between two lat/lon points
-        $dist = acos(sin($point1->toRadian()->latitude) * sin($point2->toRadian()->latitude) + cos($point1->toRadian()->latitude)
-            * cos($point2->toRadian()->latitude) * cos($point1->toRadian()->longitude - $point2->toRadian()->longitude)); // Haversine formula
-        return (((180 * 60) / pi()) * $dist); // Convert radians to NM
+    public static function calcDistance($point1, $point2) { 
+        $dist = acos(sin($point1->radLatitude()) * sin($point2->radLatitude()) + cos($point1->radLatitude())
+            * cos($point2->radLatitude()) * cos($point1->radLongitude() - $point2->radLongitude())); 
+        return (((180 * 60) / pi()) * $dist); 
     }
 }
