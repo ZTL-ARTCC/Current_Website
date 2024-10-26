@@ -54,15 +54,25 @@ class PilotPassportActivityUpdate extends Command {
         $statsData = $this->getStatsData();
         
         foreach ($statsData->pilots as $p) {
-            if (!PilotPassportEnrollment::where('cid', $p->cid)->get()) continue;
-            if ($p->groundspeed > SELF::SPEED_LIMIT) continue;
+            if (!PilotPassportEnrollment::where('cid', $p->cid)->get()) {
+                continue;
+            }
+            if ($p->groundspeed > SELF::SPEED_LIMIT) {
+                continue;
+            }
 
             $ppos = new LatLng($p->latitude, $p->longitude);
             $airports = PilotPassportAirfield::get();
             foreach ($airports as $a) {
-                if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) continue;
-                if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) continue;
-                if (!PilotPassport::airfieldInPilotChallenge($a->icao_id, $p->cid)) continue;
+                if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) {
+                    continue;
+                }
+                if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
+                    continue;
+                }
+                if (!PilotPassport::airfieldInPilotChallenge($a->icao_id, $p->cid)) {
+                    continue;
+                }
 
                 $passport = new PilotPassportLog;
                 $passport->cid = $p->cid;
@@ -111,9 +121,9 @@ class PilotPassportActivityUpdate extends Command {
         return $data;
     }
 
-    public static function calcDistance($point1, $point2) { 
+    public static function calcDistance($point1, $point2) {
         $dist = acos(sin($point1->radLatitude()) * sin($point2->radLatitude()) + cos($point1->radLatitude())
-            * cos($point2->radLatitude()) * cos($point1->radLongitude() - $point2->radLongitude())); 
-        return (((180 * 60) / pi()) * $dist); 
+            * cos($point2->radLatitude()) * cos($point1->radLongitude() - $point2->radLongitude()));
+        return (((180 * 60) / pi()) * $dist);
     }
 }
