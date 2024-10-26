@@ -12,6 +12,19 @@ class RealopsPilot extends Authenticatable {
         return $this->fname . ' ' . $this->lname;
     }
 
+    public static function getPublicName($cid) {
+        $p = RealopsPilot::find($cid);
+        switch ($p->privacy) {
+            case 1: return $p->fname;
+                break;
+            case 2: return $cid;
+                break;
+            case 3:  return 'Anonymous';
+            case 0:
+            default: return $p->full_name;
+        }
+    }
+
     public function pilotPassportEnrollments(): HasMany {
         return $this->hasMany(PilotPassportEnrollment::class, 'cid');
     }
