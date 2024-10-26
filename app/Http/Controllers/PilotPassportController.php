@@ -89,6 +89,21 @@ class PilotPassportController extends Controller {
         return redirect('/logout');
     }
 
+    public static function fetchRecentPilotAccomplishments() {
+        // Fetch accomplishments from last 90 days. If more than 10, randomly pick 10
+        $accomplishments = PilotPassportAward::where('awarded_on', '>', now()->subDays(90)->endOfDay())
+            ->orderByRaw('RAND()')->take(10)->get();
+        $ret = null;
+        foreach ($accomplishments as $acc) {
+            $a = (object) [
+                'pilot_name' => $acc->pilot_public_name,
+                'challenge_name' => $acc->challenge_title
+            ];
+            $ret[] = $a;
+        }
+        return $ret;
+    }
+
     public function generateCertificate($id) {
         $a = PilotPassportAward::find($id);
         $error_html = '<p>An error has occured - please contact <a href="emailto:wm@ztlartcc.org">wm@ztlartcc.org</a></p>';
