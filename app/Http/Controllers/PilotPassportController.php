@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+ini_set('memory_limit', '512M');
+
 use App\Mail\PilotPassportMail;
 use App\PilotPassport;
 use App\PilotPassportAward;
@@ -20,7 +22,6 @@ class PilotPassportController extends Controller {
             $tab = (in_array($request->tab, ['information', 'enrollments', 'passport_book', 'achievements', 'settings'])) ? $request->tab : 'information';
             $pg = (is_numeric($request->pg)) ? $request->pg : null;
         }
-        $challenges = $enrollments = $achievements = [];
         $privacy = null;
         if (auth()->guard('realops')->user()) {
             $pilot = auth()->guard('realops')->user();
