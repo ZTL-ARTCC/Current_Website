@@ -39,7 +39,7 @@ ZTL Pilot Passport Challenge
         </li>
         @endif
     </ul>
-    <div class="tab-content">
+    <div class="tab-content" style="min-height:500px">
         @php $active = ($tab == 'information') ? ' active' : ''; @endphp
         <div role="tabpanel" class="tab-pane p-2 mb-4{{ $active }}" id="information" dusk="info">
             <div class="row">
@@ -62,9 +62,8 @@ ZTL Pilot Passport Challenge
                 <div class="col-sm-6">
                     <h5>What's in it for me?</h5>
                     <p>Pilots who enroll and meet milestones of the challenge will be recognized on the ZTL website. You'll have the opportunity to
-                        fill up a virtual passport book with stamps for each airfield you visit. Upon completion of a path, you’ll get a badge that
-                        you can display on social media or on your website. If you complete all three paths, you'll get a limited edition, signed,
-                        high-res digital photo of VATUSA1, Mr. Brandon Barrett, and a certificate of completion suitable for framing.</p>
+                        fill up a virtual passport book with stamps for each airfield you visit. Upon completion of a path, you’ll get a badge and
+                        a certificate of completion suitable for framing.</p>
                 </div>
                 <div class="col-sm-6">
                     <h5>How do I get started?</h5>
@@ -121,7 +120,7 @@ ZTL Pilot Passport Challenge
         @php $active = ($tab == 'passport_book') ? ' active' : ''; @endphp
         <div role="tabpanel" class="tab-pane mb-4{{ $active }}" id="passport_book">
             <h5>My Passport Book</h5>
-            @if(empty($enrollments))
+            @if($enrollments->isEmpty())
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8">
@@ -193,7 +192,7 @@ ZTL Pilot Passport Challenge
                         </div>
                     </div>
                     @endforeach
-                    @if(empty($achievements))
+                    @if($achievements->isEmpty())
                         <div class="row mb-4">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-8">
