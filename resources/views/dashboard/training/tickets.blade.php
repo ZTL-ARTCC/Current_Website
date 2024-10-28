@@ -143,6 +143,35 @@ Training Tickets
             @endforeach
         </div>
     {!! $tickets->appends(['id' => $search_result->id])->render() !!}
+    @elseif($all_drafts != null && count($all_drafts) != 0)
+        <hr />
+        <h4>All Open Drafts</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">View</th>
+                    <th scope="col">Trainer Name</th>
+                    <th scope="col">Controller Name</th>
+                    <th scope="col">Date Created</th>
+                    <th scope="col">Date Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($all_drafts as $ticket)
+                    <tr>
+                        <td>
+                            <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </td>
+                        <td>{{ $ticket->trainer_name }}</td>
+                        <td>{{ $ticket->controller_name }}</td>
+                        <td>{{ date_format($ticket->created_at, 'm/d/Y') }}</td>
+                        <td>{{ date_format($ticket->updated_at, 'm/d/Y') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endif
 </div>
 @endsection
