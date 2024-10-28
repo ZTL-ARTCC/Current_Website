@@ -23,9 +23,10 @@ class PilotPassportController extends Controller {
             $pg = (is_numeric($request->pg)) ? $request->pg : null;
         }
         $privacy = null;
+        $challenges = PilotPassport::get();
+        $enrollments = $achievements = null;
         if (auth()->guard('realops')->user()) {
             $pilot = auth()->guard('realops')->user();
-            $challenges = PilotPassport::get();
             $enrollments = PilotPassportEnrollment::where('cid', $pilot->id)->get();
             $achievements = PilotPassportAward::where('cid', $pilot->id)->get();
             $privacy = intval($pilot->privacy);
