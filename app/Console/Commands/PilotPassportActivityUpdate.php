@@ -35,7 +35,7 @@ class PilotPassportActivityUpdate extends Command {
     // Parameters to consider an aircraft 'at' an airfield
     private const RADIUS_LIMIT = 3; // NM
     private const ALTITUDE_LIMIT = 500; // ft
-    private const SPEED_LIMIT = 50; // KTS GS
+    private const SPEED_LIMIT = 30; // KTS GS
 
     /**
      * Create a new command instance.
@@ -76,7 +76,7 @@ class PilotPassportActivityUpdate extends Command {
                     $this->info('- [Altitude Limit] - too high log');
                     continue;
                 }
-                if ($this->calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
+                if (LatLng::calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
                     $this->info('- [Radius Limit] - too far away to log');
                     continue;
                 }
@@ -131,11 +131,5 @@ class PilotPassportActivityUpdate extends Command {
         $res = $client->request('GET', $this->statusUrl);
         $data = json_decode($res->getBody());
         return $data;
-    }
-
-    public static function calcDistance($point1, $point2) {
-        $dist = acos(sin($point1->radLatitude()) * sin($point2->radLatitude()) + cos($point1->radLatitude())
-            * cos($point2->radLatitude()) * cos($point1->radLongitude() - $point2->radLongitude()));
-        return (((180 * 60) / pi()) * $dist);
     }
 }

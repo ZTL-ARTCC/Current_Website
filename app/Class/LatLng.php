@@ -19,4 +19,10 @@ class LatLng {
     public function radLongitude(): float {
         return $this->longitude * -1 * pi() / 180;
     }
+
+    public static function calcDistance($point1, $point2) {
+        $dist = acos(sin($point1->radLatitude()) * sin($point2->radLatitude()) + cos($point1->radLatitude())
+            * cos($point2->radLatitude()) * cos($point1->radLongitude() - $point2->radLongitude()));
+        return (((180 * 60) / pi()) * $dist);
+    }
 }
