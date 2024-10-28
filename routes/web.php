@@ -51,7 +51,6 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
 Route::prefix('pilot_passport')->group(function () {
     Route::get('/', 'PilotPassportController@index')->name('pilotPassportIndex');
     Route::post('/', 'PilotPassportController@index')->name('pilotPassportIndex');
-    //Route::post('/{pg?}', 'PilotPassportController@index')->name('pilotPassportIndex');
     Route::get('/login', 'Auth\LoginController@pilotPassportLogin')->middleware('guest:realops');
     Route::post('/enroll', 'PilotPassportController@enroll')->middleware('auth:realops')->name('pilotPassportEnroll');
     Route::get('/stamp/{id}', 'PilotPassportController@generateStamp')->middleware('auth:realops');
