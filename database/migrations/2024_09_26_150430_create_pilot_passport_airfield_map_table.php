@@ -16,11 +16,6 @@ return new class extends Migration {
             $table->string('airfield', length: 4);
             $table->integer('mapped_to');
         });
-
-        Artisan::call('db:seed', [
-            '--class' => 'PilotPassportAirfieldMapSeeder',
-            '--force' => true
-        ]);
     }
 
     /**

@@ -19,11 +19,6 @@ return new class extends Migration {
             $table->string('name', length: 255)->nullable();
             $table->text('description')->nullable();
         });
-
-        Artisan::call('db:seed', [
-            '--class' => 'PilotPassportAirfieldSeeder',
-            '--force' => true
-        ]);
     }
 
     /**
