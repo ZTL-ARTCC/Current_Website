@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-class LatLng {
+class LatLong {
     public float $latitude;
     public float $longitude;
 
