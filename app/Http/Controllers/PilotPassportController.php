@@ -37,40 +37,40 @@ class PilotPassportController extends Controller {
     }
 
     public function enroll(Request $request) {
+        $pilot = auth()->guard('realops')->user();
+        if (!$pilot) {
+            return redirect('/pilot_passport/login');
+        }
         $valid_enrollment = true;
         if (!is_numeric($request->challenge_id)) {
             $valid_enrollment = false;
         }
-        $p = auth()->guard('realops')->user();
-        if (!$p) {
-            return redirect('/pilot_passport/login');
-        }
-        $c = PilotPassport::find($request->challenge_id);
-        if (!$c) {
+        $challenge = PilotPassport::find($request->challenge_id);
+        if (!$challenge) {
             $valid_enrollment = false;
         }
         if (!$valid_enrollment) {
             return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('error', 'Enrollment data invalid. Please contact wm@ztlartcc.org for assistance.');
         }
-        $e = PilotPassportEnrollment::where('cid', $p->id)->where('challenge_id', $request->challenge_id)->get();
-        if ($e->isEmpty()) {
-            $e = new PilotPassportEnrollment;
-            $e->cid = $p->id;
-            $e->challenge_id = $c->id;
-            $e->save();
-            Mail::to($p->email)->send(new PilotPassportMail('enroll', $p, $c));
+        $enrollment = PilotPassportEnrollment::where('cid', $pilot->id)->where('challenge_id', $request->challenge_id)->get();
+        if ($enrollment->isEmpty()) {
+            $enrollment = new PilotPassportEnrollment;
+            $enrollment->cid = $pilot->id;
+            $enrollment->challenge_id = $challenge->id;
+            $enrollment->save();
+            Mail::to($pilot->email)->send(new PilotPassportMail('enroll', $pilot, $challenge));
             return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('success', 'You are now enrolled in the ZTL Pilot Passport program!');
         }
         return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('error', 'You are already enrolled in this challenge.');
     }
 
     public function setPrivacy(Request $request) {
-        $p = auth()->guard('realops')->user();
-        if (is_null($p)) {
+        $pilot = auth()->guard('realops')->user();
+        if (is_null($pilot)) {
             return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'settings'])->with('error', 'Unable to adjust privacy settings - Invalid CID.');
         }
-        $p->privacy = $request->privacy;
-        $p->save();
+        $pilot->privacy = $request->privacy;
+        $pilot->save();
         return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'settings'])->with('success', 'Your privacy preferences have been saved.');
     }
 
@@ -78,15 +78,19 @@ class PilotPassportController extends Controller {
         if (strtolower($request->input('confirm_text')) != "confirm - purge all") {
             return redirect()->back()->with('error', 'Data not purged. Please type in the required message to continue');
         }
-        $p = auth()->guard('realops')->user();
-        $p->delete();
-        $enrollments = PilotPassportEnrollment::where('cid', $request->id);
-        foreach($enrollments as $e) {
-            $e->delete();
+        $pilot = auth()->guard('realops')->user();
+        $pilot->delete();
+        $enrollments = PilotPassportEnrollment::where('cid', $pilot->id);
+        foreach($enrollments as $enrollment) {
+            $enrollment->delete();
         }
-        $logs = PilotPassportLog::where('cid', $request->id);
-        foreach($logs as $l) {
-            $l->delete();
+        $achievements = PilotPassportAward::where('cid', $pilot->id);
+        foreach($achievements as $achievement) {
+            $achievement->delete();
+        }
+        $logs = PilotPassportLog::where('cid', $pilot->id);
+        foreach($logs as $log) {
+            $log->delete();
         }
         return redirect('/logout');
     }
@@ -94,24 +98,24 @@ class PilotPassportController extends Controller {
     public static function fetchRecentPilotAccomplishments() {
         $accomplishments = PilotPassportAward::where('awarded_on', '>', now()->subDays(90)->endOfDay())
             ->orderByRaw('RAND()')->take(10)->get();
-        $ret = null;
-        foreach ($accomplishments as $acc) {
-            $a = (object) [
-                'pilot_name' => $acc->pilot_public_name,
-                'challenge_name' => $acc->challenge_title
+        $recent_accomplishments = null;
+        foreach ($accomplishments as $accomplishment) {
+            $accomplishment_for_display = (object) [
+                'pilot_name' => $accomplishment->pilot_public_name,
+                'challenge_name' => $accomplishment->challenge_title
             ];
-            $ret[] = $a;
+            $recent_accomplishments[] = $accomplishment_for_display;
         }
-        return $ret;
+        return $recent_accomplishments;
     }
 
     public function generateCertificate($id) {
-        $a = PilotPassportAward::find($id);
+        $award = PilotPassportAward::find($id);
         $error_html = '<p>An error has occured - please contact <a href="emailto:wm@ztlartcc.org">wm@ztlartcc.org</a></p>';
-        if (!$a) {
+        if (!$award) {
             return pdf()->html($error_html)->download();
         }
-        $p = RealopsPilot::find($a->cid);
+        $pilot = RealopsPilot::find($award->cid);
         $staff_users = User::with('roles')->where('status', '1')->get();
         $atm = $staff_users->filter(function ($staff_user) {
             return $staff_user->hasRole('atm');
@@ -124,13 +128,13 @@ class PilotPassportController extends Controller {
         $atm = $atm->first();
         $params = [
             'achievement' => $id,
-            'pilot_name' => $p->fname . ' ' . $p->lname,
-            'phase_title' => $a->challenge_title,
-            'award_date' => Carbon::parse($a->awarded_on),
+            'pilot_name' => $pilot->fname . ' ' . $pilot->lname,
+            'phase_title' => $award->challenge_title,
+            'award_date' => Carbon::parse($award->awarded_on),
             'atm_name' => $atm->full_name
         ];
         $pdf = Pdf::loadView('pdf.pilot_passport_certificate', $params)->setPaper('letter', 'landscape');
-        return $pdf->download('ztl_pilot_passport_challenge_' . $a->challenge_id . '.pdf');
+        return $pdf->download('ztl_pilot_passport_challenge_' . $award->challenge_id . '.pdf');
     }
 
     public function generateStamp($id) {
