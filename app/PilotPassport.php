@@ -10,9 +10,6 @@ class PilotPassport extends Model {
 
     public static function airfieldInPilotChallenge($airfield, $cid): bool {
         $enrollments = PilotPassportEnrollment::where('cid', $cid)->get();
-        if ($enrollments->isEmpty()) {
-            return false;
-        }
         foreach ($enrollments as $e) {
             if (!PilotPassportAirfieldMap::where('airfield', $airfield)->where('mapped_to', $e->challenge_id)->get()->isEmpty()) {
                 return true;
