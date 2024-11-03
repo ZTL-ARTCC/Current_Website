@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Class\LatLng;
+use App\Class\LatLong;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,8 +11,8 @@ class PilotPassportAirfield extends Model {
     protected $casts = ['id' => 'string'];
     public $incrementing = false;
 
-    public function fetchLatLng(): LatLng {
-        return new LatLng($this->latitude, $this->longitude);
+    public function fetchLatLong(): LatLong {
+        return new LatLong($this->latitude, $this->longitude);
     }
 
     public function mapping(): BelongsTo {
