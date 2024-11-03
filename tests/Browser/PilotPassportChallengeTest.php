@@ -77,7 +77,9 @@ class PilotPassportChallengeTest extends DuskTestCase {
                     ->clickLink('Settings')
                     ->radio('@privacy', '2')
                     ->press('Save Settings')
-                    ->assertSee('Your privacy preferences have been saved.');
+                    ->visit('/pilot_passport')
+                    ->clickLink('Settings')
+                    ->assertRadioSelected('@privacy', '2');
         });
     }
 
@@ -93,6 +95,18 @@ class PilotPassportChallengeTest extends DuskTestCase {
                     ->waitFor('.navbar', 30)
                     ->assertSee('You have been successfully logged out');
         });
+    }
+
+    public function test_purge_data(): void {
+        $cid = Config::get('vatsim.auth_dev_credential');
+        $pilot = RealopsPilot::find($cid);
+        $enrollment = PilotPassportEnrollment::where('cid', $cid);
+        $achievement = PilotPassportAward::where('cid', $cid);
+        $log = PilotPassportLog::where('cid', $cid);
+        if($pilot || $enrollment || $achievement || $log) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue(true);
     }
 
     public function loginSamplePilot(): void {
