@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Class\LatLng;
+use App\Class\LatLong;
 use App\Mail\PilotPassportMail;
 use App\PilotPassport;
 use App\PilotPassportAirfield;
@@ -64,7 +64,7 @@ class PilotPassportActivityUpdate extends Command {
                 continue;
             }
 
-            $ppos = new LatLng($p->latitude, $p->longitude);
+            $ppos = new LatoLng($p->latitude, $p->longitude);
             $airports = PilotPassportAirfield::all();
             foreach ($airports as $a) {
                 $this->info('- Checking ' . $a->id);
@@ -76,13 +76,13 @@ class PilotPassportActivityUpdate extends Command {
                     $this->info('- [Altitude Limit] - too high log');
                     continue;
                 }
-                if (LatLng::calcDistance($ppos, $a->fetchLatLng()) > SELF::RADIUS_LIMIT) {
+                if (LatLong::calcDistance($ppos, $a->fetchLatLong()) > SELF::RADIUS_LIMIT) {
                     $this->info('- [Radius Limit] - too far away to log');
                     continue;
                 }
                 if (!PilotPassportLog::where('cid', $p->cid)->where('airfield', $a->id)->get()->isEmpty()) {
                     $this->info('- [Visited Limit] - airfield has already been logged');
-                    break;
+                    continue;
                 }
                 $this->info('- [At Airport Now] - logging the visit!');
 
@@ -102,7 +102,7 @@ class PilotPassportActivityUpdate extends Command {
         }
     }
 
-    public static function checkPhaseComplete(RealopsPilot $pilot): bool {
+    public static function checkPhaseComplete(RealopsPilot $pilot) {
         $pilot_has_visited = PilotPassportLog::where('cid', $pilot->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
         $challenges = PilotPassport::get();
         foreach ($challenges as $c) {
@@ -121,9 +121,8 @@ class PilotPassportActivityUpdate extends Command {
                 $award->awarded_on = date('Y-m-d H:i:s');
                 $award->save();
             }
+            Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $c));
         }
-        Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $c));
-        return true;
     }
 
     public function getStatsData() {
