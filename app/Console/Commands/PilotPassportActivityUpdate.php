@@ -54,52 +54,58 @@ class PilotPassportActivityUpdate extends Command {
     public function handle() {
         $statsData = $this->getStatsData();
         
-        foreach ($statsData->pilots as $p) {
-            if (PilotPassportEnrollment::where('cid', $p->cid)->get()->isEmpty()) {
+        foreach ($statsData->pilots as $flight) {
+            if (PilotPassportEnrollment::where('cid', $flight->cid)->get()->isEmpty()) {
                 continue;
             }
-            $this->info('Enrolled pilot found connected: ' . $p->cid);
-            if ($p->groundspeed > SELF::SPEED_LIMIT) {
+            $this->info('Enrolled pilot found connected: ' . $flight->cid);
+            if ($flight->groundspeed > SELF::SPEED_LIMIT) {
                 $this->info('- [Speed Limit] - too fast to log');
                 continue;
             }
-
-            $ppos = new LatoLng($p->latitude, $p->longitude);
-            $airports = PilotPassportAirfield::all();
-            foreach ($airports as $a) {
-                $this->info('- Checking ' . $a->id);
-                if (!PilotPassport::airfieldInPilotChallenge($a->id, $p->cid)) {
-                    $this->info('- [Enrollment Limit] - airfield not part of an enrolled challenge');
-                    continue;
-                }
-                if ($p->altitude - $a->elevation > SELF::ALTITUDE_LIMIT) {
-                    $this->info('- [Altitude Limit] - too high log');
-                    continue;
-                }
-                if (LatLong::calcDistance($ppos, $a->fetchLatLong()) > SELF::RADIUS_LIMIT) {
-                    $this->info('- [Radius Limit] - too far away to log');
-                    continue;
-                }
-                if (!PilotPassportLog::where('cid', $p->cid)->where('airfield', $a->id)->get()->isEmpty()) {
-                    $this->info('- [Visited Limit] - airfield has already been logged');
-                    continue;
-                }
-                $this->info('- [At Airport Now] - logging the visit!');
-
-                $passport = new PilotPassportLog;
-                $passport->cid = $p->cid;
-                $passport->airfield = $a->id;
-                $passport->visited_on = date('Y-m-d H:i:s');
-                $passport->callsign = $p->callsign;
-                $passport->aircraft_type = (is_null($p->flight_plan)) ? '' : $p->flight_plan->aircraft_faa;
-                $passport->save();
-
-                $pilot = RealopsPilot::find($p->cid);
-                Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $a));
-                $this->checkPhaseComplete($pilot);
-                break;
+            $airport_id = $this->isFlightAtAirport($flight);
+            if (is_null($airport_id)) {
+                continue;
             }
+            if (!PilotPassportLog::where('cid', $flight->cid)->where('airfield', $airport_id)->get()->isEmpty()) {
+                $this->info('- [Visited Limit] - airfield has already been logged');
+                continue;
+            }
+
+            $passport = new PilotPassportLog;
+            $passport->cid = $flight->cid;
+            $passport->airfield = $airport_id;
+            $passport->visited_on = date('Y-m-d H:i:s');
+            $passport->callsign = $flight->callsign;
+            $passport->aircraft_type = (is_null($flight->flight_plan)) ? '' : $flight->flight_plan->aircraft_faa;
+            $passport->save();
+
+            $pilot = RealopsPilot::find($flight->cid);
+            Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $airport_id));
+            $this->checkPhaseComplete($pilot);
         }
+    }
+
+    private function isFlightAtAirport($flight) {
+        $ppos = new LatLong($flight->latitude, $flight->longitude);
+        $airports = PilotPassportAirfield::all();
+        foreach ($airports as $airport) {
+            $this->info('- Checking ' . $airport->id);
+            if (!PilotPassport::airfieldInPilotChallenge($airport->id, $flight->cid)) {
+                $this->info('- [Enrollment Limit] - airfield not part of an enrolled challenge');
+                continue;
+            }
+            if ($flight->altitude - $airport->elevation > SELF::ALTITUDE_LIMIT) {
+                $this->info('- [Altitude Limit] - too high log');
+                continue;
+            }
+            if (LatLong::calcDistance($ppos, $airport->fetchLatLong()) > SELF::RADIUS_LIMIT) {
+                $this->info('- [Radius Limit] - too far away to log');
+                continue;
+            }
+            return $airport->id;
+        }
+        return null;
     }
 
     public static function checkPhaseComplete(RealopsPilot $pilot) {
