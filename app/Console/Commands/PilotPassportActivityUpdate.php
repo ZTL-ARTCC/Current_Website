@@ -37,6 +37,8 @@ class PilotPassportActivityUpdate extends Command {
     private const ALTITUDE_LIMIT = 500; // ft
     private const SPEED_LIMIT = 30; // KTS GS
 
+    private $airports = PilotPassportAirfield::all();
+
     /**
      * Create a new command instance.
      *
@@ -88,8 +90,7 @@ class PilotPassportActivityUpdate extends Command {
 
     private function isFlightAtAirport($flight) {
         $ppos = new LatLong($flight->latitude, $flight->longitude);
-        $airports = PilotPassportAirfield::all();
-        foreach ($airports as $airport) {
+        foreach ($this->airports as $airport) {
             $this->info('- Checking ' . $airport->id);
             if (!PilotPassport::airfieldInPilotChallenge($airport->id, $flight->cid)) {
                 $this->info('- [Enrollment Limit] - airfield not part of an enrolled challenge');
