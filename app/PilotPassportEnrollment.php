@@ -9,11 +9,10 @@ class PilotPassportEnrollment extends Model {
     protected $table = "pilot_passport_enrollment";
 
     public function getNameAttribute() {
-        $pilot = RealopsPilot::find($this->cid);
-        if (!$pilot) {
+        if (!$this->pilot) {
             return 'Error!';
         }
-        return $pilot->fname . ' ' . $pilot->lname;
+        return $this->pilot->full_name;
     }
 
     public function getEmailAttribute() {
