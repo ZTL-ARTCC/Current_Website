@@ -37,7 +37,7 @@ class PilotPassportActivityUpdate extends Command {
     private const ALTITUDE_LIMIT = 500; // ft
     private const SPEED_LIMIT = 30; // KTS GS
 
-    private $airports = PilotPassportAirfield::all();
+    private $airports;
 
     /**
      * Create a new command instance.
@@ -55,7 +55,8 @@ class PilotPassportActivityUpdate extends Command {
      */
     public function handle() {
         $statsData = $this->getStatsData();
-        
+        $this->airports = PilotPassportAirfield::all();
+
         foreach ($statsData->pilots as $flight) {
             if (PilotPassportEnrollment::where('cid', $flight->cid)->get()->isEmpty()) {
                 continue;
