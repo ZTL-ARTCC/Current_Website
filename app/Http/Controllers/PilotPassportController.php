@@ -24,7 +24,7 @@ class PilotPassportController extends Controller {
         }
         $privacy = null;
         $challenges = PilotPassport::get();
-        $enrollments = $achievements = null;
+        $enrollments = $achievements = collect();
         if (auth()->guard('realops')->user()) {
             $pilot = auth()->guard('realops')->user();
             $enrollments = PilotPassportEnrollment::where('cid', $pilot->id)->get();
@@ -79,19 +79,10 @@ class PilotPassportController extends Controller {
             return redirect()->back()->with('error', 'Data not purged. Please type in the required message to continue');
         }
         $pilot = auth()->guard('realops')->user();
-        $pilot->delete();
-        $enrollments = PilotPassportEnrollment::where('cid', $pilot->id);
-        foreach($enrollments as $enrollment) {
-            $enrollment->delete();
-        }
-        $achievements = PilotPassportAward::where('cid', $pilot->id);
-        foreach($achievements as $achievement) {
-            $achievement->delete();
-        }
-        $logs = PilotPassportLog::where('cid', $pilot->id);
-        foreach($logs as $log) {
-            $log->delete();
-        }
+        PilotPassportEnrollment::where('cid', $pilot->id)->delete();
+        PilotPassportAward::where('cid', $pilot->id)->delete();
+        PilotPassportLog::where('cid', $pilot->id)->delete();
+        RealopsPilot::find($pilot->id)->delete();
         return redirect('/logout');
     }
 
