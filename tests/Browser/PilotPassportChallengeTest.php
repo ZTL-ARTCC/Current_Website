@@ -100,10 +100,10 @@ class PilotPassportChallengeTest extends DuskTestCase {
     public function test_purge_data(): void {
         $cid = Config::get('vatsim.auth_dev_credential');
         $pilot = RealopsPilot::find($cid);
-        $enrollment = PilotPassportEnrollment::where('cid', $cid);
-        $achievement = PilotPassportAward::where('cid', $cid);
-        $log = PilotPassportLog::where('cid', $cid);
-        if($pilot || $enrollment || $achievement || $log) {
+        $enrollment = PilotPassportEnrollment::where('cid', $cid)->first();
+        $achievement = PilotPassportAward::where('cid', $cid)->first();
+        $log = PilotPassportLog::where('cid', $cid)->first();
+        if ($pilot || $enrollment || $achievement || $log) {
             $this->assertTrue(false);
         }
         $this->assertTrue(true);
