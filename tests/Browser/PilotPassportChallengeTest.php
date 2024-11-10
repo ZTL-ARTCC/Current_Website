@@ -103,10 +103,8 @@ class PilotPassportChallengeTest extends DuskTestCase {
         $enrollment = PilotPassportEnrollment::where('cid', $cid)->first();
         $achievement = PilotPassportAward::where('cid', $cid)->first();
         $log = PilotPassportLog::where('cid', $cid)->first();
-        if ($pilot || $enrollment || $achievement || $log) {
-            $this->assertTrue(false);
-        }
-        $this->assertTrue(true);
+        $data_remaining = $pilot || $enrollment || $achievement || $log;
+        $this->assertFalse($data_remaining);
     }
 
     public function loginSamplePilot(): void {
