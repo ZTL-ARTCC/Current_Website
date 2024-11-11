@@ -61,21 +61,6 @@ return [
             'port' => env('DB_PORT', '3306'),
         ],
 
-        'ea_mysql' => [
-            'driver' => 'mysql',
-            'host' => env('EA_DB_HOST', '127.0.0.1'),
-            'port' => env('EA_DB_PORT', '3306'),
-            'database' => env('EA_DATABASE', 'forge'),
-            'username' => env('EA_USERNAME', 'forge'),
-            'password' => env('EA_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-        ],
-
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

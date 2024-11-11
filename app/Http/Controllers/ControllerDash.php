@@ -27,15 +27,15 @@ use App\TrainingTicket;
 use App\User;
 use Auth;
 use Carbon\Carbon;
-use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Mail;
 use SimpleXMLElement;
 
 class ControllerDash extends Controller {
-    protected static $SHOW_BOOKINGS_AFTER_APPT = 6; // Show bookings for X hours after appt start time
 
     public function dash() {
         $now = Carbon::now();
@@ -167,54 +167,34 @@ class ControllerDash extends Controller {
             $last_training_given = null;
         }
 
-        if (is_null(Auth::user()->ea_customer_id)) {
-            try {
-                $ea_users = DB::connection('ea_mysql')->table('ea_users')->select('id')->where(function ($query) {
-                    $query->where('email', Auth::user()->email)
-                          ->orWhere('custom_field_1', Auth::user()->id);
-                })->where('id_roles', '3')->limit(1)->get();
-                foreach ($ea_users as $u) {
-                    $user = Auth::user();
-                    $user->ea_customer_id = $u->id;
-                    $user->save();
-                }
-            } catch (\Illuminate\Database\QueryException $e) {
+        $client = new Client();
+
+        $appointments = [];
+        $appointments_successful = false;
+
+        try {
+            //.$user_id
+            $res = $client->get(
+                Config::get('scheddy.base').'/api/userSessions/1710004',
+                ['headers' => [
+                    'Authorization' => 'Bearer '.Config::get('scheddy.api_key')
+                ]]
+            );
+
+            if ($res->getStatusCode() == "200") {
+                Log::info($res->getBody());
+                $appointments = json_decode($res->getBody());
+                $appointments_successful = true;
             }
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            Log::error($e);
         }
-        $ea_appointments = $ea_appointments_filtered = [];
-        if (!is_null(Auth::user()->ea_customer_id)) {
-            try {
-                $ea_appointments = DB::connection('ea_mysql')
-                    ->table('ea_appointments')
-                    ->join('ea_services', 'ea_appointments.id_services', '=', 'ea_services.id')
-                    ->join('ea_users', 'ea_appointments.id_users_provider', '=', 'ea_users.id')
-                    ->select(
-                        'ea_appointments.start_datetime AS start_datetime',
-                        'ea_appointments.hash AS link_token',
-                        'ea_services.name AS service_description',
-                        'ea_users.first_name AS staff_first_name',
-                        'ea_users.last_name AS staff_last_name',
-                        'ea_users.timezone AS booking_timezone'
-                    )
-                    ->where('ea_appointments.id_users_customer', Auth::user()->ea_customer_id)
-                    ->where('ea_appointments.start_datetime', '>=', Carbon::now()->subHours(24)->format('Y-m-d H:i:s'))
-                    ->orderBy('ea_appointments.start_datetime', 'ASC')->get();
-                foreach ($ea_appointments as $ea_appointment) {
-                    if (Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone) >= Carbon::now()->subHours(self::$SHOW_BOOKINGS_AFTER_APPT)) {
-                        $appt_start_datetime = Carbon::parse($ea_appointment->start_datetime, $ea_appointment->booking_timezone)->setTimezone(Auth::user()->timezone);
-                        $ea_appointment->res_date = $appt_start_datetime->format('m/d/Y');
-                        $ea_appointment->res_time = $appt_start_datetime->format('H:i');
-                        $ea_appointment->staff_name = $ea_appointment->staff_first_name . ' ' . $ea_appointment->staff_last_name;
-                        $ea_appointments_filtered[] = $ea_appointment;
-                    }
-                }
-            } catch (\Illuminate\Database\QueryException $e) {
-            }
-        }
+
+        Log::info($appointments);
 
         return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)
             ->with('training_feedback', $training_feedback)->with('tickets', $tickets)->with('last_training', $last_training)
-            ->with('last_training_given', $last_training_given)->with('ea_appointments', $ea_appointments_filtered);
+            ->with('last_training_given', $last_training_given)->with('appointments', $appointments)->with('appointments_successful', $appointments_successful);
     }
 
     public function showTicket($id) {
