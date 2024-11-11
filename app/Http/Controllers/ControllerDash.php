@@ -182,15 +182,12 @@ class ControllerDash extends Controller {
             );
 
             if ($res->getStatusCode() == "200") {
-                Log::info($res->getBody());
                 $appointments = json_decode($res->getBody());
                 $appointments_successful = true;
             }
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Log::error($e);
         }
-
-        Log::info($appointments);
 
         return view('dashboard.controllers.profile')->with('personal_stats', $personal_stats)->with('feedback', $feedback)
             ->with('training_feedback', $training_feedback)->with('tickets', $tickets)->with('last_training', $last_training)
