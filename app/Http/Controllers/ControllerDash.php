@@ -175,7 +175,7 @@ class ControllerDash extends Controller {
         try {
             //.$user_id
             $res = $client->get(
-                Config::get('scheddy.base').'/api/userSessions/1710004',
+                Config::get('scheddy.base').'/api/userSessions/'.$user_id,
                 ['headers' => [
                     'Authorization' => 'Bearer '.Config::get('scheddy.api_key')
                 ]]
