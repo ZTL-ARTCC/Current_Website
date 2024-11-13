@@ -140,7 +140,7 @@ Profile
                             @if(count($appointments) > 0)
                                 @foreach($appointments as $appointment)
                                     <tr>
-                                        <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone) }} {{ Auth::User()->timezone_abbr }}</td>
+                                        <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
                                         <td scope="col">{{ $appointment->sessionType->name }}</td>
                                         <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
                                         <td scope="col"><i>Contact your mentor.</i></td>
