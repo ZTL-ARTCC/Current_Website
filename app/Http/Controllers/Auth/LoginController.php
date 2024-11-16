@@ -190,18 +190,33 @@ class LoginController extends Controller {
     }
 
     public function realopsLogin() {
-        $this->pilotLogin('/realops');
+        session(['pilot_redirect_path' =>  '/realops']);
+        if (! auth()->check()) {
+            session(['pilot_redirect' =>  true]);
+            return redirect('/login');
+        }
+
+        $user = auth()->user();
+        $realops_pilot = RealopsPilot::find($user->id);
+
+        if (! $realops_pilot) {
+            $realops_pilot = new RealopsPilot;
+        }
+
+        $realops_pilot->id = $user->id;
+        $realops_pilot->fname = $user->fname;
+        $realops_pilot->lname = $user->lname;
+        $realops_pilot->email = $user->email;
+        $realops_pilot->save();
+
+        return $this->completePilotLogin($realops_pilot);
     }
 
     public function pilotPassportLogin() {
-        $this->pilotLogin('/pilot_passport');
-    }
-
-    public function pilotLogin($redirect_path) {
+        session(['pilot_redirect_path' =>  '/pilot_passport']);
         if (! auth()->check()) {
             session(['pilot_redirect' =>  true]);
-            session(['pilot_redirect_path' =>  $redirect_path]);
-            return redirect('/login')->send();
+            return redirect('/login');
         }
 
         $user = auth()->user();
