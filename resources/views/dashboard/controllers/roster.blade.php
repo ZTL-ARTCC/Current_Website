@@ -88,6 +88,9 @@ Roster
                                 @if($c->hasRole('events-team')&&(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('events')))
                                 <span class="badge badge-warning text-light">Events Team</span>
                                 @endif
+                                @if($c->hasRole('marketing')&&(Auth::user()->isAbleTo('roster')))
+                                <span class="badge badge-secondary text-light">Marketing</span>
+                                @endif
                             </td>
                             <td class="text-center">{{$c->initials}}</td>
                             <td class="text-center">{{ $c->rating_short }}</td>
