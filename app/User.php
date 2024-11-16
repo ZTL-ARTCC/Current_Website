@@ -168,7 +168,8 @@ class User extends Authenticatable implements LaratrustUser {
         6 => 'AWM',
         7 => 'FE',
         8 => 'AFE',
-        9 => 'EC'
+        9 => 'EC',
+        13 => 'Marketing'
     ];
 
     protected static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
@@ -307,6 +308,8 @@ class User extends Authenticatable implements LaratrustUser {
             return 11;
         } elseif ($this->hasRole('events-team')) {
             return 12;
+        } elseif ($this->hasRole('marketing')) {
+            return 13;
         } else {
             return 0;
         }
