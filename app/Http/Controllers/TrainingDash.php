@@ -186,8 +186,9 @@ class TrainingDash extends Controller {
     }
 
     public function ticketsIndex(Request $request) {
-        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) {
-            if (TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
+        $controllers_with_tickets = array_flip(TrainingTicket::groupBy('controller_id')->pluck('controller_id')->toArray());
+        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) use ($controllers_with_tickets) {
+            if (array_key_exists($user->id, $controllers_with_tickets) || $user->visitor == 0) {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
@@ -198,6 +199,10 @@ class TrainingDash extends Controller {
         } else {
             $search_result = null;
         }
+
+        $tickets = null;
+        $all_drafts = null;
+        $exams = null;
 
         if ($search_result != null) {
             $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
@@ -215,12 +220,13 @@ class TrainingDash extends Controller {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
             $exams = User::getAcademyExamTranscriptByCid($request->id);
-        } else {
-            $tickets = null;
-            $exams = null;
+        } elseif(auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
+            $all_drafts = TrainingTicket::where('draft', true)->orderBy('created_at', 'DESC')->paginate(25);
+        } elseif(auth()->user()->isAbleTo('train')) {
+            $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts);
+        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts)->with('all_drafts', $all_drafts);
     }
 
     public function searchTickets(Request $request) {

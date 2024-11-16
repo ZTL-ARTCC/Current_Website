@@ -4,8 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
-use Config;
-use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Contracts\LaratrustUser;
@@ -22,33 +21,26 @@ class User extends Authenticatable implements LaratrustUser {
         return $this->belongsTo(User::class);
     }
 
+    public function academyExams(): HasMany {
+        return $this->hasMany(AcademyExam::class, 'controller_id');
+    }
+
     public function getAcademyExamTranscript() {
-        return User::getAcademyExamTranscriptByCid($this->id);
+        $exams = array_flip(AcademyExam::$EXAM_NAMES);
+
+        foreach (AcademyExam::$EXAM_NAMES as $exam_name) {
+            $exams[$exam_name] = ['date' => null, 'success' => 3, 'grade' => null];
+        }
+
+        foreach ($this->academyExams as $exam) {
+            $exams[$exam->name] = ['date' => $exam->date, 'success' => $exam->success, 'grade' => $exam->grade];
+        }
+
+        return $exams;
     }
 
     public static function getAcademyExamTranscriptByCid($cid) {
-        $req_params = [
-            'form_params' => [],
-            'http_errors' => false
-        ];
-        $client = new Client();
-        $res = $client->request('GET', Config::get('vatusa.base').'/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
-        $academy = (string) $res->getBody();
-        $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
-        $academy = json_decode($academy, true);
-        $exam_names = array_keys($exams);
-        foreach ($exam_names as $exam) {
-            if (isset($academy['data'][$exam])) {
-                foreach ($academy['data'][$exam] as $exam_attempt) {
-                    if (is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
-                        $exams[$exam]['date'] = date("m/d/y", $exam_attempt['time_finished']);
-                        $exams[$exam]['success'] = ($exam_attempt['grade'] >= 80) ? 1 : 0;
-                        $exams[$exam]['grade'] = $exam_attempt['grade'];
-                    }
-                }
-            }
-        }
-        return $exams;
+        return User::find($cid)->getAcademyExamTranscript();
     }
 
     public function getBackwardsNameAttribute() {
@@ -81,6 +73,20 @@ class User extends Authenticatable implements LaratrustUser {
         5 => 'C1', 7 => 'C3',
         8 => 'I1', 10 => 'I3',
         11 => 'SUP', 12 => 'ADM',
+    ];
+
+    public const RATINGS = [
+        'N/A' => 0,
+        'OBS' => 1,
+        'S1' => 2,
+        'S2' => 3,
+        'S3' => 4,
+        'C1' => 5,
+        'C3' => 7,
+        'I1' => 8,
+        'I3' => 10,
+        'SUP' => 11,
+        'ADM' => 12
     ];
 
     private static $letters = [
@@ -141,6 +147,12 @@ class User extends Authenticatable implements LaratrustUser {
         1 => 'Active',
         0 => 'LOA',
         2 => 'Inactive'
+    ];
+
+    public const STATUSES = [
+        'ACTIVE' => 1,
+        'LOA' => 0,
+        'INACTIVE' => 2
     ];
 
     public static function getUserStatusAttribute() {
