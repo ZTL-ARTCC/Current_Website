@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\RosterRemovalWarn',
         '\App\Console\Commands\VatsimAtcBookingSync',
         '\App\Console\Commands\VATUSAEventsUpdate',
+        '\App\Console\Commands\UpdateAcademyExams',
         '\App\Console\Commands\UploadTrainingTickets',
     ];
 
@@ -40,6 +41,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Weather:UpdateWeather')->everyFourMinutes()->monitorName('Update Weather');
         $schedule->command('Overflights:GetOverflights')->everyThreeMinutes()->monitorName('Sync Overflights');
         $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
+        $schedule->command('RosterUpdate:UpdateAcademyExams')->cron('17 */2 * * *')->monitorName('Active Controller Exam Update');
         $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
             return FeatureToggle::isEnabled('auto_support_events');
         });
