@@ -69,9 +69,9 @@ class LaratrustSeeder extends Seeder {
             'name' => 'events-team',
             'display_name' => 'Events Team Member'
        ]);
-       DB::table('roles')->insert([
-        'name' => 'marketing',
-        'display_name' => 'Marketing Coordinator'
+        DB::table('roles')->insert([
+         'name' => 'marketing',
+         'display_name' => 'Marketing Coordinator'
    ]);
         
         // Adds Permissions to the Permissions Table
