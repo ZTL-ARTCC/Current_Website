@@ -14,6 +14,7 @@ use App\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Mail;
 
 class PilotPassportController extends Controller {
@@ -21,6 +22,9 @@ class PilotPassportController extends Controller {
         if ($request) {
             $tab = (in_array($request->tab, ['information', 'enrollments', 'passport_book', 'achievements', 'settings'])) ? $request->tab : 'information';
             $pg = (is_numeric($request->pg)) ? $request->pg : null;
+        }
+        if (Session::get('tab')) {
+            $tab = (in_array(Session::get('tab'), ['information', 'enrollments', 'passport_book', 'achievements', 'settings'])) ? Session::get('tab') : 'information';
         }
         $privacy = null;
         $challenges = PilotPassport::get();
@@ -50,7 +54,7 @@ class PilotPassportController extends Controller {
             $valid_enrollment = false;
         }
         if (!$valid_enrollment) {
-            return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('error', 'Enrollment data invalid. Please contact wm@ztlartcc.org for assistance.');
+            return redirect(route('pilotPassportIndex'))->with(['tab' => 'enrollments'])->with('error', 'Enrollment data invalid. Please contact wm@ztlartcc.org for assistance.');
         }
         $enrollment = PilotPassportEnrollment::where('cid', $pilot->id)->where('challenge_id', $request->challenge_id)->get();
         if ($enrollment->isEmpty()) {
@@ -59,19 +63,19 @@ class PilotPassportController extends Controller {
             $enrollment->challenge_id = $challenge->id;
             $enrollment->save();
             Mail::to($pilot->email)->send(new PilotPassportMail('enroll', $pilot, $challenge));
-            return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('success', 'You are now enrolled in the ZTL Pilot Passport program!');
+            return redirect(route('pilotPassportIndex'))->with(['tab' => 'enrollments'])->with('success', 'You are now enrolled in the ZTL Pilot Passport program!');
         }
-        return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'enrollments'])->with('error', 'You are already enrolled in this challenge.');
+        return redirect(route('pilotPassportIndex'))->with(['tab' => 'enrollments'])->with('error', 'You are already enrolled in this challenge.');
     }
 
     public function setPrivacy(Request $request) {
         $pilot = auth()->guard('realops')->user();
         if (is_null($pilot)) {
-            return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'settings'])->with('error', 'Unable to adjust privacy settings - Invalid CID.');
+            return redirect(route('pilotPassportIndex'))->with(['tab' => 'settings'])->with('error', 'Unable to adjust privacy settings - Invalid CID.');
         }
         $pilot->privacy = $request->privacy;
         $pilot->save();
-        return redirect(route('pilotPassportIndex'))->withInput(['tab' => 'settings'])->with('success', 'Your privacy preferences have been saved.');
+        return redirect(route('pilotPassportIndex'))->with(['tab' => 'settings'])->with('success', 'Your privacy preferences have been saved.');
     }
 
     public function purgeData(Request $request) {

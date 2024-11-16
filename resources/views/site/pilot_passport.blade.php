@@ -142,7 +142,10 @@ ZTL Pilot Passport Challenge
                 {{ html()->form()->close() }}
             @endif
             @foreach($enrollments as $enrollment)
-                @if($enrollment->challenge_id != $view_challenge && !is_null($view_challenge))
+                @if(is_null($view_challenge))
+                    @php $view_challenge = $enrollment->challenge_id; @endphp
+                @endif
+                @if($enrollment->challenge_id != $view_challenge)
                     @php continue; @endphp
                 @endif
                 @php ($closed = false) @endphp
