@@ -10,13 +10,7 @@ ATC Bookings
 <div class="row">
     <div class="col-lg-6">
         @if(count($bookings) == 0)
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h4>No ATC Bookings</h4>
-                    <p>There are no ATC Bookings at this time. Create the first one using the form to the right!</p>
-                    <h4 class="fa fa-clock"></h4>
-                </div>
-            </div>
+            @include('inc.empty_state', ['header' => 'No ATC Bookings', 'body' => 'There are no ATC Bookings at this time. Create the first one using the form to the right!', 'icon' => 'fa fa-clock'])
         @else
             @foreach($bookings as $date => $date_bookings)
                 <table class="table">
