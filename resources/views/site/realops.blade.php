@@ -130,13 +130,7 @@ Realops
     {!! $flights->appends(request()->query())->links() !!}
 </div>
 @else
-    <div class="card mb-3">
-        <div class="card-body text-center">
-            <h4>No Flights</h4>
-            <p>There are no flights to display matching that search criteria. Please try adjusting your airport filter or wait for more flights to be added</p>
-            <h4 class="fa fa-plane"></h4>
-        </div>
-    </div>
+    @include('inc.empty_state', ['header' => 'No Flights', 'body' => 'There are no flights to display matching that search criteria. Please try adjusting your airport filter or wait for more flights to be added', 'icon' => 'fa fa-plane'])
 @endif
 </div>
 <script src="{{mix('js/realops.js')}}"></script>
