@@ -84,7 +84,8 @@ class PilotPassportActivityUpdate extends Command {
             $passport->save();
 
             $pilot = RealopsPilot::find($flight->cid);
-            Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $airport_id));
+            $airfield = PilotPassportAirfield::find($airport_id);
+            Mail::to($pilot->email)->send(new PilotPassportMail('visited_airfield', $pilot, $airfield));
             $this->checkPhaseComplete($pilot);
         }
     }
@@ -113,12 +114,12 @@ class PilotPassportActivityUpdate extends Command {
     public static function checkPhaseComplete(RealopsPilot $pilot) {
         $pilot_has_visited = PilotPassportLog::where('cid', $pilot->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
         $challenges = PilotPassport::get();
-        foreach ($challenges as $c) {
-            $challenge_previously_awarded = PilotPassportAward::where('cid', $pilot->id)->where('challenge_id', $c->id)->first();
+        foreach ($challenges as $challenge) {
+            $challenge_previously_awarded = PilotPassportAward::where('cid', $pilot->id)->where('challenge_id', $challenge->id)->first();
             if ($challenge_previously_awarded) {
                 break;
             }
-            $challenge_airfields = PilotPassportAirfieldMap::where('mapped_to', $c->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
+            $challenge_airfields = PilotPassportAirfieldMap::where('mapped_to', $challenge->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
             $phase_complete = true;
             foreach ($challenge_airfields as $challenge_airfield) {
                 if (!in_array($challenge_airfield, $pilot_has_visited)) {
@@ -129,10 +130,10 @@ class PilotPassportActivityUpdate extends Command {
             if ($phase_complete) {
                 $award = new PilotPassportAward;
                 $award->cid = $pilot->id;
-                $award->challenge_id = $c->id;
+                $award->challenge_id = $challenge->id;
                 $award->awarded_on = date('Y-m-d H:i:s');
                 $award->save();
-                Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $c));
+                Mail::to($pilot->email)->send(new PilotPassportMail('phase_complete', $pilot, $challenge));
             }
         }
     }
