@@ -83,7 +83,7 @@ class LaratrustSeeder extends Seeder {
         DB::table('permissions')->insert([
              'name' => 'staff',
              'display_name' => 'Staff',
-             'description' => 'snrStaff + EC, AEC, FE, AFE, Marketing'
+             'description' => 'snrStaff + EC, AEC, FE, AFE'
         ]);
         DB::table('permissions')->insert([
              'name' => 'ins',
@@ -486,10 +486,6 @@ class LaratrustSeeder extends Seeder {
         DB::table('permission_role')->insert([
             'permission_id' => 10,
             'role_id' => 13
-        ]);
-        DB::table('permission_role')->insert([
-            'permission_id' => 2,
-            'role_id' => 15
         ]);
         DB::table('permission_role')->insert([
             'permission_id' => 12,
