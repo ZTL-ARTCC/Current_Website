@@ -46,15 +46,17 @@
                 @endif
             </div>
         @endif
-        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
+        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->hasRole('marketing'))
             <div class="dropdown-divider"></div>
             <p class="collapsible-sidebar" name="administration">
                 ADMINISTRATION
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                @if(Auth::user()->isAbleTo('staff'))
+                @if(Auth::user()->isAbleTo('staff') || Auth::user()->hasRole('marketing'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/calendar') }}" href="/dashboard/admin/calendar">Calendar/News</a>
+                @endif
+                @if(Auth::user()->isAbleTo('staff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/airports') }}" href="/dashboard/admin/airports">Airport Management</a>
                 @endif
                 @if(Auth::user()->isAbleTo('scenery'))
@@ -63,11 +65,11 @@
                 @if(Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/feedback') }}" href="/dashboard/admin/feedback">Feedback Management</a>
                 @endif
-                @if(Auth::user()->isAbleTo('email'))
+                @if(Auth::user()->isAbleTo('email') || Auth::user()->hasRole('marketing'))
                     <a class="nav-link" href="https://accounts.zoho.in/" target="_blank">Staff Webmail</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/email/send') }}" href="/dashboard/admin/email/send">Send New Email</a>
                 @endif
-                @if(Auth::user()->isAbleTo('staff'))
+                @if(Auth::user()->isAbleTo('staff') || Auth::user()->hasRole('marketing'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/announcement') }}" href="/dashboard/admin/announcement">Announcement</a>
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))
