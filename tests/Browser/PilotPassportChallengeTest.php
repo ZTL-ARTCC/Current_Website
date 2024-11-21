@@ -31,6 +31,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
     
     public function test_enrollments_view(): void {
+        $this->loginSamplePilot();
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Enrollments')
@@ -39,6 +40,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_enroll(): void {
+        $this->loginSamplePilot();
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
             ->clickLink('Enrollments')
@@ -48,6 +50,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_passport_book_view(): void {
+        $this->loginSamplePilot(true);
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Passport Book')
@@ -56,6 +59,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_achievements_view(): void {
+        $this->loginSamplePilot(true);
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Achievements')
@@ -64,6 +68,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_settings_view(): void {
+        $this->loginSamplePilot();
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Settings')
@@ -72,6 +77,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_change_privacy_settings(): void {
+        $this->loginSamplePilot();
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Settings')
@@ -84,6 +90,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_disenroll_purge(): void {
+        $this->loginSamplePilot(true);
         $this->browse(function (Browser $browser) {
             $browser->visit('/pilot_passport')
                     ->clickLink('Settings')
@@ -98,6 +105,16 @@ class PilotPassportChallengeTest extends DuskTestCase {
     }
 
     public function test_purge_data(): void {
+        $this->loginSamplePilot(true);
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/pilot_passport')
+                    ->clickLink('Settings')
+                    ->press('@purge_data')
+                    ->whenAvailable('.modal', function (Browser $modal) {
+                        $modal->type('@confirm', 'confirm - purge all')
+                            ->press('Continue');
+                    });
+        });
         $cid = Config::get('vatsim.auth_dev_credential');
         $pilot = RealopsPilot::find($cid);
         $enrollment = PilotPassportEnrollment::where('cid', $cid)->first();
@@ -107,14 +124,14 @@ class PilotPassportChallengeTest extends DuskTestCase {
         $this->assertFalse($data_remaining);
     }
 
-    public function loginSamplePilot(): void {
-        $this->checkSamplePilot();
+    public function loginSamplePilot($with_enrollment = false): void {
+        $this->checkSamplePilot($with_enrollment);
         $this->browse(function (Browser $browser) {
             $browser->loginAs(Config::get('vatsim.auth_dev_credential'), 'realops');
         });
     }
 
-    public function checkSamplePilot(): void {
+    public function checkSamplePilot($with_enrollment): void {
         $u = RealopsPilot::find(Config::get('vatsim.auth_dev_credential'));
         if (!$u) {
             $u = new RealopsPilot;
@@ -126,6 +143,9 @@ class PilotPassportChallengeTest extends DuskTestCase {
         }
         $this->clearSamplePilotActivity($u->id);
         $this->addSamplePilotAccomplishments($u->id);
+        if ($with_enrollment) {
+            $this->addSamplePilotEnrollment($u->id);
+        }
     }
 
     public function clearSamplePilotActivity($cid): void {
@@ -152,6 +172,15 @@ class PilotPassportChallengeTest extends DuskTestCase {
             $a->challenge_id = self::TEST_CHALLENGE_ID;
             $a->awarded_on = date('Y-m-d H:i:s');
             $a->save();
+        }
+    }
+
+    public function addSamplePilotEnrollment($cid): void {
+        if (!PilotPassportEnrollment::where('cid', $cid)->where('challenge_id', self::TEST_CHALLENGE_ID)->exists()) {
+            $l = new PilotPassportEnrollment;
+            $l->cid = $cid;
+            $l->challenge_id = self::TEST_CHALLENGE_ID;
+            $l->save();
         }
     }
 }
