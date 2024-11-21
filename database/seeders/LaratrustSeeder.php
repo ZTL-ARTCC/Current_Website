@@ -128,8 +128,10 @@ class LaratrustSeeder extends Seeder {
              'name' => 'email',
              'display_name' => 'Email'
         ]);
-        
-        
+        DB::table('permissions')->insert([
+            'name' => 'contributor',
+            'display_name' => 'Content Contributor'
+       ]);        
         
         //Links Roles and Permissions
         DB::table('permission_role')->insert([
@@ -489,6 +491,10 @@ class LaratrustSeeder extends Seeder {
         ]);
         DB::table('permission_role')->insert([
             'permission_id' => 12,
+            'role_id' => 15
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 13,
             'role_id' => 15
         ]);
     }
