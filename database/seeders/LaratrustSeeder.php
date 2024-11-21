@@ -131,7 +131,7 @@ class LaratrustSeeder extends Seeder {
         DB::table('permissions')->insert([
             'name' => 'contributor',
             'display_name' => 'Content Contributor'
-       ]);        
+       ]);
         
         //Links Roles and Permissions
         DB::table('permission_role')->insert([
