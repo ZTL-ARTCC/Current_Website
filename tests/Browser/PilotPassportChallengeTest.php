@@ -47,6 +47,8 @@ class PilotPassportChallengeTest extends DuskTestCase {
             ->press('@enroll_1')
             ->assertSee('You are now enrolled in the ZTL Pilot Passport program!');
         });
+        $enrollment = PilotPassportEnrollment::where('cid', Config::get('vatsim.auth_dev_credential'))->where('challenge_id', 1)->count();
+        $this->assertTrue($enrollment > 0);
     }
 
     public function test_passport_book_view(): void {
@@ -87,6 +89,8 @@ class PilotPassportChallengeTest extends DuskTestCase {
                     ->clickLink('Settings')
                     ->assertRadioSelected('@privacy', '2');
         });
+        $privacy_flag = RealopsPilot::where('id', Config::get('vatsim.auth_dev_credential'))->where('privacy', 2)->count();
+        $this->assertTrue($privacy_flag > 0);
     }
 
     public function test_disenroll_purge(): void {
