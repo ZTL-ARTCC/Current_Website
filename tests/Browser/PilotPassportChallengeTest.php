@@ -105,27 +105,14 @@ class PilotPassportChallengeTest extends DuskTestCase {
                     })
                     ->waitFor('.navbar', 30)
                     ->assertSee('You have been successfully logged out');
+            $cid = Config::get('vatsim.auth_dev_credential');
+            $pilot = RealopsPilot::find($cid);
+            $enrollment = PilotPassportEnrollment::where('cid', $cid)->first();
+            $achievement = PilotPassportAward::where('cid', $cid)->first();
+            $log = PilotPassportLog::where('cid', $cid)->first();
+            $data_remaining = $pilot || $enrollment || $achievement || $log;
+            $this->assertFalse($data_remaining);
         });
-    }
-
-    public function test_purge_data(): void {
-        $this->loginSamplePilot(true);
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/pilot_passport')
-                    ->clickLink('Settings')
-                    ->press('@purge_data')
-                    ->whenAvailable('.modal', function (Browser $modal) {
-                        $modal->type('@confirm', 'confirm - purge all')
-                            ->press('Continue');
-                    });
-        });
-        $cid = Config::get('vatsim.auth_dev_credential');
-        $pilot = RealopsPilot::find($cid);
-        $enrollment = PilotPassportEnrollment::where('cid', $cid)->first();
-        $achievement = PilotPassportAward::where('cid', $cid)->first();
-        $log = PilotPassportLog::where('cid', $cid)->first();
-        $data_remaining = $pilot || $enrollment || $achievement || $log;
-        $this->assertFalse($data_remaining);
     }
 
     public function loginSamplePilot($with_enrollment = false): void {
