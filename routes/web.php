@@ -163,14 +163,14 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     });
 
     Route::prefix('admin')->group(function () {
-        Route::prefix('announcement')->middleware('permission:staff')->group(function () {
+        Route::prefix('announcement')->middleware('permission:staff|contributor')->group(function () {
             Route::get('/', 'AdminDash@setAnnouncement');
             Route::post('/', 'AdminDash@saveAnnouncement')->name('saveAnnouncement');
         });
         Route::prefix('audits')->middleware('permission:snrStaff')->group(function () {
             Route::get('/', 'AdminDash@showAudits');
         });
-        Route::prefix('calendar')->middleware('permission:staff')->group(function () {
+        Route::prefix('calendar')->middleware('permission:staff|contributor')->group(function () {
             Route::get('/', 'AdminDash@viewCalendar');
             Route::get('/view/{id}', 'AdminDash@viewCalendarEvent');
             Route::get('/new', 'AdminDash@newCalendarEvent');

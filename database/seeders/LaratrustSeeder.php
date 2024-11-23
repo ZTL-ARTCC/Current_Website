@@ -47,7 +47,7 @@ class LaratrustSeeder extends Seeder {
         ]);
         DB::table('roles')->insert([
              'name' => 'fe',
-             'display_name' => 'Assistant Facility Engineer'
+             'display_name' => 'Facility Engineer'
         ]);
         DB::table('roles')->insert([
              'name' => 'afe',
@@ -69,6 +69,10 @@ class LaratrustSeeder extends Seeder {
             'name' => 'events-team',
             'display_name' => 'Events Team Member'
        ]);
+        DB::table('roles')->insert([
+         'name' => 'marketing',
+         'display_name' => 'Marketing Coordinator'
+   ]);
         
         // Adds Permissions to the Permissions Table
         DB::table('permissions')->insert([
@@ -124,8 +128,10 @@ class LaratrustSeeder extends Seeder {
              'name' => 'email',
              'display_name' => 'Email'
         ]);
-        
-        
+        DB::table('permissions')->insert([
+            'name' => 'contributor',
+            'display_name' => 'Content Contributor'
+       ]);
         
         //Links Roles and Permissions
         DB::table('permission_role')->insert([
@@ -482,6 +488,14 @@ class LaratrustSeeder extends Seeder {
         DB::table('permission_role')->insert([
             'permission_id' => 10,
             'role_id' => 13
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 12,
+            'role_id' => 15
+        ]);
+        DB::table('permission_role')->insert([
+            'permission_id' => 13,
+            'role_id' => 15
         ]);
     }
 }
