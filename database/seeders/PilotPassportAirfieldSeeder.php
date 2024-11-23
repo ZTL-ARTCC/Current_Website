@@ -21,7 +21,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
              'description' => "Located in Atlanta Georgia, Hartsfield/Jackson is the world's busiest airport by 
              both aircraft movements and passenger enplanements, and is home to Delta Air Lines. The airport is named 
              after former Atlanta Mayors William B. Hartsfield and Maynard Jackson who were both champions of the 
-             airport and played a major role into growing it into the hub that it is today. ATL is also home to the 
+             airport and played a major role by growing it into the hub that it is today. ATL is also home to the 
              Delta Flight Museum; a must-see attraction for aviation enthusiasts."
 
          ]);
