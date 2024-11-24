@@ -13,8 +13,6 @@ New Training Ticket
 @section('content')
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
 
-
-
 <div class="container">
     {{ html()->form()->route('saveTicket')->attributes(['id'=>'newTrainingTicket'])->open() }}
         @csrf
@@ -115,7 +113,6 @@ New Training Ticket
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>
-                    <!-- {{ html()->textarea('comments', null)->class(['form-control']) }} -->
                     <textarea name="comments" class="form-control text-editor" id="comments"></textarea>
                 </div>
             </div>
