@@ -61,13 +61,13 @@ View Training Ticket
 
             <p><b>Comments:</b></p>
             @if($ticket->comments != null)
-                <p>{!! nl2br($ticket->comments) !!}</p>
+                <p>{!! $ticket->comments !!}</p>
             @else
                 <p>No comments for this ticket.</p>
             @endif
             <p><b>Trainer Comments:</b></p>
             @if($ticket->ins_comments != null)
-                <p>{!! nl2br($ticket->ins_comments) !!}</p>
+                <p>{!! $ticket->ins_comments !!}</p>
             @else
                 <p>No trainer comments for this ticket.</p>
             @endif
