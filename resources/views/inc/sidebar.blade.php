@@ -29,13 +29,13 @@
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                <a class="nav-link" href="https://scheduling.ztlartcc.org?first_name={{ Auth::user()->fname }}&last_name={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
+                <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback/new">Leave INS/MTR Feedback</a>
                 @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
-                    <a class="nav-link" href="https://scheduling.ztlartcc.org/index.php/user/login" target="_blank">Schedule Management</a>
+                    <a class="nav-link" href="https://scheddy.ztlartcc.org/dash/" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif
@@ -46,15 +46,17 @@
                 @endif
             </div>
         @endif
-        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files'))
+        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('contributor'))
             <div class="dropdown-divider"></div>
             <p class="collapsible-sidebar" name="administration">
                 ADMINISTRATION
                 <b class="caret float-right fas fa-caret-left"></b>
             </p>
             <div class="content">
-                @if(Auth::user()->isAbleTo('staff'))
+                @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('contributor'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/calendar') }}" href="/dashboard/admin/calendar">Calendar/News</a>
+                @endif
+                @if(Auth::user()->isAbleTo('staff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/airports') }}" href="/dashboard/admin/airports">Airport Management</a>
                 @endif
                 @if(Auth::user()->isAbleTo('scenery'))
@@ -67,7 +69,7 @@
                     <a class="nav-link" href="https://accounts.zoho.in/" target="_blank">Staff Webmail</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/email/send') }}" href="/dashboard/admin/email/send">Send New Email</a>
                 @endif
-                @if(Auth::user()->isAbleTo('staff'))
+                @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('contributor'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/announcement') }}" href="/dashboard/admin/announcement">Announcement</a>
                 @endif
                 @if(Auth::user()->isAbleTo('snrStaff'))

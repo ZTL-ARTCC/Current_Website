@@ -12,12 +12,15 @@ View Training Ticket
 @include('inc.header', ['title' => 'View Training Ticket for ' . $ticket->controller_name])
 
 <div class="container">
-    <a class="btn btn-primary" href="/dashboard/training/tickets?id={{ $ticket->controller_id }}"><i class="fas fa-arrow-left"></i> Back</a>
     @if(Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff'))
         <a class="btn btn-warning" href="/dashboard/training/tickets/edit/{{ $ticket->id }}">Edit Ticket</a>
     @endif
     @if(Auth::user()->isAbleTo('snrStaff'))
         <a class="btn btn-danger" href="/dashboard/training/tickets/delete/{{ $ticket->id }}">Delete Ticket</a>
+    @endif
+    <a class="btn btn-primary" href="/dashboard/training/tickets?id={{ $ticket->controller_id }}">View {{ $ticket->controller_name }}'s Training Data</a>
+    @if($ticket->draft)
+        <a class="btn btn-primary" href="/dashboard/training/tickets">Open Drafts</a>
     @endif
     <br><br>
     <div class="card">

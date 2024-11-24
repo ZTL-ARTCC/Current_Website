@@ -186,8 +186,9 @@ class TrainingDash extends Controller {
     }
 
     public function ticketsIndex(Request $request) {
-        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) {
-            if (TrainingTicket::where('controller_id', $user->id)->first() != null || $user->visitor == 0) {
+        $controllers_with_tickets = array_flip(TrainingTicket::groupBy('controller_id')->pluck('controller_id')->toArray());
+        $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) use ($controllers_with_tickets) {
+            if (array_key_exists($user->id, $controllers_with_tickets) || $user->visitor == 0) {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
@@ -198,6 +199,10 @@ class TrainingDash extends Controller {
         } else {
             $search_result = null;
         }
+
+        $tickets = null;
+        $all_drafts = null;
+        $exams = null;
 
         if ($search_result != null) {
             $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
@@ -214,38 +219,14 @@ class TrainingDash extends Controller {
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
-            $exams = $this->getAcademyExamTranscript($request->id);
-        } else {
-            $tickets = null;
-            $exams = null;
+            $exams = User::getAcademyExamTranscriptByCid($request->id);
+        } elseif(auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
+            $all_drafts = TrainingTicket::where('draft', true)->orderBy('created_at', 'DESC')->paginate(25);
+        } elseif(auth()->user()->isAbleTo('train')) {
+            $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts);
-    }
-
-    public function getAcademyExamTranscript($cid) {
-        $req_params = [
-            'form_params' => [],
-            'http_errors' => false
-        ];
-        $client = new Client();
-        $res = $client->request('GET', Config::get('vatusa.base').'/v2/academy/transcript/' . $cid . '?apikey=' . Config::get('vatusa.api_key'), $req_params);
-        $academy = (string) $res->getBody();
-        $exams = ['BASIC' => ['date' => null, 'success' => 3, 'grade' => null], 'S2' => ['date' => null, 'success' => 3, 'grade' => null], 'S3' => ['date' => null, 'success' => 3, 'grade' => null], 'C1' => ['date' => null, 'success' => 3, 'grade' => null]];
-        $academy = json_decode($academy, true);
-        $exam_names = array_keys($exams);
-        foreach ($exam_names as $exam) {
-            if (isset($academy['data'][$exam])) {
-                foreach ($academy['data'][$exam] as $exam_attempt) {
-                    if (is_null($exams[$exam]['date']) || ($exam_attempt['grade'] > $exams[$exam]['grade'])) {
-                        $exams[$exam]['date'] = date("m/d/y", $exam_attempt['time_finished']);
-                        $exams[$exam]['success'] = ($exam_attempt['grade'] >= 80) ? 1 : 0;
-                        $exams[$exam]['grade'] = $exam_attempt['grade'];
-                    }
-                }
-            }
-        }
-        return $exams;
+        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts)->with('all_drafts', $all_drafts);
     }
 
     public function searchTickets(Request $request) {
@@ -328,19 +309,22 @@ class TrainingDash extends Controller {
 
     public function deleteTicket($id) {
         $ticket = TrainingTicket::find($id);
-        if (Auth::user()->isAbleTo('snrStaff')) {
+        $draft = $ticket->draft;
+        if (Auth::user()->isAbleTo('snrStaff') || (Auth::id() == $ticket->trainer_id && $draft)) {
             $controller_id = $ticket->controller_id;
             $ticket->delete();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
-            $audit->save();
+            if (! $draft) {
+                $audit = new Audit;
+                $audit->cid = Auth::id();
+                $audit->ip = $_SERVER['REMOTE_ADDR'];
+                $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
+                $audit->save();
+            }
 
             return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Only the TA can delete training tickets.');
+            return redirect()->back()->with('error', 'Only the TA can delete non-draft training tickets.');
         }
     }
 
@@ -802,6 +786,17 @@ class TrainingDash extends Controller {
         $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
         return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
     }
+
+    public function handleSchedule() {
+        $user = Auth::user();
+
+        if ($user->rating_id == 1 && !$user->onboarding_complete) {
+            return redirect()->back()->with('error', 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
+        }
+
+        return redirect("https://scheddy.ztlartcc.org/");
+    }
+
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',

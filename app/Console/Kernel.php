@@ -22,8 +22,8 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\RosterRemovalWarn',
         '\App\Console\Commands\VatsimAtcBookingSync',
         '\App\Console\Commands\VATUSAEventsUpdate',
+        '\App\Console\Commands\UpdateAcademyExams',
         '\App\Console\Commands\UploadTrainingTickets',
-        '\App\Console\Commands\TrainingReminderEmails'
     ];
 
     /**
@@ -33,7 +33,6 @@ class Kernel extends ConsoleKernel {
         $schedule->command('SoloCerts:UpdateSoloCerts')->dailyAt('05:01')->monitorName('VATUSA Solo Cert Sync');
         $schedule->command('model:prune', ['--model' => MonitoredScheduledTaskLogItem::class])->dailyAt('05:17')->monitorName('Prune Task Monitor Database');
         $schedule->command('Events:GenerateStatReports')->dailyAt('05:42')->monitorName('Event Stat Reports');
-        $schedule->command('Training:SendReminderEmails')->hourlyAt(3)->monitorName('Send Training Session Reminder Emails');
         $schedule->command('RosterUpdate:UpdateRoster')->hourlyAt(7)->monitorName('Roster Update');
         $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
         $schedule->command('VATUSAEvents:Update')->hourlyAt(22)->monitorName('VATUSA Events Sync');
@@ -42,6 +41,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Weather:UpdateWeather')->everyFourMinutes()->monitorName('Update Weather');
         $schedule->command('Overflights:GetOverflights')->everyThreeMinutes()->monitorName('Sync Overflights');
         $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
+        $schedule->command('RosterUpdate:UpdateAcademyExams')->cron('17 */2 * * *')->monitorName('Active Controller Exam Update');
         $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
             return FeatureToggle::isEnabled('auto_support_events');
         });

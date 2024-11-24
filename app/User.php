@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Contracts\LaratrustUser;
@@ -18,6 +19,28 @@ class User extends Authenticatable implements LaratrustUser {
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function academyExams(): HasMany {
+        return $this->hasMany(AcademyExam::class, 'controller_id');
+    }
+
+    public function getAcademyExamTranscript() {
+        $exams = array_flip(AcademyExam::$EXAM_NAMES);
+
+        foreach (AcademyExam::$EXAM_NAMES as $exam_name) {
+            $exams[$exam_name] = ['date' => null, 'success' => 3, 'grade' => null];
+        }
+
+        foreach ($this->academyExams as $exam) {
+            $exams[$exam->name] = ['date' => $exam->date, 'success' => $exam->success, 'grade' => $exam->grade];
+        }
+
+        return $exams;
+    }
+
+    public static function getAcademyExamTranscriptByCid($cid) {
+        return User::find($cid)->getAcademyExamTranscript();
     }
 
     public function getBackwardsNameAttribute() {
@@ -50,6 +73,20 @@ class User extends Authenticatable implements LaratrustUser {
         5 => 'C1', 7 => 'C3',
         8 => 'I1', 10 => 'I3',
         11 => 'SUP', 12 => 'ADM',
+    ];
+
+    public const RATINGS = [
+        'N/A' => 0,
+        'OBS' => 1,
+        'S1' => 2,
+        'S2' => 3,
+        'S3' => 4,
+        'C1' => 5,
+        'C3' => 7,
+        'I1' => 8,
+        'I3' => 10,
+        'SUP' => 11,
+        'ADM' => 12
     ];
 
     private static $letters = [
@@ -112,6 +149,12 @@ class User extends Authenticatable implements LaratrustUser {
         2 => 'Inactive'
     ];
 
+    public const STATUSES = [
+        'ACTIVE' => 1,
+        'LOA' => 0,
+        'INACTIVE' => 2
+    ];
+
     public static function getUserStatusAttribute() {
         return array_filter(self::$StatusText);
     }
@@ -125,7 +168,8 @@ class User extends Authenticatable implements LaratrustUser {
         6 => 'AWM',
         7 => 'FE',
         8 => 'AFE',
-        9 => 'EC'
+        9 => 'EC',
+        10 => 'Marketing'
     ];
 
     protected static $FacilityStaff = [0 => 'NONE', ...self::FACILITY_STAFF_POSITION_MAP];
@@ -264,6 +308,8 @@ class User extends Authenticatable implements LaratrustUser {
             return 11;
         } elseif ($this->hasRole('events-team')) {
             return 12;
+        } elseif ($this->hasRole('marketing')) {
+            return 10;
         } else {
             return 0;
         }
