@@ -7,6 +7,8 @@ Training Tickets
 @section('content')
 @include('inc.header', ['title' => 'Training Tickets'])
 
+
+
 <div class="container">
     @if($search_result != null)
         <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
@@ -131,7 +133,7 @@ Training Tickets
                                     @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
                                         <td data-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
                                     @else
-                                        <td data-toggle="tooltip" title="{{ strip_tags($t->ins_comments) }}">{!! str_limit($t->ins_comments, 40, '...') !!}</td>
+                                        <td data-toggle="tooltip" title="{{ e($t->ins_comments) }}" data-html="true">{!! str_limit($t->ins_comments, 40, '...') !!}</td>
                                     @endif
                                 </tr>
                                 @endif
