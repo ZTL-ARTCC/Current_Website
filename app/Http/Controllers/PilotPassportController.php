@@ -90,6 +90,14 @@ class PilotPassportController extends Controller {
         return redirect('/logout');
     }
 
+    public function tabPassportBook() {
+        return redirect(route('pilotPassportIndex'))->with(['tab' => 'passport_book']);
+    }
+
+    public function tabAchievements() {
+        return redirect(route('pilotPassportIndex'))->with(['tab' => 'achievements']);
+    }
+
     public static function fetchRecentPilotAccomplishments() {
         $accomplishments = PilotPassportAward::where('awarded_on', '>', now()->subDays(90)->endOfDay())
             ->orderByRaw('RAND()')->take(10)->get();

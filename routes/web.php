@@ -58,6 +58,8 @@ Route::prefix('pilot_passport')->group(function () {
     Route::get('/certificate/{id}', 'PilotPassportController@generateCertificate')->middleware('auth:realops');
     Route::post('/disenroll', 'PilotPassportController@purgeData')->name('pilotPassportPurgeData')->middleware('auth:realops');
     Route::post('/privacy', 'PilotPassportController@setPrivacy')->name('pilotPassportSettings')->middleware('auth:realops');
+    Route::get('/passport_book', 'PilotPassportController@tabPassportBook');
+    Route::get('/achievements', 'PilotPassportController@tabAchievements');
 });
 
 /*
