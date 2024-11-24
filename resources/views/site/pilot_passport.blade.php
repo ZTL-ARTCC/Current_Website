@@ -159,7 +159,10 @@ ZTL Pilot Passport Challenge
                         <br>
                         @if($a->visited)
                             <img src="/pilot_passport/stamp/{{ $a->airfield_id }}" width="150px" alt="stamp">
-                            <br>{{ $a->visited->callsign }} ({{ $a->visited->aircraft_type }})
+                            <br>{{ $a->visited->callsign }} 
+                            @if($a->visited->aircraft_type != '') 
+                                ({{ $a->visited->aircraft_type }})
+                            @endif
                             <br>Visited on: {{ $a->visited->visited_on }}
                         @else
                             <img src="/photos/pilot_passport/pilot_passport_stamp_gray.png" width="150px" alt="stamp">
