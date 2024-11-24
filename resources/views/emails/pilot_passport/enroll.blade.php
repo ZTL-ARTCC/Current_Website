@@ -11,7 +11,7 @@
     email confirmation with each qualifying visit (emails may be delayed up to 5 minutes).</p>
 
 <p>If you did not enroll in this program or otherwise believe this email to be in error, please contact us at: 
-    <a href="emailto:wm@ztlartcc.org" alt="Email">wm@ztlartcc.org</a>.</p>
+    <a href="mailto:wm@ztlartcc.org" alt="Email">wm@ztlartcc.org</a>.</p>
 
 <p>Thank you!<br> - vZTL Staff</p>
 @endsection
