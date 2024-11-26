@@ -7,8 +7,6 @@ Training Tickets
 @section('content')
 @include('inc.header', ['title' => 'Training Tickets'])
 
-
-
 <div class="container">
     @if($search_result != null)
         <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
