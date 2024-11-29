@@ -72,7 +72,7 @@
                     </thead>
                 </table>
             @else
-                <p>No scenery available for this simulator type.</p>
+                @include('inc.empty_state', ['header' => 'No Scenery', 'body' => 'No scenery currently exists for this simulator type.', 'icon' => 'fa fa-plane'])
             @endif
         </div>
         @endforeach
