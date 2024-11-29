@@ -30,17 +30,17 @@ Files
                 @php ($activeMarker = ' active')
             @endif
         <div role="tabpanel" class="tab-pane{{ $activeMarker }}" id="{{ $fileCategory }}">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col"><center>Description</center></th>
-                        <th scope="col"><center>Uploaded/Updated at</center></th>
-                        <th scope="col"><center>Download</center></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($$fileCategory->count() > 0)
+            @if($$fileCategory->count() > 0)
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col"><center>Description</center></th>
+                            <th scope="col"><center>Uploaded/Updated at</center></th>
+                            <th scope="col"><center>Download</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach($$fileCategory as $f)
                             <tr>
                             @if($f->row_separator)
@@ -50,19 +50,21 @@ Files
                                 <td>{{ $f->desc }}</td>
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
-								<div class="btn-group">
+                                <div class="btn-group">
                                     <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download" {{ ($fileCategory == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
-										@if(!is_null($f->permalink))
-											<a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Copy Permalink" data-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
-										@endif
-								</div>									
+                                        @if(!is_null($f->permalink))
+                                            <a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Copy Permalink" data-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
+                                        @endif
+                                </div>									
                                 </td>
                             @endif
                             </tr>
                         @endforeach
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            @else
+                @include('inc.empty_state', ['header' => 'No Files', 'body' => 'There are no files of this type to show.', 'icon' => 'fa-solid fa-file'])
+            @endif
         </div>
         @endforeach
     </div>
