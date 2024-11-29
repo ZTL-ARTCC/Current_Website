@@ -137,6 +137,10 @@ return $badge;
             <p>You are departing from ATL. Atlanta Tower and Atlanta Center are the only controllers logged in. You will talk to Atlanta Tower for
                 clearance delivery, ground, and tower. You will talk to Atlanta Center for approach and enroute services.</p>
             <h4>Current ATC staffing at Atlanta:</h4>
+            @php
+            $del = $gnd = $twr = $dep = $ctr = FALSE;
+            @endphp
+            @if(count($controllers) > 0)
             <div class="table">
                 <table class="table table-bordered table-sm">
                     <thead>
@@ -154,10 +158,6 @@ return $badge;
                         </th>
                     </thead>
                     <tbody>
-                        @php
-                        $del = $gnd = $twr = $dep = $ctr = FALSE;
-                        @endphp
-                        @if(count($controllers) > 0)
                         @foreach($controllers as $c)
                         @php
                         if(is_numeric(strpos($c->position,'CTR'))&&!$ctr)
@@ -206,16 +206,12 @@ return $badge;
                         if(!$del)
                         $del = $gnd;
                         @endphp
-                        @else
-                        <tr>
-                            <td colspan="6">
-                                <center><i>No Controllers Online</i></center>
-                            </td>
-                        </tr>
-                        @endif
                     </tbody>
                 </table>
             </div>
+            @else
+            @include('inc.empty_state', ['header' => 'No Controllers Online', 'body' => 'There are currently no controllers online at ATL.'])
+            @endif
 
             <p>If more than one ground controller is online at ATL, you should call GC-N/121.9 for taxi to runway 8R/26L or GC-C/121.75 for taxi
                 to runway 9L/27R.</p>
