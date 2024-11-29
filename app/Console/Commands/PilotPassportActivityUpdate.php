@@ -61,7 +61,7 @@ class PilotPassportActivityUpdate extends Command {
             if (PilotPassportEnrollment::where('cid', $flight->cid)->get()->isEmpty()) {
                 continue;
             }
-            $this->info('Enrolled pilot found connected: ' . $flight->cid);
+            $this->info('Enrolled pilot found connected: ' . $flight->cid . '|' . $flight->name);
             if ($flight->groundspeed > SELF::SPEED_LIMIT) {
                 $this->info('- [Speed Limit] - too fast to log');
                 continue;
@@ -99,7 +99,7 @@ class PilotPassportActivityUpdate extends Command {
                 continue;
             }
             if ($flight->altitude - $airport->elevation > SELF::ALTITUDE_LIMIT) {
-                $this->info('- [Altitude Limit] - too high log');
+                $this->info('- [Altitude Limit] - too high to log');
                 continue;
             }
             if (LatLong::calcDistance($ppos, $airport->fetchLatLong()) > SELF::RADIUS_LIMIT) {
