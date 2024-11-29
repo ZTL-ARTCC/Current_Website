@@ -15,17 +15,17 @@ Profile
     <div class="row">
         <div class="col-sm-6">
             <center><h4>My Feedback:</h4></center>
-            <div class="table">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col"><center>Position</center></th>
-                            <th scope="col"><center>Result</center></th>
-                            <th scope="col"><center>Comments</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($feedback->count() >=1 )
+            @if($feedback->count() > 0)
+                <div class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Position</center></th>
+                                <th scope="col"><center>Result</center></th>
+                                <th scope="col"><center>Comments</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($feedback as $f)
                                 <tr>
                                     <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
@@ -33,29 +33,27 @@ Profile
                                     <td><center>{{ str_limit($f->comments, 25, '...') }}</center></td>
                                 </tr>
                             @endforeach
-                    </tbody>
-                </table>
-                        @else
-                    </tbody>
-                </table>
-                            <p>No feedback found.</p>
-                        @endif
-               {!! $feedback->links() !!}         
-            </div>
+                        </tbody>
+                    </table>
+                   {!! $feedback->links() !!}         
+                </div>
+            @else 
+                @include('inc.empty_state', ['header' => 'No Feedback', 'body' => 'No feedback found.', 'icon' => 'fa-solid fa-comment'])
+            @endif
         </div>
         <div class="col-sm-6">
             <center><h4>My Training Tickets:</h4></center>
-            <div class="table">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col"><center>Date</center></th>
-                            <th scope="col"><center>Trainer</center></th>
-                            <th scope="col"><center>Position</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(isset($tickets))
+            @if($tickets->count() > 0)
+                <div class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Date</center></th>
+                                <th scope="col"><center>Trainer</center></th>
+                                <th scope="col"><center>Position</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($tickets as $t)
                                 <tr>
                                     <td>
@@ -73,15 +71,12 @@ Profile
                                     <td><center>{{ $t->position_name }}</center></td>
                                 </tr>
                             @endforeach
-                        @endif
-                    </tbody>
-                </table>
-                @if(!isset($tickets))
-                    <p>No training tickets found.</p>
-                @endif
-            </div>
-            @if(isset($tickets))
+                        </tbody>
+                    </table>
+                </div>
                 {!! $tickets->links() !!}
+            @else
+                @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'No training tickets found.', 'icon' => 'fa-solid fa-folder-open'])
             @endif
         </div>
     </div>
