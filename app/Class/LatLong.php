@@ -12,7 +12,6 @@ class LatLong {
     }
 
     public function radLatitude(): float {
-        $this->latitude *= pi() / 180;
         return $this->latitude * pi() / 180;
     }
 
