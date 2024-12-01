@@ -34,6 +34,7 @@
                             <a class="dropdown-item" href="/pilots/guide/atl">ATL Pilot Guide</a>
                             <a class="dropdown-item" href="/ramp-status/atl">ATL Gate Status</a>
                             <a class="dropdown-item" href="/ramp-status/clt">CLT Gate Status</a>
+                            <a class="dropdown-item" href="/pilot_passport">Pilot Passport Challenge</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder {
             LaratrustSeeder::class,
             PositionPresetSeeder::class,
             AnnouncementSeeder::class,
+            PilotPassportSeeder::class,
+            PilotPassportAirfieldSeeder::class,
+            PilotPassportAirfieldMapSeeder::class
         ]);
     }
 }
