@@ -117,7 +117,7 @@ class PilotPassportActivityUpdate extends Command {
         foreach ($challenges as $challenge) {
             $challenge_previously_awarded = PilotPassportAward::where('cid', $pilot->id)->where('challenge_id', $challenge->id)->first();
             if ($challenge_previously_awarded) {
-                break;
+                continue;
             }
             $challenge_airfields = PilotPassportAirfieldMap::where('mapped_to', $challenge->id)->orderBy('airfield', 'asc')->pluck('airfield')->toArray();
             $phase_complete = true;
