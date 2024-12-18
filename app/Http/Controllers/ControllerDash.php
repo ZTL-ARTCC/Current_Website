@@ -149,7 +149,7 @@ class ControllerDash extends Controller {
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(10);
             $last_training = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->first();
         } else {
-            $tickets = null;
+            $tickets = $tickets_sort;
             $last_training = null;
         }
 
