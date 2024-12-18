@@ -14,18 +14,18 @@ Profile
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <center><h4>My Feedback:</h4></center>
-            <div class="table">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col"><center>Position</center></th>
-                            <th scope="col"><center>Result</center></th>
-                            <th scope="col"><center>Comments</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($feedback->count() >=1 )
+            @if($feedback->count() > 0)
+                <center><h4>My Feedback:</h4></center>
+                <div class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Position</center></th>
+                                <th scope="col"><center>Result</center></th>
+                                <th scope="col"><center>Comments</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($feedback as $f)
                                 <tr>
                                     <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
@@ -33,29 +33,27 @@ Profile
                                     <td><center>{{ str_limit($f->comments, 25, '...') }}</center></td>
                                 </tr>
                             @endforeach
-                    </tbody>
-                </table>
-                        @else
-                    </tbody>
-                </table>
-                            <p>No feedback found.</p>
-                        @endif
-               {!! $feedback->links() !!}         
-            </div>
+                        </tbody>
+                    </table>
+                   {!! $feedback->links() !!}         
+                </div>
+            @else 
+                @include('inc.empty_state', ['header' => 'No Feedback', 'body' => 'No feedback found.', 'icon' => 'fa-solid fa-comment'])
+            @endif
         </div>
         <div class="col-sm-6">
-            <center><h4>My Training Tickets:</h4></center>
-            <div class="table">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col"><center>Date</center></th>
-                            <th scope="col"><center>Trainer</center></th>
-                            <th scope="col"><center>Position</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(isset($tickets))
+            @if($tickets->count() > 0)
+                <center><h4>My Training Tickets:</h4></center>
+                <div class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Date</center></th>
+                                <th scope="col"><center>Trainer</center></th>
+                                <th scope="col"><center>Position</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($tickets as $t)
                                 <tr>
                                     <td>
@@ -73,92 +71,81 @@ Profile
                                     <td><center>{{ $t->position_name }}</center></td>
                                 </tr>
                             @endforeach
-                        @endif
-                    </tbody>
-                </table>
-                @if(!isset($tickets))
-                    <p>No training tickets found.</p>
-                @endif
-            </div>
-            @if(isset($tickets))
+                        </tbody>
+                    </table>
+                </div>
                 {!! $tickets->links() !!}
+            @else
+                @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'No training tickets found.', 'icon' => 'fa-solid fa-folder-open'])
             @endif
         </div>
     </div>
     @if(Auth::user()->isAbleTo('train'))
     <div class="row">
         <div class="col-sm-12">
-            <center><h4>My Training Team Feedback:</h4></center>
-            <div class="table">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col"><center>Date</center></th>
-                            <th scope="col"><center>Lesson/Position</center></th>
-                            <th scope="col"><center>Service Level</center></th>
-                            <th scope="col"><center>Comments</center></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($training_feedback->count() >=1 )
-                            @foreach($training_feedback as $f)
-                                <tr>
-                                    <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/trainer-feedback-details/{{ $f->id }}">{{ $f->feedback_date }}</a></center></td>
-                                    <td><center>{{ $f->position_trained }}</center></td>
-                                    <td><center>{{ $f->service_level_text }}</center></td>
-                                    <td><center>{{ str_limit($f->comments, 80, '...') }}</center></td>
-                                </tr>
-                            @endforeach
-                    </tbody>
-                </table>
-                        @else
-                    </tbody>
-                </table>
-                            <p>No training team feedback found.</p>
-                        @endif
-               {!! $training_feedback->links() !!}         
-            </div>
+            @if($training_feedback->count() > 0)
+                <center><h4>My Training Team Feedback:</h4></center>
+                <div class="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Date</center></th>
+                                <th scope="col"><center>Lesson/Position</center></th>
+                                <th scope="col"><center>Service Level</center></th>
+                                <th scope="col"><center>Comments</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @foreach($training_feedback as $f)
+                                    <tr>
+                                        <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/trainer-feedback-details/{{ $f->id }}">{{ $f->feedback_date }}</a></center></td>
+                                        <td><center>{{ $f->position_trained }}</center></td>
+                                        <td><center>{{ $f->service_level_text }}</center></td>
+                                        <td><center>{{ str_limit($f->comments, 80, '...') }}</center></td>
+                                    </tr>
+                                @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {!! $training_feedback->links() !!}         
+            @else
+                @include('inc.empty_state', ['header' => 'No Training Team Feedback', 'body' => 'No training team feedback found.', 'icon' => 'fa-solid fa-comment'])
+               @endif
         </div>
     </div>
     @endif
     <hr>
     <div class="row">
         <div class="col">
-            <h4>My Training Appointments</h4>
-            <div class="table">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date/time</th>
-                            <th scope="col">Lesson Type</th>
-                            <th scope="col">Instructor/Mentor</th>
-                            <th scope="col">View/Modify</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($appointments_successful)
-                            @if(count($appointments) > 0)
-                                @foreach($appointments as $appointment)
-                                    <tr>
-                                        <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
-                                        <td scope="col">{{ $appointment->sessionType->name }}</td>
-                                        <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
-                                        <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td scope="col" colspan="5">No appointments found.</td>
-                                </tr>
-                            @endif
-                        @else
+            @if($appointments_successful && count($appointments) > 0)
+                <h4>My Training Appointments</h4>
+                <div class="table">
+                    <table class="table table-bordered text-center">
+                        <thead>
                             <tr>
-                                <td scope="col" colspan="5">Could not load appointment information :(</td>
+                                <th scope="col">Date/time</th>
+                                <th scope="col">Lesson Type</th>
+                                <th scope="col">Instructor/Mentor</th>
+                                <th scope="col">View/Modify</th>
                             </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach($appointments as $appointment)
+                                <tr>
+                                    <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
+                                    <td scope="col">{{ $appointment->sessionType->name }}</td>
+                                    <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
+                                    <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @elseif(! $appointments_successful)
+                @include('inc.empty_state', ['header' => 'No Training Appointments', 'body' => 'Could not load training appointments.', 'icon' => 'fa-solid fa-warning'])
+            @else
+                @include('inc.empty_state', ['header' => 'No Training Appointments', 'body' => 'No training appointments found.', 'icon' => 'fa-solid fa-calendar'])
+            @endif
         </div>
     </div>
     <hr>
