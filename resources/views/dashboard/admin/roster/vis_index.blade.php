@@ -28,19 +28,19 @@ Visit Requests
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="new">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <th scope="col" class="text-left">Name (CID)</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Home ARTCC/Division</th>
-                        <th scope="col">Submitted at</th>
-                        <th scope="col" width="120px">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($new)
+            @if($new->count() > 0)
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="text-left">Name (CID)</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Home ARTCC/Division</th>
+                            <th scope="col">Submitted at</th>
+                            <th scope="col" width="120px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach($new as $v)
                             <tr class="text-center">
                                 <td class="text-left" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
@@ -79,11 +79,11 @@ Visit Requests
                             </div>
                         </div>
                         @endforeach
-                    @else
-                        <p>No new visit requests to show.</p>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            @else
+                @include('inc.empty_state', ['header' => 'No New Visit Requests', 'body' => 'There are currently no new visit requests at this time', 'icon' => 'fa-solid fa-suitcase'])
+            @endif
         </div>
         <div role="tabpanel" class="tab-pane" id="accepted">
             <table class="table table-striped">
