@@ -115,11 +115,14 @@ class FrontController extends Controller {
 
         $bookings = groupAtcBookingsByDate($bookings);
 
+        $pilot_accomplishments = PilotPassportController::fetchRecentPilotAccomplishments();
+
         return view('site.home')->with('center', $center)->with('fields', $fields)
                                 ->with('airports', $airports)->with('controllers', $controllers)
                                 ->with('calendar', $calendar)->with('news', $news)->with('events', $events)
                                 ->with('overflightCount', $overflightCount)
-                                ->with('bookings', $bookings);
+                                ->with('bookings', $bookings)
+                                ->with('pilot_accomplishments', $pilot_accomplishments);
     }
 
     public function teamspeak() {

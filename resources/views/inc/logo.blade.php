@@ -27,7 +27,7 @@
     @elseif($month == 11 && $day >= 20)
         @php ($logo_id = 'ztl_logo_turkey-')
     @elseif($month == 12)
-        @php ($logo_id = 'ztl_logo_santa-b')
+        @php ($logo_id = 'ztl_logo_santa-')
     @endif
 @endtoggle
 <img src="/photos/logos/{{ $logo_id }}{{ $logo_bg_color }}.png">

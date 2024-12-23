@@ -63,9 +63,8 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
-        $realops_toggle_enabled = toggleEnabled('realops');
-        if(session('realops_redirect') && $realops_toggle_enabled) {
-            return $this->externalRealopsLogin(
+        if(session('pilot_redirect')) {
+            return $this->externalPilotLogin(
                 $resourceOwner->data->cid,
                 $resourceOwner->data->personal->name_first,
                 $resourceOwner->data->personal->name_last,
@@ -84,11 +83,10 @@ class LoginController extends Controller {
         }
 
         $result = $client->request('GET', Config::get('vatusa.base').'/v2/user/' . $resourceOwner->data->cid . '?apikey=' . Config::get('vatusa.api_key'), ['http_errors' => false]);
-        $realops_toggle_enabled = toggleEnabled('realops');
 
         if (! $result || $result->getStatusCode() != 200) {
-            if ($realops_toggle_enabled && !App::environment('local')) {
-                return $this->externalRealopsLogin(
+            if (!App::environment('local')) {
+                return $this->externalPilotLogin(
                     $resourceOwner->data->cid,
                     $resourceOwner->data->personal->name_first,
                     $resourceOwner->data->personal->name_last,
@@ -192,8 +190,9 @@ class LoginController extends Controller {
     }
 
     public function realopsLogin() {
+        session(['pilot_redirect_path' =>  '/realops']);
         if (! auth()->check()) {
-            session(['realops_redirect' =>  true]);
+            session(['pilot_redirect' =>  true]);
             return redirect('/login');
         }
 
@@ -210,10 +209,33 @@ class LoginController extends Controller {
         $realops_pilot->email = $user->email;
         $realops_pilot->save();
 
-        return $this->completeRealopsLogin($realops_pilot);
+        return $this->completePilotLogin($realops_pilot);
     }
 
-    private function externalRealopsLogin($cid, $fname, $lname, $email) {
+    public function pilotPassportLogin() {
+        session(['pilot_redirect_path' =>  '/pilot_passport']);
+        if (! auth()->check()) {
+            session(['pilot_redirect' =>  true]);
+            return redirect('/login');
+        }
+
+        $user = auth()->user();
+        $realops_pilot = RealopsPilot::find($user->id);
+
+        if (! $realops_pilot) {
+            $realops_pilot = new RealopsPilot;
+        }
+
+        $realops_pilot->id = $user->id;
+        $realops_pilot->fname = $user->fname;
+        $realops_pilot->lname = $user->lname;
+        $realops_pilot->email = $user->email;
+        $realops_pilot->save();
+
+        return $this->completePilotLogin($realops_pilot);
+    }
+
+    private function externalPilotLogin($cid, $fname, $lname, $email) {
         $realops_pilot = RealopsPilot::find($cid);
 
         if (! $realops_pilot) {
@@ -226,12 +248,14 @@ class LoginController extends Controller {
         $realops_pilot->email = $email;
         $realops_pilot->save();
 
-        return $this->completeRealopsLogin($realops_pilot);
+        return $this->completePilotLogin($realops_pilot);
     }
 
-    private function completeRealopsLogin($realops_pilot) {
-        auth()->guard('realops')->login($realops_pilot);
-        session()->forget('realops_redirect');
-        return redirect('/realops');
+    private function completePilotLogin($pilot) {
+        auth()->guard('realops')->login($pilot);
+        $redirect_path = session('pilot_redirect_path');
+        session()->forget('pilot_redirect');
+        session()->forget('pilot_redirect_path');
+        return redirect($redirect_path);
     }
 }

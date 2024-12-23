@@ -9,7 +9,7 @@
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
         <p class="footer-copyright text-dark">© {{ Carbon\Carbon::now()->year }} vZTL ARTCC</p>
         @if(Carbon\Carbon::now()->month == 12)
-            <button class="btn btn-dark btn-sm" onclick="snowStorm.stop();return false">Stop Snow</button>
+            <button class="btn btn-dark btn-sm" onclick="window.snowStorm.stop();return false">Stop Snow</button>
         @endif
 
     </div>

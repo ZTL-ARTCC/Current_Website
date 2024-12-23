@@ -62,6 +62,21 @@ Home
 						<img src="/photos/placeholder_banner.png" class="d-block w-100 rounded" alt="placeholder" />
 					</div>
 					@endif
+					@if($pilot_accomplishments)
+					<div class="carousel-item accomplishments">
+						<a href="/pilot_passport" alt="Pilot_Passport_Challenge">
+							<div class="w-100 h-100 rounded bg-dark text-white p-2">
+								<h4>ZTL Pilot Passport Challenge</h4>
+								<p>&nbsp;&nbsp;&nbsp;Congratulations on achieving these milestones!</p>
+								<ul>
+								@foreach($pilot_accomplishments as $pa)
+									<li>{{ $pa->pilot_name }} - {{ $pa->challenge_name }}</li>
+								@endforeach
+								</ul>
+							</div>
+						</a>
+					</div>
+					@endif
 				</div>
 				<a class="carousel-control-prev" href="#eventCarousel" role="button" data-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>

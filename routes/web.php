@@ -48,6 +48,20 @@ Route::prefix('realops')->middleware('toggle:realops')->group(function () {
     Route::get('/cancel-bid/{id}', 'RealopsController@cancelBid')->middleware('auth:realops');
 });
 
+Route::prefix('pilot_passport')->group(function () {
+    Route::get('/', 'PilotPassportController@index')->name('pilotPassportIndex');
+    Route::post('/', 'PilotPassportController@index')->name('pilotPassportIndex');
+    Route::get('/login', 'Auth\LoginController@pilotPassportLogin')->middleware('guest:realops');
+    Route::post('/enroll', 'PilotPassportController@enroll')->middleware('auth:realops')->name('pilotPassportEnroll');
+    Route::get('/stamp/{id}', 'PilotPassportController@generateStamp')->middleware('auth:realops');
+    Route::get('/medal/{id}', 'PilotPassportController@generateMedal')->middleware('auth:realops');
+    Route::get('/certificate/{id}', 'PilotPassportController@generateCertificate')->middleware('auth:realops');
+    Route::post('/disenroll', 'PilotPassportController@purgeData')->name('pilotPassportPurgeData')->middleware('auth:realops');
+    Route::post('/privacy', 'PilotPassportController@setPrivacy')->name('pilotPassportSettings')->middleware('auth:realops');
+    Route::get('/passport_book', 'PilotPassportController@tabPassportBook');
+    Route::get('/achievements', 'PilotPassportController@tabAchievements');
+});
+
 /*
 *   End Front Page Stuff
 */

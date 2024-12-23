@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel {
         '\App\Console\Commands\VATUSAEventsUpdate',
         '\App\Console\Commands\UpdateAcademyExams',
         '\App\Console\Commands\UploadTrainingTickets',
+        '\App\Console\Commands\PilotPassportActivityUpdate'
     ];
 
     /**
@@ -45,6 +46,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
             return FeatureToggle::isEnabled('auto_support_events');
         });
+        $schedule->command('PilotPassport:ActivityUpdate')->everyFiveMinutes()->monitorName('Update Pilot Passport Activity');
     }
 
     /**
