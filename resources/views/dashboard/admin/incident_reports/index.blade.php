@@ -18,18 +18,18 @@ Incident Report Management
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="new">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Controller</th>
-                        <th scope="col">Reporter</th>
-                        <th scope="col">Time of Incident</th>
-                        <th scope="col">Date of Incident</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if(count($new_reports) > 0)
+            @if(count($new_reports) > 0)
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Controller</th>
+                            <th scope="col">Reporter</th>
+                            <th scope="col">Time of Incident</th>
+                            <th scope="col">Date of Incident</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach($new_reports as $r)
                             <tr>
                                 <td>{{ $r->controller_name }}</td>
@@ -43,25 +43,25 @@ Incident Report Management
                                 </td>
                             </tr>
                         @endforeach
-                    @else
-                        <p>No new incident reports.</p>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            @else
+                @include('inc.empty_state', ['header' => 'No New Incident Reports', 'body' => 'There are no new incident reports to show', 'icon' => 'fa-solid fa-person-falling'])
+            @endif
         </div>
 
         <div role="tabpanel" class="tab-pane" id="archive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Time</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">View</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if(count($archive_reports) > 0)
+            @if(count($archive_reports) > 0)
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Time</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach($archive_reports as $r)
                             <tr>
                                 <td>{{ $r->time }}</td>
@@ -72,12 +72,12 @@ Incident Report Management
                                 </td>
                             </tr>
                         @endforeach
-                    @else
-                        <p>No archived incident reports.</p>
-                    @endif
-                </tbody>
-            </table>
-            {!! $archive_reports->links() !!}
+                    </tbody>
+                </table>
+                {!! $archive_reports->links() !!}
+            @else
+                @include('inc.empty_state', ['header' => 'No Archived Incident Reports', 'body' => 'There are no archived incident reports to show', 'icon' => 'fa-solid fa-person-falling'])
+            @endif
         </div>
     </div>
 </div>
