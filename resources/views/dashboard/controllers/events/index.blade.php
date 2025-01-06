@@ -18,19 +18,19 @@ Events
             <a href="/dashboard/admin/realops" class="btn btn-primary">Realops Admin</a>
          @endtoggle
     @endif
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">Event</th>
-                <th scope="col"><center>Date</center></th>
-                <th scope="col"><center>Time</center></th>
-                @if(Auth::user()->isAbleTo('events'))
-                    <th scope="col"><center>Actions</center></th>
-                @endif
-            </tr>
-        </thead>
-        <tbody>
-            @if($events->count() > 0)
+    @if($events->count() > 0)
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Event</th>
+                    <th scope="col"><center>Date</center></th>
+                    <th scope="col"><center>Time</center></th>
+                    @if(Auth::user()->isAbleTo('events'))
+                        <th scope="col"><center>Actions</center></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
                 @foreach($events as $e)
                     @if($e->type == App\Event::$TYPES["UNVERIFIED_SUPPORT"] && Auth::user()->isAbleTo('events'))
                         <tr class="alert-warning">
@@ -104,13 +104,12 @@ Events
                             </div>
                         </div>
                     </div>
-            @else
-                <tr>
-                    <td colspan="4">No events found.</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        @else
+            <br><br>
+            @include('inc.empty_state', ['header' => 'No Events', 'body' => 'There are currently no events listed. Please check back soon.', 'icon' => 'fa-solid fa-calendar'])
+        @endif
     @if(method_exists($events,'links'))
        {!! $events->links() !!}
     @endif
