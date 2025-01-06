@@ -47,22 +47,22 @@ Files
                 @php ($activeMarker = ' active')
             @endif
             <div role="tabpanel" class="tab-pane{{ $activeMarker }}" id="{{ $displayedTab }}">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col"><center>Description</center></th>
-                            <th scope="col"><center>Uploaded/Updated at</center></th>
-                            <th scope="col"><center>Actions</center></th>
-                        </tr>
-                    </thead>
-                    @if(!isset($$displayedTab))
-                </table>
-            </div>
-                        @continue
-                    @endif
-                    <tbody>
-                        @if($$displayedTab->count() > 0)
+                @if($$displayedTab->count() > 0)
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col"><center>Description</center></th>
+                                <th scope="col"><center>Uploaded/Updated at</center></th>
+                                <th scope="col"><center>Actions</center></th>
+                            </tr>
+                        </thead>
+                        @if(!isset($$displayedTab))
+                    </table>
+                </div>
+                            @continue
+                        @endif
+                        <tbody>
                             @foreach($$displayedTab as $f)
                                 <tr>
                                 @if($f->row_separator)
@@ -108,9 +108,11 @@ Files
                                 @endif
                                 </tr>
                             @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                @else
+                    @include('inc.empty_state', ['header' => 'No Files', 'body' => 'There are no files listed for that category', 'icon' => 'fa-solid fa-file'])
+                @endif
             </div>
         @endforeach
         @if(Auth::user()->isAbleTo('files'))
