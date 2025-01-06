@@ -83,10 +83,12 @@ Training Tickets
                     @continue
                 @endif
                 @php ($active = '')
+                @php ($categoryTickets = $tickets->where('sort_category', $trainingCategory))
                 @if ($loop->first || (!$drafts && $loop->iteration == 2))
                     @php ($active = ' active')
                @endif
                 <div role="tabpanel" class="tab-pane{{ $active }}" id="{{ $trainingCategory }}">
+<<<<<<< HEAD
                     <table class="table">
                         <thead>
                             <tr>
@@ -133,16 +135,37 @@ Training Tickets
                                     @else
                                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                                     @endif
-                                </tr>
+                        @if($categoryTickets->count() > 0)
+                            @foreach($categoryTickets as $t)
+                                @if($t->cert) {{-- student certified: green highlight --}}
+                                    <tr class="table-success">
+                                @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
+                                    <tr class="table-primary">
+                                @else
+                                    <tr>
                                 @endif
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="6">No training tickets found.</td>
+                                <td>
+                                    <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>{{ $t->date }}</td>
+                                <td>{{ $t->trainer_name }}</td>
+                                <td>{{ $t->position_name }}</td>
+                                <td>{{ $t->type_name }}</td>
+                                <td>{{ $t->session_name }}</td>
+                                <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
+                                <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
+                                <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
+                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
+                                <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                             </tr>
-                        @endif
+                            @endforeach
                         </tbody>
                     </table>
+                    @else
+                        @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'There are no training tickets for this controller under this category', 'icon' => 'fa-solid fa-file'])
+                    @endif
                 </div>
             @endforeach
         </div>
@@ -176,6 +199,9 @@ Training Tickets
                 @endforeach
             </tbody>
         </table>
+    @else
+        <br />
+        @include('inc.empty_state', ['header' => 'No Open Drafts', 'body' => 'There are no open training ticket drafts to show here.', 'icon' => 'fa-solid fa-file'])
     @endif
 </div>
 @endsection
