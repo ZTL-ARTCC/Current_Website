@@ -20,7 +20,7 @@
         "devmarketer/easynav": "^1.0",
         "guzzlehttp/guzzle": "^7.8",
         "jamesmills/laravel-timezone": "dev-l11-compatibility",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "11.36.1",
         "laravel/helpers": "^1.7",
         "laravel/legacy-factories": "^1.4.0",
         "laravel/sanctum": "^4.0",
