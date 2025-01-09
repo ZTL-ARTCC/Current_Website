@@ -23,7 +23,8 @@ Upload File
                         4 => 'SOPs',
                         5 => 'LOAs',
                         6 => 'Staff',
-                        7 => 'Training'
+                        7 => 'Training',
+                        8 => 'Marketing'
                     ], null)->class(['form-control']) }}
                 </div>
             </div>

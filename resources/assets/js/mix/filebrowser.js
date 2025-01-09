@@ -19,6 +19,9 @@ function itemReorder(id, pos, typ, act) {
     case 7:
       dType = "training";
       break;
+    case 8:
+      dType = "marketing";
+      break;
   }
 
   $.get(
