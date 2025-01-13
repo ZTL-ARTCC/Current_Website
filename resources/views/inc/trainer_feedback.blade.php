@@ -35,7 +35,7 @@
             </div>
             <div class="col-sm-4 form-group">
                 <label for="booking_method" class="control-label">Booking Method: (required)</label>
-                {{ html()->select('booking_method', [0=>'Easy!Appointments', 1=>'Ad-Hoc'])->placeholder('Pick One')->class(['form-control']) }}
+                {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'])->placeholder('Pick One')->class(['form-control']) }}
             </div>
             <div class="col-sm-4 form-group">
                 <label for="training_method" class="control-label">Training Method: (required)</label>
