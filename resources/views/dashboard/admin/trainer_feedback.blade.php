@@ -129,7 +129,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Easy!Appointments', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>
@@ -203,7 +203,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Easy!Appointments', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>
@@ -278,7 +278,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Easy!Appointments', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>

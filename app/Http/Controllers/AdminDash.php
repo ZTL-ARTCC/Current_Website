@@ -402,8 +402,8 @@ class AdminDash extends Controller {
             }
             $positions = ['twr','app','ctr'];
             $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
-                'twr' => 'GSO',
-                'app' => 'GSO',
+                'twr' => 'BHM',
+                'app' => 'BHM',
                 'ctr' => 'ZTL'];
             foreach ($positions as $solo_id => $position) {
                 if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {

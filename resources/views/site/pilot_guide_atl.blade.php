@@ -72,9 +72,10 @@ return $badge;
                         <ul>
                             <li>Concourse T:
                                 <ul>
-                                    <li>T1 - T8: Delta Air Lines. Only T1 may accommodate the A359</li>
-                                    <li>T9 - T16: American Airlines</li>
-                                    <li>T17 - T22: United Preferred, Frontier, Alaska, JetBlue [Common Use]</li>
+                                    <li>T1 - T8: Delta Air Lines. Only T1/2 may accommodate the A359 and other Group V aircraft</li>
+                                    <li>T9 - T13: American Airlines</li>
+                                    <li>T14 - T17: American Preferred, Frontier, Alaska, JetBlue, Denver Air Express [Common Use]</li>
+                                    <li>T18 - T21: United</li>
                                 </ul>
                             </li>
                             <li>Concourse A: Delta Air Lines</li>
@@ -89,9 +90,7 @@ return $badge;
                                 <ul>
                                     <li>D1/D1A/D3: Frontier & Alaska [Common Use]</li>
                                     <li>D2/D4: Spirit [Common Use]</li>
-                                    <li>D5 - D16: Delta Air Lines & Delta Connection</li>
-                                    <li>D21, D23, D25, D27, D29: American Airlines</li>
-                                    <li>D24, D26, D28: Delta Air Lines & Delta Connection</li>
+                                    <li>D5 - D28: Delta Air Lines & Delta Connection</li>
                                     <li>D30 - D46: Delta Connection</li>
                                 </ul>
                             </li>
@@ -104,7 +103,7 @@ return $badge;
                                     <li>E1 - E6: Spirit/Frontier [Common Use]</li>
                                     <li>E7 - E33: Delta Air Lines [Common Use]</li>
                                     <li>E34 - E36: JetBlue, Delta Air Lines [Common Use]</li>
-                                    <li>E37: Southern Airways Express</li>
+                                    <li>E37 - E39: Frontier</li>
                                 </ul>
                             </li>
                             <li>Concourse F:
@@ -321,10 +320,13 @@ return $badge;
                 to use D, you should still call ATC prior to proceeding on any taxiway.</p>
             <p>When taxiing to runway 26L, expect a clearance via F. Pilots should continue taxiing on E to the runway unless given specific
                 instructions to hold short.</p>
-            <p>Aircraft may be instructed to hold midfield to reduce congestion at the end of the runway. Follow all hold short instructions</p>
+            <p>Aircraft may be instructed to hold midfield to reduce congestion at the end of the runway. Follow all hold short instructions.</p>
+            <p><strong>Do not cross or access runways without specific clearance from ATC. Crews are required to readback all hold short instructions.</strong></p>
             <p>If you are instructed to contact the next controller, you should call them with your location. If you are instructed to monitor the
                 next controller, tune your radio to the proper frequency and wait for ATC to call you. ATL has airport surface detection equipment
                 (ASDE), so controllers can monitor the precise location of all aircraft on the ground at all times.</p>
+            <p>Atlanta has coded taxi routes. These are pre-defined phrases ATC may issue to a pilot that describe a partiuclar route to or 
+                from a runway. <a href="{{ asset('ATL_Standard_Coded_Taxi_Routes.pdf') }}" alt="coded_taxi">Click Here</a> to view our coded taxi routes.</p>
         </div>
         <div id="tab7" class="tab-pane fade">
             <img class="float-right m-1" src="/photos/pg_atl_tab7.png">
