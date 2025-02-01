@@ -13,7 +13,8 @@ class File extends Model {
         4 => 'SOPs',
         5 => 'LOAs',
         6 => 'Staff',
-        7 => 'Training'
+        7 => 'Training',
+        8 => 'Marketing'
     ];
 
     public function getWordTypeAttribute() {

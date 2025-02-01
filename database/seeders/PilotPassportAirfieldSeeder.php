@@ -314,8 +314,7 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'name' => 'Auburn University Regional Airport',
             'description' => 'War Eagle! The Robert G. Pitts Field is owned by Auburn University and 
                 hosts a sizeable flight school and FBO. This is a popular airport on college football 
-                game days and it even has a temporary tower that operates to handle the increased 
-                traffic!'
+                game days!'
         ]);
         DB::table('pilot_passport_airfield')->insert([
             'id' => 'AHN',
@@ -1223,9 +1222,9 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'longitude' => -80.8994306,
             'elevation' => 839,
             'name' => 'Lake Norman Airpark',
-            'description' => 'The Lake Norman Airpark near Mooresville GA just north of Atlanta is a 
+            'description' => 'The Lake Norman Airpark near Mooresville NC just north of Charlotte is a 
                 fun airfield due to its proximity to its namesake lake at the end of the runway. It is 
-                also below the Atlanta Class B shelf and a resident airpark, which make operations here 
+                also below the Charlotte Class B shelf and a resident airpark, which make operations here 
                 even a bit more interesting!'
         ]);
     }

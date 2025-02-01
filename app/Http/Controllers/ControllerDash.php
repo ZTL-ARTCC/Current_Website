@@ -247,8 +247,15 @@ class ControllerDash extends Controller {
             $file->timestamps = false;
             $file->save();
         }
+        $marketing = File::where('type', 8)->orderBy('disp_order', 'ASC')->get();
+        for ($x=0;$x<count($marketing);$x++) {
+            $file = File::find($marketing[$x]['id']);
+            $file->disp_order = $x;
+            $file->timestamps = false;
+            $file->save();
+        }
         
-        return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training);
+        return view('dashboard.controllers.files')->with('vatis', $vatis)->with('sop', $sop)->with('loa', $loa)->with('staff', $staff)->with('training', $training)->with('marketing', $marketing);
     }
 
     public function showSuggestions() {
