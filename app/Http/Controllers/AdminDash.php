@@ -1360,7 +1360,7 @@ class AdminDash extends Controller {
                 $news = new Calendar;
             }
         }
-        $news_pre_title = Carbon::create()->day(1)->month($request->month)->format('F') . " Challenge: ";
+        $news_pre_title = Carbon::create()->day(1)->month(intval($request->month))->format('F') . " Challenge: ";
         $news->title = $news_pre_title . $request->title;
         $news->date = Carbon::now()->format('m/d/Y');
         $news->body = $request->description;
