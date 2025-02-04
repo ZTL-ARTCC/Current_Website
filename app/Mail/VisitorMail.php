@@ -31,11 +31,11 @@ class VisitorMail extends Mailable implements ShouldQueue {
      * Get the message envelope.
      */
     public function envelope(): Envelope {
+        $datm = new Address('datm@ztlartcc.org', 'vZTL ARTCC DATM');
         return new Envelope(
             from: new ZTLAddress('visitors', 'vZTL ARTCC Visiting Department'),
-            replyTo: [
-                new Address('datm@ztlartcc.org', 'vZTL ARTCC DATM')
-            ],
+            replyTo: [ $datm ],
+            cc: [ $datm ],
             subject: $this::$SUBJECTS[$this->type]
         );
     }
