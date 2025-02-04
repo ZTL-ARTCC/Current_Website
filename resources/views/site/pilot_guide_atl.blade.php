@@ -326,7 +326,7 @@ return $badge;
                 next controller, tune your radio to the proper frequency and wait for ATC to call you. ATL has airport surface detection equipment
                 (ASDE), so controllers can monitor the precise location of all aircraft on the ground at all times.</p>
             <p>Atlanta has coded taxi routes. These are pre-defined phrases ATC may issue to a pilot that describe a partiuclar route to or 
-                from a runway. <a href="{{ asset('ATL_Standard_Coded_Taxi_Routes.pdf') }}" alt="coded_taxi">Click Here</a> to view our coded taxi routes.</p>
+                from a runway. <a href="/pdf/ATL_Standard_Coded_Taxi_Routes.pdf" alt="coded_taxi" target="_blank">Click Here</a> to view our coded taxi routes.</p>
         </div>
         <div id="tab7" class="tab-pane fade">
             <img class="float-right m-1" src="/photos/pg_atl_tab7.png">
