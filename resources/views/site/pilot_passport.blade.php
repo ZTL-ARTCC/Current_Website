@@ -52,7 +52,7 @@ ZTL Pilot Passport Challenge
                         flying new approaches and taxiing on unfamiliar surfaces. We offer three distinct paths: airline pilot, corporate aviator,
                         and bug smasher The airline path features airports served by part 121 commercial carriers. The business aviator path
                         features airports commonly frequented by part 135 operators flying private jets and turboprops. The bug smasher path
-                        features the many smaller airports throughout Georgia, Alabama, South Carolina, North Carolina, and Tennessee.</p>
+                        features the many smaller airports throughout Georgia, Alabama, South Carolina, North Carolina, Tennessee and Virginia.</p>
                 </div>
                 <div class="col-sm-4 text-center">
                     <img src="/photos/pilot_passport/pilot_passport_stamp.png" width="200px" alt="stamp">
