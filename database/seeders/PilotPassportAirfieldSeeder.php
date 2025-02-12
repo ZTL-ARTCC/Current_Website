@@ -1010,7 +1010,14 @@ class PilotPassportAirfieldSeeder extends Seeder {
             'id' => 'EUF',
             'latitude' => 31.951305555556,
             'longitude' => -85.128916666667,
-            'elevation' => 285
+            'elevation' => 285,
+            'name' => 'Weedon Field',
+            'description' => 'The Eufaula Municipal Airport, also known as Weedon Field is on the west bank 
+                of Lake Eufaula on the Alabama-Georgia line. Known as the big bass capital of the world, the 
+                lake is a reservoir on the famed Chattahoochee River. The area is also home to Lakepoint State 
+                Park. Weedon Field features all of the comforts of your small-town airfield to include hangars, 
+                pilot controlled lighting, and automated weather. Stop in to Sams Kitchen and Grill right on 
+                the field for a $100 hamburger!'
         ]);
         DB::table('pilot_passport_airfield')->insert([
             'id' => '11A',
