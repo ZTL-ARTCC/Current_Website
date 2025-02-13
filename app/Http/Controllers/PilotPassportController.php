@@ -177,7 +177,7 @@ class PilotPassportController extends Controller {
         $x_start = $this->getGdTextCenter($gd, $font_size, $font, $title_words[0]);
         $y_start = 1700;
         imagettftext($gd, $font_size, 0, $x_start, $y_start, $bronze, $font, $title_words[0]);
-        if($title_words[1]) {
+        if ($title_words[1]) {
             $x_start = $this->getGdTextCenter($gd, $font_size, $font, $title_words[1]);
             imagettftext($gd, 200, 0, $x_start, ($y_start + $font_size + 100), $bronze, $font, $title_words[1]);
         }

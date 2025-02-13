@@ -220,9 +220,9 @@ class TrainingDash extends Controller {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
             $exams = User::getAcademyExamTranscriptByCid($request->id);
-        } elseif(auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
+        } elseif (auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
             $all_drafts = TrainingTicket::where('draft', true)->orderBy('created_at', 'DESC')->paginate(25);
-        } elseif(auth()->user()->isAbleTo('train')) {
+        } elseif (auth()->user()->isAbleTo('train')) {
             $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 

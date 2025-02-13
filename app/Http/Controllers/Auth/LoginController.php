@@ -63,7 +63,7 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
-        if(session('pilot_redirect')) {
+        if (session('pilot_redirect')) {
             return $this->externalPilotLogin(
                 $resourceOwner->data->cid,
                 $resourceOwner->data->personal->name_first,

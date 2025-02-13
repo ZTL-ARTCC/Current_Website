@@ -14,7 +14,7 @@ class RealopsPilot extends Authenticatable {
 
     public static function getPublicName($cid) {
         $p = RealopsPilot::find($cid);
-        if(!$p) {
+        if (!$p) {
             return '';
         }
         switch ($p->privacy) {
