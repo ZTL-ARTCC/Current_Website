@@ -83,30 +83,28 @@ Training Tickets
                     @continue
                 @endif
                 @php ($active = '')
-                @php ($categoryTickets = $tickets->where('sort_category', $trainingCategory))
                 @if ($loop->first || (!$drafts && $loop->iteration == 2))
                     @php ($active = ' active')
-               @endif
+                @endif
                 <div role="tabpanel" class="tab-pane{{ $active }}" id="{{ $trainingCategory }}">
-<<<<<<< HEAD
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">View</th>
-                                <th scope="col">Training Date</th>
-                                <th scope="col">Trainer Name</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Session Type</th>
-                                <th scope="col">Session ID</th>
-                                <th scope="col">Start Time</th>
-                                <th scope="col">End Time</th>
-                                <th scope="col">Score<br>(1-5)</th>
-                                <th scope="col">Movements</th>
-                                <th scope="col">INS/MTR Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @if($tickets->count() > 0)
+                    @if($tickets->count() > 0)
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">View</th>
+                                    <th scope="col">Training Date</th>
+                                    <th scope="col">Trainer Name</th>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Session Type</th>
+                                    <th scope="col">Session ID</th>
+                                    <th scope="col">Start Time</th>
+                                    <th scope="col">End Time</th>
+                                    <th scope="col">Score<br>(1-5)</th>
+                                    <th scope="col">Movements</th>
+                                    <th scope="col">INS/MTR Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             @foreach($tickets as $t)
                                 @if($t->sort_category == $trainingCategory)
                                     @if($t->cert) {{-- student certified: green highlight --}}
@@ -135,31 +133,8 @@ Training Tickets
                                     @else
                                         <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
                                     @endif
-                        @if($categoryTickets->count() > 0)
-                            @foreach($categoryTickets as $t)
-                                @if($t->cert) {{-- student certified: green highlight --}}
-                                    <tr class="table-success">
-                                @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
-                                    <tr class="table-primary">
-                                @else
-                                    <tr>
+                                </tr>
                                 @endif
-                                <td>
-                                    <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                </td>
-                                <td>{{ $t->date }}</td>
-                                <td>{{ $t->trainer_name }}</td>
-                                <td>{{ $t->position_name }}</td>
-                                <td>{{ $t->type_name }}</td>
-                                <td>{{ $t->session_name }}</td>
-                                <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                                <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                                <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
-                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
-                                <td data-toggle="tooltip" title="{{ $t->ins_comments }}">{{ str_limit($t->ins_comments, 40, '...') }}</td>
-                            </tr>
                             @endforeach
                         </tbody>
                     </table>
