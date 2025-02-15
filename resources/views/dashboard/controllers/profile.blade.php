@@ -38,7 +38,9 @@ Profile
                    {!! $feedback->links() !!}         
                 </div>
             @else 
-                @include('inc.empty_state', ['header' => 'No Feedback', 'body' => 'No feedback found.', 'icon' => 'fa-solid fa-comment'])
+                <div class="mt-h4">
+                    @include('inc.empty_state', ['header' => 'No Feedback', 'body' => 'No feedback found.', 'icon' => 'fa-solid fa-comment'])
+                </div>
             @endif
         </div>
         <div class="col-sm-6">
@@ -76,7 +78,9 @@ Profile
                 </div>
                 {!! $tickets->links() !!}
             @else
-                @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'No training tickets found.', 'icon' => 'fa-solid fa-folder-open'])
+                <div class="mt-h4">
+                    @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'No training tickets found.', 'icon' => 'fa-solid fa-folder-open'])
+                </div>
             @endif
         </div>
     </div>
