@@ -6,6 +6,8 @@
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
 
 //Standard CSS Formats
 .navbar-laravel {
@@ -53,6 +55,10 @@ body {
 
 .m-b-md {
   margin-bottom: 30px;
+}
+
+.mt-h4 {
+  margin-top: $h4-font-size + $hr-margin-y !important;
 }
 
 .dropdown .dropdown-menu {
