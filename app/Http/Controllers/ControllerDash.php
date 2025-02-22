@@ -178,7 +178,9 @@ class ControllerDash extends Controller {
                 Config::get('scheddy.base').'/api/userSessions/'.$user_id,
                 ['headers' => [
                     'Authorization' => 'Bearer '.Config::get('scheddy.api_key')
-                ]]
+                ],
+                'http_errors' => false
+                ]
             );
 
             if ($res->getStatusCode() == "200") {
