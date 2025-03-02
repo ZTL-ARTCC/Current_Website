@@ -539,7 +539,7 @@ class TrainingDash extends Controller {
         }
         // Training sessions per month by type
         if (($dataType == 'graph')||($dataType == 'stats')) {
-            $sessionsS1 = $sessions->where('position', '<', 105)->count();
+            $sessionsS1 = $sessions->where('position', '=<', 105)->count();
             $sessionsS2 = $sessions->where('position', '>', 105)->where('position', '<', 115)->count();
             $sessionsS3 = $sessions->whereIn('position', [115, 116, 117, 118, 119, 123])->count();
             $sessionsC1 = $sessions->whereIn('position', [120, 121])->count();
