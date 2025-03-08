@@ -49,6 +49,7 @@ class Ots extends Model {
 
     public function getPositionNameAttribute() {
         $pos = $this->position;
+        $position = 'Unknown/Legacy';
         if ($pos == 0) {
             $position = 'Minor Delivery/Ground';
         } elseif ($pos == 1) {
