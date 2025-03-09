@@ -68,7 +68,7 @@ class UploadTrainingTickets extends Command {
 
     // Position type must match regex /^([A-Z]{2,3})(_([A-Z]{1,3}))?_(DEL|GND|TWR|APP|DEP|CTR)$/ to be accepted by VATUSA
     private function vatusaizePosition($ticket) {
-        switch ($ticket->position) {
+        switch($ticket->position) {
             case 100:
             case 101: return 'ZTL_DEL';
             case 105: return 'ZTL_GND';
