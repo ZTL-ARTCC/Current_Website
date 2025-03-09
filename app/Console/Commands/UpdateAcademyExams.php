@@ -32,7 +32,9 @@ class UpdateAcademyExams extends Command {
             $query->where('rating_id', User::RATINGS['OBS'])
                   ->orWhere('rating_id', User::RATINGS['S1'])
                   ->orWhere('rating_id', User::RATINGS['S2'])
-                  ->orWhere('rating_id', User::RATINGS['S3']);
+                  ->orWhere('rating_id', User::RATINGS['S3'])
+                  ->orWhere('rating_id', User::RATINGS['SUP'])
+                  ->orWhere('rating_id', User::RATINGS['ADM']);
         })->get();
 
         foreach ($active_users as $user) {
