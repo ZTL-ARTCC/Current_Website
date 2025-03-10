@@ -1862,6 +1862,18 @@ class AdminDash extends Controller {
             return redirect()->back()->with('error', 'That event does not yet have a report generated');
         }
 
+        $event_stat_controllers_by_rating = $event_stat->controllers_by_rating;
+
+        if (! array_key_exists('SUP', $event_stat_controllers_by_rating)) {
+            $event_stat_controllers_by_rating['SUP'] = 0;
+        }
+
+        if (! array_key_exists('ADM', $event_stat_controllers_by_rating)) {
+            $event_stat_controllers_by_rating['ADM'] = 0;
+        }
+
+        $event_stat->controllers_by_rating = $event_stat_controllers_by_rating;
+
         return view('dashboard.admin.events.report')->with('event_stat', $event_stat);
     }
 
