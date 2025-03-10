@@ -21,6 +21,7 @@ Event Statistics Report
                         <th>C3</th>
                         <th>I1</th>
                         <th>I3</th>
+                        <th>SUP/ADM</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@ Event Statistics Report
                         <td>{{ $event_stat->controllers_by_rating['C3'] }}</td>
                         <td>{{ $event_stat->controllers_by_rating['I1'] }}</td>
                         <td>{{ $event_stat->controllers_by_rating['I3'] }}</td>
+                        <td>{{ $event_stat->controllers_by_rating['SUP'] + $event_stat->controllers_by_rating['ADM'] }}</td>
                         <th>{{ array_sum($event_stat->controllers_by_rating) }}</th>
                     </tr>
                 </tbody>

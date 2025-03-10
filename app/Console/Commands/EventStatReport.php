@@ -88,7 +88,9 @@ class EventStatReport extends Command {
             'C1' => 0,
             'C3' => 0,
             'I1' => 0,
-            'I3' => 0
+            'I3' => 0,
+            'SUP' => 0,
+            'ADM' => 0
         ];
     }
 }
