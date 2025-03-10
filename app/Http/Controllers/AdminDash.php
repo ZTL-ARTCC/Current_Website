@@ -1848,7 +1848,15 @@ class AdminDash extends Controller {
 
     public function updateTrackingAirports(Request $request, $id) {
         $event = Event::find($id);
-        $event->tracking_airports = $request->tracking_airports;
+        $tracking_airports = $request->tracking_airports;
+        $tracking_airports_array = explode(',', $tracking_airports);
+        $event->tracking_airports = '';
+
+        foreach ($tracking_airports_array as $airport) {
+            $event->tracking_airports = $event->tracking_airports . ltrim(trim(strtoupper($airport)), 'K') . ',';
+        }
+
+        $event->tracking_airports = rtrim($event->tracking_airports, ',');
         $event->save();
 
         return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
