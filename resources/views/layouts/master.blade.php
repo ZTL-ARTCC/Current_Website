@@ -36,9 +36,6 @@
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
-        {{-- Fontawesome --}}
-        <script src="https://kit.fontawesome.com/f3eeeb43e3.js" crossorigin="anonymous"></script>
-
         {{-- Custom Headers --}}
             @stack('custom_header')
             
