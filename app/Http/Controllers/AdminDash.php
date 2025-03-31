@@ -1859,7 +1859,15 @@ class AdminDash extends Controller {
 
     public function updateTrackingAirports(Request $request, $id) {
         $event = Event::find($id);
-        $event->tracking_airports = $request->tracking_airports;
+        $tracking_airports = $request->tracking_airports;
+        $tracking_airports_array = explode(',', $tracking_airports);
+        $event->tracking_airports = '';
+
+        foreach ($tracking_airports_array as $airport) {
+            $event->tracking_airports = $event->tracking_airports . ltrim(trim(strtoupper($airport)), 'K') . ',';
+        }
+
+        $event->tracking_airports = rtrim($event->tracking_airports, ',');
         $event->save();
 
         return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
@@ -1872,6 +1880,18 @@ class AdminDash extends Controller {
         if (is_null($event_stat)) {
             return redirect()->back()->with('error', 'That event does not yet have a report generated');
         }
+
+        $event_stat_controllers_by_rating = $event_stat->controllers_by_rating;
+
+        if (! array_key_exists('SUP', $event_stat_controllers_by_rating)) {
+            $event_stat_controllers_by_rating['SUP'] = 0;
+        }
+
+        if (! array_key_exists('ADM', $event_stat_controllers_by_rating)) {
+            $event_stat_controllers_by_rating['ADM'] = 0;
+        }
+
+        $event_stat->controllers_by_rating = $event_stat_controllers_by_rating;
 
         return view('dashboard.admin.events.report')->with('event_stat', $event_stat);
     }
