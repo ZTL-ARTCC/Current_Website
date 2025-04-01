@@ -57,6 +57,6 @@ $(ckeditorSelector).ready(() => {
     ClassicEditor.create(editor, {
       plugins,
       toolbar,
-    });
+    }).then((editor) => (window.editor = editor));
   });
 });
