@@ -27,7 +27,7 @@ class TrainerFeedback extends Model {
     }
 
     public function getTrainingMethodTextAttribute() {
-        switch($this->training_method) {
+        switch ($this->training_method) {
             case 0: return 'Theory';
             case 1: return 'Sweatbox';
             case 2: return 'Live Network';
