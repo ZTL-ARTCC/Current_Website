@@ -5,9 +5,7 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ asset('css/trainingticket.css') }}" />
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/43.2.0/ckeditor5-premium-features.css" />
+<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
 @endpush
 
 @section('content')
@@ -113,13 +111,13 @@ New Training Ticket
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>
-                    {{ html()->textarea('comments', null)->class(['form-control text-editor']) }}
+                    {{ html()->textarea('comments', null)->class(['form-control']) }}
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="trainer_comments" class="form-label">Trainer Comments (Visible to Only Other Trainers)</label>
-                    {{ html()->textarea('trainer_comments', null)->class(['form-control text-editor']) }}
+                    {{ html()->textarea('trainer_comments', null)->class(['form-control', 'text-editor']) }}
                 </div>
             </div>
         </div>
@@ -139,5 +137,4 @@ New Training Ticket
     {{ html()->form()->close() }}
 </div>
 <script src="{{mix('js/trainingticket.js')}}"></script>
-
 @endsection
