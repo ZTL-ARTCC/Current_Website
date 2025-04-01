@@ -1228,18 +1228,7 @@ class AdminDash extends Controller {
 
         foreach ($emails as $e) {
             if ($e != 'No email') {
-                try {
-                    Mail::send(['html' => 'emails.send'], ['sender' => $sender, 'body' => $body], function ($m) use ($name, $subject, $e, $reply_to) {
-                        $m->from('info@notams.ztlartcc.org', $name)->replyTo($reply_to, $name);
-                        $m->subject('[vZTL ARTCC] '.$subject);
-                        $m->to($e);
-                    });
-                } catch (\Exception $except) {
-                    // If they have a bad email, change it to no email
-                    $bad = User::where('email', $e)->first();
-                    $bad->email = 'No email';
-                    $bad->save();
-                }
+                Mail::to($e)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
             }
         }
 
