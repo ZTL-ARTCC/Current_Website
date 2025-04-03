@@ -43,7 +43,7 @@ class ARTCCOverflights extends Command {
     public function handle() {
         $datafeed = $this->getDatafeed();
         if (is_null($datafeed) || !property_exists($datafeed, 'pilots')) {
-            return;
+            return 1;
         }
 
         DB::table('flights_within_artcc')->truncate();
