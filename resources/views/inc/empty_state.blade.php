@@ -1,17 +1,5 @@
 @php
-$text_style = '';
-if(isset($color)) {
-    switch($color) {
-        case 'red' : $text_style = 'text-danger';
-        break;
-        case 'yellow' : $text_style = 'text-warning';
-        break;
-        case 'green' : $text_style = 'text-success';
-        break;
-        case 'blue' : $text_style = 'text-primary';
-        break;
-    }
-}
+$text_style = (isset($class)) ? $class : '';
 @endphp
 <div class="card mb-3">
     <div class="card-body text-center">
