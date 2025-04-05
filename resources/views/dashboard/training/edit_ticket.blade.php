@@ -121,7 +121,7 @@ Edit Training Ticket
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="trainer_comments" class="form-label">Trainer Comments (Visible to Only Other Trainers)</label>
-                    {{ html()->textarea('trainer_comments', $ticket->ins_comments)->class(['form-control']) }}
+                    {{ html()->textarea('trainer_comments', $ticket->ins_comments)->class(['form-control', 'text-editor']) }}
                 </div>
             </div>
         </div>

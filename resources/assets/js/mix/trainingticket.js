@@ -8,6 +8,10 @@ if (newForm.length || (editForm.length && draft.length)) {
 
   setInterval(function () {
     var formData = form.serializeArray();
+    // CKEDITOR does not update text area thus we need to get it manually
+    formData.find((formItem) => formItem.name === "trainer_comments").value =
+      window.editor.getData();
+
     formData.push(
       { name: "action", value: "draft" },
       { name: "automated", value: true }
