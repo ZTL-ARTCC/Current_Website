@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/laravel-shift/laravel-timezone.git"
+            "url": "https://github.com/ZTL-ARTCC/laravel-timezone.git"
         },
         {
             "type": "vcs",
@@ -16,15 +16,15 @@
     ],
     "require": {
         "php": "^8.3",
-        "barryvdh/laravel-dompdf": "^3.0",
+        "barryvdh/laravel-dompdf": "^3.1.1",
         "devmarketer/easynav": "^1.0",
         "guzzlehttp/guzzle": "^7.8",
-        "jamesmills/laravel-timezone": "dev-l11-compatibility",
-        "laravel/framework": "^11.0",
+        "jamesmills/laravel-timezone": "dev-l12-compatibility",
+        "laravel/framework": "^12.0",
         "laravel/helpers": "^1.7",
         "laravel/legacy-factories": "^1.4.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
+        "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.5",
         "league/oauth2-client": "^2.7",
         "maatwebsite/excel": "^3.1",
@@ -38,10 +38,10 @@
         "fakerphp/faker": "^1.23",
         "friendsofphp/php-cs-fixer": "^3.14",
         "laravel/dusk": "^8.2",
-        "laravel/sail": "^1.29",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.5|^11.0",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.3",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
