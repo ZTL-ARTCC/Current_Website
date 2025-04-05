@@ -23,6 +23,13 @@ class TrainingTicket extends Model {
                                 236=>'ZTL1', 237=>'ATL1', 238=>null, 239=>'ATL2', 242=>'ATL3', 243=>'ATL4', 240=>'ATL5', 259=>'ATL6',
                                 241=>'ATL7', 244=>'ATL8', 245=>'A801', 246=>'A802', 247=>null, 248=>'A803', 249=>null, 250=>'A804',
                                 251=>null, 252=>'A805',253=>'A806',254=>'A807', 255=>'A808', 256=>null, 257=>'Other'];
+    public static $position_types_by_rating = [
+        "S1" => [100, 101, 105, 102, 106],
+        "S2" => [109, 111, 104, 108, 113],
+        "S3" => [115, 116, 117, 118, 119],
+        "C1" => [121],
+        "OTHER" => [122, 124, 125]
+    ];
 
     public static $VATUSA_UPLOAD_STATUS = [
         "PENDING" => 0,
