@@ -503,15 +503,8 @@ class TrainingDash extends Controller {
         }
     }
 
-    public function statistics(Request $request) {
-        $yearSel = $monthSel = null;
-        if (isset($request->date_select)) {
-            $datePart = explode(' ', $request->date_select); // Format: MM YYYY
-            $monthSel = $datePart[0];
-            $yearSel = $datePart[1];
-        }
-        $stats = $this->generateTrainingStats($yearSel, $monthSel, 'stats');
-        return view('dashboard.training.statistics')->with('stats', $stats);
+    public function statistics() {
+        return view('dashboard.training.statistics');
     }
 
     public static function generateTrainingStats($year, $month, $dataType) {
