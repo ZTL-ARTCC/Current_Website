@@ -146,7 +146,7 @@ Profile
                     </table>
                 </div>
             @elseif(! $appointments_successful)
-                @include('inc.empty_state', ['header' => 'No Training Appointments', 'body' => 'Could not load training appointments.', 'icon' => 'fa-solid fa-warning'])
+                @include('inc.empty_state', ['header' => 'No Training Appointments', 'body' => 'Could not load training appointments.', 'icon' => 'fa-solid fa-warning', 'body_class' => 'text-danger'])
             @else
                 @include('inc.empty_state', ['header' => 'No Training Appointments', 'body' => 'No training appointments found.', 'icon' => 'fa-solid fa-calendar'])
             @endif

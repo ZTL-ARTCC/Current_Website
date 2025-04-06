@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Mail\OtsAssignment;
+use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
@@ -277,6 +278,14 @@ class TrainingDash extends Controller {
         $ticket->student_comments = $request->student_comments;
         $ticket->save();
 
+        $mailer = Mail::to('ta@ztlartcc.org');
+        $trainer = User::find($ticket->trainer_id);
+        if ($trainer) {
+            if ($trainer->user_status[$trainer->status] == 'Active' && $trainer->isAbleTo('train')) {
+                $mailer = Mail::to($trainer->email)->cc('training@ztlartcc.org');
+            }
+        }
+        $mailer->send(new StudentComment($trainer->full_name, $ticket->id));
         return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
     }
 
@@ -427,6 +436,7 @@ class TrainingDash extends Controller {
     }
 
     public function getTicketSortCategory($position, $draft) {
+        $position_types_by_rating = TrainingTicket::$position_types_by_rating;
         switch (true) {
             case ($draft):
                 return 'drafts';
@@ -434,29 +444,26 @@ class TrainingDash extends Controller {
             case ($position > 6 && $position < 22): // Legacy types
                 return 's1';
                 break;
-            case (in_array($position, [100, 101, 102, 105, 106])):
+            case (in_array($position, $position_types_by_rating['S1'])):
                 return 's1';
                 break;
             case ($position > 21 && $position < 31): // Legacy types
                 return 's2';
                 break;
-            case (in_array($position, [103, 104, 107, 108, 109, 110, 111, 113])):
+            case (in_array($position, $position_types_by_rating['S2'])):
                 return 's2';
                 break;
             case ($position > 30 && $position < 42): // Legacy types
                 return 's3';
                 break;
-            case (in_array($position, [112, 114, 115, 116, 117, 118, 119, 123])):
+            case (in_array($position, $position_types_by_rating['S3'])):
                 return 's3';
                 break;
             case ($position > 41 && $position < 48): // Legacy types
                 return 'c1';
                 break;
-            case (in_array($position, [120, 121])):
+            case (in_array($position, $position_types_by_rating['C1'])):
                 return 'c1';
-                break;
-            case ($position > 121 && $position != 123):
-                return 'other';
                 break;
             default:
                 return 'other';
@@ -515,6 +522,7 @@ class TrainingDash extends Controller {
     }
 
     public static function generateTrainingStats($year, $month, $dataType) {
+        $position_types_by_rating = TrainingTicket::$position_types_by_rating;
         $retArr = [];
         $retArr['dateSelect'] = ['month' => $month, 'year' => $year];
         // Set date range
@@ -539,11 +547,11 @@ class TrainingDash extends Controller {
         }
         // Training sessions per month by type
         if (($dataType == 'graph')||($dataType == 'stats')) {
-            $sessionsS1 = $sessions->where('position', '=<', 105)->count();
-            $sessionsS2 = $sessions->where('position', '>', 105)->where('position', '<', 115)->count();
-            $sessionsS3 = $sessions->whereIn('position', [115, 116, 117, 118, 119, 123])->count();
-            $sessionsC1 = $sessions->whereIn('position', [120, 121])->count();
-            $sessionsOther = $sessions->whereIn('position', [122, 124, 125])->count();
+            $sessionsS1 = $sessions->whereIn('position', $position_types_by_rating['S1'])->count();
+            $sessionsS2 = $sessions->whereIn('position', $position_types_by_rating['S2'])->count();
+            $sessionsS3 = $sessions->whereIn('position', $position_types_by_rating['S3'])->count();
+            $sessionsC1 = $sessions->whereIn('position', $position_types_by_rating['C1'])->count();
+            $sessionsOther = $sessions->whereIn('position', $position_types_by_rating['OTHER'])->count();
             $retArr['sessionsByType'] = ['S1' => $sessionsS1, 'S2' => $sessionsS2, 'S3' => $sessionsS3, 'C1' => $sessionsC1, 'Other' => $sessionsOther];
         }
         // Training sessions, type, and hours by instructor
@@ -563,13 +571,11 @@ class TrainingDash extends Controller {
             $trainerStats['name'] = explode(' ', $trainer->getFullNameAttribute())[1];
             $trainerSesh = $sessions->where('trainer_id', $trainer->id);
             $trainerStats['total'] = $trainerSesh->count();
-            $trainerStats['S1'] = $trainerSesh->where('position', '<', 105)->count();
-            $trainerStats['S2'] = $trainerSesh->where('position', '>', 105)->where('position', '<', 115)->count();
-            $trainerStats['S3'] = $trainerSesh->where('position', '>', 115)->where('position', '<', 120)->count();
-            $trainerStats['S3'] += $trainerSesh->where('position', 123)->count();
-            $trainerStats['C1'] = $trainerSesh->where('position', 120)->count();
-            $trainerStats['C1'] += $trainerSesh->where('position', 121)->count();
-            $trainerStats['Other'] = $trainerStats['total'] - $trainerStats['S1'] - $trainerStats['S2'] - $trainerStats['S3'] - $trainerStats['C1'];
+            $trainerStats['S1'] = $trainerSesh->whereIn('position', $position_types_by_rating['S1'])->count();
+            $trainerStats['S2'] = $trainerSesh->whereIn('position', $position_types_by_rating['S2'])->count();
+            $trainerStats['S3'] = $trainerSesh->whereIn('position', $position_types_by_rating['S3'])->count();
+            $trainerStats['C1'] = $trainerSesh->whereIn('position', $position_types_by_rating['C1'])->count();
+            $trainerStats['Other'] = $trainerSesh->whereIn('position', $position_types_by_rating['OTHER'])->count();
             if ($trainerStats['total'] < Config::get('ztl.trainer_min_sessions')) {
                 $trainingStaffBelowMins++;
             }
