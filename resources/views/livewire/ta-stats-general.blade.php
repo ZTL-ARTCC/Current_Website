@@ -1,4 +1,7 @@
 <div>
+    <div class="row bg-warning w-100" wire:loading>
+        <h3 class="text-center"><i class="fa-solid fa-hourglass-start me-2"></i> Refreshing Dataset... please wait</h3>
+    </div>
     <div class="row mt-4">
         <div class="col-sm-12">
             <div class="card">
@@ -30,11 +33,15 @@
             <div class="card">
                 <div class="card-header">
                     Completion Ratios
-                    <select class="form-select form-select-sm float-right">
+                    <select class="form-select form-select-sm float-right" wire:model.change='position_select'>
                         <option value="S1" selected>S1</option>
                         <option value="S2">S2</option>
                         <option value="S3">S3</option>
                         <option value="C1">C1</option>
+                        <option value="CLT_ATCT">CLT ATCT</option>
+                        <option value="CLT_APP">CLT APP</option>
+                        <option value="ATL_ATCT">ATL ATCT</option>
+                        <option value="A80">A80</option>
                     </select>
                 </div>
                 <div class="card-body">
@@ -69,7 +76,6 @@
 @script
 <script>
     let annualLookbackData = {!!json_encode($this->lookback_annual) !!}
-    console.log(annualLookbackData)
     const annualLookback = new Chart(
         document.getElementById('annual_lookback'), {
             type: 'line',
@@ -77,15 +83,11 @@
                 labels: annualLookbackData.labels,
                 datasets: [{
                         label: 'Last Year',
-                        //borderColor: 'rgb(255, 0, 0)',
-                        //backgroundColor: 'rgb(255, 0, 0)',
                         yAxisID: 'y',
                         data: annualLookbackData.last_year
                     },
                     {
                         label: 'This Year',
-                        //borderColor: 'rgb(0, 0, 255)',
-                        //backgroundColor: 'rgb(0, 0, 255)',
                         yAxisID: 'y',
                         data: annualLookbackData.this_year
                     }
@@ -110,14 +112,10 @@
                 labels: ['30', '60', '90'],
                 datasets: [{
                         label: 'Current',
-                        //borderColor: 'rgb(255, 0, 0)',
-                        //backgroundColor: 'rgb(255, 0, 0)',
                         data: monthlyLookbackData.now
                     },
                     {
                         label: 'Previous',
-                        //borderColor: 'rgb(0, 0, 255)',
-                        //backgroundColor: 'rgb(0, 0, 255)',
                         data: monthlyLookbackData.prev
                     }
                 ],
@@ -137,7 +135,7 @@
         document.getElementById('completion_ratio'), {
             type: 'bar',
             data: {
-                labels: {!!json_encode($this->cert_types) !!},
+                labels: {!!json_encode($this->session_ids) !!},
                 datasets: [{
                     data: {!!json_encode($this->completion_ratios) !!}
                 }]
@@ -152,10 +150,25 @@
                         display: true,
                         text: 'Completion Ratio of Lessons'
                     },
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            display: true,
+                            autoSkip: false
+                        }
+                    }
                 }
             }
         }
     )
+
+
+    $wire.on('updateCompletionChart', (event) => {
+        completionRatio.data.labels = event.labels;
+        completionRatio.data.datasets[0].data = event.data;
+        completionRatio.update();
+    });
 
     const ticketsByCert = new Chart(
         document.getElementById('tickets_by_cert'), {

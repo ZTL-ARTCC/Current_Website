@@ -1,14 +1,15 @@
 <div>
+    <div class="row bg-warning w-100" wire:loading>
+        <h3 class="text-center"><i class="fa-solid fa-hourglass-start me-2"></i> Refreshing Dataset... please wait</h3>
+    </div>
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {{ html()->form('GET')->route('statistics')->open() }}
                 @php ($yearOfMonthsLookback = array())
                 @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
                 @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))
                 @endforeach
-                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['onchange'=>"this.form.submit();"]) }}
-                {{ html()->form()->close() }}
+                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>

@@ -6,38 +6,29 @@ use App\TrainingTicket;
 use Carbon\Carbon;
 use Livewire\Component;
 
-class TaStatsGeneral extends Component
-{
+class TaStatsGeneral extends Component {
     public $no_shows;
     public $tickets_by_certs;
+    public $session_ids;
     public $completion_ratios;
     public \StdClass $lookback_monthly;
     public \StdClass $lookback_annual;
     private $cert_types = ['S1', 'S2', 'S3', 'C1'];
+    public $position_select;
 
-    public function render()
-    {
+    public function render() {
         $this->generate_stats();
         return view('livewire.ta-stats-general');
     }
 
-    private function generate_stats(): void
-    {
+    private function generate_stats(): void {
         $this->generate_no_shows();
         $this->generate_tickets_by_certification();
         $this->generate_completion_ratios();
         $this->generate_lookback();
-        // Data for graphics testing only!
-        $this->tickets_by_certs = [7, 12, 32, 12];
-        $this->completion_ratios = [0.9, 0.95, 0.85, 0.75];
-        $this->lookback_annual->last_year = [99, 85, 102, 77, 98, 99, 110, 81, 97, 100, 111, 99];
-        $this->lookback_annual->this_year = [100, 99, 98, 100, 102, 105, 110, 99, 98, 85, 86, 90]; 
-        $this->lookback_monthly->now = [99, 200, 300];
-        $this->lookback_monthly->prev = [85, 185, 280];   
     }
 
-    private function generate_no_shows(): void
-    {
+    private function generate_no_shows(): void {
         $by_controller = [];
         $no_show_sessions = TrainingTicket::where('type', 10)->where('date', '<=', Carbon::now()->addDays(45)->toDateTimeString())->get();
         foreach ($no_show_sessions as $no_show_session) {
@@ -62,8 +53,7 @@ class TaStatsGeneral extends Component
         }
     }
 
-    private function generate_tickets_by_certification(): void
-    {
+    private function generate_tickets_by_certification(): void {
         $position_types_by_rating = TrainingTicket::$position_types_by_rating;
         $tickets = TrainingTicket::where('date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->get();
         foreach ($this->cert_types as $cert) {
@@ -77,20 +67,24 @@ class TaStatsGeneral extends Component
         }
     }
 
-    private function generate_completion_ratios(): void
-    {
-        $position_types_by_rating = TrainingTicket::$position_types_by_rating;
-        $tickets = TrainingTicket::where('date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->get();
-        foreach ($this->cert_types as $cert) {
-            $tickets_complete = $tickets->where('type', 12)->whereIn('position', $position_types_by_rating[$cert])->count();
-            $tickets_incomplete = $tickets->where('type', 13)->whereIn('position', $position_types_by_rating[$cert])->count();
-            $total = $tickets_complete + $tickets_incomplete;
-            $this->completion_ratios[$cert] = $tickets_complete . '/' . $total;
+    private function generate_completion_ratios(): void {
+        $this->completion_ratios = $this->session_ids = [];
+        if ($this->position_select == '') {
+            $this->position_select = 'S1';
         }
+        $sorted_session_ids = TrainingTicket::$session_ids_by_category[$this->position_select];
+        foreach ($sorted_session_ids as $session_id) {
+            $tickets = TrainingTicket::where('date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->where('session_id', $session_id)->get();
+            $tickets_complete = $tickets->where('type', 12)->count();
+            $tickets_incomplete = $tickets->where('type', 13)->count();
+            $total = $tickets_complete + $tickets_incomplete;
+            $this->completion_ratios[] = $tickets_complete . '/' . $total;
+            $this->session_ids[] = TrainingTicket::$session_ids[$session_id];
+        }
+        $this->dispatch('updateCompletionChart', labels: $this->session_ids, data: $this->completion_ratios);
     }
 
-    private function generate_lookback(): void
-    {
+    private function generate_lookback(): void {
         // Annual Lookback
         $selectDate = Carbon::now('America/New_York')->startofMonth()->subMonth(24);
         $this->lookback_annual = new \StdClass;

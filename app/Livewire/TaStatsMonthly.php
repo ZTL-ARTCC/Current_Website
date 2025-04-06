@@ -3,18 +3,19 @@
 namespace App\Livewire;
 
 use App\Http\Controllers\TrainingDash;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Livewire\Component;
 
-class TaStatsMonthly extends Component
-{
+class TaStatsMonthly extends Component {
     public $stats;
+    public $date_select;
 
-    public function render(Request $request)
-    {
+    public function render() {
         $yearSel = $monthSel = null;
-        if (isset($request->date_select)) {
-            $datePart = explode(' ', $request->date_select); // Format: MM YYYY
+        $datePart = explode(' ', $this->date_select);
+        $monthSel = Carbon::now()->format('m');
+        $yearSel = Carbon::now()->format('Y');
+        if (count($datePart) == 2) {
             $monthSel = $datePart[0];
             $yearSel = $datePart[1];
         }
