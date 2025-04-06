@@ -61,7 +61,7 @@ View Training Ticket
 
             <p><b>Comments:</b></p>
             @if($ticket->comments != null)
-                <p>{!! nl2br(e($ticket->comments)) !!}</p>
+                <p>{!! $ticket->comments !!}</p>
             @else
                 <p>No comments for this ticket.</p>
             @endif
