@@ -663,7 +663,7 @@ class TrainingDash extends Controller {
                 foreach ($top_trainers as $ind => $top_trainer) {
                     $order_no = $ind + 1;
                     if ($ind > 0) {
-                        $retArr['taMonthlyReport'] .= "|";    
+                        $retArr['taMonthlyReport'] .= "|";
                     }
                     $retArr['taMonthlyReport'] .= " " . $order_no . ". " . $top_trainer->name;
                 }
