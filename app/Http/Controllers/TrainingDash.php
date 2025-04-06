@@ -582,6 +582,22 @@ class TrainingDash extends Controller {
         $retArr['totalInstructors'] = $ins;
         $retArr['totalMentors'] = $mtr;
         $retArr['trainerSessions'] = $trainerSessions;
+        // Find top trainers
+        $top_trainers = $trainer_by_total = $trainer_by_cid = [];
+        foreach ($retArr['trainerSessions'] as $t) {
+            $trainer_by_total[$t['cid']] = $t['total'];
+            $trainer_by_cid[$t['cid']] = $t['name'];
+        }
+        arsort($trainer_by_total);
+        foreach ($trainer_by_total as $trainer_cid => $tt) {
+            if ($tt == 0) {
+                break;
+            }
+            $top_trainers[] = (object)['name' => $trainer_by_cid[$trainer_cid], 'sessions_given' => $tt];
+            if (count($top_trainers) == 3) {
+                break;
+            }
+        }
         // Students requiring training
         if ($dataType == 'graph') {
             $students = User::where('status', '1')->where('visitor', '0')->where('canTrain', '1')->where('rating_id', '<', '5')->get();
@@ -642,6 +658,16 @@ class TrainingDash extends Controller {
                 }
             }
             $retArr['taMonthlyReport'] = "In the Month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . ", ZTL has offered " . $retArr['sessionsPerMonth'] . " training sessions (" . $percentSessionsChange . "% change from " . Carbon::createFromDate($retArr['date']['start_date'])->subMonths(1)->format('F') . "). " . $retArr['sessionsCompletePerMonth'] . " sessions were completed (" . $percentSessionsCompleteChange . "%), with " . $retArr['sessionsPerMonthNoShow'] . " known no-shows. " . $trainingStaffBelowMins . " Training Staff members did not meet monthly minimums.";
+            if (count($top_trainers) > 0) {
+                $retArr['taMonthlyReport'] .= "Our TOP trainers for the month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . " were:";
+                foreach ($top_trainers as $ind => $top_trainer) {
+                    $order_no = $ind + 1;
+                    if ($ind > 0) {
+                        $retArr['taMonthlyReport'] .= "|";    
+                    }
+                    $retArr['taMonthlyReport'] .= " " . $order_no . ". " . $top_trainer->name;
+                }
+            }
         }
         return $retArr;
     }
