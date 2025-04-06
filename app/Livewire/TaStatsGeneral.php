@@ -35,6 +35,10 @@ class TaStatsGeneral extends Component {
             $by_controller[] = $no_show_session->controller_id;
         }
         $more_than_one_no_show = array_count_values($by_controller);
+        if (count($more_than_one_no_show) == 0) {
+            $this->no_shows = [];
+            return;
+        }
         if (max($more_than_one_no_show) < 2) {
             $this->no_shows = [];
             return;
