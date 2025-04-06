@@ -93,3 +93,5 @@ mix.setPublicPath('public')
 const fs = require("fs");
 fs.readdirSync("resources/assets/js/mix/").forEach(fileName => mix.js(`resources/assets/js/mix/${fileName}`, "public/js"));
 fs.readdirSync("resources/assets/sass/mix/").forEach(fileName => mix.sass(`resources/assets/sass/mix/${fileName}`, "public/css"));
+
+mix.copy('node_modules/chart.js/dist/chart.js', 'public/chart.js/chart.js');
