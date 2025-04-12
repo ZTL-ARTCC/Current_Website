@@ -2,10 +2,10 @@
   <div class="card">
     <div class="card-header collapsible-sidebar" id="headingControllers" name="controllers">
       <h5 class="mb-0">
-        <button class="btn" type="button" data-toggle="collapse" data-target="#collapseControllers" aria-expanded="false" aria-controls="collapseController">
+        <button class="btn w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseControllers" aria-expanded="false" aria-controls="collapseController">
           ZTL CONTROLLERS
+          <b class="caret float-right fas fa-caret-left"></b>
         </button>
-        <b class="caret float-right fas fa-caret-left"></b>
       </h5>
     </div>
     <div id="collapseControllers" class="collapse" aria-labelledby="headingControllers" data-parent="#pill-sidebar">
@@ -32,10 +32,10 @@
   <div class="card">
     <div class="card-header collapsible-sidebar" id="headingTraining" name="training">
       <h5 class="mb-0">
-        <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTraining" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="btn collapsed w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseTraining" aria-expanded="false" aria-controls="collapseTwo">
           TRAINING
+          <b class="caret float-right fas fa-caret-left"></b>
         </button>
-        <b class="caret float-right fas fa-caret-left"></b>
       </h5>
     </div>
     <div id="collapseTraining" class="collapse" aria-labelledby="headingTraining" data-parent="#pill-sidebar">
@@ -63,10 +63,10 @@
   <div class="card">
     <div class="card-header collapsible-sidebar" id="headingAdministration" name="administration">
       <h5 class="mb-0">
-        <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseAdministration" aria-expanded="false" aria-controls="collapseThree">
+        <button class="btn collapsed w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseAdministration" aria-expanded="false" aria-controls="collapseThree">
           ADMINISTRATION
+          <b class="caret float-right fas fa-caret-left"></b>
         </button>
-        <b class="caret float-right fas fa-caret-left"></b>
       </h5>
     </div>
     <div id="collapseAdministration" class="collapse" aria-labelledby="headingAdministration" data-parent="#pill-sidebar">
