@@ -1,23 +1,19 @@
-.sidebar-container {
-  margin-left: 20px;
+#pill-sidebar a:hover {
+  background-color: #428bca;
+  color: white;
 }
 
-[class^="collapsible"] {
-  cursor: pointer;
+#pill-sidebar a.active {
+  background-color: #428bca;
+  color: white;
 }
 
-.collapsible-sidebar {
-  margin-left: -20px;
+#pill-sidebar button{
+  color: #606060;
+  font-weight: bold;
+  font-size: 12px;
 }
-
-.content {
-  text-align: left;
-  overflow: hidden;
-  min-height: 0;
-  max-height: 0;
-  transition: max-height 0.5s ease-out;
-}
-
-.open {
-  transform: rotate(-90deg);
+#pill-sidebar a.nav-link{
+  color: black;
+  font-size: 14px;
 }
