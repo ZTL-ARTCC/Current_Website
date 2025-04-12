@@ -1,13 +1,8 @@
-var coll = document.getElementsByClassName("collapsible-sidebarx");
+var coll = document.getElementsByClassName("collapsible-sidebar");
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function () {
-    return;
     this.getElementsByClassName("caret")[0].classList.toggle("open");
     this.classList.toggle("active");
-    let collapsible = this.nextElementSibling;
-    let content = collapsible.firstElementChild;
-    $(collapsible).collapse("toggle");
-
     for (j = 0; j < coll.length; j++) {
       let e = coll[j];
       if (
