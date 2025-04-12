@@ -1,13 +1,29 @@
-<div class="card bg-light card-body" id="pill-sidebar">
-    <div class="nav flex-column nav-pills sidebar-container" role="tablist" aria-orientation="vertical">
-        <div class="dropdown-divider"></div>
-        <p class="collapsible-sidebar" name="controllers">
-            ZTL CONTROLLERS
-            <b class="caret float-right fas fa-caret-left"></b>
-        </p>
-        <div class="content">
-            @if(Auth::user()->rating_id == 1)
-                <a class="nav-link {{ Nav::urlDoesContain('controllers/teamspeak') }}" href="/controllers/teamspeak">Teamspeak Information</a>
+<style>
+#pill-sidebar button{
+  color: #606060;
+  font-weight: bold;
+  font-size: 12px;
+}
+#pill-sidebar a.nav-link{
+  color: black;
+  font-size: 14px;
+}
+</style>
+
+<div class="accordion" id="pill-sidebar">
+  <div class="card">
+    <div class="card-header collapsible-sidebarx" id="headingControllers" name="controllers">
+      <h5 class="mb-0">
+        <button class="btn" type="button" data-toggle="collapse" data-target="#collapseControllers" aria-expanded="false" aria-controls="collapseController">
+          ZTL CONTROLLERS
+        </button>
+        <b class="caret float-right fas fa-caret-left"></b>
+      </h5>
+    </div>
+    <div id="collapseControllers" class="collapse" aria-labelledby="headingControllers" data-parent="#pill-sidebar">
+      <div class="card-body bg-light nav flex-column nav-pills pt-0 pl-5">
+      @if(Auth::user()->rating_id == 1)
+            <a class="nav-link {{ Nav::urlDoesContain('controllers/teamspeak') }}" href="/controllers/teamspeak">Teamspeak Information</a>
             @endif
             <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/roster') }} {{ Nav::urlDoesContain('/dashboard/admin/roster') }}" href="/dashboard/controllers/roster">Roster</a>
             <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/events') }} {{ Nav::urlDoesContain('dashboard/admin/events') }}" href="/dashboard/controllers/events">Events</a>
@@ -21,15 +37,22 @@
             <a class="nav-link {{ Nav::urlDoesContain('/dashboard/controllers/profile') }} {{ Nav::urlDoesContain('/dashboard/controllers/ticket') }}" href="/dashboard/controllers/profile"><i class="fas fa-user"></i> My Profile</a>
             <a class="nav-link" href="/"><i class="fas fa-arrow-circle-left"></i> Return to Main Website</a>
             <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-        @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
-            <div class="dropdown-divider"></div>
-            <p class="collapsible-sidebar" name="training">
-                TRAINING
-                <b class="caret float-right fas fa-caret-left"></b>
-            </p>
-            <div class="content">
-                <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
+      </div>
+    </div>
+  </div>
+  @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
+  <div class="card">
+    <div class="card-header collapsible-sidebarx" id="headingTraining" name="training">
+      <h5 class="mb-0">
+        <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTraining" aria-expanded="false" aria-controls="collapseTwo">
+          TRAINING
+        </button>
+        <b class="caret float-right fas fa-caret-left"></b>
+      </h5>
+    </div>
+    <div id="collapseTraining" class="collapse" aria-labelledby="headingTraining" data-parent="#pill-sidebar">
+      <div class="card-body bg-light nav flex-column nav-pills pt-0">
+      <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
                 <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback/new">Leave INS/MTR Feedback</a>
@@ -43,17 +66,24 @@
                         <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/statistics') }}" href="/dashboard/training/statistics">TA Dashboard</a>
                         <a class="nav-link {{ Nav::urlDoesContain('/dashboard/admin/trainer_feedback') }}" href="/dashboard/admin/trainer_feedback">Manage Training Feedback</a>
                     @endif
-                @endif
-            </div>
-        @endif
-        @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('contributor'))
-            <div class="dropdown-divider"></div>
-            <p class="collapsible-sidebar" name="administration">
-                ADMINISTRATION
-                <b class="caret float-right fas fa-caret-left"></b>
-            </p>
-            <div class="content">
-                @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('contributor'))
+                @endif        
+      </div>
+    </div>
+  </div>
+  @endif
+  @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('contributor'))
+  <div class="card">
+    <div class="card-header collapsible-sidebarx" id="headingAdministration" name="administration">
+      <h5 class="mb-0">
+        <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseAdministration" aria-expanded="false" aria-controls="collapseThree">
+          ADMINISTRATION
+        </button>
+        <b class="caret float-right fas fa-caret-left"></b>
+      </h5>
+    </div>
+    <div id="collapseAdministration" class="collapse" aria-labelledby="headingAdministration" data-parent="#pill-sidebar">
+      <div class="card-body bg-light nav flex-column nav-pills pt-0">
+      @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('contributor'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/calendar') }}" href="/dashboard/admin/calendar">Calendar/News</a>
                 @endif
                 @if(Auth::user()->isAbleTo('staff'))
@@ -98,11 +128,10 @@
                 @if(Auth::user()->isAbleTo('events'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/events/denylist') }}" href="/dashboard/admin/events/denylist">Event Denylist</a>
                 @endif
-
-            </div>
-        @endif
-        <div class="dropdown-divider"></div>
+      </div>
     </div>
+  </div>
+  @endif
 </div>
 <br>
 
@@ -177,3 +206,35 @@
 
 @endif
 <script src="{{mix('js/sidebar.js')}}"></script>
+<script>
+var coll = document.getElementsByClassName("collapsible-sidebarx");
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    return
+    this.getElementsByClassName("caret")[0].classList.toggle("open");
+    this.classList.toggle("active");
+    let collapsible = this.nextElementSibling;
+    let content = collapsible.firstElementChild;
+    $(collapsible).collapse('toggle');
+    
+    for (j = 0; j < coll.length; j++) {
+      let e = coll[j];
+      if (
+        e.getAttribute("name") !== this.getAttribute("name") &&
+        e.classList.contains("active")
+      ) {
+        e.getElementsByClassName("caret")[0].classList.toggle("open");
+        e.classList.toggle("active");
+    //    e.nextElementSibling.style.maxHeight = null;
+      }
+    }
+    
+  });
+}
+for (j = 0; j < coll.length; j++) {
+  if (coll[j].nextElementSibling.innerHTML.indexOf("active") !== -1) {
+    coll[j].click();
+    break;
+  }
+}
+</script>
