@@ -1,15 +1,3 @@
-<style>
-#pill-sidebar button{
-  color: #606060;
-  font-weight: bold;
-  font-size: 12px;
-}
-#pill-sidebar a.nav-link{
-  color: black;
-  font-size: 14px;
-}
-</style>
-
 <div class="accordion" id="pill-sidebar">
   <div class="card">
     <div class="card-header collapsible-sidebarx" id="headingControllers" name="controllers">
@@ -206,35 +194,3 @@
 
 @endif
 <script src="{{mix('js/sidebar.js')}}"></script>
-<script>
-var coll = document.getElementsByClassName("collapsible-sidebarx");
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function () {
-    return
-    this.getElementsByClassName("caret")[0].classList.toggle("open");
-    this.classList.toggle("active");
-    let collapsible = this.nextElementSibling;
-    let content = collapsible.firstElementChild;
-    $(collapsible).collapse('toggle');
-    
-    for (j = 0; j < coll.length; j++) {
-      let e = coll[j];
-      if (
-        e.getAttribute("name") !== this.getAttribute("name") &&
-        e.classList.contains("active")
-      ) {
-        e.getElementsByClassName("caret")[0].classList.toggle("open");
-        e.classList.toggle("active");
-    //    e.nextElementSibling.style.maxHeight = null;
-      }
-    }
-    
-  });
-}
-for (j = 0; j < coll.length; j++) {
-  if (coll[j].nextElementSibling.innerHTML.indexOf("active") !== -1) {
-    coll[j].click();
-    break;
-  }
-}
-</script>
