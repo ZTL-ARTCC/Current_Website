@@ -93,7 +93,9 @@
                 @endif
                 @if(Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/toggles') }}" href="/dashboard/admin/toggles">Feature Toggles</a>
-                    <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
+                    @if(App::environment('local'))
+                        <a class="nav-link {{ Nav::urlDoesContain('laratrust') }}" href="/laratrust">Laratrust Panel</a>
+                    @endif
                 @endif
                 @if(Auth::user()->isAbleTo('events'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/events/denylist') }}" href="/dashboard/admin/events/denylist">Event Denylist</a>
