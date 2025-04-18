@@ -30,16 +30,16 @@ Upload File
             </div>
         </div>
         <div class="form-group">
-            <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
-            <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
-            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
-        </div>
-        <div class="form-group">
             <label for="desc">Description:</label>
             {{ html()->textarea('desc', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
         <div class="form-group">
             {{ html()->file('file')->class(['form-control']) }}
+        </div>
+        <div class="form-group">
+            <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
+            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
+            <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
         </div>
         <div class="form-group">
             <label for="permalink">Permalink:</label>
@@ -71,13 +71,14 @@ Upload File
     
         function toggleReadonly() {
             if (existingLink.value !== '') {
-                permalink.setAttribute('readonly', 'readonly');
-                permalink.value = existingLink.value
+                permaLink.setAttribute('readonly', 'readonly');
+                permaLink.value = existingLink.value
             } else {
-                permalink.removeAttribute('readonly');
-                if (permaLink.value === existingLink.value) {
-                    permalink.value = '';
+                permaLink.removeAttribute('readonly');
+                if (permaLink.value === '') {
+                    permaLink.value = ' ';
                 }
+                
             }
         }
 
