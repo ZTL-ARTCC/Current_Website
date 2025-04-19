@@ -37,8 +37,13 @@ Upload File
             {{ html()->file('file')->class(['form-control']) }}
         </div>
         <div class="form-group">
+            <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
+            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
+            <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
+        </div>
+        <div class="form-group">
             <label for="permalink">Permalink:</label>
-            {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces') }}
+            {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces')->id('permalink') }}
         </div>
         <div class="row">
             <div class="col-sm-1">
@@ -50,4 +55,39 @@ Upload File
         </div>
     {{ html()->form()->close() }}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const existingLink = document.getElementById('existingPermalinks');
+        const permaLink = document.getElementById('permalink');
+
+        function toggleexistingLink() {
+            if (permaLink.value !== '' && permaLink.value !== existingLink.value) {
+                existingLink.disabled = true;
+            } else {
+                existingLink.disabled = false;
+            }
+        }
+    
+        function toggleReadonly() {
+            if (existingLink.value !== '') {
+                permaLink.setAttribute('readonly', 'readonly');
+                permaLink.value = existingLink.value
+            } else {
+                permaLink.removeAttribute('readonly');
+                if (permaLink.value === '') {
+                    permaLink.value = ' ';
+                }
+                
+            }
+        }
+
+        toggleexistingLink();
+        toggleReadonly();
+
+        existingLink.addEventListener('change', toggleReadonly);
+        permaLink.addEventListener('input', toggleexistingLink);
+    });
+</script>
+
 @endsection
