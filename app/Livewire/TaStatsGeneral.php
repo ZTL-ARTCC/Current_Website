@@ -30,17 +30,16 @@ class TaStatsGeneral extends Component {
 
     private function generate_no_shows(): void {
         $by_controller = [];
+        $this->no_shows = [];
         $no_show_sessions = TrainingTicket::where('type', 10)->where('date', '<=', Carbon::now()->addDays(45)->toDateTimeString())->get();
         foreach ($no_show_sessions as $no_show_session) {
             $by_controller[] = $no_show_session->controller_id;
         }
         $more_than_one_no_show = array_count_values($by_controller);
         if (count($more_than_one_no_show) == 0) {
-            $this->no_shows = [];
             return;
         }
         if (max($more_than_one_no_show) < 2) {
-            $this->no_shows = [];
             return;
         }
         foreach ($more_than_one_no_show as $controller => $number_no_shows) {
