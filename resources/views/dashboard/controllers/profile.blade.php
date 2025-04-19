@@ -193,14 +193,14 @@ Profile
 
                 <div class="row mb-4">
                     <div class="col-4">
-                        <button class="btn btn-success" type="submit">Save Profile</button>
+                        <button class="btn btn-success text-nowrap" type="submit">Save Profile</button>
                     </div>
 
                     @toggle('discord_role_updater')
                         @if(Auth::user()->discord)
                             <div class="col-4">
-                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success" type="button">Update Discord Roles</a>
-                            </div>
+                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
+                            </div>profile.
                         @else
                             <div class="col-4">
                                 <a href="#" data-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
