@@ -72,12 +72,10 @@ Upload File
         function toggleReadonly() {
             if (existingLink.value !== '') {
                 permaLink.setAttribute('readonly', 'readonly');
-                permaLink.value = existingLink.value
+                permaLink.value = existingLink.value;
             } else {
                 permaLink.removeAttribute('readonly');
-                if (permaLink.value === '') {
-                    permaLink.value = ' ';
-                }
+                permaLink.value = '';
                 
             }
         }
