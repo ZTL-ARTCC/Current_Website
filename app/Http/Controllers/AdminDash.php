@@ -808,7 +808,7 @@ class AdminDash extends Controller {
                 $existing_file_path = $existing_file->path;
                 $storage_path = ltrim($existing_file_path, '/');
         
-                if (Storage::exists($storage_path)) {
+                if (Storage::exists($storage_path) && !is_dir($storage_path)) {
                     Storage::delete($storage_path);
                 } else {
                     \Log::warning("File not found at path: " . $storage_path);
