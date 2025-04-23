@@ -848,6 +848,11 @@ class AdminDash extends Controller {
     }
 
     public function fileSeparator(Request $request) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'type' => 'required',
+        ]);
+
         $file = new File;
         $file->name = $request->input('title');
         $file->type = $request->input('type');
