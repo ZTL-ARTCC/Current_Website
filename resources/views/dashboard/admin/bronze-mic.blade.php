@@ -23,13 +23,13 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
     @endif
     <div class="row">
         <div class="col-sm-2">
-            <a class="btn btn-primary" href="/dashboard/admin/bronze-mic/<?=$sort?>/<?=$pyr?>/<?=$pm?>"><i class="fa fa-arrow-left"></i> Previous Month</a></li>
+            <a class="btn btn-primary text-nowrap" href="/dashboard/admin/bronze-mic/<?=$sort?>/<?=$pyr?>/<?=$pm?>"><i class="fa fa-arrow-left"></i> Previous Month</a></li>
         </div>
         <div class="col-sm-8">
             <center><h4>Showing Eligible Hours for <?=$mname?> 20<?=$year?></h4></center>
         </div>
         <div class="col-sm-2" align="right">
-            <a class="btn btn-primary" href="/dashboard/admin/bronze-mic/<?=$sort?>/<?=$nyr?>/<?=$nm?>">Next Month <i class="fa fa-arrow-right"></i></a>
+            <a class="btn btn-primary text-nowrap" href="/dashboard/admin/bronze-mic/<?=$sort?>/<?=$nyr?>/<?=$nm?>">Next Month <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
     <div class="row">
