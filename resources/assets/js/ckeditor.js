@@ -52,11 +52,14 @@ const toolbar = [
   "redo",
 ];
 
+var editors = {};
 $(ckeditorSelector).ready(() => {
   $(ckeditorSelector).each((_idx, editor) => {
     ClassicEditor.create(editor, {
       plugins,
       toolbar,
-    });
+    }).then((editorInstance) => (editors[editor.id] = editorInstance));
   });
 });
+
+window.editors = editors;

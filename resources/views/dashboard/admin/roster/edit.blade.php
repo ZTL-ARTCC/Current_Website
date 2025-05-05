@@ -158,11 +158,11 @@ Update Controller
             </div>
             <div class="row">
                 <div class="col-sm-1">
-                    <button class="btn btn-success" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
+                    <button class="btn btn-success text-nowrap" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
                 </div>
 
                 <div class="col-sm-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fas fa-undo"></i>&nbsp;Cancel</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-danger text-nowrap"><i class="fas fa-undo"></i>&nbsp;Cancel</a>
                 </div>
             </div>
         </div>
@@ -278,11 +278,11 @@ Update Controller
             </div>
             <div class="row">
                 <div class="col-sm-1">
-                    <button class="btn btn-success" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
+                    <button class="btn btn-success text-nowrap" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
                 </div>
 
                 <div class="col-sm-1">
-                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fas fa-undo"></i>&nbsp;Cancel</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-danger text-nowrap"><i class="fas fa-undo"></i>&nbsp;Cancel</a>
                 </div>
             </div>
         </div>

@@ -193,13 +193,13 @@ Profile
 
                 <div class="row mb-4">
                     <div class="col-4">
-                        <button class="btn btn-success" type="submit">Save Profile</button>
+                        <button class="btn btn-success text-nowrap" type="submit">Save Profile</button>
                     </div>
 
                     @toggle('discord_role_updater')
                         @if(Auth::user()->discord)
                             <div class="col-4">
-                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success" type="button">Update Discord Roles</a>
+                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
                             </div>profile.
                         @else
                             <div class="col-4">

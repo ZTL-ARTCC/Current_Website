@@ -37,8 +37,13 @@ Upload File
             {{ html()->file('file')->class(['form-control']) }}
         </div>
         <div class="form-group">
+            <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
+            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
+            <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
+        </div>
+        <div class="form-group">
             <label for="permalink">Permalink:</label>
-            {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces') }}
+            {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces')->id('permalink') }}
         </div>
         <div class="row">
             <div class="col-sm-1">
@@ -50,4 +55,7 @@ Upload File
         </div>
     {{ html()->form()->close() }}
 </div>
+
+<script src="{{mix('js/permalink_field.js')}}"></script>
+
 @endsection
