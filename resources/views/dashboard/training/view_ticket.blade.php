@@ -61,7 +61,9 @@ View Training Ticket
 
             <p><b>Comments:</b></p>
             @if($ticket->comments != null)
+            <div class="ck-content">
                 <p>{!! $ticket->comments !!}</p>
+            </div>
             @else
                 <p>No comments for this ticket.</p>
             @endif
@@ -69,7 +71,9 @@ View Training Ticket
             @if($ticket->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
                 <p>Not authorized to view own trainer comments.</p>
             @elseif($ticket->ins_comments != null)
+            <div class="ck-content">
                 <p>{!! $ticket->ins_comments !!}</p>
+            </div>
             @else
                 <p>No trainer comments for this ticket.</p>
             @endif
