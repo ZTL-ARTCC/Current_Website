@@ -128,6 +128,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('atcast', 'TrainingDash@showatcast');
         Route::get('/req', 'TrainingDash@ShowReq');
         Route::get('/schedule', 'TrainingDash@handleSchedule');
+        Route::post('/upload-image', 'TrainingDash@imageUpload')->name('imageUpload');
         Route::prefix('tickets')->middleware('permission:train')->group(function () {
             Route::get('/', 'TrainingDash@ticketsIndex');
             Route::post('/search', 'TrainingDash@searchTickets');

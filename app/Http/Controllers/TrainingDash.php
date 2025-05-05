@@ -239,6 +239,30 @@ class TrainingDash extends Controller {
         }
     }
 
+    public function imageUpload(Request $request) {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $ext = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $ext;
+
+            $request->file('upload')->storeAs('public/ticket_images', $fileName);
+
+            $public_url = '/storage/ticket_images/' . $fileName;
+
+            return response()->json([
+                'fileName' => $fileName,
+                'uploaded' => 1,
+                'url' => $public_url
+            ]);
+        }
+
+        return response()->json([
+            'uploaded' => 0,
+            'error' => ['message' => 'No file uploaded.']
+        ], 400);
+    }
+
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
         $ticket = new TrainingTicket;
