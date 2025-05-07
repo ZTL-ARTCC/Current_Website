@@ -5,10 +5,6 @@
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                @php ($yearOfMonthsLookback = array())
-                @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
-                @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))
-                @endforeach
                 {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
             <div class="card text-center mt-2">
