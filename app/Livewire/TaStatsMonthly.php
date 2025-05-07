@@ -28,7 +28,7 @@ class TaStatsMonthly extends Component {
 
     public function lookback_months(): void {
         $lookback_dates = array_reverse(CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray());
-        foreach($lookback_dates as $date) {
+        foreach ($lookback_dates as $date) {
             $this->yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y');
         }
     }
