@@ -15,7 +15,7 @@ class TrainingTicket extends Model {
                                  116=>'T1 CLT Approach', 104=>'T1 ATL Clearance', 108=>'T1 ATL Ground', 113=>'T1 ATL Tower',
                                  117 => 'A80 Departure/Satellite Radar', 118 => 'A80 Terminal Arrival Radar', 119 => 'A80 Arrival Radar',
                                  121 => 'Atlanta Center', 122 => 'Recurrent Training', 124 => 'Other', 125 => 'Mentor Training'];
-    protected static $session_ids = [  200=>'DEL1', 201=>'DEL2', 202=>'DEL3', 205=>'GND1', 203=>'CC1', 204=>null, 258=>'CC2', 206=>'TWR1',
+    public static $session_ids = [  200=>'DEL1', 201=>'DEL2', 202=>'DEL3', 205=>'GND1', 203=>'CC1', 204=>null, 258=>'CC2', 206=>'TWR1',
                                 207=>'TWR2', 208=>'TWR3', 209=>'TWR4', 210=>'TWR5', 211=>'TWR6', 261=>'TWR7', 212=>'CC3', 262=>'CC4',
                                 213=>'CC5', 214=>'CC6', 215=>null, 216=>'APP1', 217=>'APP2', 218=>'APP3', 219=>'APP4', 220=>'APP5',
                                 221=>'APP6', 222=>'APP7', 225=>'CT1', 226=>'CT2', 223=>'CT3', 224=>null, 263=>'CT4', 227=>'CT5', 228=>null,
@@ -29,6 +29,16 @@ class TrainingTicket extends Model {
         "S3" => [115, 116, 117, 118, 119],
         "C1" => [121],
         "OTHER" => [122, 124, 125]
+    ];
+    public static $session_ids_by_category = [
+        "S1" => [200, 201, 202, 205],
+        "S2" => [206, 207, 208, 209, 210, 211, 261],
+        "S3" => [216, 217, 218, 219, 220, 221, 222],
+        "C1" => [229, 260, 230, 232, 233, 231, 235],
+        "CLT_ATCT" => [203, 258, 212, 262, 213, 214],
+        "CLT_APP" => [225, 226, 223, 263, 227],
+        "ATL_ATCT" => [237, 239, 242, 243, 240, 259, 241, 244],
+        "A80" => [245, 246, 248, 250, 252,253, 254, 255]
     ];
 
     public static $VATUSA_UPLOAD_STATUS = [
