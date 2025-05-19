@@ -27,6 +27,7 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.5",
         "league/oauth2-client": "^2.7",
+        "livewire/livewire": "^3.6",
         "maatwebsite/excel": "^3.1",
         "mitoteam/jpgraph": "^10.2",
         "psr/simple-cache": "^2.0",
