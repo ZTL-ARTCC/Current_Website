@@ -1,6 +1,6 @@
 <div>
     <div class="row bg-warning w-100 my-2 rounded" wire:loading>
-        <h3 class="text-center"><i class="fa-solid fa-hourglass-start me-2"></i> Refreshing Dataset... please wait</h3>
+        <h3 class="text-center p-2"><i class="fa-solid fa-hourglass-start me-2"></i> Refreshing Dataset... please wait</h3>
     </div>
     <div class="row mt-4">
         <div class="col-sm-12">
