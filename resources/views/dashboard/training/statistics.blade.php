@@ -11,79 +11,40 @@ Training Statistics
 @section('content')
 @include('inc.header', ['title' => 'Training Department Dashboard'])
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2 col-xs-12">
-            <div class="card">
-                {{ html()->form('GET')->route('statistics')->open() }}
-                @php ($yearOfMonthsLookback = array())
-                @foreach(array_reverse(Carbon\CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray()) as $date)
-                @php ($yearOfMonthsLookback[$date->format('m Y')] = $date->format('M Y'))
-                @endforeach
-                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['onchange'=>"this.form.submit();"]) }}
-                {{ html()->form()->close() }}
-            </div>
-            <div class="card text-center mt-2">
-                <div class="card-header">Sessions Per Month</div>
-                <div class="card-body">
-                    <h2>{{ $stats['sessionsPerMonth'] }}</h2>
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" data-target="#general" aria-controls="general" aria-selected="true" href="#">General</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#monthly" aria-controls="monthly" aria-selected="false" href="#monthly">Monthly Stats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#tickets" aria-controls="tickets" aria-selected="false" href="#tickets">Ticket Views</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                    <livewire:ta-stats-general>
                 </div>
-            </div>
-            <div class="card text-center mt-2">
-                <div class="card-header">Staff Ins/Mtr</div>
-                <div class="card-body">
-                    <h2>{{ $stats['totalInstructors'] }} / {{ $stats['totalMentors'] }}</h2>
+                <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+                    <livewire:ta-stats-monthly lazy>
                 </div>
-            </div>
-            <div class="card text-center mt-2">
-                <div class="card-header">Unique Students</div>
-                <div class="card-body">
-                    <h2>{{ $stats['uniqueStudents'] }}</h2>
+                <div class="tab-pane fade" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
+                    <i class="fa-solid fa-triangle-person-digging fa-10x m-5"></i>
+                    <h3 class="text-center">Under Construction</h3>
                 </div>
-            </div>
-            <div class="card text-center mt-2">
-                <div class="card-header">OTS Pass/Fail</div>
-                <div class="card-body">
-                    <h2><span class="text-success">{{ $stats['otsPerMonth']['pass'] }}</span> / <span class="text-danger">{{ $stats['otsPerMonth']['fail'] }}</span></h2>
-                </div>
-            </div>
-            <div class="card text-center mt-2">
-                <div class="card-header">Student<br />No-Shows</div>
-                <div class="card-body">
-                    <h2>{{ $stats['sessionsPerMonthNoShow'] }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-5 col-xs-12">
-            <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=1&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions per month') }}
-            </div>
-            <br />
-            <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=2&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions by instructor and type') }}
-            </div>
-        </div>
-        <div class="col-sm-5 col-xs-12">
-            <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=3&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Average session duration') }}
-            </div>
-            <br />
-            <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=4&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Students requiring training') }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mt-2">
-                <div class="card-header">TA's Monthly Report
-                    <div class="float-right"><i class="fas fa-clipboard" onclick="copyToClipboard('taReport');" title="Copy to clipboard"></i></div>
-                </div>
-                <div class="card-body">
-                    <textarea id="taReport" rows="3" class="form-control" readonly>{{ $stats['taMonthlyReport'] }}</textarea>
+                <div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+                    <i class="fa-solid fa-triangle-person-digging fa-10x m-5"></i>
+                    <h3 class="text-center">Under Construction</h3>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection

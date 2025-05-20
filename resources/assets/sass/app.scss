@@ -9,6 +9,9 @@
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
 
+// Fontawesome
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 //Standard CSS Formats
 .navbar-laravel {
   background-color: #fff;

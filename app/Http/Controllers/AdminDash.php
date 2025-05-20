@@ -786,7 +786,12 @@ class AdminDash extends Controller {
     }
 
     public function uploadFile() {
-        return view('dashboard.admin.files.upload');
+        $existing_permalinks = \App\File::select('name', 'permalink', 'id')->get()
+        ->mapWithKeys(function ($item) {
+            return [$item->permalink => $item->name];
+        })->toArray();
+
+        return view('dashboard.admin.files.upload', compact('existing_permalinks'));
     }
 
     public function storeFile(Request $request) {
@@ -795,6 +800,23 @@ class AdminDash extends Controller {
             'type' => 'required',
             'file' => 'required'
         ]);
+
+        $existing_permalink = $request->input('existingPermalinks');
+        if ($existing_permalink != null) {
+            $existing_file = \App\File::select('id', 'path')->where('permalink', $existing_permalink)->first();
+            if ($existing_file && $existing_file->id) {
+                $existing_file_path = $existing_file->path;
+                $storage_path = ltrim($existing_file_path, '/');
+        
+                if (Storage::exists($storage_path) && !is_dir($storage_path)) {
+                    Storage::delete($storage_path);
+                } else {
+                    \Log::warning("File not found at path: " . $storage_path);
+                }
+        
+                $this->deleteFile($existing_file->id);
+            }
+        }
 
         $time = Carbon::now()->timestamp;
 
