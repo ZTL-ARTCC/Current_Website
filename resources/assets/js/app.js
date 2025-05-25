@@ -7,3 +7,7 @@
 require("./ckeditor.js");
 require("./bootstrap.js");
 require("./helpers.js");
+
+// Chart JS
+import Chart from "chart.js/auto";
+window.Chart = Chart;
