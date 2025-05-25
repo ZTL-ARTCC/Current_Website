@@ -1,6 +1,6 @@
 <div class="accordion" id="pill-sidebar">
     <div class="card">
-        <div class="card-header collapsible-sidebar" id="headingControllers" name="controllers">
+        <div class="card-header collapsible-sidebar" id="controllersClickable" name="controllers">
             <h5 class="mb-0">
                 <button class="btn w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseControllers" aria-expanded="false" aria-controls="collapseController">
                     ZTL CONTROLLERS
@@ -8,7 +8,7 @@
                 </button>
             </h5>
         </div>
-        <div id="collapseControllers" class="collapse" aria-labelledby="headingControllers" data-parent="#pill-sidebar">
+        <div id="controllersAccordion" class="collapse" aria-labelledby="controllersClickable" data-parent="#pill-sidebar">
             <div class="card-body bg-light nav flex-column nav-pills pt-0">
                 @if(Auth::user()->rating_id == 1)
                 <a class="nav-link {{ Nav::urlDoesContain('controllers/teamspeak') }}" href="/controllers/teamspeak">Teamspeak Information</a>
@@ -30,7 +30,7 @@
     </div>
     @if(Auth::user()->canTrain == 1 || Auth::user()->isAbleTo('train'))
     <div class="card">
-        <div class="card-header collapsible-sidebar" id="headingTraining" name="training">
+        <div class="card-header collapsible-sidebar" id="trainingClickable" name="training">
             <h5 class="mb-0">
                 <button class="btn collapsed w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseTraining" aria-expanded="false" aria-controls="collapseTwo">
                     TRAINING
@@ -38,7 +38,7 @@
                 </button>
             </h5>
         </div>
-        <div id="collapseTraining" class="collapse" aria-labelledby="headingTraining" data-parent="#pill-sidebar">
+        <div id="trainingAccordion" class="collapse" aria-labelledby="trainingClickable" data-parent="#pill-sidebar">
             <div class="card-body bg-light nav flex-column nav-pills pt-0">
                 <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
@@ -61,7 +61,7 @@
     @endif
     @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('email') || Auth::user()->isAbleTo('scenery') || Auth::user()->isAbleTo('files') || Auth::user()->isAbleTo('contributor'))
     <div class="card">
-        <div class="card-header collapsible-sidebar" id="headingAdministration" name="administration">
+        <div class="card-header collapsible-sidebar" id="administrationClickable" name="administration">
             <h5 class="mb-0">
                 <button class="btn collapsed w-100 text-left" type="button" data-toggle="collapse" data-target="#collapseAdministration" aria-expanded="false" aria-controls="collapseThree">
                     ADMINISTRATION
@@ -69,7 +69,7 @@
                 </button>
             </h5>
         </div>
-        <div id="collapseAdministration" class="collapse" aria-labelledby="headingAdministration" data-parent="#pill-sidebar">
+        <div id="administrationAccordion" class="collapse" aria-labelledby="administrationClickable" data-parent="#pill-sidebar">
             <div class="card-body bg-light nav flex-column nav-pills pt-0">
                 @if(Auth::user()->isAbleTo('staff') || Auth::user()->isAbleTo('contributor'))
                 <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/calendar') }}" href="/dashboard/admin/calendar">Calendar/News</a>

@@ -1,11 +1,7 @@
-#pill-sidebar a:hover {
-  background-color: #428bca;
-  color: white;
-}
-
+#pill-sidebar a:hover,
 #pill-sidebar a.active {
   background-color: #428bca;
-  color: white;
+  color: white !important;
 }
 
 #pill-sidebar button {
