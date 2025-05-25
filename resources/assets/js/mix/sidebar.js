@@ -31,12 +31,10 @@ function toggleAccordionItem(itemName, openThisItem = false) {
     itemCollapsible.classList.remove("collapse");
     itemCollapsible.classList.add("in");
     itemCollapsible.classList.add("active");
-    console.log("opening");
     return;
   }
   itemClickable.getElementsByClassName("caret")[0].classList.remove("open");
   itemCollapsible.classList.add("collapse");
   itemCollapsible.classList.remove("in");
   itemCollapsible.classList.remove("active");
-  console.log("closing");
 }
