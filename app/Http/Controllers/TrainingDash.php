@@ -248,7 +248,7 @@ class TrainingDash extends Controller {
 
             $request->file('upload')->storeAs('public/ticket_images', $fileName);
 
-            $public_url = '/storage/ticket_images/' . $fileName;
+            $public_url = config('app.url') . '/storage/ticket_images/' . $fileName;
 
             return response()->json([
                 'fileName' => $fileName,
