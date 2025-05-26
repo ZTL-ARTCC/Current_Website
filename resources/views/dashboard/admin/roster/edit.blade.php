@@ -225,6 +225,33 @@ Update Controller
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <span data-toggle="modal" data-target="#remove_solo_certs">
+                            <button type="button" class="btn btn-danger text-nowrap"><i class="fa-solid fa-user-xmark mr-2"></i>Remove Solo Certifications</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal fade" id="remove_solo_certs" tabindex="-1" role="dialog" aria-labelledby="removeSoloCerts" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Remove all solo certifications</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                                <div class="modal-body">
+                                    <p>This action will immediately revoke <b><u>ALL</u></b> solo certifications for 
+                                        {{ $user->full_name }} from both the facility roster and VATUSA.</p>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/dashboard/admin/roster/solo/{{ $user->id }}" role="button" class="btn btn-danger text-nowrap">Revoke Solo Certs Now!</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr>
             <h6><i class="fas fa-level-up-alt"></i>&nbsp;Tier 1 Facility Certifications</h6>
@@ -280,7 +307,6 @@ Update Controller
                 <div class="col-sm-1">
                     <button class="btn btn-success text-nowrap" type="submit"><i class="fas fa-save"></i>&nbsp;Save</button>
                 </div>
-
                 <div class="col-sm-1">
                     <a href="{{ url()->previous() }}" class="btn btn-danger text-nowrap"><i class="fas fa-undo"></i>&nbsp;Cancel</a>
                 </div>
