@@ -400,11 +400,7 @@ class AdminDash extends Controller {
             foreach ($positions as $position) {
                 $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
             }
-            $positions = ['twr','app','ctr'];
-            $solo_facilities = [ // Facilities submitted to VATUSA for solo certs
-                'twr' => 'BHM',
-                'app' => 'BHM',
-                'ctr' => 'ZTL'];
+            $positions = array_keys($user->SoloFacilities);
             foreach ($positions as $solo_id => $position) {
                 if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     if ($request->input($position) != 0) {
@@ -426,7 +422,7 @@ class AdminDash extends Controller {
                     $cert->expiration = $expire;
                     $cert->status = 0;
                     $cert->save();
-                    $solo_facility = $solo_facilities[$position] . '_' . strtoupper($position);
+                    $solo_facility = $user->SoloFacilities[$position] . '_' . strtoupper($position);
                     (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
                 } else {
                     $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
@@ -2076,5 +2072,39 @@ class AdminDash extends Controller {
         $audit->save();
 
         return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
+    }
+
+    public function removeSoloCertifications(Request $request) {
+        if (!Auth::user()->isAbleTo('roster')) {
+            return redirect('/dashboard/controllers/roster')->with('error', 'Insufficient permissions.');
+        }
+        $user = User::find($request->id);
+        $user->twr_solo_fields = '';
+        $user->twr_solo_expires = '';
+        $positions = ['twr','app','ctr'];
+        foreach ($positions as $position) {
+            if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
+                $user[$position] = $user->getMagicNumber('UNCERTIFIED');
+            }
+        }
+        $user->save();
+        $client = new Client(['exceptions' => false]);
+        $response = $client->request('GET', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key'));
+        $result = $response->getStatusCode();
+        if ($result == '200') {
+            $all_vatusa_solo_certs = json_decode($response->getBody());
+            foreach ($all_vatusa_solo_certs->data as $solo_cert) {
+                if ($solo_cert->cid == $user->id && in_array($solo_cert->position, $user->soloPositions())) {
+                    (new Client())->request('DELETE', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&id='.$solo_cert->id, ['http_errors' => false]);
+                }
+            }
+        }
+
+        $audit = new Audit;
+        $audit->cid = Auth::id();
+        $audit->ip = $_SERVER['REMOTE_ADDR'];
+        $audit->what = Auth::user()->full_name.' revoked solo certs for '.$user->full_name.'.';
+
+        return redirect('/dashboard/controllers/roster')->with('success', 'Solo certifications removed.');
     }
 }
