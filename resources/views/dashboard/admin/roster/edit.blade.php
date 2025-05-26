@@ -225,6 +225,7 @@ Update Controller
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
+                @if(Auth::user()->isAbleTo('roster'))
                 <div class="row mt-2">
                     <div class="col-12">
                         <span data-toggle="modal" data-target="#remove_solo_certs">
@@ -252,6 +253,7 @@ Update Controller
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
             <hr>
             <h6><i class="fas fa-level-up-alt"></i>&nbsp;Tier 1 Facility Certifications</h6>
