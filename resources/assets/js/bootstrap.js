@@ -5,13 +5,15 @@ window.Popper = require("popper.js").default;
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-
+/*
+// Not necessary because we're importing jquery in the blade. Leaving this here as a note
+// for the upcoming Bootstrap v5 upgrade so I know why I commented this out...
 try {
   window.$ = window.jQuery = require("jquery");
 
   require("bootstrap");
 } catch (e) {}
-
+*/
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
