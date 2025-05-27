@@ -78,7 +78,7 @@ class TaStatsGeneral extends Component {
             $tickets_complete = $tickets->where('type', 12)->count();
             $tickets_incomplete = $tickets->where('type', 13)->count();
             $total = $tickets_complete + $tickets_incomplete;
-            $this->completion_ratios[] = $tickets_complete / $total;
+            $this->completion_ratios[] = ($total == 0) ? 0 : $tickets_complete / $total;
             $this->session_ids[] = TrainingTicket::$session_ids[$session_id];
         }
         $this->dispatch('updateCompletionChart', labels: $this->session_ids, data: $this->completion_ratios);
