@@ -1190,7 +1190,7 @@ class AdminDash extends Controller {
     public function sendEmail(Request $request) {
         $validator = $request->validate([
             'name' => 'required',
-            'reply_to' => 'required',
+            'reply_to' => 'required|email',
             'subject' => 'required',
             'message' => 'required'
         ]);
