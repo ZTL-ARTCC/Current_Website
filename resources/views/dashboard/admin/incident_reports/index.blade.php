@@ -46,7 +46,8 @@ Incident Report Management
                     </tbody>
                 </table>
             @else
-                @include('inc.empty_state', ['header' => 'No New Incident Reports', 'body' => 'There are no new incident reports to show', 'icon' => 'fa-solid fa-person-falling'])
+                @include('inc.empty_state', ['header' => 'No New Incident Reports', 'body' => 'There are no new incident reports to show.', 'icon' => 'fa-solid
+                fa-person-falling'])
             @endif
         </div>
 
@@ -76,7 +77,8 @@ Incident Report Management
                 </table>
                 {!! $archive_reports->links() !!}
             @else
-                @include('inc.empty_state', ['header' => 'No Archived Incident Reports', 'body' => 'There are no archived incident reports to show', 'icon' => 'fa-solid fa-person-falling'])
+                @include('inc.empty_state', ['header' => 'No Archived Incident Reports', 'body' => 'There are no archived incident reports to show.', 'icon' => 'fa-solid
+                fa-person-falling'])
             @endif
         </div>
     </div>
