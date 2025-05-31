@@ -31,7 +31,7 @@ class TaStatsGeneral extends Component {
     private function generate_no_shows(): void {
         $by_controller = [];
         $this->no_shows = [];
-        $no_show_sessions = TrainingTicket::where('type', 10)->where('date', '<=', Carbon::now()->addDays(45)->toDateTimeString())->get();
+        $no_show_sessions = TrainingTicket::where('type', 10)->where('start_date', '<=', Carbon::now()->addDays(45)->toDateTimeString())->get();
         foreach ($no_show_sessions as $no_show_session) {
             $by_controller[] = $no_show_session->controller_id;
         }
@@ -55,7 +55,7 @@ class TaStatsGeneral extends Component {
 
     private function generate_tickets_by_certification(): void {
         $position_types_by_rating = TrainingTicket::$position_types_by_rating;
-        $tickets = TrainingTicket::where('date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->get();
+        $tickets = TrainingTicket::where('start_date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->get();
         foreach ($this->cert_types as $cert) {
             $cert_tickets = $tickets->whereIn('position', $position_types_by_rating[$cert])->pluck('controller_id')->toArray();
             $tickets_by_controller = array_count_values($cert_tickets);
@@ -74,11 +74,11 @@ class TaStatsGeneral extends Component {
         }
         $sorted_session_ids = TrainingTicket::$session_ids_by_category[$this->position_select];
         foreach ($sorted_session_ids as $session_id) {
-            $tickets = TrainingTicket::where('date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->where('session_id', $session_id)->get();
+            $tickets = TrainingTicket::where('start_date', '<=', Carbon::now()->addYears(2)->toDateTimeString())->where('session_id', $session_id)->get();
             $tickets_complete = $tickets->where('type', 12)->count();
             $tickets_incomplete = $tickets->where('type', 13)->count();
             $total = $tickets_complete + $tickets_incomplete;
-            $this->completion_ratios[] = $tickets_complete . '/' . $total;
+            $this->completion_ratios[] = ($total == 0) ? 0 : $tickets_complete / $total;
             $this->session_ids[] = TrainingTicket::$session_ids[$session_id];
         }
         $this->dispatch('updateCompletionChart', labels: $this->session_ids, data: $this->completion_ratios);
@@ -91,14 +91,14 @@ class TaStatsGeneral extends Component {
         $this->lookback_annual->last_year = [];
         
         while (count($this->lookback_annual->last_year) < 12) {
-            $this->lookback_annual->last_year[] = TrainingTicket::where('date', '>=', $selectDate->copy()->startofMonth()->toDateTimeString())->where('date', '<=', $selectDate->copy()->endofMonth()->toDateTimeString())->count();
+            $this->lookback_annual->last_year[] = TrainingTicket::whereBetween('start_date', [$selectDate->copy()->startofMonth()->toDateTimeString(), $selectDate->copy()->endofMonth()->toDateTimeString()])->count();
             $this->lookback_annual->labels[] = $selectDate->format('F');
             $selectDate = $selectDate->addMonth(1);
         }
         $selectDate = Carbon::now('America/New_York')->startofMonth()->subMonth(11);
         $this->lookback_annual->this_year = [];
         while (count($this->lookback_annual->this_year) < 12) {
-            $this->lookback_annual->this_year[] = TrainingTicket::where('date', '>=', $selectDate->copy()->startofMonth()->toDateTimeString())->where('date', '<=', $selectDate->copy()->endofMonth()->toDateTimeString())->count();
+            $this->lookback_annual->this_year[] = TrainingTicket::whereBetween('start_date', [$selectDate->copy()->startofMonth()->toDateTimeString(), $selectDate->copy()->endofMonth()->toDateTimeString()])->count();
             $selectDate = $selectDate->addMonth(1);
         }
 
@@ -106,18 +106,18 @@ class TaStatsGeneral extends Component {
         $this->lookback_monthly = new \StdClass;
         // Current 30, Previous 30
         $selectDate = Carbon::now('America/New_York')->subDays(30);
-        $this->lookback_monthly->now[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(30)->toDateTimeString())->count();
+        $this->lookback_monthly->now[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(30)->toDateTimeString()])->count();
         $selectDate = Carbon::now('America/New_York')->subDays(60);
-        $this->lookback_monthly->prev[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(30)->toDateTimeString())->count();
+        $this->lookback_monthly->prev[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(30)->toDateTimeString()])->count();
         // Current 60, Previous 60
         $selectDate = Carbon::now('America/New_York')->subDays(60);
-        $this->lookback_monthly->now[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(60)->toDateTimeString())->count();
+        $this->lookback_monthly->now[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(60)->toDateTimeString()])->count();
         $selectDate = Carbon::now('America/New_York')->subDays(120);
-        $this->lookback_monthly->prev[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(60)->toDateTimeString())->count();
+        $this->lookback_monthly->prev[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(60)->toDateTimeString()])->count();
         // Current 90, Previous 90
         $selectDate = Carbon::now('America/New_York')->subDays(90);
-        $this->lookback_monthly->now[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(90)->toDateTimeString())->count();
+        $this->lookback_monthly->now[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(90)->toDateTimeString()])->count();
         $selectDate = Carbon::now('America/New_York')->subDays(180);
-        $this->lookback_monthly->prev[] = TrainingTicket::where('date', '>=', $selectDate->toDateTimeString())->where('date', '<=', $selectDate->addDays(90)->toDateTimeString())->count();
+        $this->lookback_monthly->prev[] = TrainingTicket::whereBetween('start_date', [$selectDate->toDateTimeString(), $selectDate->addDays(90)->toDateTimeString()])->count();
     }
 }
