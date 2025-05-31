@@ -34,15 +34,15 @@ Training Statistics
                     <livewire:ta-stats-general>
                 </div>
                 <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
-                    <livewire:ta-stats-monthly lazy>
+                    <livewire:ta-stats-monthly>
                 </div>
-                <div class="tab-pane fade" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
-                    <i class="fa-solid fa-triangle-person-digging fa-10x m-5"></i>
-                    <h3 class="text-center">Under Construction</h3>
+                <div class="tab-pane fade text-center" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
+                    <i class="fa-solid fa-person-digging fa-10x m-5"></i>
+                    <h3>Under Construction</h3>
                 </div>
-                <div class="tab-pane fade" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-                    <i class="fa-solid fa-triangle-person-digging fa-10x m-5"></i>
-                    <h3 class="text-center">Under Construction</h3>
+                <div class="tab-pane fade text-center" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+                    <i class="fa-solid fa-person-digging fa-10x m-5"></i>
+                    <h3>Under Construction</h3>
                 </div>
             </div>
         </div>
