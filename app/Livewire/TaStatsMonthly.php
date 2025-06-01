@@ -95,6 +95,9 @@ class TaStatsMonthly extends Component {
     public function sessions_by_staff(): void {
         $instructors = $plot_array = [];
         $instructional_categories = ['S1', 'S2', 'S3', 'C1', 'Other'];
+        foreach ($instructional_categories as $instructional_category) {
+            $$instructional_category = [];
+        }
         foreach ($this->graph_stats['trainerSessions'] as $instructor) {
             $instructors[] = $instructor['name'];
             foreach ($instructional_categories as $instructional_category) {
