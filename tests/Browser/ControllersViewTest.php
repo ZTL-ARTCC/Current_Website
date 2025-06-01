@@ -58,6 +58,13 @@ class ControllersViewTest extends DuskTestCase {
         });
     }
 
+    public function test_controller_merch_store(): void {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/dashboard/controllers/merch')
+                    ->assertSee('Merch Store');
+        });
+    }
+
     public function test_controller_stats(): void {
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/controllers/stats')
