@@ -40,23 +40,19 @@
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=1&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions per month') }}
                 <canvas id="sessions_per_month" width="500" height="400"></canvas>
             </div>
             <br />
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=2&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions by instructor and type') }}
                 <canvas id="sessions_by_staff_member" width="500" height="400"></canvas>
             </div>
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=3&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Average session duration') }}
                 <canvas id="average_session_duration" width="500" height="400"></canvas>
             </div>
             <br />
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=4&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Students requiring training') }}
                 <canvas id="students_requiring_training" width="500" height="400"></canvas>
             </div>
         </div>
