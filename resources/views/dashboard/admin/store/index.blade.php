@@ -37,16 +37,9 @@ Merch Store Management
                         <td>{{ $merch_item->description }}</td>
                         <td>${{ $merch_item->price }} USD</td>
                         <td>
-                            <div class="row">
-                                <div class="col-sm-3">
+                            <div class="btn-group">
                                     <a href="/dashboard/admin/store/edit/{{ $merch_item->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Item"><i class="far fa-edit"></i></a>
-                                </div>
-                                <div class="col-sm-2">
-                                    {{ html()->form('DELETE')->route('deleteStoreItem', [$merch_item->id])->open() }}
-                                        @csrf
-                                        <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Item"><i class="fas fa-times"></i></button>
-                                    {{ html()->form()->close() }}
-                                </div>
+                                    <a href="/dashboard/admin/store/delete/{{ $merch_item->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete Item"><i class="fas fa-times"></i></a>
                             </div>
                         </td>
                     </tr>
