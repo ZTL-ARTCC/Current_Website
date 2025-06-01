@@ -32,7 +32,7 @@ Merch Store Management
                             @if(!is_null($merch_item->flag))
                                 <span class="badge badge-{{ $merch_item->displayFlag()->badge }}">{{ $merch_item->displayFlag()->text }}</span><br>
                             @endif
-                            {{ $merch_item->title }}
+                            <b>{{ $merch_item->title }}</b>
                         </td>
                         <td>{{ $merch_item->description }}</td>
                         <td>${{ $merch_item->price }} USD</td>
