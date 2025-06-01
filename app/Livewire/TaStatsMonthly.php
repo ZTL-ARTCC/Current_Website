@@ -49,10 +49,6 @@ class TaStatsMonthly extends Component {
         return view('livewire.ta-stats-monthly');
     }
 
-    public function rendered() {
-        $this->dispatch('load-charts');
-    }
-
     public function lookback_months(): void {
         $lookback_dates = array_reverse(CarbonPeriod::create(now()->subMonths(11), '1 month', now())->toArray());
         foreach ($lookback_dates as $date) {
