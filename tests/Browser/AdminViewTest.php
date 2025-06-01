@@ -38,6 +38,13 @@ class AdminViewTest extends DuskTestCase {
         });
     }
 
+    public function test_admin_merch_store(): void {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/dashboard/admin/store')
+                    ->assertSee('Merch Store');
+        });
+    }
+
     public function test_admin_new_scenery(): void {
         $this->browse(function (Browser $browser) {
 
