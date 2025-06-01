@@ -198,9 +198,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/view/{id}', 'MerchStore@viewItem');
             Route::get('/new', 'MerchStore@newItem');
             Route::post('/new', 'MerchStore@saveItem')->name('saveNewStoreItem');
-            Route::get('/edit/{id}', 'MerchStore@editItem');
+            Route::get('/edit/{id}', 'MerchStore@editItem')->name('editStoreItem');
             Route::post('/edit/{id}/save', 'MerchStore@saveItem')->name('saveStoreItem');
-            Route::delete('/delete/{id}', 'MerchStore@deleteItem')->name('deleteStoreItem');
+            Route::get('/delete/{id}', 'MerchStore@deleteItem')->name('deleteStoreItem');
         });
         Route::prefix('files')->middleware('permission:files')->group(function () {
             Route::get('/upload', 'AdminDash@uploadFile');
