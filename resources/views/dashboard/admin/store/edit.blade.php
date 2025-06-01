@@ -40,7 +40,7 @@ Edit Store Item
             <div class="row">
                 <div class="col-sm-6">
                     <label for="price">Price</label>
-                    {{ html()->text('price', $store_item->price)->class(['form-control'])->placeholder('Digits only ex 1.99 (Required)') }}
+                    {{ html()->number('price', $store_item->price, 0, 99.99, 'any')->class(['form-control'])->placeholder('Digits only ex 1.99 (Required)') }}
                 </div>
                 <div class="col-sm-6">
                     <label for="currency">Image</label>

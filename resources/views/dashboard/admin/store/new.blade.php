@@ -40,7 +40,7 @@ New Store Item
             <div class="row">
                 <div class="col-sm-6">
                     <label for="price">Price</label>
-                    {{ html()->text('price', null)->class(['form-control'])->placeholder('Digits only ex 1.99 (Required)') }}
+                    {{ html()->number('price', null, 0, 99.99, 'any')->class(['form-control'])->placeholder('Digits only ex 1.99 (Required)') }}
                 </div>
                 <div class="col-sm-6">
                     <label for="currency">Image</label>
