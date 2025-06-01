@@ -162,7 +162,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             });
         });
         Route::get('/statistics', 'TrainingDash@statistics')->middleware('permission:snrStaff')->name('statistics');
-        Route::get('/statistics/graph', 'TrainingDash@generateGraphs')->middleware('permission:snrStaff');
     });
 
     Route::prefix('admin')->group(function () {
