@@ -39,7 +39,8 @@ class MerchStore extends Controller {
         $validator = $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
+            'image' => 'mimes:jpg,bmp,gif,png'
         ]);
         if ($request->file('image') != null) {
             $filename = Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
