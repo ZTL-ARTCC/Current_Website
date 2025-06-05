@@ -45,6 +45,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
             $browser->visit('/pilot_passport')
             ->clickLink('Enrollments')
             ->press('@enroll_1')
+            ->waitFor('.navbar', 30)
             ->assertSee('You are now enrolled in the ZTL Pilot Passport program!');
         });
         $enrollment = PilotPassportEnrollment::where('cid', Config::get('vatsim.auth_dev_credential'))->where('challenge_id', 1)->count();
