@@ -238,6 +238,20 @@ class User extends Authenticatable implements LaratrustUser {
 
     protected const SOLO_CERT_DURATION = 30; // Duration of solo certs in days
 
+    protected static $SoloFacilities = [ // Facilities submitted to VATUSA for solo certs
+                'twr' => 'BHM',
+                'app' => 'BHM',
+                'ctr' => 'ZTL'
+    ];
+
+    public static function soloPositions(): array {
+        $fac_pos = [];
+        foreach (self::$SoloFacilities as $pos => $fac) {
+            $fac_pos[] = strtoupper($fac) . '_' . strtoupper($pos);
+        }
+        return $fac_pos;
+    }
+
     public static function getMagicNumber($const_name) {
         return (defined('self::'.$const_name)) ? constant('self::'.$const_name) : null;
     }
