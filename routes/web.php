@@ -261,6 +261,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('roster')->middleware('permission:roster|train|events')->group(function () {
             Route::get('/edit/{id}', 'AdminDash@editController');
             Route::post('/edit/{id}', 'AdminDash@updateController')->name('updateController');
+            Route::get('/solo/{id}', 'AdminDash@removeSoloCertifications')->name('removeSoloCertifications');
         });
         Route::prefix('local-hero')->middleware('permission:snrStaff')->group(function () {
             Route::post('/{year}/{month}/{hours}/{id}', 'AdminDash@setLocalHeroWinner');
