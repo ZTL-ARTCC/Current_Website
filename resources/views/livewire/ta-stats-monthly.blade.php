@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {{ html()->select('date_select', $yearOfMonthsLookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
+                {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>
@@ -40,20 +40,20 @@
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=1&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions per month') }}
+                <canvas id="sessions_per_month" width="500" height="400"></canvas>
             </div>
             <br />
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=2&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Sessions by instructor and type') }}
+                <canvas id="sessions_by_staff_member" width="500" height="400"></canvas>
             </div>
         </div>
         <div class="col-sm-5 col-xs-12">
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=3&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Average session duration') }}
+                <canvas id="average_session_duration" width="500" height="400"></canvas>
             </div>
             <br />
             <div class="card">
-                {{ html()->img('/dashboard/training/statistics/graph?id=4&year=' . $stats['dateSelect']['year'] . '&month=' . $stats['dateSelect']['month'], 'Students requiring training') }}
+                <canvas id="students_requiring_training" width="500" height="400"></canvas>
             </div>
         </div>
     </div>
@@ -70,3 +70,203 @@
         </div>
     </div>
 </div>
+@script
+<script>
+    let chartData = {!!json_encode($this->graph_data)!!}
+    let inclusiveDates = '(' + {!!json_encode($this->inclusive_dates) !!} + ')'
+    let trainerMinSessions = {{$this->trainer_min_sessions}}
+    let todaysDate = {!!json_encode($this->todays_date) !!}
+
+    const sessionsPerMonth = new Chart(
+        document.getElementById('sessions_per_month'), {
+            type: 'bar',
+            data: {
+                labels: chartData.sessions_per_month.labels,
+                datasets: [{
+                    data: chartData.sessions_per_month.data
+                }]
+            },
+            options: {
+                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Sessions Per Month'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: inclusiveDates
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Number of Sessions'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Session Type'
+                        }
+                    }
+                }
+            }
+        }
+    )
+    const averageSessionDuration = new Chart(
+        document.getElementById('average_session_duration'), {
+            type: 'bar',
+            data: {
+                labels: chartData.session_duration.labels,
+                datasets: [{
+                   data: chartData.session_duration.data
+                }]
+            },
+            options: {
+                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Average Session Duration'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Last Six Months'
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Average Session Duration (minutes)'
+                        }
+                    }
+                }
+            }
+        }
+    )
+    const ctx1 = document.getElementById('sessions_by_staff_member').getContext('2d');
+    const horizontalLinePlugin = {
+        id: 'horizontalLine',
+        afterDraw: (chart) => {
+            const yValue = chart.scales.y.getPixelForValue(trainerMinSessions);
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(chart.chartArea.left, yValue);
+            ctx.lineTo(chart.chartArea.right, yValue);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+        }
+    };
+    const sessionsByStaffMember = new Chart(
+        document.getElementById('sessions_by_staff_member'), {
+            type: 'bar',
+            data: {
+                labels: chartData.sessions_by_staff.labels,
+                datasets: chartData.sessions_by_staff.data
+            },
+            options: {
+                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        align: 'center'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Sessions Per Month By Instructor/Mentor'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: inclusiveDates
+                    }
+                },
+                responsive: true,
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Number of Sessions'
+                        }
+                    }
+                }
+            },
+            plugins: [horizontalLinePlugin]
+        }
+    )
+    const studentsRequiringTraining = new Chart(
+        document.getElementById('students_requiring_training'), {
+            type: 'bar',
+            data: {
+                labels: chartData.students_requiring_training.labels,
+                datasets: [{
+                   data: chartData.students_requiring_training.data
+                }]
+            },
+            options: {
+                indexAxis: 'x',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Students Requiring Training'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'As of ' + todaysDate
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Number of Students'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Student Type'
+                        }
+                    }
+
+                }
+            }
+        }
+    )
+    $wire.on('changeSelectedMonth', (event) => {
+        sessionsPerMonth.options.plugins.subtitle.text = '(' + event.inclusive_dates + ')';
+        sessionsPerMonth.data.labels = event.graph_data.sessions_per_month.labels;
+        sessionsPerMonth.data.datasets[0].data = event.graph_data.sessions_per_month.data;
+        sessionsPerMonth.update();
+        sessionsByStaffMember.options.plugins.subtitle.text = '(' + event.inclusive_dates + ')';
+        sessionsByStaffMember.data.labels = event.graph_data.sessions_by_staff.labels;
+        sessionsByStaffMember.data.datasets = event.graph_data.sessions_by_staff.data;
+        sessionsByStaffMember.update();
+    });
+</script>
+@endscript
