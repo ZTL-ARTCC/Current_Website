@@ -400,7 +400,7 @@ class AdminDash extends Controller {
             foreach ($positions as $position) {
                 $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
             }
-            $positions = array_keys($user->SoloFacilities);
+            $positions = array_keys(User::$SoloFacilities);
             foreach ($positions as $solo_id => $position) {
                 if ($user[$position] == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     if ($request->input($position) != 0) {
