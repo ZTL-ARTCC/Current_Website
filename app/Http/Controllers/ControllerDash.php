@@ -510,26 +510,23 @@ class ControllerDash extends Controller {
         }
 
         $client = new Client(['http_errors' => false]);
-        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$apt_r);
+        $res = $client->request('GET', 'https://api-v2.aviationapi.com/v2/charts?airport='.$apt_r);
         $status = $res->getStatusCode();
         if ($status == 404) {
             $charts = null;
         } elseif (json_decode($res->getBody()) != '[]') {
-            $charts = collect(json_decode($res->getBody())->$apt_r);
-            $min = $charts->where('chart_code', 'MIN');
-            $hot = $charts->where('chart_code', 'HOT');
-            $lah = $charts->where('chart_code', 'LAH');
-            $apd = $charts->where('chart_code', 'APD');
-            $iap = $charts->where('chart_code', 'IAP');
-            $dp = $charts->where('chart_code', 'DP');
-            $star = $charts->where('chart_code', 'STAR');
-            $cvfp = $charts->where('chart_code', 'CVFP');
+            $charts = collect(json_decode($res->getBody())->charts);
+            $general = $charts['general'];
+            $apd = $charts['airport_diagram'];
+            $iap = $charts['approach'];
+            $dp = $charts['departure'];
+            $star = $charts['arrival'];
         } else {
             $charts = null;
         }
 
         return view('dashboard.controllers.airport')->with('apt_r', $apt_r)->with('metar', $metar)->with('taf', $taf)->with('visual_conditions', $visual_conditions)->with('pilots_a', $pilots_a)->with('pilots_d', $pilots_d)
-                                                    ->with('charts', $charts)->with('min', $min)->with('hot', $hot)->with('lah', $lah)->with('apd', $apd)->with('iap', $iap)->with('dp', $dp)->with('star', $star)->with('cvfp', $cvfp);
+                                                    ->with('charts', $charts)->with('general', $general)->with('apd', $apd)->with('iap', $iap)->with('dp', $dp)->with('star', $star);
     }
 
     public function optIn(Request $request) {
