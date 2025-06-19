@@ -193,12 +193,12 @@ class FrontController extends Controller {
         }
 
         $client = new Client(['http_errors' => false]);
-        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$apt_r);
+        $res = $client->request('GET', 'https://api-v2.aviationapi.com/v2/charts?airport='.$apt_r);
         $status = $res->getStatusCode();
         if ($status == 404) {
             $charts = null;
         } elseif (json_decode($res->getBody()) != '[]') {
-            $charts = collect(json_decode($res->getBody())->$apt_r);
+            $charts = collect(json_decode($res->getBody())->$charts);
             $min = $charts->where('chart_code', 'MIN');
             $hot = $charts->where('chart_code', 'HOT');
             $lah = $charts->where('chart_code', 'LAH');
@@ -219,27 +219,24 @@ class FrontController extends Controller {
         $airport = Airport::find($id);
 
         $client = new Client(['http_errors' => false]);
-        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt='.$airport->ltr_4);
+        $res = $client->request('GET', 'https://api-v2.aviationapi.com/v2/charts?airport='.$airport->ltr_4);
         $status = $res->getStatusCode();
         if ($status == 404) {
             $charts = null;
         } elseif (json_decode($res->getBody()) != '[]') {
             $apt_r = $airport->ltr_4;
-            $charts = collect(json_decode($res->getBody())->$apt_r);
-            $min = $charts->where('chart_code', 'MIN');
-            $hot = $charts->where('chart_code', 'HOT');
-            $lah = $charts->where('chart_code', 'LAH');
-            $apd = $charts->where('chart_code', 'APD');
-            $iap = $charts->where('chart_code', 'IAP');
-            $dp = $charts->where('chart_code', 'DP');
-            $star = $charts->where('chart_code', 'STAR');
-            $cvfp = $charts->where('chart_code', 'CVFP');
+            $charts = collect(json_decode($res->getBody())->charts);
+            $general = $charts["general"];
+            $apd = $charts["airport_diagram"];
+            $iap = $charts["approach"];
+            $dp = $charts["departure"];
+            $star = $charts["arrival"];
         } else {
             $charts = null;
         }
 
         return view('site.airports.view')->with('airport', $airport)
-                                         ->with('charts', $charts)->with('min', $min)->with('hot', $hot)->with('lah', $lah)->with('apd', $apd)->with('iap', $iap)->with('dp', $dp)->with('star', $star)->with('cvfp', $cvfp);
+                                         ->with('charts', $charts)->with('general', $general)->with('apd', $apd)->with('iap', $iap)->with('dp', $dp)->with('star', $star);
     }
 
     public function sceneryIndex(Request $request) {
@@ -535,23 +532,29 @@ class FrontController extends Controller {
 
         $client = new Client(['http_errors' => false]);
         $icao_id = 'KATL';
-        $res = $client->request('GET', 'https://api.aviationapi.com/v1/charts?apt=' . $icao_id);
+        $res = $client->request('GET', 'https://api-v2.aviationapi.com/v2/charts?airport=' . $icao_id);
         $status = $res->getStatusCode();
         $diag = $aaup = '#';
         $charts = null;
         if ($status == 200 && json_decode($res->getBody()) != '[]') {
-            $charts = collect(json_decode($res->getBody())->$icao_id);
-            $diag = $charts->where('chart_code', 'APD');
+            $charts = collect(json_decode($res->getBody())->charts);
+            $diag = $charts['airport_diagram'];
             if (count($diag)>0) {
-                $diag = $diag->first()->pdf_path;
+                $diag = $diag[0]->pdf_url;
             } else {
                 $diag = '#';
             }
-            $aaup = $charts->where('chart_code', 'DAU');
-            if (count($aaup)>0) {
-                $aaup = $aaup->first()->pdf_path;
+            $aaup = null;
+            foreach ($charts['departure'] as $chart) {
+                if ($chart->chart_name == 'RNAV DP AAUP') {
+                    $aaup = $chart;
+                    break;
+                }
+            }
+            if (isset($aaup)) {
+                $aaup = $aaup->pdf_url;
             } else {
-                $aaup = '#';
+                $aaup = 'https://vats.im/ATLDPAAUP';
             }
         } else {
             $charts = null;

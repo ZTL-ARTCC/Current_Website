@@ -233,7 +233,7 @@ return $badge;
         <div id="tab4" class="tab-pane fade">
             <div id="diagram1Carousel" class="carousel slide w-25 float-right">
                 <br />
-                <a href="https://vats.im/ATLDPAAUP" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
+                <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
             </div>
             <h3>Receiving a clearance</h3>
             <p> After filing a flight plan, you should receive your clearance from ATC. If you have not received a clearance after a reasonable
@@ -300,7 +300,7 @@ return $badge;
                         <a href="{{ $diag }}" target="_blank"><img src="/photos/atl_diag.png" class="d-block w-100" alt="Diagram"></a>
                     </div>
                     <div class="carousel-item">
-                        <a href="https://vats.im/ATLDPAAUP" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
+                        <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#diagram2Carousel" role="button" data-slide="prev">

@@ -13,7 +13,7 @@ View Airport ({{ $airport->ltr_4 }})
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <b>Airport Diagram</b> <div class="float-right"></div>
@@ -21,7 +21,7 @@ View Airport ({{ $airport->ltr_4 }})
                 <div class="card-body">
                     @if($apd != '[]')
                         @foreach($apd as $c)
-                            <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={{ $c->pdf_path }}" width="100%" height="755px">
+                            <iframe src="{{ $c->pdf_url }}" frameborder="0" style="width:100%; height:750px"></iframe>
                         @endforeach
                     @else
                         <p>No airport diagram found</p>
@@ -29,7 +29,7 @@ View Airport ({{ $airport->ltr_4 }})
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <b>Current Weather/Forecast ({{ $airport->visual_conditions }} Conditions)</b>
@@ -47,7 +47,7 @@ View Airport ({{ $airport->ltr_4 }})
                 </div>
                 <div class="card-body">
                     @if($charts != null)
-                        @if($apd != '[]' || $min != '[]' || $hot != '[]' || $lah != '[]')
+                        @if($apd != '[]' || $general != '[]')
                             <div class="card">
                                 <div class="collapsible">
                                     <div class="card-header">
@@ -60,44 +60,24 @@ View Airport ({{ $airport->ltr_4 }})
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Chart Name</th>
-                                                    <th scope="col">Download</th>
+                                                    <th scope="col">View</th>
                                                 </tr>
                                                 @if($apd != '[]')
                                                     @foreach($apd as $c)
                                                         <tr>
                                                             <td>{{ $c->chart_name }}</td>
                                                             <td>
-                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                                <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
-                                                @if($min != '[]')
-                                                    @foreach($min as $c)
+                                                @if($general != '[]')
+                                                    @foreach($general as $c)
                                                         <tr>
                                                             <td>{{ $c->chart_name }}</td>
                                                             <td>
-                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                                @if($hot != '[]')
-                                                    @foreach($hot as $c)
-                                                        <tr>
-                                                            <td>{{ $c->chart_name }}</td>
-                                                            <td>
-                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                                @if($lah != '[]')
-                                                    @foreach($lah as $c)
-                                                        <tr>
-                                                            <td>{{ $c->chart_name }}</td>
-                                                            <td>
-                                                                <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                                <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -122,13 +102,13 @@ View Airport ({{ $airport->ltr_4 }})
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Chart Name</th>
-                                                    <th scope="col">Download</th>
+                                                    <th scope="col">View</th>
                                                 </tr>
                                                 @foreach($dp as $c)
                                                     <tr>
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -152,13 +132,13 @@ View Airport ({{ $airport->ltr_4 }})
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Chart Name</th>
-                                                    <th scope="col">Download</th>
+                                                    <th scope="col">View</th>
                                                 </tr>
                                                 @foreach($star as $c)
                                                     <tr>
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -182,13 +162,13 @@ View Airport ({{ $airport->ltr_4 }})
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Chart Name</th>
-                                                    <th scope="col">Download</th>
+                                                    <th scope="col">View</th>
                                                 </tr>
                                                 @foreach($iap as $c)
                                                     <tr>
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
-                                                            <a href="{{ $c->pdf_path }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="Download {{ $c->chart_name }}" target="_blank"><i class="fas fa-download"></i></a>
+                                                            <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
