@@ -8,22 +8,6 @@ Airports
 @include('inc.header', ['title' => 'Airports', 'type' => 'external'])
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            {{ html()->form()->route('searchAirport')->open() }}
-                <div class="form-inline">
-                    {{ html()->text('apt', null)->placeholder('Search Airport (ICAO)')->class(['form-control']) }}
-                    &nbsp;
-                    <button class="btn btn-success" type="submit">Search</button>
-                </div>
-            {{ html()->form()->close() }}
-        </div>
-        <div class="col-sm-4">
-        </div>
-        <div class="col-sm-4">
-        </div>
-    </div>
-    <br>
     @if(count($airports) > 0)
         <table class="table">
             <thead>
