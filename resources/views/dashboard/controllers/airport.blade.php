@@ -37,7 +37,7 @@
                 <div class="card-body">
                     METAR {{ $metar }}
                     <hr>
-                    TAF {{ $taf }}
+                    TAF {!! $taf !!}
                 </div>
             </div>
             <br>

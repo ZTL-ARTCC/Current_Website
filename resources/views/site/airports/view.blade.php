@@ -37,7 +37,7 @@ View Airport ({{ $airport->ltr_4 }})
                 <div class="card-body">
                     METAR {{ $airport->metar }}
                     <hr>
-                    TAF {{ $airport->taf }}
+                    TAF {!! $airport->taf !!}
                 </div>
             </div>
             <br>
