@@ -68,6 +68,9 @@
                                                             <td>{{ $c->chart_name }}</td>
                                                             <td>
                                                                 <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                                @if($c->did_change)
+                                                                    <a href="{{ $c->change_pdf_url }}" class="btn btn-warning btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }} Changes" target="_blank"><i class="fas fa-file-pen"></i></a>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -78,6 +81,9 @@
                                                             <td>{{ $c->chart_name }}</td>
                                                             <td>
                                                                 <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                                @if($c->did_change)
+                                                                    <a href="{{ $c->change_pdf_url }}" class="btn btn-warning btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }} Changes" target="_blank"><i class="fas fa-file-pen"></i></a>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -109,6 +115,9 @@
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
                                                             <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                                @if($c->did_change)
+                                                                    <a href="{{ $c->change_pdf_url }}" class="btn btn-warning btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }} Changes" target="_blank"><i class="fas fa-file-pen"></i></a>
+                                                                @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -139,6 +148,9 @@
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
                                                             <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                                @if($c->did_change)
+                                                                    <a href="{{ $c->change_pdf_url }}" class="btn btn-warning btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }} Changes" target="_blank"><i class="fas fa-file-pen"></i></a>
+                                                                @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -169,6 +181,9 @@
                                                         <td>{{ $c->chart_name }}</td>
                                                         <td>
                                                             <a href="{{ $c->pdf_url }}" class="btn btn-success btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                                @if($c->did_change)
+                                                                    <a href="{{ $c->change_pdf_url }}" class="btn btn-warning btn-sm simple-tooltip" data-toggle="tooltip" title="View {{ $c->chart_name }} Changes" target="_blank"><i class="fas fa-file-pen"></i></a>
+                                                                @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
