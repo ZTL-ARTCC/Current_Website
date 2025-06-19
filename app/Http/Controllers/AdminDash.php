@@ -422,7 +422,7 @@ class AdminDash extends Controller {
                     $cert->expiration = $expire;
                     $cert->status = 0;
                     $cert->save();
-                    $solo_facility = $user->SoloFacilities[$position] . '_' . strtoupper($position);
+                    $solo_facility = User::$SoloFacilities[$position] . '_' . strtoupper($position);
                     (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
                 } else {
                     $user[$position] = ($request->input($position)) ? $request->input($position) : $user[$position];
@@ -2087,7 +2087,14 @@ class AdminDash extends Controller {
                 $user[$position] = $user->getMagicNumber('UNCERTIFIED');
             }
         }
+        $user->twr_solo_fields = '';
         $user->save();
+        $solo_certs = SoloCert::where('cid', $user->id)->where('status', 0)->get();
+        foreach ($solo_certs as $solo_cert) {
+            $solo_cert->status = 1;
+            $solo_cert->save();
+        }
+
         $client = new Client(['exceptions' => false]);
         $response = $client->request('GET', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key'));
         $result = $response->getStatusCode();
