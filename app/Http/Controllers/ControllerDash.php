@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Airport;
 use App\Announcement;
 use App\ATC;
 use App\Bronze;
@@ -485,7 +486,7 @@ class ControllerDash extends Controller {
         }
         $metar = $metar->__toString();
         if ($taf != null) {
-            $taf = $taf->__toString();
+            $taf = Airport::formatTaf($taf->__toString());
         }
         $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
