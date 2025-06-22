@@ -24,7 +24,7 @@ class Airport extends Model {
         $airport = Metar::where('icao', $this->ltr_4)->first();
 
         if (isset($airport)) {
-            return $airport->taf;
+            return $this->formatTaf($airport->taf);
         } else {
             return 'N/A';
         }
@@ -92,5 +92,16 @@ class Airport extends Model {
         } else {
             return null;
         }
+    }
+
+    public static function formatTaf($taf) {
+        $change_des = ['FM', 'TEMPO', 'PROB', 'BECMG', 'RMK'];
+        $space = '<br>&nbsp;&nbsp;&nbsp;&nbsp;';
+
+        foreach ($change_des as $change) {
+            $taf = str_replace($change, $space . $change, $taf);
+        }
+
+        return $taf;
     }
 }
