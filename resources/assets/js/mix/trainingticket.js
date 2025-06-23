@@ -18,7 +18,8 @@ if (newForm.length || (editForm.length && draft.length)) {
 
     formData.push(
       { name: "action", value: "draft" },
-      { name: "automated", value: true }
+      { name: "automated", value: 1 },
+      { name: "is_new", value: newForm.length }
     );
 
     $.ajax({
@@ -29,6 +30,11 @@ if (newForm.length || (editForm.length && draft.length)) {
         if (newForm.length) {
           window.location.replace(result);
         }
+
+        if (!result) {
+          window.close();
+        }
+
         // Using device time opposed to database
         $("#autosaveIndicator").text(
           "Last autosaved at: " + new Date().toLocaleTimeString()
