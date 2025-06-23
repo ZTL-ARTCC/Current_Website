@@ -287,17 +287,20 @@ class TrainingDash extends Controller {
             Log::error($e);
         }
 
-        $recent_sessions = array_reduce($recent_sessions, function ($new_sessions, $session) {
+        $max_recent_sessions = 5;
+        $recent_sessions = array_reduce($recent_sessions, function ($new_sessions, $session) use ($max_recent_sessions) {
             $date = Carbon::parse($session->session->start)->setTimezone('America/New_York');
             $student = User::find($session->session->student);
             $session_id = TrainingTicket::$scheddy_session_id_map['DEFAULT'];
+            $scheddy_id = $session->session->id;
 
             if (array_key_exists($session->sessionType->id, TrainingTicket::$scheddy_session_id_map)) {
                 $session_id = TrainingTicket::$scheddy_session_id_map[$session->sessionType->id];
             }
 
-            if (isset($student)) {
+            if (!TrainingTicket::where('scheddy_id', $scheddy_id)->exists() && isset($student) && count($new_sessions) < $max_recent_sessions) {
                 array_push($new_sessions, [
+                    "scheddy_id" => $scheddy_id,
                     "date" =>  $date->format('m/d/Y'),
                     "start_time" => $date->format('H:i'),
                     "student_name" => $student->full_name,
@@ -817,6 +820,7 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
         if (! $ticket) {
             $ticket = new TrainingTicket;
+            $ticket->scheddy_id = $request->scheddy_id;
         }
 
         $ticket->controller_id = $request->controller;
@@ -880,6 +884,7 @@ class TrainingDash extends Controller {
             }
 
             $ticket = new TrainingTicket;
+            $ticket->scheddy_id = $request->scheddy_id;
         }
 
         $ticket->controller_id = $request->controller;
