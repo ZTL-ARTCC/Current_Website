@@ -14,6 +14,7 @@ New Training Ticket
 <div class="container">
     {{ html()->form()->route('saveTicket')->attributes(['id'=>'newTrainingTicket'])->open() }}
         @csrf
+        {{ html()->hidden('scheddy_id', null) }}
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
@@ -136,5 +137,31 @@ New Training Ticket
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
+
+@if (count($recent_sessions) > 0)
+    <div class="modal fade" id="showSuggestions" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Would you like to prefill any of these sessions?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            @foreach($recent_sessions as $session)
+                <div class="card mb-2 session-suggestion-card" role="button" onclick='fillSession(@json($session))'>
+                    <div class="card-body">
+                        <p class="mb-0 font-weight-light small float-right">{{ $session["date"] }} {{ $session["start_time"] }}</p>
+                        <p class="mb-0">{{ $session["student_name"] }} - {{ $session["lesson_name"] }}</p>
+                      </div>
+                </div>
+            @endforeach
+          </div>
+        </div>
+      </div>
+    </div>
+@endif
+
 <script src="{{mix('js/trainingticket.js')}}"></script>
 @endsection
