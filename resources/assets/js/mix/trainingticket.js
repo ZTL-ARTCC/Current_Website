@@ -116,9 +116,9 @@ $(window).on("load", function () {
 
 window.fillSession = (session) => {
   $("#showSuggestions").modal("hide");
+  $("#scheddy_id")[0].value = session.scheddy_id;
   $("#controller")[0].value = session.student_cid;
   $("#position")[0].value = session.lesson_type;
   $("#date")[0].value = session.date;
   $("#start")[0].value = session.start_time;
-  $("#scheddy_id")[0].value = 123;
 };
