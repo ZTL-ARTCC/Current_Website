@@ -40,6 +40,20 @@ class TrainingTicket extends Model {
         "ATL_ATCT" => [237, 239, 242, 243, 240, 259, 241, 244],
         "A80" => [245, 246, 248, 250, 252,253, 254, 255]
     ];
+    public static $scheddy_session_id_map = [
+        "dw_zinXmuG7IonJXI1rQi" => 101,
+        "_eqqpYXbIpiwQd1OIhgAh" => 105,
+        "7wb1RrBA4QG4nFlt5uBlq" => 109,
+        "NSkB0f-OUPIVp3twQcaQE" => 115,
+        "fmu_2YuEFsh8rrjMQTLjr" => 102,
+        "BOPuWxHulkUipWKuTfmX_" => 106,
+        "z9lDf54LbkdT28qzEsYGs" => 111,
+        "8zt9Mbo7cfwObZjr-l6gI" => 116,
+        "Hu8KNso7I5pjhsGpqOcRm" => 104,
+        "DOrSeznb_40GEpBv59v3N" => 117,
+        "xM_xdSHmlCwKZ3ed_-GDx" => 121,
+        "DEFAULT" => 124
+    ];
 
     public static $VATUSA_UPLOAD_STATUS = [
         "PENDING" => 0,
