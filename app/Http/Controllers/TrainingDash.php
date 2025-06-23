@@ -830,6 +830,10 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
 
         if (! $ticket) {
+            if ($request->automated && !$request->is_new) {
+                return response(null);
+            }
+
             $ticket = new TrainingTicket;
         }
 
