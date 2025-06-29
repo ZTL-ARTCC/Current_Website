@@ -8,29 +8,30 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <div class="row">
         <div class="col-sm-4 text-center">
             <h3>Total Hours this Month</h3>
-            <div class="card text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center" style="background-color:#d3d3d3">
                 <br>
-                <h4>{{ number_format($all_stats['month'], 2) }}</h4>
+                <h4 class="m-0">{{ number_format($all_stats['month'], 2) }}</h4>
                 <br>
             </div>
         </div>
         <div class="col-sm-4 text-center">
             <h3>Total Hours this Year</h3>
-            <div class="card text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center" style="background-color:#d3d3d3">
                 <br>
-                <h4>{{ number_format($all_stats['year'], 2) }}</h4>
+                <h4 class="m-0">{{ number_format($all_stats['year'], 2) }}</h4>
                 <br>
             </div>
         </div>
         <div class="col-sm-4 text-center">
             <h3>Total Hours All Time</h3>
-            <div class="card text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center" style="background-color:#d3d3d3">
                 <br>
-                <h4>{{ number_format($all_stats['total'], 2) }}</h4>
+                <h4 class="m-0">{{ number_format($all_stats['total'], 2) }}</h4>
                 <br>
             </div>
         </div>
     </div>
+
     <hr>
     <div class="row">
         <div class="col-sm-2">
