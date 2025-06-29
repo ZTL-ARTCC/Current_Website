@@ -121,7 +121,7 @@
         {!! $flights->links() !!}
     </div>
 @else
-    @include('inc.empty_state', ['header' => 'No Flights', 'body' => 'No flights have been added', 'icon' => 'fa fa-plane'])
+    @include('inc.empty_state', ['header' => 'No Flights', 'body' => 'No flights have been added.', 'icon' => 'fa fa-plane'])
 @endif
 </div>
 <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-hidden="true">
