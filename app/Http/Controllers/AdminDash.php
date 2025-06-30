@@ -876,6 +876,12 @@ class AdminDash extends Controller {
     }
 
     public function saveFile(Request $request, $id) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'type' => 'required',
+            'file' => 'required'
+        ]);
+
         $permalink = $request->input('permalink');
         if (strlen($permalink) < 1) {
             $permalink = null;
