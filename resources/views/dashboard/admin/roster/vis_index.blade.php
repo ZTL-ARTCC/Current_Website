@@ -10,8 +10,8 @@
         <div class="form-group inline">
             <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
             <span data-toggle="modal" data-target="#manualAdd">
-            <button type="button" class="btn btn-warning">Manual Add Controller</button>
-        </span>
+                <button type="button" class="btn btn-warning">Manual Add Controller</button>
+            </span>
         </div>
         <br><br>
         <ul class="nav nav-tabs nav-justified" role="tablist">
