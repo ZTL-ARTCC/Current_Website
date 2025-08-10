@@ -10,11 +10,11 @@ New Calendar Event/News
 <div class="container">
     {{ html()->form()->route('storeCalendarEvent')->open() }}
         @csrf
-        <div class="form-group">
+        <div class="form-group mb-3">
         <label for="title">Title</label>
         {{ html()->text('title', null)->class(['form-control'])->placeholder('Required') }}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="date">Date</label>
@@ -36,11 +36,11 @@ New Calendar Event/News
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="body">Additional Information</label>
             {{ html()->textarea('body', null)->class(['form-control', 'text-editor'])->placeholder('Required') }}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="type">Type of Post</label>
             {{ html()->select('type', [
                 1 => 'Calendar Event',

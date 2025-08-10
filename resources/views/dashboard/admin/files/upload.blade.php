@@ -10,7 +10,7 @@ Upload File
 <div class="container">
     {{ html()->form()->route('storeFile')->acceptsFiles()->open() }}
         @csrf
-        <div class="form-group">
+        <div class="form-group mb-3">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="title">Title (Please refrain from using slashes in the title):</label>
@@ -29,19 +29,19 @@ Upload File
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="desc">Description:</label>
             {{ html()->textarea('desc', null)->class(['form-control'])->placeholder('Optional') }}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             {{ html()->file('file')->class(['form-control']) }}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
             {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
             <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="permalink">Permalink:</label>
             {{ html()->text('permalink', null)->class(['form-control'])->placeholder('Optional, no spaces')->id('permalink') }}
         </div>

@@ -10,7 +10,7 @@ Edit Feature Toggle
 <div class="container">
     {{ html()->form()->route('editFeatureToggle')->open() }}
         @csrf
-        <div class="form-group">
+        <div class="form-group mb-3">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="toggle_name">Toggle Name</label>

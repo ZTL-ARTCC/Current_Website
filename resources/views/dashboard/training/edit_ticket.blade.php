@@ -17,7 +17,7 @@ Edit Training Ticket
     @endif
     {{ html()->form()->route('saveTicket', [$ticket->id])->attributes(['id'=>'editTrainingTicket'])->open() }}
         @csrf
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="controller" class="form-label">Controller</label>
@@ -43,7 +43,7 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="date" class="form-label">Date</label>
@@ -88,7 +88,7 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
@@ -111,7 +111,7 @@ Edit Training Ticket
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="comments" class="form-label">Comments (Visible to Controller and other Trainers)</label>

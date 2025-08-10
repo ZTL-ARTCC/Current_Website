@@ -48,7 +48,7 @@ ATC Bookings
             <div class="card-body">
                 {{ html()->form()->route('createBooking')->open() }}
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="facility">3-Letter Facility Identifier</label>
@@ -60,7 +60,7 @@ ATC Bookings
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="start">Start Time (ZULU)</label>

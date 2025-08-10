@@ -2,7 +2,7 @@
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
         @php ($redirect_to = (isset($redirect)) ? $redirect : 'external')
         {{ html()->text('redirect_to', $redirect_to)->attribute('hidden') }}
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-4 form-group">
                 <label for="feedback_id" class="control-label">Training Team Member: (required)</label>
                 {{ html()->select('feedback_id', $feedbackOptions)->placeholder('Select Team Member')->class(['form-control']) }}
@@ -19,16 +19,16 @@
             <div class="col-sm-4 form-group">
                 <label for="service_level" class="control-label">Service Level: (required)</label>
                 <div id="stars" class="star-input input-group">
-                        <span data-bs-rating="1">&star;</span>
-                        <span data-bs-rating="2">&star;</span>
-                        <span data-bs-rating="3">&star;</span>
-                        <span data-bs-rating="4">&star;</span>
-                        <span data-bs-rating="5">&star;</span>
+                        <span data-rating="1">&star;</span>
+                        <span data-rating="2">&star;</span>
+                        <span data-rating="3">&star;</span>
+                        <span data-rating="4">&star;</span>
+                        <span data-rating="5">&star;</span>
                         {{ html()->text('service_level', null)->attribute('hidden') }}
                     </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-4 form-group">
                 <label for="position_trained" class="control-label">Position Trained/Training Session ID: (required)</label>
                 {{ html()->text('position_trained', null)->placeholder('Position Staffed')->class(['form-control']) }}
@@ -42,7 +42,7 @@
                 {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'])->placeholder('Pick One')->class(['form-control']) }}
             </div>
         </div>
-        <div class="row form-group">
+        <div class="row form-group mb-3">
             <div class="col-sm-12 form-group">
                 <label for="comments" class="control-label">Comments: (required)</label>
                 {{ html()->textarea('comments', null)->placeholder('Type your comments here. This will be reviewed by the facility TA and ATA.')->class(['form-control']) }}

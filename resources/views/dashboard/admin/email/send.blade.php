@@ -10,7 +10,7 @@
 <div class="container">
     {{ html()->form()->route('sendEmail')->open() }}
         @csrf
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="from">From</label>
@@ -28,7 +28,7 @@
                 {{ html()->text('reply_to', null)->placeholder('ex. youremail@ztlartcc.org (Required)')->class(['form-control']) }}
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="to">To (Single Person)</label>
@@ -54,11 +54,11 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="subject">Subject</label>
             {{ html()->text('subject', null)->placeholder('Subject (Required)')->class(['form-control']) }}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="message">Message</label>
             {{ html()->textarea('message', null)->placeholder('Message (Required)')->class(['form-control', 'text-editor']) }}
         </div>

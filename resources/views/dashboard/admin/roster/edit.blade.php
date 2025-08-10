@@ -291,7 +291,7 @@ Update Controller
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_twr">Atlanta Tower</label>

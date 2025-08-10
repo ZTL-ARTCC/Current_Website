@@ -37,7 +37,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [0])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_gnd->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -84,7 +84,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [1])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_lcl->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -131,7 +131,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [2])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_app->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -179,7 +179,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [3])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_gnd->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -226,7 +226,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [4])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_lcl->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -273,7 +273,7 @@ Training Information
                                 @if(Auth::user()->isAbleTo('snrStaff'))
                                     <br>
                                     {{ html()->form()->route('addInfo', [5])->open() }}
-                                    <div class="form-row">
+                                    <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_app->count() == 0)
                                                 {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
@@ -322,7 +322,7 @@ Training Information
                         @if(Auth::user()->isAbleTo('snrStaff'))
                             <br>
                             {{ html()->form()->route('addInfo', [6])->open() }}
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-sm-2">
                                     @if($info_ctr->count() == 0)
                                         {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
