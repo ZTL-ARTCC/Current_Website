@@ -1,9 +1,3 @@
-$(function () {
-  $("#datetimepicker").datetimepicker({
-    format: "L",
-  });
-});
-
 function realopsValidateAndSubmit() {
   let valid = true;
   let validateFields = ["realops_add_edit_dep_time", "realops_add_edit_ete"];
