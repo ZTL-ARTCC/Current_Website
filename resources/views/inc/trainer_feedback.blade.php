@@ -9,21 +9,21 @@
             </div>
             <div class="col-sm-4 form-group">
                 <label for="feedback_date" class="control-label">Date of Session/Event: (required)</label>
-                <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {{ html()->text('feedback_date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('feedback_date', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker1']) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
                     </div>
             </div>
             <div class="col-sm-4 form-group">
                 <label for="service_level" class="control-label">Service Level: (required)</label>
                 <div id="stars" class="star-input input-group">
-                        <span data-rating="1">&star;</span>
-                        <span data-rating="2">&star;</span>
-                        <span data-rating="3">&star;</span>
-                        <span data-rating="4">&star;</span>
-                        <span data-rating="5">&star;</span>
+                        <span data-bs-rating="1">&star;</span>
+                        <span data-bs-rating="2">&star;</span>
+                        <span data-bs-rating="3">&star;</span>
+                        <span data-bs-rating="4">&star;</span>
+                        <span data-bs-rating="5">&star;</span>
                         {{ html()->text('service_level', null)->attribute('hidden') }}
                     </div>
             </div>

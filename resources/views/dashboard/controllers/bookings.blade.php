@@ -27,7 +27,7 @@ ATC Bookings
                                     &emsp;
                                     <span>{{ $b->start_time_formatted }} - {{ $b->end_time_formatted }}Z</span>
                                     @if($b->cid == Auth::id() || Auth::user()->can('snrStaff'))
-                                        <span class="float-right"><a href="/dashboard/controllers/bookings/delete/{{ $b->id }}" class="btn btn-sm btn-danger">Cancel</a></span>
+                                        <span class="float-end"><a href="/dashboard/controllers/bookings/delete/{{ $b->id }}" class="btn btn-sm btn-danger">Cancel</a></span>
                                     @endif
                                 </td>
                             </tr>
@@ -64,21 +64,21 @@ ATC Bookings
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="start">Start Time (ZULU)</label>
-                                <div class="input-group date dt_picker_datetime" id="datetimepickerstart" data-target-input="nearest">
-                                    {{ html()->text('start', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerstart']) }}
-                                    <div class="input-group-append" data-target="#datetimepickerstart" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                    <div class="input-group date dt_picker_datetime" id="datetimepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('start', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerstart']) }}
+                        <span class="input-group-text" data-td-target="#datetimepickerstart" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="end">End Time (ZULU)</label>
-                                <div class="input-group date dt_picker_datetime" id="datetimepickerend" data-target-input="nearest">
-                                    {{ html()->text('end', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepickerend']) }}
-                                    <div class="input-group-append" data-target="#datetimepickerend" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                    <div class="input-group date dt_picker_datetime" id="datetimepickerend" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('start', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerend']) }}
+                        <span class="input-group-text" data-td-target="#datetimepickerend" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </div>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ ATC Bookings
                     <p><i><b>All times are in ZULU time</b></i></p>
                     <p><i>ZULU Time Now: {{ Carbon\Carbon::now()->format('H:i') }}</i></p>
                     <div>
-                        <button class="btn btn-success float-left mr-2" type="submit">Create Booking</button>
+                        <button class="btn btn-success float-start me-2" type="submit">Create Booking</button>
                         <button class="btn btn-danger" type="submit">Cancel</button>
                     </div>
                 {{ html()->form()->close() }}

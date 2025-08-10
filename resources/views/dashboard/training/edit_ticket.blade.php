@@ -13,7 +13,7 @@ Edit Training Ticket
 
 <div class="container">
     @if($ticket->draft)
-        <span id="draft" class="badge badge-warning mb-3">DRAFT</span>
+        <span id="draft" class="badge bg-warning mb-3">DRAFT</span>
     @endif
     {{ html()->form()->route('saveTicket', [$ticket->id])->attributes(['id'=>'editTrainingTicket'])->open() }}
         @csrf
@@ -47,11 +47,11 @@ Edit Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="date" class="form-label">Date</label>
-                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {{ html()->text('date', $ticket->date)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('date', $ticket->date)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker1']) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -66,24 +66,24 @@ Edit Training Ticket
                     @else
                         <label for="start" class="form-label">Start Time ET</label>
                     @endif
-                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
-                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker2']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="end" class="form-label">End Time ET</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-target-input="nearest">
-                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker3']) }}
+                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker3']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="duration" class="form-label">Duration (hh:mm)</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-target-input="nearest">
-                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker4']) }}
+                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker4']) }}
                     </div>
                 </div>
             </div>
@@ -93,11 +93,11 @@ Edit Training Ticket
                 <div class="form-group">
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
                     <div id="stars" class="star-input input-group">
-                        <span data-rating="1">&star;</span>
-                        <span data-rating="2">&star;</span>
-                        <span data-rating="3">&star;</span>
-                        <span data-rating="4">&star;</span>
-                        <span data-rating="5">&star;</span>
+                        <span data-bs-rating="1">&star;</span>
+                        <span data-bs-rating="2">&star;</span>
+                        <span data-bs-rating="3">&star;</span>
+                        <span data-bs-rating="4">&star;</span>
+                        <span data-bs-rating="5">&star;</span>
                         {{ html()->text('score', $ticket->score)->attribute('hidden') }}
                     </div>
                 </div>
