@@ -22,7 +22,7 @@ Merch Store
                     <th scope="col">Price</th>
                 </tr>
                 @foreach($merch_items as $merch_item)
-                    <tr>
+                    <tr class="align-top">
                         <td>
                             @if($merch_item->image)
                                 <img src="{{ url('/storage/store/'.$merch_item->image) }}" width="300px"></img>
