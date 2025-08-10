@@ -11,8 +11,8 @@ Files
     @if(Auth::user()->isAbleTo('files'))
         <a href="/dashboard/admin/files/upload" class="btn btn-primary">Upload File</a>
         &nbsp;
-        <span data-toggle="modal" data-target="#addRowSeparator">
-            <button type="button" class="btn btn-primary" data-placement="top">Add Separator</button>
+        <span data-bs-toggle="modal" data-bs-target="#addRowSeparator">
+            <button type="button" class="btn btn-primary" data-bs-placement="top">Add Separator</button>
         </span>
         <br><br>
     @endif
@@ -35,7 +35,7 @@ Files
                 @php ($activeMarker = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-toggle="tab" style="color:black">{{ $fileCategory }}</a>
+                <a class="nav-link{{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-bs-toggle="tab" style="color:black">{{ $fileCategory }}</a>
             </li>
             @php ($displayedTabs[] = strtolower($fileCategory))
         @endforeach
@@ -70,13 +70,13 @@ Files
                                         <th class="text-center" colspan="3">{{ $f->name }}</th>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
-                                                <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                                <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-bs-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
+                                                <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
                                                 @if(!$loop->first)
-      									    	    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up fa-fw"></i></a>
+      									    	    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-bs-toggle="tooltip" title="Up"><i class="fas fa-arrow-up fa-fw"></i></a>
 	    								        @endif
     		    							    @if(!$loop->last)
-	    		    							    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down fa-fw"></i></a>
+	    		    							    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-bs-toggle="tooltip" title="Down"><i class="fas fa-arrow-down fa-fw"></i></a>
 		    		    					    @endif
                                             </div>
                                         </td>
@@ -89,18 +89,18 @@ Files
                                     <td>{{ $f->updated_at }}</td>
                                     <td>
 	    			    				<div class="btn-group">
-                                            <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Download" {{ ($displayedTab == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
+                                            <a href="{{ $f->path }}" target="_blank" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Download" {{ ($displayedTab == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
                                             @if(Auth::user()->isAbleTo('files'))
-                                                <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
-                                                <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
+                                                <a href="/dashboard/admin/files/edit/{{ $f->id }}" class="btn btn-warning simple-tooltip" data-bs-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt fa-fw"></i></a>
+                                                <a href="/dashboard/admin/files/delete/{{ $f->id }}" onclick="return confirm('Are you sure you want to delete {{ $f->name }}?')" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Delete"><i class="fas fa-times fa-fw"></i></a>
 						    			    	@if(!is_null($f->permalink))
-							    			    	<a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Copy Permalink" data-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
+							    			    	<a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-bs-toggle="tooltip" title="Copy Permalink" data-bs-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
     							    			@endif										
 	    							    		@if(!$loop->first)
-		    							    		<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Up"><i class="fas fa-arrow-up fa-fw"></i></a>
+		    							    		<a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'up');" class="btn btn-info simple-tooltip" data-bs-toggle="tooltip" title="Up"><i class="fas fa-arrow-up fa-fw"></i></a>
 			    							    @endif
 				    						    @if(!$loop->last)
-					    						    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="Down"><i class="fas fa-arrow-down fa-fw"></i></a>
+					    						    <a onclick="itemReorder({{ $f->id }},{{ $loop->index }},{{ $f->type }},'down');" class="btn btn-info simple-tooltip" data-bs-toggle="tooltip" title="Down"><i class="fas fa-arrow-down fa-fw"></i></a>
 						    				    @endif
                                             @endif
 								        </div>
@@ -121,9 +121,7 @@ Files
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">Add a Row Separator</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
                     {{ html()->form()->route('fileSeparator')->open() }}
 					@csrf
@@ -149,7 +147,7 @@ Files
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 						<button action="submit" class="btn btn-success">Save Separator</button>
 					</div>
 					{{ html()->form()->close() }}

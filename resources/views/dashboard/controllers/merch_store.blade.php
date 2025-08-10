@@ -32,7 +32,7 @@ Merch Store
                         </td>
                         <td>
                             @if(!is_null($merch_item->flag))
-                                <span class="badge badge-{{ $merch_item->displayFlag()->badge }}">{{ $merch_item->displayFlag()->text }}</span><br>
+                                <span class="badge bg-{{ $merch_item->displayFlag()->badge }}">{{ $merch_item->displayFlag()->text }}</span><br>
                             @endif
                             <b>{{ $merch_item->title }}</b>
                         </td>

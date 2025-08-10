@@ -3,7 +3,7 @@
         <div class="form-group inline">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-sm-9">
                             {{ html()->text('search', null)->placeholder('Search for Airport/Developer')->class(['form-control']) }}
                         </div>
@@ -27,7 +27,7 @@
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-toggle="tab" style="color:black">{{ $sceneryDescription }}</a>
+                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ $sceneryDescription }}</a>
             </li>
         @endforeach
     </ul>

@@ -35,7 +35,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
     <div class="row">
         <div class="col">
             <br>
-            <span data-toggle="modal" data-target="#updateLocalHeroChallenge">
+            <span data-bs-toggle="modal" data-bs-target="#updateLocalHeroChallenge">
                 <button type="button" class="btn btn-primary"><i class="fas fa-cog"></i> Configure Local Hero Challenge</a></button>
             </span>
         </div>
@@ -71,17 +71,17 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                 @if($sort == 'localsort')
                     <th scope="col">Eligible Local Hero Monthly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Local Hero Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/localsort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by local hero"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Local Hero Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/localsort/<?=$year?>/<?=$month?>" data-bs-toggle="tooltip" title="Sort by local hero"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 @if($sort == 'bronzesort')
                     <th scope="col">Eligible Bronze Monthly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Bronze Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/bronzesort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by bronze"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Bronze Monthly Hours to Date <a class="btn btn-primary btn-sm" href="/dashboard/admin/bronze-mic/bronzesort/<?=$year?>/<?=$month?>" data-bs-toggle="tooltip" title="Sort by bronze"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 @if($sort == 'pyritesort')
                     <th scope="col">Eligible Pyrite Yearly Hours to Date</th>
                 @else
-                    <th scope="col">Eligible Pyrite Yearly Hours to Date <a class="btn btn-primary btn-sm"href="/dashboard/admin/bronze-mic/pyritesort/<?=$year?>/<?=$month?>" data-toggle="tooltip" title="Sort by pyrite"><i class="fas fa-chevron-down"></i></a></th>
+                    <th scope="col">Eligible Pyrite Yearly Hours to Date <a class="btn btn-primary btn-sm"href="/dashboard/admin/bronze-mic/pyritesort/<?=$year?>/<?=$month?>" data-bs-toggle="tooltip" title="Sort by pyrite"><i class="fas fa-chevron-down"></i></a></th>
                 @endif
                 <th scope="col">Actions</th>
             </tr>
@@ -101,19 +101,19 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                                 @if($winner_local == null)
                                     {{ html()->form('POST', '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id)->open() }}
                                         @csrf
-                                        <button action="submit" class="btn btn-primary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
+                                        <button action="submit" class="btn btn-primary btn-simple-tooltip me-2" data-bs-toggle="tooltip" title="Set as local hero Winner for <?=$mname?>"><i class="fas fa-trophy"></i></button>
                                     {{ html()->form()->close() }}
                                 @elseif($winner_local->controller_id == $h->id)
-                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip mr-2" data-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
+                                    <a href="/dashboard/admin/local-hero/remove/{{ $winner_local->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip me-2" data-bs-toggle="tooltip" title="Remove local hero Winner"><i class="fas fa-trophy"></i></a>
                                 @endif
                             @endtoggle
                             @if($winner == null)
                                 {{ html()->form('POST', '/dashboard/admin/bronze-mic/'.$year.'/'.$month.'/'.$stats[$h->id]->bronze_hrs.'/'.$h->id)->open() }}
                                     @csrf
-                                    <button action="submit" class="btn btn-simple-tooltip bronze-bg" data-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
+                                    <button action="submit" class="btn btn-simple-tooltip bronze-bg" data-bs-toggle="tooltip" title="Set as bronze Winner for <?=$mname?>"><i class="fa fa-microphone"></i></button>
                                 {{ html()->form()->close() }}
                             @elseif($winner->controller_id == $h->id)
-                                <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-toggle="tooltip" title="Remove bronze mic Winner"><i class="fa fa-microphone"></i></a>
+                                <a href="/dashboard/admin/bronze-mic/remove/{{ $winner->id }}/{{ $year }}/{{ $month }}" class="btn btn-secondary btn-simple-tooltip" data-bs-toggle="tooltip" title="Remove bronze mic Winner"><i class="fa fa-microphone"></i></a>
                             @endif
                         </div>
                     </td>
@@ -126,8 +126,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Local Hero Challenge Configuration for <?=$mname?> 20<?=$year?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 {{ html()->form()->route('updateLocalHeroChallenge', [$challenge->id])->open() }}
                 @csrf
@@ -155,7 +154,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         <div class="small text-secondary">Hold CTRL + click to select multiple positions</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button action="submit" class="btn btn-success">Save Challenge</button>
                     </div>
                     {{ html()->hidden('year', $year) }}

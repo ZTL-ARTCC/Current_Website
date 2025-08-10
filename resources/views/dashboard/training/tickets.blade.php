@@ -72,7 +72,7 @@ Training Tickets
                     @php ($active = ' active')
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
+                    <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
                 </li>
             @endforeach
         </ul>
@@ -129,9 +129,9 @@ Training Tickets
                                     <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
 	                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
                                     @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
-                                        <td data-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
+                                        <td data-bs-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
                                     @else
-                                        <td data-toggle="tooltip" data-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}<td>
+                                        <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}<td>
                                     @endif
                                 </tr>
                                 @endif

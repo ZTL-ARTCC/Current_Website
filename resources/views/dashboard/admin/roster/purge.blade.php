@@ -36,11 +36,11 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-toggle="tab" style="color:black">{{ ucfirst($statCategory) }} Controllers</a>
+                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($statCategory) }} Controllers</a>
             </li>
         @endforeach
         <li class="nav-item">
-            <a class="nav-link tab-link" href="#train" role="tab" data-toggle="tab">Mentors/Instructors</a>
+            <a class="nav-link tab-link" href="#train" role="tab" data-bs-toggle="tab">Mentors/Instructors</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -116,9 +116,9 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                         <tr>
                             <td>
                                 @if($c->hasRole('mtr'))
-                                    <span class="badge badge-info">MTR</span>
+                                    <span class="badge bg-info">MTR</span>
                                 @elseif($c->hasRole('ins'))
-                                    <span class="badge badge-info">INS</span>
+                                    <span class="badge bg-info">INS</span>
                                 @endif
                                 {{ ucwords($c->backwards_name) }} ({{ $c->id }})
                             </td>
@@ -139,5 +139,4 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <br>
     <p><i>**Controller did not meet 3 hours activity requirement during the previous quarter.</i></p>
 </div>
-<script src="{{mix('js/roster.js')}}"></script>
 @endsection

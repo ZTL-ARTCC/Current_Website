@@ -18,7 +18,7 @@ Files
                 @php ($activeMarker = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link tab-link {{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-toggle="tab">{{ $fileCategory }}</a>
+                <a class="nav-link tab-link {{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-bs-toggle="tab">{{ $fileCategory }}</a>
             </li>
         @endforeach
     </ul>
@@ -51,9 +51,9 @@ Files
                                 <td>{{ $f->updated_at }}</td>
                                 <td>
                                 <div class="btn-group">
-                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-toggle="tooltip" title="Download" {{ ($fileCategory == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
+                                    <a href="{{ $f->path }}" target="_blank" class="btn btn-success btn-block simple-tooltip" data-bs-toggle="tooltip" title="Download" {{ ($fileCategory == 'vatis') ? 'download' : null }}><i class="fas fa-download fa-fw"></i></a>
                                         @if(!is_null($f->permalink))
-                                            <a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-toggle="tooltip" title="Copy Permalink" data-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
+                                            <a onclick="linkToClipboard(this);" class="btn btn-secondary simple-tooltip" data-bs-toggle="tooltip" title="Copy Permalink" data-bs-title="asset/{{ $f->permalink }}"><i class="fas fa-link fa-fw"></i></a>
                                         @endif
                                 </div>									
                                 </td>

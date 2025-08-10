@@ -30,7 +30,7 @@ Merch Store Management
                         </td>
                         <td>
                             @if(!is_null($merch_item->flag))
-                                <span class="badge badge-{{ $merch_item->displayFlag()->badge }}">{{ $merch_item->displayFlag()->text }}</span><br>
+                                <span class="badge bg-{{ $merch_item->displayFlag()->badge }}">{{ $merch_item->displayFlag()->text }}</span><br>
                             @endif
                             <b>{{ $merch_item->title }}</b>
                         </td>
@@ -38,8 +38,8 @@ Merch Store Management
                         <td>${{ $merch_item->price }} USD</td>
                         <td>
                             <div class="btn-group">
-                                    <a href="/dashboard/admin/store/edit/{{ $merch_item->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Item"><i class="far fa-edit"></i></a>
-                                    <a href="/dashboard/admin/store/delete/{{ $merch_item->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete Item"><i class="fas fa-times"></i></a>
+                                    <a href="/dashboard/admin/store/edit/{{ $merch_item->id }}" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Edit Item"><i class="far fa-edit"></i></a>
+                                    <a href="/dashboard/admin/store/delete/{{ $merch_item->id }}" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Delete Item"><i class="fas fa-times"></i></a>
                             </div>
                         </td>
                     </tr>

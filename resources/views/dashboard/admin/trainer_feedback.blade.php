@@ -30,7 +30,7 @@ $tabs[] = (object) $t;
     <ul class="nav nav-tabs nav-justified" role="tablist">
         @foreach($tabs as $t)
         <li class="nav-item">
-            <a class="nav-link tab-link {{ $t->active }}" href="#{{ $t->id }}" role="tab" data-toggle="tab">{{ ucfirst($t->id) }} Feedback</a>
+            <a class="nav-link tab-link {{ $t->active }}" href="#{{ $t->id }}" role="tab" data-bs-toggle="tab">{{ ucfirst($t->id) }} Feedback</a>
         </li>
         @endforeach
     </ul>
@@ -64,24 +64,24 @@ $tabs[] = (object) $t;
                             }
                         @endphp
                         <td>{{$student_info}}</td>
-                        <td data-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
+                        <td data-bs-toggle="tooltip" title="{{ $f->comments }}">{{ str_limit($f->comments, 80, '...') }}</td>
                         <td>{{ $f->created_at }}</td>
                         <td>
                             @if($t->id == 'new')
-                            <span data-toggle="modal" data-target="#saveFeedback{{ $f->id }}">
-                                <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Save Feedback"><i class="fas fa-check"></i></button>
+                            <span data-bs-toggle="modal" data-bs-target="#saveFeedback{{ $f->id }}">
+                                <button type="button" class="btn btn-success simple-tooltip" data-bs-placement="top" bs-toggle="tooltip" title="Save Feedback"><i class="fas fa-check"></i></button>
                             </span>
-                            <span data-toggle="modal" data-target="#hideFeedback{{ $f->id }}">
-                                <button type="button" class="btn btn-danger simple-tooltip" data-placement="top" data-toggle="tooltip" title="Hide Feedback"><i class="fas fa-times"></i></button>
+                            <span data-bs-toggle="modal" data-bs-target="#hideFeedback{{ $f->id }}">
+                                <button type="button" class="btn btn-danger simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Hide Feedback"><i class="fas fa-times"></i></button>
                             </span>
                             @else
-                            <span data-toggle="modal" data-target="#updateFeedback{{ $f->id }}">
-                                <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
+                            <span data-bs-toggle="modal" data-bs-target="#updateFeedback{{ $f->id }}">
+                                <button type="button" class="btn btn-success simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Update Feedback"><i class="fas fa-pencil-alt"></i></button>
                             </span>
                             @endif
                             @if($f->student_email != null)
-                            <span data-toggle="modal" data-target="#emailFeedback{{ $f->id }}">
-                                <button type="button" class="btn btn-warning simple-tooltip" data-placement="top" data-toggle="tooltip" title="Email Student"><i class="fas fa-envelope"></i></button>
+                            <span data-bs-toggle="modal" data-bs-target="#emailFeedback{{ $f->id }}">
+                                <button type="button" class="btn btn-warning simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Email Student"><i class="fas fa-envelope"></i></button>
                             </span>
                             @endif
                         </td>
@@ -93,9 +93,7 @@ $tabs[] = (object) $t;
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Save Feedback</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 {{ html()->form()->route('saveTrainerFeedback', [$f->id])->open() }}
                                 @csrf
@@ -155,7 +153,7 @@ $tabs[] = (object) $t;
                                     {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button action="submit" class="btn btn-success">Save Feedback</button>
                                 </div>
                                 {{ html()->form()->close() }}
@@ -167,9 +165,7 @@ $tabs[] = (object) $t;
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Hide Feedback for {{ $f->feedback_name }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 {{ html()->form()->route('hideTrainerFeedback', [$f->id])->open() }}
                                 @csrf
@@ -229,7 +225,7 @@ $tabs[] = (object) $t;
                                     {{ html()->textarea('staff_comments', $f->staff_comments)->class(['form-control']) }}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button action="submit" class="btn btn-success">Hide Feedback</button>
                                 </div>
                                 {{ html()->form()->close() }}
@@ -242,9 +238,7 @@ $tabs[] = (object) $t;
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Update Feedback for {{ $f->feedback_name }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 {{ html()->form()->route('updateTrainerFeedback', [$f->id])->open() }}
                                 @csrf
@@ -309,7 +303,7 @@ $tabs[] = (object) $t;
                                             1 => 'Saved',
                                             2 => 'Hidden'
                                         ], $f->status)->class(['form-control']) }}
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button action="submit" class="btn btn-success">Update Feedback</button>
                                 </div>
                                 {{ html()->form()->close() }}
@@ -323,9 +317,7 @@ $tabs[] = (object) $t;
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Email Student, {{ $f->student_name }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 {{ html()->form()->route('emailFeedback', [$f->id])->open() }}
                                 @csrf
@@ -348,7 +340,7 @@ $tabs[] = (object) $t;
                                     {{ html()->textarea('body', null)->placeholder('Enter your reply to the student here')->class(['form-control']) }}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button action="submit" class="btn btn-success">Send Email</button>
                                 </div>
                                 {{ html()->form()->close() }}

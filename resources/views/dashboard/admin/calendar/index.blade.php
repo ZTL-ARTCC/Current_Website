@@ -12,10 +12,10 @@ Calendar/News
     <br><br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link tab-link active" href="#calendar" role="tab" data-toggle="tab">Calendar</a>
+            <a class="nav-link tab-link active" href="#calendar" role="tab" data-bs-toggle="tab">Calendar</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link tab-link" href="#news" role="tab" data-toggle="tab">News</a>
+            <a class="nav-link tab-link" href="#news" role="tab" data-bs-toggle="tab">News</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -42,17 +42,17 @@ Calendar/News
                             @endif
                             <td><center><a href="/dashboard/admin/calendar/view/{{ $c->id }}">{{ $c->title }}</a></center></td>
                             <td><center>{!! str_limit($c->body, 50, '...') !!}</center></td>
-                            <td data-toggle="tooltip" title="{{ $c->created_at }}"><center>{{ App\User::find($c->created_by)->full_name }}</center></td>
+                            <td data-bs-toggle="tooltip" title="{{ $c->created_at }}"><center>{{ App\User::find($c->created_by)->full_name }}</center></td>
                             @if($c->updated_by != null)
-                                <td data-toggle="tooltip" title="{{ $c->updated_at }}"><center>{{ App\User::find($c->updated_by)->full_name }}</center></td>
+                                <td data-bs-toggle="tooltip" title="{{ $c->updated_at }}"><center>{{ App\User::find($c->updated_by)->full_name }}</center></td>
                             @else
                                 <td></td>
                             @endif
                             <td>
                                 {{ html()->form('DELETE')->route('deleteCalendarEvent', [$c->id])->open() }}
                                     @csrf
-                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
-                                    <button class="btn btn-danger simple-tooltip" type="submit" data-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
+                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-bs-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-danger simple-tooltip" type="submit" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
                                 {{ html()->form()->close() }}
                             </td>
                         </tr>
@@ -87,17 +87,17 @@ Calendar/News
                             @endif
                             <td><center><a href="/dashboard/admin/calendar/view/{{ $c->id }}">{{ $c->title }}</a></center></td>
                             <td><center>{!! str_limit($c->body, 50, '...') !!}</center></td>
-                            <td data-toggle="tooltip" title="{{ $c->created_at }}"><center>{{ App\User::find($c->created_by)->full_name }}</center></td>
+                            <td data-bs-toggle="tooltip" title="{{ $c->created_at }}"><center>{{ App\User::find($c->created_by)->full_name }}</center></td>
                             @if($c->updated_by != null)
-                                <td data-toggle="tooltip" title="{{ $c->updated_at }}"><center>{{ App\User::find($c->updated_by)->full_name }}</center></td>
+                                <td data-bs-toggle="tooltip" title="{{ $c->updated_at }}"><center>{{ App\User::find($c->updated_by)->full_name }}</center></td>
                             @else
                                 <td></td>
                             @endif
                             <td>
                                 {{ html()->form('DELETE')->route('deleteCalendarEvent', [$c->id])->open() }}
                                     @csrf
-                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
-                                    <button class="btn btn-danger simple-tooltip" type="submit" data-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
+                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/calendar/edit/{{ $c->id }}" data-bs-toggle="tooltip" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-danger simple-tooltip" type="submit" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-times"></i></button>
                                 {{ html()->form()->close() }}
                             </td>
 
@@ -105,9 +105,9 @@ Calendar/News
                                 {{ html()->form()->route('toggleCalendarEventVisibility', [$c->id])->open() }}
                                 @csrf
                                 @if($c->visible == 0)
-                                    <button class="btn btn-success" data-toggle="tooltip" title="Show News"><i class="far fa-eye"></i></button>
+                                    <button class="btn btn-success" data-bs-toggle="tooltip" title="Show News"><i class="far fa-eye"></i></button>
                                 @elseif($c->visible == 1)
-                                    <button class="btn btn-warning" data-toggle="tooltip" title="Hide News"><i class="fas fa-ban"></i></button>
+                                    <button class="btn btn-warning" data-bs-toggle="tooltip" title="Hide News"><i class="fas fa-ban"></i></button>
                                 @endif
                                 {{ html()->form()->close() }}
                             </td>

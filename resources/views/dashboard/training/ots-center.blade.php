@@ -12,13 +12,13 @@ OTS Center
     <br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-toggle="tab" style="color:black">New Recommendations</a>
+            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" style="color:black">New Recommendations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#accepted" role="tab" data-toggle="tab" style="color:black">Accepted Recommendations</a>
+            <a class="nav-link" href="#accepted" role="tab" data-bs-toggle="tab" style="color:black">Accepted Recommendations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#complete" role="tab" data-toggle="tab" style="color:black">Completed OTS Exams</a>
+            <a class="nav-link" href="#complete" role="tab" data-bs-toggle="tab" style="color:black">Completed OTS Exams</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -40,12 +40,12 @@ OTS Center
                             <td>{{ $o->recommender_name }}</td>
                             <td>{{ $o->position_name }}</td>
                             <td>
-                                <a href="/dashboard/training/ots-center/accept/{{ $o->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept Recommendation"><i class="fas fa-check"></i></a>
-                                <a href="/dashboard/training/tickets?id={{ $o->controller_id }}" class="btn btn-info simple-tooltip" data-toggle="tooltip" title="View Training Tickets."><i class="fas fa-check"></i></a>
+                                <a href="/dashboard/training/ots-center/accept/{{ $o->id }}" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Accept Recommendation"><i class="fas fa-check"></i></a>
+                                <a href="/dashboard/training/tickets?id={{ $o->controller_id }}" class="btn btn-info simple-tooltip" data-bs-toggle="tooltip" title="View Training Tickets."><i class="fas fa-check"></i></a>
                                 @if(Auth::user()->isAbleTo('snrStaff'))
-                                    <a href="/dashboard/training/ots-center/reject/{{ $o->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Reject Recommendation"><i class="fas fa-times"></i></a>
-                                    <span data-toggle="modal" data-target="#assign{{ $o->id }}">
-                                        <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Assign to Instructor"><i class="fas fa-user-check"></i></button>
+                                    <a href="/dashboard/training/ots-center/reject/{{ $o->id }}" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Reject Recommendation"><i class="fas fa-times"></i></a>
+                                    <span data-bs-toggle="modal" data-bs-target="#assign{{ $o->id }}">
+                                        <button type="button" class="btn btn-success simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Assign to Instructor"><i class="fas fa-user-check"></i></button>
                                     </span>
                                 @endif
                             </td>
@@ -55,16 +55,14 @@ OTS Center
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Assign OTS for {{ $o->controller_name }} to Instructor</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     {{ html()->form()->route('assignRecommendation', [$o->id])->open() }}
                                     @csrf
                                     <div class="modal-body">
                                     {{ html()->select('ins', $instructors, null)->placeholder('Select Instructor')->class(['form-control']) }}
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <button action="submit" class="btn btn-success">Assign</button>
                                     </div>
                                     {{ html()->form()->close() }}
@@ -100,10 +98,10 @@ OTS Center
                             <td>{{ $o->position_name }}</td>
                             <td>
                                 @if($o->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff'))
-                                    <span data-toggle="modal" data-target="#completeOTS{{ $o->id }}">
-                                        <button type="button" class="btn btn-success simple-tooltip" data-placement="top" data-toggle="tooltip" title="Set OTS as Complete"><i class="fas fa-check"></i></button>
+                                    <span bs-toggle="modal" data-bs-target="#completeOTS{{ $o->id }}">
+                                        <button type="button" class="btn btn-success simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Set OTS as Complete"><i class="fas fa-check"></i></button>
                                     </span>
-                                    <a href="/dashboard/training/ots-center/cancel/{{ $o->id }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Cancel OTS"><i class="fas fa-ban"></i></a>
+                                    <a href="/dashboard/training/ots-center/cancel/{{ $o->id }}" class="btn btn-warning simple-tooltip" data-bs-toggle="tooltip" title="Cancel OTS"><i class="fas fa-ban"></i></a>
                                 @endif
                             </td>
                         </tr>
@@ -113,9 +111,7 @@ OTS Center
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Upload OTS Report</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     {{ html()->form()->route('completeOTS', [$o->id])->acceptsFiles()->open() }}
                                     @csrf
@@ -126,7 +122,7 @@ OTS Center
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Set Complete</button>
                                     </div>
                                     {{ html()->form()->close() }}

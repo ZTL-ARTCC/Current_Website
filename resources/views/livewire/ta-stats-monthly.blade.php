@@ -61,7 +61,7 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">TA's Monthly Report
-                    <div class="float-right"><i class="fas fa-clipboard" onclick="copyToClipboard('taReport');" title="Copy to clipboard"></i></div>
+                    <div class="float-end"><i class="fas fa-clipboard" onclick="copyToClipboard('taReport');" title="Copy to clipboard"></i></div>
                 </div>
                 <div class="card-body">
                     <textarea id="taReport" rows="3" class="form-control" readonly>{{ $stats['taMonthlyReport'] }}</textarea>

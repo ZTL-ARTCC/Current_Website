@@ -33,7 +33,7 @@
             <div class="card">
                 <div class="card-header">
                     Completion Ratios
-                    <select class="form-select form-select-sm float-right" wire:model.change='position_select'>
+                    <select class="form-select form-select-sm float-end" wire:model.change='position_select'>
                         <option value="S1" selected>S1</option>
                         <option value="S2">S2</option>
                         <option value="S3">S3</option>

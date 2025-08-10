@@ -13,14 +13,14 @@
 
 <div class="container">
 <div class="mb-4">
-    <a href="/dashboard/admin/realops/create" class="btn btn-success mr-2">Add Flight</a>
-    <span data-toggle="modal" data-target="#upload">
-        <button type="button" class="btn btn-warning mr-2" data-toggle="tooltip">Bulk Upload Flights</button>
+    <a href="/dashboard/admin/realops/create" class="btn btn-success me-2">Add Flight</a>
+    <span data-bs-toggle="modal" data-bs-target="#upload">
+        <button type="button" class="btn btn-warning me-2" data-bs-toggle="tooltip">Bulk Upload Flights</button>
     </span>
 
 @if (Auth::user()->isAbleTo('staff'))
-    <span data-toggle="modal" data-target="#dump">
-        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip">Dump all Data</button>
+    <span data-bs-toggle="modal" data-bs-target="#dump">
+        <button type="button" class="btn btn-danger me-2" data-bs-toggle="tooltip">Dump all Data</button>
     </span>
     <a href="/dashboard/admin/realops/export" class="btn btn-success">Export Data</a>
 @endif
@@ -75,21 +75,21 @@
                             <span class="small">({{ $f->assigned_pilot->email }})</span>
                         </td>
                         <td>
-                            <a href="/dashboard/admin/realops/remove-pilot/{{ $f->id }}" class="btn btn-danger btn-sm float-right" title="Unassign Pilot" data-toggle="tooltip"><i class="fas fa-times"></i></a>
+                            <a href="/dashboard/admin/realops/remove-pilot/{{ $f->id }}" class="btn btn-danger btn-sm float-end" title="Unassign Pilot" data-bs-toggle="tooltip"><i class="fas fa-times"></i></a>
                         </td>
                     @else
                         <td colspan="2">N/A</td>
                     @endif
                     <td>
-                    <a href="/dashboard/admin/realops/edit/{{ $f->id }}" class="btn btn-warning btn-sm float-left mr-2" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                    <span data-toggle="modal" data-target="#assign{{ $f->id }}">
+                    <a href="/dashboard/admin/realops/edit/{{ $f->id }}" class="btn btn-warning btn-sm float-start me-2" title="Edit" data-bs-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
+                    <span data-bs-toggle="modal" data-bs-target="#assign{{ $f->id }}">
                         @if(!$f->assigned_pilot)
-                            <button type="button" class="btn btn-success btn-sm float-left mr-2" data-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-success btn-sm float-start me-2" data-bs-toggle="tooltip" title="Assign Pilot"><i class="fas fa-plus"></i></button>
                         @else
-                            <button type="button" class="btn btn-success btn-sm float-left mr-2" disabled><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-success btn-sm float-start me-2" disabled><i class="fas fa-plus"></i></button>
                         @endif
                     </span>
-                    <a href="/dashboard/admin/realops/delete/{{ $f->id }}" class="btn btn-danger btn-sm float-left mr-2" title="Delete" data-toggle="tooltip"><i class="fas fa-times"></i></a>
+                    <a href="/dashboard/admin/realops/delete/{{ $f->id }}" class="btn btn-danger btn-sm float-start me-2" title="Delete" data-bs-toggle="tooltip"><i class="fas fa-times"></i></a>
                     </td>
                 </tr>
                 <div class="modal fade" id="assign{{ $f->id }}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -97,16 +97,14 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Assign Pilot for {{ $f->flight_number }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             {{ html()->form('PUT')->route('assignPilotToFlight', [$f->id])->open() }}
                             @csrf
                             <div class="modal-body">
                             {{ html()->select('pilot', $pilots, null)->placeholder('Select Pilot')->class(['form-control']) }}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button action="submit" class="btn btn-success">Assign</button>
                             </div>
                             {{ html()->form()->close() }}
@@ -117,7 +115,7 @@
             @endforeach
         </tbody>
     </table>
-    <div class="float-right">
+    <div class="float-end">
         {!! $flights->links() !!}
     </div>
 @else
@@ -129,9 +127,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Bulk Upload Flights</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {{ html()->form()->route('bulkUploadFlights')->acceptsFiles()->open() }}
             @csrf
@@ -140,7 +136,7 @@
                 {{ html()->file('file')->class(['form-control'])->attributes(['accept' => '.csv']) }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-success">Upload</button>
             </div>
             {{ html()->form()->close() }}
@@ -153,9 +149,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Dump all Realops Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {{ html()->form()->route('dumpData')->open() }}
             @csrf
@@ -164,7 +158,7 @@
                 {{ html()->text('confirm_text', null)->class(['form-control'])->placeholder('confirm - dump all') }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-danger">Continue</button>
             </div>
             {{ html()->form()->close() }}

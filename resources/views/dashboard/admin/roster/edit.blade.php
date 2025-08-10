@@ -10,16 +10,16 @@ Update Controller
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
+            <a class="nav-link active" href="#profile" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
         </li>
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->hasRole('ec'))
         <li class="nav-item">
-            <a class="nav-link" href="#certifications" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
+            <a class="nav-link" href="#certifications" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
         </li>
         @endif
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
         <li class="nav-item">
-            <a class="nav-link" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+            <a class="nav-link" href="#events" role="tab" data-bs-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
         </li>
         @endif
     </ul>
@@ -168,7 +168,7 @@ Update Controller
         </div>
         <div role="tabpanel" class="tab-pane" id="certifications">
             <br>
-            <h6><span class="badge badge-warning text-light">New!</span>&nbsp;This control now complies with GCAP requirements.<br>Please review the latest version of ZTL 3120.4 prior to updating a controller's certifications.</h6>
+            <h6><span class="badge bg-warning text-light">New!</span>&nbsp;This control now complies with GCAP requirements.<br>Please review the latest version of ZTL 3120.4 prior to updating a controller's certifications.</h6>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -228,8 +228,8 @@ Update Controller
                 @if(Auth::user()->isAbleTo('roster'))
                 <div class="row mt-2">
                     <div class="col-12">
-                        <span data-toggle="modal" data-target="#remove_solo_certs">
-                            <button type="button" class="btn btn-danger text-nowrap"><i class="fa-solid fa-user-xmark mr-2"></i>Remove Solo Certifications</button>
+                        <span data-bs-toggle="modal" data-bs-target="#remove_solo_certs">
+                            <button type="button" class="btn btn-danger text-nowrap"><i class="fa-solid fa-user-xmark me-2"></i>Remove Solo Certifications</button>
                         </span>
                     </div>
                 </div>
@@ -238,16 +238,14 @@ Update Controller
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Remove all solo certifications</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                                 <div class="modal-body">
                                     <p>This action will immediately revoke <b><u>ALL</u></b> solo certifications for 
                                         {{ $user->full_name }} from both the facility roster and VATUSA.</p>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <a href="/dashboard/admin/roster/solo/{{ $user->id }}" role="button" class="btn btn-danger text-nowrap">Revoke Solo Certs Now!</a>
                                 </div>
                         </div>
@@ -364,7 +362,7 @@ Update Controller
                             <td>{{ $event->time_logged }}</td>
                             <td>
                                 @if($event->no_show == 1)
-                                    <span class="text-danger" data-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
+                                    <span class="text-danger" data-bs-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
                                 @endif
                             </td>
                         </tr>
@@ -380,5 +378,4 @@ Update Controller
     </div>
     {{ html()->form()->close() }}
 </div>
-<script src="{{mix('js/roster.js')}}"></script>
 @endsection

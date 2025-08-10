@@ -28,7 +28,7 @@ Profile
                         <tbody>
                             @foreach($feedback as $f)
                                 <tr>
-                                    <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
+                                    <td><center><a data-bs-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/feedback-details/{{ $f->id }}">{{ $f->position }}</a></center></td>
                                     <td><center>{{ $f->service_level_text }}</center></td>
                                     <td><center>{{ str_limit($f->comments, 25, '...') }}</center></td>
                                 </tr>
@@ -63,9 +63,9 @@ Profile
                                             <a href="/dashboard/controllers/ticket/{{ $t->id }}">{{ $t->date }}</a>
                                             <br />
                                             @if(!$t->student_comments)
-                                                <span class="badge badge-danger">Awaiting Your Comments</span>
+                                                <span class="badge bg-danger">Awaiting Your Comments</span>
                                             @else
-                                                <span class="badge badge-success">Comments Submitted</span>
+                                                <span class="badge bg-success">Comments Submitted</span>
                                             @endif
                                         </center>
                                     </td>
@@ -102,7 +102,7 @@ Profile
                         <tbody>
                                 @foreach($training_feedback as $f)
                                     <tr>
-                                        <td><center><a data-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/trainer-feedback-details/{{ $f->id }}">{{ $f->feedback_date }}</a></center></td>
+                                        <td><center><a data-bs-toggle="tooltip" title="View Details" href="/dashboard/controllers/profile/trainer-feedback-details/{{ $f->id }}">{{ $f->feedback_date }}</a></center></td>
                                         <td><center>{{ $f->position_trained }}</center></td>
                                         <td><center>{{ $f->service_level_text }}</center></td>
                                         <td><center>{{ str_limit($f->comments, 80, '...') }}</center></td>
@@ -139,7 +139,7 @@ Profile
                                     <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
                                     <td scope="col">{{ $appointment->sessionType->name }}</td>
                                     <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
-                                    <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
+                                    <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-bs-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
                                 </tr>
                             @endforeach
                         </tbody>
@@ -160,18 +160,18 @@ Profile
 	    <p><b>CID:</b> {{ Auth::id() }}</p>
             <p><b>Name:</b> {{ Auth::user()->full_name }}</p>
             <p><b>Rating:</b> {{ Auth::user()->rating_long }}</p>
-            <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
-            <p><b>Name Privacy:</b> {{ Auth::user()->name_privacy == 1 ? 'Enabled' : 'Disabled' }} <a class="info-tooltip" href="https://www.vatusa.net/my/profile" target="_blank" data-toggle="tooltip" title="Click Here to Update"><i class="fas fa-info-circle"></i></a></p>
+            <p><b>Email:</b> {{ Auth::user()->email }} <a class="info-tooltip" href="https://my.vatsim.net/user/email" target="_blank" data-bs-toggle="tooltip" title="Click Here to Update (It may take up to an hour for changes to be reflected)"><i class="fas fa-info-circle"></i></a></p>
+            <p><b>Name Privacy:</b> {{ Auth::user()->name_privacy == 1 ? 'Enabled' : 'Disabled' }} <a class="info-tooltip" href="https://www.vatusa.net/my/profile" target="_blank" data-bs-toggle="tooltip" title="Click Here to Update"><i class="fas fa-info-circle"></i></a></p>
             {{ html()->form()->route('updateInfo', [Auth::id()])->open() }}
             @csrf
                 <div class="row">
-                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-bs-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{{ html()->text('ts3', Auth::user()->ts3)->class(['form-control']) }}</div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-5">
-                        <b>Timezone: <a class="info-tooltip" href="#" data-toggle="tooltip"
+                        <b>Timezone: <a class="info-tooltip" href="#" data-bs-toggle="tooltip"
                                         title="Times will be shown in this timezone, along with Zulu. For Zulu, select UTC. If you don't know what to pick here, look up 'tzdb identifier list' or ask in Discord for help."><i
                                         class="fas fa-info-circle"></i></a></b>
                     </div>
@@ -203,7 +203,7 @@ Profile
                             </div>profile.
                         @else
                             <div class="col-4">
-                                <a href="#" data-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
+                                <a href="#" data-bs-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
                             </div>
                         @endif
                     @endtoggle
@@ -214,14 +214,14 @@ Profile
                 Receive Broadcast Emails?
                 &nbsp;
                 @if(Auth::user()->opt == 1)
-                   <span data-toggle="modal" data-target="#unOpt">
+                   <span data-bs-toggle="modal" data-bs-target="#unOpt">
                           <label class="switch">
                               <input type="checkbox" checked>
                             <span class="slider round"></span>
                             </label>
                         </span>
                @else
-                   <span data-toggle="modal" data-target="#Opt">
+                   <span data-bs-toggle="modal" data-bs-target="#Opt">
                         <label class="switch">
                             <input type="checkbox">
                             <span class="slider round"></span>

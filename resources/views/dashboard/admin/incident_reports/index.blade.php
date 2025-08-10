@@ -10,10 +10,10 @@ Incident Report Management
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-toggle="tab" style="color:black">New Reports</a>
+            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" style="color:black">New Reports</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#archive" role="tab" data-toggle="tab" style="color:black">Archived Reports</a>
+            <a class="nav-link" href="#archive" role="tab" data-bs-toggle="tab" style="color:black">Archived Reports</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -37,9 +37,9 @@ Incident Report Management
                                 <td>{{ $r->time }}</td>
                                 <td>{{ $r->date }}</td>
                                 <td>
-                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/incident/archive/{{ $r->id }}" data-toggle="tooltip" title="Archive Report"><i class="fas fa-check"></i></a>
-                                    <a class="btn btn-danger simple-tooltip" href="/dashboard/admin/incident/delete/{{ $r->id }}" data-toggle="tooltip" title="Delete Report"><i class="fas fa-times"></i></a>
-                                    <a class="btn btn-warning simple-tooltip" href="/dashboard/admin/incident/view/{{ $r->id }}" data-toggle="tooltip" title="View Report"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-success simple-tooltip" href="/dashboard/admin/incident/archive/{{ $r->id }}" data-bs-toggle="tooltip" title="Archive Report"><i class="fas fa-check"></i></a>
+                                    <a class="btn btn-danger simple-tooltip" href="/dashboard/admin/incident/delete/{{ $r->id }}" data-bs-toggle="tooltip" title="Delete Report"><i class="fas fa-times"></i></a>
+                                    <a class="btn btn-warning simple-tooltip" href="/dashboard/admin/incident/view/{{ $r->id }}" data-bs-toggle="tooltip" title="View Report"><i class="fas fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -68,7 +68,7 @@ Incident Report Management
                                 <td>{{ $r->date }}</td>
                                 <td>{{ str_limit($r->description, 50, '...') }}</td>
                                 <td>
-                                    <a class="btn btn-warning simple-tooltip" href="/dashboard/admin/incident/view/{{ $r->id }}" data-toggle="tooltip" title="View Report"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-warning simple-tooltip" href="/dashboard/admin/incident/view/{{ $r->id }}" data-bs-toggle="tooltip" title="View Report"><i class="fas fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach

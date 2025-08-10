@@ -14,10 +14,10 @@ Roster
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link tab-link active" href="#hcontrollers" role="tab" data-toggle="tab"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
+            <a class="nav-link tab-link active" href="#hcontrollers" role="tab" data-bs-toggle="tab"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link tab-link" href="#vcontrollers" role="tab" data-toggle="tab"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
+            <a class="nav-link tab-link" href="#vcontrollers" role="tab" data-bs-toggle="tab"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
         </li>
     </ul>
     @php
@@ -48,27 +48,27 @@ Roster
                         <tr>
                             <td>
                                 @if($c->hasRole('atm'))
-                                <span class="badge badge-danger">ATM</span>
+                                <span class="badge bg-danger">ATM</span>
                                 @elseif($c->hasRole('datm'))
-                                <span class="badge badge-danger">DATM</span>
+                                <span class="badge bg-danger">DATM</span>
                                 @elseif($c->hasRole('ta'))
-                                <span class="badge badge-danger">TA</span>
+                                <span class="badge bg-danger">TA</span>
                                 @elseif($c->hasRole('wm'))
-                                <span class="badge badge-primary">WM</span>
+                                <span class="badge bg-primary">WM</span>
                                 @elseif($c->hasRole('awm'))
-                                <span class="badge badge-primary">AWM</span>
+                                <span class="badge bg-primary">AWM</span>
                                 @elseif($c->hasRole('ec'))
-                                <span class="badge badge-primary">EC</span>
+                                <span class="badge bg-primary">EC</span>
                                 @elseif($c->hasRole('aec'))
-                                <span class="badge badge-primary">AEC</span>
+                                <span class="badge bg-primary">AEC</span>
                                 @elseif($c->hasRole('fe'))
-                                <span class="badge badge-primary">FE</span>
+                                <span class="badge bg-primary">FE</span>
                                 @elseif($c->hasRole('afe'))
-                                <span class="badge badge-primary">AFE</span>
+                                <span class="badge bg-primary">AFE</span>
                                 @elseif($c->hasRole('ins'))
-                                <span class="badge badge-info">INS</span>
+                                <span class="badge bg-info">INS</span>
                                 @elseif($c->hasRole('mtr'))
-                                <span class="badge badge-info">MTR</span>
+                                <span class="badge bg-info">MTR</span>
                                 @endif
                                 {{ $c->backwards_public_name }}
                             </td>
@@ -78,18 +78,18 @@ Roster
                             <!-- Unrestricted -->
                             <td class="text-center">
                                 @if($c->gnd > $c->getMagicNumber('UNCERTIFIED'))
-                                <span class="badge badge-primary">DEL</span>
-                                <span class="badge badge-success">GND</span>
+                                <span class="badge bg-primary">DEL</span>
+                                <span class="badge bg-success">GND</span>
                                 @endif
                                 @if($c->twr === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">TWR-SOLO</span>
+                                <span class="badge bg-warning text-light" data-bs-toggle="tooltip" data-bs-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">TWR-SOLO</span>
                                 @elseif($c->twr > $c->getMagicNumber('UNCERTIFIED'))
-                                <span class="badge badge-danger">TWR</span>
+                                <span class="badge bg-danger">TWR</span>
                                 @endif
                                 @if($c->app === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">APP-SOLO</span>
+                                <span class="badge bg-warning text-light" data-bs-toggle="tooltip" data-bs-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">APP-SOLO</span>
                                 @elseif($c->app > $c->getMagicNumber('UNCERTIFIED'))
-                                <span class="badge badge-info">APP</span>
+                                <span class="badge bg-info">APP</span>
                                 @endif
                             </td>
                             <!-- CLT Tier 1 -->
@@ -99,31 +99,31 @@ Roster
                             ?>
                             <td class="text-center">
                                 @if(($c->clt_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-primary">DEL</span>
+                                <span class="badge bg-primary">DEL</span>
                                 @endif
                                 @if(($c->clt_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-success">GND</span>
+                                <span class="badge bg-success">GND</span>
                                 @endif
                                 @if(($c->clt_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-danger">TWR</span>
+                                <span class="badge bg-danger">TWR</span>
                                 @endif
                                 @if(($c->clt_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-info">APP</span>
+                                <span class="badge bg-info">APP</span>
                                 @endif
                             </td>
                             <!-- ATL Tier 1 -->
                             <td class="text-center">
                                 @if(($c->atl_del > $c->getMagicNumber('UNCERTIFIED'))||($c->del === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-primary">DEL</span>
+                                <span class="badge bg-primary">DEL</span>
                                 @endif
                                 @if(($c->atl_gnd > $c->getMagicNumber('UNCERTIFIED'))||($c->gnd === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-success">GND</span>
+                                <span class="badge bg-success">GND</span>
                                 @endif
                                 @if(($c->atl_twr > $c->getMagicNumber('UNCERTIFIED'))||($c->twr === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-danger">TWR</span>
+                                <span class="badge bg-danger">TWR</span>
                                 @endif
                                 @if(($c->atl_app > $c->getMagicNumber('UNCERTIFIED'))||($c->app === $c->getMagicNumber('LEGACY_MAJOR_CERTIFIED')))
-                                <span class="badge badge-info">
+                                <span class="badge bg-info">
                                     @if($c->atl_app === $c->getMagicNumber('TRACON_SAT_CERTIFIED'))
                                     A80 SAT
                                     @elseif($c->atl_app === $c->getMagicNumber('TRACON_DR_CERTIFIED'))
@@ -139,9 +139,9 @@ Roster
                             <!-- Enroute -->
                             <td class="text-center">
                                 @if($c->ctr === $c->getMagicNumber('SOLO_CERTIFICATION'))
-                                <span class="badge badge-warning text-light" data-toggle="tooltip" data-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">ZTL-SOLO</span>
+                                <span class="badge bg-warning text-light" data-bs-toggle="tooltip" data-bs-html="true" title="Cert Expires: {{ $c->solo }}<br>{{$c->twr_solo_fields}}">ZTL-SOLO</span>
                                 @elseif($c->ctr > $c->getMagicNumber('UNCERTIFIED'))
-                                <span class="badge badge-secondary">ZTL</span>
+                                <span class="badge bg-secondary">ZTL</span>
                                 @endif
                             </td>
                         </tr>
