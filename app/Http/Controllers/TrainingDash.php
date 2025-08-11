@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Mail;
 
 class TrainingDash extends Controller {
@@ -265,9 +266,56 @@ class TrainingDash extends Controller {
         $c = $request->id;
         $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
+        $recent_sessions = [];
+
+        try {
+            $res = (new Client)->get(
+                Config::get('scheddy.base').'/api/userSessions/trainers/'.Auth::id(),
+                ['headers' => [
+                    'Authorization' => 'Bearer '.Config::get('scheddy.api_key')
+                ],
+                'http_errors' => false
+                ]
+            );
+
+            if ($res->getStatusCode() == "200") {
+                $recent_sessions = json_decode($res->getBody());
+            } else {
+                Log::error('Scheddy trainer session pull resulted in a ' . $res->getStatusCode() . ' status code');
+            }
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            Log::error($e);
+        }
+
+        $max_recent_sessions = 5;
+        $recent_sessions = array_reduce($recent_sessions, function ($new_sessions, $session) use ($max_recent_sessions) {
+            $date = Carbon::parse($session->session->start)->setTimezone('America/New_York');
+            $student = User::find($session->session->student);
+            $session_id = TrainingTicket::$scheddy_session_id_map['DEFAULT'];
+            $scheddy_id = $session->session->id;
+
+            if (array_key_exists($session->sessionType->id, TrainingTicket::$scheddy_session_id_map)) {
+                $session_id = TrainingTicket::$scheddy_session_id_map[$session->sessionType->id];
+            }
+
+            if (!TrainingTicket::where('scheddy_id', $scheddy_id)->exists() && isset($student) && count($new_sessions) < $max_recent_sessions) {
+                array_push($new_sessions, [
+                    "scheddy_id" => $scheddy_id,
+                    "date" =>  $date->format('m/d/Y'),
+                    "start_time" => $date->format('H:i'),
+                    "student_name" => $student->full_name,
+                    "student_cid" => $session->session->student,
+                    "lesson_name" => $session->sessionType->name,
+                    "lesson_type" => $session_id
+                ]);
+            }
+
+            return $new_sessions;
+        }, []);
+
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
             ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
-            ->with('progress_types', $ticket->getProgressSelectAttribute());
+            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions);
     }
 
     public function handleSaveTicket(Request $request, $id = null) {
@@ -772,6 +820,7 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
         if (! $ticket) {
             $ticket = new TrainingTicket;
+            $ticket->scheddy_id = $request->scheddy_id;
         }
 
         $ticket->controller_id = $request->controller;
@@ -830,7 +879,12 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
 
         if (! $ticket) {
+            if ($request->automated && !$request->is_new) {
+                return response(null);
+            }
+
             $ticket = new TrainingTicket;
+            $ticket->scheddy_id = $request->scheddy_id;
         }
 
         $ticket->controller_id = $request->controller;

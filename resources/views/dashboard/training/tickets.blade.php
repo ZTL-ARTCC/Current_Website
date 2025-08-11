@@ -139,7 +139,7 @@ Training Tickets
                         </tbody>
                     </table>
                     @else
-                        @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'There are no training tickets for this controller under this category', 'icon' => 'fa-solid fa-file'])
+                        @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'There are no training tickets for this controller under this category.', 'icon' => 'fa-solid fa-file'])
                     @endif
                 </div>
             @endforeach

@@ -44,7 +44,7 @@ Airport Management
             </thead>
         </table>
     @else
-        @include('inc.empty_state', ['header' => 'No Airports', 'body' => 'There are no airports to show', 'icon' => 'fa fa-tower-observation'])
+        @include('inc.empty_state', ['header' => 'No Airports', 'body' => 'There are no airports to show.', 'icon' => 'fa fa-tower-observation'])
     @endif
 </div>
 @endsection

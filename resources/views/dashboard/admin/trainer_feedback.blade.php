@@ -352,9 +352,9 @@ $tabs[] = (object) $t;
                 </tbody>
             </table>
             @elseif($t->id == 'new')
-                @include('inc.empty_state', ['header' => 'No New Feedback', 'body' => 'There is no new feedback to show', 'icon' => 'fa-solid fa-file'])
+                @include('inc.empty_state', ['header' => 'No New Feedback', 'body' => 'There is no new feedback to show.', 'icon' => 'fa-solid fa-file'])
             @elseif($t->id == 'processed')
-                @include('inc.empty_state', ['header' => 'No Processed Feedback', 'body' => 'There is no processed feedback to show', 'icon' => 'fa-solid fa-file'])
+                @include('inc.empty_state', ['header' => 'No Processed Feedback', 'body' => 'There is no processed feedback to show.', 'icon' => 'fa-solid fa-file'])
             @endif
             @if($t->id == 'processed')
             {!! $$d->links() !!}

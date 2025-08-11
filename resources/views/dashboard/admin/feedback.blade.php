@@ -167,7 +167,7 @@ Feedback Management
                     </tbody>
                 </table>
             @else
-                @include('inc.empty_state', ['header' => 'No New Feedback', 'body' => 'There is no new feedback to show', 'icon' => 'fa-solid fa-file'])
+                @include('inc.empty_state', ['header' => 'No New Feedback', 'body' => 'There is no new feedback to show.', 'icon' => 'fa-solid fa-file'])
             @endif
         </div>
         <div role="tabpanel" class="tab-pane" id="processed">
@@ -288,7 +288,7 @@ Feedback Management
                     </tbody>
                 </table>
             @else
-                @include('inc.empty_state', ['header' => 'No Processed Feedback', 'body' => 'There is no processed feedback to show', 'icon' => 'fa-solid fa-file'])
+                @include('inc.empty_state', ['header' => 'No Processed Feedback', 'body' => 'There is no processed feedback to show.', 'icon' => 'fa-solid fa-file'])
             @endif
             {!! $feedback_p->links() !!}
         </div>

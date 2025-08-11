@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-Visit Requests
+    Visit Requests
 @endsection
 
 @section('content')
@@ -71,106 +71,105 @@ Visit Requests
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <button action="submit" class="btn btn-success">Confirm</button>
                                             </div>
-                                        {{ html()->form()->close() }}
+                                            {{ html()->form()->close() }}
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    @include('inc.empty_state', ['header' => 'No New Visit Requests', 'body' => 'There are no new visit requests at this time.', 'icon' => 'fa-solid fa-suitcase'])
+                @endif
+            </div>
+            <div role="tabpanel" class="tab-pane" id="accepted">
+                @if($accepted->count() > 0)
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="text-start" scope="col">Name (CID)</th>
+                                <th scope="col">Rating</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Home ARTCC/Division</th>
+                                <th scope="col">Accepted at</th>
+                                <th scope="col">Accepted by</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($accepted as $v)
+                                <tr class="text-center">
+                                    <td class="text-start" class="text-center" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                    <td>{{ $v->rating_short }}</td>
+                                    <td>{{ $v->email }}</td>
+                                    <td>{{ $v->home }}</td>
+                                    <td>{{ $v->updated_at }}</td>
+                                    <td>{{ App\User::find($v->updated_by)->full_name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    @include('inc.empty_state', ['header' => 'No Accepted Visit Requests', 'body' => 'There are no previously accepted visit requests at this time.', 'icon' => 'fa-solid fa-suitcase'])
+                @endif
+            </div>
+            <div role="tabpanel" class="tab-pane" id="rejected">
+                @if($rejected->count() > 0)
+                    <table class="table table-striped">
+                        <thead>
+                                <tr class="text-center">
+                                <th class="text-start" scope="col">Name (CID)</th>
+                                <th scope="col">Rating</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Home ARTCC/Division</th>
+                                <th scope="col">Rejected at</th>
+                                <th scope="col">Rejected by</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($rejected as $v)
+                                <tr class="text-center">
+                                    <td class="text-start" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                    <td>{{ $v->rating_short }}</td>
+                                    <td>{{ $v->email }}</td>
+                                    <td>{{ $v->home }}</td>
+                                    <td>{{ $v->updated_at }}</td>
+                                    <td>{{ App\User::find($v->updated_by)->full_name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    @include('inc.empty_state', ['header' => 'No Rejected Visit Requests', 'body' => 'There are no previously rejected visit requests at this time.', 'icon' => 'fa-solid fa-suitcase'])
+                @endif
+            </div>
+        </div>
+        <div class="modal fade" id="manualAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Manually Add Controller</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ html()->form()->route('manualAddVisitor')->open() }}
+                    @csrf
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="cid">Controller CID</label>
+                                    {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                @include('inc.empty_state', ['header' => 'No New Visit Requests', 'body' => 'There are currently no new visit requests at this time', 'icon' => 'fa-solid fa-suitcase'])
-            @endif
-        </div>
-        <div role="tabpanel" class="tab-pane" id="accepted">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <th class="text-start" scope="col">Name (CID)</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Home ARTCC/Division</th>
-                        <th scope="col">Accepted at</th>
-                        <th scope="col">Accepted by</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($accepted)
-                        @foreach($accepted as $v)
-                            <tr class="text-center">
-                                <td class="text-start" class="text-center" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td>{{ $v->rating_short }}</td>
-                                <td>{{ $v->email }}</td>
-                                <td>{{ $v->home }}</td>
-                                <td>{{ $v->updated_at }}</td>
-                                <td>{{ App\User::find($v->updated_by)->full_name }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <p>No accepted visit requests to show.</p>
-                    @endif
-                </tbody>
-            </table>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="rejected">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <th class="text-start" scope="col">Name (CID)</th>
-                        <th scope="col">Rating</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Home ARTCC/Division</th>
-                        <th scope="col">Rejected at</th>
-                        <th scope="col">Rejected by</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($rejected)
-                        @foreach($rejected as $v)
-                            <tr class="text-center">
-                                <td class="text-start" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                <td>{{ $v->rating_short }}</td>
-                                <td>{{ $v->email }}</td>
-                                <td>{{ $v->home }}</td>
-                                <td>{{ $v->updated_at }}</td>
-                                <td>{{ App\User::find($v->updated_by)->full_name }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <p>No rejected visit requests to show.</p>
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="modal fade" id="manualAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Manually Add Controller</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                {{ html()->form()->route('manualAddVisitor')->open() }}
-                @csrf
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="cid">Controller CID</label>
-                                {{ html()->text('cid', null)->placeholder('Controller CID')->class(['form-control']) }}
-                            </div>
-                        </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button action="submit" class="btn btn-success">Search CID</button>
+                    </div>
+                    {{ html()->form()->close() }}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button action="submit" class="btn btn-success">Search CID</button>
-                </div>
-                {{ html()->form()->close() }}
             </div>
         </div>
     </div>
-</div>
 @endsection

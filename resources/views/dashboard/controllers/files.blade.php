@@ -111,7 +111,7 @@ Files
                         </tbody>
                     </table>
                 @else
-                    @include('inc.empty_state', ['header' => 'No Files', 'body' => 'There are no files listed for that category', 'icon' => 'fa-solid fa-file'])
+                    @include('inc.empty_state', ['header' => 'No Files', 'body' => 'There are no files listed for that category.', 'icon' => 'fa-solid fa-file'])
                 @endif
             </div>
         @endforeach

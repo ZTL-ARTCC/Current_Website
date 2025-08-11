@@ -60,7 +60,7 @@ Calendar/News
                 </tbody>
             </table>
             @else
-                @include('inc.empty_state', ['header' => 'No Calendar Events to Show', 'body' => 'There are no calendar events to show', 'icon' => 'fa-solid fa-calendar'])
+                @include('inc.empty_state', ['header' => 'No Calendar Events to Show', 'body' => 'There are no calendar events to show.', 'icon' => 'fa-solid fa-calendar'])
             @endif
         </div>
 
@@ -116,7 +116,7 @@ Calendar/News
                 </tbody>
             </table>
             @else
-                @include('inc.empty_state', ['header' => 'No News to Show', 'body' => 'There is no news to show', 'icon' => 'fa-solid fa-newspaper'])
+                @include('inc.empty_state', ['header' => 'No News to Show', 'body' => 'There is no news to show.', 'icon' => 'fa-solid fa-newspaper'])
             @endif
         </div>
     </div>
