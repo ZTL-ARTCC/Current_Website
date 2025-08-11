@@ -15,12 +15,12 @@ window.onload = function () {
   for (const picker of dtPickerDate) {
     new TempusDominus(picker, {
       display: {
-        viewMode: 'calendar',
+        viewMode: "calendar",
         keepOpen: false,
         components: {
           calendar: true,
-          clock: false
-        }
+          clock: false,
+        },
       },
       localization: {
         format: "L",
@@ -31,28 +31,29 @@ window.onload = function () {
   for (const picker of dtPickerTime) {
     new TempusDominus(picker, {
       display: {
-        viewMode: 'clock',
+        viewMode: "clock",
         keepOpen: false,
         components: {
           calendar: false,
-          clock: true
-        }
+          clock: true,
+        },
       },
       localization: {
         format: "HH:mm",
       },
     });
   }
-  const dtPickerDateTime = document.getElementsByClassName("dt_picker_datetime");
+  const dtPickerDateTime =
+    document.getElementsByClassName("dt_picker_datetime");
   for (const picker of dtPickerDateTime) {
     new TempusDominus(picker, {
       display: {
-        viewMode: 'calendar',
+        viewMode: "calendar",
         keepOpen: false,
         components: {
           calendar: true,
-          clock: true
-        }
+          clock: true,
+        },
       },
       localization: {
         format: "L HH:mm",
