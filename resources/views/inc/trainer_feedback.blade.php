@@ -5,7 +5,7 @@
         <div class="row mb-3">
             <div class="col-sm-4 form-group">
                 <label for="feedback_id" class="control-label">Training Team Member: (required)</label>
-                {{ html()->select('feedback_id', $feedbackOptions)->placeholder('Select Team Member')->class(['form-control']) }}
+                {{ html()->select('feedback_id', $feedbackOptions)->placeholder('Select Team Member')->class(['form-select']) }}
             </div>
             <div class="col-sm-4 form-group">
                 <label for="feedback_date" class="control-label">Date of Session/Event: (required)</label>
@@ -35,11 +35,11 @@
             </div>
             <div class="col-sm-4 form-group">
                 <label for="booking_method" class="control-label">Booking Method: (required)</label>
-                {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'])->placeholder('Pick One')->class(['form-control']) }}
+                {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'])->placeholder('Pick One')->class(['form-select']) }}
             </div>
             <div class="col-sm-4 form-group">
                 <label for="training_method" class="control-label">Training Method: (required)</label>
-                {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'])->placeholder('Pick One')->class(['form-control']) }}
+                {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'])->placeholder('Pick One')->class(['form-select']) }}
             </div>
         </div>
         <div class="row form-group mb-3">

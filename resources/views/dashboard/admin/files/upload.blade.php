@@ -25,7 +25,7 @@ Upload File
                         6 => 'Staff',
                         7 => 'Training',
                         8 => 'Marketing'
-                    ], null)->class(['form-control']) }}
+                    ], null)->class(['form-select']) }}
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@ Upload File
         </div>
         <div class="form-group mb-3">
             <label for="existingPermalinks">(Optional) Replace Existing Permalink</label>
-            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-control'])->id('existingPermalinks') }}
+            {{ html()->select('existingPermalinks', ['' => 'None'] + $existing_permalinks, null)->class(['form-select'])->id('existingPermalinks') }}
             <b><p>The existing file which corresponds to the permalink will be replaced if the permalink is selected. Please Select "None" if you would like to use a new link.</p></b>
         </div>
         <div class="form-group mb-3">

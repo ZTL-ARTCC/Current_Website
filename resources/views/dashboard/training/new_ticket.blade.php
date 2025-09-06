@@ -22,25 +22,25 @@ New Training Ticket
                     @php
                         $c = (is_null($c)) ? null : $c;
                     @endphp
-                    {{ html()->select('controller', $controllers, $c)->placeholder('Select Controller')->class(['form-control']) }}
+                    {{ html()->select('controller', $controllers, $c)->placeholder('Select Controller')->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="position" class="form-label">Session Category</label>
-                    {{ html()->select('position', $positions, null)->placeholder('Select Training Session')->class(['form-control']) }}
+                    {{ html()->select('position', $positions, null)->placeholder('Select Training Session')->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="session_id" class="form-label">Session ID</label>
-                    {{ html()->select('session_id', $session_ids, null)->placeholder('Select Session ID')->class(['form-control']) }}
+                    {{ html()->select('session_id', $session_ids, null)->placeholder('Select Session ID')->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="type" class="form-label">Progress</label>
-                    {{ html()->select('type', $progress_types, null)->placeholder('Select Progress Type')->class(['form-control']) }}
+                    {{ html()->select('type', $progress_types, null)->placeholder('Select Progress Type')->class(['form-select']) }}
                 </div>
             </div>
         </div>

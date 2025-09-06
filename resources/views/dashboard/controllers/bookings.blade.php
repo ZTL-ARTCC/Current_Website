@@ -87,7 +87,7 @@ ATC Bookings
                             {{ html()->hidden('type', 'booking') }}
                         @else
                             <label for="type">Booking Type</label>
-                            {{ html()->select('type', $types, 'booking')->class(['form-control']) }}
+                            {{ html()->select('type', $types, 'booking')->class(['form-select']) }}
                         @endif
                     </div>
                     <p><i><b>All times are in ZULU time</b></i></p>

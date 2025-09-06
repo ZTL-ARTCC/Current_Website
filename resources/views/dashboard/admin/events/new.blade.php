@@ -47,7 +47,7 @@ New Event
                 </div>
                 <div class="col-sm-4">
                     <label for="type" class="form-label">Event Type</label>
-                    {{ html()->select('type', ['Local Event', 'Support Event', 'Support Event (unverified)'], 'Local Event')->class(['form-control']) }}
+                    {{ html()->select('type', ['Local Event', 'Support Event', 'Support Event (unverified)'], 'Local Event')->class(['form-select']) }}
                 </div>
             </div>
         </div>

@@ -45,7 +45,7 @@ New Calendar Event/News
             {{ html()->select('type', [
                 1 => 'Calendar Event',
                 2 => 'News'
-            ], null)->class(['form-control']) }}
+            ], null)->class(['form-select']) }}
         </div>
         <div class="row">
             <div class="col-sm-1">

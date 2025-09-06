@@ -29,7 +29,7 @@ Training Tickets
             {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
         </div>
         <div class="col-sm-3">
-            {{ html()->select('cid', $controllers, null)->placeholder('Select Controller')->class(['form-control']) }}
+            {{ html()->select('cid', $controllers, null)->placeholder('Select Controller')->class(['form-select']) }}
         </div>
         <div class="col-sm-1">
             <button class="btn btn-primary" action="submit">Search</button>

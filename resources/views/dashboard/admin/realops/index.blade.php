@@ -102,7 +102,7 @@
                             {{ html()->form('PUT')->route('assignPilotToFlight', [$f->id])->open() }}
                             @csrf
                             <div class="modal-body">
-                            {{ html()->select('pilot', $pilots, null)->placeholder('Select Pilot')->class(['form-control']) }}
+                            {{ html()->select('pilot', $pilots, null)->placeholder('Select Pilot')->class(['form-select']) }}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button action="submit" class="btn btn-success">Assign</button>

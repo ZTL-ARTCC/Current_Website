@@ -32,7 +32,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="to">To (Single Person)</label>
-                    {{ html()->select('to', $controllers, null, ['placeholder' => 'Select Controller'])->class(['form-control']) }}
+                    {{ html()->select('to', $controllers, null, ['placeholder' => 'Select Controller'])->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-6">
@@ -50,7 +50,7 @@
                         3 => 'Mentors',
                         4 => 'Instructors',
                         5 => 'All Training Staff'
-                    ], null)->placeholder('N/A')->class(['form-control']) }}
+                    ], null)->placeholder('N/A')->class(['form-select']) }}
                 </div>
             </div>
         </div>

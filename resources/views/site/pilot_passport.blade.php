@@ -18,7 +18,7 @@ ZTL Pilot Passport Challenge
     <ul class="nav nav-tabs nav-justified" role="tablist" id="tabMenu">
         <li class="nav-item">
             @php $active = ($tab == 'information') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#information" role="tab" bs-toggle="tab">Program Information</a>
+            <a class="nav-link tab-link{{ $active }}" href="#information" role="tab" data-bs-toggle="tab">Program Information</a>
         </li>
         @if(!auth()->guard('realops')->guest())
         <li class="nav-item">
@@ -138,7 +138,7 @@ ZTL Pilot Passport Challenge
                 ?>
                 {{ html()->form()->route('pilotPassportIndex')->open() }}
                 {{ html()->hidden('tab', 'passport_book') }}
-                {{ html()->select('pg', $enrolled_challenges, $view_challenge)->class(['form-control'])->attributes(['onchange' => 'submit()']) }}
+                {{ html()->select('pg', $enrolled_challenges, $view_challenge)->class(['form-select'])->attributes(['onchange' => 'submit()']) }}
                 {{ html()->form()->close() }}
             @endif
             @foreach($enrollments as $enrollment)

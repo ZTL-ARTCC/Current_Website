@@ -60,7 +60,7 @@ OTS Center
                                     {{ html()->form()->route('assignRecommendation', [$o->id])->open() }}
                                     @csrf
                                     <div class="modal-body">
-                                    {{ html()->select('ins', $instructors, null)->placeholder('Select Instructor')->class(['form-control']) }}
+                                    {{ html()->select('ins', $instructors, null)->placeholder('Select Instructor')->class(['form-select']) }}
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <button action="submit" class="btn btn-success">Assign</button>
@@ -118,7 +118,7 @@ OTS Center
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="result">Result</label>
-                                            {{ html()->select('result', [2 => 'Pass', 3 => 'Fail'], null)->placeholder('Select Result')->class(['form-control']) }}
+                                            {{ html()->select('result', [2 => 'Pass', 3 => 'Fail'], null)->placeholder('Select Result')->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="modal-footer">

@@ -69,7 +69,7 @@ Feedback Management
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <label for="feedback_id">Controller/Event</label>
-                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
+                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-select']) }}
                                                     {{ html()->hidden('event_id', $f->feedback_id) }}
                                                 </div>
                                                 <div class="col-sm-6">
@@ -105,7 +105,7 @@ Feedback Management
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <label for="feedback_id">Controller/Event</label>
-                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
+                                                    {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-select']) }}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="position">Position</label>
@@ -221,7 +221,7 @@ Feedback Management
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="feedback_id">Controller</label>
-                                                {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-control']) }}
+                                                {{ html()->select('feedback_id', $feedbackOptions, $f->feedback_id)->class(['form-select']) }}
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="position">Position</label>
@@ -240,7 +240,7 @@ Feedback Management
                                             0 => 'N/A',
                                             1 => 'Saved',
                                             2 => 'Hidden'
-                                        ], $f->status)->class(['form-control']) }}
+                                        ], $f->status)->class(['form-select']) }}
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button action="submit" class="btn btn-success">Update Feedback</button>
                                     </div>

@@ -40,9 +40,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_gnd->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_minor_gnd->first()->new_numbers, $info_minor_gnd->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_minor_gnd->first()->new_numbers, $info_minor_gnd->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -87,9 +87,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_lcl->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_minor_lcl->first()->new_numbers, $info_minor_lcl->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_minor_lcl->first()->new_numbers, $info_minor_lcl->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -134,9 +134,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_minor_app->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_minor_app->first()->new_numbers, $info_minor_app->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_minor_app->first()->new_numbers, $info_minor_app->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -182,9 +182,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_gnd->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_major_gnd->first()->new_numbers, $info_major_gnd->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_major_gnd->first()->new_numbers, $info_major_gnd->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -229,9 +229,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_lcl->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_major_lcl->first()->new_numbers, $info_major_lcl->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_major_lcl->first()->new_numbers, $info_major_lcl->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -276,9 +276,9 @@ Training Information
                                     <div class="row">
                                         <div class="col-sm-2">
                                             @if($info_major_app->count() == 0)
-                                                {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                                {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                             @else
-                                                {{ html()->select('number', $info_major_app->first()->new_numbers, $info_major_app->first()->default_new_number)->class(['form-control']) }}
+                                                {{ html()->select('number', $info_major_app->first()->new_numbers, $info_major_app->first()->default_new_number)->class(['form-select']) }}
                                             @endif
                                         </div>
                                         <div class="col-sm-8">
@@ -325,9 +325,9 @@ Training Information
                             <div class="row">
                                 <div class="col-sm-2">
                                     @if($info_ctr->count() == 0)
-                                        {{ html()->select('number', [0 => '1'], null)->class(['form-control']) }}
+                                        {{ html()->select('number', [0 => '1'], null)->class(['form-select']) }}
                                     @else
-                                        {{ html()->select('number', $info_ctr->first()->new_numbers, $info_ctr->first()->default_new_number)->class(['form-control']) }}
+                                        {{ html()->select('number', $info_ctr->first()->new_numbers, $info_ctr->first()->default_new_number)->class(['form-select']) }}
                                     @endif
                                 </div>
                                 <div class="col-sm-8">
@@ -364,7 +364,7 @@ Training Information
                         {{ html()->text('name', null)->placeholder('Section Name')->class(['form-control']) }}
                         <br>
                         <label for="order">Order</label>
-                        {{ html()->select('order', $public_section_order, $public_section_next)->placeholder('Select Order')->class(['form-control']) }}
+                        {{ html()->select('order', $public_section_order, $public_section_next)->placeholder('Select Order')->class(['form-select']) }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

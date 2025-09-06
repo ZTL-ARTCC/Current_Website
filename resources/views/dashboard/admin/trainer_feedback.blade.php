@@ -101,7 +101,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Training Team Member</label>
-                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-control']) }}
+                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Service Level</label>
@@ -111,7 +111,7 @@ $tabs[] = (object) $t;
                         3 => 'Fair',
                         2 => 'Poor',
                         1 => 'Unsatisfactory'
-                    ], $f->service_level)->class(['form-control']) }}
+                    ], $f->service_level)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -127,11 +127,11 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>
-                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-control']) }}
+                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -173,7 +173,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Training Team Member</label>
-                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-control']) }}
+                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Service Level</label>
@@ -183,7 +183,7 @@ $tabs[] = (object) $t;
                         3 => 'Fair',
                         2 => 'Poor',
                         1 => 'Unsatisfactory'
-                    ], $f->service_level)->class(['form-control']) }}
+                    ], $f->service_level)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -199,11 +199,11 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>
-                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-control']) }}
+                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -246,7 +246,7 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Training Team Member</label>
-                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-control']) }}
+                                            {{ html()->select('trainer_id', $feedbackOptions, $f->trainer_id)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Service Level</label>
@@ -256,7 +256,7 @@ $tabs[] = (object) $t;
                         3 => 'Fair',
                         2 => 'Poor',
                         1 => 'Unsatisfactory'
-                    ], $f->service_level)->class(['form-control']) }}
+                    ], $f->service_level)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -272,11 +272,11 @@ $tabs[] = (object) $t;
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="feedback_id">Booking Method</label>
-                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-control']) }}
+                                            {{ html()->select('booking_method', [0=>'Scheddy', 1=>'Ad-Hoc'], $f->booking_method)->class(['form-select']) }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="position">Training Method</label>
-                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-control']) }}
+                                            {{ html()->select('training_method', [0=>'Theory', 1=>'Sweatbox', 2=>'Live Network'], $f->training_method)->class(['form-select']) }}
                                         </div>
                                     </div>
                                     <div class="row">
@@ -302,7 +302,7 @@ $tabs[] = (object) $t;
                                             0 => 'N/A',
                                             1 => 'Saved',
                                             2 => 'Hidden'
-                                        ], $f->status)->class(['form-control']) }}
+                                        ], $f->status)->class(['form-select']) }}
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button action="submit" class="btn btn-success">Update Feedback</button>
                                 </div>

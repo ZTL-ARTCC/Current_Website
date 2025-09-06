@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
+                {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-select'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>

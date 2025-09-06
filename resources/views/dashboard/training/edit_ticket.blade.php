@@ -21,25 +21,25 @@ Edit Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="controller" class="form-label">Controller</label>
-                    {{ html()->select('controller', [$ticket->controller_id => $ticket->Controller_name], null)->class(['form-control']) }}
+                    {{ html()->select('controller', [$ticket->controller_id => $ticket->Controller_name], null)->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="position" class="form-label">Session Category</label>
-                    {{ html()->select('position', $positions, $ticket->position)->placeholder('Select Position')->class(['form-control']) }}
+                    {{ html()->select('position', $positions, $ticket->position)->placeholder('Select Position')->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="session_id" class="form-label">Session ID</label>
-                    {{ html()->select('session_id', $session_ids, $ticket->session_id)->placeholder('Select Session ID')->class(['form-control']) }}
+                    {{ html()->select('session_id', $session_ids, $ticket->session_id)->placeholder('Select Session ID')->class(['form-select']) }}
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="type" class="form-label">Progress</label>
-                    {{ html()->select('type', $progress_types, $ticket->type)->placeholder('Select Session Type')->class(['form-control']) }}
+                    {{ html()->select('type', $progress_types, $ticket->type)->placeholder('Select Session Type')->class(['form-select']) }}
                 </div>
             </div>
         </div>

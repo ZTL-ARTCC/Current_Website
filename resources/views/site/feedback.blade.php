@@ -13,7 +13,7 @@ New Feedback
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="feedback_id" class="control-label">Event or Controller:</label>
-                    {{ html()->select('feedback_id', $feedbackOptions, $controllerSelected)->placeholder('Select Event or Controller')->class(['form-control']) }}
+                    {{ html()->select('feedback_id', $feedbackOptions, $controllerSelected)->placeholder('Select Event or Controller')->class(['form-select']) }}
                 </div>
                 <div class="form-group">
                     <label for="service" class="control-label">Service Level:</label>
@@ -23,7 +23,7 @@ New Feedback
                         2 => 'Fair',
                         3 => 'Poor',
                         4 => 'Unsatisfactory'
-                    ], null)->placeholder('Select Level')->class(['form-control']) }}
+                    ], null)->placeholder('Select Level')->class(['form-select']) }}
                 </div>
                 <div class="form-group">
                     <div class="row">

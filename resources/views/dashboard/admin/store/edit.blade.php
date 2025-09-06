@@ -24,7 +24,7 @@ Edit Store Item
                         'limited stock' => 'Limited Stock',
                         'out of stock' => 'Out of Stock',
                         'new' => 'New'
-                    ], $store_item->flag)->class(['form-control']) }}
+                    ], $store_item->flag)->class(['form-select']) }}
                 </div>
             </div>
         </div>

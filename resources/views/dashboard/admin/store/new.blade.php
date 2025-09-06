@@ -24,7 +24,7 @@ New Store Item
                         'limited stock' => 'Limited Stock',
                         'out of stock' => 'Out of Stock',
                         'new' => 'New'
-                    ], null)->class(['form-control']) }}
+                    ], null)->class(['form-select']) }}
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@ Upload File
                         5 => 'LOAs',
                         6 => 'Staff',
                         7 => 'Training'
-                    ], $file->type)->class(['form-control']) }}
+                    ], $file->type)->class(['form-select']) }}
                 </div>
             </div>
         </div>

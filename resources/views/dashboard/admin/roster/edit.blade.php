@@ -87,7 +87,7 @@ Update Controller
                             {{ html()->hidden('status', $user->status) }}
                         @else
                             <label for="status">Status</label>
-                            {{ html()->select('status', $user->user_status, $user->status)->class(['form-control'])->attributes([$roster_disable]) }}
+                            {{ html()->select('status', $user->user_status, $user->status)->class(['form-select'])->attributes([$roster_disable]) }}
                         @endif
                     </div>
                     <div class="col-sm-6">
@@ -101,11 +101,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="staff">Facility Staff</label>
-                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-control'])->attributes([$roster_disable]) }}
+                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-select'])->attributes([$roster_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="events_staff">Events Staff</label>
-                        {{ html()->select('events_staff', $user->events_staff, $user->events_position)->class(['form-control'])->attributes([$events_disable]) }}
+                        {{ html()->select('events_staff', $user->events_staff, $user->events_position)->class(['form-select'])->attributes([$events_disable]) }}
                     </div>
                 </div>
             </div>
@@ -113,12 +113,12 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="training">Training Staff</label>
-                        {{ html()->select('training', $user->training_staff, $user->train_position)->class(['form-control'])->attributes([$roster_disable]) }}
+                        {{ html()->select('training', $user->training_staff, $user->train_position)->class(['form-select'])->attributes([$roster_disable]) }}
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
                         <label for="max">Training Level</label>
-                        {{ html()->select('max', $user->training_level, $user->max)->class(['form-control'])->attributes([$train_config_disable]) }}
+                        {{ html()->select('max', $user->training_level, $user->max)->class(['form-select'])->attributes([$train_config_disable]) }}
                     </div>
                     @endif
                 </div>
@@ -194,11 +194,11 @@ Update Controller
                         @endphp
                         {{ html()->hidden('del', $user->del) }}
                         <label for="gnd">Unrestricted Ground/Clearance Delivery</label>
-                        {{ html()->select('gnd', $user->uncertified_certified, $user->gnd)->class(['form-control'])->attributes([$unres_gnd_disable]) }}
+                        {{ html()->select('gnd', $user->uncertified_certified, $user->gnd)->class(['form-select'])->attributes([$unres_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="twr">Unrestricted Tower</label>
-                        {{ html()->select('twr', $user->Uncertified_solo_certified, $user->twr)->class(['form-control'])->attributes([$unres_twr_disable]) }}
+                        {{ html()->select('twr', $user->Uncertified_solo_certified, $user->twr)->class(['form-select'])->attributes([$unres_twr_disable]) }}
                     </div>
                 </div>
             </div>
@@ -206,11 +206,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="app">Unrestricted Approach</label>
-                        {{ html()->select('app', $user->uncertified_solo_certified, $user->app)->class(['form-control'])->attributes([$unres_app_disable]) }}
+                        {{ html()->select('app', $user->uncertified_solo_certified, $user->app)->class(['form-select'])->attributes([$unres_app_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="ctr">Center Certification</label>
-                        {{ html()->select('ctr', $user->uncertified_solo_certified, $user->ctr)->class(['form-control'])->attributes([$center_disable]) }}
+                        {{ html()->select('ctr', $user->uncertified_solo_certified, $user->ctr)->class(['form-select'])->attributes([$center_disable]) }}
                     </div>
                 </div>
             </div>
@@ -259,11 +259,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="clt_del">Charlotte Clearance Delivery</label>
-                        {{ html()->select('clt_del', $user->uncertified_certified, $user->clt_del)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
+                        {{ html()->select('clt_del', $user->uncertified_certified, $user->clt_del)->class(['form-select'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="clt_gnd">Charlotte Ground</label>
-                        {{ html()->select('clt_gnd', $user->uncertified_certified, $user->clt_gnd)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
+                        {{ html()->select('clt_gnd', $user->uncertified_certified, $user->clt_gnd)->class(['form-select'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                 </div>
             </div>
@@ -271,11 +271,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="clt_twr">Charlotte Tower</label>
-                        {{ html()->select('clt_twr', $user->uncertified_certified, $user->clt_twr)->class(['form-control'])->attributes([$clt_twr_disable]) }}
+                        {{ html()->select('clt_twr', $user->uncertified_certified, $user->clt_twr)->class(['form-select'])->attributes([$clt_twr_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="clt_app">Charlotte Approach</label>
-                        {{ html()->select('clt_app', $user->uncertified_certified, $user->clt_app)->class(['form-control'])->attributes([$clt_app_disable]) }}
+                        {{ html()->select('clt_app', $user->uncertified_certified, $user->clt_app)->class(['form-select'])->attributes([$clt_app_disable]) }}
                     </div>
                 </div>
             </div>
@@ -283,11 +283,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_del">Atlanta Clearance Delivery</label>
-                        {{ html()->select('atl_del', $user->uncertified_certified, $user->atl_del)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_del', $user->uncertified_certified, $user->atl_del)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="atl_gnd">Atlanta Ground</label>
-                        {{ html()->select('atl_gnd', $user->uncertified_certified, $user->atl_gnd)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_gnd', $user->uncertified_certified, $user->atl_gnd)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                 </div>
             </div>
@@ -295,11 +295,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_twr">Atlanta Tower</label>
-                        {{ html()->select('atl_twr', $user->uncertified_certified, $user->atl_twr)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_twr', $user->uncertified_certified, $user->atl_twr)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="atl_app">Atlanta (A80) Approach</label>
-                        {{ html()->select('atl_app', $user->uncertified_certified_a80, $user->atl_app)->class(['form-control'])->attributes([$atl_app_disable]) }}
+                        {{ html()->select('atl_app', $user->uncertified_certified_a80, $user->atl_app)->class(['form-select'])->attributes([$atl_app_disable]) }}
                     </div>
                 </div>
             </div>

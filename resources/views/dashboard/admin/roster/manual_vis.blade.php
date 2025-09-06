@@ -32,7 +32,7 @@ New Visitor
                             10 => 'Senior Instructor (I3)',
                             11 => 'Supervisor (SUP)',
                             12 => 'Admin (ADM)',
-                        ], $visitor->rating)->class(['form-control']) }}
+                        ], $visitor->rating)->class(['form-select']) }}
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@ New Visitor
                             10 => 'Senior Instructor (I3)',
                             11 => 'Supervisor (SUP)',
                             12 => 'Admin (ADM)',
-                        ], null)->placeholder(' => Select Rating')->class(['form-control']) }}
+                        ], null)->placeholder(' => Select Rating')->class(['form-select']) }}
                     </div>
                 </div>
             </div>

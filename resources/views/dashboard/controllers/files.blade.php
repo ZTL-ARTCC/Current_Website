@@ -141,7 +141,7 @@ Files
                                         6 => 'Staff',
                                         7 => 'Training',
                                         8 => 'Marketing'
-                                    ], null)->class(['form-control']) }}
+                                    ], null)->class(['form-select']) }}
                                 </div>
 							</div>
 						</div>

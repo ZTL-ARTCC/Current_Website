@@ -181,7 +181,7 @@ View Event
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <label for="position">Position</label>
-                                                                    {{ html()->select('position', $positions->pluck('name', 'id'), $r->position_id)->class(['form-control']) }}
+                                                                    {{ html()->select('position', $positions->pluck('name', 'id'), $r->position_id)->class(['form-select']) }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -359,7 +359,7 @@ View Event
                                         <div class="row">
                                             @if($your_registration1->status == App\Event::$STATUSES["HIDDEN"])
                                                 <div class="col-sm-5">
-                                                    {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-control']) }}
+                                                    {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-select']) }}
                                                 </div>
                                                 <div class="col-sm-3">
                                                     {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control']) }}
@@ -370,9 +370,9 @@ View Event
                                             @else
                                                 <div class="col-sm-5">
                                                     @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
-                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['disabled'])->placeholder('Pending...')->class(['form-control']) }}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['disabled'])->placeholder('Pending...')->class(['form-select']) }}
                                                     @else
-                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->attributes(['disabled'])->placeholder('Choice 1')->class(['form-control']) }}
+                                                        {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->attributes(['disabled'])->placeholder('Choice 1')->class(['form-select']) }}
                                                     @endif
                                                 </div>
                                                 <div class="col-sm-3">
@@ -389,7 +389,7 @@ View Event
                                         {{ html()->hidden('yr1', null) }}
                                         <div class="row mb-2">
                                             <div class="col-sm-5 mt-1">
-                                                {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['autocomplete' => 'off'])->placeholder('Desired Position')->class(['form-control']) }}
+                                                {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['autocomplete' => 'off'])->placeholder('Desired Position')->class(['form-select']) }}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -400,7 +400,7 @@ View Event
                                                     {{ html()->text('start_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'me-2']) }}
                                                     <label for="end_time1" class="form-label pe-2">-</label>
                                                     {{ html()->text('end_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->end_time)->class(['form-control', 'col-sm-2', 'me-2']) }}
-                                                    {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-control', 'col-sm-3'])->id('timezone') }}
+                                                    {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-select', 'col-sm-3'])->id('timezone') }}
 
                                                 </div>
                                             </div>
@@ -567,7 +567,7 @@ View Event
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
-						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-select']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -588,7 +588,7 @@ View Event
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
-						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-control']) }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-select']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -612,11 +612,11 @@ View Event
 							<div class="row">
 								<div class="col-sm-6">
                                     <label for="controller">Controller Name</label>
-									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-control']) }}
+									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-select']) }}
 								</div>
 								<div class="col-sm-6">
                                     <label for="position">Position</label>
-									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-control']) }}
+									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-select']) }}
 								</div>
 							</div>
 						</div>

@@ -22,7 +22,7 @@ New Scenery
                         0 => 'FSX/P3D',
                         1 => 'X-Plane',
                         2 => 'AFCAD'
-                    ], null)->class(['form-control'])->placeholder('Choose Simulator (Required)') }}
+                    ], null)->class(['form-select'])->placeholder('Choose Simulator (Required)') }}
                 </div>
             </div>
         </div>

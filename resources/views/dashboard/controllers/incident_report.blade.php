@@ -15,7 +15,7 @@ New Incident Report
             <div class="row">
                 <div class="col-sm-4">
                     <label for="controller_id" class="form-label">Controller</label>
-                    {{ html()->select('controller_id', $controllers, null)->placeholder('Select Controller')->class(['form-control']) }}
+                    {{ html()->select('controller_id', $controllers, null)->placeholder('Select Controller')->class(['form-select']) }}
                 </div>
                 <div class="col-sm-4">
                     <label for="time" class="form-label">Time of Incident (Zulu)</label>
