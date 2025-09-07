@@ -2,6 +2,10 @@
 $mname = date("F", mktime(0, 0, 0, $month, 1, $year));
 if ($month == 1) { $pm = 12; $pyr = $year - 1; } else { $pm = $month -1; $pyr = $year; }
 if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr = $year; }
+$base_url = '/controllers/stats';
+if (!$privacy)  {
+    $base_url = '/dashboard/controllers/stats';
+}
 ?>
 
 <div class="container">
@@ -35,13 +39,13 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
     <hr>
     <div class="row">
         <div class="col-sm-2">
-            <a class="btn btn-primary text-nowrap" href="/controllers/stats/<?=$pyr?>/<?=$pm?>"><i class="fa fa-arrow-left"></i> Previous Month</a></li>
+            <a class="btn btn-primary text-nowrap" href="{{ $base_url }}/<?=$pyr?>/<?=$pm?>"><i class="fa fa-arrow-left"></i> Previous Month</a></li>
         </div>
         <div class="col-sm-8 text-center">
             <h4>Showing Stats for <?=$mname?> 20<?=$year?></h4>
         </div>
         <div class="col-sm-2 text-end">
-            <a class="btn btn-primary text-nowrap" href="/controllers/stats/<?=$nyr?>/<?=$nm?>">Next Month <i class="fa fa-arrow-right"></i></a>
+            <a class="btn btn-primary text-nowrap" href="{{ $base_url }}/<?=$nyr?>/<?=$nm?>">Next Month <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
     <br>
