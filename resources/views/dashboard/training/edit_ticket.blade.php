@@ -93,11 +93,11 @@ Edit Training Ticket
                 <div class="form-group">
                     <label for="score" class="form-label">Score (Visible to Controller)</label>
                     <div id="stars" class="star-input input-group">
-                        <span data-bs-rating="1">&star;</span>
-                        <span data-bs-rating="2">&star;</span>
-                        <span data-bs-rating="3">&star;</span>
-                        <span data-bs-rating="4">&star;</span>
-                        <span data-bs-rating="5">&star;</span>
+                        <span data-rating="1">&star;</span>
+                        <span data-rating="2">&star;</span>
+                        <span data-rating="3">&star;</span>
+                        <span data-rating="4">&star;</span>
+                        <span data-rating="5">&star;</span>
                         {{ html()->text('score', $ticket->score)->attribute('hidden') }}
                     </div>
                 </div>

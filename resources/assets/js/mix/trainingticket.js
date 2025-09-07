@@ -101,9 +101,6 @@ window.autoCalcDuration = (time1, time2, target) => {
     }
     document.getElementById("duration").value =
       duration_hours + ":" + duration_minutes;
-    $("#datetimepicker4").datetimepicker({
-      format: "HH:mm",
-    });
   }
 };
 
