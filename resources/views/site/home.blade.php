@@ -4,6 +4,10 @@
 Home
 @endsection
 
+@push('custom_header')
+	<link rel="stylesheet" href="{{ mix('css/home.css') }}" />
+@endpush
+
 @section('content')
 <div class="py-3 bg-secondary">
 	<div class="container-flex rounded mb-0 mx-3" style="height: 200px; background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat">
