@@ -9,9 +9,15 @@ View Event
 
 <div class="container">
     @if($event->banner_path != null)
-        <div class="jumbotron">
-            <img src="{{ $event->banner_path }}" width="100%" alt="{{ $event->name }}">
+    <div class="row mb-4">
+        <div class="col-sm-*">
+            <div class="card">
+                <div class="card-header p-4">
+                    <img src="{{ $event->banner_path }}" width="100%" alt="{{ $event->name }}">
+                </div>
+            </div>
         </div>
+    </div>
     @endif
     <div class="row">
         <div class="col-sm-6">
@@ -392,19 +398,26 @@ View Event
                                                 {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['autocomplete' => 'off'])->placeholder('Desired Position')->class(['form-select']) }}
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-10">
-                                                <div class="form-inline">
-                                                    {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone))->id('timedata') }}
-                                                    <label for="start_time1" class="form-label pe-2">Available from:</label>
-                                                    {{ html()->text('start_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'me-2']) }}
-                                                    <label for="end_time1" class="form-label pe-2">-</label>
-                                                    {{ html()->text('end_time1', null)->attributes(['autocomplete' => 'off'])->placeholder($event->end_time)->class(['form-control', 'col-sm-2', 'me-2']) }}
-                                                    {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-select', 'col-sm-3'])->id('timezone') }}
-
-                                                </div>
+                                        <div class="row row-cols-lg-auto g-3 align-items-center">
+                                            {{ html()->hidden('timedata', $event->start_time.';'.$event->end_time.';'.timeToLocal($event->start_time, Auth::user()->timezone).';'.timeToLocal($event->end_time, Auth::user()->timezone))->id('timedata') }}
+                                            <div class="col-12">
+                                                <label for="start_time1" class="form-label">Available from:</label>
                                             </div>
-                                            <div class="col-sm-10 pt-2 pe-2">
+                                            <div class="col-12">
+                                                {{ html()->text('start_time1', null)->attributes(['size' => '4', 'autocomplete' => 'off'])->placeholder($event->start_time)->class(['form-control', 'col-sm-2', 'me-2'])->id('start_time1') }}
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="end_time1" class="form-label">-</label>
+                                            </div>
+                                            <div class="col-12">
+                                                {{ html()->text('end_time1', null)->attributes(['size' => '4', 'autocomplete' => 'off'])->placeholder($event->end_time)->class(['form-control', 'col-sm-2', 'me-2']) }}
+                                            </div>
+                                            <div class="col-12">
+                                                {{ html()->select('timezone', ['Zulu', 'Local'], 'Zulu')->attributes(['autocomplete' => 'off'])->class(['form-select', 'col-sm-3'])->id('timezone') }}
+                                            </div>
+                                        </div>
+                                        <div class="row my-2 align-items-center">
+                                            <div class="col-12">
                                                 {{ html()->textarea('remarks', null)->placeholder('Specific position requests/additional information (optional)')->class(['form-control', 'textarea-no-resize', 'col-sm-11', 'pe-2'])->attributes(['rows' => '3', 'maxlength' => '1024']) }}
                                             </div>
                                         </div>
@@ -415,7 +428,7 @@ View Event
                                         <button type="submit" class="btn btn-success">Submit Request</button>
                                     @else
                                         <a href="/dashboard/controllers/events/view/{{ $your_registration1->id }}/un-signup"
-                                           class="btn btn-danger">Delete your Signup</a>
+                                           class="btn btn-danger mt-2">Delete your Signup</a>
                                     @endif
                                     <p class="pt-2"><i>Please note that the position assignments are made according to
                                             operational necessity and not all position preferences can be met.</i></p>
@@ -567,7 +580,7 @@ View Event
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
-						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-select']) }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset'])->class(['form-select']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -588,7 +601,7 @@ View Event
 					@csrf
 					<div class="modal-body">
                         <label for="p_id">Position Preset</label>
-						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset', 'class' => 'form-select']) }}
+						{{ html()->select('p_id', $presets, null, ['placeholder' => 'Select Preset'])->class(['form-select']) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -612,11 +625,11 @@ View Event
 							<div class="row">
 								<div class="col-sm-6">
                                     <label for="controller">Controller Name</label>
-									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller', 'class' => 'form-select']) }}
+									{{ html()->select('controller', $controllers, null, ['placeholder' => 'Select Controller'])->class(['form-select']) }}
 								</div>
 								<div class="col-sm-6">
                                     <label for="position">Position</label>
-									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position', 'class' => 'form-select']) }}
+									{{ html()->select('position', $positions->pluck('name', 'id'), null, ['placeholder' => 'Select Position'])->class(['form-select']) }}
 								</div>
 							</div>
 						</div>

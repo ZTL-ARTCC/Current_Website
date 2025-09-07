@@ -10,6 +10,6 @@
 </span>
 @else
 <div class="container-fluid py-4 mb-4 view-header">
-    <h2>{!! $title !!}</h2>
+    <h2 class="mb-0">{!! $title !!}</h2>
 </div>
 @endif

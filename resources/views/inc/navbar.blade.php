@@ -52,7 +52,7 @@
                 <a class="nav-link" href="/feedback/new">Feedback</a>
                 @endif
                 @if(Auth::check())
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown me-2">
                     <a class="nav-link dropdown-toggle" href="#" id="dashboard" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
                     <div class="dropdown-menu" aria-labelledby="dashboard">
                         <a class="dropdown-item" href="/dashboard/controllers/profile"><i class="fas fa-user"></i> My Profile</a>
