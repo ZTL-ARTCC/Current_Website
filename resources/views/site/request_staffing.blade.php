@@ -9,7 +9,7 @@ Staffing Request
 
 <div class="container">
     {{ html()->form()->route('staffRequest')->open() }}
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="row">
@@ -29,7 +29,7 @@ Staffing Request
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="date" class="form-label">Date of Staffing</label>
@@ -51,7 +51,7 @@ Staffing Request
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="additional_information" class="control-label">Additional Information:</label>
             {{ html()->textarea('additional_information', null)->placeholder('Please include all additional relevant information regarding the need for staffing.')->class(['form-control']) }}
         </div>

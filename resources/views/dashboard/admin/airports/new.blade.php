@@ -10,11 +10,11 @@
 <div class="container">
     {{ html()->form()->route('storeAirport')->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="name">Airport Name</label>
             {{ html()->text('name', null)->class(['form-control']) }}
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="FAA">3-Letter Identifier (FAA)</label>

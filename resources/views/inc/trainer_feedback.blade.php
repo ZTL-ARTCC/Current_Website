@@ -2,7 +2,7 @@
     {{ html()->form()->route('saveNewTrainerFeedback')->open() }}
         @php ($redirect_to = (isset($redirect)) ? $redirect : 'external')
         {{ html()->text('redirect_to', $redirect_to)->attribute('hidden') }}
-        <div class="row mb-3">
+        <div class="row-mb-3">
             <div class="col-sm-4 form-group">
                 <label for="feedback_id" class="control-label">Training Team Member: (required)</label>
                 {{ html()->select('feedback_id', $feedbackOptions)->placeholder('Select Team Member')->class(['form-select']) }}
@@ -28,7 +28,7 @@
                     </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row-mb-3">
             <div class="col-sm-4 form-group">
                 <label for="position_trained" class="control-label">Position Trained/Training Session ID: (required)</label>
                 {{ html()->text('position_trained', null)->placeholder('Position Staffed')->class(['form-control']) }}

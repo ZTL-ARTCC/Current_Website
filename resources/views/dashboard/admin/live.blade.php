@@ -26,7 +26,7 @@ Live Event Information
         <?php
             $pub = ($liveInfo->publish) ? 'checked' : '';
         ?>
-        <label class="switch mb-3">
+        <label class="switch">
             <input type="checkbox" name="publish" value="1" {{ $pub }}>
             <span class="slider round"></span>
         </label>

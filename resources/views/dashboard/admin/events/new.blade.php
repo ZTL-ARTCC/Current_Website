@@ -10,7 +10,7 @@ New Event
 <div class="container">
     {{ html()->form()->route('saveNewEvent')->acceptsFiles()->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="name">Event Name</label>
@@ -21,7 +21,7 @@ New Event
                     {{ html()->text('host', null)->class(['form-control'])->placeholder('Event Host') }}
                 </div>
                 <div class="col-sm-4">
-                    <label for="date" class="form-label mb-0">Date of Event</label>
+                    <label for="date" class="form-label-date">Date of Event</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
                         {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker1']) }}
                         <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
@@ -31,7 +31,7 @@ New Event
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="start_time" class="form-label">Start Time (Zulu)</label>
@@ -51,11 +51,11 @@ New Event
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="description">Event Description</label>
             {{ html()->textarea('description', null)->class(['form-control', 'text-editor']) }}
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="banner">Upload Banner or Enter Banner URL</label>
             {{ html()->file('banner')->class(['form-control']) }} 
             <span>OR</span>

@@ -9,7 +9,7 @@ View Event
 
 <div class="container">
     @if($event->banner_path != null)
-    <div class="row mb-4">
+    <div class="row-mb-3">
         <div class="col-sm-*">
             <div class="card">
                 <div class="card-header p-4">
@@ -393,7 +393,7 @@ View Event
                                         </div>
                                     @else
                                         {{ html()->hidden('yr1', null) }}
-                                        <div class="row mb-2">
+                                        <div class="row-mb-3">
                                             <div class="col-sm-5 mt-1">
                                                 {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['autocomplete' => 'off'])->placeholder('Desired Position')->class(['form-select']) }}
                                             </div>

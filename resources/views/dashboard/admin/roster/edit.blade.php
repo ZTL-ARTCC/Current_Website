@@ -221,7 +221,7 @@ Update Controller
                         {{ html()->text('twr_solo_fields', $user->twr_solo_fields)->class(['form-control'])->attributes(['maxlength' => 255, $solo_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        <label for="twr_solo_expires" class="form-label">Solo Expiration Date</label>
+                        <label for="twr_solo_expires" class="form-label-date">Solo Expiration Date</label>
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
@@ -291,7 +291,7 @@ Update Controller
                     </div>
                 </div>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_twr">Atlanta Tower</label>
@@ -315,7 +315,7 @@ Update Controller
         <div role="tabpanel" class="tab-pane" id="events">
             <br>
             <h5>Controler Event Participation Tracking</h5>
-            <div class="row mb-2">
+            <div class="row-mb-3">
                 <div class="col-6">
                     <div class="card p-3">
                         <h5 class="card-title">Stats Last 12-Months</h5>

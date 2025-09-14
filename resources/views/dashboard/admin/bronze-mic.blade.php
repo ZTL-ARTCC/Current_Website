@@ -131,15 +131,15 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                 {{ html()->form()->route('updateLocalHeroChallenge', [$challenge->id])->open() }}
                 @csrf
                 <div class="modal-body mx-2">
-                    <div class="row mb-2">
+                    <div class="row-mb-3">
                         <label for="title">Name of the monthly challenge</label>
                         {{ html()->text('title', $challenge->title)->class(['form-control']) }}
                     </div>
-                    <div class="row mb-2">
+                    <div class="row-mb-3">
                         <label for="description">Description of the monthly challenge</label>
                         {{ html()->textarea('description', $challenge->description)->class(['form-control'])->attributes(['rows' => '5']) }}
                     </div>
-                    <div class="row form-check mb-2">
+                    <div class="row-mb-3 form-check">
                         @toggle('local-hero')
                             {{ html()->checkbox('postToNews', true, 1)->class(['form-check-input']) }}
                         @else

@@ -285,8 +285,8 @@ Dashboard
                 {{ html()->form()->route('reportBug')->open() }}
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <div class="row">
+                    <div>
+                        <div class="row-mb-3">
                             <div class="col-sm-6">
                                 <label for="url">Intended URL</label>
                                 {{ html()->text('url', null)->placeholder('Paste the Intended URL Here')->class(['form-control']) }}
@@ -297,7 +297,7 @@ Dashboard
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="desc">Brief Description of Bug</label>
                         {{ html()->textarea('desc', null)->placeholder('Please be brief but specific with details regarding the bug.')->class(['form-control']) }}
                     </div>

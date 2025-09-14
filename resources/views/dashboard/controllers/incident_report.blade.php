@@ -11,7 +11,7 @@ New Incident Report
     <p>Please use this to report incidents rather than sending an email. Please know that your ID and the controller's ID will be recorded for the sole reason of resolving any issues. Once any issues have been resolved, the incident will be archived without the controller/report ID.</p>
     {{ html()->form()->route('submitIncidentReport')->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="controller_id" class="form-label">Controller</label>
@@ -37,7 +37,7 @@ New Incident Report
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="controller_callsign" class="form-label">Controller Callsign</label>
@@ -53,7 +53,7 @@ New Incident Report
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="description" class="form-label">Description of Incident</label>
             {{ html()->textarea('description', null)->placeholder('Please describe the incident as descriptively as possible.')->class(['form-control']) }}
         </div>

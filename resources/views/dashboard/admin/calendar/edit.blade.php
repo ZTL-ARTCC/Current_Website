@@ -10,11 +10,11 @@ Edit Calendar Event/News
 <div class="container">
     {{ html()->form()->route('saveCalendarEvent', [$calendar->id])->open() }}
     @csrf
-    <div class="form-group mb-3">
+    <div class="form-group">
     <label for="title">Title</label>
     {{ html()->text('title', $calendar->title)->class(['form-control'])->placeholder('Required') }}
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
         <div class="row">
         <div class="col-sm-6">
                     <label for="date">Date</label>
@@ -36,11 +36,11 @@ Edit Calendar Event/News
                 </div>
         </div>
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
         <label for="body">Additional Information</label>
         {{ html()->textarea('body', $calendar->body)->class(['form-control', 'text-editor'])->placeholder('Required') }}
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
         <label for="type">Type of Post</label>
         {{ html()->select('type', [
             1 => 'Calendar Event',

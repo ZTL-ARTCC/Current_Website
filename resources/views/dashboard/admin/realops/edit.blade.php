@@ -10,10 +10,10 @@
 <div class="container">
     {{ html()->form('PUT')->route('editFlight', [$flight->id])->id('realops_add_edit_flight')->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="flight_date" class="form-label mb-0">Date</label>
+                    <label for="flight_date" class="form-label-date">Date</label>
                     <div class="input-group date dt_picker_date" id="datetimepicker" data-td-target-input="nearest" data-td-target-toggle="nearest">
                         {{ html()->text('flight_date', $flight->flight_date_formatted)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker']) }}
                         <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="flight_number">Flight Number</label>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="dep_airport">Departure Airport</label>

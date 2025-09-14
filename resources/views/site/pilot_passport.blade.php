@@ -92,7 +92,7 @@ ZTL Pilot Passport Challenge
                 </div>
             </div>
             @foreach($challenges as $c)
-            <div class="row mb-4">
+            <div class="row-mb-3">
                 <div class="col-sm-3 text-center">
                     <strong>{{ $c->title }}</strong>
                     <br> 
@@ -199,7 +199,7 @@ ZTL Pilot Passport Challenge
                     </div>
                     @endforeach
                     @if($achievements->isEmpty())
-                        <div class="row mb-4">
+                        <div class="row-mb-3">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-8">
                             <h6>No program achievements yet. When you complete a challenge, your achievements and certifiate will show up here.</h6>

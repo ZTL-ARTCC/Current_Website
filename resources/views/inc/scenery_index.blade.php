@@ -3,7 +3,7 @@
         <div class="form-group inline">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="row mb-3">
+                    <div class="row-mb-3">
                         <div class="col-sm-9">
                             {{ html()->text('search', null)->placeholder('Search for Airport/Developer')->class(['form-control']) }}
                         </div>

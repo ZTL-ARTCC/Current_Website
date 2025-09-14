@@ -6,9 +6,8 @@ $font-family-base: "Hind+Siliguri", sans-serif;
 @import "variables";
 
 // Bootstrap
+
 @import "~bootstrap/scss/bootstrap";
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
 
 // Fontawesome
 @import "@fortawesome/fontawesome-free/css/all.css";
@@ -194,4 +193,22 @@ td.hours-success {
 
 .navbar-brand img {
   width: 100px;
+}
+
+.switch {
+  @extend .mb-3;
+}
+
+.form-label-date {
+  @extend .form-label;
+  @extend .mb-0;
+}
+
+.row-mb-3 {
+  @extend .row;
+  @extend .mb-3;
+}
+
+.form-group {
+  @extend .mb-3;
 }

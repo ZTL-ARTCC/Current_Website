@@ -10,7 +10,7 @@ New Store Item
 <div class="container">
     {{ html()->form()->route('saveNewStoreItem')->attribute('enctype', 'multipart/form-data')->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="apt">Title</label>
@@ -28,7 +28,7 @@ New Store Item
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="price">Description</label>
@@ -36,7 +36,7 @@ New Store Item
                 </div>
             </div>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="price">Price</label>

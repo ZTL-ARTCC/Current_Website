@@ -10,7 +10,7 @@ Upload File
 <div class="container">
     {{ html()->form()->route('saveFile', [$file->id])->open() }}
         @csrf
-        <div class="form-group mb-3">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="title">Title:</label>
@@ -29,11 +29,11 @@ Upload File
             </div>
         </div>
         @if(! $file->row_separator)
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label for="desc">Description:</label>
                 {{ html()->textarea('desc', $file->desc)->class(['form-control'])->placeholder('Optional') }}
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label for="permalink">Permalink:</label>
                 {{ html()->text('permalink', $file->permalink)->class(['form-control'])->placeholder('Optional, no spaces') }}
             </div>
