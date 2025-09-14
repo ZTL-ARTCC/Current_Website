@@ -30,8 +30,8 @@ View Training Ticket
             @endif
             <h3>Training Ticket for {{ $ticket->controller_name }} on {{ $ticket->position_name }}</h3>
         </div>
-        <div class="card-body">
-            <div class="float-end">
+        <div class="card-body clearfix">
+            <div class="float-md-end">
                 @if($ticket->is_vatusa_synced)
                     <span class="badge bg-success">Synced with VATUSA</span>
                 @elseif ($ticket->draft)

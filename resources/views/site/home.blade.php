@@ -224,7 +224,7 @@ Home
 	</div>
 </div>
 <div class="modal fade" id="displayNewsCalendar" tabindex="-1" role="dialog" aria-labelledby="displayNews" aria-hidden="true">
-	<div class="modal-dialog" style="height:50vh; max-width:50vw" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content py-1 home-modal-bg">
 			<div class="modal-body">
 				<button type="button" class="btn-close" style="position:absolute; z-index:100; top:5px; right:15px;" data-bs-dismiss="modal" aria-label="Close"></button>
