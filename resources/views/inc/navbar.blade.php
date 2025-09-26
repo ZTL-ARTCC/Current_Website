@@ -52,9 +52,9 @@
                 <a class="nav-link" href="/feedback/new">Feedback</a>
                 @endif
                 @if(Auth::check())
-                <li class="nav-item dropdown me-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="dashboard" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
-                    <div class="dropdown-menu" aria-labelledby="dashboard">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-item-var-width me-2" href="#" id="dashboard" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dashboard">
                         <a class="dropdown-item" href="/dashboard/controllers/profile"><i class="fas fa-user"></i> My Profile</a>
                         <a class="dropdown-item" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Controller Dashboard</a>
                         <div class="dropdown-divider"></div>
