@@ -1,12 +1,11 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Hind+Siliguri:300");
-$font-family-base: "Hind+Siliguri", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+$font-family-base: "Hind Siliguri", sans-serif;
 
 // Variables
 @import "variables";
 
 // Bootstrap
-
 @import "~bootstrap/scss/bootstrap";
 
 // Fontawesome
@@ -25,7 +24,7 @@ html,
 body {
   background-color: #fff;
   color: black;
-  --bs-body-font-family: "Hind+Siliguri", sans-serif;
+  --bs-body-font-family: "Hind Siliguri", sans-serif;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 100;
   height: 100vh;
@@ -215,4 +214,8 @@ td.hours-success {
 
 .nav-item-var-width {
   min-width: 20ch;
+}
+
+a {
+  text-decoration: none;
 }
