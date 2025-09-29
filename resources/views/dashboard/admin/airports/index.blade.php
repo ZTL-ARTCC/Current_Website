@@ -26,15 +26,15 @@ Airport Management
                             <div class="row">
                                 <div class="col-sm-2">
                                     @if($a->front_pg == 1)
-                                        <a href="/dashboard/admin/airports/del-from-home/{{ $a->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Remove from Home Page"><i class="fas fa-minus"></i></a>
+                                        <a href="/dashboard/admin/airports/del-from-home/{{ $a->id }}" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Remove from Home Page"><i class="fas fa-minus"></i></a>
                                     @else
-                                        <a href="/dashboard/admin/airports/add-to-home/{{ $a->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Add to Home Page"><i class="fas fa-plus"></i></a>
+                                        <a href="/dashboard/admin/airports/add-to-home/{{ $a->id }}" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Add to Home Page"><i class="fas fa-plus"></i></a>
                                     @endif
                                 </div>
                                 <div class="col-sm-2">
                                     {{ html()->form('DELETE')->route('deleteAirport', [$a->id])->open() }}
                                         @csrf
-                                        <button class="btn btn-danger simple-tooltip" action="submit" data-toggle="tooltip" title="Delete Airport"><i class="fas fa-times"></i></button>
+                                        <button class="btn btn-danger simple-tooltip" action="submit" data-bs-toggle="tooltip" title="Delete Airport"><i class="fas fa-times"></i></button>
                                     {{ html()->form()->close() }}
                                 </div>
                             </div>

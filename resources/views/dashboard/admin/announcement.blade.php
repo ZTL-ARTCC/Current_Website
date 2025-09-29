@@ -10,7 +10,7 @@ Announcement
 <div class="container">
     {{ html()->form()->route('saveAnnouncement')->open() }}
         @csrf
-        <div class="form-group">
+        <div>
             <label for="body" class="control-label">Announcement (Leave Blank to Remove the Announcement)</label>
             {{ html()->textarea('body', $announcement->body)->placeholder('Leave Blank for no Announcement')->class(['form-control text-editor']) }}
         </div>

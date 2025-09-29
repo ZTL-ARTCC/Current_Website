@@ -23,17 +23,17 @@ Feature Toggles
                     <td>
                         {{ $t->toggle_name }}
                         @if($t->is_enabled)
-                            <span class="badge badge-success">Enabled</span>
+                            <span class="badge bg-success">Enabled</span>
                         @else
-                            <span class="badge badge-dark">Disabled</span>
+                            <span class="badge bg-dark">Disabled</span>
                         @endif
                     </td>
                     <td>{{ $t->toggle_description }}</td>
                     <td class="text-center">
                         <div class="btn-group">
-                            <a href="/dashboard/admin/toggles/toggle/{{ $t->toggle_name }}" class="btn btn-primary simple-tooltip" data-toggle="tooltip" title="Flip Toggle"><i class="fas fa-sliders-h fa-fw"></i></a>
-                            <a href="/dashboard/admin/toggles/edit/{{ $t->toggle_name }}" class="btn btn-warning simple-tooltip" data-toggle="tooltip" title="Edit Toggle"><i class="fas fa-pencil-alt fa-fw"></i></i></a>
-                            <a href="/dashboard/admin/toggles/delete/{{ $t->toggle_name }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Delete Toggle"><i class="fas fa-trash fa-fw"></i></i></a>
+                            <a href="/dashboard/admin/toggles/toggle/{{ $t->toggle_name }}" class="btn btn-primary simple-tooltip" data-bs-toggle="tooltip" title="Flip Toggle"><i class="fas fa-sliders-h fa-fw"></i></a>
+                            <a href="/dashboard/admin/toggles/edit/{{ $t->toggle_name }}" class="btn btn-warning simple-tooltip" data-bs-toggle="tooltip" title="Edit Toggle"><i class="fas fa-pencil-alt fa-fw"></i></i></a>
+                            <a href="/dashboard/admin/toggles/delete/{{ $t->toggle_name }}" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Delete Toggle"><i class="fas fa-trash fa-fw"></i></i></a>
                         </div>
                     </td>
                 </tr>

@@ -5,74 +5,73 @@
 @endsection
 
 @section('content')
-    @include('inc.header', ['title' => 'Visit Requests'])
-    <div class="container">
-        <div class="form-group inline">
-            <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
-            <span data-toggle="modal" data-target="#manualAdd">
-                <button type="button" class="btn btn-warning">Manual Add Controller</button>
-            </span>
-        </div>
-        <br><br>
-        <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link tab-link active" href="#new" role="tab" data-toggle="tab">New Requests</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tab-link" href="#accepted" role="tab" data-toggle="tab">Accepted Requests</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tab-link" href="#rejected" role="tab" data-toggle="tab">Rejected Requests</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="new">
-                @if($new->count() > 0)
-                    <table class="table table-striped">
-                        <thead>
+@include('inc.header', ['title' => 'Visit Requests'])
+
+<div class="container">
+    <div class="form-group inline">
+        <a href="/dashboard/controllers/roster" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+        <span data-bs-toggle="modal" data-bs-target="#manualAdd">
+            <button type="button" class="btn btn-warning">Manual Add Controller</button>
+        </span>
+    </div>
+    <br><br>
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link tab-link active" href="#new" role="tab" data-bs-toggle="tab">New Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link tab-link" href="#accepted" role="tab" data-bs-toggle="tab">Accepted Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link tab-link" href="#rejected" role="tab" data-bs-toggle="tab">Rejected Requests</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="new">
+            @if($new->count() > 0)
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="text-start">Name (CID)</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Home ARTCC/Division</th>
+                            <th scope="col">Submitted at</th>
+                            <th scope="col" width="120px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($new as $v)
                             <tr class="text-center">
-                                <th scope="col" class="text-left">Name (CID)</th>
-                                <th scope="col">Rating</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Home ARTCC/Division</th>
-                                <th scope="col">Submitted at</th>
-                                <th scope="col" width="120px">Actions</th>
+                                <td class="text-start" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                <td>{{ $v->rating_short }}</td>
+                                <td>{{ $v->email }}</td>
+                                <td>{{ $v->home }}</td>
+                                <td>{{ $v->updated_at }}</td>
+                                <td>
+                                    <a href="/dashboard/admin/roster/visit/accept/{{ $v->id }}" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Accept"><i class="fa fa-check"></i></a>
+                                    <span data-bs-toggle="modal" data-bs-target="#reject{{ $v->id }}">
+                                        <button type="button" class="btn btn-danger simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Reject"><i class="fas fa-times"></i></button>
+                                    </span>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($new as $v)
-                                <tr class="text-center">
-                                    <td class="text-left" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
-                                    <td>{{ $v->rating_short }}</td>
-                                    <td>{{ $v->email }}</td>
-                                    <td>{{ $v->home }}</td>
-                                    <td>{{ $v->updated_at }}</td>
-                                    <td>
-                                        <a href="/dashboard/admin/roster/visit/accept/{{ $v->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Accept"><i class="fa fa-check"></i></a>
-                                        <span data-toggle="modal" data-target="#reject{{ $v->id }}">
-                                            <button type="button" class="btn btn-danger simple-tooltip" data-placement="top" data-toggle="tooltip" title="Reject"><i class="fas fa-times"></i></button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="reject{{ $v->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Reason for Visit Request Rejection</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                            <div class="modal fade" id="reject{{ $v->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Reason for Visit Request Rejection</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        {{ html()->form()->route('rejectVisitRequest', [$v->id])->open() }}
+                                        @csrf
+                                        <div class="modal-body">
+                                            <label for="reject_reason">Please specific why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.</label>
+                                            {{ html()->textarea('reject_reason', 'Your visit request has been rejected.')->placeholder('Required')->class(['form-control']) }}
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button action="submit" class="btn btn-success">Confirm</button>
                                             </div>
-                                            {{ html()->form()->route('rejectVisitRequest', [$v->id])->open() }}
-                                            @csrf
-                                            <div class="modal-body">
-                                                <label for="reject_reason">Please specific why the visit request is being rejected. This will be sent to the requesting visitor with a rejection notification.</label>
-                                                {{ html()->textarea('reject_reason', 'Your visit request has been rejected.')->placeholder('Required')->class(['form-control']) }}
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                    <button action="submit" class="btn btn-success">Confirm</button>
-                                                </div>
-                                                {{ html()->form()->close() }}
+                                            {{ html()->form()->close() }}
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +88,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr class="text-center">
-                                <th class="text-left" scope="col">Name (CID)</th>
+                                <th class="text-start" scope="col">Name (CID)</th>
                                 <th scope="col">Rating</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Home ARTCC/Division</th>
@@ -100,7 +99,7 @@
                         <tbody>
                             @foreach($accepted as $v)
                                 <tr class="text-center">
-                                    <td class="text-left" class="text-center" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                    <td class="text-start" class="text-center" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
                                     <td>{{ $v->rating_short }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->home }}</td>
@@ -119,7 +118,7 @@
                     <table class="table table-striped">
                         <thead>
                                 <tr class="text-center">
-                                <th class="text-left" scope="col">Name (CID)</th>
+                                <th class="text-start" scope="col">Name (CID)</th>
                                 <th scope="col">Rating</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Home ARTCC/Division</th>
@@ -130,7 +129,7 @@
                         <tbody>
                             @foreach($rejected as $v)
                                 <tr class="text-center">
-                                    <td class="text-left" data-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
+                                    <td class="text-start" data-bs-toggle="tooltip" title="{{ $v->reason }}">{{ $v->name }} ({{ $v->cid }})</td>
                                     <td>{{ $v->rating_short }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->home }}</td>
@@ -150,9 +149,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Manually Add Controller</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     {{ html()->form()->route('manualAddVisitor')->open() }}
                     @csrf
@@ -167,7 +164,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button action="submit" class="btn btn-success">Search CID</button>
                     </div>
                     {{ html()->form()->close() }}

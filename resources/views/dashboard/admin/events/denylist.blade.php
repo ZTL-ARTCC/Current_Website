@@ -22,7 +22,7 @@ Event Denylist
                 <td>{{ $event_denylist->event_name }}</td>
                 <td>{{ $event_denylist->vatsim_id }}</td>
                 <td>{{ $event_denylist->created_at }}</td>
-                <td><a href="/dashboard/admin/events/denylist/delete/{{ $event_denylist->id }}" class="btn btn-danger simple-tooltip" data-toggle="tooltip" title="Remove from denylist"><i class="fas fa-times fa-fw"></i></a></td>
+                <td><a href="/dashboard/admin/events/denylist/delete/{{ $event_denylist->id }}" class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" title="Remove from denylist"><i class="fas fa-times fa-fw"></i></a></td>
             </tr>
         @endforeach
     </tbody>

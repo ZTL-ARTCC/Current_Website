@@ -58,27 +58,27 @@ Dashboard
     <br>
     <div class="row">
         <div class="col-sm-3">
-            <a class="btn btn-secondary btn-block" href="/dashboard/controllers/profile">My Profile</a>
+            <a class="btn btn-secondary w-100 mb-2" href="/dashboard/controllers/profile">My Profile</a></br>
             @if(Auth::user()->isAbleTo('staff'))
-                <a class="btn btn-secondary btn-block" href="/dashboard/admin/announcement">Edit Announcement</a>
+                <a class="btn btn-secondary w-100 mb-2" href="/dashboard/admin/announcement">Edit Announcement</a>
             @endif
         </div>
         <div class="col-sm-3">
-            <a class="btn btn-secondary btn-block" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a>
+            <a class="btn btn-secondary w-100 mb-2" href="https://scheduling.ztlartcc.org?name_first={{ Auth::user()->fname }}&name_last={{ Auth::user()->lname }}&email={{ Auth::user()->email }}&cid={{ Auth::id() }}" target="_blank">Schedule a Training Session</a></br>
             @if(Auth::user()->isAbleTo('staff'))
-                <a class="btn btn-secondary btn-block" href="http://mail.ztlartcc.org" target="_blank">Email</a>
+                <a class="btn btn-secondary w-100 mb-2" href="http://mail.ztlartcc.org" target="_blank">Email</a>
             @endif
         </div>
         <div class="col-sm-3">
-            <button data-toggle="modal" data-target="#reportBug" class="btn btn-secondary btn-block">Report a Bug</button>
+            <button data-bs-toggle="modal" data-bs-target="#reportBug" class="btn btn-secondary w-100 mb-2">Report a Bug</button></br>
             @if(Auth::user()->isAbleTo('staff'))
-                <a class="btn btn-secondary btn-block" href="/dashboard/admin/calendar">Manage Calendar/News</a>
+                <a class="btn btn-secondary w-100 mb-2" href="/dashboard/admin/calendar">Manage Calendar/News</a>
             @endif
         </div>
         <div class="col-sm-3">
-            <a class="btn btn-secondary btn-block" href="/">Return to Main Website</a>
+            <a class="btn btn-secondary w-100 mb-2" href="/">Return to Main Website</a></br>
             @if(Auth::user()->isAbleTo('staff'))
-                <a class="btn btn-secondary btn-block" href="/dashboard/admin/airports">Manage Airports</a>
+                <a class="btn btn-secondary w-100 mb-2" href="/dashboard/admin/airports">Manage Airports</a>
             @endif
         </div>
     </div>
@@ -106,7 +106,7 @@ Dashboard
         </div>
         <div class="col-sm-4">
             <h4 class="text-center"><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4>
-			<div id="eventCarousel" class="carousel slide" data-ride="carousel">
+			<div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)
 					    @foreach($events as $e)
@@ -122,13 +122,13 @@ Dashboard
 					    </div>
 					@endif
 				</div>
-				<a class="carousel-control-prev" href="#eventCarousel" role="button" data-slide="prev">
+				<a class="carousel-control-prev" href="#eventCarousel" role="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
+					<span class="visually-hidden">Previous</span>
 				</a>
-				<a class="carousel-control-next" href="#eventCarousel" role="button" data-slide="next">
+				<a class="carousel-control-next" href="#eventCarousel" role="button" data-bs-target="#eventCarousel" data-bs-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
+					<span class="visually-hidden">Next</span>
 				</a>
 			</div>
         </div>
@@ -280,15 +280,13 @@ Dashboard
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Report a Bug</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 {{ html()->form()->route('reportBug')->open() }}
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <div class="row">
+                    <div>
+                        <div class="row-mb-3">
                             <div class="col-sm-6">
                                 <label for="url">Intended URL</label>
                                 {{ html()->text('url', null)->placeholder('Paste the Intended URL Here')->class(['form-control']) }}
@@ -299,13 +297,13 @@ Dashboard
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="desc">Brief Description of Bug</label>
                         {{ html()->textarea('desc', null)->placeholder('Please be brief but specific with details regarding the bug.')->class(['form-control']) }}
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button action="submit" class="btn btn-success">Send</button>
                 </div>
                 {{ html()->form()->close() }}

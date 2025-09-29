@@ -1,16 +1,18 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Hind+Siliguri:300");
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
+$font-family-base: "Hind Siliguri", sans-serif;
 
 // Variables
 @import "variables";
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
 
 // Fontawesome
 @import "@fortawesome/fontawesome-free/css/all.css";
+
+// Tempus Dominus date-time picker
+@import "~@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
 
 //Standard CSS Formats
 .navbar-laravel {
@@ -22,8 +24,9 @@ html,
 body {
   background-color: #fff;
   color: black;
-  font-family: "Hind+Siliguri", sans-serif;
-  font-weight: 100;
+  --bs-body-font-family: "Hind Siliguri", sans-serif;
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 100;
   height: 100vh;
   margin: 0;
 }
@@ -189,4 +192,30 @@ td.hours-success {
 
 .navbar-brand img {
   width: 100px;
+}
+
+.switch {
+  @extend .mb-3;
+}
+
+.form-label-date {
+  @extend .form-label;
+  @extend .mb-0;
+}
+
+.row-mb-3 {
+  @extend .row;
+  @extend .mb-3;
+}
+
+.form-group {
+  @extend .mb-3;
+}
+
+.nav-item-var-width {
+  min-width: 20ch;
+}
+
+a {
+  text-decoration: none;
 }

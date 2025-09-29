@@ -8,9 +8,12 @@ class Announcement extends Model {
     protected $table = 'announcement';
     protected $fillable = ['id', 'body', 'staff_member', 'created_at', 'updated_at'];
 
-    public function getStaffNameAttribute() {
-        $name = User::find($this->staff_member)->full_name;
-        return $name;
+    public function getStaffNameAttribute(): string {
+        $editor = User::find($this->staff_member);
+        if (!$editor) {
+            return 'Unknown';
+        }
+        return $editor->full_name;
     }
 
     public function getUpdateTimeAttribute() {

@@ -10,16 +10,16 @@ Update Controller
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#profile" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
+            <a class="nav-link active" href="#profile" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
         </li>
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->hasRole('ec'))
         <li class="nav-item">
-            <a class="nav-link" href="#certifications" role="tab" data-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
+            <a class="nav-link" href="#certifications" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
         </li>
         @endif
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
         <li class="nav-item">
-            <a class="nav-link" href="#events" role="tab" data-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+            <a class="nav-link" href="#events" role="tab" data-bs-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
         </li>
         @endif
     </ul>
@@ -87,7 +87,7 @@ Update Controller
                             {{ html()->hidden('status', $user->status) }}
                         @else
                             <label for="status">Status</label>
-                            {{ html()->select('status', $user->user_status, $user->status)->class(['form-control'])->attributes([$roster_disable]) }}
+                            {{ html()->select('status', $user->user_status, $user->status)->class(['form-select'])->attributes([$roster_disable]) }}
                         @endif
                     </div>
                     <div class="col-sm-6">
@@ -101,11 +101,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="staff">Facility Staff</label>
-                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-control'])->attributes([$roster_disable]) }}
+                        {{ html()->select('staff', $user->facility_staff, $user->staff_position)->class(['form-select'])->attributes([$roster_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="events_staff">Events Staff</label>
-                        {{ html()->select('events_staff', $user->events_staff, $user->events_position)->class(['form-control'])->attributes([$events_disable]) }}
+                        {{ html()->select('events_staff', $user->events_staff, $user->events_position)->class(['form-select'])->attributes([$events_disable]) }}
                     </div>
                 </div>
             </div>
@@ -113,12 +113,12 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="training">Training Staff</label>
-                        {{ html()->select('training', $user->training_staff, $user->train_position)->class(['form-control'])->attributes([$roster_disable]) }}
+                        {{ html()->select('training', $user->training_staff, $user->train_position)->class(['form-select'])->attributes([$roster_disable]) }}
                     </div>
                     @if($user->hasRole('mtr') || $user->hasRole('ins'))
                     <div class="col-sm-6">
                         <label for="max">Training Level</label>
-                        {{ html()->select('max', $user->training_level, $user->max)->class(['form-control'])->attributes([$train_config_disable]) }}
+                        {{ html()->select('max', $user->training_level, $user->max)->class(['form-select'])->attributes([$train_config_disable]) }}
                     </div>
                     @endif
                 </div>
@@ -168,7 +168,7 @@ Update Controller
         </div>
         <div role="tabpanel" class="tab-pane" id="certifications">
             <br>
-            <h6><span class="badge badge-warning text-light">New!</span>&nbsp;This control now complies with GCAP requirements.<br>Please review the latest version of ZTL 3120.4 prior to updating a controller's certifications.</h6>
+            <h6><span class="badge bg-warning text-light">New!</span>&nbsp;This control now complies with GCAP requirements.<br>Please review the latest version of ZTL 3120.4 prior to updating a controller's certifications.</h6>
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
@@ -194,11 +194,11 @@ Update Controller
                         @endphp
                         {{ html()->hidden('del', $user->del) }}
                         <label for="gnd">Unrestricted Ground/Clearance Delivery</label>
-                        {{ html()->select('gnd', $user->uncertified_certified, $user->gnd)->class(['form-control'])->attributes([$unres_gnd_disable]) }}
+                        {{ html()->select('gnd', $user->uncertified_certified, $user->gnd)->class(['form-select'])->attributes([$unres_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="twr">Unrestricted Tower</label>
-                        {{ html()->select('twr', $user->Uncertified_solo_certified, $user->twr)->class(['form-control'])->attributes([$unres_twr_disable]) }}
+                        {{ html()->select('twr', $user->Uncertified_solo_certified, $user->twr)->class(['form-select'])->attributes([$unres_twr_disable]) }}
                     </div>
                 </div>
             </div>
@@ -206,11 +206,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="app">Unrestricted Approach</label>
-                        {{ html()->select('app', $user->uncertified_solo_certified, $user->app)->class(['form-control'])->attributes([$unres_app_disable]) }}
+                        {{ html()->select('app', $user->uncertified_solo_certified, $user->app)->class(['form-select'])->attributes([$unres_app_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="ctr">Center Certification</label>
-                        {{ html()->select('ctr', $user->uncertified_solo_certified, $user->ctr)->class(['form-control'])->attributes([$center_disable]) }}
+                        {{ html()->select('ctr', $user->uncertified_solo_certified, $user->ctr)->class(['form-select'])->attributes([$center_disable]) }}
                     </div>
                 </div>
             </div>
@@ -221,15 +221,15 @@ Update Controller
                         {{ html()->text('twr_solo_fields', $user->twr_solo_fields)->class(['form-control'])->attributes(['maxlength' => 255, $solo_disable]) }}
                     </div>
                     <div class="col-sm-6">
-                        <label for="twr_solo_expires" class="form-label">Solo Expiration Date</label>
+                        <label for="twr_solo_expires" class="form-label-date">Solo Expiration Date</label>
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
                 </div>
                 @if(Auth::user()->isAbleTo('roster'))
                 <div class="row mt-2">
                     <div class="col-12">
-                        <span data-toggle="modal" data-target="#remove_solo_certs">
-                            <button type="button" class="btn btn-danger text-nowrap"><i class="fa-solid fa-user-xmark mr-2"></i>Remove Solo Certifications</button>
+                        <span data-bs-toggle="modal" data-bs-target="#remove_solo_certs">
+                            <button type="button" class="btn btn-danger text-nowrap"><i class="fa-solid fa-user-xmark me-2"></i>Remove Solo Certifications</button>
                         </span>
                     </div>
                 </div>
@@ -238,16 +238,14 @@ Update Controller
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Remove all solo certifications</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                                 <div class="modal-body">
                                     <p>This action will immediately revoke <b><u>ALL</u></b> solo certifications for 
                                         {{ $user->full_name }} from both the facility roster and VATUSA.</p>
                                 </div>
                                 <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <a href="/dashboard/admin/roster/solo/{{ $user->id }}" role="button" class="btn btn-danger text-nowrap">Revoke Solo Certs Now!</a>
                                 </div>
                         </div>
@@ -261,11 +259,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="clt_del">Charlotte Clearance Delivery</label>
-                        {{ html()->select('clt_del', $user->uncertified_certified, $user->clt_del)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
+                        {{ html()->select('clt_del', $user->uncertified_certified, $user->clt_del)->class(['form-select'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="clt_gnd">Charlotte Ground</label>
-                        {{ html()->select('clt_gnd', $user->uncertified_certified, $user->clt_gnd)->class(['form-control'])->attributes([$clt_del_gnd_disable]) }}
+                        {{ html()->select('clt_gnd', $user->uncertified_certified, $user->clt_gnd)->class(['form-select'])->attributes([$clt_del_gnd_disable]) }}
                     </div>
                 </div>
             </div>
@@ -273,11 +271,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="clt_twr">Charlotte Tower</label>
-                        {{ html()->select('clt_twr', $user->uncertified_certified, $user->clt_twr)->class(['form-control'])->attributes([$clt_twr_disable]) }}
+                        {{ html()->select('clt_twr', $user->uncertified_certified, $user->clt_twr)->class(['form-select'])->attributes([$clt_twr_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="clt_app">Charlotte Approach</label>
-                        {{ html()->select('clt_app', $user->uncertified_certified, $user->clt_app)->class(['form-control'])->attributes([$clt_app_disable]) }}
+                        {{ html()->select('clt_app', $user->uncertified_certified, $user->clt_app)->class(['form-select'])->attributes([$clt_app_disable]) }}
                     </div>
                 </div>
             </div>
@@ -285,11 +283,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_del">Atlanta Clearance Delivery</label>
-                        {{ html()->select('atl_del', $user->uncertified_certified, $user->atl_del)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_del', $user->uncertified_certified, $user->atl_del)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="atl_gnd">Atlanta Ground</label>
-                        {{ html()->select('atl_gnd', $user->uncertified_certified, $user->atl_gnd)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_gnd', $user->uncertified_certified, $user->atl_gnd)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                 </div>
             </div>
@@ -297,11 +295,11 @@ Update Controller
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="atl_twr">Atlanta Tower</label>
-                        {{ html()->select('atl_twr', $user->uncertified_certified, $user->atl_twr)->class(['form-control'])->attributes([$atl_disable]) }}
+                        {{ html()->select('atl_twr', $user->uncertified_certified, $user->atl_twr)->class(['form-select'])->attributes([$atl_disable]) }}
                     </div>
                     <div class="col-sm-6">
                         <label for="atl_app">Atlanta (A80) Approach</label>
-                        {{ html()->select('atl_app', $user->uncertified_certified_a80, $user->atl_app)->class(['form-control'])->attributes([$atl_app_disable]) }}
+                        {{ html()->select('atl_app', $user->uncertified_certified_a80, $user->atl_app)->class(['form-select'])->attributes([$atl_app_disable]) }}
                     </div>
                 </div>
             </div>
@@ -317,7 +315,7 @@ Update Controller
         <div role="tabpanel" class="tab-pane" id="events">
             <br>
             <h5>Controler Event Participation Tracking</h5>
-            <div class="row mb-2">
+            <div class="row-mb-3">
                 <div class="col-6">
                     <div class="card p-3">
                         <h5 class="card-title">Stats Last 12-Months</h5>
@@ -364,7 +362,7 @@ Update Controller
                             <td>{{ $event->time_logged }}</td>
                             <td>
                                 @if($event->no_show == 1)
-                                    <span class="text-danger" data-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
+                                    <span class="text-danger" data-bs-toggle="tooltip" title="Marked No-Show"><i class="fas fa-user-tag"></i></span>
                                 @endif
                             </td>
                         </tr>
@@ -380,5 +378,4 @@ Update Controller
     </div>
     {{ html()->form()->close() }}
 </div>
-<script src="{{mix('js/roster.js')}}"></script>
 @endsection

@@ -18,20 +18,20 @@ New Calendar Event/News
             <div class="row">
                 <div class="col-sm-6">
                     <label for="date">Date</label>
-                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-target-input="nearest">
-                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker1']) }}
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="input-group date dt_picker_date" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('date', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker1']) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label for="time">Time</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-target-input="nearest">
-                        {{ html()->text('time', null)->placeholder('HH:MM (Optional)')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker2']) }}
-                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                        </div>
+                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('time', null)->placeholder('HH:MM (Optional)')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker2']) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker2" data-td-toggle="datetimepicker">
+                            <i class="fas fa-clock"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@ New Calendar Event/News
             {{ html()->select('type', [
                 1 => 'Calendar Event',
                 2 => 'News'
-            ], null)->class(['form-control']) }}
+            ], null)->class(['form-select']) }}
         </div>
         <div class="row">
             <div class="col-sm-1">

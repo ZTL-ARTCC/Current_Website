@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
-                {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-control'])->attributes(['wire:model.change'=>'date_select']) }}
+                {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-select'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>
@@ -61,7 +61,7 @@
         <div class="col-12">
             <div class="card mt-2">
                 <div class="card-header">TA's Monthly Report
-                    <div class="float-right"><i class="fas fa-clipboard" onclick="copyToClipboard('taReport');" title="Copy to clipboard"></i></div>
+                    <div class="float-end"><i class="fas fa-clipboard" onclick="copyToClipboard('taReport');" title="Copy to clipboard"></i></div>
                 </div>
                 <div class="card-body">
                     <textarea id="taReport" rows="3" class="form-control" readonly>{{ $stats['taMonthlyReport'] }}</textarea>

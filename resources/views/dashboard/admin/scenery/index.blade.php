@@ -18,7 +18,7 @@ Scenery Management
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-toggle="tab" style="color:black">{{ $sceneryDescription }}</a>
+                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ $sceneryDescription }}</a>
             </li>
         @endforeach
     </ul>
@@ -62,12 +62,12 @@ Scenery Management
                                 <td>
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
+                                            <a href="/dashboard/admin/scenery/edit/{{ $s->id }}" class="btn btn-success simple-tooltip" data-bs-toggle="tooltip" title="Edit Scenery"><i class="far fa-edit"></i></a>
                                         </div>
                                         <div class="col-sm-2">
                                             {{ html()->form('DELETE')->route('deleteScenery', [$s->id])->open() }}
                                                 @csrf
-                                                <button class="btn btn-danger simple-tooltip" data-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
+                                                <button class="btn btn-danger simple-tooltip" data-bs-toggle="tooltip" action="submit" title="Delete Scenery"><i class="fas fa-times"></i></button>
                                             {{ html()->form()->close() }}
                                         </div>
                                     </div>

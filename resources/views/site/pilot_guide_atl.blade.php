@@ -15,12 +15,12 @@ ATL Pilot Guide
 function fetch_badge($pos) {
 $badge = array('position','frequency');
 if($pos) {
-$badge['position'] = "<span class=\"badge badge-primary\">$pos->position</span>";
-$badge['frequency'] = "<span class=\"badge badge-primary\">$pos->freq</span>";
+$badge['position'] = "<span class=\"badge bg-primary\">$pos->position</span>";
+$badge['frequency'] = "<span class=\"badge bg-primary\">$pos->freq</span>";
 }
 else {
-$badge['position'] = "<span class=\"badge badge-secondary\">OFFLINE</span>";
-$badge['frequency'] = "<span class=\"badge badge-secondary\">OFFLINE</span>";
+$badge['position'] = "<span class=\"badge bg-secondary\">OFFLINE</span>";
+$badge['frequency'] = "<span class=\"badge bg-secondary\">OFFLINE</span>";
 }
 return $badge;
 }
@@ -29,22 +29,22 @@ return $badge;
 
 <div class="container">
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab0">Welcome</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab1" onclick="resizeMap();">Connecting</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2">Communications</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab3">Flight Plans</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab4">Clearances</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab5">Push/Start</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab6">Taxi</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab7">Takeoff & Climb</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab8">Arrival</a></li>
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab0">Welcome</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab1" onclick="resizeMap();">Connecting</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">Communications</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Flight Plans</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab4">Clearances</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab5">Push/Start</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab6">Taxi</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab7">Takeoff & Climb</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab8">Arrival</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="tab0" class="tab-pane active">
-            <img class="float-right m-1" src="/photos/pg_atl_tab0.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab0.png">
             <h3>Welcome</h3>
-            <p>We are glad that you have decided to fly out of Atlanta today. The Atlanta Hartsfield-Jackson International Airport is the world’s
+            <p>We are glad that you have decided to fly out of Atlanta today. The Atlanta Hartsfield-Jackson International Airport is the world's
                 busiest airport by passenger volume. At ZTL, we do our very best to simulate real-world operations and air traffic control. Thanks
                 for your interest and help in creating a great simulation environment!</p>
         </div>
@@ -218,7 +218,7 @@ return $badge;
             <p>If more than 1 tower controller is online at ATL, you should call the controller on the frequency provided by ground.</p>
         </div>
         <div id="tab3" class="tab-pane fade">
-            <img class="float-right m-1" src="/photos/pg_atl_tab3.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab3.png">
             <h3>Filing a flight plan</h3>
             <p> All IFR operations at ATL require a flight plan on-file. We highly recommend that all VFR operators file flight plans. If you
                 cannot file a flight plan, a controller will assist you (workload depending).</p>
@@ -226,12 +226,12 @@ return $badge;
                 ATL departure.</p>
             <p>One common area of confusion for Atlanta involves filed altitudes for departures to destinations in Florida. Because of Florida's
                 geographic north-south orientation, certain areas of airspace do not operate on traditional north-odd/south-even (NEODD/SWEVEN)
-                rules. You may expect a change in altitude while en route flying along the eastern part of Florida. Additionally, because of ATL’s
+                rules. You may expect a change in altitude while en route flying along the eastern part of Florida. Additionally, because of ATL's
                 proximity to north Florida, there are some restrictions regarding final altitudes. Here are some common routes and acceptable
                 altitudes.</p>
         </div>
         <div id="tab4" class="tab-pane fade">
-            <div id="diagram1Carousel" class="carousel slide w-25 float-right">
+            <div id="diagram1Carousel" class="carousel slide w-25 float-end">
                 <br />
                 <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
             </div>
@@ -249,13 +249,13 @@ return $badge;
                 correctly. If you have questions about your route of flight, you should ask clearance delivery. Voice clearances may not include an
                 altitude or departure frequency. In this case, use the information published on the appropriate departure procedure chart.</p>
             <p>You should listen to ATIS at this time. The ATIS provides important information regarding weather and NOTAMs at the airfield. ATL
-                publishes both an arrival ATIS and a departure ATIS – you should listen to the one applicable to your operation.</p>
+                publishes both an arrival ATIS and a departure ATIS - you should listen to the one applicable to your operation.</p>
             <p>Take the time now to ensure that your FMS or GPS flight plan matches the clearance that ATC issued to you. Your departure runway
                 is determined by the standard instrument departure (SID) that you were issued, your requirements for takeoff, and your parking
                 location on the airfield. Here is a guide to determine your departure runway:</p>
             <ul>
                 <li>ATL departs runways 8R/26L and 9L/27R. Do not expect other runways for departure.</li>
-                <li>Runway 9L/27R is the longest runway at ATL at 12,390 feet. If your aircraft’s takeoff data indicates that you need this runway
+                <li>Runway 9L/27R is the longest runway at ATL at 12,390 feet. If your aircraft's takeoff data indicates that you need this runway
                     for departure, you should inform the ground controller on first contact.</li>
                 <li>If parked at concourse T, A, B, C, D, E, F, your departure runway is dependent on your filed SID. See chart on the right side
                     of this page.</li>
@@ -264,7 +264,7 @@ return $badge;
             </ul>
         </div>
         <div id="tab5" class="tab-pane fade">
-            <img class="float-right m-1" src="/photos/pg_atl_tab5.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab5.png">
             <h3>Push & Start</h3>
             <p> ATL does not simulate ramp control. During non-event periods, push and start clearances are at your discretion and do not require
                 ATC clearance. For major events (example: cross the pond) where you have been issued an estimated departure clearance time (EDCT),
@@ -280,7 +280,7 @@ return $badge;
                 direction.</p>
         </div>
         <div id="tab6" class="tab-pane fade">
-            <img class="float-right m-1" src="/photos/pg_atl_tab6.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab6.png">
             <h3>Taxi</h3>
             <p> Check ATIS one more time prior to calling for taxi to ensure that nothing has changed. Ensure that your transponder is on with
                 the correct squawk code entered and in altitude mode. Taxi to the north or south hold point on the ramp and call
@@ -294,7 +294,7 @@ return $badge;
                 end of the runway. If you are assigned an intersection, make sure that you hold at the intersection. Note: intersections that are
                 within 500 feet of the end of the runway are considered full-length departures. Hold points are commonly used on runway 9L (M2)
                 and 27R (LB, LC).</p>
-            <div id="diagram2Carousel" class="carousel slide w-25 float-right" data-ride="carousel">
+            <div id="diagram2Carousel" class="carousel slide w-25 float-end" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <a href="{{ $diag }}" target="_blank"><img src="/photos/atl_diag.png" class="d-block w-100" alt="Diagram"></a>
@@ -303,13 +303,13 @@ return $badge;
                         <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#diagram2Carousel" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#diagram2Carousel" role="button" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="visually-hidden">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#diagram2Carousel" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#diagram2Carousel" role="button" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="visually-hidden">Next</span>
                 </a>
             </div>
             <p>Taxiway D at Atlanta between G and L is a non-movement area and is not controlled by ATC. If you are taxiing to a runway and intend
@@ -325,7 +325,7 @@ return $badge;
                 from a runway. <a href="/pdf/ATL_Standard_Coded_Taxi_Routes.pdf" alt="coded_taxi" target="_blank">Click Here</a> to view our coded taxi routes.</p>
         </div>
         <div id="tab7" class="tab-pane fade">
-            <img class="float-right m-1" src="/photos/pg_atl_tab7.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab7.png">
             <h3>Takeoff & Climbout</h3>
             <p>As part of your takeoff clearance, the controller will state your initial RNAV waypoint or your departure heading. These items must
                 be read back to the controller issuing your takeoff clearance. This step ensures that you will remain clear of traffic departing
@@ -342,10 +342,10 @@ return $badge;
                 your climb-out and provide you with a hand-off to Atlanta Center.</p>
         </div>
         <div id="tab8" class="tab-pane fade">
-            <img class="float-right m-1" src="/photos/pg_atl_tab8.png">
+            <img class="float-end m-1" src="/photos/pg_atl_tab8.png">
             <h3>Arrival</h3>
-            <p>Welcome to Atlanta – we’re glad that you decided to make us your destination today. Ensure that you monitor the arrival ATIS when
-                you are inbound (no later than 60 miles from the airport). Atlanta Approach is responsible for assigning your arrival runway –
+            <p>Welcome to Atlanta - we're glad that you decided to make us your destination today. Ensure that you monitor the arrival ATIS when
+                you are inbound (no later than 60 miles from the airport). Atlanta Approach is responsible for assigning your arrival runway -
                 Center will not be able to do this unless Center is also controlling the Approach position.</p>
             <p>To check-in with Atlanta Approach, provide your callsign, current altitude and the altitude that you are descending to, your location
                 on the arrival, your current indicated airspeed, and the current arrival ATIS code. For example: <span class="font-italic">Atlanta Approach DAL69 FL180
@@ -357,13 +357,13 @@ return $badge;
             <p>After you are established on an arrival and approach has issued a landing runway, check your FMS to ensure that you have the entire
                 arrival and approach programmed correctly. RNAV arrivals and approaches should be continuous with no discontinuity.</p>
             <p>At peak traffic periods, six or more controllers may be working positions in the Atlanta large terminal radar approach control
-                facility (TRACON). It is important that you listen to the controller’s instructions during a hand-off to ensure that you contact the
+                facility (TRACON). It is important that you listen to the controller's instructions during a hand-off to ensure that you contact the
                 proper controller. If you switch to the wrong frequency, go back to your previous frequency and ask for clarification.</p>
             <p>For planning purposes and to manage traffic flow, you should expect to fly 210 knots on downwind and once cleared for the approach no
                 less than 180 knots until the final approach fix. ATC will provide specific instructions if other speeds are necessary.</p>
             <p>On landing roll-out, taxi clear of the runway in the direction of your preferred parking location and hold short of the parallel
                 taxiway. Remain on the tower frequency until instructed to monitor or contact ground. If given a crossing instruction, listen to the
-                taxi instructions for the other side of the runway you will cross. Parking gate assignment is at the discretion of the pilot – not
+                taxi instructions for the other side of the runway you will cross. Parking gate assignment is at the discretion of the pilot - not
                 ATC. When given instructions to taxi to parking, you may select any open gate.</p>
             <div class="container">
                 <div class="row">

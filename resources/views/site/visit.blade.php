@@ -62,7 +62,7 @@ Visit
                         3 => 'Student 2 (S2)', 4 => 'Senior Student (S3)',
                         5 => 'Controller (C1)', 7 => 'Senior Controller (C3)',
                         8 => 'Instructor (I1)', 10 => 'Senior Instructor (I3)'
-                    ], null)->placeholder('Select Rating')->class(['form-control']) }}
+                    ], null)->placeholder('Select Rating')->class(['form-select']) }}
                 </div>
                 <div class="col-sm-3">
                     <label for="home">Home ARTCC</label>

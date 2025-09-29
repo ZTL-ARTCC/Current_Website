@@ -16,16 +16,16 @@ Training Statistics
         <div class="col-sm-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" data-target="#general" aria-controls="general" aria-selected="true" href="#">General</a>
+                    <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#general" aria-controls="general" aria-selected="true" href="#">General</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#monthly" aria-controls="monthly" aria-selected="false" href="#monthly">Monthly Stats</a>
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#monthly" aria-controls="monthly" aria-selected="false" href="#monthly">Monthly Stats</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#tickets" aria-controls="tickets" aria-selected="false" href="#tickets">Ticket Views</a>
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tickets" aria-controls="tickets" aria-selected="false" href="#tickets">Ticket Views</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
                 </li>
             </ul>
 

@@ -10,9 +10,9 @@ Realops
 
 @section('content')
 @if(auth()->guard('realops')->guest())
-    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<a href="/realops/login" class="btn btn-primary float-right">Login as Realops Pilot</a>'])
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<a href="/realops/login" class="btn btn-primary float-end">Login as Realops Pilot</a>'])
 @else
-    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
+    @include('inc.header', ['title' => 'Realops', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-end">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
 @endif
 
 <div class="container">
@@ -38,8 +38,8 @@ Realops
             <div class="col-sm-12 col-md p-1">
                {{ html()->text('time_filter', $time_filter)->class(['form-control'])->placeholder('Time (11:00)')->id('time_filter') }}
             </div>
-            <div class="col-sm-12 col-md p-1 mr-2 text-center">
-                <button class="btn btn-success mr-2" type="button" onclick="realopsFilterValidateAndSubmit();" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
+            <div class="col-sm-12 col-md p-1 me-2 text-center">
+                <button class="btn btn-success me-2" type="button" onclick="realopsFilterValidateAndSubmit();" title="Filter"><i class="fas fa-filter"></i>&nbsp;Filter</button>
                 <a href="/realops" class="btn btn-warning" title="Clear"><i class="fas fa-redo"></i>&nbsp;Clear</a>
             </div>
         </div>
@@ -94,18 +94,18 @@ Realops
                     @if($f->assigned_pilot)
                         @if(auth()->guard('realops')->check() && auth()->guard('realops')->id() == $f->assigned_pilot_id)
                             <p>
-                                <span class="badge badge-success">Assigned to You</span>
+                                <span class="badge bg-success">Assigned to You</span>
                                 @unlesstoggle('realops_bidding')
                                     <a href="/realops/cancel-bid" class="btn btn-danger btn-sm d-block mt-2">Cancel Bid</a>
                                 @endtoggle
                             </p>
                         @else
-                            <p><span class="badge badge-secondary">Assigned</span></p>
+                            <p><span class="badge bg-secondary">Assigned</span></p>
                         @endif
                     @elseif(toggleEnabled('realops_bidding'))
-                        <p><span class="badge badge-success">Open For Bidding</span></p>
+                        <p><span class="badge bg-success">Open For Bidding</span></p>
                     @else
-                        <p><span class="badge badge-warning">Bidding Closed, No Assignment</span></p>
+                        <p><span class="badge bg-warning">Bidding Closed, No Assignment</span></p>
                     @endif
                 </td>
                 @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
@@ -126,7 +126,7 @@ Realops
         @endforeach
     </tbody>
 </table>
-<div class="float-right">
+<div class="float-end">
     {!! $flights->appends(request()->query())->links() !!}
 </div>
 @else

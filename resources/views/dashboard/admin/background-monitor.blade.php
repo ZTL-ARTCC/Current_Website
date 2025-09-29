@@ -26,9 +26,9 @@ Background Task Monitor
                 @else
                     <td class="text-center"><i class="fas fa-check text-success"></i></td>
                 @endif
-                    <td class="simple-tooltip" role="button" data-toggle="tooltip" title="{{ $task->name() }}" onclick="copyTextToClipboard('{{ $task->defaultName() }}')">
+                    <td class="simple-tooltip" role="button" data-bs-toggle="tooltip" title="{{ $task->name() }}" onclick="copyTextToClipboard('{{ $task->defaultName() }}')">
                         {{ $task->defaultName() }}
-                        <span class="float-right"><i class="fas fa-clipboard"></i></span>
+                        <span class="float-end"><i class="fas fa-clipboard"></i></span>
                     </td>
                 <td>{{ $task->humanReadableCron() }}</td>
                 <td>{{ optional($task->lastRunStartedAt())->format($format) ?? '' }}</td>

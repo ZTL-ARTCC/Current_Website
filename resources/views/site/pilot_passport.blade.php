@@ -9,33 +9,33 @@ ZTL Pilot Passport Challenge
 
 @section('content')
 @if(auth()->guard('realops')->guest())
-@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<a href="/pilot_passport/login" class="btn btn-primary float-right" dusk="login">Login as Pilot</a>'])
+@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<a href="/pilot_passport/login" class="btn btn-primary float-end" dusk="login">Login as Pilot</a>'])
 @else
-@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-right">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
+@include('inc.header', ['title' => 'ZTL Pilot Passport Challenge', 'type' => 'external', 'content' => '<button disabled class="btn btn-primary float-end">Welcome, ' . auth()->guard('realops')->user()->full_name . '</button>'])
 @endif
 
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist" id="tabMenu">
         <li class="nav-item">
             @php $active = ($tab == 'information') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#information" role="tab" data-toggle="tab">Program Information</a>
+            <a class="nav-link tab-link{{ $active }}" href="#information" role="tab" data-bs-toggle="tab">Program Information</a>
         </li>
         @if(!auth()->guard('realops')->guest())
         <li class="nav-item">
             @php $active = ($tab == 'enrollments') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#enrollments" role="tab" data-toggle="tab">Enrollments</a>
+            <a class="nav-link tab-link{{ $active }}" href="#enrollments" role="tab" data-bs-toggle="tab">Enrollments</a>
         </li>
         <li class="nav-item">
             @php $active = ($tab == 'passport_book') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#passport_book" role="tab" data-toggle="tab">Passport Book</a>
+            <a class="nav-link tab-link{{ $active }}" href="#passport_book" role="tab" data-bs-toggle="tab">Passport Book</a>
         </li>
         <li class="nav-item">
             @php $active = ($tab == 'achievements') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#achievements" role="tab" data-toggle="tab">Achievements</a>
+            <a class="nav-link tab-link{{ $active }}" href="#achievements" role="tab" data-bs-toggle="tab">Achievements</a>
         </li>
         <li class="nav-item">
             @php $active = ($tab == 'settings') ? ' active' : ''; @endphp
-            <a class="nav-link tab-link{{ $active }}" href="#settings" role="tab" data-toggle="tab">Settings</a>
+            <a class="nav-link tab-link{{ $active }}" href="#settings" role="tab" data-bs-toggle="tab">Settings</a>
         </li>
         @endif
     </ul>
@@ -62,13 +62,13 @@ ZTL Pilot Passport Challenge
                 <div class="col-sm-6">
                     <h5>What's in it for me?</h5>
                     <p>Pilots who enroll and meet milestones of the challenge will be recognized on the ZTL website. You'll have the opportunity to
-                        fill up a virtual passport book with stamps for each airfield you visit. Upon completion of a path, you’ll get a badge and
+                        fill up a virtual passport book with stamps for each airfield you visit. Upon completion of a path, you'll get a badge and
                         a certificate of completion suitable for framing.</p>
                 </div>
                 <div class="col-sm-6">
                     <h5>How do I get started?</h5>
                     <p>Start at the top of this page and login. Then, enroll in our challenge and pick your path. Each time you visit an airport,
-                        you’ll get a stamp in your passport. To earn a stamp, you should plan a full-stop landing at a qualifying airport and spend
+                        you'll get a stamp in your passport. To earn a stamp, you should plan a full-stop landing at a qualifying airport and spend
                         at least 5 minutes on the ground before departing.</p>
                 </div>
             </div>
@@ -92,7 +92,7 @@ ZTL Pilot Passport Challenge
                 </div>
             </div>
             @foreach($challenges as $c)
-            <div class="row mb-4">
+            <div class="row-mb-3">
                 <div class="col-sm-3 text-center">
                     <strong>{{ $c->title }}</strong>
                     <br> 
@@ -138,7 +138,7 @@ ZTL Pilot Passport Challenge
                 ?>
                 {{ html()->form()->route('pilotPassportIndex')->open() }}
                 {{ html()->hidden('tab', 'passport_book') }}
-                {{ html()->select('pg', $enrolled_challenges, $view_challenge)->class(['form-control'])->attributes(['onchange' => 'submit()']) }}
+                {{ html()->select('pg', $enrolled_challenges, $view_challenge)->class(['form-select'])->attributes(['onchange' => 'submit()']) }}
                 {{ html()->form()->close() }}
             @endif
             @foreach($enrollments as $enrollment)
@@ -199,7 +199,7 @@ ZTL Pilot Passport Challenge
                     </div>
                     @endforeach
                     @if($achievements->isEmpty())
-                        <div class="row mb-4">
+                        <div class="row-mb-3">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-8">
                             <h6>No program achievements yet. When you complete a challenge, your achievements and certifiate will show up here.</h6>
@@ -280,8 +280,8 @@ ZTL Pilot Passport Challenge
             <hr class="mb-4">
             <div class="row">
                 <div class="col-sm-2">
-                    <span data-toggle="modal" data-target="#purge">
-                        <button type="button" class="btn btn-danger mr-2" data-toggle="tooltip" dusk="purge_data">Disenroll /<br>Purge Data</button>
+                    <span data-bs-toggle="modal" data-bs-target="#purge">
+                        <button type="button" class="btn btn-danger me-2" data-bs-toggle="tooltip" dusk="purge_data">Disenroll /<br>Purge Data</button>
                     </span>
                 </div>
                 <div class="col-sm-10">
@@ -303,9 +303,7 @@ ZTL Pilot Passport Challenge
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Disenroll/Purge Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {{ html()->form()->route('pilotPassportPurgeData')->open() }}
             @csrf
@@ -314,7 +312,7 @@ ZTL Pilot Passport Challenge
                 {{ html()->text('confirm_text', null)->class(['form-control'])->placeholder('confirm - purge all')->attributes(['dusk' => 'confirm']) }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button action="submit" class="btn btn-danger">Continue</button>
             </div>
             {{ html()->form()->close() }}

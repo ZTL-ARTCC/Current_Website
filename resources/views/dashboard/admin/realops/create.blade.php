@@ -13,12 +13,12 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="flight_date" class="form-label">Date</label>
-                    <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                        {{ html()->text('flight_date', null)->placeholder('MM/DD/YYYY')->class(['form-control', 'datetimepicker-input'])->attributes(['data-target' => '#datetimepicker']) }}
-                        <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <label for="flight_date" class="form-label-date">Date</label>
+                    <div class="input-group date dt_picker_date" id="datetimepicker" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ html()->text('flight_date', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker']) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                            <i class="fas fa-calendar"></i>
+                        </span>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-success mr-2" type="button" onclick="realopsValidateAndSubmit();">Submit</button>
+        <button class="btn btn-success me-2" type="button" onclick="realopsValidateAndSubmit();">Submit</button>
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {{ html()->form()->close() }}
 </div>

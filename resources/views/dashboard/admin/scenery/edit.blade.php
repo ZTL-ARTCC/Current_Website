@@ -22,7 +22,7 @@ Edit Scenery
                         0 => 'FSX/P3D',
                         1 => 'X-Plane',
                         2 => 'AFCAD'
-                    ], $scenery->sim)->class(['form-control']) }}
+                    ], $scenery->sim)->class(['form-select']) }}
                 </div>
             </div>
         </div>

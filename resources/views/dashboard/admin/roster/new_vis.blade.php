@@ -31,7 +31,7 @@ New Visitor
                         10 => 'Senior Instructor (I3)',
                         11 => 'Supervisor (SUP)',
                         12 => 'Admin (ADM)',
-                    ], $visitor->rating)->class(['form-control']) }}
+                    ], $visitor->rating)->class(['form-select']) }}
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@ New Visitor
                             @elseif($c->twr == 2)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
                             @elseif($c->twr == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+                                <td><center><i class="fab fa-stripe-s" data-bs-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
                             @if($c->app == 0)
                                 <td><center><i class="fas fa-times" style="color:red"></i></center></td>
@@ -135,7 +135,7 @@ New Visitor
                             @elseif($c->app == 92)
                                 <td><center><b style="color:blue;">A80 TAR</b></center></td>    
                             @elseif($c->app == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+                                <td><center><i class="fab fa-stripe-s" data-bs-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @elseif($c->app == 89)
                                 <td><center style="color:#c1ad13">M</center></td>
                             @endif
@@ -144,7 +144,7 @@ New Visitor
                             @elseif($c->ctr == 1)
                                 <td><center><i class="fas fa-check" style="color:green"></i></center></td>
                             @elseif($c->ctr == 99)
-                                <td><center><i class="fab fa-stripe-s" data-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
+                                <td><center><i class="fab fa-stripe-s" data-bs-toggle="tooltip" style="color:#c1ad13" title="Expires: {{ $c->solo }}"></i></center></td>
                             @endif
                         </tr>
                 </tbody>
