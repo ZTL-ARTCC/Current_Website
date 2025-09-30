@@ -20,7 +20,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/stats') }}" href="/dashboard/controllers/stats">Statistics</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/incident/report') }}" href="/dashboard/controllers/incident/report">Incident Report</a>
                     @toggle('merch-store')
-                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/merch') }}" href="/dashboard/controllers/merch">Merch Store <span class="badge bg-warning">New!</span></a>
+                    <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/merch') }}" href="/dashboard/controllers/merch">Merch Store</a>
                     @endtoggle
                     <div class="dropdown-divider"></div>
                     <a class="nav-link {{ Nav::urlDoesContain('/dashboard/controllers/profile') }} {{ Nav::urlDoesContain('/dashboard/controllers/ticket') }}" href="/dashboard/controllers/profile"><i class="fas fa-user"></i> My Profile</a>
