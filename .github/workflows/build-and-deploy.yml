@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@main
+    uses: ZTL-ARTCC/Current_Website/.github/workflows/build.yml@PHP-8.4
     with:
       artifact-name: 'ztl-deploy-artifact-v1'
 
