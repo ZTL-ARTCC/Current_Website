@@ -477,15 +477,20 @@ class ControllerDash extends Controller {
             return redirect()->back()->with('error', 'The airport code you entered is invalid.');
         }
 
-        $res_json = json_decode($response->getBody())[0];
-        $metar = $res_json->rawOb;
-
+        $metar = null;
         $taf = null;
-        if (isset($res_json->rawTaf)) {
-            $taf = Airport::formatTaf($res_json->rawTaf);
-        }
+        $visual_conditions = null;
 
-        $visual_conditions = $res_json->fltCat;
+        if ($response->getStatusCode() == 200) {
+            $res_json = json_decode($response->getBody())[0];
+            $metar = $res_json->rawOb;
+
+            if (isset($res_json->rawTaf)) {
+                $taf = Airport::formatTaf($res_json->rawTaf);
+            }
+
+            $visual_conditions = $res_json->fltCat;
+        }
 
         $pilots_a = $pilots_d = false;
         $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');
