@@ -9,35 +9,41 @@
 @endpush
 
 @section('content')
-@include('inc.header', ['title' => '{{ $apt_r }} Airport Information'])
+@include('inc.header', ['title' => $apt_r . ' Airport Information'])
 
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <b>Airport Diagram</b> <div class="float-end"></div>
-                </div>
-                <div class="card-body">
-                    @if($apd != '[]')
+            @if(count($apd) > 0)
+                <div class="card">
+                    <div class="card-header">
+                        <b>Airport Diagram</b> <div class="float-end"></div>
+                    </div>
+                    <div class="card-body">
                         @foreach($apd as $c)
                             <iframe src="{{ $c->pdf_url }}" frameborder="0" style="width:100%; height:750px"></iframe>
                         @endforeach
-                    @else
-                        <p>No airport diagram found</p>
-                    @endif
+                    </div>
                 </div>
-            </div>
+            @else
+                @include('inc.empty_state', ['header' => 'No Airport Diagram', 'body' => 'No airport diagram was found for this airport. Normally that means this is a non towered airport. However, there may be other charts for this airport that you can explore to the right.', 'icon' => 'fa-solid fa-copy'])
+            @endif
         </div>
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <b>Current Weather/Forecast ({{ $visual_conditions }} Conditions)</b>
+                    <b>Current Weather/Forecast ({{ isset($visual_conditions) ? $visual_conditions : 'Unknown' }} Conditions)</b>
                 </div>
                 <div class="card-body">
-                    METAR {{ $metar }}
+                    @if(isset($metar))
+                        {{ $metar }}
+                    @else
+                        <i>No METAR Found</i>
+                    @endif
+                    @if(isset($taf))
                     <hr>
-                    TAF {!! $taf !!}
+                        {!! $taf !!}
+                    @endif
                 </div>
             </div>
             <br>
