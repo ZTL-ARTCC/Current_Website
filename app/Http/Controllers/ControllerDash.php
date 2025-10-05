@@ -34,7 +34,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Mail;
-use SimpleXMLElement;
 
 class ControllerDash extends Controller {
 
@@ -472,23 +471,26 @@ class ControllerDash extends Controller {
         $apt_r = strtoupper($apt_s);
 
         $client = new Client(['http_errors' => false]);
-        $response_metar = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
-        $response_taf = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.$apt_s);
+        $response = $client->request('GET', 'https://aviationweather.gov/api/data/metar?format=json&taf=true&ids=' . $apt_r);
 
-        $root_metar = new SimpleXMLElement($response_metar->getBody());
-        $root_taf = new SimpleXMLElement($response_taf->getBody());
-
-        $metar = $root_metar->data->children()->METAR->raw_text;
-        $taf = $root_taf->data->children()->TAF->raw_text;
-
-        if ($metar == null) {
+        if ($response->getStatusCode() == 404) {
             return redirect()->back()->with('error', 'The airport code you entered is invalid.');
         }
-        $metar = $metar->__toString();
-        if ($taf != null) {
-            $taf = Airport::formatTaf($taf->__toString());
+
+        $metar = null;
+        $taf = null;
+        $visual_conditions = null;
+
+        if ($response->getStatusCode() == 200) {
+            $res_json = json_decode($response->getBody())[0];
+            $metar = $res_json->rawOb;
+
+            if (isset($res_json->rawTaf)) {
+                $taf = Airport::formatTaf($res_json->rawTaf);
+            }
+
+            $visual_conditions = $res_json->fltCat;
         }
-        $visual_conditions = $root_metar->data->children()->METAR->flight_category->__toString();
 
         $pilots_a = $pilots_d = false;
         $res_a = $client->get('https://ids.ztlartcc.org/FetchAirportInfo.php?id='.$apt_s.'&type=arrival');

@@ -7,7 +7,6 @@ use App\Metar;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use SimpleXMLElement;
 
 class FetchMetar extends Command {
     /**
@@ -44,57 +43,37 @@ class FetchMetar extends Command {
         $airports = $airports_icao->toArray();
 
         $client = new Client;
-        $response_metars = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
-        $response_tafs = $client->request('GET', 'https://aviationweather.gov/cgi-bin/data/dataserver.php?dataSource=tafs&requestType=retrieve&format=xml&hoursBeforeNow=2&mostRecentForEachStation=true&stationString='.implode(',', $airports));
-
-        $root_metars = new SimpleXMLElement($response_metars->getBody());
-        $root_tafs = new SimpleXMLElement($response_tafs->getBody());
-
-        $i = 0;
+        $response = $client->request('GET', 'https://aviationweather.gov/api/data/metar?format=json&taf=true&ids='.implode(',', $airports));
+        $res_json = json_decode($response->getBody());
         
         DB::table('airport_weather')->truncate();
-        foreach ($root_metars->data->children() as $metar) {
+        foreach ($res_json as $res) {
             $airport = new Metar;
-            $airport->icao = $metar->station_id->__toString();
+            $airport->icao = $res->icaoId;
 
             $wind = 'CALM';
 
-            if ($metar->wind_dir_degrees->__toString() > 0 && $metar->wind_dir_degrees->__toString() < 100) {
-                $winds = "0" . $metar->wind_dir_degrees->__toString();
-            } else {
-                $winds = $metar->wind_dir_degrees->__toString();
-            }
+            if ($res->wspd > 0) {
+                $wind = ($res->wdir != 'VRB' && $res->wdir < 100 ? '0' : '') . $res->wdir;
+                $wind .= '@' . ($res->wspd < 10 ? '0' : '') . $res->wspd;
 
-            if ($winds > 0 && $metar->wind_speed_kt->__toString() > 0) {
-                if ($metar->wind_speed_kt->__toString() < 10) {
-                    $windspeed = '0'.$metar->wind_speed_kt->__toString();
-                } else {
-                    $windspeed = $metar->wind_speed_kt->__toString();
-                }
-                $wind = $winds . '@' . $windspeed;
-
-                if ($metar->wind_gust_kt) {
-                    $wind .= "G" . $metar->wind_gust_kt->__toString();
+                if (isset($res->wgst)) {
+                    $wind .= 'G' . $res->wgst;
                 }
             }
 
-            $airport->visual_conditions = $metar->flight_category->__toString();
+            $airport->visual_conditions = $res->fltCat;
             $airport->wind = $wind;
-            $airport->altimeter = number_format((double)$metar->altim_in_hg, 2);
-            $airport->metar = $metar->raw_text->__toString();
-            $airport->temp = $metar->temp_c->__toString();
-            $airport->dp = $metar->dewpoint_c->__toString();
+            $airport->altimeter = $this->hpa_to_inhg($res->altim);
+            $airport->metar = $res->rawOb;
+            $airport->temp = $res->temp;
+            $airport->dp = $res->dewp;
+            $airport->taf = $res->rawTaf;
             $airport->save();
-
-            $i++;
         }
+    }
 
-        foreach ($root_tafs->data->children() as $taf) {
-            $airport = Metar::where('icao', $taf->station_id)->first();
-            $airport->taf = $taf->raw_text->__toString();
-            $airport->save();
-
-            $i++;
-        }
+    private function hpa_to_inhg($hpa) {
+        return number_format($hpa * 0.02953, 2);
     }
 }

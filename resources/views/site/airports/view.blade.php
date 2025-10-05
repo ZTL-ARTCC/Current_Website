@@ -35,9 +35,9 @@ View Airport ({{ $airport->ltr_4 }})
                     <b>Current Weather/Forecast ({{ $airport->visual_conditions }} Conditions)</b>
                 </div>
                 <div class="card-body">
-                    METAR {{ $airport->metar }}
+                    {{ $airport->metar }}
                     <hr>
-                    TAF {!! $airport->taf !!}
+                    {!! $airport->taf !!}
                 </div>
             </div>
             <br>
