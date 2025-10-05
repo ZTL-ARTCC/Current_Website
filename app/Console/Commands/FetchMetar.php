@@ -39,6 +39,9 @@ class FetchMetar extends Command {
      */
     public function handle() {
         $airports_icao = Airport::get()->pluck('ltr_4');
+        if ($airports_icao->isEmpty()) {
+            return 1;
+        }
         $airports_full = Airport::get();
         $airports = $airports_icao->toArray();
 
