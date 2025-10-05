@@ -7,6 +7,7 @@ use App\Metar;
 use DB;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class FetchMetar extends Command {
     /**
@@ -40,6 +41,8 @@ class FetchMetar extends Command {
     public function handle() {
         $airports_icao = Airport::get()->pluck('ltr_4');
         if ($airports_icao->isEmpty()) {
+            $this->info('Exiting - no airports configured.');
+            Log::info('Unable to fetch METARs - no airports configured.');
             return 1;
         }
         $airports_full = Airport::get();
