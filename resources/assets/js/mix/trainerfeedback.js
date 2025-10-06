@@ -1,26 +1,33 @@
-var stars = $("#stars span");
+const stars = document.querySelectorAll("#stars span");
+const ratingInput = document.querySelector(
+  "#stars input[name='service_level']"
+);
+const rating = ratingInput.value;
 
-// Needed for if you submit and get redirected back the stars will now still be highlighted
-var rating = $("#stars input[name='service_level']").val();
 if (rating) {
-  for (var i = 0; i < rating; i++) {
-    stars.eq(i).text("\u2605");
+  for (let i = 0; i < rating; i++) {
+    stars[i].textContent = "★";
   }
 }
 
-stars.each(function () {
-  $(this).hover(
-    function () {
-      $(this).prevAll().addBack().addClass("star-hover");
-    },
-    function () {
-      $(this).prevAll().addBack().removeClass("star-hover");
+stars.forEach((star, index) => {
+  star.addEventListener("mouseenter", () => {
+    for (let i = 0; i <= index; i++) {
+      stars[i].classList.add("star-hover");
     }
-  );
-  $(this).on("click", function () {
-    // Different format from the blade beacause JS internally only supports UTF-16
-    stars.text("\u2606");
-    $(this).prevAll().addBack().text("\u2605");
-    $("#stars input[name='service_level']").val($(this).data("rating"));
+  });
+
+  star.addEventListener("mouseleave", () => {
+    for (let i = 0; i <= index; i++) {
+      stars[i].classList.remove("star-hover");
+    }
+  });
+
+  star.addEventListener("click", () => {
+    stars.forEach((s) => (s.textContent = "☆"));
+    for (let i = 0; i <= index; i++) {
+      stars[i].textContent = "★";
+    }
+    ratingInput.value = star.dataset.rating;
   });
 });

@@ -190,8 +190,10 @@ const restrictedToolbar = [
 ];
 
 var editors = {};
-$(ckeditorSelector).ready(() => {
-  $(ckeditorSelector).each((_idx, editorElement) => {
+document.addEventListener("DOMContentLoaded", () => {
+  const editorElements = document.querySelectorAll(ckeditorSelector);
+
+  editorElements.forEach((editorElement) => {
     const isTrainerComments = editorElement.id === "trainer_comments";
 
     ClassicEditor.create(editorElement, {

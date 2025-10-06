@@ -2,9 +2,15 @@ function copyToClipboard(eId) {
   let e = document.getElementById(eId);
   navigator.clipboard.writeText(e.innerHTML);
 }
+window.copyToClipboard = copyToClipboard;
 
-$(function () {
-  $('[data-bs-toggle="tooltip"]').tooltip();
+document.addEventListener("DOMContentLoaded", function () {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+    new bootstrap.Tooltip(tooltipTriggerEl);
+  });
 });
 
 // Setup Datetime Picker
