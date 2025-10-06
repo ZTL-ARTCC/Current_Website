@@ -1,11 +1,16 @@
-$("#denylistEvent").on("show.bs.modal", function (e) {
-  var eventId = $(e.relatedTarget).data("id");
-  var deleteLink = $(this).find("#deleteLink");
-  var denylistLink = $(this).find("#denylistLink");
+document
+  .getElementById("denylistEvent")
+  .addEventListener("show.bs.modal", function (e) {
+    const eventId = e.relatedTarget.dataset.id;
+    const deleteLink = this.querySelector("#deleteLink");
+    const denylistLink = this.querySelector("#denylistLink");
 
-  deleteLink.attr("href", "/dashboard/admin/events/delete/" + eventId);
-  denylistLink.attr(
-    "href",
-    "/dashboard/admin/events/delete/" + eventId + "?denylist=true"
-  );
-});
+    deleteLink.setAttribute(
+      "href",
+      "/dashboard/admin/events/delete/" + eventId
+    );
+    denylistLink.setAttribute(
+      "href",
+      "/dashboard/admin/events/delete/" + eventId + "?denylist=true"
+    );
+  });

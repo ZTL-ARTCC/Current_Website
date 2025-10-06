@@ -26,22 +26,22 @@ function updatePlanes() {
     if (this.readyState == 4 && this.status == 200) {
       resp = JSON.parse(this.responseText);
       planeLayer.clearLayers();
-      $.each(resp.data, function (i) {
+      resp.data.forEach((plane) => {
         if (
-          resp.data[i].lat < maxLatLon[0] &&
-          resp.data[i].lon < maxLatLon[1] &&
-          resp.data[i].lat > minLatLon[0] &&
-          resp.data[i].lon > minLatLon[1]
+          plane.lat < maxLatLon[0] &&
+          plane.lon < maxLatLon[1] &&
+          plane.lat > minLatLon[0] &&
+          plane.lon > minLatLon[1]
         ) {
           // Enforce bounding box and airborne logic
           createPlane(
-            resp.data[i].lat,
-            resp.data[i].lon,
-            resp.data[i].hdg,
-            resp.data[i].callsign,
-            resp.data[i].type,
-            resp.data[i].dep,
-            resp.data[i].arr
+            plane.lat,
+            plane.lon,
+            plane.hdg,
+            plane.callsign,
+            plane.type,
+            plane.dep,
+            plane.arr
           );
         }
       });
