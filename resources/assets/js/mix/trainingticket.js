@@ -44,41 +44,48 @@ if (newForm.length || (editForm.length && draft.length)) {
   }, 60000);
 }
 
-var stars = $("#stars span");
+const stars = document.querySelectorAll("#stars span");
 
 // Needed for if you submit and get redirected back the stars will now still be highlighted
-var rating = $("#stars input[name='score']").val();
+var rating = document.querySelector("#stars input[name='score']").value;
 if (rating) {
   for (var i = 0; i < rating; i++) {
     stars.eq(i).text("\u2605");
   }
 }
 
-stars.each(function () {
-  $(this).hover(
-    function () {
-      $(this).prevAll().addBack().addClass("star-hover");
-    },
-    function () {
-      $(this).prevAll().addBack().removeClass("star-hover");
+document.querySelectorAll(".your-selector").forEach(function (el) {
+  el.addEventListener("click", function () {
+    // Reset all stars to hollow (☆)
+    document.querySelectorAll("#stars .your-selector").forEach(function (star) {
+      star.textContent = "\u2606";
+    });
+
+    // Fill this star and all previous siblings (★)
+    let current = this;
+    while (current) {
+      current.textContent = "\u2605";
+      current = current.previousElementSibling;
     }
-  );
-  $(this).on("click", function () {
-    // Different format from the blade beacause JS internally only supports UTF-16
-    stars.text("\u2606");
-    $(this).prevAll().addBack().text("\u2605");
-    $("#stars input[name='score']").val($(this).data("rating"));
+
+    // Set the hidden input value
+    const input = document.querySelector("#stars input[name='score']");
+    if (input) {
+      input.value = this.dataset.rating;
+    }
   });
 });
 
-$("#start,#end").on("change", function () {
-  setTimeout(function () {
-    autoCalcDuration(
-      document.getElementById("start").value,
-      document.getElementById("end").value,
-      document.getElementById("duration").value
-    );
-  }, 100);
+document.querySelectorAll("#start, #end").forEach(function (el) {
+  el.addEventListener("change", function () {
+    setTimeout(function () {
+      autoCalcDuration(
+        document.getElementById("start").value,
+        document.getElementById("end").value,
+        document.getElementById("duration").value
+      );
+    }, 100);
+  });
 });
 
 window.autoCalcDuration = (time1, time2, target) => {
@@ -104,18 +111,27 @@ window.autoCalcDuration = (time1, time2, target) => {
   }
 };
 
-$(window).on("load", function () {
-  const showSuggestions = $("#showSuggestions");
+window.addEventListener("load", function () {
+  const showSuggestions = document.getElementById("showSuggestions");
   if (showSuggestions) {
-    $("#showSuggestions").modal("show");
+    // Assuming you're using Bootstrap's modal component
+    const modal = new bootstrap.Modal(showSuggestions);
+    modal.show();
   }
 });
 
 window.fillSession = (session) => {
-  $("#showSuggestions").modal("hide");
-  $("#scheddy_id")[0].value = session.scheddy_id;
-  $("#controller")[0].value = session.student_cid;
-  $("#position")[0].value = session.lesson_type;
-  $("#date")[0].value = session.date;
-  $("#start")[0].value = session.start_time;
+  const showSuggestions = document.getElementById("showSuggestions");
+  if (showSuggestions) {
+    const modal =
+      bootstrap.Modal.getInstance(showSuggestions) ||
+      new bootstrap.Modal(showSuggestions);
+    modal.hide();
+  }
+
+  document.getElementById("scheddy_id").value = session.scheddy_id;
+  document.getElementById("controller").value = session.student_cid;
+  document.getElementById("position").value = session.lesson_type;
+  document.getElementById("date").value = session.date;
+  document.getElementById("start").value = session.start_time;
 };
