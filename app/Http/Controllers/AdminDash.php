@@ -861,7 +861,6 @@ class AdminDash extends Controller {
         $validator = $request->validate([
             'title' => 'required',
             'type' => 'required',
-            'file' => 'required'
         ]);
 
         $permalink = $request->input('permalink');
