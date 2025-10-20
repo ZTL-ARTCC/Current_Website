@@ -44,7 +44,7 @@ function itemReorder(id, pos, typ, act) {
 window.itemReorder = itemReorder;
 
 function linkToClipboard(e) {
-  var path = getSiteRoot() + e.dataset.bsTitle;
+  const path = getSiteRoot() + e.dataset.bsTitle;
   window.copyTextToClipboard(path);
 }
 
