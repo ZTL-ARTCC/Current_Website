@@ -88,7 +88,7 @@ Home
 		</div>
 		<div class="col">
 			<div class="row pe-md-2 ps-md-0">
-				<div class="col mt-lg-0 mt-3 mb-1 mx-2 p-2 rounded bg-dark text-white info_card airspace_status" onclick="$('#displayAsx').modal('toggle');">
+				<div class="col mt-lg-0 mt-3 mb-1 mx-2 p-2 rounded bg-dark text-white info_card airspace_status" onclick="asxModalInstance.toggle();">
 					<div class="row">
 						<div class="col">
 							<h4 class="pb-0 mb-0">Airspace Status</h4><span class="text-secondary pt-0 mt-0">Click for map</span>
@@ -185,7 +185,7 @@ Home
 				</div>
 			</div>
 			<div class="row pe-md-2 ps-md-0">
-				<div class="col my-1 mx-2 p-2 rounded bg-dark text-white info_card news_calendar" onclick="$('#displayNewsCalendar').modal('toggle');">
+				<div class="col my-1 mx-2 p-2 rounded bg-dark text-white info_card news_calendar" onclick="newsModalInstance.toggle();">
 					<h4>News</h4><span class="text-secondary pt-0 mt-0">Click for details</span>
 					@if(count($news) > 0)
 					@foreach($news as $c)
@@ -263,4 +263,5 @@ Home
 		</div>
 	</div>
 </div>
+<script src="{{mix('js/home.js')}}"></script>
 @endsection
