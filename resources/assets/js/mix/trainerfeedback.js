@@ -4,29 +4,33 @@ const ratingInput = document.querySelector(
 );
 const rating = ratingInput.value;
 
+// Needed so if you submit and get redirected back the stars will still be highlighted
 if (rating) {
   for (let i = 0; i < rating; i++) {
-    stars[i].textContent = "★";
+    stars[i].textContent = "\u2605";
   }
 }
 
-stars.forEach((star, index) => {
+stars.forEach((star, i) => {
+  // Hover in
   star.addEventListener("mouseenter", () => {
-    for (let i = 0; i <= index; i++) {
-      stars[i].classList.add("star-hover");
+    for (let j = 0; j <= i; j++) {
+      stars[j].classList.add("star-hover");
     }
   });
 
+  // Hover out
   star.addEventListener("mouseleave", () => {
-    for (let i = 0; i <= index; i++) {
-      stars[i].classList.remove("star-hover");
+    for (let j = 0; j <= i; j++) {
+      stars[j].classList.remove("star-hover");
     }
   });
 
+  // Click to set rating
   star.addEventListener("click", () => {
-    stars.forEach((s) => (s.textContent = "☆"));
-    for (let i = 0; i <= index; i++) {
-      stars[i].textContent = "★";
+    stars.forEach((s) => (s.textContent = "\u2606")); // empty star
+    for (let j = 0; j <= i; j++) {
+      stars[j].textContent = "\u2605"; // filled star
     }
     ratingInput.value = star.dataset.rating;
   });

@@ -1,87 +1,91 @@
-var newForm = $("#newTrainingTicket");
-var editForm = $("#editTrainingTicket");
-var draft = $("#draft");
+const newForm = document.getElementById("newTrainingTicket");
+const editForm = document.getElementById("editTrainingTicket");
+const draft = document.getElementById("draft");
 
-if (newForm.length || (editForm.length && draft.length)) {
-  var form = newForm.length ? newForm : editForm;
-  var ajaxUrl = form.attr("action");
+if (newForm || (editForm && draft)) {
+  const form = newForm || editForm;
+  const ajaxUrl = form.getAttribute("action");
 
-  setInterval(function () {
-    var formData = form.serializeArray();
-    var editors = window.editors;
-    // CKEDITOR does not update text area thus we need to get it manually
-    formData.find((formItem) => formItem.name === "trainer_comments").value =
-      editors["trainer_comments"].getData();
+  setInterval(() => {
+    const formData = new FormData(form);
+    const editors = window.editors;
 
-    formData.find((formItem) => formItem.name === "comments").value =
-      editors["comments"].getData();
+    // CKEditor fields need manual sync
+    formData.set("trainer_comments", editors["trainer_comments"].getData());
+    formData.set("comments", editors["comments"].getData());
 
-    formData.push(
-      { name: "action", value: "draft" },
-      { name: "automated", value: 1 },
-      { name: "is_new", value: newForm.length }
-    );
+    // Add extra fields
+    formData.append("action", "draft");
+    formData.append("automated", "1");
+    formData.append("is_new", newForm ? "1" : "0");
 
-    $.ajax({
-      type: "POST",
-      url: ajaxUrl,
-      data: $.param(formData),
-      success: function (result) {
-        if (newForm.length) {
+    fetch(ajaxUrl, {
+      method: "POST",
+      body: new URLSearchParams(formData),
+    })
+      .then((response) => response.text())
+      .then((result) => {
+        if (newForm && result) {
           window.location.replace(result);
-        }
-
-        if (!result) {
+        } else if (!result) {
           window.close();
         }
 
-        // Using device time opposed to database
-        $("#autosaveIndicator").text(
-          "Last autosaved at: " + new Date().toLocaleTimeString()
-        );
-      },
-    });
+        const indicator = document.getElementById("autosaveIndicator");
+        if (indicator) {
+          indicator.textContent =
+            "Last autosaved at: " + new Date().toLocaleTimeString();
+        }
+      })
+      .catch((error) => console.error("Autosave failed:", error));
   }, 60000);
 }
 
 const stars = document.querySelectorAll("#stars span");
+const scoreInput = document.querySelector("#stars input[name='score']");
+const rating = scoreInput.value;
 
-// Needed for if you submit and get redirected back the stars will now still be highlighted
-var rating = document.querySelector("#stars input[name='score']").value;
+// Needed so if you submit and get redirected back the stars will still be highlighted
 if (rating) {
-  for (var i = 0; i < rating; i++) {
-    stars.eq(i).text("\u2605");
+  for (let i = 0; i < rating; i++) {
+    stars[i].textContent = "\u2605";
   }
 }
 
-document.querySelectorAll(".your-selector").forEach(function (el) {
-  el.addEventListener("click", function () {
-    // Reset all stars to hollow (☆)
-    document.querySelectorAll("#stars .your-selector").forEach(function (star) {
-      star.textContent = "\u2606";
-    });
-
-    // Fill this star and all previous siblings (★)
-    let current = this;
-    while (current) {
-      current.textContent = "\u2605";
-      current = current.previousElementSibling;
+stars.forEach((star, i) => {
+  // Hover in
+  star.addEventListener("mouseenter", () => {
+    for (let j = 0; j <= i; j++) {
+      stars[j].classList.add("star-hover");
     }
+  });
 
-    // Set the hidden input value
-    const input = document.querySelector("#stars input[name='score']");
-    if (input) {
-      input.value = this.dataset.rating;
+  // Hover out
+  star.addEventListener("mouseleave", () => {
+    for (let j = 0; j <= i; j++) {
+      stars[j].classList.remove("star-hover");
     }
+  });
+
+  // Click to set rating
+  star.addEventListener("click", () => {
+    stars.forEach((s) => (s.textContent = "\u2606")); // empty star
+    for (let j = 0; j <= i; j++) {
+      stars[j].textContent = "\u2605"; // filled star
+    }
+    scoreInput.value = star.dataset.rating;
   });
 });
 
-document.querySelectorAll("#start, #end").forEach(function (el) {
-  el.addEventListener("change", function () {
-    setTimeout(function () {
+const startInput = document.getElementById("start");
+const endInput = document.getElementById("end");
+
+[startInput, endInput].forEach((input) => {
+  input.addEventListener("change", () => {
+    setTimeout(() => {
       autoCalcDuration(
-        document.getElementById("start").value,
-        document.getElementById("end").value,
+        startInput.value,
+        endInput.value,
         document.getElementById("duration").value
       );
     }, 100);
@@ -111,10 +115,9 @@ window.autoCalcDuration = (time1, time2, target) => {
   }
 };
 
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   const showSuggestions = document.getElementById("showSuggestions");
   if (showSuggestions) {
-    // Assuming you're using Bootstrap's modal component
     const modal = new bootstrap.Modal(showSuggestions);
     modal.show();
   }
@@ -123,10 +126,8 @@ window.addEventListener("load", function () {
 window.fillSession = (session) => {
   const showSuggestions = document.getElementById("showSuggestions");
   if (showSuggestions) {
-    const modal =
-      bootstrap.Modal.getInstance(showSuggestions) ||
-      new bootstrap.Modal(showSuggestions);
-    modal.hide();
+    const modal = bootstrap.Modal.getInstance(showSuggestions);
+    modal?.hide();
   }
 
   document.getElementById("scheddy_id").value = session.scheddy_id;
