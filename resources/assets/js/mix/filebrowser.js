@@ -24,29 +24,27 @@ function itemReorder(id, pos, typ, act) {
       break;
   }
 
-  $.get(
-    "/dashboard/admin/files/disp-order?id=" +
-      id +
-      "&pos=" +
-      pos +
-      "&act=" +
-      act +
-      "&typ=" +
-      typ,
-    function (data) {
+  fetch(
+    `/dashboard/admin/files/disp-order?id=${id}&pos=${pos}&act=${act}&typ=${typ}`
+  )
+    .then((response) => response.text())
+    .then((data) => {
       if (data.length > 0) {
-        document
+        const tbody = document
           .getElementById(dType)
-          .getElementsByTagName("tbody")[0].innerHTML = data.replace(/\\/g, "");
+          .getElementsByTagName("tbody")[0];
+        tbody.innerHTML = data.replace(/\\/g, "");
       }
-    }
-  );
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
 }
 
 window.itemReorder = itemReorder;
 
 function linkToClipboard(e) {
-  var path = getSiteRoot() + e.dataset.title;
+  const path = getSiteRoot() + e.dataset.bsTitle;
   window.copyTextToClipboard(path);
 }
 
