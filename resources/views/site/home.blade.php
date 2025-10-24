@@ -5,7 +5,7 @@ Home
 @endsection
 
 @push('custom_header')
-	<link rel="stylesheet" href="{{ mix('css/home.css') }}" />
+	@vite('resources/css/home.css')
 @endpush
 
 @section('content')
@@ -263,5 +263,5 @@ Home
 		</div>
 	</div>
 </div>
-<script src="{{mix('js/home.js')}}"></script>
+@vite('resources/js/home.js')
 @endsection

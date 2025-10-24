@@ -40,5 +40,5 @@ Background Task Monitor
     </tbody>
 </table>
 
-<script src="{{mix('js/copy_to_clipboard.js')}}"></script>
+@vite('resources/js/copy_to_clipboard.js')
 @endsection

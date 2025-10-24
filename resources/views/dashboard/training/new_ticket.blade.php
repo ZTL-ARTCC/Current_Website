@@ -5,7 +5,7 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
+@vite('resources/css/trainingticket.css')
 @endpush
 
 @section('content')
@@ -163,5 +163,5 @@ New Training Ticket
     </div>
 @endif
 
-<script src="{{mix('js/trainingticket.js')}}"></script>
+@vite('resources/js/trainingticket.js')
 @endsection

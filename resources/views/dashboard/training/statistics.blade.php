@@ -5,7 +5,7 @@ Training Statistics
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/clipboard.css') }}" />
+@vite('resources/css/clipboard.css')
 @endpush
 
 @section('content')

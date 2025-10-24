@@ -112,5 +112,5 @@ Events
        {!! $events->links() !!}
     @endif
 </div>
-<script src="{{mix('js/event_index.js')}}"></script>
+@vite('resources/js/event_index.js')
 @endsection

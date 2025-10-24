@@ -215,4 +215,4 @@
     </div>
 </div>
 @endif
-<script src="{{mix('js/sidebar.js')}}"></script>
+@vite('resources/js/sidebar.js')

@@ -5,7 +5,7 @@ View Airport ({{ $airport->ltr_4 }})
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/airports.css') }}" />
+@vite('resources/css/airports.css')
 @endpush
 
 @section('content')
@@ -275,5 +275,5 @@ View Airport ({{ $airport->ltr_4 }})
         </div>
     </div>
 </div>
-<script src="{{mix('js/airports.js')}}"></script>
+@vite('resources/js/airports.js')
 @endsection
