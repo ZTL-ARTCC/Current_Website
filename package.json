@@ -15,11 +15,12 @@
         "@popperjs/core": "^2.11.8",
         "axios": "^1.8",
         "bootstrap": "^5.3.7",
-        "laravel-mix": "^6.0.6",
         "prettier": "^2.7.1",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.52.2",
-        "sass-loader": "^12.6.0"
+        "sass-loader": "^12.6.0",
+        "vite": "^3.0.2",
+        "laravel-vite-plugin": "^0.6.0"
     },
     "name": "ztl-v2",
     "description": "## vZTL Website",
