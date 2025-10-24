@@ -683,5 +683,5 @@ View Event
         </div>
     </div>
 </div>
-<script src="{{mix('js/event_view.js')}}"></script>
+@vite('resources/js/event_view.js')
 @endsection

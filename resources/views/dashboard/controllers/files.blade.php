@@ -157,5 +157,5 @@ Files
         @endif
     </div>
 </div>
-<script src="{{mix('js/filebrowser.js')}}"></script>
+@vite('resources/js/filebrowser.js')
 @endsection

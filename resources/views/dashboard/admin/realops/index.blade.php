@@ -5,7 +5,7 @@
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/realops.css') }}" />
+@vite('resources/css/realops.css')
 @endpush
 
 @section('content')

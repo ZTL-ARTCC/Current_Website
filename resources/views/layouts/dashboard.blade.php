@@ -11,19 +11,19 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
-        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
-        <link rel="stylesheet" href="{{ mix('/css/dashboard.css') }}">
-        <link rel="stylesheet" href="{{ mix('/css/main.css') }}">
-        <link rel="stylesheet" href="{{ mix('/css/footer_white.css') }}">
+        @vite('resources/css/app.css')
+        @vite('resources/css/dashboard.css')
+        @vite('resources/css/main.css')
+        @vite('resources/css/footer_white.css')
 
         {{-- Custom JS --}}
-        <script type="text/javascript" src="{{ mix('/js/app.js') }}"></script>
+        @vite('resources/js/app.js')
 
         {{-- Custom Headers --}}
         @stack('custom_header')
 
         {{-- Sidebar Menu Styles --}}
-        <link rel="stylesheet" href="{{ mix('/css/sidebar.css') }}">
+        @vite('resources/css/sidebar.css')
 
         {{-- Title --}}
         <title>

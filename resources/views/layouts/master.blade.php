@@ -11,8 +11,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
-        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
-        <link rel="stylesheet" href="{{ mix('/css/footer_white.css') }}">
+        @vite('resources/css/app.css')
+        @vite('resources/css/footer_white.css')
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
@@ -20,7 +20,7 @@
         @endif
 
         {{-- Custom JS --}}
-        <script type="text/javascript" src="{{ mix('/js/app.js') }}"></script>
+        @vite('resources/js/app.js')
 
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>

@@ -5,7 +5,7 @@ Realops
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/realops.css') }}" />
+@vite('resources/css/realops.css')
 @endpush
 
 @section('content')
@@ -133,5 +133,5 @@ Realops
     @include('inc.empty_state', ['header' => 'No Flights', 'body' => 'There are no flights to display matching that search criteria. Please try adjusting your airport filter or wait for more flights to be added', 'icon' => 'fa fa-plane'])
 @endif
 </div>
-<script src="{{mix('js/realops.js')}}"></script>
+@vite('resources/js/realops.js')
 @endsection

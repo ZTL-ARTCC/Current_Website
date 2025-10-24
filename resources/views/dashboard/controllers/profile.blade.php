@@ -5,7 +5,7 @@ Profile
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/profile.css') }}" />
+@vite('resources/css/profile.css')
 @endpush
 
 @section('content')
