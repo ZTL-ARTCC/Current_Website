@@ -40,5 +40,5 @@ Background Task Monitor
     </tbody>
 </table>
 
-@vite('resources/js/copy_to_clipboard.js')
+@vite('resources/assets/js/copy_to_clipboard.js')
 @endsection

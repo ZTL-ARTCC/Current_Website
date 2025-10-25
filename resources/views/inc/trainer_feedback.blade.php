@@ -74,4 +74,4 @@
         <button class="btn btn-success mb-2" type="submit">Send Feedback</button>
     {{ html()->form()->close() }}
 </div>
-@vite('resources/js/trainerfeedback.js')
+@vite('resources/assets/js/trainerfeedback.js')

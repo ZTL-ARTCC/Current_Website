@@ -5,7 +5,7 @@ Training Team Feedback
 @endsection
 
 @push('custom_header')
-@vite('resources/css/trainingticket.css')
+@vite('resources/assets/sass/trainingticket.scss')
 @endpush
 
 @section('content')

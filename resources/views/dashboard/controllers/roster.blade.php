@@ -5,7 +5,7 @@ Roster
 @endsection
 
 @push('custom_header')
-@vite('resources/css/roster.css')
+@vite('resources/assets/sass/roster.scss')
 @endpush
 
 @section('content')

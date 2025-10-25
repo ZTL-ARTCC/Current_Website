@@ -112,5 +112,5 @@ Events
        {!! $events->links() !!}
     @endif
 </div>
-@vite('resources/js/event_index.js')
+@vite('resources/assets/js/event_index.js')
 @endsection

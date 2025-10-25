@@ -5,7 +5,7 @@ Profile
 @endsection
 
 @push('custom_header')
-@vite('resources/css/profile.css')
+@vite('resources/assets/sass/profile.scss')
 @endpush
 
 @section('content')

@@ -11,16 +11,16 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
-        @vite('resources/css/app.css')
-        @vite('resources/css/footer_white.css')
+        @vite('resources/assets/sass/app.scss')
+        @vite('resources/assets/sass/footer_white.scss')
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
-            <script src="/js/snowstorm.js"></script>
+            @vite('resources/assets/js/snowstorm.jsx')
         @endif
 
         {{-- Custom JS --}}
-        @vite('resources/js/app.js')
+        @vite('resources/assets/js/app.js')
 
         {{-- Google reCAPTCHA v2 --}}
         <script src='https://www.google.com/recaptcha/api.js'></script>

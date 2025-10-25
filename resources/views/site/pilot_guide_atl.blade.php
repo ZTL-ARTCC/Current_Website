@@ -7,7 +7,7 @@ ATL Pilot Guide
 @push('custom_header')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-@vite('resources/css/pilots_guide.css')
+@vite('resources/assets/sass/pilots_guide.scss')
 @endpush
 
 @section('content')
@@ -431,5 +431,5 @@ return $badge;
     const maxLatLon = [33.66, -84.39];
     const minLatLon = [33.61, -84.46];
 </script>
-@vite('resources/js/pilots_guide.js')
+@vite('resources/assets/js/pilots_guide.js')
 @endsection

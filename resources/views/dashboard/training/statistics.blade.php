@@ -5,7 +5,7 @@ Training Statistics
 @endsection
 
 @push('custom_header')
-@vite('resources/css/clipboard.css')
+@vite('resources/assets/sass/clipboard.scss')
 @endpush
 
 @section('content')

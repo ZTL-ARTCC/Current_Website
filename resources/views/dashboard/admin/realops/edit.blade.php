@@ -67,5 +67,5 @@
         <a class="btn btn-danger" href="/dashboard/admin/realops">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-@vite('resources/js/realops.js')
+@vite('resources/assets/js/realops.js')
 @endsection

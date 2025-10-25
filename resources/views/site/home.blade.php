@@ -5,7 +5,7 @@ Home
 @endsection
 
 @push('custom_header')
-	@vite('resources/css/home.css')
+	@vite('resources/assets/sass/home.scss')
 @endpush
 
 @section('content')
@@ -263,5 +263,5 @@ Home
 		</div>
 	</div>
 </div>
-@vite('resources/js/home.js')
+@vite('resources/assets/js/home.js')
 @endsection
