@@ -683,5 +683,5 @@ View Event
         </div>
     </div>
 </div>
-@vite('resources/js/event_view.js')
+@vite('resources/assets/js/event_view.js')
 @endsection

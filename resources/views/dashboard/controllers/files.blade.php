@@ -157,5 +157,5 @@ Files
         @endif
     </div>
 </div>
-@vite('resources/js/filebrowser.js')
+@vite('resources/assets/js/filebrowser.js')
 @endsection

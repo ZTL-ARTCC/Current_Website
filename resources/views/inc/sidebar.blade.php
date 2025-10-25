@@ -215,4 +215,4 @@
     </div>
 </div>
 @endif
-@vite('resources/js/sidebar.js')
+@vite('resources/assets/js/sidebar.js')

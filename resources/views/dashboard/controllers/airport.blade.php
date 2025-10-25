@@ -5,7 +5,7 @@
 @endsection
 
 @push('custom_header')
-@vite('resources/css/airports.css')
+@vite('resources/assets/sass/airports.scss')
 @endpush
 
 @section('content')
@@ -282,5 +282,5 @@
         </div>
     </div>
 </div>
-@vite('resources/js/airports.js')
+@vite('resources/assets/js/airports.js')
 @endsection

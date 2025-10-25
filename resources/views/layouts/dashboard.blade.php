@@ -11,19 +11,19 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Stylesheets --}}
-        @vite('resources/css/app.css')
-        @vite('resources/css/dashboard.css')
-        @vite('resources/css/main.css')
-        @vite('resources/css/footer_white.css')
+        @vite('resources/assets/sass/app.scss')
+        @vite('resources/assets/sass/dashboard.scss')
+        @vite('resources/assets/sass/main.scss')
+        @vite('resources/assets/sass/footer_white.scss')
 
         {{-- Custom JS --}}
-        @vite('resources/js/app.js')
+        @vite('resources/assets/js/app.js')
 
         {{-- Custom Headers --}}
         @stack('custom_header')
 
         {{-- Sidebar Menu Styles --}}
-        @vite('resources/css/sidebar.css')
+        @vite('resources/assets/sass/sidebar.scss')
 
         {{-- Title --}}
         <title>

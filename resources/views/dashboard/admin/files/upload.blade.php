@@ -56,6 +56,6 @@ Upload File
     {{ html()->form()->close() }}
 </div>
 
-@vite('resources/js/permalink_field.js')
+@vite('resources/assets/js/permalink_field.js')
 
 @endsection
