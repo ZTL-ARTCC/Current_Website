@@ -5,7 +5,7 @@ Dashboard
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/dashboard.css') }}" />
+@vite('resources/assets/sass/dashboard.scss')
 @endpush
 
 @section('content')
