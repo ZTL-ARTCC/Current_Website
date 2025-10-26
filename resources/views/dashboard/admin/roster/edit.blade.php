@@ -140,7 +140,7 @@ Update Controller
                     <div class="col-sm-10">
                         <label for="visitor">Visitor?</label>
                         {{ html()->checkbox('visitor', $is_visitor, 1)->attributes(['disabled']) }}
-                        @if($user->visitor == 1)
+                        @if($user->visitor == 1 && Auth::user()->isAbleTo('roster'))
                             <a href="/dashboard/admin/roster/visit/remove/{{ $user->id }}">(Remove from Roster)</a>
                         @endif
                     </div>
