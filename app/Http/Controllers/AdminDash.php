@@ -398,7 +398,7 @@ class AdminDash extends Controller {
         if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
             $positions = ['gnd','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
             foreach ($positions as $position) {
-                $user[$position] = $request->input($position);
+                $user[$position] = $request->input($position) ?? 0;
             }
             $positions = array_keys(User::$SoloFacilities);
             foreach ($positions as $solo_id => $position) {
