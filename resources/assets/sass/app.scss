@@ -22,8 +22,8 @@ $font-family-base: "Hind Siliguri", sans-serif;
 
 html,
 body {
-  background-color: #fff;
-  color: black;
+  //background-color: #fff;
+  //color: black;
   --bs-body-font-family: "Hind Siliguri", sans-serif;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 100;
@@ -151,15 +151,16 @@ body {
 }
 
 .view-header {
-  background-color: #f0f0f0;
+  background-color: var(--bs-secondary-bg);
 }
 
 .tab-link {
-  color: black;
+//  color: black;
 }
 
 .item-black {
-  color: black;
+//  color: black;
+    color: var(--bs-body-color);
 }
 
 .bronze {
@@ -168,6 +169,7 @@ body {
 
 div.bronze-bg {
   background-color: #c9ae5d;
+  color: rgb(33,37,41);
 }
 
 .pyrite {
@@ -176,6 +178,7 @@ div.bronze-bg {
 
 div.pyrite-bg {
   background-color: #ffdf00;
+  color: rgb(33,37,41);
 }
 
 div.hours-danger,
