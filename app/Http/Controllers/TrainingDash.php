@@ -57,6 +57,10 @@ class TrainingDash extends Controller {
     }
 
     public function addInfo(Request $request, $section) {
+        $validator = $request->validate([
+            'number' => 'required|numeric',
+            'info' => 'required'
+        ]);
         $replacing = TrainingInfo::where('number', '>', $request->number)->where('section', $section)->get();
         if ($replacing != null) {
             foreach ($replacing as $r) {
