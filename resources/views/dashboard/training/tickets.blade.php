@@ -34,12 +34,22 @@ Training Tickets
         <div class="col-sm-1">
             <button class="btn btn-primary" action="submit">Search</button>
         </div>
+        {{ html()->form()->close() }}
+        <div class="col-sm-3">
+            {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
+            {{ html()->hidden('cid', Auth::id()) }}
+            {{ html()->hidden('search_type', 'trainer') }}
+            <button class="btn btn-primary" action="submit">View My Tickets</button>
+            {{ html()->form()->close() }}
+        </div>
     </div>
-    {{ html()->form()->close() }}
 
     @if($search_result != null)
         <hr>
-        <h5>Showing Training Data for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+        @if($is_trainer_search)
+            <h5>Showing Training Sessions Conducted by {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
+        @else
+            <h5>Showing Training Data for {{ $search_result->full_name }} ({{ $search_result->id }})</h5>
             <div class="row">
                 <div class="col-sm-4">VATUSA Academy Exam Scores:</div>
                 @php ($examTypes = array('BASIC', 'S2', 'S3', 'C1'))
@@ -60,6 +70,7 @@ Training Tickets
             <div class="row">
                 <div class="col-sm-12">Date of Last Promotion: <strong>{{ $search_result->last_promotion_date }}</strong></div>
             </div>
+        @endif
         <hr>
         @php ($trainingCategories = array('drafts', 's1', 's2', 's3', 'c1', 'other'))
         <ul class="nav nav-tabs nav-justified" role="tablist">
