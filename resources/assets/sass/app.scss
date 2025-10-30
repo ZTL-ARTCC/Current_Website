@@ -229,3 +229,7 @@ a {
 [data-bs-theme=light] .logo-dark {
   display: none;
 }
+
+.tab-link {
+  color: var(--bs-secondary-color);
+}
