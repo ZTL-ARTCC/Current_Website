@@ -22,10 +22,10 @@ Roster
     @endif
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#hcontrollers" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
+            <a class="nav-link active" href="#hcontrollers" role="tab" data-bs-toggle="tab" ><i class="fas fa-home"></i>&nbsp;Home Controllers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#vcontrollers" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
+            <a class="nav-link" href="#vcontrollers" role="tab" data-bs-toggle="tab" ><i class="fas fa-suitcase"></i>&nbsp;Visiting Controllers</a>
         </li>
     </ul>
     @php
