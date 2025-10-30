@@ -222,3 +222,10 @@ td.hours-success {
 a {
   text-decoration: none;
 }
+
+[data-bs-theme=dark] .logo-light {
+  display: none;
+}
+[data-bs-theme=light] .logo-dark {
+  display: none;
+}
