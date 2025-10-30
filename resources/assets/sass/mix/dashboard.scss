@@ -63,7 +63,7 @@ input:checked + .slider:before {
 
 div.clocks div.card-body {
   text-align: center;
-  background-color: lightgrey;
+  background-color: var(--bs-tertiary-bg);
 }
 
 div.clocks iframe {

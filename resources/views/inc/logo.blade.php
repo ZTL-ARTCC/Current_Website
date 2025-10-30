@@ -1,11 +1,5 @@
 @php
     $logo_id = 'ztl_logo_';
-    $logo_bg_color = 'white';
-    if(isset($color)) {
-        if(in_array($color, ['white','black'])) {
-            $logo_bg_color = $color;
-        }
-    }
 @endphp
 @toggle('custom_theme_logo')
     @php
@@ -30,4 +24,7 @@
         @php ($logo_id = 'ztl_logo_santa-')
     @endif
 @endtoggle
-<img src="/photos/logos/{{ $logo_id }}{{ $logo_bg_color }}.png">
+<!-- Dark mode logo: White accent -->
+<img class="logo-dark" src="/photos/logos/{{ $logo_id }}white.png">
+<!-- Light mode logo: Black accent -->
+<img class="logo-light" src="/photos/logos/{{ $logo_id }}black.png">

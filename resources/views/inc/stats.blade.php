@@ -57,7 +57,7 @@ if (!$privacy)  {
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($statCategory) }} Controllers</a>
+                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-bs-toggle="tab" >{{ ucfirst($statCategory) }} Controllers</a>
             </li>
         @endforeach
     </ul>

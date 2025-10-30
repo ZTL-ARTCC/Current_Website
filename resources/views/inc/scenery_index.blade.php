@@ -27,7 +27,7 @@
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ $sceneryDescription }}</a>
+                <a class="nav-link tab-link{{ $active }}" href="#{{ $sceneryCategory }}" role="tab" data-bs-toggle="tab" >{{ $sceneryDescription }}</a>
             </li>
         @endforeach
     </ul>

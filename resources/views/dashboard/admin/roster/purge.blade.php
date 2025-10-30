@@ -36,7 +36,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 @php ($active = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($statCategory) }} Controllers</a>
+                <a class="nav-link{{ $active }}" href="#{{ $statCategory }}" role="tab" data-bs-toggle="tab" >{{ ucfirst($statCategory) }} Controllers</a>
             </li>
         @endforeach
         <li class="nav-item">

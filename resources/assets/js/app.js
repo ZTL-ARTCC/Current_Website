@@ -6,3 +6,4 @@
 require("./ckeditor.js");
 require("./bootstrap.js");
 require("./helpers.js");
+require("./theme.js");

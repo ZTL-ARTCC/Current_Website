@@ -72,7 +72,7 @@ Training Tickets
                     @php ($active = ' active')
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
+                    <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" >{{ ucfirst($trainingCategory) }}</a>
                 </li>
             @endforeach
         </ul>

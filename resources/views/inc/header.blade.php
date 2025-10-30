@@ -1,6 +1,6 @@
 @php ($header_type = (isset($type)) ? $type : 'internal')
 @if($header_type == 'external')
-<span class="border border-light py-4 mb-4 view-header">
+<span class="border  py-4 mb-4 view-header">
     <div class="container">
         @isset($content)
             {!! $content !!}

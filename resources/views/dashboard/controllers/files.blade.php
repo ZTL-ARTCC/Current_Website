@@ -35,7 +35,7 @@ Files
                 @php ($activeMarker = ' active')
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-bs-toggle="tab" style="color:black">{{ $fileCategory }}</a>
+                <a class="nav-link{{ $activeMarker }}" href="#{{ strtolower($fileCategory) }}" role="tab" data-bs-toggle="tab" >{{ $fileCategory }}</a>
             </li>
             @php ($displayedTabs[] = strtolower($fileCategory))
         @endforeach
