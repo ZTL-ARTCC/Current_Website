@@ -83,6 +83,7 @@ const endInput = document.getElementById("end");
 [startInput, endInput].forEach((input) => {
   input.addEventListener("change", () => {
     setTimeout(() => {
+      timeRectifyFormat([startInput, endInput]);
       autoCalcDuration(
         startInput.value,
         endInput.value,
@@ -91,6 +92,44 @@ const endInput = document.getElementById("end");
     }, 100);
   });
 });
+
+window.timeRectifyFormat = (times) => {
+  const errorValue = "00:00";
+  for (let t = 0; t < times.length; t++) {
+    let timeStrRegex = /^\d{1,2}:\d{0,2}$/;
+    if (timeStrRegex.test(times[t].value)) {
+      let hours = times[t].value.split(":")[0];
+      let minutes = times[t].value.split(":")[1];
+      times[t].value = hours.padStart(2, "0") + ":" + minutes.padStart(2, "0");
+      continue;
+    }
+    if (isNaN(times[t].value)) {
+      times[t].value = errorValue;
+      continue;
+    }
+    switch (times[t].value.length) {
+      case 1:
+        times[t].value = "0" + times[t].value + ":00";
+        break;
+      case 2:
+        times[t].value = times[t].value + ":00";
+        break;
+      case 3:
+        times[t].value =
+          "0" +
+          times[t].value.substring(0, 1) +
+          ":" +
+          times[t].value.substring(1, 3);
+        break;
+      case 4:
+        times[t].value =
+          times[t].value.substring(0, 2) + ":" + times[t].value.substring(2, 4);
+        break;
+      default:
+        times[t].value = errorValue;
+    }
+  }
+};
 
 window.autoCalcDuration = (time1, time2, target) => {
   if (time1 != "" && time2 != "") {
