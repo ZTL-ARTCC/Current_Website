@@ -398,7 +398,7 @@ class AdminDash extends Controller {
         if (Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train')) { // Update training certifications
             $positions = ['gnd','clt_del','clt_gnd','clt_twr','clt_app','atl_del','atl_gnd','atl_twr','atl_app','twr_solo_fields'];
             foreach ($positions as $position) {
-                $user[$position] = $request->input($position);
+                $user[$position] = $request->input($position) ?? 0;
             }
             $positions = array_keys(User::$SoloFacilities);
             foreach ($positions as $solo_id => $position) {
@@ -848,6 +848,11 @@ class AdminDash extends Controller {
     }
 
     public function fileSeparator(Request $request) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'type' => 'required',
+        ]);
+
         $file = new File;
         $file->name = $request->input('title');
         $file->type = $request->input('type');
@@ -871,6 +876,11 @@ class AdminDash extends Controller {
     }
 
     public function saveFile(Request $request, $id) {
+        $validator = $request->validate([
+            'title' => 'required',
+            'type' => 'required',
+        ]);
+
         $permalink = $request->input('permalink');
         if (strlen($permalink) < 1) {
             $permalink = null;
@@ -1185,7 +1195,7 @@ class AdminDash extends Controller {
     public function sendEmail(Request $request) {
         $validator = $request->validate([
             'name' => 'required',
-            'reply_to' => 'required',
+            'reply_to' => 'required|email',
             'subject' => 'required',
             'message' => 'required'
         ]);

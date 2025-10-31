@@ -98,7 +98,7 @@ OTS Center
                             <td>{{ $o->position_name }}</td>
                             <td>
                                 @if($o->ins_id == Auth::id() || Auth::user()->isAbleTo('snrStaff'))
-                                    <span bs-toggle="modal" data-bs-target="#completeOTS{{ $o->id }}">
+                                    <span data-bs-toggle="modal" data-bs-target="#completeOTS{{ $o->id }}">
                                         <button type="button" class="btn btn-success simple-tooltip" data-bs-placement="top" data-bs-toggle="tooltip" title="Set OTS as Complete"><i class="fas fa-check"></i></button>
                                     </span>
                                     <a href="/dashboard/training/ots-center/cancel/{{ $o->id }}" class="btn btn-warning simple-tooltip" data-bs-toggle="tooltip" title="Cancel OTS"><i class="fas fa-ban"></i></a>
