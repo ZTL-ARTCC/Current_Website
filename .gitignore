@@ -5,6 +5,7 @@
 /public/hot
 /public/build
 /public/storage
+/public/mix-manifest.json
 /public/js/*.js
 /public/css/*.css
 /public/fonts/vendor
