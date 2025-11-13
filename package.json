@@ -15,7 +15,7 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.93.2",
         "sass-loader": "^12.6.0",
-        "vite": "^3.0.2"
+        "vite": "^5.4.21"
     },
     "name": "ztl-v2",
     "description": "## vZTL Website",
