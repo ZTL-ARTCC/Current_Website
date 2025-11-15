@@ -21,8 +21,6 @@ Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
 Route::post('/visit/save', 'FrontController@storeVisit')->name('storeVisit');
 Route::get('/pilots/airports', 'FrontController@airportIndex');
-Route::post('/pilots/airports', 'FrontController@searchAirport')->name('searchAirport');
-Route::get('/pilots/airports/search', 'FrontController@searchAirportResult');
 Route::get('/pilots/airports/view/{id}', 'FrontController@showAirport');
 Route::get('/pilots/scenery', 'FrontController@sceneryIndex');
 Route::get('/pilots/scenery/view/{id}', 'FrontController@showScenery');
