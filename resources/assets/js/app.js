@@ -3,6 +3,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require("./ckeditor.js");
-require("./bootstrap.js");
-require("./helpers.js");
+import "./ckeditor.js";
+import "./bootstrap.js";
+import "./helpers.js";

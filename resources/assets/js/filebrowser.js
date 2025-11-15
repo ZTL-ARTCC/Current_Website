@@ -1,4 +1,4 @@
-require("./copy_to_clipboard.js");
+import "./copy_to_clipboard.js";
 
 function itemReorder(id, pos, typ, act) {
   // Handles custom re-ordering of items in file browser
