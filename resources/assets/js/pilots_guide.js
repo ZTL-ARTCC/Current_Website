@@ -19,7 +19,6 @@ function resizeMap() {
   }, 500);
 }
 
-
 const showAtlMapTab = document.getElementById("showAtlMap");
 if (showAtlMapTab) {
   showAtlMapTab.addEventListener("click", function () {
