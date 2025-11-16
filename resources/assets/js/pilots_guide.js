@@ -19,7 +19,6 @@ function resizeMap() {
   }, 500);
 }
 
-window.resizeMap = resizeMap;
 
 const showAtlMapTab = document.getElementById("showAtlMap");
 if (showAtlMapTab) {
@@ -62,8 +61,6 @@ function updatePlanes() {
   );
   xhttp.send();
 }
-
-window.updatePlanes = updatePlanes;
 
 function createPlane(lat, lon, hdg, cs, actype, dep, arr, sel = false) {
   var color = null;
