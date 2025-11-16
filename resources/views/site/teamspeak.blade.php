@@ -8,7 +8,7 @@ TeamSpeak
 @include('inc.header', ['title' => 'ZTL ARTCC Teamspeak Information', 'type' => 'external'])
 
 <div class="container">
-    <center><h1><a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a> vZTL ARTCC TeamSpeak Information <a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="/photos/ts_stacked.png"></a></h1></center>
+    <center><h1><a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="{{ Vite::asset('resources/assets/img/ts_stacked.png') }}"></a> vZTL ARTCC TeamSpeak Information <a href="https://www.teamspeak.com/?tour=yes" target="_blank"><img width="50" src="{{ Vite::asset('resources/assets/img/ts_stacked.png') }}"></a></h1></center>
     <center><p><i>Thank you to TeamSpeak for providing us with our TeamSpeak license. Check them out at <a href="https://www.teamspeak.com/?tour=yes" target="_blank">https://www.teamspeak.com</a> for more information!</i></p></center>
     <hr>
     <center><h3>TeamSpeak is used for all training and all controller communications. All members are welcome to join us in the TeamSpeak. You can connect to the TeamSpeak server without a password, using the server:</h3></center>
