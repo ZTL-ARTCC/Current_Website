@@ -6,6 +6,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 18,
   minZoom: 15,
 }).addTo(map);
+updatePlanes();
 
 var planeLayer = new L.LayerGroup();
 planeLayer.addTo(map);
@@ -20,11 +21,18 @@ function resizeMap() {
 
 window.resizeMap = resizeMap;
 
+const showAtlMapTab = document.getElementById("showAtlMap");
+if (showAtlMapTab) {
+  showAtlMapTab.addEventListener("click", function () {
+    resizeMap();
+  });
+}
+
 function updatePlanes() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      resp = JSON.parse(this.responseText);
+      let resp = JSON.parse(this.responseText);
       planeLayer.clearLayers();
       resp.data.forEach((plane) => {
         if (
@@ -94,7 +102,7 @@ function createPlane(lat, lon, hdg, cs, actype, dep, arr, sel = false) {
   marker.on("mouseout", function (e) {
     this.closePopup();
   });
-  this.planeLayer.addLayer(marker);
+  window.planeLayer.addLayer(marker);
 }
 
 setInterval(function () {
