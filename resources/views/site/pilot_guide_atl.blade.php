@@ -42,7 +42,7 @@ return $badge;
 
     <div class="tab-content">
         <div id="tab0" class="tab-pane active">
-            <img class="float-end m-1" src="/photos/pg_atl_tab0.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab0.png') }}">
             <h3>Welcome</h3>
             <p>We are glad that you have decided to fly out of Atlanta today. The Atlanta Hartsfield-Jackson International Airport is the world's
                 busiest airport by passenger volume. At ZTL, we do our very best to simulate real-world operations and air traffic control. Thanks
@@ -218,7 +218,7 @@ return $badge;
             <p>If more than 1 tower controller is online at ATL, you should call the controller on the frequency provided by ground.</p>
         </div>
         <div id="tab3" class="tab-pane fade">
-            <img class="float-end m-1" src="/photos/pg_atl_tab3.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab3.png') }}">
             <h3>Filing a flight plan</h3>
             <p> All IFR operations at ATL require a flight plan on-file. We highly recommend that all VFR operators file flight plans. If you
                 cannot file a flight plan, a controller will assist you (workload depending).</p>
@@ -233,7 +233,7 @@ return $badge;
         <div id="tab4" class="tab-pane fade">
             <div id="diagram1Carousel" class="carousel slide w-25 float-end">
                 <br />
-                <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
+                <a href="{{ $aaup }}" target="_blank"><img src="{{ Vite::asset('resources/assets/img/pilot_guide/atl_aaup.png') }}" class="d-block w-100" alt="AAUP"></a>
             </div>
             <h3>Receiving a clearance</h3>
             <p> After filing a flight plan, you should receive your clearance from ATC. If you have not received a clearance after a reasonable
@@ -264,7 +264,7 @@ return $badge;
             </ul>
         </div>
         <div id="tab5" class="tab-pane fade">
-            <img class="float-end m-1" src="/photos/pg_atl_tab5.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab5.png') }}">
             <h3>Push & Start</h3>
             <p> ATL does not simulate ramp control. During non-event periods, push and start clearances are at your discretion and do not require
                 ATC clearance. For major events (example: cross the pond) where you have been issued an estimated departure clearance time (EDCT),
@@ -280,7 +280,7 @@ return $badge;
                 direction.</p>
         </div>
         <div id="tab6" class="tab-pane fade">
-            <img class="float-end m-1" src="/photos/pg_atl_tab6.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab6.png') }}">
             <h3>Taxi</h3>
             <p> Check ATIS one more time prior to calling for taxi to ensure that nothing has changed. Ensure that your transponder is on with
                 the correct squawk code entered and in altitude mode. Taxi to the north or south hold point on the ramp and call
@@ -297,10 +297,10 @@ return $badge;
             <div id="diagram2Carousel" class="carousel slide w-25 float-end" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <a href="{{ $diag }}" target="_blank"><img src="/photos/atl_diag.png" class="d-block w-100" alt="Diagram"></a>
+                        <a href="{{ $diag }}" target="_blank"><img src="{{ Vite::asset('resources/assets/img/pilot_guide/atl_diag.png') }}" class="d-block w-100" alt="Diagram"></a>
                     </div>
                     <div class="carousel-item">
-                        <a href="{{ $aaup }}" target="_blank"><img src="/photos/atl_aaup.png" class="d-block w-100" alt="AAUP"></a>
+                        <a href="{{ $aaup }}" target="_blank"><img src="{{ Vite::asset('resources/assets/img/pilot_guide/atl_aaup.png') }}" class="d-block w-100" alt="AAUP"></a>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#diagram2Carousel" role="button" data-bs-slide="prev">
@@ -325,7 +325,7 @@ return $badge;
                 from a runway. <a href="/pdf/ATL_Standard_Coded_Taxi_Routes.pdf" alt="coded_taxi" target="_blank">Click Here</a> to view our coded taxi routes.</p>
         </div>
         <div id="tab7" class="tab-pane fade">
-            <img class="float-end m-1" src="/photos/pg_atl_tab7.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab7.png') }}">
             <h3>Takeoff & Climbout</h3>
             <p>As part of your takeoff clearance, the controller will state your initial RNAV waypoint or your departure heading. These items must
                 be read back to the controller issuing your takeoff clearance. This step ensures that you will remain clear of traffic departing
@@ -342,7 +342,7 @@ return $badge;
                 your climb-out and provide you with a hand-off to Atlanta Center.</p>
         </div>
         <div id="tab8" class="tab-pane fade">
-            <img class="float-end m-1" src="/photos/pg_atl_tab8.png">
+            <img class="float-end m-1" src="{{ Vite::asset('resources/assets/img/pilot_guide/pg_atl_tab8.png') }}">
             <h3>Arrival</h3>
             <p>Welcome to Atlanta - we're glad that you decided to make us your destination today. Ensure that you monitor the arrival ATIS when
                 you are inbound (no later than 60 miles from the airport). Atlanta Approach is responsible for assigning your arrival runway -
