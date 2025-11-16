@@ -22,7 +22,7 @@ Unauthorized Access
                     <h3>Whoops this part of the website is protected and you aren't supposed to be going there!</h3>
                 </div>
                 <div class="col-sm-4">
-                    <img src="/photos/jail.gif" width="300px">
+                    <img src="{{ Vite::asset('resources/assets/img/errors/jail.gif') }}" width="300px">
                 </div>
             </div>
             <hr>

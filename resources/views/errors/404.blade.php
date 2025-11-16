@@ -22,7 +22,7 @@ Page Not Found
                     <h3>Whoops it looks you're lost because that page does not exist!</h3>
                 </div>
                 <div class="col-sm-4">
-                    <img src="/photos/lost.gif" width="300px">
+                    <img src="{{ Vite::asset('resources/assets/img/errors/lost.gif') }}" width="300px">
                 </div>
             </div>
             <hr>
