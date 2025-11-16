@@ -30,7 +30,7 @@ return $badge;
 <div class="container">
     <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab0">Welcome</a></li>
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab1" onclick="resizeMap();">Connecting</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab1" id="showAtlMap">Connecting</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">Communications</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">Flight Plans</a></li>
         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab4">Clearances</a></li>
