@@ -8,18 +8,19 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.8",
-        "axios": "^1.8",
+        "axios": "^1.13.2",
         "bootstrap": "^5.3.7",
-        "laravel-vite-plugin": "^0.6.0",
+        "laravel-vite-plugin": "^1.1.1",
         "prettier": "^2.7.1",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.93.2",
         "sass-loader": "^12.6.0",
-        "vite": "^3.0.2"
+        "vite": "^5.4.21"
     },
     "name": "ztl-v2",
     "description": "## vZTL Website",
     "version": "1.0.0",
+    "type": "module",
     "main": "webpack.mix.js",
     "directories": {
         "test": "tests"
