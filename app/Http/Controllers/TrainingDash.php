@@ -17,6 +17,7 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Mail;
@@ -311,10 +312,13 @@ class TrainingDash extends Controller {
             } else {
                 Log::error('Scheddy trainer session pull resulted in a ' . $res->getStatusCode() . ' status code');
             }
+        } catch (ConnectException $e) {
+            Log::error('cURL connection error: ' . $e->getMessage());
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Log::error($e);
+        } catch (\Exception $e) {
+            Log::error('An unexpected error occurred: ' . $e->getMessage());
         }
-
         $max_recent_sessions = 5;
         $recent_sessions = array_reduce($recent_sessions, function ($new_sessions, $session) use ($max_recent_sessions) {
             $date = Carbon::parse($session->session->start)->setTimezone('America/New_York');

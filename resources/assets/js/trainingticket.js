@@ -79,18 +79,59 @@ stars.forEach((star, i) => {
 
 const startInput = document.getElementById("start");
 const endInput = document.getElementById("end");
+const durationInput = document.getElementById("duration");
 
 [startInput, endInput].forEach((input) => {
   input.addEventListener("change", () => {
     setTimeout(() => {
-      autoCalcDuration(
-        startInput.value,
-        endInput.value,
-        document.getElementById("duration").value
-      );
+      timeRectifyFormat([startInput, endInput]);
+      autoCalcDuration(startInput.value, endInput.value, durationInput);
+      timeRectifyFormat([durationInput]);
     }, 100);
   });
 });
+
+durationInput.addEventListener("change", () => {
+  timeRectifyFormat([durationInput]);
+});
+
+window.timeRectifyFormat = (times) => {
+  const errorValue = "00:00";
+  for (let t = 0; t < times.length; t++) {
+    let timeStrRegex = /^\d{1,2}:\d{0,2}$/;
+    if (timeStrRegex.test(times[t].value)) {
+      let hours = times[t].value.split(":")[0];
+      let minutes = times[t].value.split(":")[1];
+      times[t].value = hours.padStart(2, "0") + ":" + minutes.padStart(2, "0");
+    } else if (isNaN(times[t].value)) {
+      times[t].value = errorValue;
+    } else {
+      switch (times[t].value.length) {
+        case 1:
+          times[t].value = "0" + times[t].value + ":00";
+          break;
+        case 2:
+          times[t].value = times[t].value + ":00";
+          break;
+        case 3:
+          times[t].value =
+            "0" +
+            times[t].value.substring(0, 1) +
+            ":" +
+            times[t].value.substring(1, 3);
+          break;
+        case 4:
+          times[t].value =
+            times[t].value.substring(0, 2) +
+            ":" +
+            times[t].value.substring(2, 4);
+          break;
+        default:
+          times[t].value = errorValue;
+      }
+    }
+  }
+};
 
 window.autoCalcDuration = (time1, time2, target) => {
   if (time1 != "" && time2 != "") {
@@ -104,14 +145,7 @@ window.autoCalcDuration = (time1, time2, target) => {
     var duration = endDeci - startDeci;
     var duration_hours = parseInt(duration);
     var duration_minutes = Math.round((duration - duration_hours) * 60);
-    if (duration_hours < 10) {
-      duration_hours = "0" + duration_hours;
-    }
-    if (duration_minutes < 10) {
-      duration_minutes = "0" + duration_minutes;
-    }
-    document.getElementById("duration").value =
-      duration_hours + ":" + duration_minutes;
+    target.value = duration_hours + ":" + duration_minutes;
   }
 };
 
