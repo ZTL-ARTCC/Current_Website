@@ -66,24 +66,24 @@ Edit Training Ticket
                     @else
                         <label for="start" class="form-label">Start Time ET</label>
                     @endif
-                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker2']) }}
+                    <div class="input-group">
+                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="end" class="form-label">End Time ET</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker3']) }}
+                    <div class="input-group">
+                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="duration" class="form-label">Duration (hh:mm)</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker4']) }}
+                    <div class="input-group">
+                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
