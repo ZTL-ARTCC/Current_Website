@@ -30,4 +30,4 @@
         @php ($logo_id = 'ztl_logo_santa-')
     @endif
 @endtoggle
-<img src="/photos/logos/{{ $logo_id }}{{ $logo_bg_color }}.png">
+<img src="{{ Vite::asset('resources/assets/img/logos/' . $logo_id . $logo_bg_color . '.png') }}">
