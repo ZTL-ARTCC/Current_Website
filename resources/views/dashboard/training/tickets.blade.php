@@ -8,11 +8,24 @@ Training Tickets
 @include('inc.header', ['title' => 'Training Tickets'])
 
 <div class="container">
-    @if($search_result != null)
-        <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
-    @else
-        <a class="btn btn-primary" href="/dashboard/training/tickets/new">Submit New Training Ticket</a>
-    @endif
+    <div class=row>
+        <div class="col-sm-auto">
+            @if($search_result != null)
+                <a class="btn btn-primary" href="/dashboard/training/tickets/new?id={{ $search_result->id }}">Submit New Training Ticket</a>
+            @else
+                <a class="btn btn-primary" href="/dashboard/training/tickets/new">Submit New Training Ticket</a>
+            @endif
+        </div>
+
+        <div class="col-sm-auto">
+            {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
+            {{ html()->hidden('cid', Auth::id()) }}
+            {{ html()->hidden('search_type', 'trainer') }}
+            <button class="btn btn-primary" action="submit">View My Tickets as Trainer</button>
+            {{ html()->form()->close() }}
+        </div>
+    </div>
+
     <br><br>
     <h5>Search Training Tickets:</h5>
     {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
@@ -35,13 +48,6 @@ Training Tickets
             <button class="btn btn-primary" action="submit">Search</button>
         </div>
         {{ html()->form()->close() }}
-        <div class="col-sm-3">
-            {{ html()->form('POST', '/dashboard/training/tickets/search')->open() }}
-            {{ html()->hidden('cid', Auth::id()) }}
-            {{ html()->hidden('search_type', 'trainer') }}
-            <button class="btn btn-primary" action="submit">View My Tickets</button>
-            {{ html()->form()->close() }}
-        </div>
     </div>
 
     @if($search_result != null)
