@@ -53,7 +53,7 @@
                                     @if($s->image1)
                                         <a href="/pilots/scenery/view/{{ $s->id }}"><img src="{{ $s->image1 }}" width="100px"></img></a>
                                     @else
-                                        <img src="{{ Vite::asset('resources/assets/img/No_image_available.svg') }}" width="100px"></img>
+                                        <img src="{{ Vite::image('No_image_available.svg') }}" width="100px"></img>
                                     @endif
                                 </td>
                                 <td>{{ $s->airport }}</td>

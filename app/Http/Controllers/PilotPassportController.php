@@ -142,7 +142,7 @@ class PilotPassportController extends Controller {
     }
 
     public function generateStamp($id) {
-        $img_path = Vite::asset('resources/assets/img/pilot_passport/pilot_passport_stamp.png');
+        $img_path = Vite::image('pilot_passport/pilot_passport_stamp.png');
         $gd = imagecreatefrompng($img_path);
         imagealphablending($gd, false);
         $transparency = imagecolorallocatealpha($gd, 0, 0, 0, 127);
@@ -165,7 +165,7 @@ class PilotPassportController extends Controller {
 
     public function generateMedal($id) {
         $a = PilotPassportAward::find($id);
-        $img_path = Vite::asset('resources/assets/img/pilot_passport/challenge_medal.png');
+        $img_path = Vite::image('pilot_passport/challenge_medal.png');
         $gd = imagecreatefrompng($img_path);
         imagealphablending($gd, false);
         $transparency = imagecolorallocatealpha($gd, 0, 0, 0, 127);

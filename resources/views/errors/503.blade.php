@@ -21,7 +21,7 @@ Under Maintenance
                     <h3>Whoops there is currently website maintenance in progress! We will be back online in a few...</h3>
                 </div>
                 <div class="col-sm-4">
-                    <img src="{{ Vite::asset('resources/assets/img/errors/construction.gif') }}" width="300px">
+                    <img src="{{ Vite::image('errors/construction.gif') }}" width="300px">
                     <p><small>Let's hope this isn't happening!</small></p>
                 </div>
             </div>
