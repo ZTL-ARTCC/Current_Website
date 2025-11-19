@@ -15,6 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Vite;
 use Mail;
 
 class PilotPassportController extends Controller {
@@ -141,7 +142,7 @@ class PilotPassportController extends Controller {
     }
 
     public function generateStamp($id) {
-        $img_path = 'photos/pilot_passport/pilot_passport_stamp.png';
+        $img_path = Vite::image('pilot_passport/pilot_passport_stamp.png');
         $gd = imagecreatefrompng($img_path);
         imagealphablending($gd, false);
         $transparency = imagecolorallocatealpha($gd, 0, 0, 0, 127);
@@ -164,7 +165,7 @@ class PilotPassportController extends Controller {
 
     public function generateMedal($id) {
         $a = PilotPassportAward::find($id);
-        $img_path = 'photos/pilot_passport/challenge_medal.png';
+        $img_path = Vite::image('pilot_passport/challenge_medal.png');
         $gd = imagecreatefrompng($img_path);
         imagealphablending($gd, false);
         $transparency = imagecolorallocatealpha($gd, 0, 0, 0, 127);

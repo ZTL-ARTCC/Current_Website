@@ -27,7 +27,7 @@ Merch Store
                             @if($merch_item->image)
                                 <img src="{{ url('/storage/store/'.$merch_item->image) }}" width="300px"></img>
                             @else
-                                <img src="/photos/No_image_available.svg" width="100px"></img>
+                                <img src="{{ Vite::image('No_image_available.svg') }}" width="100px"></img>
                             @endif
                         </td>
                         <td>

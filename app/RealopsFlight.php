@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Vite;
 
 class RealopsFlight extends Model {
     protected $table = 'realops_flights';
@@ -45,10 +46,11 @@ class RealopsFlight extends Model {
 
     public function getImageDirectory() {
         $flight_id = (!is_null($this->callsign)) ? $this->callsign : $this->flight_number;
-        $directory = '/photos/airline_logos/' . substr($flight_id, 0, 3) . '.png';
-        if (file_exists(public_path() . $directory)) {
-            return $directory;
+        $airline = strtoupper(substr($flight_id, 0, 3));
+        if (file_exists(resource_path('/assets/img/airline_logos/' . $airline . '.png'))) {
+
+            return Vite::image('airline_logos/' . $airline . '.png');
         }
-        return '/photos/airline_logos/default.png';
+        return Vite::image('airline_logos/default.png');
     }
 }
