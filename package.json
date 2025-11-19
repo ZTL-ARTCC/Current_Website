@@ -20,7 +20,6 @@
     "name": "ztl-v2",
     "description": "## vZTL Website",
     "version": "1.0.0",
-    "type": "module",
     "main": "webpack.mix.js",
     "directories": {
         "test": "tests"
