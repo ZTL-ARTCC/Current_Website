@@ -136,6 +136,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/view/{id}', 'TrainingDash@viewTicket');
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
+            Route::post('/get-rating/{cid}', 'TrainingDash@getRating');
         });
         Route::prefix('trainer_feedback')->group(function () {
             Route::get('/new', 'TrainingDash@newTrainerFeedback')->name('internalTrainerFeedback');
