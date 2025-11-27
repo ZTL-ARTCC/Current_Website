@@ -2,7 +2,7 @@
     <div class="row bg-warning w-100 my-2 rounded" wire:loading>
         <h3 class="text-center p-2"><i class="fa-solid fa-hourglass-start me-2"></i> Refreshing Dataset... please wait</h3>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-sm-2 col-xs-12">
             <div class="card">
                 {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-select'])->attributes(['wire:model.change'=>'date_select']) }}
