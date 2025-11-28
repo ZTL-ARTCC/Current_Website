@@ -40,6 +40,9 @@
         <div id="collapseTraining" class="accordion-collapse collapse" data-bs-parent="#pill-sidebar">
             <div class="accordion-body">
                 <div class="nav flex-column nav-pills pt-0">
+                    @toggle('moodle')
+                    <a class="nav-link" href="https://learn.ztlartcc.org" target="_blank">ZTL Moodle <span class="badge bg-warning">New!</span></a>
+                    @endtoggle
                     <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
                     <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/atcast') }}" href="/dashboard/training/atcast">ATCast Videos</a>
