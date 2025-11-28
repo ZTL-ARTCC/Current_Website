@@ -33,6 +33,9 @@ Realops
                {{ html()->text('flightno_filter', $flightno_filter)->class(['form-control'])->placeholder('Flight (DAL367)')->id('flightno_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
+               {{ html()->text('actype_filter', $actype_filter)->class(['form-control'])->placeholder('A20N')->id('actype_filter') }}
+            </div>
+            <div class="col-sm-12 col-md p-1">
                {{ html()->text('date_filter', $date_filter)->class(['form-control'])->placeholder('Date (YYYY-MM-DD)')->id('date_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
@@ -52,6 +55,7 @@ Realops
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Callsign<br><small class="text-muted">Flight Number</small></th>
+            <th scope="col">Aircraft Type</th>
             <th scope="col">Departure Time (UTC)</th>
             <th scope="col">Departure Airport</th>
             <th scope="col">Arrival Airport</th>
@@ -77,6 +81,7 @@ Realops
                     <br>
                     <small class="text-muted">{{ $f->flight_number }}</small>
                 </td>
+                <td>{{ $f->aircraft_type }}</td>
                 <td>{{ $f->dep_time_formatted }}</td>
                 <td>{{ $f->dep_airport }}</td>
                 <td>{{ $f->arr_airport }}</td>
@@ -109,16 +114,18 @@ Realops
                     @endif
                 </td>
                 @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
-                    <td>
-                        <center>
-                            @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
-                                <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
-                            @elseif($f->assigned_pilot)
-                                    <button class="btn btn-success btn-sm" disabled>Bid</button>
-                            @else
-                                <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
-                            @endif
-                        </center>
+                    <td class="text-center">
+                        @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)
+                            <a href="/realops/cancel-bid/{{ $f->id }}" class="btn btn-danger btn-sm">Cancel Bid</a>
+                        @elseif($f->assigned_pilot)
+                            <button class="btn btn-success btn-sm" disabled>Bid</button>
+                        @else
+                            <a href="/realops/bid/{{ $f->id }}" class="btn btn-success btn-sm">Bid</a>
+                        @endif
+                        @if($f->assigned_pilot)
+                            <a href="https://my.vatsim.net/pilots/flightplan?raw={{ $f->icao_flightplan }}" class="btn btn-secondary btn-sm d-block mt-2" target="_blank"><img src="{{ Vite::image('vatsim-icon.png') }}" alt="MyVATSIM" height="16px" class="me-2">Prefile Flight Plan</a>
+                            <a href="https://www.simbrief.com/system/dispatch.php?{{ $f->simbrief_params }}" class="btn btn-secondary btn-sm d-block mt-2" target="_blank"><img src="{{ Vite::image('navigraph-icon.png') }}" alt="SimBrief" height="16px" class="me-2">Send to SimBrief</a>
+                        @endif
                     </td>
                 @endif
             </tr>
