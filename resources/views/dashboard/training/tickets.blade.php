@@ -76,6 +76,17 @@ Training Tickets
             <div class="row">
                 <div class="col-sm-12">Date of Last Promotion: <strong>{{ $search_result->last_promotion_date }}</strong></div>
             </div>
+            @if($student_note && ($search_result->id != Auth::id()))
+            <hr>
+            <h5><i class="fa-solid fa-circle-info me-2"></i>TA Notes for this Student</h5>
+            <div class="row mx-1">
+                <div class="col-sm-12 bg-info rounded">
+                    {!! $student_note->note !!}
+                    <br>
+                    Last modified by {{ $student_note->entered_by_name }} ({{ $student_note->last_modified }})
+                </div>
+            </div>
+            @endif
         @endif
         <hr>
         @php ($trainingCategories = array('drafts', 's1', 's2', 's3', 'c1', 'other'))
