@@ -38,7 +38,7 @@ class TaTicketViews extends Component {
     }
 
     public function render() {
-        $tickets = null;
+        $tickets = collect();
         if ($this->student || $this->trainer || ($this->start_date && $this->end_date)) {
             $query = TrainingTicket::query();
             $query->when($this->student, function ($query, $value) {
