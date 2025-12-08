@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            @if($tickets)
+            @if($tickets->count() > 0)
                 <table class="table">
                     <thead>
                         <tr>
