@@ -761,11 +761,11 @@ class TrainingDash extends Controller {
             }
             $retArr['taMonthlyReport'] = "In the Month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . ", ZTL has offered " . $retArr['sessionsPerMonth'] . " training sessions (" . $percentSessionsChange . "% change from " . Carbon::createFromDate($retArr['date']['start_date'])->subMonths(1)->format('F') . "). " . $retArr['sessionsCompletePerMonth'] . " sessions were completed (" . $percentSessionsCompleteChange . "%), with " . $retArr['sessionsPerMonthNoShow'] . " known no-shows. " . $trainingStaffBelowMins . " Training Staff members did not meet monthly minimums.";
             if (count($top_trainers) > 0) {
-                $retArr['taMonthlyReport'] .= "Our TOP trainers for the month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . " were:";
+                $retArr['taMonthlyReport'] .= " Our TOP trainers for the month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . " were:";
                 foreach ($top_trainers as $ind => $top_trainer) {
                     $order_no = $ind + 1;
                     if ($ind > 0) {
-                        $retArr['taMonthlyReport'] .= "|";
+                        $retArr['taMonthlyReport'] .= ",";
                     }
                     $retArr['taMonthlyReport'] .= " " . $order_no . ". " . $top_trainer->name;
                 }

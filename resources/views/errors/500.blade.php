@@ -42,7 +42,7 @@ function safeErrorMessage($exception) {
                     <p>{{ safeErrorMessage($exception) }}</p>
                 </div>
                 <div class="col-sm-4">
-                    <img src="/photos/this_is_fine.png" width="300px">
+                    <img src="{{ Vite::image('errors/this_is_fine.png') }}" width="300px">
                 </div>
             </div>
             <hr>
