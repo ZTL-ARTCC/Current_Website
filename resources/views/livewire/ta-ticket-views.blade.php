@@ -53,14 +53,11 @@
                         <tr>
                             <th scope="col">View</th>
                             <th scope="col">Training Date</th>
+                            <th scope="col">Student Name</th>
                             <th scope="col">Trainer Name</th>
-                            <th scope="col">Position</th>
-                            <th scope="col">Session Type</th>
                             <th scope="col">Session ID</th>
                             <th scope="col">Start Time</th>
                             <th scope="col">End Time</th>
-                            <th scope="col">Score<br>(1-5)</th>
-                            <th scope="col">Movements</th>
                             <th scope="col">INS/MTR Comments</th>
                         </tr>
                     </thead>
@@ -80,14 +77,11 @@
                             </a>
                         </td>
                         <td>{{ $t->date }}</td>
+                        <td>{{ $t->controller_name }}</td>
                         <td>{{ $t->trainer_name }}</td>
-                        <td>{{ $t->position_name }}</td>
-                        <td>{{ $t->type_name }}</td>
                         <td>{{ $t->session_name }}</td>
                         <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                         <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                        <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
-	                    <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
                         <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}</td>
                     </tr>
                     @endforeach
