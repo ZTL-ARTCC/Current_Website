@@ -170,3 +170,32 @@ window.fillSession = (session) => {
   document.getElementById("date").value = session.date;
   document.getElementById("start").value = session.start_time;
 };
+
+const controllerSelect = document.getElementById("controller");
+controllerSelect.addEventListener("change", () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open(
+    "POST",
+    "/dashboard/training/tickets/get-rating/" + controllerSelect.value,
+    true
+  );
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader(
+    "X-CSRF-TOKEN",
+    document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+  );
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      let el = document.getElementById("s1_rating_push");
+      if (data.rating == 1) {
+        el.classList.remove("d-none");
+        el.classList.add("d-block");
+      } else {
+        el.classList.remove("d-block");
+        el.classList.add("d-none");
+      }
+    }
+  };
+  xhr.send();
+});
