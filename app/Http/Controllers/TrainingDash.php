@@ -9,6 +9,7 @@ use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
+use App\StudentNotes;
 use App\TrainerFeedback;
 use App\TrainingInfo;
 use App\TrainingTicket;
@@ -209,6 +210,7 @@ class TrainingDash extends Controller {
         $all_drafts = null;
         $exams = null;
         $is_trainer_search = false;
+        $student_note = null;
 
         if ($search_result != null && $request->search_type === 'trainer') {
             $tickets_sort = TrainingTicket::where('trainer_id', $search_result->id)->get()->sortByDesc(function ($t) {
@@ -243,14 +245,14 @@ class TrainingDash extends Controller {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
             }
             $exams = User::getAcademyExamTranscriptByCid($request->id);
-            
+            $student_note = StudentNotes::find($request->id);
         } elseif (auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
             $all_drafts = TrainingTicket::where('draft', true)->orderBy('created_at', 'DESC')->paginate(25);
         } elseif (auth()->user()->isAbleTo('train')) {
             $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts)->with('all_drafts', $all_drafts)->with('is_trainer_search', $is_trainer_search);
+        return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets', 'exams', 'drafts', 'all_drafts', 'is_trainer_search', 'student_note'));
     }
     
     public function searchTickets(Request $request) {
