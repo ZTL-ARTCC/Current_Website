@@ -34,8 +34,8 @@ class TaStudNotes extends Component {
         $this->dispatch('updateNoteContent', content: $this->note);
     }
 
-    public function save() {
-        $this->dispatch('updateNoteFromEditor');
+    public function save($content) {
+        $this->note = $content;
         StudentNotes::updateOrCreate(
             ['id' => $this->student],
             ['note' => $this->note, 'entered_by' => Auth::id()]
