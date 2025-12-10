@@ -82,7 +82,6 @@ Training Tickets
             <div class="row mx-1">
                 <div class="col-sm-12 bg-info rounded">
                     {!! $student_note->note !!}
-                    <br>
                     Last modified by {{ $student_note->entered_by_name }} ({{ $student_note->last_modified }})
                 </div>
             </div>

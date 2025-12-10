@@ -15,7 +15,7 @@
                                 <label for="student" class="form-label">Select Student</label>
                                 {{ html()->select('student', $controllers, $this->student)->placeholder('Select Student')->class(['form-select'])->attributes(['wire:model' => 'student', 'wire:change' => 'student_select']) }}
                             </div>
-                            <button type="button" class="btn btn-primary w-100" wire:click="save"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+                            <button type="button" class="btn btn-primary w-100" id="save"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group" wire:ignore>
@@ -24,7 +24,6 @@
                                 <p>*Note* this text is not visible to the student, even if the student is a training staff member.</p>
                             </div>
                         </div>
-                        {{ html()->hidden('note', null)->attributes(['wire:model' => 'note']) }}
                     </div>
                 </div>
             </div>
@@ -66,11 +65,10 @@
 <script>
     window.addEventListener('updateNoteContent', (event) => {
         editors['note_editor'].setData(event.detail.content);
-        document.getElementById('note').value = event.detail.content;
     });
-    window.addEventListener('updateNoteFromEditor', () => {
-        console.log('updating note: ' + editors['note_editor'].getData());
-        $wire.set('note', editors['note_editor'].getData());
+    const saveButton = document.getElementById('save');
+    saveButton.addEventListener('click', function() {
+        $wire.call('save', editors['note_editor'].getData());
     });
 </script>
 @endscript
