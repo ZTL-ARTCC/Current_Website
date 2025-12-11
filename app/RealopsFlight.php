@@ -92,6 +92,7 @@ class RealopsFlight extends Model {
         return Vite::image('airline_logos/default.png');
     }
 
+    // ICAO flight plan reference: https://www.faa.gov/documentLibrary/media/Form/7233-4_02-07-24.pdf
     public function getIcaoFlightplanAttribute(): string {
         $icao_string = 'FPL-' . $this->flight_number . '-IS ';
         $icao_string .= '-' . $this->aircraft_type;
@@ -109,7 +110,7 @@ class RealopsFlight extends Model {
         return '(' . $icao_string . ')';
     }
 
-    // https://developers.navigraph.com/docs/simbrief/using-the-api#api-parameters
+    // SimBrief reference: https://developers.navigraph.com/docs/simbrief/using-the-api#api-parameters
     public function getSimbriefParamsAttribute(): string {
         $pilot = RealopsPilot::find($this->assigned_pilot_id);
         $params = [
