@@ -58,7 +58,7 @@
                     {{ html()->text('arr_airport', $flight->arr_airport)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-4">
-                    <label for="aircraft_type">Aircraft Type</label>
+                    <label for="aircraft_type">ICAO Aircraft Type</label>
                     {{ html()->text('aircraft_type', $flight->aircraft_type)->class(['form-control'])->placeholder('A20N') }}
                 </div>
             </div>
