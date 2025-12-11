@@ -33,7 +33,7 @@ Realops
                {{ html()->text('flightno_filter', $flightno_filter)->class(['form-control'])->placeholder('Flight (DAL367)')->id('flightno_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
-               {{ html()->text('actype_filter', $actype_filter)->class(['form-control'])->placeholder('A20N')->id('actype_filter') }}
+               {{ html()->text('actype_filter', $actype_filter)->class(['form-control'])->placeholder('Aircraft Type (A20N)')->id('actype_filter') }}
             </div>
             <div class="col-sm-12 col-md p-1">
                {{ html()->text('date_filter', $date_filter)->class(['form-control'])->placeholder('Date (YYYY-MM-DD)')->id('date_filter') }}
