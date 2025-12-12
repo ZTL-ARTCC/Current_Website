@@ -58,8 +58,8 @@
                     {{ html()->text('arr_airport', $flight->arr_airport)->class(['form-control'])->placeholder('Required') }}
                 </div>
                 <div class="col-sm-4">
-                    <label for="est_time_enroute">Estimated Time Enroute (ETE)</label>
-                    {{ html()->text('est_time_enroute', $flight->est_time_enroute_formatted)->class(['form-control'])->placeholder('HH:MM - Required')->id('realops_add_edit_ete') }}
+                    <label for="aircraft_type">ICAO Aircraft Type</label>
+                    {{ html()->text('aircraft_type', $flight->aircraft_type)->class(['form-control'])->placeholder('A20N') }}
                 </div>
             </div>
         </div>
