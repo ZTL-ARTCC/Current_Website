@@ -96,7 +96,7 @@ class RealopsFlight extends Model {
     public function getIcaoFlightplanAttribute(): string {
         $icao_string = 'FPL-' . $this->flight_number . '-IS ';
         $icao_string .= '-' . $this->aircraft_type;
-        $ac = Aircraft::where('ac_type', 'LIKE', '%' . $this->aircraft_type . '%')->first();
+        $ac = (object) Aircraft::$data->where('ac_type', $this->aircraft_type)->first();
         if ($ac) {
             $icao_string .= '/' . $ac->icao_wtc . '-' . $ac->equipment . '/' . $ac->transponder;
         }
@@ -130,7 +130,7 @@ class RealopsFlight extends Model {
             'pid' => $pilot->id,
             'acdata' => null
         ];
-        $ac = Aircraft::where('ac_type', 'LIKE', '%' . $this->aircraft_type . '%')->first();
+        $ac = (object) Aircraft::$data->where('ac_type', $this->aircraft_type)->first();
         if ($ac) {
             $ac_data = [
                 "pbn" => $ac->pbn,
