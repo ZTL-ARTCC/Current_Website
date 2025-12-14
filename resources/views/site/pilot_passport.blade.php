@@ -55,7 +55,7 @@ ZTL Pilot Passport Challenge
                         features the many smaller airports throughout Georgia, Alabama, South Carolina, North Carolina, Tennessee and Virginia.</p>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <img src="/photos/pilot_passport/pilot_passport_stamp.png" width="200px" alt="stamp">
+                    <img src="{{ Vite::image('pilot_passport/pilot_passport_stamp.png') }}" width="200px" alt="stamp">
                 </div>
             </div>
             <div class="row">
@@ -165,7 +165,7 @@ ZTL Pilot Passport Challenge
                             @endif
                             <br>Visited on: {{ $a->visited->visited_on }}
                         @else
-                            <img src="/photos/pilot_passport/pilot_passport_stamp_gray.png" width="150px" alt="stamp">
+                            <img src="{{ Vite::image('pilot_passport/pilot_passport_stamp_gray.png') }}" width="150px" alt="stamp">
                             <br>No visit logged
                         @endif
                     </div>

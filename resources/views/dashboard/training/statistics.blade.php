@@ -25,6 +25,9 @@ Training Statistics
                     <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tickets" aria-controls="tickets" aria-selected="false" href="#tickets">Ticket Views</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#studnotes" aria-controls="studnotes" aria-selected="false" href="#studnotes">Student Notes</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
                 </li>
             </ul>
@@ -37,8 +40,10 @@ Training Statistics
                     <livewire:ta-stats-monthly>
                 </div>
                 <div class="tab-pane fade text-center" id="tickets" role="tabpanel" aria-labelledby="tickets-tab">
-                    <i class="fa-solid fa-person-digging fa-10x m-5"></i>
-                    <h3>Under Construction</h3>
+                    <livewire:ta-ticket-views>
+                </div>
+                <div class="tab-pane fade text-center" id="studnotes" role="tabpanel" aria-labelledby="studnotes-tab">
+                    <livewire:ta-stud-notes>
                 </div>
                 <div class="tab-pane fade text-center" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
                     <i class="fa-solid fa-person-digging fa-10x m-5"></i>

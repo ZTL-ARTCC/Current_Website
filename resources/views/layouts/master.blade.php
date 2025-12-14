@@ -16,7 +16,7 @@
 	
         @if(Carbon\Carbon::now()->month == 12)
             {{-- Merry Christmas --}}
-            @vite('resources/assets/js/snowstorm.jsx')
+            <script src="/js/snowstorm.js"></script>
         @endif
 
         {{-- Custom JS --}}
