@@ -17,11 +17,13 @@ class RealopsController extends Controller {
     public function index(Request $request) {
         $airport_filter = $request->get('airport_filter');
         $flightno_filter = $request->get('flightno_filter');
+        $actype_filter = $request->get('actype_filter');
         $date_filter = $request->get('date_filter');
         $time_filter = $request->get('time_filter');
         
         $flights = RealopsFlight::where('flight_number', 'like', '%' . $flightno_filter . '%')
                                 ->orWhere('callsign', 'like', '%' . $flightno_filter . '%')
+                                ->orWhere('aircraft_type', 'like', '%' . $actype_filter . '%')
                                 ->when(! is_null($time_filter), function ($query) use ($time_filter) {
                                     $times = $this->timeBetween($time_filter, 15, 45);
                                     $query->whereTime('dep_time', ">=", Carbon::parse($times[0]))
@@ -38,7 +40,7 @@ class RealopsController extends Controller {
                                 ->orderBy('dep_time', 'ASC')
                                 ->paginate(20);
 
-        return view('site.realops')->with('flights', $flights)->with('airport_filter', $airport_filter)->with('flightno_filter', $flightno_filter)->with('date_filter', $date_filter)->with('time_filter', $time_filter);
+        return view('site.realops', compact('flights', 'airport_filter', 'flightno_filter', 'actype_filter', 'date_filter', 'time_filter'));
     }
 
     public function bid($id) {
@@ -148,6 +150,7 @@ class RealopsController extends Controller {
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
         $flight->gate = $request->input('gate');
+        $flight->aircraft_type = $request->input('aircraft_type');
         $flight->save();
 
         return redirect('/dashboard/admin/realops')->with('success', 'That flight was created successfully');
@@ -187,6 +190,7 @@ class RealopsController extends Controller {
         $flight->arr_airport = $request->input('arr_airport');
         $flight->est_time_enroute = $request->input('est_time_enroute');
         $flight->gate = $request->input('gate');
+        $flight->aircraft_type = $request->input('aircraft_type');
         $flight->save();
 
         $pilot = $flight->assigned_pilot;
@@ -204,9 +208,6 @@ class RealopsController extends Controller {
         ]);
 
         try {
-            // what is this for?
-            // this doesn't do anything
-            //$contents = file_get_contents($request->file('file')->getRealPath());
             Excel::import(new RealopsFlightImporter, request()->file('file'));
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
@@ -214,7 +215,6 @@ class RealopsController extends Controller {
             $errors = "";
 
             foreach ($failures as $failure) {
-                // L21#0 Blah blah blah (value: 'fbalsdhj')
                 Log::info($failure);
                 $errors = $errors.' L'.$failure->row().'#'.$failure->attribute().': '.join(',', $failure->errors()).' ('.$failure->values()[$failure->attribute()].')';
             }
