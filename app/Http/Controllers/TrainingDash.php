@@ -295,6 +295,8 @@ class TrainingDash extends Controller {
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
+        $student = User::find($c);
+        $student_rating = ($student) ? $student->rating_id : null;
         $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         $recent_sessions = [];
@@ -349,7 +351,8 @@ class TrainingDash extends Controller {
 
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
             ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
-            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions);
+            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions)
+            ->with('student_rating', $student_rating);
     }
 
     public function handleSaveTicket(Request $request, $id = null) {
@@ -401,6 +404,7 @@ class TrainingDash extends Controller {
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
+        $student = User::find($ticket->controller_id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         $positions = $ticket->getPositionSelectAttribute();
         if (!key_exists($ticket->position, $positions)) {
@@ -414,7 +418,8 @@ class TrainingDash extends Controller {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
             ->with('positions', $positions)->with('session_ids', $sessions)
-            ->with('progress_types', $ticket->getProgressSelectAttribute());
+            ->with('progress_types', $ticket->getProgressSelectAttribute())
+            ->with('student_rating', $student->rating_id);
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
@@ -986,9 +991,42 @@ class TrainingDash extends Controller {
             $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
             $audit->save();
 
+            $student = User::find($request->controller);
+            if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->s1_ots == 1) {
+                $client = new Client(['exceptions' => false]);
+                $now = Carbon::now();
+                $response = $client->request('POST', 'https://api.vatusa.net/user/' . $request->controller . '/S1', [
+                     'form_params' => [
+                         'rating' => 's1',
+                         'exam_date' => $now->format('Y-m-d'),
+                         'examiner' => Auth::user()->id,
+                         'position' => 'BHM_GND' // <- Maybe this shouldn't be hard-coded...
+                     ]
+                 ]);
+                $result = $response->getStatusCode();
+                if ($result == '200') {
+                    $audit = new Audit;
+                    $audit->cid = Auth::id();
+                    $audit->ip = $_SERVER['REMOTE_ADDR'];
+                    $audit->what = Auth::user()->full_name . ' promoted ' . User::find($request->controller)->full_name . ' to S1.';
+                    $audit->save();
+                    $student->rating_id = 2; // Needed to prevent data discontinuity
+                    $student->save();
+                    return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The student was promoted to S1.');
+                }
+            }
             return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
+    }
+
+    public function getRating($cid) {
+        $user = User::find($cid);
+        $result = ['cid' => $cid, 'rating' => null];
+        if ($user) {
+            $result['rating'] = $user->rating_id;
+        }
+        return response()->json($result, 200);
     }
 }
