@@ -54,6 +54,13 @@ class User extends Authenticatable implements LaratrustUser {
         return $this->backwards_name;
     }
 
+    public function getStaffPublicNameAttribute() {
+        if ($this->name_privacy == 1) {
+            return ucwords($this->fname);
+        }
+        return $this->full_name;
+    }
+
     public function getBackwardsNameRatingAttribute() {
         return $this->backwards_name . ' - ' . $this->rating_short;
     }
