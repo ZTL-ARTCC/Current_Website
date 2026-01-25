@@ -190,9 +190,9 @@ controllerSelect.addEventListener("change", () => {
       let el = document.getElementById("s1_rating_push");
       if (data.rating == 1) {
         el.classList.remove("d-none");
-        el.classList.add("d-block");
+        el.classList.add("d-inline");
       } else {
-        el.classList.remove("d-block");
+        el.classList.remove("d-inline");
         el.classList.add("d-none");
       }
     }
