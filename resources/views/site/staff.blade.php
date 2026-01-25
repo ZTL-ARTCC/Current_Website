@@ -15,7 +15,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($atm as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:atm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -30,7 +30,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($datm as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:datm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -45,7 +45,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($ta as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:ta@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -61,7 +61,7 @@ Staff
                     <i>Vacant</i>
                 @else
                     @foreach($ata as $s)
-                        {{ $s->full_name }}
+                        {{ $s->staff_public_name }}
                     @endforeach
                 @endif
             </h4>
@@ -76,7 +76,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($wm as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:wm@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -91,7 +91,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($ec as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:ec@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -107,7 +107,7 @@ Staff
                     <i>Vacant</i>
                 @else
                     @foreach($aec as $s)
-                        {{ $s->full_name }}
+                        {{ $s->staff_public_name }}
                     @endforeach
                 @endif
             </h4>
@@ -121,7 +121,7 @@ Staff
                 <i>Vacant</i>
             @else
                 @foreach($fe as $s)
-                    {{ $s->full_name }}
+                    {{ $s->staff_public_name }}
                 @endforeach
             @endif
             &nbsp;<a href="mailto:fe@ztlartcc.org" style="color:black"><i class="fa fa-envelope" ></i></a>
@@ -137,7 +137,7 @@ Staff
                     <i>Vacant</i>
                 @else
                     @foreach($afe as $s)
-                        {{ $s->full_name }}
+                        {{ $s->staff_public_name }}
                     @endforeach
                 @endif
             </h4>
@@ -153,7 +153,7 @@ Staff
                 <br><br>
                 <ul>
                     @foreach($ins as $i)
-                        <li>{{ $i->full_name }}</li>
+                        <li>{{ $i->staff_public_name }}</li>
                     @endforeach
                 </ul>
             @endif
@@ -165,7 +165,7 @@ Staff
                 <br><br>
                 <ul>
                     @foreach($mtr as $i)
-                        <li>{{ $i->full_name }}</li>
+                        <li>{{ $i->staff_public_name }}</li>
                     @endforeach
                 </ul>
             @endif
