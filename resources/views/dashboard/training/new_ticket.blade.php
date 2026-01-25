@@ -130,11 +130,13 @@ New Training Ticket
 		<br>
         <label for="cert" class="form-label">Certification or Solo Issued</label>
 		{{ html()->checkbox('cert', false, 1) }}
+        <span id="s1_rating_push" class="ms-1 small">
         @toggle('s1_push')
             @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
-                <span id="s1_rating_push" class="ms-1 small">(Promote controller to S1)</span>
+                <small>(Promote controller to S1)</small>
             @endif
         @endtoggle
+        </span>	
 		<br>
         <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
         <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
