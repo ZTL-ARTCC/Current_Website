@@ -147,11 +147,13 @@ Edit Training Ticket
         @else
 			{{ html()->checkbox('cert', false, 1) }}
         @endif
+        <span id="s1_rating_push" class="ms-1 small">
         @toggle('s1_push')
             @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
-                <span id="s1_rating_push" class="ms-1 small">(Promote controller to S1)</span>
+                <small>(Promote controller to S1)</small>
             @endif
-        @endtoggle		
+        @endtoggle
+        </span>	
 		<br>
         <br>
         @if ($ticket->draft)
