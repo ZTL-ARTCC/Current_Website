@@ -110,23 +110,6 @@ Edit Training Ticket
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->rating_id >= 4)            
-            <div class="col-sm-6">
-                @if($student_rating == 1)
-                <div id="s1_rating_push" class="form-group d-block">
-                @else
-                <div id="s1_rating_push" class="form-group d-none">
-                @endif
-                    <label for="s1_ots" class="form-label">Promote OBS to S1</label>
-                    <br>
-                    <label class="switch">
-                        <input type="checkbox" name="s1_ots" />
-                        <span class="slider round"></span>
-                    </label>
-                    <small>This will auto-push to VATUSA and promote the controller to S1.</small>
-                </div>
-            </div>
-            @endif
         </div>
         <div class="row-mb-3">
             <div class="col-sm-6">
@@ -163,7 +146,12 @@ Edit Training Ticket
 			{{ html()->checkbox('cert', true, 1) }}
         @else
 			{{ html()->checkbox('cert', false, 1) }}
-        @endif		
+        @endif
+        @toggle('s1_push')
+            @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
+                <span id="s1_rating_push" class="ms-1 small">(Promote controller to S1)</span>
+            @endif
+        @endtoggle		
 		<br>
         <br>
         @if ($ticket->draft)
