@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\FeatureToggle;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
@@ -899,10 +900,22 @@ class TrainingDash extends Controller {
             $extra = ' and the OTS recommendation has been added';
         }
 
+        $promotion = false;
+        $student = User::find($request->controller);
+        if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+            $promotion = true;
+            $extra .= ' and the students S1 promotion will be pushed to VATUSA';
+            $student->rating_id = 2; // Needed to prevent data discontinuity
+            $student->save();
+        }
+
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
+        if ($promotion) {
+            $audit->what .= ' A promotion was pushed to VATUSA.';
+        }
         $audit->save();
 
         return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
@@ -985,37 +998,25 @@ class TrainingDash extends Controller {
             $ticket->movements = $request->movements;
             $ticket->save();
 
+            $promotion = false;
+            $extra = '';
+            $student = User::find($request->controller);
+            if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+                $promotion = true;
+                $extra = ' and the students S1 promotion will be pushed to VATUSA';
+                $student->rating_id = 2; // Needed to prevent data discontinuity
+                $student->save();
+            }
             $audit = new Audit;
             $audit->cid = Auth::id();
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
+            if ($promotion) {
+                $audit->what .= ' A promotion was pushed to VATUSA.';
+            }
             $audit->save();
 
-            $student = User::find($request->controller);
-            if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->s1_ots == 1) {
-                $client = new Client(['exceptions' => false]);
-                $now = Carbon::now();
-                $response = $client->request('POST', 'https://api.vatusa.net/user/' . $request->controller . '/S1', [
-                     'form_params' => [
-                         'rating' => 's1',
-                         'exam_date' => $now->format('Y-m-d'),
-                         'examiner' => Auth::user()->id,
-                         'position' => 'BHM_GND' // <- Maybe this shouldn't be hard-coded...
-                     ]
-                 ]);
-                $result = $response->getStatusCode();
-                if ($result == '200') {
-                    $audit = new Audit;
-                    $audit->cid = Auth::id();
-                    $audit->ip = $_SERVER['REMOTE_ADDR'];
-                    $audit->what = Auth::user()->full_name . ' promoted ' . User::find($request->controller)->full_name . ' to S1.';
-                    $audit->save();
-                    $student->rating_id = 2; // Needed to prevent data discontinuity
-                    $student->save();
-                    return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The student was promoted to S1.');
-                }
-            }
-            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
+            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully' . $extra . '.');
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
