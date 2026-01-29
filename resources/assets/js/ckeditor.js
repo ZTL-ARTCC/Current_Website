@@ -200,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       plugins: isTrainerComments ? restrictedPlugins : plugins,
       extraPlugins: isTrainerComments ? [] : [UploadAdapterPlugin],
       toolbar: isTrainerComments ? restrictedToolbar : toolbar,
+      licenseKey: "GPL",
     }).then((editorInstance) => {
       editors[editorElement.id] = editorInstance;
     });

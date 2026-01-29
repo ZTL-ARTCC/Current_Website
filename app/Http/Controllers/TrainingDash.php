@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\FeatureToggle;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
@@ -217,7 +218,7 @@ class TrainingDash extends Controller {
                 return strtotime($t->date . ' ' . $t->start_time);
             })->pluck('id');
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
-            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
+            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25)->withQueryString();
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
@@ -295,6 +296,8 @@ class TrainingDash extends Controller {
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
+        $student = User::find($c);
+        $student_rating = ($student) ? $student->rating_id : null;
         $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         $recent_sessions = [];
@@ -349,7 +352,8 @@ class TrainingDash extends Controller {
 
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
             ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
-            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions);
+            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions)
+            ->with('student_rating', $student_rating);
     }
 
     public function handleSaveTicket(Request $request, $id = null) {
@@ -401,6 +405,7 @@ class TrainingDash extends Controller {
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
+        $student = User::find($ticket->controller_id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         $positions = $ticket->getPositionSelectAttribute();
         if (!key_exists($ticket->position, $positions)) {
@@ -414,7 +419,8 @@ class TrainingDash extends Controller {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
             ->with('positions', $positions)->with('session_ids', $sessions)
-            ->with('progress_types', $ticket->getProgressSelectAttribute());
+            ->with('progress_types', $ticket->getProgressSelectAttribute())
+            ->with('student_rating', $student->rating_id);
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
@@ -894,10 +900,22 @@ class TrainingDash extends Controller {
             $extra = ' and the OTS recommendation has been added';
         }
 
+        $promotion = false;
+        $student = User::find($request->controller);
+        if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+            $promotion = true;
+            $extra .= ' and the students S1 promotion will be pushed to VATUSA';
+            $student->rating_id = 2; // Needed to prevent data discontinuity
+            $student->save();
+        }
+
         $audit = new Audit;
         $audit->cid = Auth::id();
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
+        if ($promotion) {
+            $audit->what .= ' A promotion was pushed to VATUSA.';
+        }
         $audit->save();
 
         return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
@@ -980,15 +998,36 @@ class TrainingDash extends Controller {
             $ticket->movements = $request->movements;
             $ticket->save();
 
+            $promotion = false;
+            $extra = '';
+            $student = User::find($request->controller);
+            if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+                $promotion = true;
+                $extra = ' and the students S1 promotion will be pushed to VATUSA';
+                $student->rating_id = 2; // Needed to prevent data discontinuity
+                $student->save();
+            }
             $audit = new Audit;
             $audit->cid = Auth::id();
             $audit->ip = $_SERVER['REMOTE_ADDR'];
             $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
+            if ($promotion) {
+                $audit->what .= ' A promotion was pushed to VATUSA.';
+            }
             $audit->save();
 
-            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
+            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully' . $extra . '.');
         } else {
             return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
         }
+    }
+
+    public function getRating($cid) {
+        $user = User::find($cid);
+        $result = ['cid' => $cid, 'rating' => null];
+        if ($user) {
+            $result['rating'] = $user->rating_id;
+        }
+        return response()->json($result, 200);
     }
 }

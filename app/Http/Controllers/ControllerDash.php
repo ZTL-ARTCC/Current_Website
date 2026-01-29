@@ -68,7 +68,7 @@ class ControllerDash extends Controller {
         $month_challenge_description = ($local_hero_challenge_this_month) ? $local_hero_challenge_this_month->title : $default_challenge_description;
         $pmonth_challenge_description = ($local_hero_challenge_prev_month) ? $local_hero_challenge_prev_month->title : $default_challenge_description;
 
-        $controllers = ATC::get();
+        $controllers = ATC::all()->unique('cid');
 
         $events = Event::where('status', 1)->get()->filter(function ($e) use ($now) {
             return strtotime($e->date.' '.$e->start_time) > strtotime($now);
