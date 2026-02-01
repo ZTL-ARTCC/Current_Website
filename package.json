@@ -4,7 +4,8 @@
         "format": "npx prettier --write resources/assets/.",
         "format-check": "npx prettier --check resources/assets/.",
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "watch": "vite build --watch"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.8",
