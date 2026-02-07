@@ -19,5 +19,10 @@ class Aircraft {
             self::$data = Collection::fromJson(Storage::disk('local')->get(self::FILENAME));
         }
     }
+
+    public static function fetch($acid) {
+        $ac = self::$data->where('ac_type', $acid)->first();
+        return (is_null($ac)) ? null : (object) $ac;
+    }
 }
 Aircraft::init();

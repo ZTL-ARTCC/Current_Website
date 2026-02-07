@@ -82,6 +82,11 @@ class RealopsFlight extends Model {
         return str_pad($hours, 2, '0', STR_PAD_LEFT) . str_pad($minutes, 2, '0', STR_PAD_LEFT);
     }
 
+    private function ete(): string {
+        $ete = explode(':', $this->est_time_enroute);
+        return str_pad($ete[0], 2, '0', STR_PAD_LEFT) . str_pad($ete[1], 2, '0', STR_PAD_LEFT);
+    }
+
     public function getImageDirectory() {
         $flight_id = (!is_null($this->callsign)) ? $this->callsign : $this->flight_number;
         $airline = strtoupper(substr($flight_id, 0, 3));
@@ -96,13 +101,13 @@ class RealopsFlight extends Model {
     public function getIcaoFlightplanAttribute(): string {
         $icao_string = 'FPL-' . $this->flight_number . '-IS ';
         $icao_string .= '-' . $this->aircraft_type;
-        $ac = (object) Aircraft::$data->where('ac_type', $this->aircraft_type)->first();
+        $ac = Aircraft::fetch($this->aircraft_type);
         if ($ac) {
             $icao_string .= '/' . $ac->icao_wtc . '-' . $ac->equipment . '/' . $ac->transponder;
         }
         $icao_string .= ' -' . $this->dep_airport . str_pad($this->timePart($this->dep_time, 'h'), 2, '0', STR_PAD_LEFT) . str_pad($this->timePart($this->dep_time, 'm'), 2, '0', STR_PAD_LEFT);
         $icao_string .= ' -' . PreferredRoute::routeLookup($this->dep_airport, $this->arr_airport);
-        $icao_string .= ' -' . $this->arr_airport . $this->eta();
+        $icao_string .= ' -' . $this->arr_airport . $this->ete();
         $icao_string .= ' -DOF/' . Carbon::parse($this->flight_date)->format('ymd') . ' OPR/' . $this->airline;
         if ($ac) {
             $icao_string .= ' PBN/' . $ac->pbn . ' PER/' . $ac->perf_cat;
@@ -130,11 +135,11 @@ class RealopsFlight extends Model {
             'pid' => $pilot->id,
             'acdata' => null
         ];
-        $ac = (object) Aircraft::$data->where('ac_type', $this->aircraft_type)->first();
+        $ac = Aircraft::fetch($this->aircraft_type);
         if ($ac) {
             $ac_data = [
                 "pbn" => $ac->pbn,
-                "dof" => Carbon::parse($this->flight_date)->format('ymd'), // May need to remove this... SimBrief may generate the DOF from data above
+                "dof" => Carbon::parse($this->flight_date)->format('ymd'),
                 "opr" => $this->airline,
                 "per" => $ac->perf_cat,
                 "cat" => $ac->icao_wtc,
