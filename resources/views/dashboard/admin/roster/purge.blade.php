@@ -54,6 +54,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                 <thead>
                     <tr>
                         <th scope="col">Name (CID)</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Rating</th>
                         <th scope="col">Hours This Quarter</th>
                         @if($statCategory == 'home')
@@ -67,6 +68,7 @@ if ($month == 12) { $nm = 1; $nyr = $year + 1; } else { $nm = $month + 1; $nyr =
                     @foreach($$statCategory as $c)
                         <tr>
                             <td><a href="/dashboard/admin/roster/edit/{{ $c->id }}">{{ ucwords($c->backwards_name) }} ({{ $c->id }})</a></td>
+                            <td>{{ $c->email }}</td>
                             <td>{{ $c->rating_short }}</td>
                             @if($stats[$c->id]->total_hrs >= 3)
                                 <td class="black hours-success"><b>
