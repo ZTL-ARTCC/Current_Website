@@ -143,7 +143,7 @@ Training Tickets
                                 @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
                                     <td data-bs-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
                                 @else
-                                    <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}<td>
+                                    <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}</td>
                                 @endif
                             </tr>
                             @endforeach
