@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
-use App\FeatureToggle;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
