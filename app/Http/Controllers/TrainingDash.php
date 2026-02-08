@@ -260,7 +260,7 @@ class TrainingDash extends Controller {
             's1' => [],
             's2' => [],
             's3' => [],
-            's4' => [],
+            'c1' => [],
             'other' => [],
         ];
         $active_category = $request->activeTab;
