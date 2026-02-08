@@ -247,13 +247,11 @@ View Event
                             @else
                                 <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end" data-bs-toggle="tooltip" title="Close Registration"><i class="fas fa-times"></i></a>
                             @endif
-                            @toggle('event_assignment_toggle')
-                                @if($event->show_assignments)
-                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
-                                @else
-                                    <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
-                                @endif
-                            @endtoggle
+                            @if($event->show_assignments)
+                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
+                            @else
+                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
+                            @endif
                         @endif
                     </h3>
                 </div>
@@ -274,7 +272,7 @@ View Event
                                     <tr>
                                         <td>{{ $p->name }}</td>
                                         <td>
-                                            @if($p->controller->count() == 0 || (toggleEnabled('event_assignment_toggle') && ! (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team')) && ! $event->show_assignments))
+                                            @if($p->controller->count() == 0 || (! (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team')) && ! $event->show_assignments))
                                                 No Assignment
                                             @else
                                                 @foreach($p->controller as $c)
@@ -375,7 +373,7 @@ View Event
                                                 </div>
                                             @else
                                                 <div class="col-sm-5">
-                                                    @if(toggleEnabled('event_assignment_toggle') && ! $event->show_assignments)
+                                                    @if(! $event->show_assignments)
                                                         {{ html()->select('num1', $positions->pluck('name', 'id'), null)->attributes(['disabled'])->placeholder('Pending...')->class(['form-select']) }}
                                                     @else
                                                         {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->attributes(['disabled'])->placeholder('Choice 1')->class(['form-select']) }}
