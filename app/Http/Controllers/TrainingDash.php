@@ -939,7 +939,7 @@ class TrainingDash extends Controller {
 
         $promotion = false;
         $student = User::find($request->controller);
-        if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+        if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
             $promotion = true;
             $extra .= ' and the students S1 promotion will be pushed to VATUSA';
             $student->rating_id = 2; // Needed to prevent data discontinuity
@@ -1038,7 +1038,7 @@ class TrainingDash extends Controller {
             $promotion = false;
             $extra = '';
             $student = User::find($request->controller);
-            if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+            if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
                 $promotion = true;
                 $extra = ' and the students S1 promotion will be pushed to VATUSA';
                 $student->rating_id = 2; // Needed to prevent data discontinuity

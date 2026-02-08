@@ -36,7 +36,7 @@ class UploadTrainingTickets extends Command {
         foreach ($tickets as $ticket) {
             $vatusa_position = $this->vatusaizePosition($ticket);
             $ots_status = 0; // We do not implement 2 = fail or 3 = recommended
-            if (FeatureToggle::isEnabled('s1_push') && $ticket->cert && User::find($ticket->controller_id)->rating_id && User::find($ticket->trainer_id)->rating_id >= 4) {
+            if ($ticket->cert && User::find($ticket->controller_id)->rating_id && User::find($ticket->trainer_id)->rating_id >= 4) {
                 $ots_status = 1;
             }
             $req_params = [
