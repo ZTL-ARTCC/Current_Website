@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\FeatureToggle;
 use App\TrainingTicket;
 use App\User;
 use Config;
