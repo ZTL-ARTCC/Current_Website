@@ -919,8 +919,6 @@ class TrainingDash extends Controller {
         $ticket->save();
         $extra = null;
 
-        $date = $ticket->date;
-        $date = date("Y-m-d");
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 
@@ -973,6 +971,10 @@ class TrainingDash extends Controller {
 
             $ticket = new TrainingTicket;
             $ticket->scheddy_id = $request->scheddy_id;
+        } else {
+            if (!$ticket->draft) {
+                return redirect()->back()->with('error', 'This ticket has already been finalized and cannot be saved as a draft.');
+            }
         }
 
         $ticket->controller_id = $request->controller;
