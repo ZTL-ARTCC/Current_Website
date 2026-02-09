@@ -11,7 +11,7 @@
     <ul>
         @foreach($positions as $p)
             <li>
-                @if(strlen($p->position_name) > 0)
+                @if(strlen($p->position_name) > 0 && $event->show_assignments)
                     {{ $p->controller_name }} - {{ $p->position_name }}
                 @else
                     {{ $p->controller_name }} - position assignment pending
