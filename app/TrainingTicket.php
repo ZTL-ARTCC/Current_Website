@@ -60,6 +60,18 @@ class TrainingTicket extends Model {
         "UPLOADED" => 1
     ];
 
+    protected static function booted(): void {
+        static::saving(function (TrainingTicket $ticket) {
+            if (!is_null($ticket->id)) {
+                $saved_ticket = TrainingTicket::find($ticket->id);
+                if (!is_null($saved_ticket)) {
+                    // Prevents a finalized ticket from being marked as a draft... this is a one-way switch
+                    $ticket->draft = (!$saved_ticket->draft) ? false : $ticket->draft;
+                }
+            }
+        });
+    }
+
     public function getTrainerNameAttribute() {
         $user = User::find($this->trainer_id);
         if ($user != null) {
