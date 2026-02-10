@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Enums\SessionVariables;
 use App\User;
 use Auth;
 use Illuminate\View\View;
@@ -20,7 +21,7 @@ class ImpersonationComposer {
      */
     public function compose(View $view): void {
         $users = null;
-        $is_impersonating = false;
+        $is_impersonating = session()->has(SessionVariables::IMPERSONATE->value);
 
         if (Auth::user()->isAbleTo('snrStaff')) {
             $users = User::orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
