@@ -3,20 +3,27 @@
         <a class="navbar-brand" href="/dashboard">
             @include('inc.logo', ['color' => 'black'])
         </a>
-        <div class="d-flex justify-content-start ms-5 collapse navbar-collapse">
-            {{ html()->form()->route('searchAirport')->class(['row','row-cols-lg-auto'])->open() }}
+        <ul class="navbar-nav me-auto align-items-center">
+            {{ html()->form()->route('searchAirport')->class(['form-inline'])->open() }}
                 <div class="col-12 input-group">
                     {{ html()->text('apt', null)->placeholder('Search Airport ICAO')->class(['form-control']) }}
                     &nbsp;
                     <button class="btn btn-success" type="submit">Search</button>
                 </div>
             {{ html()->form()->close() }}
-        </div>
-        <ul class="navbar-nav ms-auto">
+        </ul>
+        <ul class="navbar-nav ml-auto align-items-center">
             <a class="nav-link {{ Nav::isRoute('controller_dash_home') }}" href="/dashboard">Dashboard Home</a>
-            <li class="nav-item dropdown">
-                <a class="nav-link" style="pointer-events:none">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
-            </li>
+            @if($is_impersonating)
+                <a class="nav-link" href="/">End Impersonation</a>
+            @endif
+            @if(Auth::user()->isAbleTo('snrStaff'))
+                {{ html()->form()->route('searchAirport')->class(['form-inline'])->open() }}
+                    {{ html()->select('student', $users, Auth::id())->class(['form-select']) }}
+                {{ html()->form()->close() }}
+            @else
+                <a class="nav-link disabled">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
+            @endif
         </ul>
     </div>
 </nav>

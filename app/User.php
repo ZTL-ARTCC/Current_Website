@@ -73,6 +73,18 @@ class User extends Authenticatable implements LaratrustUser {
         return $this->full_name . ' - ' . $this->rating_short;
     }
 
+    public function getImpersonationNameAttribute() {
+        $roles = array_reduce($this->roles->toArray(), function ($role_string, $role) {
+            return $role_string . $role['name'] . ', ';
+        }, '');
+
+        if ($roles != '') {
+            $roles = ' (' . trim($roles, ', ') . ')';
+        }
+
+        return $this->full_name . ' ' . $this->id . ' - ' . $this->rating_short . $roles;
+    }
+
     public static $RatingShort = [
         0 => 'N/A',
         1 => 'OBS', 2 => 'S1',
