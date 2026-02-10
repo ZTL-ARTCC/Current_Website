@@ -14,7 +14,7 @@ class Impersonation {
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response {
-        if (session()->has('impersonate') && Auth::user()->isAbleTo('snrStaff')) {
+        if (toggleEnabled('impersonation') && session()->has('impersonate') && Auth::user()->isAbleTo('snrStaff')) {
             session()->put('impersonating_user', Auth::id());
             Auth::onceUsingId(session('impersonate'));
         }
