@@ -20,7 +20,7 @@ class ImpersonationComposer {
      */
     public function compose(View $view): void {
         $users = null;
-        $is_impersonating = false;
+        $is_impersonating = session()->has('impersonate');
 
         if (Auth::user()->isAbleTo('snrStaff')) {
             $users = User::orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
