@@ -16,6 +16,13 @@
     </div>
 @endif
 
+@if(session()->has($SessionVariables::WARNING->value))
+    <br>
+    <div class="alert alert-warning">
+        {{ session($SessionVariables::WARNING->value) }}
+    </div>
+@endif
+
 @if(session()->has($SessionVariables::ERROR->value))
     <br>
     <div class="alert alert-danger">
