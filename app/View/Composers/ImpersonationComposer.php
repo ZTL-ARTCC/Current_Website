@@ -22,7 +22,7 @@ class ImpersonationComposer {
         $is_impersonating = session()->has('impersonate');
 
         if (Auth::user()->isAbleTo('snrStaff')) {
-            $users = User::orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
+            $users = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
         }
 
         $view->with('users', $users)->with('is_impersonating', $is_impersonating);
