@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum SessionVariables: string {
     case SUCCESS = 'success';
+    case WARNING = 'warning';
     case ERROR = 'error';
     case VATSIM_AUTH_STATE = 'vatsimauthstate';
     case REALOPS_PILOT_REDIRECT = 'pilot_redirect';
