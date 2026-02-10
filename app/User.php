@@ -78,6 +78,10 @@ class User extends Authenticatable implements LaratrustUser {
             return $role_string . $role['name'] . ', ';
         }, '');
 
+        if ($this->visitor) {
+            $roles = 'visitor';
+        }
+
         if ($roles != '') {
             $roles = ' (' . trim($roles, ', ') . ')';
         }
