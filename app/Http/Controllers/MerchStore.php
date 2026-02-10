@@ -60,11 +60,7 @@ class MerchStore extends Controller {
         $store_item->flag = $request->input('flag');
         $store_item->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' modified a store item.';
-        $audit->save();
+        Audit::new(' modified a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item modified successfully.');
     }
@@ -73,11 +69,7 @@ class MerchStore extends Controller {
         $store_item = Merch::find($id);
         $store_item->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed a store item.';
-        $audit->save();
+        Audit::new(' removed a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item deleted successfully.');
     }
