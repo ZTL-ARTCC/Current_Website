@@ -82,7 +82,7 @@ class User extends Authenticatable implements LaratrustUser {
             $roles = ' (' . trim($roles, ', ') . ')';
         }
 
-        return $this->full_name . ' ' . $this->id . ' - ' . $this->rating_short . $roles;
+        return $this->backwards_name . ' ' . $this->id . ' - ' . $this->rating_short . $roles;
     }
 
     public static $RatingShort = [

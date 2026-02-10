@@ -15,11 +15,11 @@
         <ul class="navbar-nav ml-auto align-items-center">
             <a class="nav-link {{ Nav::isRoute('controller_dash_home') }}" href="/dashboard">Dashboard Home</a>
             @if($is_impersonating)
-                <a class="nav-link" href="/">End Impersonation</a>
+                <a class="nav-link" href="/dashboard/admin/impersonation/stop">End Impersonation</a>
             @endif
             @if(Auth::user()->isAbleTo('snrStaff'))
-                {{ html()->form()->route('searchAirport')->class(['form-inline'])->open() }}
-                    {{ html()->select('student', $users, Auth::id())->class(['form-select']) }}
+                {{ html()->form()->route('startImpersonation')->class(['form-inline'])->open() }}
+                    {{ html()->select('user_id', $users, Auth::id())->class(['form-select'])->attributes(['onchange' => 'this.form.submit()']) }}
                 {{ html()->form()->close() }}
             @else
                 <a class="nav-link disabled">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>
