@@ -10,4 +10,5 @@ enum FeatureToggles: string {
     case CUSTOM_THEME_LOGO = 'custom_theme_logo';
     case LOCAL_HERO = 'local-hero';
     case AUTO_SUPPORT_EVENTS = 'auto_support_events';
+    case IMPERSONATION = 'impersonation';
 }

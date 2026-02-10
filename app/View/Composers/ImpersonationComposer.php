@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Enums\FeatureToggles;
 use App\Enums\SessionVariables;
 use App\User;
 use Auth;
@@ -20,13 +21,15 @@ class ImpersonationComposer {
      * Bind data to the view.
      */
     public function compose(View $view): void {
-        $users = null;
-        $is_impersonating = session()->has(SessionVariables::IMPERSONATE->value);
+        if (toggleEnabled(FeatureToggles::IMPERSONATION)) {
+            $users = null;
+            $is_impersonating = session()->has(SessionVariables::IMPERSONATE->value);
 
-        if (Auth::user()->isAbleTo('snrStaff')) {
-            $users = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
+            if (Auth::user()->isAbleTo('snrStaff')) {
+                $users = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
+            }
+
+            $view->with('users', $users)->with('is_impersonating', $is_impersonating);
         }
-
-        $view->with('users', $users)->with('is_impersonating', $is_impersonating);
     }
 }
