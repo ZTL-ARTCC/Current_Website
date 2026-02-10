@@ -5,7 +5,6 @@ namespace App\View\Composers;
 use App\User;
 use Auth;
 use Illuminate\View\View;
-use Laratrust\Models\Role;
 
 class ImpersonationComposer {
     /**

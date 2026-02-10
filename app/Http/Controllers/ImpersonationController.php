@@ -6,8 +6,7 @@ use App\Audit;
 use App\User;
 use Illuminate\Http\Request;
 
-class ImpersonationController extends Controller
-{
+class ImpersonationController extends Controller {
     public function start(Request $request) {
         $user = User::find($request->user_id);
         if (is_null($user)) {
