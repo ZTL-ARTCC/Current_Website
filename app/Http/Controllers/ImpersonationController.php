@@ -14,7 +14,7 @@ class ImpersonationController extends Controller
         }
 
         session()->put('impersonate', $user->id);
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('warning', 'Successfully started impersonationg ' . $user->full_name . '. CAUTION: Impersonating actively logs you into the user\'s REAL account. Changes made while impersonating will be reflected on the user\'s actual account. PROCEED WITH CARE.');
     }
 
     public function stop() {

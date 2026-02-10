@@ -17,6 +17,13 @@
         </div>
     @endif
 
+    @if(session('warning'))
+        <br>
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
+
     @if(session('error'))
         <br>
         <div class="alert alert-danger">
