@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Merch;
-use Auth;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
@@ -60,11 +59,7 @@ class MerchStore extends Controller {
         $store_item->flag = $request->input('flag');
         $store_item->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' modified a store item.';
-        $audit->save();
+        Audit::newAudit(' modified a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item modified successfully.');
     }
@@ -73,11 +68,7 @@ class MerchStore extends Controller {
         $store_item = Merch::find($id);
         $store_item->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed a store item.';
-        $audit->save();
+        Audit::newAudit(' removed a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item deleted successfully.');
     }

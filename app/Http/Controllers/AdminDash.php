@@ -91,11 +91,7 @@ class AdminDash extends Controller {
         $scenery->image3 = $request->input('image3');
         $scenery->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' added new scenery.';
-        $audit->save();
+        Audit::newAudit(' added new scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery added successfully.');
     }
@@ -128,11 +124,7 @@ class AdminDash extends Controller {
         $scenery->image3 = $request->input('image3');
         $scenery->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated a scenery.';
-        $audit->save();
+        Audit::newAudit(' updated a scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery edited successfully.');
     }
@@ -141,11 +133,7 @@ class AdminDash extends Controller {
         $scenery = Scenery::find($id);
         $scenery->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed a scenery.';
-        $audit->save();
+        Audit::newAudit(' removed a scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery deleted successfully.');
     }
@@ -452,11 +440,7 @@ class AdminDash extends Controller {
             $user->save();
         }
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' made changes to '.$user->full_name.'.';
-        $audit->save();
+        Audit::newAudit(' made changes to '.$user->full_name.'.');
 
         return redirect('/dashboard/controllers/roster')->with('success', 'Controller updated successfully.');
     }
@@ -471,11 +455,7 @@ class AdminDash extends Controller {
         $user->status = 2;
         $user->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed '.$name.' from the visitor agreement.';
-        $audit->save();
+        Audit::newAudit(' removed '.$name.' from the visitor agreement.');
 
         return redirect('/dashboard/controllers/roster')->with('success', 'Controller removed from the visitor agreement.');
     }
@@ -493,11 +473,7 @@ class AdminDash extends Controller {
         }
         $visitrej->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' readded '.$name.' to the visitor agreement.';
-        $audit->save();
+        Audit::newAudit(' readded '.$name.' to the visitor agreement.');
 
         return redirect('/dashboard/controllers/roster')->with('success', 'Controller allowed to visit.');
     }
@@ -564,11 +540,7 @@ class AdminDash extends Controller {
 
         Mail::to($visitor->email)->send(new VisitorMail('reject', $visitor));
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' rejected the visit request for '.$visitor->name.'.';
-        $audit->save();
+        Audit::newAudit(' rejected the visit request for '.$visitor->name.'.');
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visit request has been rejected successfully.');
     }
@@ -617,11 +589,7 @@ class AdminDash extends Controller {
         $user->twr_solo_expires = '';
         $user->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' added the visitor '.$user->full_name.'.';
-        $audit->save();
+        Audit::newAudit(' added the visitor '.$user->full_name.'.');
         
         // Add to the VATUSA roster
         $client = new Client();
@@ -643,11 +611,7 @@ class AdminDash extends Controller {
             $user->status = 2;
             $user->save();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name.' removed the visitor '.$name.'.';
-            $audit->save();
+            Audit::newAudit(' removed the visitor '.$name.'.');
             if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
@@ -703,11 +667,7 @@ class AdminDash extends Controller {
         $calendar->created_by = Auth::id();
         $calendar->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' added a new calendar or news event.';
-        $audit->save();
+        Audit::newAudit(' added a new calendar or news event.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been created.');
     }
@@ -735,11 +695,7 @@ class AdminDash extends Controller {
         $calendar->updated_by = Auth::id();
         $calendar->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' edited the calendar event '.$calendar->title.'.';
-        $audit->save();
+        Audit::newAudit(' edited the calendar event '.$calendar->title.'.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been edited.');
     }
@@ -749,11 +705,7 @@ class AdminDash extends Controller {
         $title = $calendar->title;
         $calendar->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed the calendar event '.$title.'.';
-        $audit->save();
+        Audit::newAudit(' removed the calendar event '.$title.'.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
@@ -772,11 +724,7 @@ class AdminDash extends Controller {
 
         $calendar->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
-        $audit->save();
+        Audit::newAudit(' made ' . $calendar->title . ' ' . $type . '.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
     }
@@ -838,11 +786,7 @@ class AdminDash extends Controller {
         $file->permalink = $permalink;
         $file->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' created the file '.$file->name.'.';
-        $audit->save();
+        Audit::newAudit(' created the file '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been successfully added.');
     }
@@ -860,11 +804,7 @@ class AdminDash extends Controller {
         $file->row_separator = 1;
         $file->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' created the file separator '.$file->name.'.';
-        $audit->save();
+        Audit::newAudit(' created the file separator '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file separator has been successfully added.');
     }
@@ -892,11 +832,7 @@ class AdminDash extends Controller {
         $file->permalink = $permalink;
         $file->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated the file '.$file->name.'.';
-        $audit->save();
+        Audit::newAudit(' updated the file '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
     }
@@ -960,11 +896,7 @@ class AdminDash extends Controller {
         $file_path = $file->path;
         $file->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' deleted the file '.$file->name.'.';
-        $audit->save();
+        Audit::newAudit(' deleted the file '.$file->name.'.');
 
         return redirect()->back()->with('success', 'The file has been deleted successfully.');
     }
@@ -1000,11 +932,7 @@ class AdminDash extends Controller {
         $feedback->status = 1;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         $controller = User::find($feedback->feedback_id);
         if (isset($controller)) {
@@ -1022,11 +950,7 @@ class AdminDash extends Controller {
         $feedback->status = 2;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The feedback has been hidden.');
     }
@@ -1040,11 +964,7 @@ class AdminDash extends Controller {
         $feedback->status = $request->status;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The feedback has been updated.');
     }
@@ -1064,11 +984,7 @@ class AdminDash extends Controller {
         $body = $request->body;
         $sender = Auth::user();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' emailed the pilot for feedback '.$feedback->id.'.';
-        $audit->save();
+        Audit::newAudit(' emailed the pilot for feedback '.$feedback->id.'.');
 
         Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
@@ -1097,11 +1013,7 @@ class AdminDash extends Controller {
         $feedback->status = 1;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         $trainer = User::find($feedback->feedback_id);
         if (isset($trainer)) {
@@ -1127,11 +1039,7 @@ class AdminDash extends Controller {
         $feedback->status = 2;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
     }
@@ -1152,11 +1060,7 @@ class AdminDash extends Controller {
         $feedback->status = $request->status;
         $feedback->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
-        $audit->save();
+        Audit::newAudit(' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The trainer feedback has been updated.');
     }
@@ -1176,11 +1080,7 @@ class AdminDash extends Controller {
         $body = $request->body;
         $sender = Auth::user();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' emailed the student for feedback '.$feedback->id.'.';
-        $audit->save();
+        Audit::newAudit(' emailed the student for feedback '.$feedback->id.'.');
 
         Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
@@ -1262,11 +1162,7 @@ class AdminDash extends Controller {
 
         Mail::to($sender->email)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' sent an email from the send email page.';
-        $audit->save();
+        Audit::newAudit(' sent an email from the send email page.');
 
         return redirect('/dashboard/admin/email/send')->with('success', 'The email has been sent successfully and a copy has been sent to you as well.');
     }
@@ -1282,11 +1178,7 @@ class AdminDash extends Controller {
         $announcement->staff_member = Auth::id();
         $announcement->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated the announcement.';
-        $audit->save();
+        Audit::newAudit(' updated the announcement.');
 
         return redirect('/dashboard/admin/announcement')->with('success', 'The announcement has been updated successfully.');
     }
@@ -1348,11 +1240,7 @@ class AdminDash extends Controller {
         $local_hero->month_hours = $hours;
         $local_hero->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' set the local hero winner for '.$month.'/'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' set the local hero winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
     }
@@ -1361,11 +1249,7 @@ class AdminDash extends Controller {
         $local_hero = LocalHero::find($id);
         $local_hero->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed the local hero winner for '.$month.'/'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' removed the local hero winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
     }
@@ -1403,11 +1287,7 @@ class AdminDash extends Controller {
         $local_hero_challenge->news_id = $news->id;
         $local_hero_challenge->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$request->month.'/'.$request->year.'.';
-        $audit->save();
+        Audit::newAudit(' updated the local hero configuration for '.$request->month.'/'.$request->year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with('success', 'Local hero configuration settings were saved.');
     }
@@ -1420,11 +1300,7 @@ class AdminDash extends Controller {
         $bronze->month_hours = $hours;
         $bronze->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' set the bronze mic winner for '.$month.'/'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' set the bronze mic winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
     }
@@ -1433,11 +1309,7 @@ class AdminDash extends Controller {
         $bronze = Bronze::find($id);
         $bronze->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed the bronze mic winner for '.$month.'/'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' removed the bronze mic winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
     }
@@ -1468,11 +1340,7 @@ class AdminDash extends Controller {
         $bronze->year_hours = $hours;
         $bronze->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' set the pyrite mic winner for 20'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' set the pyrite mic winner for 20'.$year.'.');
 
         return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The controller has been set as the pyrite mic winner successfully.');
     }
@@ -1481,11 +1349,7 @@ class AdminDash extends Controller {
         $bronze = Pyrite::find($id);
         $bronze->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' removed the pyrite mic winner for 20'.$year.'.';
-        $audit->save();
+        Audit::newAudit(' removed the pyrite mic winner for 20'.$year.'.');
 
         return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The winner has been removed successfully.');
     }
@@ -1556,11 +1420,7 @@ class AdminDash extends Controller {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
     
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' created the event '.$event->name.'.';
-        $audit->save();
+        Audit::newAudit(' created the event '.$event->name.'.');
 
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been created successfully.');
     }
@@ -1645,11 +1505,7 @@ class AdminDash extends Controller {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' edited the event '.$event->name.'.';
-        $audit->save();
+        Audit::newAudit(' edited the event '.$event->name.'.');
 
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been edited successfully.');
     }
@@ -1676,11 +1532,7 @@ class AdminDash extends Controller {
 
         $event->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' deleted the event '.$name.'.';
-        $audit->save();
+        Audit::newAudit(' deleted the event '.$name.'.');
 
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
     }
@@ -1691,11 +1543,7 @@ class AdminDash extends Controller {
         $event_denylist->event_name = $event->name;
         $event_denylist->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' denylisted event with name '.$event->name.'.';
-        $audit->save();
+        Audit::newAudit(' denylisted event with name '.$event->name.'.');
     }
 
     public function viewEventDenylist() {
@@ -1708,11 +1556,7 @@ class AdminDash extends Controller {
         $vatsim_id = $event_denylists->vatim_id;
         $event_denylists->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' deleted the event denylist with id '.$vatsim_id.'.';
-        $audit->save();
+        Audit::newAudit(' deleted the event denylist with id '.$vatsim_id.'.');
 
         return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
     }
@@ -1825,11 +1669,7 @@ class AdminDash extends Controller {
         $event->status = 1;
         $event->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' set the event '.$event->name.' as active.';
-        $audit->save();
+        Audit::newAudit(' set the event '.$event->name.' as active.');
 
         return redirect()->back()->with('success', 'The event has been unhidden successfully.');
     }
@@ -1839,11 +1679,7 @@ class AdminDash extends Controller {
         $event->status = 0;
         $event->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' hid the event '.$event->name.'.';
-        $audit->save();
+        Audit::newAudit(' hid the event '.$event->name.'.');
 
         return redirect()->back()->with('success', 'The event has been hidden successfully.');
     }
@@ -1973,11 +1809,7 @@ class AdminDash extends Controller {
         $incident->status = 1;
         $incident->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' archived incident report '.$id.'.';
-        $audit->save();
+        Audit::newAudit(' archived incident report '.$id.'.');
 
         return redirect()->back()->with('success', 'The incident has been reported successfully.');
     }
@@ -1986,11 +1818,7 @@ class AdminDash extends Controller {
         $incident = Incident::find($id);
         $incident->delete();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' deleted incident report '.$id.'.';
-        $audit->save();
+        Audit::newAudit(' deleted incident report '.$id.'.');
 
         return redirect()->back()->with('success', 'The incident has been deleted successfully.');
     }
@@ -2075,11 +1903,7 @@ class AdminDash extends Controller {
         $live_event_info->publish = ($request->publish == '1') ? true : false;
         $live_event_info->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' updated the live event info.';
-        $audit->save();
+        Audit::newAudit(' updated the live event info.');
 
         return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
     }
@@ -2117,11 +1941,7 @@ class AdminDash extends Controller {
             }
         }
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name.' revoked solo certs for '.$user->full_name.'.';
-
+        Audit::newAudit(' revoked solo certs for '.$user->full_name.'.');
         return redirect('/dashboard/controllers/roster')->with('success', 'Solo certifications removed.');
     }
 }
