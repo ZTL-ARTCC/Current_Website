@@ -17,6 +17,7 @@ class Impersonation
     public function handle(Request $request, Closure $next): Response
     {
         if (session()->has('impersonate') && Auth::user()->isAbleTo('snrStaff')) {
+            session()->put('impersonating_user', Auth::id());
             Auth::onceUsingId(session('impersonate'));
         }
 
