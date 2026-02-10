@@ -19,7 +19,7 @@
             @endif
             @if(Auth::user()->isAbleTo('snrStaff'))
                 {{ html()->form()->route('startImpersonation')->class(['form-inline'])->open() }}
-                    {{ html()->select('user_id', $users, Auth::id())->class(['form-select'])->attributes(['onchange' => 'this.form.submit()']) }}
+                    {{ html()->select('user_id', $users, Auth::id())->class(['form-select'])->attributes(['onchange' => 'this.form.submit()'])->disabled($is_impersonating) }}
                 {{ html()->form()->close() }}
             @else
                 <a class="nav-link disabled">{{ Auth::user()->full_name }} - {{ Auth::user()->rating_short }}</a>

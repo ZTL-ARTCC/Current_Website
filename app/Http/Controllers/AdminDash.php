@@ -91,7 +91,7 @@ class AdminDash extends Controller {
         $scenery->image3 = $request->input('image3');
         $scenery->save();
 
-        Audit::new(' added new scenery.');
+        Audit::newAudit(' added new scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery added successfully.');
     }
@@ -124,7 +124,7 @@ class AdminDash extends Controller {
         $scenery->image3 = $request->input('image3');
         $scenery->save();
 
-        Audit::new(' updated a scenery.');
+        Audit::newAudit(' updated a scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery edited successfully.');
     }
@@ -133,7 +133,7 @@ class AdminDash extends Controller {
         $scenery = Scenery::find($id);
         $scenery->delete();
 
-        Audit::new(' removed a scenery.');
+        Audit::newAudit(' removed a scenery.');
 
         return redirect('/dashboard/admin/scenery')->with('success', 'Scenery deleted successfully.');
     }
@@ -473,7 +473,7 @@ class AdminDash extends Controller {
         }
         $visitrej->delete();
 
-        Audit::new(' readded '.$name.' to the visitor agreement.');
+        Audit::newAudit(' readded '.$name.' to the visitor agreement.');
 
         return redirect('/dashboard/controllers/roster')->with('success', 'Controller allowed to visit.');
     }
@@ -540,7 +540,7 @@ class AdminDash extends Controller {
 
         Mail::to($visitor->email)->send(new VisitorMail('reject', $visitor));
 
-        Audit::new(' rejected the visit request for '.$visitor->name.'.');
+        Audit::newAudit(' rejected the visit request for '.$visitor->name.'.');
 
         return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visit request has been rejected successfully.');
     }
@@ -589,7 +589,7 @@ class AdminDash extends Controller {
         $user->twr_solo_expires = '';
         $user->save();
 
-        Audit::new(' added the visitor '.$user->full_name.'.');
+        Audit::newAudit(' added the visitor '.$user->full_name.'.');
         
         // Add to the VATUSA roster
         $client = new Client();
@@ -611,7 +611,7 @@ class AdminDash extends Controller {
             $user->status = 2;
             $user->save();
 
-            Audit::new(' removed the visitor '.$name.'.');
+            Audit::newAudit(' removed the visitor '.$name.'.');
             if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
@@ -667,7 +667,7 @@ class AdminDash extends Controller {
         $calendar->created_by = Auth::id();
         $calendar->save();
 
-        Audit::new(' added a new calendar or news event.');
+        Audit::newAudit(' added a new calendar or news event.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been created.');
     }
@@ -695,7 +695,7 @@ class AdminDash extends Controller {
         $calendar->updated_by = Auth::id();
         $calendar->save();
 
-        Audit::new(' edited the calendar event '.$calendar->title.'.');
+        Audit::newAudit(' edited the calendar event '.$calendar->title.'.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been edited.');
     }
@@ -705,7 +705,7 @@ class AdminDash extends Controller {
         $title = $calendar->title;
         $calendar->delete();
 
-        Audit::new(' removed the calendar event '.$title.'.');
+        Audit::newAudit(' removed the calendar event '.$title.'.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
     }
@@ -724,7 +724,7 @@ class AdminDash extends Controller {
 
         $calendar->save();
 
-        Audit::new(' made ' . $calendar->title . ' ' . $type . '.');
+        Audit::newAudit(' made ' . $calendar->title . ' ' . $type . '.');
 
         return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
     }
@@ -786,7 +786,7 @@ class AdminDash extends Controller {
         $file->permalink = $permalink;
         $file->save();
 
-        Audit::new(' created the file '.$file->name.'.');
+        Audit::newAudit(' created the file '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been successfully added.');
     }
@@ -804,7 +804,7 @@ class AdminDash extends Controller {
         $file->row_separator = 1;
         $file->save();
 
-        Audit::new(' created the file separator '.$file->name.'.');
+        Audit::newAudit(' created the file separator '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file separator has been successfully added.');
     }
@@ -832,7 +832,7 @@ class AdminDash extends Controller {
         $file->permalink = $permalink;
         $file->save();
 
-        Audit::new(' updated the file '.$file->name.'.');
+        Audit::newAudit(' updated the file '.$file->name.'.');
 
         return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
     }
@@ -896,7 +896,7 @@ class AdminDash extends Controller {
         $file_path = $file->path;
         $file->delete();
 
-        Audit::new(' deleted the file '.$file->name.'.');
+        Audit::newAudit(' deleted the file '.$file->name.'.');
 
         return redirect()->back()->with('success', 'The file has been deleted successfully.');
     }
@@ -932,7 +932,7 @@ class AdminDash extends Controller {
         $feedback->status = 1;
         $feedback->save();
 
-        Audit::new(' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' saved feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         $controller = User::find($feedback->feedback_id);
         if (isset($controller)) {
@@ -950,7 +950,7 @@ class AdminDash extends Controller {
         $feedback->status = 2;
         $feedback->save();
 
-        Audit::new(' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The feedback has been hidden.');
     }
@@ -964,7 +964,7 @@ class AdminDash extends Controller {
         $feedback->status = $request->status;
         $feedback->save();
 
-        Audit::new(' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The feedback has been updated.');
     }
@@ -984,7 +984,7 @@ class AdminDash extends Controller {
         $body = $request->body;
         $sender = Auth::user();
 
-        Audit::new(' emailed the pilot for feedback '.$feedback->id.'.');
+        Audit::newAudit(' emailed the pilot for feedback '.$feedback->id.'.');
 
         Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
@@ -1013,7 +1013,7 @@ class AdminDash extends Controller {
         $feedback->status = 1;
         $feedback->save();
 
-        Audit::new(' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' saved trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         $trainer = User::find($feedback->feedback_id);
         if (isset($trainer)) {
@@ -1039,7 +1039,7 @@ class AdminDash extends Controller {
         $feedback->status = 2;
         $feedback->save();
 
-        Audit::new(' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
     }
@@ -1060,7 +1060,7 @@ class AdminDash extends Controller {
         $feedback->status = $request->status;
         $feedback->save();
 
-        Audit::new(' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
+        Audit::newAudit(' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.');
 
         return redirect()->back()->with('success', 'The trainer feedback has been updated.');
     }
@@ -1080,7 +1080,7 @@ class AdminDash extends Controller {
         $body = $request->body;
         $sender = Auth::user();
 
-        Audit::new(' emailed the student for feedback '.$feedback->id.'.');
+        Audit::newAudit(' emailed the student for feedback '.$feedback->id.'.');
 
         Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
@@ -1162,7 +1162,7 @@ class AdminDash extends Controller {
 
         Mail::to($sender->email)->send(new SendEmail($sender, $subject, $body, $reply_to, $name));
 
-        Audit::new(' sent an email from the send email page.');
+        Audit::newAudit(' sent an email from the send email page.');
 
         return redirect('/dashboard/admin/email/send')->with('success', 'The email has been sent successfully and a copy has been sent to you as well.');
     }
@@ -1178,7 +1178,7 @@ class AdminDash extends Controller {
         $announcement->staff_member = Auth::id();
         $announcement->save();
 
-        Audit::new(' updated the announcement.');
+        Audit::newAudit(' updated the announcement.');
 
         return redirect('/dashboard/admin/announcement')->with('success', 'The announcement has been updated successfully.');
     }
@@ -1240,7 +1240,7 @@ class AdminDash extends Controller {
         $local_hero->month_hours = $hours;
         $local_hero->save();
 
-        Audit::new(' set the local hero winner for '.$month.'/'.$year.'.');
+        Audit::newAudit(' set the local hero winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
     }
@@ -1249,7 +1249,7 @@ class AdminDash extends Controller {
         $local_hero = LocalHero::find($id);
         $local_hero->delete();
 
-        Audit::new(' removed the local hero winner for '.$month.'/'.$year.'.');
+        Audit::newAudit(' removed the local hero winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
     }
@@ -1287,7 +1287,7 @@ class AdminDash extends Controller {
         $local_hero_challenge->news_id = $news->id;
         $local_hero_challenge->save();
 
-        Audit::new(' updated the local hero configuration for '.$request->month.'/'.$request->year.'.');
+        Audit::newAudit(' updated the local hero configuration for '.$request->month.'/'.$request->year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with('success', 'Local hero configuration settings were saved.');
     }
@@ -1300,7 +1300,7 @@ class AdminDash extends Controller {
         $bronze->month_hours = $hours;
         $bronze->save();
 
-        Audit::new(' set the bronze mic winner for '.$month.'/'.$year.'.');
+        Audit::newAudit(' set the bronze mic winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
     }
@@ -1309,7 +1309,7 @@ class AdminDash extends Controller {
         $bronze = Bronze::find($id);
         $bronze->delete();
 
-        Audit::new(' removed the bronze mic winner for '.$month.'/'.$year.'.');
+        Audit::newAudit(' removed the bronze mic winner for '.$month.'/'.$year.'.');
 
         return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
     }
@@ -1340,7 +1340,7 @@ class AdminDash extends Controller {
         $bronze->year_hours = $hours;
         $bronze->save();
 
-        Audit::new(' set the pyrite mic winner for 20'.$year.'.');
+        Audit::newAudit(' set the pyrite mic winner for 20'.$year.'.');
 
         return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The controller has been set as the pyrite mic winner successfully.');
     }
@@ -1349,7 +1349,7 @@ class AdminDash extends Controller {
         $bronze = Pyrite::find($id);
         $bronze->delete();
 
-        Audit::new(' removed the pyrite mic winner for 20'.$year.'.');
+        Audit::newAudit(' removed the pyrite mic winner for 20'.$year.'.');
 
         return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The winner has been removed successfully.');
     }
@@ -1420,7 +1420,7 @@ class AdminDash extends Controller {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
     
-        Audit::new(' created the event '.$event->name.'.');
+        Audit::newAudit(' created the event '.$event->name.'.');
 
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been created successfully.');
     }
@@ -1505,7 +1505,7 @@ class AdminDash extends Controller {
             return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
 
-        Audit::new(' edited the event '.$event->name.'.');
+        Audit::newAudit(' edited the event '.$event->name.'.');
 
         return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been edited successfully.');
     }
@@ -1532,7 +1532,7 @@ class AdminDash extends Controller {
 
         $event->delete();
 
-        Audit::new(' deleted the event '.$name.'.');
+        Audit::newAudit(' deleted the event '.$name.'.');
 
         return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
     }
@@ -1543,7 +1543,7 @@ class AdminDash extends Controller {
         $event_denylist->event_name = $event->name;
         $event_denylist->save();
 
-        Audit::new(' denylisted event with name '.$event->name.'.');
+        Audit::newAudit(' denylisted event with name '.$event->name.'.');
     }
 
     public function viewEventDenylist() {
@@ -1556,7 +1556,7 @@ class AdminDash extends Controller {
         $vatsim_id = $event_denylists->vatim_id;
         $event_denylists->delete();
 
-        Audit::new(' deleted the event denylist with id '.$vatsim_id.'.');
+        Audit::newAudit(' deleted the event denylist with id '.$vatsim_id.'.');
 
         return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
     }
@@ -1669,7 +1669,7 @@ class AdminDash extends Controller {
         $event->status = 1;
         $event->save();
 
-        Audit::new(' set the event '.$event->name.' as active.');
+        Audit::newAudit(' set the event '.$event->name.' as active.');
 
         return redirect()->back()->with('success', 'The event has been unhidden successfully.');
     }
@@ -1679,7 +1679,7 @@ class AdminDash extends Controller {
         $event->status = 0;
         $event->save();
 
-        Audit::new(' hid the event '.$event->name.'.');
+        Audit::newAudit(' hid the event '.$event->name.'.');
 
         return redirect()->back()->with('success', 'The event has been hidden successfully.');
     }
@@ -1809,7 +1809,7 @@ class AdminDash extends Controller {
         $incident->status = 1;
         $incident->save();
 
-        Audit::new(' archived incident report '.$id.'.');
+        Audit::newAudit(' archived incident report '.$id.'.');
 
         return redirect()->back()->with('success', 'The incident has been reported successfully.');
     }
@@ -1818,7 +1818,7 @@ class AdminDash extends Controller {
         $incident = Incident::find($id);
         $incident->delete();
 
-        Audit::new(' deleted incident report '.$id.'.');
+        Audit::newAudit(' deleted incident report '.$id.'.');
 
         return redirect()->back()->with('success', 'The incident has been deleted successfully.');
     }
@@ -1903,7 +1903,7 @@ class AdminDash extends Controller {
         $live_event_info->publish = ($request->publish == '1') ? true : false;
         $live_event_info->save();
 
-        Audit::new(' updated the live event info.');
+        Audit::newAudit(' updated the live event info.');
 
         return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
     }
@@ -1941,7 +1941,7 @@ class AdminDash extends Controller {
             }
         }
 
-        Audit::new(' revoked solo certs for '.$user->full_name.'.');
+        Audit::newAudit(' revoked solo certs for '.$user->full_name.'.');
         return redirect('/dashboard/controllers/roster')->with('success', 'Solo certifications removed.');
     }
 }

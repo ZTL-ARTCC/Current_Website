@@ -59,7 +59,7 @@ class MerchStore extends Controller {
         $store_item->flag = $request->input('flag');
         $store_item->save();
 
-        Audit::new(' modified a store item.');
+        Audit::newAudit(' modified a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item modified successfully.');
     }
@@ -68,7 +68,7 @@ class MerchStore extends Controller {
         $store_item = Merch::find($id);
         $store_item->delete();
 
-        Audit::new(' removed a store item.');
+        Audit::newAudit(' removed a store item.');
 
         return redirect('/dashboard/admin/store')->with('success', 'Store item deleted successfully.');
     }

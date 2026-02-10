@@ -470,7 +470,7 @@ class TrainingDash extends Controller {
             $ticket->delete();
 
             if (! $draft) {
-                Audit::new(' deleted a training ticket for ' . User::find($controller_id)->full_name . '.');
+                Audit::newAudit(' deleted a training ticket for ' . User::find($controller_id)->full_name . '.');
             }
 
             return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
@@ -495,7 +495,7 @@ class TrainingDash extends Controller {
         $ots->ins_id = Auth::id();
         $ots->save();
 
-        Audit::new(' accepted an OTS for ' . User::find($ots->controller_id)->full_name . '.');
+        Audit::newAudit(' accepted an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
         return redirect()->back()->with('success', 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
     }
@@ -525,7 +525,7 @@ class TrainingDash extends Controller {
 
             Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
 
-            Audit::new(' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.');
+            Audit::newAudit(' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.');
 
             return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');
         }
@@ -542,7 +542,7 @@ class TrainingDash extends Controller {
             $ots->status = $request->result;
             $ots->save();
 
-            Audit::new(' updated an OTS for ' . User::find($ots->controller_id)->full_name . '.');
+            Audit::newAudit(' updated an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
             return redirect()->back()->with('success', 'The OTS has been updated successfully!');
         } else {
@@ -556,7 +556,7 @@ class TrainingDash extends Controller {
         $ots->status = 0;
         $ots->save();
 
-        Audit::new(' cancelled an OTS for ' . User::find($ots->controller_id)->full_name . '.');
+        Audit::newAudit(' cancelled an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
         return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
     }
@@ -928,7 +928,7 @@ class TrainingDash extends Controller {
         if ($promotion) {
             $audit_msg .= ' A promotion was pushed to VATUSA.';
         }
-        Audit::new($audit_msg);
+        Audit::newAudit($audit_msg);
 
         return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
     }
@@ -1028,7 +1028,7 @@ class TrainingDash extends Controller {
             if ($promotion) {
                 $audit_msg .= ' A promotion was pushed to VATUSA.';
             }
-            Audit::new($audit_msg);
+            Audit::newAudit($audit_msg);
 
             return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully' . $extra . '.');
         } else {
