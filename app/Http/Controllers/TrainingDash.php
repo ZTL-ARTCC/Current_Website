@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
-use App\FeatureToggle;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
@@ -21,6 +20,8 @@ use Config;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
 use Mail;
 
@@ -199,7 +200,6 @@ class TrainingDash extends Controller {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
-        $drafts = false;
 
         if ($request->id != null) {
             $search_result = User::find($request->id);
@@ -212,18 +212,16 @@ class TrainingDash extends Controller {
         $exams = null;
         $is_trainer_search = false;
         $student_note = null;
-
+        
         if ($search_result != null && $request->search_type === 'trainer') {
             $tickets_sort = TrainingTicket::where('trainer_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
             })->pluck('id');
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
-            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25)->withQueryString();
+            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
-
-                $drafts = $drafts || $t->draft;
             }
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
                 return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
@@ -234,17 +232,20 @@ class TrainingDash extends Controller {
             $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
             })->pluck('id');
-            $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
-            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
-            foreach ($tickets as &$t) {
-                $t->position = $this->legacyTicketTypes($t->position);
-                $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
 
-                $drafts = $drafts || $t->draft;
+            if (! $tickets_sort->isEmpty()) {
+                $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
+                $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
+                foreach ($tickets as &$t) {
+                    $t->position = $this->legacyTicketTypes($t->position);
+                    $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
+                }
+            } else {
+                if ($search_result->status != 1) {
+                    return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+                }
             }
-            if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
-                return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
-            }
+
             $exams = User::getAcademyExamTranscriptByCid($request->id);
             $student_note = StudentNotes::find($request->id);
         } elseif (auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
@@ -253,7 +254,42 @@ class TrainingDash extends Controller {
             $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 
-        return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets', 'exams', 'drafts', 'all_drafts', 'is_trainer_search', 'student_note'));
+        $tickets_by_category = [
+            'drafts' => [],
+            's1' => [],
+            's2' => [],
+            's3' => [],
+            'c1' => [],
+            'other' => [],
+        ];
+        $active_category = $request->activeTab;
+
+        foreach (($tickets ?? []) as $ticket) {
+            array_push($tickets_by_category[$ticket->sort_category], $ticket);
+        }
+
+        $tickets_by_category = array_reduce(array_keys($tickets_by_category), function ($new_tickets_by_category, $category) use (&$active_category, $tickets_by_category) {
+            if ($category != 'drafts' || count($tickets_by_category['drafts']) > 0) {
+                $items_per_page = 25;
+                $page_num = Paginator::resolveCurrentPage($category);
+                $query_string = Paginator::resolveQueryString();
+                $query_string['activeTab'] = $category;
+
+                $paginated_array = array_slice($tickets_by_category[$category], $items_per_page * ($page_num - 1), $items_per_page);
+
+                $paginator = new LengthAwarePaginator($paginated_array, count($tickets_by_category[$category]), $items_per_page, $page_num, ['pageName' => $category, 'path' => '/dashboard/training/tickets', 'query' => $query_string]);
+
+                $new_tickets_by_category[$category] = $paginator;
+
+                if (is_null($active_category)) {
+                    $active_category = $category;
+                }
+            }
+
+            return $new_tickets_by_category;
+        }, []);
+
+        return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets_by_category', 'active_category', 'exams', 'all_drafts', 'is_trainer_search', 'student_note'));
     }
     
     public function searchTickets(Request $request) {
@@ -883,8 +919,6 @@ class TrainingDash extends Controller {
         $ticket->save();
         $extra = null;
 
-        $date = $ticket->date;
-        $date = date("Y-m-d");
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 
@@ -902,7 +936,7 @@ class TrainingDash extends Controller {
 
         $promotion = false;
         $student = User::find($request->controller);
-        if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+        if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
             $promotion = true;
             $extra .= ' and the students S1 promotion will be pushed to VATUSA';
             $student->rating_id = 2; // Needed to prevent data discontinuity
@@ -937,6 +971,10 @@ class TrainingDash extends Controller {
 
             $ticket = new TrainingTicket;
             $ticket->scheddy_id = $request->scheddy_id;
+        } else {
+            if (!$ticket->draft) {
+                return redirect()->back()->with('error', 'This ticket has already been finalized and cannot be saved as a draft.');
+            }
         }
 
         $ticket->controller_id = $request->controller;
@@ -1001,7 +1039,7 @@ class TrainingDash extends Controller {
             $promotion = false;
             $extra = '';
             $student = User::find($request->controller);
-            if (FeatureToggle::isEnabled('s1_push') && Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+            if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
                 $promotion = true;
                 $extra = ' and the students S1 promotion will be pushed to VATUSA';
                 $student->rating_id = 2; // Needed to prevent data discontinuity

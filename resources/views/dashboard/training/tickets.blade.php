@@ -88,33 +88,19 @@ Training Tickets
             @endif
         @endif
         <hr>
-        @php ($trainingCategories = array('drafts', 's1', 's2', 's3', 'c1', 'other'))
+        @php ($trainingCategories = array_keys($tickets_by_category))
         <ul class="nav nav-tabs nav-justified" role="tablist">
             @foreach($trainingCategories as $trainingCategory)
-                @if ($trainingCategory == 'drafts' && !$drafts)
-                    @continue
-                @endif
-                @php ($active = '')
-                @if ($loop->first || (!$drafts && $loop->iteration == 2))
-                    @php ($active = ' active')
-                @endif
                 <li class="nav-item">
-                    <a class="nav-link{{ $active }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
+                    <a class="nav-link{{ $active_category == $trainingCategory ? ' active' : '' }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
                 </li>
             @endforeach
         </ul>
         <div class="tab-content">
             @php($transition_date = \Carbon\Carbon::parse('11/12/2021')) {{-- ticket dates eastern timezone after this date --}}
             @foreach($trainingCategories as $trainingCategory)
-                @if ($trainingCategory == 'drafts' && !$drafts)
-                    @continue
-                @endif
-                @php ($active = '')
-                @if ($loop->first || (!$drafts && $loop->iteration == 2))
-                    @php ($active = ' active')
-                @endif
-                <div role="tabpanel" class="tab-pane{{ $active }}" id="{{ $trainingCategory }}">
-                    @if($tickets->count() > 0)
+                <div role="tabpanel" class="tab-pane{{ $active_category == $trainingCategory ? ' active' : '' }}" id="{{ $trainingCategory }}">
+                    @if($tickets_by_category[$trainingCategory]->count() > 0)
                         <table class="table">
                             <thead>
                                 <tr>
@@ -132,46 +118,44 @@ Training Tickets
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($tickets as $t)
-                                @if($t->sort_category == $trainingCategory)
-                                    @if($t->cert) {{-- student certified: green highlight --}}
-                                        <tr class="table-success">
-                                    @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
-                                        <tr class="table-primary">
-                                    @else
-                                        <tr>
-                                    @endif
-                                    <td>
-                                        <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                    </td>
-                                    <td>{{ $t->date }}</td>
-                                    <td>{{ $t->trainer_name }}</td>
-                                    <td>{{ $t->position_name }}</td>
-                                    <td>{{ $t->type_name }}</td>
-                                    <td>{{ $t->session_name }}</td>
-                                    <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                                    <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                                    <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
-	                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
-                                    @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
-                                        <td data-bs-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
-                                    @else
-                                        <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}<td>
-                                    @endif
-                                </tr>
+                            @foreach($tickets_by_category[$trainingCategory] as $t)
+                                @if($t->cert) {{-- student certified: green highlight --}}
+                                    <tr class="table-success">
+                                @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
+                                    <tr class="table-primary">
+                                @else
+                                    <tr>
                                 @endif
+                                <td>
+                                    <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>{{ $t->date }}</td>
+                                <td>{{ $t->trainer_name }}</td>
+                                <td>{{ $t->position_name }}</td>
+                                <td>{{ $t->type_name }}</td>
+                                <td>{{ $t->session_name }}</td>
+                                <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
+                                <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
+                                <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
+                                <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
+                                @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
+                                    <td data-bs-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
+                                @else
+                                    <td data-bs-toggle="tooltip" data-bs-html="true" title="{{ $t->ins_comments }}">{!! str_limit(strip_tags($t->ins_comments, '<p>'), 40, '...') !!}</td>
+                                @endif
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    {!! $tickets_by_category[$trainingCategory]->render() !!}
                     @else
                         @include('inc.empty_state', ['header' => 'No Training Tickets', 'body' => 'There are no training tickets for this controller under this category.', 'icon' => 'fa-solid fa-file'])
                     @endif
                 </div>
             @endforeach
         </div>
-    {!! $tickets->appends(['id' => $search_result->id])->render() !!}
     @elseif($all_drafts != null && count($all_drafts) != 0)
         <hr />
         <h4>All Open Drafts</h4>
