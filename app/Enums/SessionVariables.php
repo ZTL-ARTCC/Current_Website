@@ -10,4 +10,5 @@ enum SessionVariables: string {
     case REALOPS_PILOT_REDIRECT = 'pilot_redirect';
     case REALOPS_PILOT_REDIRECT_PATH = 'pilot_redirect_path';
     case IMPERSONATE = 'impersonate';
+    case IMPERSONATING_USER = 'impersonating_user';
 }

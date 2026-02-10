@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\FeatureToggles;
 use App\Enums\SessionVariables;
 use Closure;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class Impersonation
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if (session()->has(SessionVariables::IMPERSONATE->value) && Auth::user()->isAbleTo('snrStaff')) {
+    public function handle(Request $request, Closure $next): Response {
+        if (toggleEnabled(FeatureToggles::IMPERSONATION) && session()->has(SessionVariables::IMPERSONATE->value) && Auth::user()->isAbleTo('snrStaff')) {
+            session()->put(SessionVariables::IMPERSONATING_USER->value, Auth::id());
             Auth::onceUsingId(session(SessionVariables::IMPERSONATE->value));
         }
 
