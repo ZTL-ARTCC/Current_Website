@@ -8,6 +8,7 @@ use App\ATC;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
+use App\Enums\SessionVariables;
 use App\Event;
 use App\EventPosition;
 use App\EventRegistration;
@@ -201,7 +202,7 @@ class ControllerDash extends Controller {
         if (Auth::id() == $ticket->controller_id) {
             return view('dashboard.controllers.ticket')->with('ticket', $ticket);
         } else {
-            return redirect()->back()->with('error', 'You can only view your own tickets. If you are a trainer trying to view a ticket, please do that from the training section.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only view your own tickets. If you are a trainer trying to view a ticket, please do that from the training section.');
         }
     }
 
@@ -311,7 +312,7 @@ class ControllerDash extends Controller {
     public function showFeedbackDetails($id) {
         $feedback = Feedback::find($id);
         if ($feedback->controller_id != Auth::id()) {
-            return redirect('dashboard/controllers/profile')->with('error', 'You\'re not allowed to see this!');
+            return redirect('dashboard/controllers/profile')->with(SessionVariables::ERROR->value, 'You\'re not allowed to see this!');
         }
             
         return view('dashboard.controllers.feedback')->with('feedback', $feedback);
@@ -320,7 +321,7 @@ class ControllerDash extends Controller {
     public function showTrainerFeedbackDetails($id) {
         $feedback = TrainerFeedback::find($id);
         if ($feedback->trainer_id != Auth::id()) {
-            return redirect('dashboard/controllers/profile')->with('error', 'You\'re not allowed to see this!');
+            return redirect('dashboard/controllers/profile')->with(SessionVariables::ERROR->value, 'You\'re not allowed to see this!');
         }
             
         return view('dashboard.controllers.trainer_feedback')->with('feedback', $feedback);
@@ -382,10 +383,10 @@ class ControllerDash extends Controller {
         }
 
         if (!preg_match($valid_time_expr, $request->start_time1)) {
-            return redirect()->back()->with('error', 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Invalid signup start time. Must be in the format HH:MM, and only contain numbers and `:`.');
         }
         if (!preg_match($valid_time_expr, $request->end_time1)) {
-            return redirect()->back()->with('error', 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Invalid signup end time. Must be in the format HH:MM, and only contain numbers and `:`.');
         }
 
         if ($request->timezone == '1') { // Local: 1
@@ -394,7 +395,7 @@ class ControllerDash extends Controller {
         }
 
         if ($request->num1 == null && $request->yr1 == null) {
-            return redirect()->back()->with('error', 'You need to select a position to sign up for.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You need to select a position to sign up for.');
         }
 
         if ($request->num1 != null) {
@@ -415,7 +416,7 @@ class ControllerDash extends Controller {
             }
         }
 
-        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'Your event registration has been saved successfully.');
+        return redirect('/dashboard/controllers/events/view/'.$id)->with(SessionVariables::SUCCESS->value, 'Your event registration has been saved successfully.');
     }
 
     public function unsignupForEvent($id) {
@@ -426,7 +427,7 @@ class ControllerDash extends Controller {
         $request->delete();
 
         // Go back
-        return redirect()->back()->with('success', 'Your registration has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your registration has been removed successfully.');
     }
 
     public function sceneryIndex(Request $request) {
@@ -465,7 +466,7 @@ class ControllerDash extends Controller {
         } elseif (strlen($apt) == 4) {
             $apt_s = strtolower($apt);
         } else {
-            return redirect()->back()->with('error', 'You either did not search for an airport or the airport ID is too long.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You either did not search for an airport or the airport ID is too long.');
         }
 
         $apt_r = strtoupper($apt_s);
@@ -474,7 +475,7 @@ class ControllerDash extends Controller {
         $response = $client->request('GET', 'https://aviationweather.gov/api/data/metar?format=json&taf=true&ids=' . $apt_r);
 
         if ($response->getStatusCode() == 404) {
-            return redirect()->back()->with('error', 'The airport code you entered is invalid.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'The airport code you entered is invalid.');
         }
 
         $metar = null;
@@ -533,7 +534,7 @@ class ControllerDash extends Controller {
 
     public function optIn(Request $request) {
         if ($request->opt != 1 || $request->privacy != 1) {
-            return redirect()->back()->with('error', 'You have not been opted in. You must select both checkboxes if you would like to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You have not been opted in. You must select both checkboxes if you would like to continue.');
         }
 
         $opt = new Opt;
@@ -547,7 +548,7 @@ class ControllerDash extends Controller {
         $user->opt = 1;
         $user->save();
 
-        return redirect()->back()->with('success', 'You have been opted in successfully and will now receive broadcast emails from the vZTL ARTCC.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have been opted in successfully and will now receive broadcast emails from the vZTL ARTCC.');
     }
 
     public function optOut() {
@@ -562,7 +563,7 @@ class ControllerDash extends Controller {
         $user->opt = 0;
         $user->save();
 
-        return redirect()->back()->with('success', 'You have been opted out successfully and will no longer receive broadcast emails from the vZTL ARTCC.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have been opted out successfully and will no longer receive broadcast emails from the vZTL ARTCC.');
     }
 
     public function incidentReport() {
@@ -592,7 +593,7 @@ class ControllerDash extends Controller {
         $incident->status = 0;
         $incident->save();
 
-        return redirect('/dashboard')->with('success', 'Your report has been submitted successfully.');
+        return redirect('/dashboard')->with(SessionVariables::SUCCESS->value, 'Your report has been submitted successfully.');
     }
 
     public function reportBug(Request $request) {
@@ -606,7 +607,7 @@ class ControllerDash extends Controller {
 
         Mail::to('wm@ztlartcc.org')->send(new BugReport($reporter, $url, $error, $desc));
 
-        return redirect()->back()->with('success', 'Your bug has been reported successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your bug has been reported successfully.');
     }
 
     public function updateInfo(Request $request) {
@@ -614,7 +615,7 @@ class ControllerDash extends Controller {
         $user->ts3 = $request->ts3;
         $user->timezone = $request->timezone;
         $user->save();
-        return redirect()->back()->with('success', 'Your profile has been updated successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your profile has been updated successfully.');
     }
 
     public function updateDiscordRoles(Request $request) {
@@ -622,7 +623,7 @@ class ControllerDash extends Controller {
         $user_id = $user->discord;
 
         if (!$user_id) {
-            return redirect()->back()->with('error', 'You must have a Discord UID set in order to update your roles.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must have a Discord UID set in order to update your roles.');
         }
 
         $response = Http::get('http://bot.ztlartcc.org:3000/assignRoles', [
@@ -630,12 +631,12 @@ class ControllerDash extends Controller {
         ]);
 
         if ($response->notFound()) {
-            return redirect()->back()->with('error', 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You have not been found in the Discord server. Please make sure you are in the server and your id is correct.');
         } elseif (!$response->successful()) {
-            return redirect()->back()->with('error', 'An error occurred while updating your roles. Please try again later.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'An error occurred while updating your roles. Please try again later.');
         }
 
-        return redirect()->back()->with('success', 'Your roles have been updated successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your roles have been updated successfully.');
     }
 
     public function showLiveEventInfo() {

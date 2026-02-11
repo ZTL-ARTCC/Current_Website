@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SessionVariables;
 use App\Exports\RealopsExport;
 use App\Importers\RealopsFlightImporter;
 use App\Mail\Realops;
@@ -45,11 +46,11 @@ class RealopsController extends Controller {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'That flight doesn\'t exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight doesn\'t exist');
         }
 
         if ($flight->assigned_pilot_id) {
-            return redirect()->back()->with('error', 'That flight already has a pilot assigned');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight already has a pilot assigned');
         }
         
         $pilot = auth()->guard('realops')->user();
@@ -57,24 +58,24 @@ class RealopsController extends Controller {
 
         Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'bid'));
 
-        return redirect()->back()->with('success', 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have bid for that flight successfully. You should receive a confirmation email soon and will receive email updates regarding your flight');
     }
 
     public function cancelBid($id) {
         $flight = RealopsFlight::find($id);
         if (! $flight) {
-            return redirect()->back()->with('error', 'That flight doesn\'t exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight doesn\'t exist');
         }
 
         $pilot = auth()->guard('realops')->user();
         if ($pilot->id != $flight->assigned_pilot_id) {
-            return redirect()->back()->with('error', 'That flight isn\'t assigned to you');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight isn\'t assigned to you');
         }
         $flight->removeAssignedPilot();
 
         Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'cancel_bid'));
 
-        return redirect()->back()->with('success', 'You have removed your bid successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have removed your bid successfully');
     }
 
     public function adminIndex() {
@@ -97,7 +98,7 @@ class RealopsController extends Controller {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'Unable to assign the pilot to that flight');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to assign the pilot to that flight');
         }
 
         $pilot = RealopsPilot::find($request->input('pilot'));
@@ -105,14 +106,14 @@ class RealopsController extends Controller {
 
         Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'assigned_flight'));
 
-        return redirect()->back()->with('success', 'That pilot was assigned successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'That pilot was assigned successfully');
     }
 
     public function removePilotFromFlight($id) {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'Unable to remove the assigned pilot from that flight');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to remove the assigned pilot from that flight');
         }
 
         $pilot = $flight->assigned_pilot;
@@ -122,7 +123,7 @@ class RealopsController extends Controller {
 
         Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'removed_from_flight'));
 
-        return redirect()->back()->with('success', 'Pilot unassigned successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Pilot unassigned successfully');
     }
 
     public function showCreateFlight() {
@@ -150,14 +151,14 @@ class RealopsController extends Controller {
         $flight->gate = $request->input('gate');
         $flight->save();
 
-        return redirect('/dashboard/admin/realops')->with('success', 'That flight was created successfully');
+        return redirect('/dashboard/admin/realops')->with(SessionVariables::SUCCESS->value, 'That flight was created successfully');
     }
 
     public function showEditFlight($id) {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'That flight does not exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight does not exist');
         }
 
         return view('dashboard.admin.realops.edit')->with('flight', $flight);
@@ -167,7 +168,7 @@ class RealopsController extends Controller {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'That flight does not exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight does not exist');
         }
 
         $request->validate([
@@ -195,7 +196,7 @@ class RealopsController extends Controller {
             Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'flight_updated'));
         }
 
-        return redirect('/dashboard/admin/realops')->with('success', 'That flight was edited successfully');
+        return redirect('/dashboard/admin/realops')->with(SessionVariables::SUCCESS->value, 'That flight was edited successfully');
     }
 
     public function bulkUploadFlights(Request $request) {
@@ -218,19 +219,19 @@ class RealopsController extends Controller {
                 Log::info($failure);
                 $errors = $errors.' L'.$failure->row().'#'.$failure->attribute().': '.join(',', $failure->errors()).' ('.$failure->values()[$failure->attribute()].')';
             }
-            return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Errors: ' . $errors);
+            return redirect('/dashboard/admin/realops')->with(SessionVariables::ERROR->value, 'Upload failed. Errors: ' . $errors);
         } catch (\Exception $e) {
-            return redirect('/dashboard/admin/realops')->with('error', 'Upload failed. Check your formatting: ' . $e->getMessage());
+            return redirect('/dashboard/admin/realops')->with(SessionVariables::ERROR->value, 'Upload failed. Check your formatting: ' . $e->getMessage());
         }
 
-        return redirect('/dashboard/admin/realops')->with('success', 'Upload succeeded');
+        return redirect('/dashboard/admin/realops')->with(SessionVariables::SUCCESS->value, 'Upload succeeded');
     }
 
     public function deleteFlight($id) {
         $flight = RealopsFlight::find($id);
 
         if (! $flight) {
-            return redirect()->back()->with('error', 'That flight does not exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That flight does not exist');
         }
 
         $pilot = $flight->assigned_pilot;
@@ -240,12 +241,12 @@ class RealopsController extends Controller {
             Mail::to($pilot->email)->send(new Realops($flight, $pilot, 'flight_cancelled'));
         }
 
-        return redirect()->back()->with('success', 'That flight has been deleted successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'That flight has been deleted successfully');
     }
 
     public function dumpData(Request $request) {
         if (strtolower($request->input('confirm_text')) != "confirm - dump all") {
-            return redirect()->back()->with('error', 'Data not dumped. Please type in the required message to continue');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Data not dumped. Please type in the required message to continue');
         }
 
         foreach (RealopsFlight::get() as $f) {
@@ -256,7 +257,7 @@ class RealopsController extends Controller {
             $p->delete();
         }
 
-        return redirect()->back()->with('success', 'The realops data has been dumped successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The realops data has been dumped successfully');
     }
 
     public function exportData() {

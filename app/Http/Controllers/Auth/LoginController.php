@@ -96,14 +96,14 @@ class LoginController extends Controller {
             }
 
             if (!App::environment('local')) {
-                return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+                return redirect('/')->with(SessionVariables::ERROR->value, 'We are unable to verify your access at this time. Please try again in a few minutes.');
             }
         }
 
         $resu = json_decode($result->getBody()->__toString(), true);
 
         if (! isset($resu['data'])) {
-            return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'We are unable to verify your access at this time. Please try again in a few minutes.');
         }
 
         $res = $resu['data'];
@@ -130,13 +130,13 @@ class LoginController extends Controller {
 
             $message = 'You have been logged in successfully via the dev mode login. A webmaster role has been automatically attached.';
 
-            return redirect()->intended('/dashboard')->with('success', $message);
+            return redirect()->intended('/dashboard')->with(SessionVariables::SUCCESS->value, $message);
         } else {
             $userstatuscheck = User::find($res['cid']);
         }
         
         if (! $userstatuscheck || $userstatuscheck->status == 2) {
-            return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
         }
 
         $userstatuscheck->fname = $res['fname'];
@@ -180,7 +180,7 @@ class LoginController extends Controller {
             $message = 'You have been logged in successfully. Please note that you are on an LOA and should not control until off the LOA. If this is an error, please let the DATM know.';
         }
 
-        return redirect()->intended('/dashboard')->with('success', $message);
+        return redirect()->intended('/dashboard')->with(SessionVariables::SUCCESS->value, $message);
     }
 
     public function logout() {
