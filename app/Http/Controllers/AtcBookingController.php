@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AtcBooking;
+use App\Enums\SessionVariables;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -65,20 +66,20 @@ class AtcBookingController extends Controller {
                               })->count() > 0;
 
         if ($existing) {
-            return redirect()->back()->with('error', 'A booking already exists for ' . $callsign . ' at this time')->withInput();
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'A booking already exists for ' . $callsign . ' at this time')->withInput();
         }
 
         $type = $request->type;
         if ($type == AtcBooking::TYPES["EVENT"] && ! (Auth::user()->isAbleTo('events') || Auth::user()->hasRole('events-team'))) {
-            return redirect()->back()->with('error', 'Only the EC and events team can create event bookings')->withInput();
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the EC and events team can create event bookings')->withInput();
         }
 
         if ($type == AtcBooking::TYPES["EXAM"] && ! (Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))) {
-            return redirect()->back()->with('error', 'Only instructors can create exam bookings')->withInput();
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only instructors can create exam bookings')->withInput();
         }
 
         if ($type == AtcBooking::TYPES["MONITORING"] && ! (Auth::user()->isAbleTo('train') || Auth::user()->isAbleTo('snrStaff'))) {
-            return redirect()->back()->with('error', 'Only mentors and instructors can create monitoring bookings')->withInput();
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only mentors and instructors can create monitoring bookings')->withInput();
         }
 
         $booking = new AtcBooking;
@@ -89,18 +90,18 @@ class AtcBookingController extends Controller {
         $booking->end = $end;
         $booking->save();
 
-        return redirect('/dashboard/controllers/bookings')->with('success', 'Your booking has been created successfully');
+        return redirect('/dashboard/controllers/bookings')->with(SessionVariables::SUCCESS->value, 'Your booking has been created successfully');
     }
 
     public function deleteBooking($id) {
         $booking = AtcBooking::find($id);
 
         if (! ($booking->cid == Auth::id() || Auth::user()->isAbleTo('snrStaff'))) {
-            return redirect()->back()->with('error', 'You can only delete your own bookings');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only delete your own bookings');
         }
 
         $booking->delete();
 
-        return redirect()->back()->with('success', 'Your booking has been deleted successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your booking has been deleted successfully');
     }
 }

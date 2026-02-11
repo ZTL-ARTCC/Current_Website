@@ -8,6 +8,7 @@ use App\Audit;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
+use App\Enums\SessionVariables;
 use App\Event;
 use App\EventDenylist;
 use App\EventPosition;
@@ -97,7 +98,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' added new scenery.';
         $audit->save();
 
-        return redirect('/dashboard/admin/scenery')->with('success', 'Scenery added successfully.');
+        return redirect('/dashboard/admin/scenery')->with(SessionVariables::SUCCESS->value, 'Scenery added successfully.');
     }
 
     public function editScenery(Request $request, $id) {
@@ -134,7 +135,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated a scenery.';
         $audit->save();
 
-        return redirect('/dashboard/admin/scenery')->with('success', 'Scenery edited successfully.');
+        return redirect('/dashboard/admin/scenery')->with(SessionVariables::SUCCESS->value, 'Scenery edited successfully.');
     }
 
     public function deleteScenery($id) {
@@ -147,7 +148,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed a scenery.';
         $audit->save();
 
-        return redirect('/dashboard/admin/scenery')->with('success', 'Scenery deleted successfully.');
+        return redirect('/dashboard/admin/scenery')->with(SessionVariables::SUCCESS->value, 'Scenery deleted successfully.');
     }
 
     public function showAirports() {
@@ -179,7 +180,7 @@ class AdminDash extends Controller {
 
         Artisan::call('Weather:UpdateWeather');
 
-        return redirect('/dashboard/admin/airports')->with('success', 'The airport was added successfully.');
+        return redirect('/dashboard/admin/airports')->with(SessionVariables::SUCCESS->value, 'The airport was added successfully.');
     }
 
     public function addAirportToHome($id) {
@@ -187,7 +188,7 @@ class AdminDash extends Controller {
         $airport->front_pg = 1;
         $airport->save();
 
-        return redirect()->back()->with('success', 'You have successfully added this airport to the home page.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have successfully added this airport to the home page.');
     }
 
     public function removeAirportFromHome($id) {
@@ -195,14 +196,14 @@ class AdminDash extends Controller {
         $airport->front_pg = 0;
         $airport->save();
 
-        return redirect()->back()->with('success', 'You have successfully removed this airport from the home page.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have successfully removed this airport from the home page.');
     }
 
     public function deleteAirport($id) {
         $airport = Airport::find($id);
         $airport->delete();
 
-        return redirect('/dashboard/admin/airports')->with('success', 'The airport has been deleted successfully.');
+        return redirect('/dashboard/admin/airports')->with(SessionVariables::SUCCESS->value, 'The airport has been deleted successfully.');
     }
 
     public function showRoster() {
@@ -458,7 +459,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' made changes to '.$user->full_name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/roster')->with('success', 'Controller updated successfully.');
+        return redirect('/dashboard/controllers/roster')->with(SessionVariables::SUCCESS->value, 'Controller updated successfully.');
     }
 
     public function disallowVisitReq($id) {
@@ -477,7 +478,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed '.$name.' from the visitor agreement.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/roster')->with('success', 'Controller removed from the visitor agreement.');
+        return redirect('/dashboard/controllers/roster')->with(SessionVariables::SUCCESS->value, 'Controller removed from the visitor agreement.');
     }
 
     public function allowVisitReq(Request $request) {
@@ -489,7 +490,7 @@ class AdminDash extends Controller {
         $visitrej = VisitRej::where('cid', $id)->first();
 
         if ($visitrej == null) {
-            return redirect('/dashboard/controllers/roster')->with('error', 'Controller not found.');
+            return redirect('/dashboard/controllers/roster')->with(SessionVariables::ERROR->value, 'Controller not found.');
         }
         $visitrej->delete();
 
@@ -499,7 +500,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' readded '.$name.' to the visitor agreement.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/roster')->with('success', 'Controller allowed to visit.');
+        return redirect('/dashboard/controllers/roster')->with(SessionVariables::SUCCESS->value, 'Controller allowed to visit.');
     }
 
     public function showVisitRequests() {
@@ -570,7 +571,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' rejected the visit request for '.$visitor->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visit request has been rejected successfully.');
+        return redirect('/dashboard/admin/roster/visit/requests')->with(SessionVariables::SUCCESS->value, 'The visit request has been rejected successfully.');
     }
 
     public function storeVisitor(Request $request) {
@@ -627,14 +628,14 @@ class AdminDash extends Controller {
         $client = new Client();
         $res = $client->request('POST', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$request->input('cid').'?apikey='.Config::get('vatusa.api_key'), ['http_errors' => false]);
 
-        return redirect('/dashboard/admin/roster/visit/requests')->with('success', 'The visitor has been successfully added to the roster.');
+        return redirect('/dashboard/admin/roster/visit/requests')->with(SessionVariables::SUCCESS->value, 'The visitor has been successfully added to the roster.');
     }
 
     public function removeVisitor($id) {
         $user = User::find($id);
         $name = $user->full_name;
         if ($user->visitor == 0) {
-            return redirect()->back()->with('error', 'You can only remove visitors this way. If you are trying to remove a home controller, please do this from the VATUSA website.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only remove visitors this way. If you are trying to remove a home controller, please do this from the VATUSA website.');
         } else {
             $event_requests = EventRegistration::where('controller_id', $user->id)->get();
             foreach ($event_requests as $e) {
@@ -661,7 +662,7 @@ class AdminDash extends Controller {
             ];
             $res = $client->request('DELETE', Config::get('vatusa.base').'/v2/facility/'.Config::get('vatusa.facility').'/roster/manageVisitor/'.$id.'?apikey='.Config::get('vatusa.api_key'), $req_params);
             
-            return redirect('/dashboard/controllers/roster')->with('success', 'The visitor has been removed successfully.');
+            return redirect('/dashboard/controllers/roster')->with(SessionVariables::SUCCESS->value, 'The visitor has been removed successfully.');
         }
     }
 
@@ -709,7 +710,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' added a new calendar or news event.';
         $audit->save();
 
-        return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been created.');
+        return redirect('/dashboard/admin/calendar')->with(SessionVariables::SUCCESS->value, 'The calendar event or news posting has been created.');
     }
 
     public function editCalendarEvent($id) {
@@ -741,7 +742,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' edited the calendar event '.$calendar->title.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been edited.');
+        return redirect('/dashboard/admin/calendar')->with(SessionVariables::SUCCESS->value, 'The calendar event or news posting has been edited.');
     }
 
     public function deleteCalendarEvent($id) {
@@ -755,7 +756,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the calendar event '.$title.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/calendar')->with('success', 'The calendar event or news posting has been deleted.');
+        return redirect('/dashboard/admin/calendar')->with(SessionVariables::SUCCESS->value, 'The calendar event or news posting has been deleted.');
     }
 
     public function toggleCalendarEventVisibility($id) {
@@ -778,7 +779,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name . ' made ' . $calendar->title . ' ' . $type . '.';
         $audit->save();
 
-        return redirect('/dashboard/admin/calendar')->with('success', 'Changed ' . $calendar->title . ' to be ' . $type . '!');
+        return redirect('/dashboard/admin/calendar')->with(SessionVariables::SUCCESS->value, 'Changed ' . $calendar->title . ' to be ' . $type . '!');
     }
 
     public function uploadFile() {
@@ -844,7 +845,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' created the file '.$file->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/files')->with('success', 'The file has been successfully added.');
+        return redirect('/dashboard/controllers/files')->with(SessionVariables::SUCCESS->value, 'The file has been successfully added.');
     }
 
     public function fileSeparator(Request $request) {
@@ -866,7 +867,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' created the file separator '.$file->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/files')->with('success', 'The file separator has been successfully added.');
+        return redirect('/dashboard/controllers/files')->with(SessionVariables::SUCCESS->value, 'The file separator has been successfully added.');
     }
 
     public function editFile($id) {
@@ -898,7 +899,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated the file '.$file->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/files')->with('success', 'The file has been edited successfully.');
+        return redirect('/dashboard/controllers/files')->with(SessionVariables::SUCCESS->value, 'The file has been edited successfully.');
     }
     
     public function updateFileDispOrder(Request $request) {
@@ -966,7 +967,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' deleted the file '.$file->name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The file has been deleted successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The file has been deleted successfully.');
     }
 
     public function showFeedback() {
@@ -1010,7 +1011,7 @@ class AdminDash extends Controller {
         if (isset($controller)) {
             Mail::to($controller->email)->send(new NewFeedback($feedback, $controller));
         }
-        return redirect()->back()->with('success', 'The feedback has been saved.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The feedback has been saved.');
     }
 
     public function hideFeedback(Request $request, $id) {
@@ -1028,7 +1029,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' archived feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The feedback has been hidden.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The feedback has been hidden.');
     }
 
     public function updateFeedback(Request $request, $id) {
@@ -1046,7 +1047,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The feedback has been updated.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The feedback has been updated.');
     }
 
     public function emailFeedback(Request $request, $id) {
@@ -1072,7 +1073,7 @@ class AdminDash extends Controller {
 
         Mail::to($feedback->pilot_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
-        return redirect()->back()->with('success', 'The email has been sent to the pilot successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The email has been sent to the pilot successfully.');
     }
 
     public function showTrainerFeedback() {
@@ -1108,7 +1109,7 @@ class AdminDash extends Controller {
             Mail::to($trainer->email)->send(new NewTrainerFeedback($feedback, $trainer));
         }
 
-        return redirect()->back()->with('success', 'The trainer feedback has been saved.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The trainer feedback has been saved.');
     }
 
     public function hideTrainerFeedback(Request $request, $id) {
@@ -1133,7 +1134,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' archived treainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The trainer feedback has been hidden.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The trainer feedback has been hidden.');
     }
 
     public function updateTrainerFeedback(Request $request, $id) {
@@ -1158,7 +1159,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated trainer feedback '.$feedback->id.' for '.$feedback->controller_name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The trainer feedback has been updated.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The trainer feedback has been updated.');
     }
 
     public function emailTrainerFeedback(Request $request, $id) {
@@ -1184,7 +1185,7 @@ class AdminDash extends Controller {
 
         Mail::to($feedback->student_email)->send(new PilotFeedback($feedback, $subject, $body, $sender, $replyToAddress, $replyToName));
 
-        return redirect()->back()->with('success', 'The email has been sent to the student successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The email has been sent to the student successfully.');
     }
 
     public function sendNewEmail() {
@@ -1251,7 +1252,7 @@ class AdminDash extends Controller {
         } elseif ($bulk == 10) {
             $emails = $c1;
         } else {
-            return redirect()->back()->with('error', 'Please select either a controller or a group to send an email to.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Please select either a controller or a group to send an email to.');
         }
 
         foreach ($emails as $e) {
@@ -1268,7 +1269,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' sent an email from the send email page.';
         $audit->save();
 
-        return redirect('/dashboard/admin/email/send')->with('success', 'The email has been sent successfully and a copy has been sent to you as well.');
+        return redirect('/dashboard/admin/email/send')->with(SessionVariables::SUCCESS->value, 'The email has been sent successfully and a copy has been sent to you as well.');
     }
 
     public function setAnnouncement() {
@@ -1288,7 +1289,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated the announcement.';
         $audit->save();
 
-        return redirect('/dashboard/admin/announcement')->with('success', 'The announcement has been updated successfully.');
+        return redirect('/dashboard/admin/announcement')->with(SessionVariables::SUCCESS->value, 'The announcement has been updated successfully.');
     }
 
     public function showBronzeMic($sort = 'bronzesort', $year = null, $month = null) {
@@ -1354,7 +1355,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the local hero winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The controller has been set as the local hero winner successfully.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with(SessionVariables::SUCCESS->value, 'The controller has been set as the local hero winner successfully.');
     }
 
     public function removeLocalHeroWinner($id, $year, $month) {
@@ -1367,7 +1368,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the local hero winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with('success', 'The local hero winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$year.'/'.$month)->with(SessionVariables::SUCCESS->value, 'The local hero winner has been removed successfully.');
     }
 
     public function updateLocalHeroChallenge(Request $request, $id) {
@@ -1409,7 +1410,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated the local hero configuration for '.$request->month.'/'.$request->year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with('success', 'Local hero configuration settings were saved.');
+        return redirect('/dashboard/admin/bronze-mic/localsort/'.$request->year.'/'.$request->month)->with(SessionVariables::SUCCESS->value, 'Local hero configuration settings were saved.');
     }
 
     public function setBronzeWinner(Request $request, $year, $month, $hours, $id) {
@@ -1426,7 +1427,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The controller has been set as the bronze mic winner successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with(SessionVariables::SUCCESS->value, 'The controller has been set as the bronze mic winner successfully.');
     }
 
     public function removeBronzeWinner($id, $year, $month) {
@@ -1439,7 +1440,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the bronze mic winner for '.$month.'/'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with('success', 'The bronze mic winner has been removed successfully.');
+        return redirect('/dashboard/admin/bronze-mic/bronzesort/'.$year.'/'.$month)->with(SessionVariables::SUCCESS->value, 'The bronze mic winner has been removed successfully.');
     }
 
     public function showPyriteMic($year = null) {
@@ -1474,7 +1475,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the pyrite mic winner for 20'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The controller has been set as the pyrite mic winner successfully.');
+        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with(SessionVariables::SUCCESS->value, 'The controller has been set as the pyrite mic winner successfully.');
     }
 
     public function removePyriteWinner($id, $year) {
@@ -1487,7 +1488,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' removed the pyrite mic winner for 20'.$year.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with('success', 'The winner has been removed successfully.');
+        return redirect('/dashboard/admin/pyrite-mic/'.$year)->with(SessionVariables::SUCCESS->value, 'The winner has been removed successfully.');
     }
 
     public function newEvent() {
@@ -1553,7 +1554,7 @@ class AdminDash extends Controller {
             $event->reduceEventBanner();
             $event->save();
         } catch (\Exception $e) {
-            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with(SessionVariables::ERROR->value, 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
     
         $audit = new Audit;
@@ -1562,7 +1563,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' created the event '.$event->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been created successfully.');
+        return redirect('/dashboard/controllers/events/view/'.$event->id)->with(SessionVariables::SUCCESS->value, 'The event has been created successfully.');
     }
 
     public function editEvent($id) {
@@ -1592,7 +1593,7 @@ class AdminDash extends Controller {
                 try {
                     $event->reduceEventBanner();
                 } catch (\Exception $e) {
-                    return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+                    return redirect('/dashboard/controllers/events/view/'.$event->id)->with(SessionVariables::ERROR->value, 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
                 }
                 $event->banner_path = '/storage'.$public_url;
             }
@@ -1642,7 +1643,7 @@ class AdminDash extends Controller {
             $event->reduceEventBanner();
             $event->save();
         } catch (\Exception $e) {
-            return redirect('/dashboard/controllers/events/view/'.$event->id)->with('error', 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
+            return redirect('/dashboard/controllers/events/view/'.$event->id)->with(SessionVariables::ERROR->value, 'The event has been created successfully, but the banner image appears to be corrupt. Please re-save the image and ensure that it is not an animated image.');
         }
 
         $audit = new Audit;
@@ -1651,7 +1652,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' edited the event '.$event->name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/events/view/'.$event->id)->with('success', 'The event has been edited successfully.');
+        return redirect('/dashboard/controllers/events/view/'.$event->id)->with(SessionVariables::SUCCESS->value, 'The event has been edited successfully.');
     }
 
     public function deleteEvent($id, Request $request) {
@@ -1682,7 +1683,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' deleted the event '.$name.'.';
         $audit->save();
 
-        return redirect('/dashboard/controllers/events')->with('success', 'The event has been deleted successfully.');
+        return redirect('/dashboard/controllers/events')->with(SessionVariables::SUCCESS->value, 'The event has been deleted successfully.');
     }
 
     public function denylistEvent($event) {
@@ -1714,7 +1715,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' deleted the event denylist with id '.$vatsim_id.'.';
         $audit->save();
 
-        return redirect('/dashboard/admin/events/denylist')->with('success', 'The event denylist has been removed successfully.');
+        return redirect('/dashboard/admin/events/denylist')->with(SessionVariables::SUCCESS->value, 'The event denylist has been removed successfully.');
     }
 
     public function addPosition(Request $request, $id) {
@@ -1725,7 +1726,7 @@ class AdminDash extends Controller {
         $position->name = $request->name;
         $position->save();
 
-        return redirect()->back()->with('success', 'The position was added successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position was added successfully.');
     }
 
     public function removePosition($id) {
@@ -1737,30 +1738,30 @@ class AdminDash extends Controller {
             $r->delete();
         }
 
-        return redirect()->back()->with('success', 'The position has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position has been removed successfully.');
     }
 
     public function toggleRegistration($id): RedirectResponse {
         $event = Event::find($id);
 
         if (! $event) {
-            return redirect()->back()->with('error', 'That event does not exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That event does not exist');
         }
 
         $event->toggleRegistration();
 
-        return redirect()->back()->with('success', 'The registration has been toggled successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The registration has been toggled successfully.');
     }
 
     public function toggleShowAssignments($id): RedirectResponse {
         $event = Event::find($id);
         if (! $event) {
-            return redirect()->back()->with('error', 'That event does not exist');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That event does not exist');
         }
 
         $event->toggleShowAssignments();
 
-        return redirect()->back()->with('success', 'The assignment visibility has been toggled successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The assignment visibility has been toggled successfully.');
     }
 
     public function assignPosition(Request $request, $id) {
@@ -1772,7 +1773,7 @@ class AdminDash extends Controller {
         $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->save();
 
-        return redirect()->back()->with('success', 'The position has been assigned successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position has been assigned successfully.');
     }
 
     public function unassignPosition($id) {
@@ -1780,7 +1781,7 @@ class AdminDash extends Controller {
         $position->status = EventRegistration::STATUSES['UNASSIGNED'];
         $position->save();
 
-        return redirect()->back()->with('success', 'The position assignment has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position assignment has been removed successfully.');
     }
 
     public function eventMarkNoShow($id) {
@@ -1788,7 +1789,7 @@ class AdminDash extends Controller {
         $position->no_show = 1;
         $position->save();
 
-        return redirect()->back()->with('success', 'Controller was marked as a no-show.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Controller was marked as a no-show.');
     }
 
     public function eventUnMarkNoShow($id) {
@@ -1796,7 +1797,7 @@ class AdminDash extends Controller {
         $position->no_show = 0;
         $position->save();
 
-        return redirect()->back()->with('success', 'Controller was unmarked as a no-show.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Controller was unmarked as a no-show.');
     }
 
     public function manualAssign(Request $request, $id) {
@@ -1817,7 +1818,7 @@ class AdminDash extends Controller {
         $reg->choice_number = 0;
         $reg->save();
 
-        return redirect()->back()->with('success', 'The position has been assigned successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position has been assigned successfully.');
     }
 
     public function setEventActive($id) {
@@ -1831,7 +1832,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' set the event '.$event->name.' as active.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The event has been unhidden successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The event has been unhidden successfully.');
     }
 
     public function hideEvent($id) {
@@ -1845,7 +1846,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' hid the event '.$event->name.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The event has been hidden successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The event has been hidden successfully.');
     }
 
     public function setEventPositionPreset(Request $request, $id) {
@@ -1866,12 +1867,12 @@ class AdminDash extends Controller {
             $preset->save();
         }
 
-        return redirect()->back()->with('success', 'The position preset has been added successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position preset has been added successfully');
     }
 
     public function sendEventReminder($id) {
         Artisan::call('Event:SendEventReminder ' . $id);
-        return redirect()->back()->with('success', 'Event reminder sent');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Event reminder sent');
     }
 
     public function updateTrackingAirports(Request $request, $id) {
@@ -1887,7 +1888,7 @@ class AdminDash extends Controller {
         $event->tracking_airports = rtrim($event->tracking_airports, ',');
         $event->save();
 
-        return redirect()->back()->with('success', 'Airports for event statistics report updated successfully');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Airports for event statistics report updated successfully');
     }
 
     public function viewEventStats($id) {
@@ -1895,7 +1896,7 @@ class AdminDash extends Controller {
         $event_stat = $event->eventStat;
 
         if (is_null($event_stat)) {
-            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That event does not yet have a report generated');
         }
 
         $event_stat_controllers_by_rating = $event_stat->controllers_by_rating;
@@ -1918,12 +1919,12 @@ class AdminDash extends Controller {
         $event_stat = $event->eventStat;
 
         if (is_null($event_stat)) {
-            return redirect()->back()->with('error', 'That event does not yet have a report generated');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'That event does not yet have a report generated');
         }
 
         $event_stat->delete();
 
-        return redirect()->back()->with('success', 'The report for this event has been deleted and a new report will be available within 24 hours');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The report for this event has been deleted and a new report will be available within 24 hours');
 
     }
 
@@ -1943,14 +1944,14 @@ class AdminDash extends Controller {
             $position->save();
         }
 
-        return redirect('/dashboard/controllers/events/view/'.$id)->with('success', 'The position preset has been loaded successfully.');
+        return redirect('/dashboard/controllers/events/view/'.$id)->with(SessionVariables::SUCCESS->value, 'The position preset has been loaded successfully.');
     }
 
     public function deletePositionPreset(Request $request) {
         $preset = PositionPreset::find($request->p_id);
         $preset->delete();
 
-        return redirect()->back()->with('success', 'The position preset has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position preset has been removed successfully.');
     }
 
     public function incidentReportIndex() {
@@ -1979,7 +1980,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' archived incident report '.$id.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The incident has been reported successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The incident has been reported successfully.');
     }
 
     public function deleteIncident($id) {
@@ -1992,7 +1993,7 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' deleted incident report '.$id.'.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The incident has been deleted successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The incident has been deleted successfully.');
     }
 
     public function showAudits() {
@@ -2022,7 +2023,7 @@ class AdminDash extends Controller {
         $toggle->toggle_description = $request->input('toggle_description');
         $toggle->save();
 
-        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle->toggle_name . '` has been created');
+        return redirect('/dashboard/admin/toggles')->with(SessionVariables::SUCCESS->value, 'The toggle `' . $toggle->toggle_name . '` has been created');
     }
 
     public function showEditFeatureToggle($toggle_name) {
@@ -2037,7 +2038,7 @@ class AdminDash extends Controller {
         }
         FeatureToggle::updateToggle($request->input('toggle_name_orig'), $request->input('toggle_name'), $request->input('toggle_description'));
 
-        return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $request->input('toggle_name') . '` has been updated');
+        return redirect('/dashboard/admin/toggles')->with(SessionVariables::SUCCESS->value, 'The toggle `' . $request->input('toggle_name') . '` has been updated');
     }
 
     public function toggleFeatureToggle($toggle_name) {
@@ -2049,9 +2050,9 @@ class AdminDash extends Controller {
     public function deleteFeatureToggle($toggle_name) {
         $result = FeatureToggle::deleteToggle($toggle_name);
         if ($result) {
-            return redirect('/dashboard/admin/toggles')->with('success', 'The toggle `' . $toggle_name . '` has been deleted');
+            return redirect('/dashboard/admin/toggles')->with(SessionVariables::SUCCESS->value, 'The toggle `' . $toggle_name . '` has been deleted');
         } else {
-            return redirect('/dashboard/admin/toggles')->with('error', 'The toggle `' . $toggle_name . '` could not be deleted');
+            return redirect('/dashboard/admin/toggles')->with(SessionVariables::ERROR->value, 'The toggle `' . $toggle_name . '` could not be deleted');
         }
     }
 
@@ -2081,12 +2082,12 @@ class AdminDash extends Controller {
         $audit->what = Auth::user()->full_name.' updated the live event info.';
         $audit->save();
 
-        return redirect('/dashboard/admin/live')->with('success', 'The live event info has been updated successfully.');
+        return redirect('/dashboard/admin/live')->with(SessionVariables::SUCCESS->value, 'The live event info has been updated successfully.');
     }
 
     public function removeSoloCertifications(Request $request) {
         if (!Auth::user()->isAbleTo('roster')) {
-            return redirect('/dashboard/controllers/roster')->with('error', 'Insufficient permissions.');
+            return redirect('/dashboard/controllers/roster')->with(SessionVariables::ERROR->value, 'Insufficient permissions.');
         }
         $user = User::find($request->id);
         $user->twr_solo_fields = '';
@@ -2122,6 +2123,6 @@ class AdminDash extends Controller {
         $audit->ip = $_SERVER['REMOTE_ADDR'];
         $audit->what = Auth::user()->full_name.' revoked solo certs for '.$user->full_name.'.';
 
-        return redirect('/dashboard/controllers/roster')->with('success', 'Solo certifications removed.');
+        return redirect('/dashboard/controllers/roster')->with(SessionVariables::SUCCESS->value, 'Solo certifications removed.');
     }
 }

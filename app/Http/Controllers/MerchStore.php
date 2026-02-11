@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Enums\SessionVariables;
 use App\Merch;
 use Auth;
 use Carbon\Carbon;
@@ -66,7 +67,7 @@ class MerchStore extends Controller {
         $audit->what = Auth::user()->full_name.' modified a store item.';
         $audit->save();
 
-        return redirect('/dashboard/admin/store')->with('success', 'Store item modified successfully.');
+        return redirect('/dashboard/admin/store')->with(SessionVariables::SUCCESS->value, 'Store item modified successfully.');
     }
 
     public function deleteItem($id) {
@@ -79,6 +80,6 @@ class MerchStore extends Controller {
         $audit->what = Auth::user()->full_name.' removed a store item.';
         $audit->save();
 
-        return redirect('/dashboard/admin/store')->with('success', 'Store item deleted successfully.');
+        return redirect('/dashboard/admin/store')->with(SessionVariables::SUCCESS->value, 'Store item deleted successfully.');
     }
 }
