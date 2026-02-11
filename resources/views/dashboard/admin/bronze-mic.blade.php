@@ -97,7 +97,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                     <td>{{ $year_stats[$h->id]->bronze_hrs }}</td>
                     <td style="min-width:125px">
                         <div class="btn-toolbar">
-                            @toggle('local-hero')
+                            @toggle($FeatureToggles::LOCAL_HERO)
                                 @if($winner_local == null)
                                     {{ html()->form('POST', '/dashboard/admin/local-hero/'.$year.'/'.$month.'/'.$stats[$h->id]->local_hero_hrs.'/'.$h->id)->open() }}
                                         @csrf
@@ -140,7 +140,7 @@ if (!in_array($sort, ['localsort', 'bronzesort', 'pyritesort'])) { $sort = 'bron
                         {{ html()->textarea('description', $challenge->description)->class(['form-control'])->attributes(['rows' => '5']) }}
                     </div>
                     <div class="row-mb-3 form-check">
-                        @toggle('local-hero')
+                        @toggle($FeatureToggles::LOCAL_HERO)
                             {{ html()->checkbox('postToNews', true, 1)->class(['form-check-input']) }}
                         @else
                             {{ html()->checkbox('postToNews', false, 1)->class(['form-check-input'])->attributes(['disabled' => 'disabled']) }}

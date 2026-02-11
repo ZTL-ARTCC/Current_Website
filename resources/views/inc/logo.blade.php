@@ -7,7 +7,7 @@
         }
     }
 @endphp
-@toggle('custom_theme_logo')
+@toggle($FeatureToggles::CUSTOM_THEME_LOGO)
     @php
         $month = Carbon\Carbon::now()->month;
         $day = Carbon\Carbon::now()->day;
