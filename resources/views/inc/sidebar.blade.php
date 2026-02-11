@@ -19,7 +19,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/scenery') }}" href="/dashboard/controllers/scenery">Scenery</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/stats') }}" href="/dashboard/controllers/stats">Statistics</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/incident/report') }}" href="/dashboard/controllers/incident/report">Incident Report</a>
-                    @toggle('merch-store')
+                    @toggle($FeatureToggles::MERCH_STORE)
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/controllers/merch') }}" href="/dashboard/controllers/merch">Merch Store</a>
                     @endtoggle
                     <div class="dropdown-divider"></div>
@@ -40,7 +40,7 @@
         <div id="collapseTraining" class="accordion-collapse collapse" data-bs-parent="#pill-sidebar">
             <div class="accordion-body">
                 <div class="nav flex-column nav-pills pt-0">
-                    @toggle('moodle')
+                    @toggle($FeatureToggles::MOODLE)
                     <a class="nav-link" href="https://learn.ztlartcc.org" target="_blank">ZTL Moodle <span class="badge bg-warning">New!</span></a>
                     @endtoggle
                     <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
@@ -99,7 +99,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/bronze-mic') }}" href="/dashboard/admin/bronze-mic">Award Management</a>
                     @endif
                     @if(Auth::user()->isAbleTo('staff') || Auth::user()->hasRole('events-team'))
-                    @toggle('realops')
+                    @toggle($FeatureToggles::REALOPS)
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/realops') }}" href="/dashboard/admin/realops">Realops</a>
                     @endtoggle
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/admin/live') }}" href="/dashboard/admin/live">Live Event Info</a>

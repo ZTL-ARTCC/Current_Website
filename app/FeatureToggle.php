@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\FeatureToggles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -11,29 +12,30 @@ class FeatureToggle extends Model {
     protected $keyType = 'string';
     public $incrementing = false;
 
-    public static function isEnabled($toggle_name) {
-        return FeatureToggle::getToggleValue($toggle_name);
+    public static function isEnabled($toggle_enum) {
+        return FeatureToggle::getToggleValue($toggle_enum);
     }
      
     public static function toggle($toggle_name) {
         $toggle = FeatureToggle::find($toggle_name);
-        $toggle_value = FeatureToggle::getToggleValue($toggle_name);
+        $toggle_enum = FeatureToggles::from($toggle_name);
+        $toggle_value = FeatureToggle::getToggleValue($toggle_enum);
 
         if ($toggle) {
             $toggle->is_enabled = ! $toggle_value;
             $toggle->save();
         }
 
-        Cache::put(FeatureToggle::generateToggleCacheName($toggle_name), $toggle->is_enabled);
+        Cache::put(FeatureToggle::generateToggleCacheName($toggle_enum), $toggle->is_enabled);
     }
 
-    private static function generateToggleCacheName($toggle_name) {
-        return 'FeatureToggle_' . $toggle_name;
+    private static function generateToggleCacheName($toggle_enum) {
+        return 'FeatureToggle_' . $toggle_enum->value;
     }
 
-    private static function getToggleValue($toggle_name) {
-        return Cache::rememberForever(FeatureToggle::generateToggleCacheName($toggle_name), function () use ($toggle_name) {
-            $toggle = FeatureToggle::find($toggle_name);
+    private static function getToggleValue($toggle_enum) {
+        return Cache::rememberForever(FeatureToggle::generateToggleCacheName($toggle_enum), function () use ($toggle_enum) {
+            $toggle = FeatureToggle::find($toggle_enum->value);
             return $toggle != null && $toggle->is_enabled;
         });
     }
