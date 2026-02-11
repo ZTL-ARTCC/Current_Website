@@ -58,7 +58,7 @@ Realops
             <th scope="col">Estimated Enroute Time (HH:MM)</th>
             <th scope="col">Gate</th>
             <th scope="col">Bidding Status</th>
-            @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
+            @if(auth()->guard('realops')->check() && toggleEnabled($FeatureToggles::REALOPS_BIDDING))
                 <th scope="col">Actions</th>
             @endif
         </tr>
@@ -95,20 +95,20 @@ Realops
                         @if(auth()->guard('realops')->check() && auth()->guard('realops')->id() == $f->assigned_pilot_id)
                             <p>
                                 <span class="badge bg-success">Assigned to You</span>
-                                @unlesstoggle('realops_bidding')
+                                @unlesstoggle($FeatureToggles::REALOPS_BIDDING)
                                     <a href="/realops/cancel-bid" class="btn btn-danger btn-sm d-block mt-2">Cancel Bid</a>
                                 @endtoggle
                             </p>
                         @else
                             <p><span class="badge bg-secondary">Assigned</span></p>
                         @endif
-                    @elseif(toggleEnabled('realops_bidding'))
+                    @elseif(toggleEnabled($FeatureToggles::REALOPS_BIDDING))
                         <p><span class="badge bg-success">Open For Bidding</span></p>
                     @else
                         <p><span class="badge bg-warning">Bidding Closed, No Assignment</span></p>
                     @endif
                 </td>
-                @if(auth()->guard('realops')->check() && toggleEnabled('realops_bidding'))
+                @if(auth()->guard('realops')->check() && toggleEnabled($FeatureToggles::REALOPS_BIDDING))
                     <td>
                         <center>
                             @if(auth()->guard('realops')->user()->id == $f->assigned_pilot_id)

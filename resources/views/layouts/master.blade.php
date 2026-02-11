@@ -36,7 +36,9 @@
     <body>
 
         {{-- Messages --}}
-        @include('inc.home_messages')
+        <div class="container-fluid bg-secondary">
+            @include('inc.messages')
+        </div>
 
         {{-- Navbar --}}
         @include('inc.navbar')

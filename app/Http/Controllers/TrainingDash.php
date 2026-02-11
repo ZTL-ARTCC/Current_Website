@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Enums\SessionVariables;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
@@ -78,7 +79,7 @@ class TrainingDash extends Controller {
         $info->section = $request->section;
         $info->info = $request->info;
         $info->save();
-        return redirect()->back()->with('success', 'The information has been added successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The information has been added successfully.');
     }
 
     public function deleteInfo($id) {
@@ -89,7 +90,7 @@ class TrainingDash extends Controller {
             $o->save();
         }
         $info->delete();
-        return redirect()->back()->with('success', 'The information has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The information has been removed successfully.');
     }
 
     public function newPublicInfoSection(Request $request) {
@@ -111,7 +112,7 @@ class TrainingDash extends Controller {
         $info->order = $request->order;
         $info->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was added successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was added successfully.');
     }
 
     public function editPublicSection(Request $request, $id) {
@@ -123,7 +124,7 @@ class TrainingDash extends Controller {
         $section->name = $request->name;
         $section->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was updated successfully.');
     }
 
     public function saveSession() {
@@ -162,7 +163,7 @@ class TrainingDash extends Controller {
             $p->delete();
         }
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was removed successfully.');
     }
 
     public function addPublicPdf(Request $request, $section_id) {
@@ -183,14 +184,14 @@ class TrainingDash extends Controller {
         $pdf->pdf_path = $public_url;
         $pdf->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The PDF was added successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The PDF was added successfully.');
     }
 
     public function removePublicPdf($id) {
         $pdf = PublicTrainingInfoPdf::find($id);
         $pdf->delete();
 
-        return redirect('/dashboard/training/info')->with('success', 'The PDF was removed successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The PDF was removed successfully.');
     }
 
     public function ticketsIndex(Request $request) {
@@ -224,7 +225,7 @@ class TrainingDash extends Controller {
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
             }
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
-                return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
             }
             $is_trainer_search = true;
             $exams = null;
@@ -242,7 +243,7 @@ class TrainingDash extends Controller {
                 }
             } else {
                 if ($search_result->status != 1) {
-                    return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+                    return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
                 }
             }
 
@@ -302,7 +303,7 @@ class TrainingDash extends Controller {
             }
 
         } else {
-            return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
         }
     }
 
@@ -326,7 +327,7 @@ class TrainingDash extends Controller {
 
         return response()->json([
             'uploaded' => 0,
-            'error' => ['message' => 'No file uploaded.']
+            SessionVariables::ERROR->value => ['message' => 'No file uploaded.']
         ], 400);
     }
 
@@ -405,7 +406,7 @@ class TrainingDash extends Controller {
             return $this->draftNewTicket($request, $id);
         }
 
-        return redirect()->back()->with('error', 'Invalid way to save training tickets. Please report this to the webmaster.');
+        return redirect()->back()->with(SessionVariables::ERROR->value, 'Invalid way to save training tickets. Please report this to the webmaster.');
     }
 
     public function addStudentComments(Request $request, $id) {
@@ -416,7 +417,7 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
 
         if (Auth::id() != $ticket->controller_id) {
-            return redirect()->back()->with('error', 'Not your training ticket');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Not your training ticket');
         }
 
         $ticket->student_comments = $request->student_comments;
@@ -430,7 +431,7 @@ class TrainingDash extends Controller {
             }
         }
         $mailer->send(new StudentComment($trainer->full_name, $ticket->id));
-        return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
     }
 
     public function viewTicket($id) {
@@ -458,7 +459,7 @@ class TrainingDash extends Controller {
             ->with('progress_types', $ticket->getProgressSelectAttribute())
             ->with('student_rating', $student->rating_id);
         } else {
-            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only edit tickets that you have submitted unless you are the TA.');
         }
     }
 
@@ -477,9 +478,9 @@ class TrainingDash extends Controller {
                 $audit->save();
             }
 
-            return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
+            return redirect('/dashboard/training/tickets?id=' . $controller_id)->with(SessionVariables::SUCCESS->value, 'The ticket has been deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Only the TA can delete non-draft training tickets.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can delete non-draft training tickets.');
         }
     }
 
@@ -505,23 +506,23 @@ class TrainingDash extends Controller {
         $audit->what = Auth::user()->full_name . ' accepted an OTS for ' . User::find($ots->controller_id)->full_name . '.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
     }
 
     public function rejectRecommendation($id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
-            return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can reject OTS recommendations.');
         } else {
             $ots = Ots::find($id);
             $ots->delete();
 
-            return redirect()->back()->with('success', 'The OTS recommendation has been rejected successfully.');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS recommendation has been rejected successfully.');
         }
     }
 
     public function assignRecommendation(Request $request, $id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
-            return redirect()->back()->with('error', 'Only the TA can assign OTS recommendations to instructors.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can assign OTS recommendations to instructors.');
         } else {
             $ots = Ots::find($id);
             $ots->status = 1;
@@ -539,7 +540,7 @@ class TrainingDash extends Controller {
             $audit->what = Auth::user()->full_name . ' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.';
             $audit->save();
 
-            return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been assigned successfully and the instructor has been notified.');
         }
     }
 
@@ -560,9 +561,9 @@ class TrainingDash extends Controller {
             $audit->what = Auth::user()->full_name . ' updated an OTS for ' . User::find($ots->controller_id)->full_name . '.';
             $audit->save();
 
-            return redirect()->back()->with('success', 'The OTS has been updated successfully!');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been updated successfully!');
         } else {
-            return redirect()->back()->with('error', 'This OTS has not been assigned to you.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'This OTS has not been assigned to you.');
         }
     }
 
@@ -578,7 +579,7 @@ class TrainingDash extends Controller {
         $audit->what = Auth::user()->full_name . ' cancelled an OTS for ' . User::find($ots->controller_id)->full_name . '.';
         $audit->save();
 
-        return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
     public function getTicketSortCategory($position, $draft) {
@@ -847,7 +848,7 @@ class TrainingDash extends Controller {
         $r = json_decode($response->getBody())->success;
         if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 &&
             app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
         }
 
         //Continue Request
@@ -866,14 +867,14 @@ class TrainingDash extends Controller {
         $feedback->save();
 
         $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
-        return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
+        return redirect($redirect)->with(SessionVariables::SUCCESS->value, 'Thank you for the feedback! It has been received successfully.');
     }
 
     public function handleSchedule() {
         $user = Auth::user();
 
         if ($user->rating_id == 1 && !$user->onboarding_complete) {
-            return redirect()->back()->with('error', 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
         }
 
         return redirect("https://scheddy.ztlartcc.org/");
@@ -952,7 +953,7 @@ class TrainingDash extends Controller {
         }
         $audit->save();
 
-        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
+        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with(SessionVariables::SUCCESS->value, 'The training ticket has been submitted successfully' . $extra . '.');
     }
 
     private function draftNewTicket(Request $request, $id) {
@@ -973,7 +974,7 @@ class TrainingDash extends Controller {
             $ticket->scheddy_id = $request->scheddy_id;
         } else {
             if (!$ticket->draft) {
-                return redirect()->back()->with('error', 'This ticket has already been finalized and cannot be saved as a draft.');
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'This ticket has already been finalized and cannot be saved as a draft.');
             }
         }
 
@@ -1000,7 +1001,7 @@ class TrainingDash extends Controller {
             return response(url('/dashboard/training/tickets/edit/' . $ticket->id));
         }
 
-        return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with('success', 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
+        return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with(SessionVariables::SUCCESS->value, 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
     }
 
     private function saveTicket(Request $request, $id) {
@@ -1054,9 +1055,9 @@ class TrainingDash extends Controller {
             }
             $audit->save();
 
-            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully' . $extra . '.');
+            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with(SessionVariables::SUCCESS->value, 'The ticket has been updated successfully' . $extra . '.');
         } else {
-            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only edit tickets that you have submitted unless you are the TA.');
         }
     }
 

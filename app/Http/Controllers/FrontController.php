@@ -7,6 +7,7 @@ use App\ATC;
 use App\AtcBooking;
 use App\Calendar;
 use App\ControllerLog;
+use App\Enums\SessionVariables;
 use App\Event;
 use App\Feedback;
 use App\File;
@@ -242,14 +243,14 @@ class FrontController extends Controller {
         ]);
         $r = json_decode($response->getBody())->success;
         if ($r != true && Config::get('app.env') != 'local') {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
         }
         
         // Check to see if CID is already active in database (prevents account takeover)
         if (User::find($request->cid) !== null) {
             $user = User::find($request->cid);
             if ($user->status == 1) {
-                return redirect()->back()->with('error', 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
             }
         }
         
@@ -283,9 +284,9 @@ class FrontController extends Controller {
                     
             Mail::to($visit->email)->cc('datm@ztlartcc.org')->send(new VisitorMail('new', $visit));
         
-            return redirect('/')->with('success', 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
+            return redirect('/')->with(SessionVariables::SUCCESS->value, 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
         } else {
-            return redirect('/')->with('error', 'You need to be a S1 rated controller or greater');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'You need to be a S1 rated controller or greater');
         }
     }
 
@@ -338,7 +339,7 @@ class FrontController extends Controller {
         ]);
         $r = json_decode($response->getBody())->success;
         if ($r != true && Config::get('app.env') != 'local') {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
         }
 
         //Continue Request
@@ -354,7 +355,7 @@ class FrontController extends Controller {
         $feedback->status = 0;
         $feedback->save();
 
-        return redirect('/')->with('success', 'Thank you for the feedback! It has been received successfully.');
+        return redirect('/')->with(SessionVariables::SUCCESS->value, 'Thank you for the feedback! It has been received successfully.');
     }
 
     public function newTrainerFeedback() {
@@ -374,7 +375,7 @@ class FrontController extends Controller {
         if (!is_null($file)) {
             return redirect($file->path);
         } else {
-            return redirect('/')->with('error', 'The requested resource is not available.');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'The requested resource is not available.');
         }
     }
 
@@ -401,7 +402,7 @@ class FrontController extends Controller {
         ]);
         $r = json_decode($response->getBody())->success;
         if ($r != true && Config::get('app.env') != 'local') {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
         }
 
         //Continue Request
@@ -414,7 +415,7 @@ class FrontController extends Controller {
 
         Mail::to('ec@ztlartcc.org')->send(new ReqStaffing($name, $email, $org, $date, $time, $exp));
 
-        return redirect('/')->with('success', 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
+        return redirect('/')->with(SessionVariables::SUCCESS->value, 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
     }
     
     public function showAtlRamp() {

@@ -14,7 +14,7 @@ Events
 
 
     @if(Auth::user()->ability(['events-team'], ['staff', 'events']))
-         @toggle('realops')
+         @toggle($FeatureToggles::REALOPS)
             <a href="/dashboard/admin/realops" class="btn btn-primary">Realops Admin</a>
          @endtoggle
     @endif

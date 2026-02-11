@@ -2,6 +2,6 @@
 
 use App\FeatureToggle;
 
-function toggleEnabled($toggle_name) {
-    return FeatureToggle::isEnabled($toggle_name);
+function toggleEnabled($toggle_enum) {
+    return FeatureToggle::isEnabled($toggle_enum);
 }

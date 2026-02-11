@@ -8,7 +8,7 @@ Merch Store
 @include('inc.header', ['title' => 'ZTL Merch Store'])
 
 <div class="container">
-    @if(count($merch_items) > 0 && toggleEnabled('merch-store'))
+    @if(count($merch_items) > 0 && toggleEnabled($FeatureToggles::MERCH_STORE))
         <p>Items below are offered at cost to ZTL members. ZTL ARTCC is sales tax exempt thanks to VATUSA's
             status as an IRS-recognized 501(c)(3) entity. Please email your order to 
             <a href="mailto:{{ $merch_email }}" alt="Store Email">{{ $merch_email }}</a> with the item name(s) and quantity. We will reply with a confirmation

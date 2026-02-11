@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SessionVariables;
 use Artisan;
 use Config;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CronController extends Controller {
             if ($job != null) {
                 if (command_exists($job)) {
                     Artisan::call($job);
-                    return 'success';
+                    return SessionVariables::SUCCESS->value;
                 } else {
                     return 'error: That command does not exist.';
                 }
