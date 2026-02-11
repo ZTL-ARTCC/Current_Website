@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\FeatureToggles;
+use App\Enums\SessionVariables;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider {
         });
 
         View::share('FeatureToggles', FeatureToggles::class);
+        View::share('SessionVariables', SessionVariables::class);
 
         /**
          * Paginate a standard Laravel Collection.
