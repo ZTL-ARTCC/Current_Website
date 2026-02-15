@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\SessionVariables;
+use App\Audit;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,10 +20,14 @@ class ImpersonationController extends Controller {
         }
 
         session()->put(SessionVariables::IMPERSONATE->value, $user->id);
+        Audit::newAudit('started impersonating user ' . $user->impersonation_name . '.');
+
         return redirect('/dashboard')->with(SessionVariables::ERROR->value, 'Successfully started impersonationg ' . $user->full_name . '. CAUTION: Impersonating actively logs you into the user\'s REAL account. Changes made while impersonating will be reflected on the user\'s actual account. PROCEED WITH CARE.');
     }
 
     public function stop() {
+        Audit::newAudit('impersonation session ending...');
+
         session()->forget(SessionVariables::IMPERSONATE->value);
         return redirect('/dashboard');
     }
