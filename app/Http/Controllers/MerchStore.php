@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Merch;
-use Auth;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
