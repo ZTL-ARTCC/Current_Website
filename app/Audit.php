@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\SessionVariables;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,10 +18,21 @@ class Audit extends Model {
     }
 
     public static function newAudit(string $message): void {
+        $impersonated_by_id = null;
+        $impersonation_string = '';
+        if (session()->has(SessionVariables::IMPERSONATING_USER->value)) {
+            $impersonated_by_id = session(SessionVariables::IMPERSONATING_USER->value);
+            $impersonation_user = User::find($impersonated_by_id);
+
+            $impersonation_string = 'IMPERSONATED BY ' . (is_null($impersonation_user) ? 'UNKNOWN' : $impersonation_user->full_name) . ': ';
+        }
+        $impersonated_by_id = session()->has(SessionVariables::IMPERSONATING_USER->value) ? session(SessionVariables::IMPERSONATING_USER->value) : null;
+
         $audit = new Audit;
         $audit->cid = Auth::id();
+        $audit->impersonated_by_id = $impersonated_by_id;
         $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' ' . $message;
+        $audit->what = $impersonation_string . Auth::user()->full_name . ' ' . $message;
         $audit->save();
     }
 }
