@@ -15,11 +15,15 @@ class PreferredRoute extends Model {
         if (!$routes) {
             return '';
         }
-        /*
-            PRDs normally contain the origin and destination ID as the first and last points.
-            SimBrief doesn't like this. Remove.
-        */
-        $route = explode(' ', $routes->route_string);
+        $clean_route = self::remove_origin_destination_points($routes->route_string, $departure, $arrival);
+        return $clean_route;
+    }
+
+    private static function remove_origin_destination_points($route_string, $departure, $arrival): string {
+        $route = explode(' ', $route_string);
+        if (!is_array($route)) {
+            return '';
+        }
         if ($route[0] == substr($departure, 1)) {
             unset($route[0]);
         }
