@@ -14,8 +14,6 @@
 /*
 *   Front Page Stuff
 */
-
-
 Route::get('/', 'FrontController@home');
 Route::get('/controllers/teamspeak', 'FrontController@teamspeak');
 Route::get('/privacy', 'FrontController@privacy');
