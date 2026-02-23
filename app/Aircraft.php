@@ -18,6 +18,7 @@ class Aircraft {
         if (Storage::disk('local')->exists(self::FILENAME)) {
             self::$data = Collection::fromJson(Storage::disk('local')->get(self::FILENAME));
         }
+        self::$initialized = true;
     }
 
     public static function fetch($acid) {
