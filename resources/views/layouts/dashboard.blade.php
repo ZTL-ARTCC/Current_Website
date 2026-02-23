@@ -32,7 +32,9 @@
     </head>
     <body>
         {{-- Messages --}}
-        @include('inc.messages')
+        <div class="container">
+            @include('inc.messages')
+        </div>
 
         {{-- Navbar --}}
         @include('inc.dashboard_head')
