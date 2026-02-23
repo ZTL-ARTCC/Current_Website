@@ -17,7 +17,7 @@
             @if(toggleEnabled($FeatureToggles::IMPERSONATION) && $is_impersonating)
                 <a class="nav-link" href="/dashboard/admin/impersonation/stop">End Impersonation</a>
             @endif
-            @if(toggleEnabled($FeatureToggles::IMPERSONATION) && Auth::user()->isAbleTo('snrStaff'))
+            @if(toggleEnabled($FeatureToggles::IMPERSONATION) && (Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm')))
                 {{ html()->form()->route('startImpersonation')->class(['form-inline'])->open() }}
                     {{ html()->select('user_id', $users, Auth::id())->class(['form-select'])->attributes(['onchange' => 'this.form.submit()'])->disabled($is_impersonating) }}
                 {{ html()->form()->close() }}
