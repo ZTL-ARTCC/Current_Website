@@ -24,7 +24,7 @@ class ImpersonationComposer {
             $users = null;
             $is_impersonating = session()->has(SessionVariables::IMPERSONATE->value);
 
-            if (Auth::user()->isAbleTo('snrStaff')) {
+            if (Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm')) {
                 $users = User::where('status', 1)->orderBy('lname', 'ASC')->get()->pluck('impersonation_name', 'id');
             }
 

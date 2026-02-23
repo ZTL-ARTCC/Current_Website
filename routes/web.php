@@ -335,7 +335,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         });
 
         Route::prefix('impersonation')->middleware('toggle:impersonation')->group(function () {
-            Route::post('/', 'ImpersonationController@start')->middleware('permission:snrStaff')->name('startImpersonation');
+            Route::post('/', 'ImpersonationController@start')->middleware('role:wm|awm')->name('startImpersonation');
             Route::get('/stop', 'ImpersonationController@stop')->name('stopImpersonation');
         });
     });
