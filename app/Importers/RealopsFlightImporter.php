@@ -17,6 +17,7 @@ class RealopsFlightImporter implements ToModel, WithValidation {
         }
         $est_time_enroute = null;
         $gate = null;
+        $aircraft_type = null;
 
         if (count($row) > 6) {
             $est_time_enroute = $row[6];
@@ -24,6 +25,10 @@ class RealopsFlightImporter implements ToModel, WithValidation {
 
         if (count($row) > 7) {
             $gate = $row[7];
+        }
+
+        if (count($row) > 8) {
+            $aircraft_type = $row[8];
         }
 
         $flight = new RealopsFlight;
@@ -35,6 +40,7 @@ class RealopsFlightImporter implements ToModel, WithValidation {
         $flight->arr_airport = $row[5];
         $flight->est_time_enroute = $est_time_enroute;
         $flight->gate = $gate;
+        $flight->aircraft_type = $aircraft_type;
 
         return $flight;
     }
