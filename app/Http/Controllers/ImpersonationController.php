@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\SessionVariables;
 use App\Audit;
+use App\Enums\SessionVariables;
 use App\User;
 use Illuminate\Http\Request;
 
