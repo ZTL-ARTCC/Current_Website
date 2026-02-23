@@ -104,7 +104,7 @@ Realops
                         @else
                             <p><span class="badge bg-secondary">Assigned</span></p>
                         @endif
-                    @elseif(toggleEnabled('realops_bidding'))
+                    @elseif(toggleEnabled($FeatureToggles::REALOPS_BIDDING))
                         <p><span class="badge bg-success">Open For Bidding</span></p>
                     @else
                         <p><span class="badge bg-warning">Bidding Closed, No Assignment</span></p>

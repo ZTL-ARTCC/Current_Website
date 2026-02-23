@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\FeatureToggle;
+use App\Enums\FeatureToggles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
         $schedule->command('RosterUpdate:UpdateAcademyExams')->cron('17 */2 * * *')->monitorName('Active Controller Exam Update');
         $schedule->command('Events:UpdateSupportEvents')->dailyAt('05:09')->monitorName('Sync Support Events')->when(function () {
-            return FeatureToggle::isEnabled('auto_support_events');
+            return toggleEnabled(FeatureToggles::AUTO_SUPPORT_EVENTS);
         });
         $schedule->command('PilotPassport:ActivityUpdate')->everyFiveMinutes()->monitorName('Update Pilot Passport Activity');
     }

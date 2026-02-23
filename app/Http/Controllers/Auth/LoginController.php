@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\SessionVariables;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\VatsimOAuthController;
 use App\Opt;
@@ -36,9 +37,9 @@ class LoginController extends Controller {
     public function login(Request $request) {
         if (!$request->has('code') || !$request->has('state')) { // User has clicked "login", redirect to Connect
             $authorizationUrl = $this->provider->getAuthorizationUrl(); // Generates state
-            $request->session()->put('vatsimauthstate', $this->provider->getState());
+            $request->session()->put(SessionVariables::VATSIM_AUTH_STATE->value, $this->provider->getState());
             return redirect()->away($authorizationUrl);
-        } elseif ($request->input('state') !== session()->pull('vatsimauthstate')) { // State mismatch, error
+        } elseif ($request->input('state') !== session()->pull(SessionVariables::VATSIM_AUTH_STATE->value)) { // State mismatch, error
             return redirect('/')->withError("Something went wrong, please try again.");
         } else { // Callback (user has just logged in Connect)
             return $this->verifyLogin($request);
@@ -63,7 +64,7 @@ class LoginController extends Controller {
         ) {
             return redirect('/')->withError("We need you to grant us all marked permissions");
         }
-        if (session('pilot_redirect')) {
+        if (session(SessionVariables::REALOPS_PILOT_REDIRECT->value)) {
             return $this->externalPilotLogin(
                 $resourceOwner->data->cid,
                 $resourceOwner->data->personal->name_first,
@@ -95,14 +96,14 @@ class LoginController extends Controller {
             }
 
             if (!App::environment('local')) {
-                return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+                return redirect('/')->with(SessionVariables::ERROR->value, 'We are unable to verify your access at this time. Please try again in a few minutes.');
             }
         }
 
         $resu = json_decode($result->getBody()->__toString(), true);
 
         if (! isset($resu['data'])) {
-            return redirect('/')->with('error', 'We are unable to verify your access at this time. Please try again in a few minutes.');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'We are unable to verify your access at this time. Please try again in a few minutes.');
         }
 
         $res = $resu['data'];
@@ -129,13 +130,13 @@ class LoginController extends Controller {
 
             $message = 'You have been logged in successfully via the dev mode login. A webmaster role has been automatically attached.';
 
-            return redirect()->intended('/dashboard')->with('success', $message);
+            return redirect()->intended('/dashboard')->with(SessionVariables::SUCCESS->value, $message);
         } else {
             $userstatuscheck = User::find($res['cid']);
         }
         
         if (! $userstatuscheck || $userstatuscheck->status == 2) {
-            return redirect('/')->with('error', 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
+            return redirect('/')->with(SessionVariables::ERROR->value, 'You have not been found on the roster. If you have recently joined, please allow up to an hour for the roster to update.');
         }
 
         $userstatuscheck->fname = $res['fname'];
@@ -179,7 +180,7 @@ class LoginController extends Controller {
             $message = 'You have been logged in successfully. Please note that you are on an LOA and should not control until off the LOA. If this is an error, please let the DATM know.';
         }
 
-        return redirect()->intended('/dashboard')->with('success', $message);
+        return redirect()->intended('/dashboard')->with(SessionVariables::SUCCESS->value, $message);
     }
 
     public function logout() {
@@ -190,9 +191,9 @@ class LoginController extends Controller {
     }
 
     public function realopsLogin() {
-        session(['pilot_redirect_path' =>  '/realops']);
+        session()->put(SessionVariables::REALOPS_PILOT_REDIRECT_PATH->value, '/realops');
         if (! auth()->check()) {
-            session(['pilot_redirect' =>  true]);
+            session()->put(SessionVariables::REALOPS_PILOT_REDIRECT->value, true);
             return redirect('/login');
         }
 
@@ -213,9 +214,9 @@ class LoginController extends Controller {
     }
 
     public function pilotPassportLogin() {
-        session(['pilot_redirect_path' =>  '/pilot_passport']);
+        session()->put(SessionVariables::REALOPS_PILOT_REDIRECT_PATH->value, '/pilot_passport');
         if (! auth()->check()) {
-            session(['pilot_redirect' =>  true]);
+            session()->put(SessionVariables::REALOPS_PILOT_REDIRECT->value, true);
             return redirect('/login');
         }
 
@@ -253,9 +254,9 @@ class LoginController extends Controller {
 
     private function completePilotLogin($pilot) {
         auth()->guard('realops')->login($pilot);
-        $redirect_path = session('pilot_redirect_path');
-        session()->forget('pilot_redirect');
-        session()->forget('pilot_redirect_path');
+        $redirect_path = session(SessionVariables::REALOPS_PILOT_REDIRECT_PATH->value);
+        session()->forget(SessionVariables::REALOPS_PILOT_REDIRECT->value);
+        session()->forget(SessionVariables::REALOPS_PILOT_REDIRECT_PATH->value);
         return redirect($redirect_path);
     }
 }
