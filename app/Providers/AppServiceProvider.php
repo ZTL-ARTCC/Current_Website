@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider {
 
         View::share('FeatureToggles', FeatureToggles::class);
         View::share('SessionVariables', SessionVariables::class);
-        View::composer('inc.dashboard_head', ImpersonationComposer::class);
+        View::composer(['inc.dashboard_head', 'inc.impersonation_warning'], ImpersonationComposer::class);
 
         /**
          * Paginate a standard Laravel Collection.
