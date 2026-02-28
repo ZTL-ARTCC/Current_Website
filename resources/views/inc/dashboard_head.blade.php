@@ -14,9 +14,6 @@
         </ul>
         <ul class="navbar-nav ml-auto align-items-center">
             <a class="nav-link {{ Nav::isRoute('controller_dash_home') }}" href="/dashboard">Dashboard Home</a>
-            @if(toggleEnabled($FeatureToggles::IMPERSONATION) && $is_impersonating)
-                <a class="nav-link" href="/dashboard/admin/impersonation/stop">End Impersonation</a>
-            @endif
             @if(toggleEnabled($FeatureToggles::IMPERSONATION) && (Auth::user()->hasRole('wm') || Auth::user()->hasRole('awm')))
                 {{ html()->form()->route('startImpersonation')->class(['form-inline'])->open() }}
                     {{ html()->select('user_id', $users, Auth::id())->class(['form-select'])->attributes(['onchange' => 'this.form.submit()'])->disabled($is_impersonating) }}
