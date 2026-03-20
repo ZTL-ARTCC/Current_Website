@@ -333,6 +333,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('monitor')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@backgroundMonitor');
         });
+
+        Route::prefix('impersonation')->middleware('toggle:impersonation')->group(function () {
+            Route::post('/', 'ImpersonationController@start')->middleware('role:wm|awm')->name('startImpersonation');
+            Route::get('/stop', 'ImpersonationController@stop')->name('stopImpersonation');
+        });
     });
 });
 /*
