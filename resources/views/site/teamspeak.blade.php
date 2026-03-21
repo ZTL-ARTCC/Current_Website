@@ -23,9 +23,9 @@ TeamSpeak
                 <li>All users must join the TeamSpeak using the name associated with their VATSIM account.</li>
                 <li>Anonymous users will be kicked with a warning and banned upon reconnecting anonymously.</li>
                 <li>TeamSpeak permissions are required to move within the server. Please contact a staff member to receive appropriate permissions. (If you are not a member of the VATUSA region, please provide your CID for rating verification).</li>
-                <li>Although streaming while controlling is encouraged, you may not stream the audio from the ZTL TeamSpeak server for the privacy of other controllers. Streaming TeamSpeak audio requires the written permission of the ATM (Contact the ATM at <a href="atm@ztlartcc.org">atm@ztlartcc.org</a> for permission). Streaming audio without permission from the ATM may result in loss of TeamSpeak privileges.</li>
+                <li>Although streaming while controlling is encouraged, you may not stream the audio from the ZTL TeamSpeak server for the privacy of other controllers. Streaming TeamSpeak audio requires the written permission of the ATM (Contact the ATM at <a href="mailto:{{config('artcc.email_atm')}}">{{config('artcc.email_atm')}}</a> for permission). Streaming audio without permission from the ATM may result in loss of TeamSpeak privileges.</li>
                 <li>Controlling rooms are limited to controlling only. If a controller asks for you to leave, please do so.</li>
-                <li>Use of the TeamSpeak is a privilege and can be revoked by a staff member at any time and for any reason. To appeal TeamSpeak bans, please contact the DATM at <a href="datm@ztlartcc.org">datm@ztlartcc.org</a>.</li>
+                <li>Use of the TeamSpeak is a privilege and can be revoked by a staff member at any time and for any reason. To appeal TeamSpeak bans, please contact the DATM at <a href="mailto:{{config('artcc.email_datm')}}">{{config('artcc.email_datm')}}</a>.</li>
             </ul>
             <p>Please review the <a href="https://www.ztlartcc.org/asset/TeamSpeakDiscordPolicy">TeamSpeak and Discord Policy</a> for the full list of rules prior to joining the TeamSpeak server.</p>
         </div>
@@ -52,7 +52,7 @@ TeamSpeak
         </div>
     </div>
     <hr>
-    <center><p>If you have any additional questions, please contact either the ATM or DATM at <a href="atm@ztlartcc.org">atm@ztlartcc.org</a> or <a href="datm@ztlartcc.org">datm@ztlartcc.org</a> respectively.</p></center>
+    <center><p>If you have any additional questions, please contact either the ATM or DATM at <a href="mailto:{{config('artcc.email_atm')}}">{{config('artcc.email_atm')}}</a> or <a href="mailto:{{config('artcc.email_datm')}}">{{config('artcc.email_datm')}}</a> respectively.</p></center>
 </div>
 
 @endsection

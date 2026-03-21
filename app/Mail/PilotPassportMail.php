@@ -33,7 +33,7 @@ class PilotPassportMail extends Mailable implements ShouldQueue {
         return new Envelope(
             from: new ZTLAddress('events', 'vZTL ARTCC Events Department'),
             replyTo: [
-                new Address('wm@ztlartcc.org', 'vZTL ARTCC WM')
+                new Address(config('artcc.email_wm'), 'vZTL ARTCC WM')
             ],
             subject: $this::$SUBJECTS[$this->type]
         );

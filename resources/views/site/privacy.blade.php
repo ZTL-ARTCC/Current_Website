@@ -73,7 +73,7 @@ Privacy
 <h2><em>Opt Out</em></h2>
 <p>Given the nature of our services, it is not possible to opt out of data collection and use our services. But if you desire to opt out and no longer desire to use our services, we will purge all information we have collected upon written request.</p>
 <p>The first step is to deactivate and request VATSIM to purge your data. Please head to&nbsp;<a href="https://membership.vatsim.net/">https://membership.vatsim.net</a>&nbsp;to do so.</p>
-<p>After VATSIM has purged your data, please send a written request to Virtual Atlanta ARTCC's Air Traffic Manager by emailing <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=atm@zhuartcc.org" target="_blank" rel="noopener">atm@ztlartcc.org</a>. It is a manual process, so please allow up to 30 days for information to be purged. You will receive an email response once the data has been purged.</p>
+<p>After VATSIM has purged your data, please send a written request to Virtual Atlanta ARTCC's Air Traffic Manager by emailing <a href="mailto:{{config('artcc.email_atm')}}" alt="Email Us">{{config('artcc.email_atm')}}</a>. It is a manual process, so please allow up to 30 days for information to be purged. You will receive an email response once the data has been purged.</p>
 <p>Note Virtual Atlanta ARTCC cannot guarantee that information collected by parties outside of Virtual Atlanta ARTCC will be purged in the process.</p>
 </div>
 </div>
