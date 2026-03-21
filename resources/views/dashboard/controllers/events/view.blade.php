@@ -363,13 +363,13 @@ View Event
                                         <div class="row">
                                             @if($your_registration1->status == App\Event::$STATUSES["HIDDEN"])
                                                 <div class="col-sm-5">
-                                                    {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-select']) }}
+                                                    {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-select'])->disabled(true) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control']) }}
+                                                    {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control'])->isReadonly(true) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {{ html()->text('end_time1', $your_registration1->end_time)->placeholder($event->end_time)->class(['form-control']) }}
+                                                    {{ html()->text('end_time1', $your_registration1->end_time)->placeholder($event->end_time)->class(['form-control'])->isReadonly(true) }}
                                                 </div>
                                             @else
                                                 <div class="col-sm-5">
