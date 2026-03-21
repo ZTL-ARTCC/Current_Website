@@ -96,9 +96,13 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/profile/trainer-feedback-details/{id}', 'ControllerDash@showTrainerFeedbackDetails');
         Route::get('/events', 'ControllerDash@showEvents');
-        Route::get('/events/view/{id}', 'ControllerDash@viewEvent');
-        Route::post('/events/view/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
-        Route::get('/events/view/{id}/un-signup', 'ControllerDash@unsignupForEvent');
+        Route::prefix('events')->group(function () {
+            Route::prefix('view')->middleware('event_visibility')->group(function () {
+                Route::get('/{id}', 'ControllerDash@viewEvent');
+                Route::post('/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
+                Route::get('/{id}/un-signup', 'ControllerDash@unsignupForEvent');
+            });
+        });
         Route::get('/scenery', 'ControllerDash@sceneryIndex');
         Route::get('/scenery/view/{id}', 'ControllerDash@showScenery');
         Route::post('/scenery/search', 'ControllerDash@searchScenery');
