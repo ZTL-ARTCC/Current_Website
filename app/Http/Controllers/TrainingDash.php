@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Enums\Queues;
 use App\Enums\SessionVariables;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
@@ -23,7 +24,9 @@ use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 use Mail;
 
 class TrainingDash extends Controller {
@@ -920,8 +923,7 @@ class TrainingDash extends Controller {
         if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
             $promotion = true;
             $extra .= ' and the students S1 promotion will be pushed to VATUSA';
-            $student->rating_id = 2; // Needed to prevent data discontinuity
-            $student->save();
+            $this->s1Promotion($student);
         }
 
         
@@ -1021,8 +1023,7 @@ class TrainingDash extends Controller {
             if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
                 $promotion = true;
                 $extra = ' and the students S1 promotion will be pushed to VATUSA';
-                $student->rating_id = 2; // Needed to prevent data discontinuity
-                $student->save();
+                $this->s1Promotion($student);
             }
 
             $audit_msg = ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
@@ -1044,5 +1045,16 @@ class TrainingDash extends Controller {
             $result['rating'] = $user->rating_id;
         }
         return response()->json($result, 200);
+    }
+
+    private function s1Promotion($student) {
+        $student->rating_id = 2; // Needed to prevent data discontinuity
+        $student->save();
+
+        if (Queue::size(Queues::S1_TICKETS->value) == 0) {
+            dispatch(function () {
+                Artisan::call('VATUSATrainingTickets:UploadPending');
+            })->onQueue(Queues::S1_TICKETS->value);
+        }
     }
 }
