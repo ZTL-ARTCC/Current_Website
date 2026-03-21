@@ -19,7 +19,7 @@
 @endif
 <br>
 
-<p>If you have any thoughts/comments, please email the DATM at <a href="mailto:datm@ztlartcc.org">datm@ztlartcc.org</a>.</p>
+<p>If you have any thoughts/comments, please email the DATM at <a href="mailto:{{config('artcc.email_datm')}}">{{config('artcc.email_datm')}}</a>.</p>
 <br>
 
 <p>Sincerely,</p>

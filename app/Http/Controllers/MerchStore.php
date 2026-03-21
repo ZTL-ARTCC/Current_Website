@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class MerchStore extends Controller {
     public function viewStore() {
         $merch_items = Merch::get();
-        $merch_email = Config::get('ztl.merch_store_email');
+        $merch_email = Config::get('artcc.merch_store_email');
         return view('dashboard.controllers.merch_store', compact('merch_items', 'merch_email'));
     }
 
