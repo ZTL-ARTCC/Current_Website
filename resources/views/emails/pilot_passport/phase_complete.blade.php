@@ -11,7 +11,7 @@
 </p>
 
 <p>If you did not enroll in this program or otherwise believe this email to be in error, please contact us at: 
-    <a href="mailto:wm@ztlartcc.org" alt="Email">wm@ztlartcc.org</a>.</p>
+    <a href="mailto:{{config('artcc.email_wm')}}" alt="Email">{{config('artcc.email_wm')}}</a>.</p>
 
 <p>Thank you!<br> - vZTL Staff</p>
 @endsection

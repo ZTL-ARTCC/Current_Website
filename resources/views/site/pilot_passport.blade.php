@@ -76,7 +76,7 @@ ZTL Pilot Passport Challenge
                 <div class="col-sm-12">
                     <h5>Feedback?</h5>
                     <p>Want to tell us what you think about this program? We're always looking for feedback. Send us an email at
-                        <a href="mailto:wm@ztlartcc.org" alt="Email_Us">wm@ztlartcc.org</a> or visit our <a href="/feedback/new" alt="Feedback">
+                        <a href="mailto:{{config('artcc.email_wm')}}" alt="Email_Us">{{config('artcc.email_wm')}}</a> or visit our <a href="/feedback/new" alt="Feedback">
                             pilot feedback</a> page.
                     </p>
                 </div>
@@ -132,9 +132,9 @@ ZTL Pilot Passport Challenge
             @else
                 <?php
                     $enrolled_challenges = [];
-                    foreach ($enrollments as $enrollment) {
-                        $enrolled_challenges[$enrollment->challenge_id] = $enrollment->title;
-                    }
+                foreach ($enrollments as $enrollment) {
+                    $enrolled_challenges[$enrollment->challenge_id] = $enrollment->title;
+                }
                 ?>
                 {{ html()->form()->route('pilotPassportIndex')->open() }}
                 {{ html()->hidden('tab', 'passport_book') }}

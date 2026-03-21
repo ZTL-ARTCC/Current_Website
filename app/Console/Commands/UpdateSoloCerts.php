@@ -90,7 +90,7 @@ class UpdateSoloCerts extends Command {
 
         foreach ($certs as $cert) {
             if ($cert->expiration <= $today && $cert->status == 0) {
-                Mail::to('ta@ztlartcc.org')->send(new SoloCertExpiration($cert));
+                Mail::to(config('artcc.email_ta'))->send(new SoloCertExpiration($cert));
                 $cert->status = 1;
 
                 $user = User::find($cert->cid);

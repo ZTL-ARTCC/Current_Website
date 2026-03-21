@@ -20,7 +20,7 @@
 @endif
 <br>
 
-<p>If you have any thoughts/comments, please email the TA at <a href="mailto:ta@ztlartcc.org">ta@ztlartcc.org</a>.</p>
+<p>If you have any thoughts/comments, please email the TA at <a href="mailto:{{config('artcc.email_ta')}}">{{config('artcc.email_ta')}}</a>.</p>
 <br>
 
 <p>Sincerely,</p>

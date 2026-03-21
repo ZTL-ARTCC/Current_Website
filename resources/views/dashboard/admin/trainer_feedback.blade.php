@@ -329,7 +329,7 @@ $tabs[] = (object) $t;
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="email">Your Email</label>
-                                            {{ html()->email('email', 'ta@ztlartcc.org')->class(['form-control']) }}
+                                            {{ html()->email('email', config('artcc.email_ta'))->class(['form-control']) }}
                                         </div>
                                     </div>
                                     <br>
