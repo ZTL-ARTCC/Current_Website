@@ -95,8 +95,8 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::post('/ticket/{id}', 'TrainingDash@addStudentComments')->name('addStudentComments');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/profile/trainer-feedback-details/{id}', 'ControllerDash@showTrainerFeedbackDetails');
-        Route::get('/events', 'ControllerDash@showEvents');
         Route::prefix('events')->group(function () {
+            Route::get('/', 'ControllerDash@showEvents');
             Route::prefix('view')->middleware('event_visibility')->group(function () {
                 Route::get('/{id}', 'ControllerDash@viewEvent');
                 Route::post('/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
