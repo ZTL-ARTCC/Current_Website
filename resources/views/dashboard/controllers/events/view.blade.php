@@ -366,10 +366,10 @@ View Event
                                                     {{ html()->select('num1', $positions->pluck('name', 'id'), $your_registration1->position_id)->placeholder('Position')->class(['form-select'])->disabled(true) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control'])->isReadonly(true) }}
+                                                    {{ html()->text('start_time1', $your_registration1->start_time)->placeholder($event->start_time)->class(['form-control'])->disabled(true) }}
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    {{ html()->text('end_time1', $your_registration1->end_time)->placeholder($event->end_time)->class(['form-control'])->isReadonly(true) }}
+                                                    {{ html()->text('end_time1', $your_registration1->end_time)->placeholder($event->end_time)->class(['form-control'])->disabled(true) }}
                                                 </div>
                                             @else
                                                 <div class="col-sm-5">
