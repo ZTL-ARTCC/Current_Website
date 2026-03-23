@@ -31,6 +31,11 @@
         </title>
     </head>
     <body>
+        {{-- Impersonation Warning --}}
+        <div class="container">
+            @include('inc.impersonation_warning')
+        </div>
+
         {{-- Messages --}}
         <div class="container">
             @include('inc.messages')

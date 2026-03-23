@@ -3,21 +3,19 @@
 namespace App\Mail;
 
 use App\Mail\Package\ZTLAddress;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OtsAssignment extends Mailable implements ShouldQueue {
-    use Queueable, SerializesModels;
+class OtsAssignment extends MailQueue {
+    use SerializesModels;
 
     /**
      * Create a new message instance.
      */
     public function __construct(public $ots, public $controller, public $ins) {
+        parent::__construct();
     }
 
     /**

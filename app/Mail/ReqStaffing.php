@@ -3,21 +3,19 @@
 namespace App\Mail;
 
 use App\Mail\Package\ZTLAddress;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ReqStaffing extends Mailable implements ShouldQueue {
-    use Queueable, SerializesModels;
+class ReqStaffing extends MailQueue {
+    use SerializesModels;
 
     /**
      * Create a new message instance.
      */
     public function __construct(public $name, public $email, public $org, public $date, public $time, public $exp) {
+        parent::__construct();
     }
 
     /**
