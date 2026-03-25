@@ -452,7 +452,7 @@ class User extends Authenticatable implements LaratrustUser {
     }
 
     public function getTimezoneAbbrAttribute() {
-        $now = Carbon::now('America/New_York');
+        $now = Carbon::now($this->timezone);
         $tz = new CarbonTimeZone($this->timezone);
         return strtoupper($tz->getAbbr($now->isDST()));
     }
