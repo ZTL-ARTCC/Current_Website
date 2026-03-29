@@ -136,7 +136,7 @@ Profile
                         <tbody>
                             @foreach($appointments as $appointment)
                                 <tr>
-                                    <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
+                                    <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y g:i A') }} {{ Auth::User()->timezone_abbr }}</td>
                                     <td scope="col">{{ $appointment->sessionType->name }}</td>
                                     <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
                                     <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-bs-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
