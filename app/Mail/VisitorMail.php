@@ -3,16 +3,13 @@
 namespace App\Mail;
 
 use App\Mail\Package\ZTLAddress;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VisitorMail extends Mailable implements ShouldQueue {
-    use Queueable, SerializesModels;
+class VisitorMail extends MailQueue {
+    use SerializesModels;
 
     private static $SUBJECTS = [
         'new' => 'New Visitor Request Submitted',
@@ -25,6 +22,7 @@ class VisitorMail extends Mailable implements ShouldQueue {
      * Create a new message instance.
      */
     public function __construct(public $type, public $visitor) {
+        parent::__construct();
     }
 
     /**
