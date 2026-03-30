@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Event;
+use App\EventRegistration;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventViewPolicy {
@@ -16,10 +18,17 @@ class EventViewPolicy {
      */
     public function handle(Request $request, Closure $next): Response {
         $event_id = null;
-        if (!is_null($request->route('id'))) {
+        $route = Route::current();
+
+        if ($route->getName() == 'viewEvent') {
             $event_id = $request->route('id');
-        } elseif (!is_null($request->event_id)) {
+        } elseif ($route->getName() == 'signupForEvent') {
             $event_id = $request->event_id;
+        } elseif ($route->getName() == 'unSignupForEvent') {
+            $event_registration = EventRegistration::find($request->route('id'));
+            if (!is_null($event_registration)) {
+                $event_id = $event_registration->event_id;
+            }
         }
         $event = Event::find($event_id);
 
