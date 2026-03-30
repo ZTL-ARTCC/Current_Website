@@ -98,9 +98,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::prefix('events')->group(function () {
             Route::get('/', 'ControllerDash@showEvents');
             Route::prefix('view')->middleware('event_visibility')->group(function () {
-                Route::get('/{id}', 'ControllerDash@viewEvent');
+                Route::get('/{id}', 'ControllerDash@viewEvent')->name('viewEvent');
                 Route::post('/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
-                Route::get('/{id}/un-signup', 'ControllerDash@unsignupForEvent');
+                Route::get('/{id}/un-signup', 'ControllerDash@unsignupForEvent')->name('unSignupForEvent');
             });
         });
         Route::get('/scenery', 'ControllerDash@sceneryIndex');
