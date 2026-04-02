@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Airport;
 use App\Announcement;
 use App\ATC;
+use App\Audit;
 use App\Bronze;
 use App\Calendar;
 use App\ControllerLog;
@@ -420,13 +421,15 @@ class ControllerDash extends Controller {
     }
 
     public function unsignupForEvent($id) {
-        // Get the position request to be deleted
         $request = EventRegistration::find($id);
 
-        // Delete the request
+        if (Auth::user()->id != $request->controller_id && !Auth::user()->hasPermission('events')) {
+            Audit::newAudit(' attempted to remove an event registration belonging to someone else.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to unregister other users - this attempt has been logged.');
+        }
+
         $request->delete();
 
-        // Go back
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your registration has been removed successfully.');
     }
 

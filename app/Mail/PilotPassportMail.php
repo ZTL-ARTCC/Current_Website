@@ -3,16 +3,13 @@
 namespace App\Mail;
 
 use App\Mail\Package\ZTLAddress;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PilotPassportMail extends Mailable implements ShouldQueue {
-    use Queueable, SerializesModels;
+class PilotPassportMail extends MailQueue {
+    use SerializesModels;
 
     private static $SUBJECTS = [
         'enroll' => 'ZTL Pilot Passport Program Enrollment',
@@ -24,6 +21,7 @@ class PilotPassportMail extends Mailable implements ShouldQueue {
      * Create a new message instance.
      */
     public function __construct(public $type, public $pilot, public $data = null) {
+        parent::__construct();
     }
 
     /**

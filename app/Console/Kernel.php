@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Enums\FeatureToggles;
+use App\Enums\Queues;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -38,7 +39,8 @@ class Kernel extends ConsoleKernel {
         $schedule->command('Vatsim:AtcBookingSync')->hourlyAt(12)->monitorName('VATSIM ATC Booking Sync');
         $schedule->command('VATUSAEvents:Update')->hourlyAt(22)->monitorName('VATUSA Events Sync');
         $schedule->command('VATUSATrainingTickets:UploadPending')->hourlyAt(33)->monitorName('VATUSA Training Ticket Sync');
-        $schedule->command('queue:work --max-jobs=7 --stop-when-empty')->everyFiveMinutes()->monitorName('Queue Processing');
+        $schedule->command('queue:work --queue=' . Queues::S1_TICKETS->value . ' --stop-when-empty')->everyMinute()->monitorName('S1 Promotion Queue Processing');
+        $schedule->command('queue:work --queue=' . Queues::MAIL->value . ' --max-jobs=7 --stop-when-empty')->everyFiveMinutes()->monitorName('Email Queue Processing');
         $schedule->command('Weather:UpdateWeather')->everyFourMinutes()->monitorName('Update Weather');
         $schedule->command('Overflights:GetOverflights')->everyThreeMinutes()->monitorName('Sync Overflights');
         $schedule->command('OnlineControllers:GetControllers')->everyMinute()->monitorName('Get Online Controllers');
