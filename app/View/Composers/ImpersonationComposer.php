@@ -20,7 +20,7 @@ class ImpersonationComposer {
      * Bind data to the view.
      */
     public function compose(View $view): void {
-        if (toggleEnabled(FeatureToggles::IMPERSONATION)) {
+        if (toggleEnabled(FeatureToggles::IMPERSONATION) && Auth::check()) {
             $users = null;
             $is_impersonating = session()->has(SessionVariables::IMPERSONATE->value);
 
