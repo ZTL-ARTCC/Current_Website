@@ -2,10 +2,20 @@
   color: inherit;
 }
 
-.tng-received {
-  background-color: aqua;
+@media (prefers-color-scheme: light) {
+  .tng-received {
+    background-color: aqua;
+  }
+  .tng-given {
+    background-color: lightgray;
+  }
 }
 
-.tng-given {
-  background-color: lightgray;
+@media (prefers-color-scheme: dark) {
+  .tng-received {
+    background-color: darken(aqua, 20%);
+  }
+  .tng-given {
+    background-color: darken(lightgray, 40%);
+  }
 }

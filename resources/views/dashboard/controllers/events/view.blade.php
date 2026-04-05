@@ -34,7 +34,7 @@ View Event
                     <h5><b>Date:</b> {{ $event->date }}</h5>
                     <h5><b>Time:</b>
                             {{ $event->start_time }} to {{ $event->end_time }} Zulu
-                            ({{ $local_start_time }} to {{ $local_end_time }} local <a style="color:inherit" href="#"
+                            ({{ $local_start_time }} to {{ $local_end_time }} local <a href="#"
                                                                                  data-bs-toggle="tooltip"
                                                                                  title="Showing times in {{ $timezone }}. You can change this on your profile."><i
                                         class="fas fa-info-circle"></i></a>)
@@ -47,7 +47,7 @@ View Event
                                     Support Event
                                 @else
                                     Unverified Support Event
-                                    <a style="color:inherit" href="#" data-bs-toggle="tooltip" title="Verify by setting the Event Type to 'Support Event' on the Edit Event page."><i class="fas fa-info-circle"></i></a>
+                                    <a  href="#" data-bs-toggle="tooltip" title="Verify by setting the Event Type to 'Support Event' on the Edit Event page."><i class="fas fa-info-circle"></i></a>
                                 @endif
                             @else
                                 @if($event->type == App\Event::$TYPES["LOCAL"])
@@ -100,7 +100,7 @@ View Event
                                             </td>
                                             <td>
 
-                                                <a style="color:inherit" href="#" data-bs-toggle="tooltip" title="
+                                                <a  href="#" data-bs-toggle="tooltip" title="
                                             @if($r->start_time != null)
                                                 {{ timeToLocal($r->start_time, Auth::user()->timezone) }}
                                             @else
@@ -279,7 +279,7 @@ View Event
                                                     <p>
                                                         @if(Auth::user()->isAbleTo('events'))
                                                             <a href="/dashboard/admin/events/positions/unassign/{{ $c->id }}"
-                                                               style="color:inherit" data-bs-toggle="tooltip"
+                                                                data-bs-toggle="tooltip"
                                                                title="Unassign Controller"><i class="fas fa-times"></i></a>
                                                             &nbsp;
                                                         @endif
@@ -311,7 +311,7 @@ View Event
                                                                         {{ $event->end_time }}z)
                                                                     @endif
 
-                                                                    <a style="color:inherit" href="#" data-bs-toggle="tooltip" title="
+                                                                    <a  href="#" data-bs-toggle="tooltip" title="
                                             @if($c->start_time != null)
                                                 {{ timeToLocal($c->start_time, Auth::user()->timezone) }}
                                             @else

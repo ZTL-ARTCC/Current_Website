@@ -10,10 +10,10 @@ Incident Report Management
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" style="color:black">New Reports</a>
+            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" >New Reports</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#archive" role="tab" data-bs-toggle="tab" style="color:black">Archived Reports</a>
+            <a class="nav-link" href="#archive" role="tab" data-bs-toggle="tab" >Archived Reports</a>
         </li>
     </ul>
     <div class="tab-content">
