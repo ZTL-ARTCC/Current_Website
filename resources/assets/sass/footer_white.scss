@@ -9,7 +9,6 @@
 #myFooter .footer-copyright {
   margin-bottom: 35px;
   text-align: center;
-  color: #777;
 }
 
 #myFooter ul {
@@ -19,8 +18,8 @@
 }
 
 #myFooter a {
-  color: #282b2d;
   font-size: 18px;
+  color: var(--bs-secondary)
 }
 
 table.availability td {

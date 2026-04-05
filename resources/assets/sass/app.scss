@@ -174,16 +174,17 @@ div.pyrite-bg {
   color: rgb(33,37,41);
 }
 
+
 div.hours-danger,
 li.hours-danger,
 td.hours-danger {
-  background-color: #e6b0aa;
+  background-color: var(--bs-danger);
 }
 
 div.hours-success,
 li.hours-success,
 td.hours-success {
-  background-color: #a9dfbf;
+  background-color: var(--bs-success);
 }
 
 .navbar-brand img {
@@ -216,11 +217,15 @@ a {
   text-decoration: none;
 }
 
-[data-bs-theme=dark] .logo-light {
-  display: none;
+@include color-mode(dark) {
+  .logo-light {
+    display: none;
+  }
 }
-[data-bs-theme=light] .logo-dark {
-  display: none;
+@include color-mode(light) {
+  .logo-dark {
+    display: none;
+  }
 }
 
 .tab-link {
