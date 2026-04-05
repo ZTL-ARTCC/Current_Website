@@ -5,7 +5,7 @@
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/realops.css') }}" />
+@vite('resources/assets/sass/realops.scss')
 @endpush
 
 @section('content')
@@ -32,6 +32,7 @@
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Callsign<br><small class="text-muted">Flight Number</small></th>
+                <th scope="col">Aircraft Type</th>
                 <th scope="col">Departure Time (UTC)</th>
                 <th scope="col">Departure Airport</th>
                 <th scope="col">Arrival Airport</th>
@@ -55,6 +56,7 @@
                         <br>
                         <small class="text-muted">{{ $f->flight_number }}</small>
                     </td>
+                    <td>{{ $f->aircraft_type }}</td>
                     <td>{{ $f->dep_time_formatted }}</td>
                     <td>{{ $f->dep_airport }}</td>
                     <td>{{ $f->arr_airport }}</td>

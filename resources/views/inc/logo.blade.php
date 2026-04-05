@@ -1,7 +1,7 @@
 @php
     $logo_id = 'ztl_logo_';
 @endphp
-@toggle('custom_theme_logo')
+@toggle($FeatureToggles::CUSTOM_THEME_LOGO)
     @php
         $month = Carbon\Carbon::now()->month;
         $day = Carbon\Carbon::now()->day;
@@ -25,6 +25,6 @@
     @endif
 @endtoggle
 <!-- Dark mode logo: White accent -->
-<img class="logo-dark" src="/photos/logos/{{ $logo_id }}white.png">
+<img class="logo-dark" src="{{ Vite::image('logos/' . $logo_id . 'white.png') }}">
 <!-- Light mode logo: Black accent -->
-<img class="logo-light" src="/photos/logos/{{ $logo_id }}black.png">
+<img class="logo-light" src="{{ Vite::image('logos/' . $logo_id . 'black.png') }}">

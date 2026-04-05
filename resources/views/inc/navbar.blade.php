@@ -16,7 +16,7 @@
                     <a class="nav-link" href="/live">Live Event Info!</a>
                 </li>
                 @endif
-                @toggle('realops')
+                @toggle($FeatureToggles::REALOPS)
                 <li class="nav-item">
                     <a class="nav-link" href="/realops">Realops</a>
                 </li>

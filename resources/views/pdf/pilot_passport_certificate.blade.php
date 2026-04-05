@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="{{public_path('css/certificate.css')}}">
         <style>
             body {
-                background-image: url('{{public_path('/photos/pilot_passport/certificate_background.jpg')}}');
+                background-image: url("{{resource_path('/assets/img/pilot_passport/certificate_background.jpg')}}");
                 background-color: #cccccc;
                 background-position: center; 
                 background-repeat: no-repeat; 
@@ -21,7 +21,7 @@
             <h6>On this {{ $award_date->format('jS') }} day of {{ $award_date->format('F') }} of the year {{ $award_date->year }}</h6>
         </div>
         <div class="medal-block">
-            <img src="{{public_path('/photos/pilot_passport/challenge_medal.png')}}" height="300px">
+            <img src="{{resource_path('/assets/img/pilot_passport/challenge_medal.png')}}" height="300px">
         </div>
         <div class="signature-block">
             <span class="signature-field">{{ $atm_name }}</span>

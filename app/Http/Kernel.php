@@ -35,6 +35,7 @@ class Kernel extends HttpKernel {
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\Impersonation::class,
         ],
 
         'api' => [
@@ -63,5 +64,6 @@ class Kernel extends HttpKernel {
         'permission' => \Laratrust\Middleware\Permission::class,
         'ability' => \Laratrust\Middleware\Ability::class,
         'toggle' => \App\Http\Middleware\FeatureToggles::class,
+        'event_visibility' => \App\Http\Middleware\EventViewPolicy::class,
     ];
 }

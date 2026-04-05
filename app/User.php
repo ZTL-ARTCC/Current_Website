@@ -44,14 +44,21 @@ class User extends Authenticatable implements LaratrustUser {
     }
 
     public function getBackwardsNameAttribute() {
-        return $this->lname.', '.$this->fname;
+        return ucwords($this->lname) . ', ' . ucwords($this->fname);
     }
 
     public function getBackwardsPublicNameAttribute() {
         if ($this->name_privacy == 1) {
-            return $this->id.', '.$this->fname;
+            return $this->id . ', ' . ucwords($this->fname);
         }
-        return $this->lname.', '.$this->fname;
+        return $this->backwards_name;
+    }
+
+    public function getStaffPublicNameAttribute() {
+        if ($this->name_privacy == 1) {
+            return ucwords($this->fname);
+        }
+        return $this->full_name;
     }
 
     public function getBackwardsNameRatingAttribute() {
@@ -59,11 +66,27 @@ class User extends Authenticatable implements LaratrustUser {
     }
 
     public function getFullNameAttribute() {
-        return $this->fname.' '.$this->lname;
+        return ucwords($this->fname) . ' ' . ucwords($this->lname);
     }
 
     public function getFullNameRatingAttribute() {
         return $this->full_name . ' - ' . $this->rating_short;
+    }
+
+    public function getImpersonationNameAttribute() {
+        $roles = array_reduce($this->roles->toArray(), function ($role_string, $role) {
+            return $role_string . $role['name'] . ', ';
+        }, '');
+
+        if ($this->visitor) {
+            $roles = 'visitor';
+        }
+
+        if ($roles != '') {
+            $roles = ' (' . trim($roles, ', ') . ')';
+        }
+
+        return $this->backwards_name . ' ' . $this->id . ' - ' . $this->rating_short . $roles;
     }
 
     public static $RatingShort = [
@@ -429,7 +452,8 @@ class User extends Authenticatable implements LaratrustUser {
     }
 
     public function getTimezoneAbbrAttribute() {
+        $now = Carbon::now($this->timezone);
         $tz = new CarbonTimeZone($this->timezone);
-        return strtoupper($tz->getAbbr());
+        return strtoupper($tz->getAbbr($now->isDST()));
     }
 }

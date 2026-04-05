@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Enums\Queues;
+use App\Enums\SessionVariables;
 use App\Mail\OtsAssignment;
 use App\Mail\StudentComment;
 use App\Mail\TrainingTicketMail;
 use App\Ots;
 use App\PublicTrainingInfo;
 use App\PublicTrainingInfoPdf;
+use App\StudentNotes;
 use App\TrainerFeedback;
 use App\TrainingInfo;
 use App\TrainingTicket;
@@ -17,8 +20,13 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 use Mail;
 
 class TrainingDash extends Controller {
@@ -74,7 +82,7 @@ class TrainingDash extends Controller {
         $info->section = $request->section;
         $info->info = $request->info;
         $info->save();
-        return redirect()->back()->with('success', 'The information has been added successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The information has been added successfully.');
     }
 
     public function deleteInfo($id) {
@@ -85,7 +93,7 @@ class TrainingDash extends Controller {
             $o->save();
         }
         $info->delete();
-        return redirect()->back()->with('success', 'The information has been removed successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The information has been removed successfully.');
     }
 
     public function newPublicInfoSection(Request $request) {
@@ -107,7 +115,7 @@ class TrainingDash extends Controller {
         $info->order = $request->order;
         $info->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was added successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was added successfully.');
     }
 
     public function editPublicSection(Request $request, $id) {
@@ -119,7 +127,7 @@ class TrainingDash extends Controller {
         $section->name = $request->name;
         $section->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was updated successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was updated successfully.');
     }
 
     public function saveSession() {
@@ -158,7 +166,7 @@ class TrainingDash extends Controller {
             $p->delete();
         }
 
-        return redirect('/dashboard/training/info')->with('success', 'The section was removed successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The section was removed successfully.');
     }
 
     public function addPublicPdf(Request $request, $section_id) {
@@ -179,14 +187,14 @@ class TrainingDash extends Controller {
         $pdf->pdf_path = $public_url;
         $pdf->save();
 
-        return redirect('/dashboard/training/info')->with('success', 'The PDF was added successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The PDF was added successfully.');
     }
 
     public function removePublicPdf($id) {
         $pdf = PublicTrainingInfoPdf::find($id);
         $pdf->delete();
 
-        return redirect('/dashboard/training/info')->with('success', 'The PDF was removed successfully.');
+        return redirect('/dashboard/training/info')->with(SessionVariables::SUCCESS->value, 'The PDF was removed successfully.');
     }
 
     public function ticketsIndex(Request $request) {
@@ -196,7 +204,6 @@ class TrainingDash extends Controller {
                 return $user;
             }
         })->pluck('backwards_name', 'id');
-        $drafts = false;
 
         if ($request->id != null) {
             $search_result = User::find($request->id);
@@ -207,38 +214,99 @@ class TrainingDash extends Controller {
         $tickets = null;
         $all_drafts = null;
         $exams = null;
-
-        if ($search_result != null) {
-            $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
+        $is_trainer_search = false;
+        $student_note = null;
+        
+        if ($search_result != null && $request->search_type === 'trainer') {
+            $tickets_sort = TrainingTicket::where('trainer_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
             })->pluck('id');
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
-            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->paginate(25);
+            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
-
-                $drafts = $drafts || $t->draft;
             }
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
-                return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
             }
+            $is_trainer_search = true;
+            $exams = null;
+        } elseif ($search_result != null) {
+            $tickets_sort = TrainingTicket::where('controller_id', $search_result->id)->get()->sortByDesc(function ($t) {
+                return strtotime($t->date . ' ' . $t->start_time);
+            })->pluck('id');
+
+            if (! $tickets_sort->isEmpty()) {
+                $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
+                $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
+                foreach ($tickets as &$t) {
+                    $t->position = $this->legacyTicketTypes($t->position);
+                    $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
+                }
+            } else {
+                if ($search_result->status != 1) {
+                    return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
+                }
+            }
+
             $exams = User::getAcademyExamTranscriptByCid($request->id);
+            $student_note = StudentNotes::find($request->id);
         } elseif (auth()->user()->hasRole('ata') || auth()->user()->isAbleTo('snrStaff')) {
             $all_drafts = TrainingTicket::where('draft', true)->orderBy('created_at', 'DESC')->paginate(25);
         } elseif (auth()->user()->isAbleTo('train')) {
             $all_drafts = TrainingTicket::where('draft', true)->where('trainer_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(25);
         }
 
-        return view('dashboard.training.tickets')->with('controllers', $controllers)->with('search_result', $search_result)->with('tickets', $tickets)->with('exams', $exams)->with('drafts', $drafts)->with('all_drafts', $all_drafts);
-    }
+        $tickets_by_category = [
+            'drafts' => [],
+            's1' => [],
+            's2' => [],
+            's3' => [],
+            'c1' => [],
+            'other' => [],
+        ];
+        $active_category = $request->activeTab;
 
+        foreach (($tickets ?? []) as $ticket) {
+            array_push($tickets_by_category[$ticket->sort_category], $ticket);
+        }
+
+        $tickets_by_category = array_reduce(array_keys($tickets_by_category), function ($new_tickets_by_category, $category) use (&$active_category, $tickets_by_category) {
+            if ($category != 'drafts' || count($tickets_by_category['drafts']) > 0) {
+                $items_per_page = 25;
+                $page_num = Paginator::resolveCurrentPage($category);
+                $query_string = Paginator::resolveQueryString();
+                $query_string['activeTab'] = $category;
+
+                $paginated_array = array_slice($tickets_by_category[$category], $items_per_page * ($page_num - 1), $items_per_page);
+
+                $paginator = new LengthAwarePaginator($paginated_array, count($tickets_by_category[$category]), $items_per_page, $page_num, ['pageName' => $category, 'path' => '/dashboard/training/tickets', 'query' => $query_string]);
+
+                $new_tickets_by_category[$category] = $paginator;
+
+                if (is_null($active_category)) {
+                    $active_category = $category;
+                }
+            }
+
+            return $new_tickets_by_category;
+        }, []);
+
+        return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets_by_category', 'active_category', 'exams', 'all_drafts', 'is_trainer_search', 'student_note'));
+    }
+    
     public function searchTickets(Request $request) {
         $search_result = User::find($request->cid);
         if ($search_result != null) {
-            return redirect('/dashboard/training/tickets?id=' . $search_result->id);
+            if ($request->search_type === 'trainer') {
+                return redirect('/dashboard/training/tickets?id=' . $search_result->id . '&search_type=trainer');
+            } else {
+                return redirect('/dashboard/training/tickets?id=' . $search_result->id);
+            }
+
         } else {
-            return redirect()->back()->with('error', 'There is no controller that exists with that CID.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'There is no controller that exists with that CID.');
         }
     }
 
@@ -262,12 +330,14 @@ class TrainingDash extends Controller {
 
         return response()->json([
             'uploaded' => 0,
-            'error' => ['message' => 'No file uploaded.']
+            SessionVariables::ERROR->value => ['message' => 'No file uploaded.']
         ], 400);
     }
 
     public function newTrainingTicket(Request $request) {
         $c = $request->id;
+        $student = User::find($c);
+        $student_rating = ($student) ? $student->rating_id : null;
         $ticket = new TrainingTicket;
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
         $recent_sessions = [];
@@ -287,10 +357,13 @@ class TrainingDash extends Controller {
             } else {
                 Log::error('Scheddy trainer session pull resulted in a ' . $res->getStatusCode() . ' status code');
             }
+        } catch (ConnectException $e) {
+            Log::error('cURL connection error: ' . $e->getMessage());
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Log::error($e);
+        } catch (\Exception $e) {
+            Log::error('An unexpected error occurred: ' . $e->getMessage());
         }
-
         $max_recent_sessions = 5;
         $recent_sessions = array_reduce($recent_sessions, function ($new_sessions, $session) use ($max_recent_sessions) {
             $date = Carbon::parse($session->session->start)->setTimezone('America/New_York');
@@ -319,7 +392,8 @@ class TrainingDash extends Controller {
 
         return view('dashboard.training.new_ticket')->with('controllers', $controllers)->with('c', $c)
             ->with('positions', $ticket->getPositionSelectAttribute())->with('session_ids', $ticket->getSessionSelectAttribute())
-            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions);
+            ->with('progress_types', $ticket->getProgressSelectAttribute())->with('recent_sessions', $recent_sessions)
+            ->with('student_rating', $student_rating);
     }
 
     public function handleSaveTicket(Request $request, $id = null) {
@@ -335,7 +409,7 @@ class TrainingDash extends Controller {
             return $this->draftNewTicket($request, $id);
         }
 
-        return redirect()->back()->with('error', 'Invalid way to save training tickets. Please report this to the webmaster.');
+        return redirect()->back()->with(SessionVariables::ERROR->value, 'Invalid way to save training tickets. Please report this to the webmaster.');
     }
 
     public function addStudentComments(Request $request, $id) {
@@ -346,7 +420,7 @@ class TrainingDash extends Controller {
         $ticket = TrainingTicket::find($id);
 
         if (Auth::id() != $ticket->controller_id) {
-            return redirect()->back()->with('error', 'Not your training ticket');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Not your training ticket');
         }
 
         $ticket->student_comments = $request->student_comments;
@@ -360,7 +434,7 @@ class TrainingDash extends Controller {
             }
         }
         $mailer->send(new StudentComment($trainer->full_name, $ticket->id));
-        return redirect()->back()->with('success', 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have successfully added your comments to your training ticket. Please reach out to your mentor or instructor if you have any further questions or concerns');
     }
 
     public function viewTicket($id) {
@@ -371,6 +445,7 @@ class TrainingDash extends Controller {
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
+        $student = User::find($ticket->controller_id);
         $ticket->position = $this->legacyTicketTypes($ticket->position);
         $positions = $ticket->getPositionSelectAttribute();
         if (!key_exists($ticket->position, $positions)) {
@@ -384,9 +459,10 @@ class TrainingDash extends Controller {
             $controllers = User::where('status', '1')->where('canTrain', '1')->orderBy('lname', 'ASC')->get()->pluck('backwards_name', 'id');
             return view('dashboard.training.edit_ticket')->with('ticket', $ticket)->with('controllers', $controllers)
             ->with('positions', $positions)->with('session_ids', $sessions)
-            ->with('progress_types', $ticket->getProgressSelectAttribute());
+            ->with('progress_types', $ticket->getProgressSelectAttribute())
+            ->with('student_rating', $student->rating_id);
         } else {
-            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only edit tickets that you have submitted unless you are the TA.');
         }
     }
 
@@ -398,16 +474,12 @@ class TrainingDash extends Controller {
             $ticket->delete();
 
             if (! $draft) {
-                $audit = new Audit;
-                $audit->cid = Auth::id();
-                $audit->ip = $_SERVER['REMOTE_ADDR'];
-                $audit->what = Auth::user()->full_name . ' deleted a training ticket for ' . User::find($controller_id)->full_name . '.';
-                $audit->save();
+                Audit::newAudit(' deleted a training ticket for ' . User::find($controller_id)->full_name . '.');
             }
 
-            return redirect('/dashboard/training/tickets?id=' . $controller_id)->with('success', 'The ticket has been deleted successfully.');
+            return redirect('/dashboard/training/tickets?id=' . $controller_id)->with(SessionVariables::SUCCESS->value, 'The ticket has been deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Only the TA can delete non-draft training tickets.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can delete non-draft training tickets.');
         }
     }
 
@@ -427,29 +499,25 @@ class TrainingDash extends Controller {
         $ots->ins_id = Auth::id();
         $ots->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' accepted an OTS for ' . User::find($ots->controller_id)->full_name . '.';
-        $audit->save();
+        Audit::newAudit(' accepted an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
-        return redirect()->back()->with('success', 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'You have sucessfully accepted this OTS. Please email the controller at ' . User::find($ots->controller_id)->email . ' in order to schedule the OTS.');
     }
 
     public function rejectRecommendation($id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
-            return redirect()->back()->with('error', 'Only the TA can reject OTS recommendations.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can reject OTS recommendations.');
         } else {
             $ots = Ots::find($id);
             $ots->delete();
 
-            return redirect()->back()->with('success', 'The OTS recommendation has been rejected successfully.');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS recommendation has been rejected successfully.');
         }
     }
 
     public function assignRecommendation(Request $request, $id) {
         if (!Auth::user()->isAbleTo('snrStaff')) {
-            return redirect()->back()->with('error', 'Only the TA can assign OTS recommendations to instructors.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Only the TA can assign OTS recommendations to instructors.');
         } else {
             $ots = Ots::find($id);
             $ots->status = 1;
@@ -461,13 +529,9 @@ class TrainingDash extends Controller {
 
             Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.';
-            $audit->save();
+            Audit::newAudit(' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.');
 
-            return redirect()->back()->with('success', 'The OTS has been assigned successfully and the instructor has been notified.');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been assigned successfully and the instructor has been notified.');
         }
     }
 
@@ -482,15 +546,11 @@ class TrainingDash extends Controller {
             $ots->status = $request->result;
             $ots->save();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' updated an OTS for ' . User::find($ots->controller_id)->full_name . '.';
-            $audit->save();
+            Audit::newAudit(' updated an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
-            return redirect()->back()->with('success', 'The OTS has been updated successfully!');
+            return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been updated successfully!');
         } else {
-            return redirect()->back()->with('error', 'This OTS has not been assigned to you.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'This OTS has not been assigned to you.');
         }
     }
 
@@ -500,13 +560,9 @@ class TrainingDash extends Controller {
         $ots->status = 0;
         $ots->save();
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' cancelled an OTS for ' . User::find($ots->controller_id)->full_name . '.';
-        $audit->save();
+        Audit::newAudit(' cancelled an OTS for ' . User::find($ots->controller_id)->full_name . '.');
 
-        return redirect()->back()->with('success', 'The OTS has been unassigned from you and cancelled successfully.');
+        return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
     public function getTicketSortCategory($position, $draft) {
@@ -733,11 +789,11 @@ class TrainingDash extends Controller {
             }
             $retArr['taMonthlyReport'] = "In the Month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . ", ZTL has offered " . $retArr['sessionsPerMonth'] . " training sessions (" . $percentSessionsChange . "% change from " . Carbon::createFromDate($retArr['date']['start_date'])->subMonths(1)->format('F') . "). " . $retArr['sessionsCompletePerMonth'] . " sessions were completed (" . $percentSessionsCompleteChange . "%), with " . $retArr['sessionsPerMonthNoShow'] . " known no-shows. " . $trainingStaffBelowMins . " Training Staff members did not meet monthly minimums.";
             if (count($top_trainers) > 0) {
-                $retArr['taMonthlyReport'] .= "Our TOP trainers for the month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . " were:";
+                $retArr['taMonthlyReport'] .= " Our TOP trainers for the month of " . Carbon::createFromDate($retArr['date']['start_date'])->format('F') . " were:";
                 foreach ($top_trainers as $ind => $top_trainer) {
                     $order_no = $ind + 1;
                     if ($ind > 0) {
-                        $retArr['taMonthlyReport'] .= "|";
+                        $retArr['taMonthlyReport'] .= ",";
                     }
                     $retArr['taMonthlyReport'] .= " " . $order_no . ". " . $top_trainer->name;
                 }
@@ -775,7 +831,7 @@ class TrainingDash extends Controller {
         $r = json_decode($response->getBody())->success;
         if ($r != true && Config::get('app.env') != 'local' && $request->input('internal') != 1 &&
             app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != 'internalTrainerFeedback') {
-            return redirect()->back()->with('error', 'You must complete the ReCaptcha to continue.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
         }
 
         //Continue Request
@@ -794,14 +850,14 @@ class TrainingDash extends Controller {
         $feedback->save();
 
         $redirect = ($request->input('redirect_to') == 'internal') ? '/dashboard' : '/';
-        return redirect($redirect)->with('success', 'Thank you for the feedback! It has been received successfully.');
+        return redirect($redirect)->with(SessionVariables::SUCCESS->value, 'Thank you for the feedback! It has been received successfully.');
     }
 
     public function handleSchedule() {
         $user = Auth::user();
 
         if ($user->rating_id == 1 && !$user->onboarding_complete) {
-            return redirect()->back()->with('error', 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'Onboarding must be complete before scheduling a training session. Please refer to the ZTL onboarding course on the VATUSA Academy. Contact the TA with questions or concerns.');
         }
 
         return redirect("https://scheddy.ztlartcc.org/");
@@ -847,8 +903,6 @@ class TrainingDash extends Controller {
         $ticket->save();
         $extra = null;
 
-        $date = $ticket->date;
-        $date = date("Y-m-d");
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 
@@ -864,13 +918,22 @@ class TrainingDash extends Controller {
             $extra = ' and the OTS recommendation has been added';
         }
 
-        $audit = new Audit;
-        $audit->cid = Auth::id();
-        $audit->ip = $_SERVER['REMOTE_ADDR'];
-        $audit->what = Auth::user()->full_name . ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
-        $audit->save();
+        $promotion = false;
+        $student = User::find($request->controller);
+        if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+            $promotion = true;
+            $extra .= ' and the students S1 promotion will be pushed to VATUSA';
+            $this->s1Promotion($student);
+        }
 
-        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with('success', 'The training ticket has been submitted successfully' . $extra . '.');
+        
+        $audit_msg = ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
+        if ($promotion) {
+            $audit_msg .= ' A promotion was pushed to VATUSA.';
+        }
+        Audit::newAudit($audit_msg);
+
+        return redirect('/dashboard/training/tickets?id=' . $ticket->controller_id)->with(SessionVariables::SUCCESS->value, 'The training ticket has been submitted successfully' . $extra . '.');
     }
 
     private function draftNewTicket(Request $request, $id) {
@@ -889,6 +952,10 @@ class TrainingDash extends Controller {
 
             $ticket = new TrainingTicket;
             $ticket->scheddy_id = $request->scheddy_id;
+        } else {
+            if (!$ticket->draft) {
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'This ticket has already been finalized and cannot be saved as a draft.');
+            }
         }
 
         $ticket->controller_id = $request->controller;
@@ -914,7 +981,7 @@ class TrainingDash extends Controller {
             return response(url('/dashboard/training/tickets/edit/' . $ticket->id));
         }
 
-        return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with('success', 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
+        return redirect('/dashboard/training/tickets/edit/' . $ticket->id)->with(SessionVariables::SUCCESS->value, 'The training ticket has been saved successfully, but not finalized. Please finalize all changes once you are ready.');
     }
 
     private function saveTicket(Request $request, $id) {
@@ -950,15 +1017,44 @@ class TrainingDash extends Controller {
             $ticket->movements = $request->movements;
             $ticket->save();
 
-            $audit = new Audit;
-            $audit->cid = Auth::id();
-            $audit->ip = $_SERVER['REMOTE_ADDR'];
-            $audit->what = Auth::user()->full_name . ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
-            $audit->save();
+            $promotion = false;
+            $extra = '';
+            $student = User::find($request->controller);
+            if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
+                $promotion = true;
+                $extra = ' and the students S1 promotion will be pushed to VATUSA';
+                $this->s1Promotion($student);
+            }
 
-            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with('success', 'The ticket has been updated successfully.');
+            $audit_msg = ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
+            if ($promotion) {
+                $audit_msg .= ' A promotion was pushed to VATUSA.';
+            }
+            Audit::newAudit($audit_msg);
+
+            return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with(SessionVariables::SUCCESS->value, 'The ticket has been updated successfully' . $extra . '.');
         } else {
-            return redirect()->back()->with('error', 'You can only edit tickets that you have submitted unless you are the TA.');
+            return redirect()->back()->with(SessionVariables::ERROR->value, 'You can only edit tickets that you have submitted unless you are the TA.');
+        }
+    }
+
+    public function getRating($cid) {
+        $user = User::find($cid);
+        $result = ['cid' => $cid, 'rating' => null];
+        if ($user) {
+            $result['rating'] = $user->rating_id;
+        }
+        return response()->json($result, 200);
+    }
+
+    private function s1Promotion($student) {
+        $student->rating_id = 2; // Needed to prevent data discontinuity
+        $student->save();
+
+        if (Queue::size(Queues::S1_TICKETS->value) == 0) {
+            dispatch(function () {
+                Artisan::call('VATUSATrainingTickets:UploadPending');
+            })->onQueue(Queues::S1_TICKETS->value);
         }
     }
 }

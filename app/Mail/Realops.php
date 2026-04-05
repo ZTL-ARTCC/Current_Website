@@ -3,15 +3,12 @@
 namespace App\Mail;
 
 use App\Mail\Package\ZTLAddress;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Realops extends Mailable implements ShouldQueue {
-    use Queueable, SerializesModels;
+class Realops extends MailQueue {
+    use SerializesModels;
 
     private static $SUBJECTS = [
         'flight_cancelled' => 'Flight Cancelled',
@@ -26,6 +23,7 @@ class Realops extends Mailable implements ShouldQueue {
      * Create a new message instance.
      */
     public function __construct(public $flight, public $pilot, public $type, public $flight_number = '') {
+        parent::__construct();
         $this->flight_number = $this->flight->flight_number;
 
         if ($type == 'flight_cancelled') {

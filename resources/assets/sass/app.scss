@@ -12,7 +12,7 @@ $font-family-base: "Hind Siliguri", sans-serif;
 @import "@fortawesome/fontawesome-free/css/all.css";
 
 // Tempus Dominus date-time picker
-@import "~@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
+@import "@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
 
 //Standard CSS Formats
 .navbar-laravel {
@@ -104,15 +104,15 @@ body {
 }
 
 .airspace_status:hover {
-  background-image: url("/photos/asx_bg.png");
+  background-image: url("../img/landing/asx_bg.png");
 }
 
 .weather_status:hover {
-  background-image: url("/photos/atl_weather.png");
+  background-image: url("../img/landing/atl_weather.png");
 }
 
 .news_calendar:hover {
-  background-image: url("/photos/atl_newscalendar.png");
+  background-image: url("../img/landing/atl_newscalendar.png");
 }
 
 #teamspeak_logo {
@@ -232,4 +232,8 @@ a {
 
 .tab-link {
   color: var(--bs-secondary-color);
+}
+
+.ck-content strong {
+  font-weight: bold !important;
 }

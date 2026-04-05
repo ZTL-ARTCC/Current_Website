@@ -21,8 +21,6 @@ Route::get('/controllers/stats/{year?}/{month?}', 'FrontController@showStats');
 Route::get('/visit', 'FrontController@visit');
 Route::post('/visit/save', 'FrontController@storeVisit')->name('storeVisit');
 Route::get('/pilots/airports', 'FrontController@airportIndex');
-Route::post('/pilots/airports', 'FrontController@searchAirport')->name('searchAirport');
-Route::get('/pilots/airports/search', 'FrontController@searchAirportResult');
 Route::get('/pilots/airports/view/{id}', 'FrontController@showAirport');
 Route::get('/pilots/scenery', 'FrontController@sceneryIndex');
 Route::get('/pilots/scenery/view/{id}', 'FrontController@showScenery');
@@ -97,10 +95,14 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::post('/ticket/{id}', 'TrainingDash@addStudentComments')->name('addStudentComments');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
         Route::get('/profile/trainer-feedback-details/{id}', 'ControllerDash@showTrainerFeedbackDetails');
-        Route::get('/events', 'ControllerDash@showEvents');
-        Route::get('/events/view/{id}', 'ControllerDash@viewEvent');
-        Route::post('/events/view/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
-        Route::get('/events/view/{id}/un-signup', 'ControllerDash@unsignupForEvent');
+        Route::prefix('events')->group(function () {
+            Route::get('/', 'ControllerDash@showEvents');
+            Route::prefix('view')->middleware('event_visibility')->group(function () {
+                Route::get('/{id}', 'ControllerDash@viewEvent')->name('viewEvent');
+                Route::post('/signup', 'ControllerDash@signupForEvent')->name('signupForEvent');
+                Route::get('/{id}/un-signup', 'ControllerDash@unsignupForEvent')->name('unSignupForEvent');
+            });
+        });
         Route::get('/scenery', 'ControllerDash@sceneryIndex');
         Route::get('/scenery/view/{id}', 'ControllerDash@showScenery');
         Route::post('/scenery/search', 'ControllerDash@searchScenery');
@@ -138,6 +140,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/view/{id}', 'TrainingDash@viewTicket');
             Route::get('/edit/{id}', 'TrainingDash@editTicket');
             Route::get('/delete/{id}', 'TrainingDash@deleteTicket');
+            Route::post('/get-rating/{cid}', 'TrainingDash@getRating');
         });
         Route::prefix('trainer_feedback')->group(function () {
             Route::get('/new', 'TrainingDash@newTrainerFeedback')->name('internalTrainerFeedback');
@@ -230,7 +233,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::post('/edit/{id}', 'AdminDash@saveEvent')->name('saveEvent');
             Route::get('/delete/{id}', 'AdminDash@deleteEvent');
             Route::get('/toggle-reg/{id}', 'AdminDash@toggleRegistration');
-            Route::get('/toggle-show-assignments/{id}', 'AdminDash@toggleShowAssignments')->middleware('toggle:event_assignment_toggle');
+            Route::get('/toggle-show-assignments/{id}', 'AdminDash@toggleShowAssignments');
             Route::get('/set-active/{id}', 'AdminDash@setEventActive');
             Route::get('/hide/{id}', 'AdminDash@hideEvent');
             Route::post('/save-preset/{id}', 'AdminDash@setEventPositionPreset')->name('setEventPositionPreset');
@@ -333,6 +336,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         });
         Route::prefix('monitor')->middleware('permission:staff')->group(function () {
             Route::get('/', 'AdminDash@backgroundMonitor');
+        });
+
+        Route::prefix('impersonation')->middleware('toggle:impersonation')->group(function () {
+            Route::post('/', 'ImpersonationController@start')->middleware('role:wm|awm')->name('startImpersonation');
+            Route::get('/stop', 'ImpersonationController@stop')->name('stopImpersonation');
         });
     });
 });

@@ -5,7 +5,7 @@ New Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
+@vite('resources/assets/sass/trainingticket.scss')
 @endpush
 
 @section('content')
@@ -63,24 +63,24 @@ New Training Ticket
 						$currentTimeET = $currentDateET->format('H:i');
 					@endphp
                     <label for="start" class="form-label">Start Time ET (now {{ $currentTimeET }})</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('start', null)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker2']) }}
+                    <div class="input-group">
+                        {{ html()->text('start', null)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="end" class="form-label">End Time ET</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('end', null)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker3']) }}
+                    <div class="input-group">
+                        {{ html()->text('end', null)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="duration" class="form-label">Duration (hh:mm)</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('duration', null)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker4']) }}
+                    <div class="input-group">
+                        {{ html()->text('duration', null)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
@@ -130,6 +130,11 @@ New Training Ticket
 		<br>
         <label for="cert" class="form-label">Certification or Solo Issued</label>
 		{{ html()->checkbox('cert', false, 1) }}
+        <span id="s1_rating_push" class="ms-1 small">
+        @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
+            <small>(Promote controller to S1)</small>
+        @endif
+        </span>	
 		<br>
         <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
         <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
@@ -163,5 +168,5 @@ New Training Ticket
     </div>
 @endif
 
-<script src="{{mix('js/trainingticket.js')}}"></script>
+@vite('resources/assets/js/trainingticket.js')
 @endsection

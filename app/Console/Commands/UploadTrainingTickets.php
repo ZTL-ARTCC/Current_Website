@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\TrainingTicket;
+use App\User;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -33,7 +34,10 @@ class UploadTrainingTickets extends Command {
 
         foreach ($tickets as $ticket) {
             $vatusa_position = $this->vatusaizePosition($ticket);
-
+            $ots_status = 0; // We do not implement 2 = fail or 3 = recommended
+            if ($ticket->cert && User::find($ticket->controller_id)->rating_id && User::find($ticket->trainer_id)->rating_id >= 4) {
+                $ots_status = 1;
+            }
             $req_params = [
                 'form_params' =>
                 [
@@ -44,7 +48,8 @@ class UploadTrainingTickets extends Command {
                     'notes' => $ticket->comments,
                     'movements' => $ticket->movements,
                     'score' => $ticket->score,
-                    'location' => 1
+                    'location' => 1,
+                    'ots_status' => $ots_status
                 ],
                 'http_errors' => false
             ];

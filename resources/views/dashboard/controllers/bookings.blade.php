@@ -65,7 +65,7 @@ ATC Bookings
                             <div class="col-md-6">
                                 <label for="start">Start Time (ZULU)</label>
                     <div class="input-group date dt_picker_datetime" id="datetimepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('start', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerstart']) }}
+                        {{ html()->text('start', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerstart']) }}
                         <span class="input-group-text" data-td-target="#datetimepickerstart" data-td-toggle="datetimepicker">
                             <i class="fas fa-calendar"></i>
                         </span>
@@ -74,7 +74,7 @@ ATC Bookings
                             <div class="col-md-6">
                                 <label for="end">End Time (ZULU)</label>
                     <div class="input-group date dt_picker_datetime" id="datetimepickerend" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('start', null)->placeholder('MM/DD/YYYY')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerend']) }}
+                        {{ html()->text('end', null)->placeholder('MM/DD/YYYY 00:00')->class(['form-control','datetimepicker-input'])->attributes(['data-td-target' => '#datetimepickerend']) }}
                         <span class="input-group-text" data-td-target="#datetimepickerend" data-td-toggle="datetimepicker">
                             <i class="fas fa-calendar"></i>
                         </span>

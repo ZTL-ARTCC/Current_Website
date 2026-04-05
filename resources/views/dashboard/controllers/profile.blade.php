@@ -5,7 +5,7 @@ Profile
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/profile.css') }}" />
+@vite('resources/assets/sass/profile.scss')
 @endpush
 
 @section('content')
@@ -136,7 +136,7 @@ Profile
                         <tbody>
                             @foreach($appointments as $appointment)
                                 <tr>
-                                    <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y h:i') }} {{ Auth::User()->timezone_abbr }}</td>
+                                    <td scope="col">{{ \Carbon\Carbon::parse($appointment->session->start)->setTimezone(Auth::User()->timezone)->format('m/d/y g:i A') }} {{ Auth::User()->timezone_abbr }}</td>
                                     <td scope="col">{{ $appointment->sessionType->name }}</td>
                                     <td scope="col">{{ $appointment->mentor->firstName }} {{ $appointment->mentor->lastName }}</td>
                                     <td scope="col"><a href="https://scheddy.ztlartcc.org/schedule/?sessionId={{ $appointment->session->id }}&reschedule=true&type={{ $appointment->sessionType->id }}" target="_blank" class="btn btn-primary simple-tooltip" data-bs-toggle="tooltip" title="View"><i class="fas fa-edit fa-fw"></i></a></td> 
@@ -196,17 +196,15 @@ Profile
                         <button class="btn btn-success text-nowrap" type="submit">Save Profile</button>
                     </div>
 
-                    @toggle('discord_role_updater')
-                        @if(Auth::user()->discord)
-                            <div class="col-4">
-                                <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
-                            </div>
-                        @else
-                            <div class="col-4">
-                                <a href="#" data-bs-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
-                            </div>
-                        @endif
-                    @endtoggle
+                    @if(Auth::user()->discord)
+                        <div class="col-4">
+                            <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
+                        </div>
+                    @else
+                        <div class="col-4">
+                            <a href="#" data-bs-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
+                        </div>
+                    @endif
                 </div>
                 {{ html()->form()->close() }}
 

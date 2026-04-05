@@ -74,7 +74,7 @@ Calendar/News
                             <th scope="col"><center>Body</center></th>
                             <th scope="col"><center>Created By</center></th>
                             <th scope="col"><center>Last Updated By</center></th>
-                            <th scope="col" style="width:110px"><center>Actions</center></th>
+                            <th scope="col" colspan="2"><center>Actions</center></th>
                         </tr>
                     </thead>
                     <tbody>

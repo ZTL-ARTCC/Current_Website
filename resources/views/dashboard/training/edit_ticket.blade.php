@@ -5,7 +5,7 @@ Edit Training Ticket
 @endsection
 
 @push('custom_header')
-<link rel="stylesheet" href="{{ mix('css/trainingticket.css') }}" />
+@vite('resources/assets/sass/trainingticket.scss')
 @endpush
 
 @section('content')
@@ -66,24 +66,24 @@ Edit Training Ticket
                     @else
                         <label for="start" class="form-label">Start Time ET</label>
                     @endif
-                    <div class="input-group date dt_picker_time" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker2']) }}
+                    <div class="input-group">
+                        {{ html()->text('start', $ticket->start_time)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="end" class="form-label">End Time ET</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker3" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker3']) }}
+                    <div class="input-group">
+                        {{ html()->text('end', $ticket->end_time)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="duration" class="form-label">Duration (hh:mm)</label>
-                    <div class="input-group date dt_picker_time" id="datetimepicker4" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control datetimepicker-input'])->attributes(['data-td-target' => '#datetimepicker4']) }}
+                    <div class="input-group">
+                        {{ html()->text('duration', $ticket->duration)->placeholder('00:00')->class(['form-control']) }}
                     </div>
                 </div>
             </div>
@@ -146,7 +146,12 @@ Edit Training Ticket
 			{{ html()->checkbox('cert', true, 1) }}
         @else
 			{{ html()->checkbox('cert', false, 1) }}
-        @endif		
+        @endif
+        <span id="s1_rating_push" class="ms-1 small">
+        @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
+            <small>(Promote controller to S1)</small>
+        @endif
+        </span>	
 		<br>
         <br>
         @if ($ticket->draft)
@@ -162,5 +167,5 @@ Edit Training Ticket
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
-<script src="{{mix('js/trainingticket.js')}}"></script>
+@vite('resources/assets/js/trainingticket.js')
 @endsection

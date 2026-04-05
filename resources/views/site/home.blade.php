@@ -5,12 +5,12 @@ Home
 @endsection
 
 @push('custom_header')
-	<link rel="stylesheet" href="{{ mix('css/home.css') }}" />
+	@vite('resources/assets/sass/home.scss')
 @endpush
 
 @section('content')
 <div class="py-3 bg-secondary">
-	<div class="container-flex rounded mb-0 mx-3" style="height: 200px; background-image:url(/photos/ZTL_Banner3.jpg); background-size:cover; background-repeat:no-repeat">
+	<div class="container-flex rounded mb-0 mx-3" style="height: 200px; background-image:url({{ Vite::image('landing/ZTL_Banner3.jpg') }}); background-size:cover; background-repeat:no-repeat">
 		<div class="row h-100">	
 			<div class="col-* text-white h1 fw-bold d-flex align-items-center px-5">
 				Atlanta Virtual ARTCC
@@ -57,7 +57,7 @@ Home
 					@endforeach
 					@else
 					<div class="carousel-item active">
-						<img src="/photos/placeholder_banner.png" class="d-block w-100 rounded" alt="placeholder" />
+						<img src="{{ Vite::image('landing/placeholder_banner.png') }}" class="d-block w-100 rounded" alt="placeholder" />
 					</div>
 					@endif
 					@if($pilot_accomplishments)
@@ -263,5 +263,5 @@ Home
 		</div>
 	</div>
 </div>
-<script src="{{mix('js/home.js')}}"></script>
+@vite('resources/assets/js/home.js')
 @endsection
