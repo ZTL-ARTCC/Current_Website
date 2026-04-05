@@ -2,7 +2,7 @@
   color: inherit;
 }
 
-@media(prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
   .tng-received {
     background-color: aqua;
   }
@@ -11,8 +11,7 @@
   }
 }
 
-
-@media(prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   .tng-received {
     background-color: darken(aqua, 20%);
   }
