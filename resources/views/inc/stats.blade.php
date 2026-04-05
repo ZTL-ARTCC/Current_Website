@@ -12,7 +12,7 @@ if (!$privacy)  {
     <div class="row">
         <div class="col-sm-4 text-center">
             <h3>Total Hours this Month</h3>
-            <div class="card py-1 text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center">
                 <br>
                 <h4 class="m-0">{{ number_format($all_stats['month'], 2) }}</h4>
                 <br>
@@ -20,7 +20,7 @@ if (!$privacy)  {
         </div>
         <div class="col-sm-4 text-center">
             <h3>Total Hours this Year</h3>
-            <div class="card py-1 text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center">
                 <br>
                 <h4 class="m-0">{{ number_format($all_stats['year'], 2) }}</h4>
                 <br>
@@ -28,7 +28,7 @@ if (!$privacy)  {
         </div>
         <div class="col-sm-4 text-center">
             <h3>Total Hours All Time</h3>
-            <div class="card py-1 text-center" style="background-color:#d3d3d3">
+            <div class="card py-1 text-center">
                 <br>
                 <h4 class="m-0">{{ number_format($all_stats['total'], 2) }}</h4>
                 <br>

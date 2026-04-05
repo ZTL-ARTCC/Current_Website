@@ -79,7 +79,11 @@ Dashboard
             @endif
         </div>
         <div class="col-sm-4">
-            <h4 class="text-center"><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4>
+            <h4 class="text-center">
+                <a href="/dashboard/controllers/events">
+                    <i class="fas fa-plane"></i> Events
+                </a>
+            </h4>
 			<div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)
