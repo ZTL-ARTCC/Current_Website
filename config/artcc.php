@@ -32,7 +32,7 @@ return [
     'email_merch_store' => env('ARTCC_MERCH_STORE_EMAIL', 'datm@ztlartcc.org'),
 
     // Number of sessions training staff are required to provide per month
-    'trainer_min_sessions' => env('ZTL_TRAINER_MONTHLY_SESSIONS', 3),
+    'trainer_min_sessions' => env('ARTCC_TRAINER_MONTHLY_SESSIONS', 3),
 
     // Solo cert facilities (3-letter ID)
     'solo_twr' => env('ARTCC_SOLO_TWR', 'BHM'),

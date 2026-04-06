@@ -44,7 +44,7 @@ class TaStatsMonthly extends Component {
             $this->dispatch('changeSelectedMonth', inclusive_dates: $this->inclusive_dates, graph_data: $this->graph_data);
             $this->skipRender();
         }
-        $this->trainer_min_sessions = Config::get('trainer.trainer_min_sessions');
+        $this->trainer_min_sessions = Config::get('artcc.trainer_min_sessions');
         $this->lookback_months();
         return view('livewire.ta-stats-monthly');
     }
