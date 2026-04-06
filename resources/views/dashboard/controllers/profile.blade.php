@@ -282,7 +282,7 @@ Profile
             </div>
             <br>
             <div class="container">
-                <p>Please note that opting out of broadcast emails will only prevent you from receiving broadcast emails issued from staff. Personalized emails (both automated and issued by staff) will not be affected. If you have any questions, please contact the ATM at <a href="mailto:config('artcc.email_atm')">config('artcc.email_atm')</a>.</p>
+                <p>Please note that opting out of broadcast emails will only prevent you from receiving broadcast emails issued from staff. Personalized emails (both automated and issued by staff) will not be affected. If you have any questions, please contact the ATM at <a href="mailto:{{config('artcc.email_atm')}}">{{config('artcc.email_atm')}}</a>.</p>
             </div>
             <div class="modal-footer">
                 <a href="{{ url()->current() }}" class="btn btn-secondary">Close</a>
