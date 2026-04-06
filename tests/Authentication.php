@@ -15,7 +15,7 @@ class Authentication {
             $u->id = Config::get('vatsim.auth_dev_credential');
             $u->fname = 'Test';
             $u->lname = 'User';
-            $u->email = 'test@ztlartcc.org';
+            $u->email = config('artcc.email_test');
             $u->rating_id = 7;
             $u->visitor = 0;
             $u->status = 1;

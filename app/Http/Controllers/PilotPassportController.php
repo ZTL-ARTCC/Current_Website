@@ -56,7 +56,7 @@ class PilotPassportController extends Controller {
             $valid_enrollment = false;
         }
         if (!$valid_enrollment) {
-            return redirect(route('pilotPassportIndex'))->with(['tab' => 'enrollments'])->with(SessionVariables::ERROR->value, 'Enrollment data invalid. Please contact wm@ztlartcc.org for assistance.');
+            return redirect(route('pilotPassportIndex'))->with(['tab' => 'enrollments'])->with(SessionVariables::ERROR->value, 'Enrollment data invalid. Please contact ' . config('artcc.email_wm') . ' for assistance.');
         }
         $enrollment = PilotPassportEnrollment::where('cid', $pilot->id)->where('challenge_id', $request->challenge_id)->get();
         if ($enrollment->isEmpty()) {
@@ -116,7 +116,7 @@ class PilotPassportController extends Controller {
 
     public function generateCertificate($id) {
         $award = PilotPassportAward::find($id);
-        $error_html = '<p>An error has occured - please contact <a href="emailto:wm@ztlartcc.org">wm@ztlartcc.org</a></p>';
+        $error_html = '<p>An error has occured - please contact <a href="mailto:' . config('artcc.email_wm') . '">' . config('artcc.email_wm') . '</a></p>';
         if (!$award) {
             return pdf()->html($error_html)->download();
         }

@@ -36,7 +36,7 @@
 @endif
 
 <br>
-<p>If you have any questions or concerns, please contact the events coordinator at <a href="mailto:ec@ztlartcc.org">ec@ztlartcc.org</a>.</p>
+<p>If you have any questions or concerns, please contact the events coordinator at <a href="mailto:{{config('artcc.email_ec')}}">{{config('artcc.email_ec')}}</a>.</p>
 <br>
 
 <p>Sincerely,</p>

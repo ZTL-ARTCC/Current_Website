@@ -426,11 +426,11 @@ class TrainingDash extends Controller {
         $ticket->student_comments = $request->student_comments;
         $ticket->save();
 
-        $mailer = Mail::to('ta@ztlartcc.org');
+        $mailer = Mail::to(config('artcc.email_ta'));
         $trainer = User::find($ticket->trainer_id);
         if ($trainer) {
             if ($trainer->user_status[$trainer->status] == 'Active' && $trainer->isAbleTo('train')) {
-                $mailer = Mail::to($trainer->email)->cc('training@ztlartcc.org');
+                $mailer = Mail::to($trainer->email)->cc(config('artcc.email_training'));
             }
         }
         $mailer->send(new StudentComment($trainer->full_name, $ticket->id));
@@ -527,7 +527,7 @@ class TrainingDash extends Controller {
             $ins = User::find($ots->ins_id);
             $controller = User::find($ots->controller_id);
 
-            Mail::to($ins->email)->cc('training@ztlartcc.org')->send(new OtsAssignment($ots, $controller, $ins));
+            Mail::to($ins->email)->cc(config('artcc.email_training'))->send(new OtsAssignment($ots, $controller, $ins));
 
             Audit::newAudit(' assigned an OTS for ' . User::find($ots->controller_id)->full_name . ' to ' . User::find($ots->ins_id)->full_name . '.');
 
@@ -699,7 +699,7 @@ class TrainingDash extends Controller {
             $trainerStats['S3'] = $trainerSesh->whereIn('position', $position_types_by_rating['S3'])->count();
             $trainerStats['C1'] = $trainerSesh->whereIn('position', $position_types_by_rating['C1'])->count();
             $trainerStats['Other'] = $trainerSesh->whereIn('position', $position_types_by_rating['OTHER'])->count();
-            if ($trainerStats['total'] < Config::get('ztl.trainer_min_sessions')) {
+            if ($trainerStats['total'] < Config::get('artcc.trainer_min_sessions')) {
                 $trainingStaffBelowMins++;
             }
             $trainerSessions[] = $trainerStats;
@@ -906,7 +906,7 @@ class TrainingDash extends Controller {
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
 
-        Mail::to($controller->email)->cc('training@ztlartcc.org')->send(new TrainingTicketMail($ticket, $controller, $trainer));
+        Mail::to($controller->email)->cc(config('artcc.email_training'))->send(new TrainingTicketMail($ticket, $controller, $trainer));
 
         if ($request->ots == 1) {
             $ots = new Ots;

@@ -608,7 +608,7 @@ class ControllerDash extends Controller {
         $error = $request->error;
         $desc = $request->desc;
 
-        Mail::to('wm@ztlartcc.org')->send(new BugReport($reporter, $url, $error, $desc));
+        Mail::to(config('artcc.email_wm'))->send(new BugReport($reporter, $url, $error, $desc));
 
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'Your bug has been reported successfully.');
     }

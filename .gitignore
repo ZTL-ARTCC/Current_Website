@@ -25,3 +25,5 @@ favicon.ico
 favicon.gif
 /public/favicon.gif
 .php-cs-fixer.cache
+/.vs
+/.env
