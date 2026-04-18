@@ -165,7 +165,7 @@ Profile
             {{ html()->form()->route('updateInfo', [Auth::id()])->open() }}
             @csrf
                 <div class="row">
-                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-bs-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-bs-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identities. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{{ html()->text('ts3', Auth::user()->ts3)->class(['form-control']) }}</div>
                 </div>
 
