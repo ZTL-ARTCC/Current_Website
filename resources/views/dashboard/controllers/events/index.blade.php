@@ -8,16 +8,23 @@ Events
 @include('inc.header', ['title' => 'Events'])
 
 <div class="container">
+    <div class="mb-2">
     @if(Auth::user()->isAbleTo('events'))
         <a href="/dashboard/admin/events/new" class="btn btn-primary">New Event</a>
     @endif
-
 
     @if(Auth::user()->ability(['events-team'], ['staff', 'events']))
          @toggle($FeatureToggles::REALOPS)
             <a href="/dashboard/admin/realops" class="btn btn-primary">Realops Admin</a>
          @endtoggle
     @endif
+
+    @if(Auth::user()->isAbleTo('events') && !is_null($discord_role))
+        <a href="/dashboard/controllers/events/view/{{ $discord_role->id }}" alt="Discord Ref Event" class="btn btn-primary float-end">
+            <i class="fa-brands fa-discord me-2"></i>Event Role Reference: {{ $discord_role->name }}
+        </a>
+    @endif
+    </div>
     @if($events->count() > 0)
         <table class="table table-bordered">
             <thead>

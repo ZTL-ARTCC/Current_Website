@@ -57,6 +57,12 @@ View Event
                                 @endif
                             @endif
                         </h5>
+                    @if((Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) && !is_null($event->discord_role))
+                        <h5 class="text-bg-warning rounded p-1">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <b>Discord Reference:</b> This event is the current reference for the "Event Participant" Discord role.
+                        </h5>
+                    @endif
                     <p><b>Additional Information:</b></p>
                     <p>{!! $event->description !!}</p>
                 </div>
@@ -248,9 +254,25 @@ View Event
                                 <a href="/dashboard/admin/events/toggle-reg/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end" data-bs-toggle="tooltip" title="Close Registration"><i class="fas fa-times"></i></a>
                             @endif
                             @if($event->show_assignments)
-                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
+                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-danger btn-simple-tooltip float-end px-2 me-1" data-bs-toggle="tooltip" title="Hide Assignments"><i class="fas fa-eye-slash"></i></a>
                             @else
-                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-end me-2" data-bs-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
+                                <a href="/dashboard/admin/events/toggle-show-assignments/{{ $event->id }}" class="btn btn-success btn-simple-tooltip float-end px-2 me-1" data-bs-toggle="tooltip" title="Show Assignments"><i class="fas fa-eye"></i></a>
+                            @endif
+                            @if(config('discord.event_role'))
+                            @php
+                                $discord_tooltip = 'Set Discord Reference';
+                                if(!is_null($event->discord_role)) {
+                                    $discord_tooltip = 'Remove Discord Reference';
+                                }
+                            @endphp
+                            <a href="/dashboard/admin/events/discord-role/{{ $event->id }}" class="btn btn-purple btn-simple-tooltip float-end px-2 me-1" data-bs-toggle="tooltip" title="{{$discord_tooltip}}">
+                                <span class="fa-fw">
+                                    <i class="fa-brands fa-discord"></i>
+                                    @if(!is_null($event->discord_role))
+                                    <i class="fa-inverse fa-solid  fa-times" data-fa-transform="shrink-6"></i>
+                                    @endif
+                                </span>
+                            </a>
                             @endif
                         @endif
                     </h3>
