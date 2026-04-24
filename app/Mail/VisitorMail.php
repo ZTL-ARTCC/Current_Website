@@ -29,7 +29,7 @@ class VisitorMail extends MailQueue {
      * Get the message envelope.
      */
     public function envelope(): Envelope {
-        $datm = new Address('datm@ztlartcc.org', 'vZTL ARTCC DATM');
+        $datm = new Address(config('artcc.email_datm'), 'vZTL ARTCC DATM');
         return new Envelope(
             from: new ZTLAddress('visitors', 'vZTL ARTCC Visiting Department'),
             replyTo: [ $datm ],

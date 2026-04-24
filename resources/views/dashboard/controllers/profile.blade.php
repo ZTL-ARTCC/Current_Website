@@ -279,7 +279,7 @@ Profile
             </div>
             <br>
             <div class="container">
-                <p>Please note that opting out of broadcast emails will only prevent you from receiving broadcast emails issued from staff. Personalized emails (both automated and issued by staff) will not be affected. If you have any questions, please contact the ATM at <a href="mailto:atm@ztlartcc.org">atm@ztlartcc.org</a>.</p>
+                <p>Please note that opting out of broadcast emails will only prevent you from receiving broadcast emails issued from staff. Personalized emails (both automated and issued by staff) will not be affected. If you have any questions, please contact the ATM at <a href="mailto:{{config('artcc.email_atm')}}">{{config('artcc.email_atm')}}</a>.</p>
             </div>
             <div class="modal-footer">
                 <a href="{{ url()->current() }}" class="btn btn-secondary">Close</a>
@@ -297,7 +297,7 @@ Profile
             </div>
             <br>
             <div class="container">
-                <p>Opting into emails will only affect the recieving of mass emails. If you elect to opt into emails, you agree to recieve mass emails sent to groups of members of the vZTL ARTCC. This selection will not affect the reception of personalized emails (both automated and issued by staff) for example, training ticket emails. If you have any questions, please contact the ATM at <a href="mailto:atm@ztlartcc.org">atm@ztlartcc.org</a>.</p>
+                <p>Opting into emails will only affect the recieving of mass emails. If you elect to opt into emails, you agree to recieve mass emails sent to groups of members of the vZTL ARTCC. This selection will not affect the reception of personalized emails (both automated and issued by staff) for example, training ticket emails. If you have any questions, please contact the ATM at <a href="mailto:{{config('artcc.email_atm')}}">{{config('artcc.email_atm')}}</a>.</p>
                 <p>You may opt out at any time by using the slider shown on the profile page.</p>
                 <br>
                 <i>Please check the following check boxes if you would like to continue.</i>

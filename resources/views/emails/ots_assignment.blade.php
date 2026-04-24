@@ -2,7 +2,7 @@
 
 @section('content')
 <p>Dear {{ $ins->fullname }},</p>
-<p>You have been assigned an OTS. The details are listed below. Please reply to this email, or email the controller separately in order to schedule the OTS exam. If you have any questions, please contact the TA at <a href="mailto:ta@ztlartcc.org">ta@ztlartcc.org</a>.</p>
+<p>You have been assigned an OTS. The details are listed below. Please reply to this email, or email the controller separately in order to schedule the OTS exam. If you have any questions, please contact the TA at <a href="mailto:{{config('artcc.email_ta')}}">{{config('artcc.email_ta')}}</a>.</p>
 <br>
 <p><b>Controller Name:</b> {{ $ots->controller_name }}</p>
 <p><b>Position:</b> {{ $ots->position_name }}</p>
