@@ -24,7 +24,12 @@
         @php ($logo_id = 'ztl_logo_santa-')
     @endif
 @endtoggle
-<!-- Dark mode logo: White accent -->
-<img class="logo-dark" src="{{ Vite::image('logos/' . $logo_id . 'white.png') }}">
-<!-- Light mode logo: Black accent -->
-<img class="logo-light" src="{{ Vite::image('logos/' . $logo_id . 'black.png') }}">
+
+@if(isset($color_override))
+    <img src="{{ Vite::image('logos/' .$logo_id . $color_override . '.png') }}">
+@else
+    <!-- Dark mode logo: White accent -->
+    <img class="logo-dark" src="{{ Vite::image('logos/' . $logo_id . 'white.png') }}">
+    <!-- Light mode logo: Black accent -->
+    <img class="logo-light" src="{{ Vite::image('logos/' . $logo_id . 'black.png') }}">
+@endif
