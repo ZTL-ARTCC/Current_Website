@@ -35,7 +35,7 @@
         "psr/simple-cache": "^2.0",
         "santigarcor/laratrust": "^8.0",
         "spatie/laravel-html": "^3.7",
-        "spatie/laravel-schedule-monitor": "^3.7"
+        "spatie/laravel-schedule-monitor": "^4.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
