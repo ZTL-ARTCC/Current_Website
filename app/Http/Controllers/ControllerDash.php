@@ -329,15 +329,17 @@ class ControllerDash extends Controller {
     }
 
     public function showEvents() {
+        $discord_event = null;
         if (Auth::user()->isAbleTo('events')||Auth::user()->hasRole('events-team')) {
             $events = Event::all()->sortByDesc('date_stamp')->paginate(10);
+            $discord_role = Event::whereNotNull('discord_role')->first();
         } else {
             $events = Event::where('status', 1)->get()->sortByDesc('date_stamp');
         }
         foreach ($events as $e) {
             $e->banner_path = $e->displayBannerPath();
         }
-        return view('dashboard.controllers.events.index')->with('events', $events);
+        return view('dashboard.controllers.events.index', compact('events', 'discord_role'));
     }
 
     public function viewEvent($id) {

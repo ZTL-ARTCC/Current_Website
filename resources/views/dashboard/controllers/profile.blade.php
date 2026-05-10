@@ -165,7 +165,7 @@ Profile
             {{ html()->form()->route('updateInfo', [Auth::id()])->open() }}
             @csrf
                 <div class="row">
-                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-bs-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identifies. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
+                    <div class="col-5"><b>TS3 UID: <a class="info-tooltip" href="#" data-bs-toggle="tooltip" title="In TeamSpeak 3, go to Tools->Identities. Paste your 'Unique ID' here for bot integration"><i class="fas fa-info-circle"></i></a></b></div>
                     <div class="col-7">{{ html()->text('ts3', Auth::user()->ts3)->class(['form-control']) }}</div>
                 </div>
 
@@ -192,19 +192,16 @@ Profile
                 </div>
 
                 <div class="row-mb-3">
-                    <div class="col-4">
-                        <button class="btn btn-success text-nowrap" type="submit">Save Profile</button>
-                    </div>
-
+                    <div class="col-*">
+                        <button class="btn btn-success text-nowrap me-1" type="submit">Save Profile</button>
                     @if(Auth::user()->discord)
-                        <div class="col-4">
-                            <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
-                        </div>
+                        <a href="/dashboard/controllers/profile/discord" class="btn btn-success text-nowrap" type="button">Update Discord Roles</a>
+                        <br>
+                        <a href="/dashboard/controllers/profile/discord-staffup" class="btn btn-success text-nowrap mt-2" type="button">Toggle Discord StaffUp Role</a>
                     @else
-                        <div class="col-4">
-                            <a href="#" data-bs-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
-                        </div>
+                        <a href="#" data-bs-toggle="tooltip" title="No Discord ID Found: Ensure your Discord ID is linked to your VATUSA account. The roster may take time to refresh. You can manually update your role in the ZTL Discord server in the meantime." class="btn btn-secondary" type="button">Update Discord Role</a>
                     @endif
+                    </div>
                 </div>
                 {{ html()->form()->close() }}
 
