@@ -49,6 +49,7 @@ class Kernel extends ConsoleKernel {
             return toggleEnabled(FeatureToggles::AUTO_SUPPORT_EVENTS);
         });
         $schedule->command('PilotPassport:ActivityUpdate')->everyFiveMinutes()->monitorName('Update Pilot Passport Activity');
+        $schedule->command('app:moodle-sync')->twiceDailyAt(2, 14, 27)->monitorName('Sync Moodle User Table');
     }
 
     /**
