@@ -24,6 +24,7 @@ use Config;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Mail;
 
 class FrontController extends Controller {
@@ -283,7 +284,7 @@ class FrontController extends Controller {
             }
                     
             Mail::to($visit->email)->cc('datm@ztlartcc.org')->send(new VisitorMail('new', $visit));
-        
+            Artisan::call('app:moodle-sync ' . $request->cid);
             return redirect('/')->with(SessionVariables::SUCCESS->value, 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
         } else {
             return redirect('/')->with(SessionVariables::ERROR->value, 'You need to be a S1 rated controller or greater');
