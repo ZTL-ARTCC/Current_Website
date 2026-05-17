@@ -31,7 +31,7 @@
         "laravel/ui": "^4.5",
         "league/oauth2-client": "^2.7",
         "livewire/livewire": "^3.6",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^3.1.69",
         "psr/simple-cache": "^2.0",
         "santigarcor/laratrust": "^8.0",
         "spatie/laravel-html": "^3.7",
