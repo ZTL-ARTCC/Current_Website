@@ -130,7 +130,7 @@ class PilotPassportChallengeTest extends DuskTestCase {
             $u->id = Config::get('vatsim.auth_dev_credential');
             $u->fname = 'Web';
             $u->lname = 'Two';
-            $u->email = 'wm@ztlartcc.org';
+            $u->email = config('artcc.email_test');
             $u->save();
         }
         $this->clearSamplePilotActivity($u->id);
