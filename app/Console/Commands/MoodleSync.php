@@ -41,6 +41,7 @@ class MoodleSync extends Command {
     private function check_cohorts_table(): void {
         // Check to ensure required cohorts exist. If not, create them.
         $cohorts = DB::connection('moodle')->table('cohort')->select(['id', 'name'])->pluck('name', 'id')->toArray();
+        $insert = false;
         foreach (self::REQUIRED_COHORTS as $req_cohort) {
             if (!in_array($req_cohort, $cohorts)) {
                 $this->info('Creating cohort: ' . $req_cohort);
@@ -52,9 +53,13 @@ class MoodleSync extends Command {
                     'timecreated' => time(),
                     'timemodified' => time()
                     ]);
+                $insert = true;
             }
         }
-        $this->cohorts = DB::connection('moodle')->table('cohort')->select(['id', 'name'])->pluck('name', 'id')->toArray();
+        if ($insert) {
+            $cohorts = DB::connection('moodle')->table('cohort')->select(['id', 'name'])->pluck('name', 'id')->toArray();
+        }
+        $this->cohorts = array_flip($cohorts); // Index the array by cohort name
         $this->info('Cohorts table verified.');
     }
 
@@ -65,9 +70,9 @@ class MoodleSync extends Command {
             $moodle_user_id = $this->update_moodle_user($user);
             $cohort_id = null;
             if ($user->status == 1) {
-                $cohort_id = array_search('Home', $this->cohorts);
+                $cohort_id = $this->cohorts['Home'];
             } elseif ($user->status == 2) {
-                $cohort_id = array_search('Visiting', $this->cohorts);
+                $cohort_id = $this->cohorts['Visiting'];
             }
             $this->assign_cohort_to_user($moodle_user_id, $cohort_id);
         }
@@ -78,7 +83,7 @@ class MoodleSync extends Command {
         $visit_requests = Visitor::whereNot('status', 1)->get();
         foreach ($visit_requests as $visit_req) {
             $moodle_user_id = $this->update_moodle_user($visit_req);
-            $cohort_id = ($visit_req == 0) ? array_search('Visit Request', $this->cohorts) : null;
+            $cohort_id = ($visit_req->status == 0) ? $this->cohorts['Visit Request'] : null;
             $this->assign_cohort_to_user($moodle_user_id, $cohort_id);
         }
     }
@@ -91,18 +96,19 @@ class MoodleSync extends Command {
             return;
         }
         $moodle_user_id = $this->update_moodle_user($visitor);
-        $this->assign_cohort_to_user($moodle_user_id, array_search('Visit Request', $this->cohorts));
+        $this->assign_cohort_to_user($moodle_user_id, $this->cohorts['Visit Request']);
         $this->info('Visit request user added to Moodle users with appropriate cohort.');
     }
 
     private function update_moodle_user(User|Visitor $user): null|int {
-        $cid = (class_basename($user) == 'User') ? $user->id : $user->cid;
-        $first_name = (class_basename($user) == 'User') ? $user->fname : $user->name;
-        $last_name = (class_basename($user) == 'User') ? $user->lname : '';
-        $suspended = (class_basename($user) == 'User') ? (($user->status == 0) ? 1 : 0) : (($user->status == 2) ? 1 : 0);
-        $timezone = (class_basename($user) == 'User') ? $user->timezone : '99';
+        $isHomeController = (class_basename($user) == 'User');
+        $cid = $isHomeController ? $user->id : $user->cid;
+        $first_name = $isHomeController ? $user->fname : $user->name;
+        $last_name = $isHomeController ? $user->lname : '';
+        $suspended = $isHomeController ? (($user->status == 0) ? 1 : 0) : (($user->status == 2) ? 1 : 0);
+        $timezone = $isHomeController ? $user->timezone : '99';
         $moodle_user = DB::connection('moodle')->table('user')->select(['id'])->where('username', $cid)->pluck('id')->toArray();
-        if (count($moodle_user) == 0 && class_basename($user) == 'User' && $user->status == 0) {
+        if (count($moodle_user) == 0 && $isHomeController && $user->status == 0) {
             // No reason to sync inactive users
             return null;
         }
