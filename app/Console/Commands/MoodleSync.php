@@ -115,6 +115,8 @@ class MoodleSync extends Command {
         $this->info('Updating Moodle user ' . $cid);
         $query_parameters = [
                 'auth' => 'oauth2',
+                'confirmed' => 1,
+                'mnethostid' => 1,
                 'firstname' => $first_name,
                 'lastname' => $last_name,
                 'email' => $user->email,
