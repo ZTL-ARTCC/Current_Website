@@ -55,6 +55,22 @@ return [
             'timezone' => '+00:00',
         ],
 
+        'moodle' => [
+            'driver' => 'mysql',
+            'host' => env('MOODLE_DB_HOST', '127.0.0.1'),
+            'port' => env('MOODLE_DB_PORT', '3306'),
+            'database' => env('MOODLE_DB_DATABASE', 'forge'),
+            'username' => env('MOODLE_DB_USERNAME', 'forge'),
+            'password' => env('MOODLE_DB_PASSWORD', ''),
+            'unix_socket' => env('MOODLE_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => env('MOODLE_DB_TABLE_PREFIX', 'mdl_'),
+            'strict' => true,
+            'engine' => null,
+            'timezone' => '+00:00',
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
