@@ -142,7 +142,7 @@ class DiscordController extends Controller {
 
     private function modifyUserRole($user_id, $role_id, $action) {
         if ($this->ratelimit_remaining == 0 && $this->ratelimit_reset_after <= self::API_TIMEOUT) {
-            Log::info('Discord rate limit reached, waiting for ' . $this->ratelimit_reset_after . ' seconds');
+            Log::info('Discord role assignment rate limit reached, waiting for ' . $this->ratelimit_reset_after . ' seconds');
             sleep($this->ratelimit_reset_after);
         }
         $http_method = ($action == 'assign') ? 'PUT' : 'DELETE';
