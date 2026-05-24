@@ -235,6 +235,13 @@ a {
   font-weight: bold !important;
 }
 
-.nav-link[role="tab"] {
-  color: black;
+@include color-mode(dark) {
+  .nav-link[role="tab"] {
+    color: white;
+  }
+}
+@include color-mode(light) {
+  .nav-link[role="tab"] {
+    color: black;
+  }
 }
