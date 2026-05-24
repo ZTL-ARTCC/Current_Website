@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -116,5 +117,30 @@ class Event extends Model {
         $this->save();
 
         Audit::newAudit('toggled event assignment visibility for ' . $this->name);
+    }
+
+    public function getStartDateTimeAttribute(): Carbon {
+        return Carbon::createFromFormat('m/d/Y H:i', $this->date . ' ' . $this->start_time, 'UTC');
+    }
+
+    public function tzOffsetDayIndicator(): string {
+        $tz_offset_day_indicator = '';
+        $event_utc_start_of_day = $this->start_date_time->clone()->startOfDay();
+        $event_local_start_of_day = $this->start_date_time->clone()->setTimezone(Auth::user()->timezone)->startOfDay();
+        // Change local TZ back to UTC to force diff to compare full days
+        $event_local_start_of_day = $event_local_start_of_day->shiftTimezone('UTC');
+        $utc_local_diff_days = round($event_utc_start_of_day->diffInDays($event_local_start_of_day), 0);
+        //dd($utc_local_diff_days);
+        if ($utc_local_diff_days > 0) {
+            $tz_offset_day_indicator = '(+1)';
+        }
+        if ($utc_local_diff_days < 0) {
+            $tz_offset_day_indicator = '(-1)';
+        }
+        return $tz_offset_day_indicator;
+    }
+
+    public function getLocalTimezoneAbbreviationAttribute(): string {
+        return Carbon::now()->setTimezone(Auth::user()->timezone)->format('T');
     }
 }
