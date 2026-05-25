@@ -91,6 +91,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/profile', 'ControllerDash@showProfile');
         Route::post('/profile', 'ControllerDash@updateInfo')->name('updateInfo');
         Route::get('/profile/discord', 'ControllerDash@updateDiscordRoles');
+        Route::get('/profile/discord-staffup', 'DiscordController@toggleStaffUpRole');
         Route::get('/ticket/{id}', 'ControllerDash@showTicket');
         Route::post('/ticket/{id}', 'TrainingDash@addStudentComments')->name('addStudentComments');
         Route::get('/profile/feedback-details/{id}', 'ControllerDash@showFeedbackDetails');
@@ -247,6 +248,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
             Route::get('/statistics/{id}', 'AdminDash@viewEventStats');
             Route::get('/statistics/rerun/{id}', 'AdminDash@rerunEventStats');
             Route::post('/statistics/update/{id}', 'AdminDash@updateTrackingAirports')->name('updateEventTrackingAirports');
+            Route::get('/discord-role/{id}', 'DiscordController@toggleEventRole');
         });
         Route::prefix('roster')->middleware('permission:roster')->group(function () {
             Route::get('/visit/requests', 'AdminDash@showVisitRequests');

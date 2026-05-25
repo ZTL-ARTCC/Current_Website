@@ -24,6 +24,7 @@ use Config;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Mail;
 
 class FrontController extends Controller {
@@ -250,7 +251,7 @@ class FrontController extends Controller {
         if (User::find($request->cid) !== null) {
             $user = User::find($request->cid);
             if ($user->status == 1) {
-                return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at datm@ztlartcc.org');
+                return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at ' . config('artcc.email_datm'));
             }
         }
         
@@ -282,7 +283,8 @@ class FrontController extends Controller {
                 );
             }
                     
-            Mail::to($visit->email)->cc('datm@ztlartcc.org')->send(new VisitorMail('new', $visit));
+            Mail::to($visit->email)->cc(config('artcc.email_datm'))->send(new VisitorMail('new', $visit));
+            Artisan::call('app:moodle-sync ' . $request->cid);
         
             return redirect('/')->with(SessionVariables::SUCCESS->value, 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
         } else {
@@ -413,7 +415,7 @@ class FrontController extends Controller {
         $time = $request->time;
         $exp = $request->additional_information;
 
-        Mail::to('ec@ztlartcc.org')->send(new ReqStaffing($name, $email, $org, $date, $time, $exp));
+        Mail::to(config('artcc.email_ec'))->send(new ReqStaffing($name, $email, $org, $date, $time, $exp));
 
         return redirect('/')->with(SessionVariables::SUCCESS->value, 'The staffing request has been delivered to the appropiate parties successfully. You should expect to hear back soon.');
     }

@@ -36,7 +36,7 @@ function safeErrorMessage($exception) {
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-8">
-                    <h3>Something just happened that wasn't supposed to happen and we're really not sure why! Please kindly report this error to <a href="mailto:wm@ztlartcc.org">wm@ztlartcc.org</a> with descriptive steps to reproduce and a link to the page. Thank you for your help!</h3>
+                    <h3>Something just happened that wasn't supposed to happen and we're really not sure why! Please kindly report this error to <a href="mailto:{{config('artcc.email_wm')}}">{{config('artcc.email_wm')}}</a> with descriptive steps to reproduce and a link to the page. Thank you for your help!</h3>
                     <br>
                     <h3>Please include the following message in your email (if applicable):</h3>
                     <p>{{ safeErrorMessage($exception) }}</p>

@@ -25,7 +25,7 @@
             </div>
             <div class="col-sm-4">
                 <label for="reply_to">Reply to Email</label>
-                {{ html()->text('reply_to', null)->placeholder('ex. youremail@ztlartcc.org (Required)')->class(['form-control']) }}
+                {{ html()->text('reply_to', null)->placeholder('ex. ' . config('artcc.email_placeholder') . ' (Required)')->class(['form-control']) }}
             </div>
         </div>
         <div class="row-mb-3">

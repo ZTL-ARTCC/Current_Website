@@ -1617,6 +1617,9 @@ class AdminDash extends Controller {
         $reg->status = EventRegistration::STATUSES['ASSIGNED'];
         $reg->save();
 
+        $discord = new DiscordController;
+        $discord->manageEventRole($reg->event_id, $reg->controller_id, 'assign');
+
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position has been assigned successfully.');
     }
 
@@ -1624,6 +1627,9 @@ class AdminDash extends Controller {
         $position = EventRegistration::find($id);
         $position->status = EventRegistration::STATUSES['UNASSIGNED'];
         $position->save();
+
+        $discord = new DiscordController;
+        $discord->manageEventRole($position->event_id, $position->controller_id, 'remove');
 
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position assignment has been removed successfully.');
     }
@@ -1661,6 +1667,9 @@ class AdminDash extends Controller {
         $reg->reminder = 1;
         $reg->choice_number = 0;
         $reg->save();
+
+        $discord = new DiscordController;
+        $discord->manageEventRole($reg->event_id, $reg->controller_id, 'assign');
 
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The position has been assigned successfully.');
     }
