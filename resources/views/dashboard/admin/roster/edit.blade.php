@@ -10,16 +10,16 @@ Update Controller
 <div class="container">
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#profile" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
+            <a class="nav-link active" href="#profile" role="tab" data-bs-toggle="tab" ><i class="fas fa-id-card"></i>&nbsp;Member Profile</a>
         </li>
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('train') || Auth::user()->hasRole('ec'))
         <li class="nav-item">
-            <a class="nav-link" href="#certifications" role="tab" data-bs-toggle="tab" style="color:black"><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
+            <a class="nav-link" href="#certifications" role="tab" data-bs-toggle="tab" ><i class="fas fa-graduation-cap"></i>&nbsp;Controller Certifications</a>
         </li>
         @endif
         @if(Auth::user()->isAbleTo('roster') || Auth::user()->isAbleTo('events'))
         <li class="nav-item">
-            <a class="nav-link" href="#events" role="tab" data-bs-toggle="tab" style="color:black"><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
+            <a class="nav-link" href="#events" role="tab" data-bs-toggle="tab" ><i class="fa-solid fa-chart-line"></i>&nbsp;Event Participation</a>
         </li>
         @endif
     </ul>

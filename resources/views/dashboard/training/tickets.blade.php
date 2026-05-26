@@ -92,7 +92,7 @@ Training Tickets
         <ul class="nav nav-tabs nav-justified" role="tablist">
             @foreach($trainingCategories as $trainingCategory)
                 <li class="nav-item">
-                    <a class="nav-link{{ $active_category == $trainingCategory ? ' active' : '' }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" style="color:black">{{ ucfirst($trainingCategory) }}</a>
+                    <a class="nav-link{{ $active_category == $trainingCategory ? ' active' : '' }}" href="#{{ $trainingCategory }}" role="tab" data-bs-toggle="tab" >{{ ucfirst($trainingCategory) }}</a>
                 </li>
             @endforeach
         </ul>

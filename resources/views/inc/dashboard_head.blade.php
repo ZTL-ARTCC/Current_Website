@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/dashboard">
-            @include('inc.logo', ['color' => 'black'])
+            @include('inc.logo')
         </a>
         <ul class="navbar-nav me-auto align-items-center">
             {{ html()->form()->route('searchAirport')->class(['form-inline'])->open() }}

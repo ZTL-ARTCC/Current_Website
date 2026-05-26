@@ -12,13 +12,13 @@ OTS Center
     <br>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" style="color:black">New Recommendations</a>
+            <a class="nav-link active" href="#new" role="tab" data-bs-toggle="tab" >New Recommendations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#accepted" role="tab" data-bs-toggle="tab" style="color:black">Accepted Recommendations</a>
+            <a class="nav-link" href="#accepted" role="tab" data-bs-toggle="tab" >Accepted Recommendations</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#complete" role="tab" data-bs-toggle="tab" style="color:black">Completed OTS Exams</a>
+            <a class="nav-link" href="#complete" role="tab" data-bs-toggle="tab" >Completed OTS Exams</a>
         </li>
     </ul>
     <div class="tab-content">

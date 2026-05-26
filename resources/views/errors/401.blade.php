@@ -5,7 +5,7 @@ Unauthorized Access
 @endsection
 
 @section('content')
-<span class="border border-light" style="background-color:#F0F0F0">
+<span class="border border-light">
     <div class="container">
         &nbsp;
         <h2>401: Unauthorized Access</h2>
