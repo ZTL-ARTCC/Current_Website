@@ -7,6 +7,7 @@
         <p class="px-5">Thank you for visiting our website! The Virtual Atlanta ARTCC (vZTL) is a community of flight simulation enthusiasts providing air traffic control services on the VATSIM network. We take pride in fostering an immersive and enjoyable environment for controllers and pilots. While we occupy the same geographic area in our network coverage, we are not affiliated with the real-world ZTL ARTCC or FAA.</p>
 		<p class="px-5">vZTL is an affiliate of the <a href="http://www.vatsim.net" target="_blank"><img src="{{ Vite::image('footer/vatsim_logo.png') }}" class="vatsim_logo" alt="VATSIM"></a> network and the <a href="http://www.vatusa.net" target="_blank"><img src="{{ Vite::image('footer/vatusa_logo.png') }}" class="vatusa_logo" alt="VATUSA"></a> division</p>
         <p><a href="/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
+        @include("inc.theme_toggler")
         <p class="footer-copyright text-dark">© {{ Carbon\Carbon::now()->year }} vZTL ARTCC</p>
         @if(Carbon\Carbon::now()->month == 12)
             <button class="btn btn-dark btn-sm" onclick="window.snowStorm.stop();return false">Stop Snow</button>
