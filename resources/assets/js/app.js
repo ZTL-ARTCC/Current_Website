@@ -6,5 +6,4 @@
 import "./ckeditor.js";
 import "./bootstrap.js";
 import "./helpers.js";
-import "./theme.js";
 import.meta.glob(["../img/**"]);

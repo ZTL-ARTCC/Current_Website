@@ -6,6 +6,7 @@
     </div>
     <div class="container">
         <p><a href="https://www.ztlartcc.org/privacy" target="_blank">Privacy Policy, Terms and Conditions</a></p>
+        @include("inc.theme_toggler")
         <p class="footer-copyright">© {{ Carbon\Carbon::now()->year }} vZTL ARTCC</p>
     </div>
 </footer>
