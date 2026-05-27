@@ -1,0 +1,68 @@
+:root {
+  --ck-custom-foreground: var(--bs-secondary-bg);
+  --ck-custom-border:     var(--bs-border-color);
+  --ck-custom-white:      var(--bs-emphasis-color);
+
+  --ck-content-font-color:    var(--bs-body-color) !important;
+  --ck-color-base-background: var(--bs-body-bg) !important;
+  --ck-color-base-border:     var(--bs-border-color) !important;
+  --ck-color-focus-border:    var(--bs-primary) !important;
+  --ck-color-text:            var(--bs-body-color) !important;
+  --ck-color-shadow-drop:     rgba(0, 0, 0, 0.2) !important;
+  --ck-color-shadow-inner:    rgba(0, 0, 0, 0.1) !important;
+
+  --ck-color-button-default-hover-background:   var(--bs-tertiary-bg) !important;
+  --ck-color-button-default-active-background:  var(--bs-secondary-bg) !important;
+  --ck-color-button-default-active-shadow:      var(--bs-border-color) !important;
+  --ck-color-button-on-background:              var(--ck-custom-foreground) !important;
+  --ck-color-button-on-hover-background:        var(--bs-tertiary-bg) !important;
+  --ck-color-button-on-active-background:       var(--bs-tertiary-bg) !important;
+  --ck-color-button-on-active-shadow:           var(--bs-border-color) !important;
+  --ck-color-button-on-disabled-background:     var(--ck-custom-foreground) !important;
+  --ck-color-button-action-background:          var(--bs-success) !important;
+  --ck-color-button-action-hover-background:    var(--bs-success) !important;
+  --ck-color-button-action-active-background:   var(--bs-success) !important;
+  --ck-color-button-action-active-shadow:       var(--bs-success) !important;
+  --ck-color-button-action-disabled-background: var(--bs-success) !important;
+  --ck-color-button-action-text:                var(--bs-white) !important;
+  --ck-color-button-save:                       var(--bs-success) !important;
+  --ck-color-button-cancel:                     var(--bs-danger) !important;
+
+  --ck-color-dropdown-panel-border:         var(--ck-custom-foreground) !important;
+  --ck-color-dialog-form-header-border:     var(--ck-custom-border) !important;
+  --ck-color-split-button-hover-background: var(--ck-color-button-default-hover-background) !important;
+  --ck-color-split-button-hover-border:     var(--ck-custom-foreground) !important;
+
+  --ck-color-input-border:              var(--bs-border-color) !important;
+  --ck-color-input-text:                var(--bs-body-color) !important;
+  --ck-color-input-disabled-background: var(--bs-secondary-bg) !important;
+  --ck-color-input-disabled-border:     var(--bs-border-color) !important;
+  --ck-color-input-disabled-text:       var(--bs-secondary-color) !important;
+
+  --ck-color-list-button-hover-background: var(--ck-custom-foreground) !important;
+  --ck-color-list-button-on-background:    var(--bs-primary) !important;
+  --ck-color-list-button-on-text:          var(--bs-white) !important;
+
+  --ck-color-panel-border:       var(--ck-custom-border) !important;
+  --ck-color-toolbar-border:     var(--ck-custom-border) !important;
+  --ck-color-tooltip-background: var(--bs-tertiary-bg) !important;
+  --ck-color-tooltip-text:       var(--bs-emphasis-color) !important;
+
+  --ck-content-color-image-caption-background: var(--bs-light) !important;
+  --ck-content-color-image-caption-text:       var(--bs-dark) !important;
+
+  --ck-color-widget-blurred-border:            var(--bs-border-color) !important;
+  --ck-color-widget-hover-border:              var(--bs-warning) !important;
+  --ck-color-widget-editable-focus-background: var(--bs-body-bg) !important;
+
+  --ck-color-link-default: var(--bs-link-color) !important;
+}
+
+.ck.ck-editor__editable a {
+  color: var(--bs-link-color) !important;
+}
+
+.ck-content pre {
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-border-color) !important;
+}

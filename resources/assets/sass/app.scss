@@ -14,6 +14,8 @@ $font-family-base: "Hind Siliguri", sans-serif;
 // Tempus Dominus date-time picker
 @import "@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css";
 
+@import "ckeditor.scss";
+
 //Standard CSS Formats
 .navbar-laravel {
   background-color: #fff;
