@@ -2,20 +2,20 @@
   color: inherit;
 }
 
-@media (prefers-color-scheme: light) {
-  .tng-received {
-    background-color: aqua;
-  }
-  .tng-given {
-    background-color: lightgray;
-  }
+
+.tng-received {
+  background-color: aqua;
+}
+.tng-given {
+  background-color: lightgray;
 }
 
-@media (prefers-color-scheme: dark) {
-  .tng-received {
-    background-color: darken(aqua, 20%);
-  }
-  .tng-given {
-    background-color: darken(lightgray, 40%);
-  }
+
+
+[data-bs-theme="dark"] .tng-received {
+  background-color: darken(cyan, 20%);
 }
+[data-bs-theme="dark"] .tng-given {
+  background-color: darken(lightgray, 40%);
+}
+
