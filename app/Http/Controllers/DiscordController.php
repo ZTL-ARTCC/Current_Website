@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\SessionVariables;
 use App\Event;
 use App\EventRegistration;
+use App\Jobs\AssignEventRole;
 use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Log;
 class DiscordController extends Controller {
 
     private $guild_id = null;
+    private $ratelimit_remaining = 1;
+    private $ratelimit_reset_after = 0;
+    const API_TIMEOUT = 10; // Abort API call (sec)
 
     public function __construct() {
         $this->guild_id = config('discord.guild_id');
@@ -28,11 +32,12 @@ class DiscordController extends Controller {
             $this->disableEventRole($id);
             return back()->with(SessionVariables::SUCCESS->value, "Event reference and roles removed in Discord.");
         }
-        $this->enableEventRole($id);
-        return back()->with(SessionVariables::SUCCESS->value, "Event reference set and role assigned in Discord.");
+        AssignEventRole::dispatchAfterResponse($id);
+        return back()->with(SessionVariables::SUCCESS->value, "Event reference set. If this event has more than 10 controllers the role assignments will take a few seconds to show up due to Discord API rate limiting.");
     }
 
-    private function enableEventRole($id) {
+    // Call from job 'AssignEventRole' due to rate limiting (10 assignments per call)
+    public function enableEventRole($id) {
         $event = Event::find($id);
         // Check to make sure role doesn't exist, if it does, delete it
         $role_id = $this->getRoleId(config('discord.event_role_name'));
@@ -48,7 +53,7 @@ class DiscordController extends Controller {
         $event_controllers = EventRegistration::where('status', 1)->where('event_id', $event->id)->pluck('controller_id')->toArray();
         foreach ($event_controllers as $controller_id) {
             $controller = User::find($controller_id);
-            if ($controller) {
+            if ($controller && $controller->discord) {
                 $this->assignUserRole($controller->discord, $event_role_id);
             }
         }
@@ -136,6 +141,10 @@ class DiscordController extends Controller {
     }
 
     private function modifyUserRole($user_id, $role_id, $action) {
+        if ($this->ratelimit_remaining == 0 && $this->ratelimit_reset_after <= self::API_TIMEOUT) {
+            Log::info('Discord role assignment rate limit reached, waiting for ' . $this->ratelimit_reset_after . ' seconds');
+            sleep($this->ratelimit_reset_after);
+        }
         $http_method = ($action == 'assign') ? 'PUT' : 'DELETE';
         try {
             $client = new Client();
@@ -145,6 +154,9 @@ class DiscordController extends Controller {
                     'Content-Type' => 'application/json',
                 ]
             ]);
+            //            Log::info($response->getHeaders());
+            $this->ratelimit_remaining = $response->getheader('x-ratelimit-remaining')[0];
+            $this->ratelimit_reset_after = $response->getheader('x-ratelimit-reset-after')[0];
         } catch (RequestException $e) {
             Log::info('Unable to modify Discord user role: ' . $e->getMessage());
         }

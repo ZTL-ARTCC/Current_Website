@@ -56,7 +56,7 @@ Events
                             {{ $e->start_time }} to {{ $e->end_time }} Zulu
                             <br>
                             {{ timeToLocal($e->start_time, Auth::user()->timezone) }} {{ $e->tzOffsetDayIndicator() }} to {{ timeToLocal($e->end_time, Auth::user()->timezone) }} {{ $e->local_timezone_abbreviation }} 
-                            <a style="color:inherit" href="#" data-bs-toggle="tooltip" title="Showing times in {{ Auth::user()->timezone }}. You can change this on your profile."><i class="fas fa-info-circle"></i></a>
+                            <a href="#" data-bs-toggle="tooltip" title="Showing times in {{ Auth::user()->timezone }}. You can change this on your profile."><i class="fas fa-info-circle"></i></a>
                         </td>
                         @if(Auth::user()->isAbleTo('events'))
                             <td>

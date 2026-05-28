@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/dashboard">
-            @include('inc.logo', ['color' => 'white'])
+            @include('inc.logo', ['color_override' => 'white'])
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

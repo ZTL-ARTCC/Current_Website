@@ -25,7 +25,7 @@ Training Information
                                     @foreach($info_minor_gnd as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -72,7 +72,7 @@ Training Information
                                     @foreach($info_minor_lcl as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -119,7 +119,7 @@ Training Information
                                     @foreach($info_minor_app as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -167,7 +167,7 @@ Training Information
                                     @foreach($info_major_gnd as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -214,7 +214,7 @@ Training Information
                                     @foreach($info_major_lcl as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -261,7 +261,7 @@ Training Information
                                     @foreach($info_major_app as $i)
                                         <li>
                                             @if(Auth::user()->isAbleTo('snrStaff'))
-                                                <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                                <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                                 &nbsp;
                                             @endif
                                             {{ $i->info }}
@@ -310,7 +310,7 @@ Training Information
                             @foreach($info_ctr as $i)
                                 <li>
                                     @if(Auth::user()->isAbleTo('snrStaff'))
-                                        <a href="/dashboard/training/info/delete/{{ $i->id }}" style="color:inherit" data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
+                                        <a href="/dashboard/training/info/delete/{{ $i->id }}"  data-bs-toggle="tooltip" title="Remove Information"><i class="fas fa-times"></i></a>
                                         &nbsp;
                                     @endif
                                     {{ $i->info }}

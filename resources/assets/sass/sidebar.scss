@@ -6,12 +6,12 @@
 }
 
 #pill-sidebar button {
-  color: #606060;
+  color: var(--bs-secondary-color);
   font-weight: bold;
   font-size: 12px;
 }
 #pill-sidebar a.nav-link {
-  color: black;
+  color: var(--bs-body-color);
   font-size: 14px;
 }
 

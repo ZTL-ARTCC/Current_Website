@@ -5,7 +5,13 @@
 .tng-received {
   background-color: aqua;
 }
-
 .tng-given {
   background-color: lightgray;
+}
+
+[data-bs-theme="dark"] .tng-received {
+  background-color: darken(cyan, 20%);
+}
+[data-bs-theme="dark"] .tng-given {
+  background-color: darken(lightgray, 40%);
 }

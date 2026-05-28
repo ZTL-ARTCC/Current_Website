@@ -26,32 +26,6 @@ Dashboard
         </div>
         <hr>
     @endif
-    <div class="row clocks">
-        <div class="col-sm-3">
-            <div class="card card-body">
-                <h5>Zulu/UTC Time Now:</h5>
-                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=GMT&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card card-body">
-                <h5>Eastern Time Now:</h5>
-                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=EST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card card-body">
-                <h5>Central Time Now:</h5>
-                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=CST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card card-body">
-                <h5>Pacific Time Now:</h5>
-                <iframe src="https://www.clocklink.com/html5embed.php?clock=043&timezone=PST&color=black&size=180&Title=&Message=&Target=&From=2019,1,1,0,0,0&Color=black" frameborder="0" allowTransparency="true"></iframe>
-            </div>
-        </div>
-    </div>
     @include('inc.notifications')
     <hr>
     <h4 class="text-center"><i>Controller Dashboard Quicklinks</i></h4>
@@ -105,7 +79,11 @@ Dashboard
             @endif
         </div>
         <div class="col-sm-4">
-            <h4 class="text-center"><a href="/dashboard/controllers/events" style="color:inherit;text-decoration:none"><i class="fas fa-plane"></i> Events</a></h4>
+            <h4 class="text-center">
+                <a href="/dashboard/controllers/events">
+                    <i class="fas fa-plane"></i> Events
+                </a>
+            </h4>
 			<div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
 					@if($events->count() > 0)
