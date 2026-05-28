@@ -34,10 +34,8 @@ View Event
                     <h5><b>Date:</b> {{ $event->date }}</h5>
                     <h5><b>Time:</b>
                             {{ $event->start_time }} to {{ $event->end_time }} Zulu
-                            ({{ $local_start_time }} to {{ $local_end_time }} local <a href="#"
-                                                                                 data-bs-toggle="tooltip"
-                                                                                 title="Showing times in {{ $timezone }}. You can change this on your profile."><i
-                                        class="fas fa-info-circle"></i></a>)
+                            | {{ timeToLocal($event->start_time, Auth::user()->timezone) }} {{ $event->tzOffsetDayIndicator() }} to {{ timeToLocal($event->end_time, Auth::user()->timezone) }} {{ $event->local_timezone_abbreviation }} 
+                        <a href="#" data-bs-toggle="tooltip" title="Showing times in {{ $timezone }}. You can change this on your profile."><i class="fas fa-info-circle"></i></a>
                         </h5>
                         <h5><b>Type:</b>
                             @if(Auth::user()->isAbleTo('events'))
