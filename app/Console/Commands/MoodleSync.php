@@ -103,8 +103,14 @@ class MoodleSync extends Command {
     private function update_moodle_user(User|Visitor $user): null|int {
         $isHomeController = (class_basename($user) == 'User');
         $cid = $isHomeController ? $user->id : $user->cid;
-        $first_name = $isHomeController ? $user->fname : $user->name;
-        $last_name = $isHomeController ? $user->lname : '';
+        $visitor_first = $visitor_last = '';
+        if (!$isHomeController) {
+            $visitor_name = explode(' ', $user->name, 2);
+            $visitor_first = $visitor_name[0];
+            $visitor_last = (isset($visitor_name[1])) ? $visitor_name[1] : 'Unknown';
+        }
+        $first_name = $isHomeController ? $user->fname : $visitor_first;
+        $last_name = $isHomeController ? $user->lname : $visitor_last;
         $suspended = $isHomeController ? (($user->status == 0) ? 1 : 0) : (($user->status == 2) ? 1 : 0);
         $timezone = $isHomeController ? $user->timezone : '99';
         $moodle_user = DB::connection('moodle')->table('user')->select(['id'])->where('username', $cid)->pluck('id')->toArray();
