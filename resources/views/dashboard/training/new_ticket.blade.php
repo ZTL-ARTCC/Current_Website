@@ -10,6 +10,7 @@ New Training Ticket
 
 @section('content')
 @include('inc.header', ['title' => 'Submit New Training Ticket'])
+@include('inc.loading', ['message' => 'Attempting to push ticket to VATUSA...'])
 
 <div class="container">
     {{ html()->form()->route('saveTicket')->attributes(['id'=>'newTrainingTicket'])->open() }}
@@ -132,13 +133,16 @@ New Training Ticket
 		{{ html()->checkbox('cert', false, 1) }}
         <span id="s1_rating_push" class="ms-1 small">
         @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
+            {{ html()->hidden('is_s1_promo', true) }}
             <small>(Promote controller to S1)</small>
+        @else
+            {{ html()->hidden('is_s1_promo', false) }}
         @endif
         </span>	
 		<br>
         <p id="autosaveIndicator" class="font-italic">Last autosaved at: Not yet saved</p>
         <button class="btn btn-primary" type="submit" name="action" value="draft">Save as Draft</button>
-        <button class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
+        <button id="save-button" class="btn btn-success" type="submit" name="action" value="new">Finalize Ticket</button>
         <a href="/dashboard/training/tickets" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>

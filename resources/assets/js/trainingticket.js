@@ -199,3 +199,15 @@ controllerSelect.addEventListener("change", () => {
   };
   xhr.send();
 });
+
+const submitButton = document.getElementById("save-button");
+submitButton.addEventListener("click", () => {
+  const certSelected = document.querySelector("input[name='cert']").value;
+  const s1RatingPush = document.querySelector(
+    "input[name='is_s1_promo']"
+  ).value;
+
+  if (s1RatingPush && certSelected) {
+    document.getElementById("loading").classList.remove("d-none");
+  }
+});
