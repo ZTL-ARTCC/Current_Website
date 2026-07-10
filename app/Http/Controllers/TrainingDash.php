@@ -899,7 +899,7 @@ class TrainingDash extends Controller {
         $ticket->movements = $request->movements;
         $ticket->draft = false;
         $ticket->save();
-        $extra = null;
+        $extra = '';
 
         $controller = User::find($ticket->controller_id);
         $trainer = User::find($ticket->trainer_id);
@@ -913,12 +913,20 @@ class TrainingDash extends Controller {
             $ots->position = $request->position;
             $ots->status = 0;
             $ots->save();
-            $extra = ' and the OTS recommendation has been added';
+            $extra .= ' and the OTS recommendation has been added';
         }
 
         $audit_msg = ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
-        if ($promotion) {
-            $audit_msg .= ' A promotion was pushed to VATUSA.';
+        if (Auth::user()->rating_id >= 4 && $controller->rating_id == 1 && $request->cert) {
+            $upload_status = Artisan::call('VATUSATrainingTickets:UploadPending');
+
+            $ticket->refresh();
+            $audit_msg .= ' A promotion was attempted to be pushed to VATUSA.';
+            if ($upload_status == 0 && $ticket->vatusa_upload_status == TrainingTicket::$VATUSA_UPLOAD_STATUS["UPLOADED"]) {
+                $extra .= ' and the student\'s S1 promotion was successfully pushed to VATUSA.';
+            } else {
+                $extra .= ' and there was an issue pushing the student\'s S1 promotion to VATUSA. If the ticket isn\'t pushed to VATUSA within an hour, please contact the web team.';
+            }
         }
 
         Audit::newAudit($audit_msg);
@@ -1007,20 +1015,21 @@ class TrainingDash extends Controller {
             $ticket->movements = $request->movements;
             $ticket->save();
 
-            $promotion = false;
             $extra = '';
             $audit_msg = ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
             $student = User::find($request->controller);
             if (Auth::user()->rating_id >= 4 && $student->rating_id == 1 && $request->cert) {
-                $promotion = true;
-                $extra = ' and the students S1 promotion will be pushed to VATUSA';
-                $this->s1Promotion($student);
+                $upload_status = Artisan::call('VATUSATrainingTickets:UploadPending');
+
+                $ticket->refresh();
+                $audit_msg .= ' A promotion was attempted to be pushed to VATUSA.';
+                if ($upload_status == 0 && $ticket->vatusa_upload_status == TrainingTicket::$VATUSA_UPLOAD_STATUS["UPLOADED"]) {
+                    $extra = ' and the student\'s S1 promotion was successfully pushed to VATUSA.';
+                } else {
+                    $extra = ' and there was an issue pushing the student\'s S1 promotion to VATUSA. If the ticket isn\'t pushed to VATUSA within an hour, please contact the web team.';
+                }
             }
 
-            $audit_msg = ' edited a training ticket for ' . User::find($request->controller)->full_name . '.';
-            if ($promotion) {
-                $audit_msg .= ' A promotion was pushed to VATUSA.';
-            }
             Audit::newAudit($audit_msg);
 
             return redirect('/dashboard/training/tickets/view/' . $ticket->id)->with(SessionVariables::SUCCESS->value, 'The ticket has been updated successfully' . $extra . '.');
