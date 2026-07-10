@@ -10,6 +10,7 @@ Edit Training Ticket
 
 @section('content')
 @include('inc.header', ['title' => 'Edit Training Ticket'])
+@include('inc.loading', ['message' => 'Attempting to push ticket to VATUSA...'])
 
 <div class="container">
     @if($ticket->draft)
@@ -149,7 +150,10 @@ Edit Training Ticket
         @endif
         <span id="s1_rating_push" class="ms-1 small">
         @if(Auth::user()->rating_id >= 4 && $student_rating == 1)
+            {{ html()->hidden('is_s1_promo', true) }}
             <small>(Promote controller to S1)</small>
+        @else
+            {{ html()->hidden('is_s1_promo', false) }}
         @endif
         </span>	
 		<br>
@@ -167,5 +171,6 @@ Edit Training Ticket
         <a href="/dashboard/training/tickets/view/{{ $ticket->id }}" class="btn btn-danger">Cancel</a>
     {{ html()->form()->close() }}
 </div>
+
 @vite('resources/assets/js/trainingticket.js')
 @endsection
