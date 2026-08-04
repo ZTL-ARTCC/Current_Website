@@ -11,7 +11,7 @@ export default defineConfig({
             input: [
                 ...globSync("resources/assets/sass/*.scss"),
                 ...globSync("resources/assets/js/*.js*"),
-		...globSync("resources/assets/img/*")
+		...globSync("resources/assets/img/{*,**/*}.{png,svg,jpg,webp,avif}"),
             ],
             refresh: true,
         }),
