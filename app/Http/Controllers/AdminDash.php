@@ -45,6 +45,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
@@ -616,6 +617,8 @@ class AdminDash extends Controller {
             if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
+
+            DB::table('sessions')->where('user_id', $user->id)->delete();
 
             $client = new Client();
             $req_params = [ 'form_params' =>
