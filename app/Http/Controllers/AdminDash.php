@@ -342,6 +342,9 @@ class AdminDash extends Controller {
             foreach ($attributes as $attribute) {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
+            if ($user->status != $request->input('status')) {
+                DB::table('sessions')->where('user_id', $user->id)->delete();
+            }
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
