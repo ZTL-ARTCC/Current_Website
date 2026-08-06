@@ -222,7 +222,7 @@ Update Controller
                     </div>
                     @if($user->solo_exp == '' || str_contains($user->solo_exp, 'Expired!'))
                     <div class="col-sm-6">
-                        <label for="solo_duration" class="form-label-date">Solo Certification Duration</label>
+                        <label for="solo_duration" class="form-label-date">Solo Certification Duration (days)</label>
                         {{ html()->select('solo_duration', [0 => '', 15 => '15', 30 => '30', 45=> '45'], 0)->class(['form-select'])->attributes([$solo_disable]) }}
                     </div>
                     @else
