@@ -404,12 +404,14 @@ class AdminDash extends Controller {
                     }
                 } elseif ($request->input($position) == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     $user[$position] = $request->input($position);
-                    $expire = Carbon::now()->addDays($user->getMagicNumber('SOLO_CERT_DURATION'))->format('Y-m-d');
+                    $solo_duration = ($request->input('solo_duration') != '0') ? intval($request->input('solo_duration')) : $user->getMagicNumber('SOLO_CERT_DURATION');
+                    $expire = Carbon::now()->addDays($solo_duration)->format('Y-m-d');
                     $cert = new SoloCert;
                     $cert->cid = $id;
                     $cert->pos = $solo_id;
                     $cert->expiration = $expire;
                     $cert->status = 0;
+                    $cert->duration = $solo_duration;
                     $cert->save();
                     $solo_facility = User::$SoloFacilities[$position] . '_' . strtoupper($position);
                     (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
