@@ -65,5 +65,6 @@ class Kernel extends HttpKernel {
         'ability' => \Laratrust\Middleware\Ability::class,
         'toggle' => \App\Http\Middleware\FeatureToggles::class,
         'event_visibility' => \App\Http\Middleware\EventViewPolicy::class,
+        'no_back' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 }
