@@ -1,16 +1,20 @@
-import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
-import { Essentials } from "@ckeditor/ckeditor5-essentials";
-import { Bold, Italic } from "@ckeditor/ckeditor5-basic-styles";
-import { BlockQuote } from "@ckeditor/ckeditor5-block-quote";
-import { Heading } from "@ckeditor/ckeditor5-heading";
-import { HorizontalLine } from "@ckeditor/ckeditor5-horizontal-line";
-import { Image, ImageUpload } from "@ckeditor/ckeditor5-image";
-import { Indent } from "@ckeditor/ckeditor5-indent";
-import { Link } from "@ckeditor/ckeditor5-link";
-import { List } from "@ckeditor/ckeditor5-list";
-import { MediaEmbed } from "@ckeditor/ckeditor5-media-embed";
-import { Table } from "@ckeditor/ckeditor5-table";
-import { FileRepository } from "@ckeditor/ckeditor5-upload";
+import {
+  ClassicEditor,
+  Essentials,
+  Bold,
+  Italic,
+  BlockQuote,
+  Heading,
+  HorizontalLine,
+  Image,
+  ImageUpload,
+  Indent,
+  Link,
+  MediaEmbed,
+  Table,
+  FileRepository,
+  List,
+} from "ckeditor5";
 
 const ckeditorSelector = ".text-editor";
 window.isImageUploading = false;
