@@ -432,7 +432,7 @@ class ControllerDash extends Controller {
 
         $event = Event::find($request->event_id);
         $event_start = Carbon::createFromFormat('m/d/Y H:i', $event->date . ' ' . $event->start_time, 'UTC');
-        if ($event_start->diffInHours(now()) <= 24  && !Auth::user()->hasPermission('events')) {
+        if (now()->diffInHours($event_start) <= 24  && !Auth::user()->hasPermission('events')) {
             return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to unregister within 24 hours of event start - please contact the EC.');
         }
 
