@@ -45,7 +45,6 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Mail;
@@ -343,7 +342,7 @@ class AdminDash extends Controller {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
             if ($user->status != $request->input('status')) {
-                DB::table('sessions')->where('user_id', $user->id)->delete();
+                $user->forceLogout();
             }
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
@@ -621,7 +620,7 @@ class AdminDash extends Controller {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
 
-            DB::table('sessions')->where('user_id', $user->id)->delete();
+            $user->forceLogout();
 
             $client = new Client();
             $req_params = [ 'form_params' =>

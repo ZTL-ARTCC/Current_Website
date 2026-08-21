@@ -7,7 +7,6 @@ use App\User;
 use Config;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class RosterUpdate extends Command {
     /**
@@ -117,12 +116,11 @@ class RosterUpdate extends Command {
         $users = User::where('status', 2)->get();
         foreach ($users as $u) {
             $u->removeRoles();
+            $u->forceLogout();
             $u->initials = null;
             $u->train_pwr = null;
             $u->monitor_pwr = null;
             $u->save();
-
-            DB::table('sessions')->where('user_id', $u->id)->delete();
         }
     }
 }
