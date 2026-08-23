@@ -291,6 +291,9 @@ class TrainingDash extends Controller {
             return $new_tickets_by_category;
         }, []);
 
+        if (!is_null($search_result)) {
+            return view('dashboard.training.student');
+        }
         return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets_by_category', 'active_category', 'exams', 'all_drafts', 'is_trainer_search', 'student_note'));
     }
     
@@ -563,7 +566,7 @@ class TrainingDash extends Controller {
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position, $draft) {
+    public static function getTicketSortCategory($position, $draft) {
         $position_types_by_rating = TrainingTicket::$position_types_by_rating;
         switch (true) {
             case ($draft):
@@ -598,7 +601,7 @@ class TrainingDash extends Controller {
         }
     }
 
-    public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
+    public static function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
         switch ($position) {
             case 11:
                 return 104;
