@@ -96,7 +96,7 @@
                                 <tr>
                                     <td scope="col">{{ $control_session->created_at->format('F j, Y H:i:s') }}</td>
                                     <td scope="col">{{ $control_session->position }}</td>
-                                    <td scope="col">{{ $control_session->created_at->diffInHours($control_session->updated_at) }}</td>
+                                    <td scope="col">{{ round($control_session->created_at->diffInHours($control_session->updated_at), 1) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

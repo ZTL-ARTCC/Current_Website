@@ -152,7 +152,7 @@ class StudentProfile extends Component {
     public function fetchTickets() {
         $this->tickets = [];
         if ($this->ticket_select == null) {
-            $this->ticket_select = 'S1';
+            $this->ticket_select = 's1';
         }
         $tickets_sort = TrainingTicket::where('controller_id', $this->user->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date . ' ' . $t->start_time);
