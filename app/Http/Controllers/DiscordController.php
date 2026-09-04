@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\SessionVariables;
 use App\Event;
 use App\EventRegistration;
+use App\Guild;
 use App\Jobs\AssignEventRole;
+use App\Notifications\DiscordChannelMessage;
 use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -220,5 +222,12 @@ class DiscordController extends Controller {
         } catch (RequestException $e) {
             Log::info('Unable to fetch Discord event role ID: ' . $e->getMessage());
         }
+    }
+
+    public static function publishOtsNotification() {
+        $message = "<@&" . config('discord.instructor_role_id') . "> A new OTS nomination is ready!
+            <" . url('/') . "/dashboard/training/ots-center>";
+        $guild = new Guild();
+        $guild->notify(new DiscordChannelMessage($message));
     }
 }

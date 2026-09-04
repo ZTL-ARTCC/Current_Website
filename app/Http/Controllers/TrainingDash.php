@@ -914,6 +914,7 @@ class TrainingDash extends Controller {
             $ots->status = 0;
             $ots->save();
             $extra .= ' and the OTS recommendation has been added';
+            DiscordController::publishOtsNotification();
         }
 
         $audit_msg = ' added a training ticket for ' . User::find($ticket->controller_id)->full_name . '.';
