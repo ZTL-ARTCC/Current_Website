@@ -366,9 +366,15 @@ class ControllerDash extends Controller {
         $local_start_time = timeToLocal($event->start_time, $timezone);
         $local_end_time = timeToLocal($event->end_time, $timezone);
 
+        $delete_restricted = false;
+        $event_start = Carbon::createFromFormat('m/d/Y H:i', $event->date . ' ' . $event->start_time, 'UTC');
+        if (now('UTC')->diffInHours($event_start) <= 24  && !Auth::user()->hasPermission('events')) {
+            $delete_restricted = true;
+        }
+
         return view('dashboard.controllers.events.view')->with('event', $event)->with('positions', $positions)->with('registrations', $registrations)->with('presets', $presets)->with('controllers', $controllers)
                                                         ->with('your_registration1', $your_registration1)->with('your_registration2', $your_registration2)->with('your_registration3', $your_registration3)->with('timezone', $timezone)
-                                                        ->with('local_start_time', $local_start_time)->with('local_end_time', $local_end_time);
+                                                        ->with('local_start_time', $local_start_time)->with('local_end_time', $local_end_time)->with('delete_restricted', $delete_restricted);
     }
 
     public function signupForEvent(Request $request) {
