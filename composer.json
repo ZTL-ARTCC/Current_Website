@@ -23,6 +23,7 @@
         "devmarketer/easynav": "^1.0",
         "guzzlehttp/guzzle": "^7.8",
         "jamesmills/laravel-timezone": "dev-l13-compatibility",
+        "laravel-notification-channels/discord": "^1.8",
         "laravel/framework": "^13.12",
         "laravel/helpers": "^1.7",
         "laravel/legacy-factories": "^1.4.0",
