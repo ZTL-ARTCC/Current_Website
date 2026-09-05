@@ -51,20 +51,18 @@
             </ul>
             <p>Best wishes and we hope to see you on the scopes soon!</p>
             <p>{{ $atm_name }}<br>Air Traffic Manager</p>
-            @if($checklist->visiting)
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" wire:model="acknowledge">
-                <label class="form-check-label" for="acknowledge">
-                    I read and acknowledge that I meet the requirements as stated above.
-                </label>
-                @error('acknowledge')<div class="text-danger text-sm">{{ $message }}</div>@enderror
-            </div>            
-            @endif
         </div>
     </div>
     @if($checklist->visiting)
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" wire:model="acknowledge">
+        <label class="form-check-label" for="acknowledge">
+            I read and acknowledge that I meet the requirements as stated above.
+        </label>
+        @error('acknowledge')<div class="text-danger text-sm">{{ $message }}</div>@enderror
+    </div>            
     <div class="form-group">
-        <label for="reason">Explanation of why you want to visit the {{ config('artcc.id') }} ARTCC</label>
+        <label for="reason">Explain why you want to visit the {{ config('artcc.id') }} ARTCC</label>
         <textarea class="form-control" rows="4" placeholder="Required" wire:model="justification"></textarea>
         @error('justification')<div class="text-danger text-sm">{{ $message }}</div>@enderror
     </div>

@@ -81,14 +81,9 @@ class VisitRequest extends Component {
 
     public function submitVisitRequest() {
         $validated = $this->validate([
+            'acknowledge' => 'accepted',
             'justification' => 'required|string'
         ]);
-
-        if (is_null($this->vatusa_checklist) && !$this->acknowledge) {
-            throw ValidationException::withMessages([
-                'acknowledge' => 'Please read and acknowledge.',
-            ]);
-        }
 
         if (!$this->evaluate_recapcha()) {
             return false;
