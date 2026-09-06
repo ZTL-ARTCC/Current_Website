@@ -366,9 +366,15 @@ class ControllerDash extends Controller {
         $local_start_time = timeToLocal($event->start_time, $timezone);
         $local_end_time = timeToLocal($event->end_time, $timezone);
 
+        $delete_restricted = false;
+        $event_start = Carbon::createFromFormat('m/d/Y H:i', $event->date . ' ' . $event->start_time, 'UTC');
+        if (now('UTC')->diffInHours($event_start) <= 24  && !Auth::user()->hasPermission('events')) {
+            $delete_restricted = true;
+        }
+
         return view('dashboard.controllers.events.view')->with('event', $event)->with('positions', $positions)->with('registrations', $registrations)->with('presets', $presets)->with('controllers', $controllers)
                                                         ->with('your_registration1', $your_registration1)->with('your_registration2', $your_registration2)->with('your_registration3', $your_registration3)->with('timezone', $timezone)
-                                                        ->with('local_start_time', $local_start_time)->with('local_end_time', $local_end_time);
+                                                        ->with('local_start_time', $local_start_time)->with('local_end_time', $local_end_time)->with('delete_restricted', $delete_restricted);
     }
 
     public function signupForEvent(Request $request) {
@@ -432,7 +438,7 @@ class ControllerDash extends Controller {
 
         $event = Event::find($request->event_id);
         $event_start = Carbon::createFromFormat('m/d/Y H:i', $event->date . ' ' . $event->start_time, 'UTC');
-        if ($event_start->diffInHours(now()) <= 24  && !Auth::user()->hasPermission('events')) {
+        if (now('UTC')->diffInHours($event_start) <= 24  && !Auth::user()->hasPermission('events')) {
             return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to unregister within 24 hours of event start - please contact the EC.');
         }
 
