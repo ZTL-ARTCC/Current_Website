@@ -13,18 +13,14 @@ use App\Feedback;
 use App\File;
 use App\LiveEvent;
 use App\Mail\ReqStaffing;
-use App\Mail\VisitorMail;
 use App\Overflight;
 use App\Scenery;
 use App\TrainerFeedback;
 use App\User;
-use App\Visitor;
 use Carbon\Carbon;
 use Config;
-use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Mail;
 
 class FrontController extends Controller {
@@ -222,74 +218,6 @@ class FrontController extends Controller {
 
     public function visit() {
         return view('site.visit');
-    }
-
-    public function storeVisit(Request $request) {
-        $validator = $request->validate([
-            'cid' => 'required',
-            'name' => 'required',
-            'email' => 'required',
-            'rating' => 'required',
-            'home' => 'required',
-            'reason' => 'required'
-        ]);
-
-        //Google reCAPTCHA Verification
-        $client = new Client;
-        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
-            'form_params' => [
-                'secret' => Config::get('google.recaptcha'),
-                'response' => $request->input('g-recaptcha-response'),
-            ]
-        ]);
-        $r = json_decode($response->getBody())->success;
-        if ($r != true && Config::get('app.env') != 'local') {
-            return redirect()->back()->with(SessionVariables::ERROR->value, 'You must complete the ReCaptcha to continue.');
-        }
-        
-        // Check to see if CID is already active in database (prevents account takeover)
-        if (User::find($request->cid) !== null) {
-            $user = User::find($request->cid);
-            if ($user->status == 1) {
-                return redirect()->back()->with(SessionVariables::ERROR->value, 'Unable to apply as a visitor - you are already listed as a controller on our roster. If you believe this is in error, contact the ZTL DATM at ' . config('artcc.email_datm'));
-            }
-        }
-        
-        if ($request->rating != 1) {
-            $expireDate = new DateTime($request->updated_at);
-            $expireDate->modify('+ 90 days');
-            if (date_create() > $expireDate) {
-                $visit = Visitor::Create(
-                    ['cid' => $request->cid,
-                    'name' => $request->name,
-                        'email' => $request->email,
-                        'rating' => $request->rating,
-                        'home' => $request->home,
-                        'reason'=> $request->reason,
-                        'status'=> 0
-                    ]
-                );
-            } else {
-                $visit = Visitor::updateOrCreate(
-                    ['cid' => $request->cid],
-                    [
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'rating' => $request->rating,
-                        'home' => $request->home,
-                        'reason'=> $request->reason,
-                        'status'=> 0
-                    ]
-                );
-            }
-                    
-            Mail::to($visit->email)->cc(config('artcc.email_datm'))->send(new VisitorMail('new', $visit));
-            Artisan::call('app:moodle-sync ' . $request->cid);
-        
-            return redirect('/')->with(SessionVariables::SUCCESS->value, 'Thank you for your interest in the ZTL ARTCC! Your visit request has been submitted.');
-        } else {
-            return redirect('/')->with(SessionVariables::ERROR->value, 'You need to be a S1 rated controller or greater');
-        }
     }
 
     public function newFeedback($controllerSelected=null) {
