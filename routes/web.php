@@ -133,7 +133,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/req', 'TrainingDash@ShowReq');
         Route::get('/schedule', 'TrainingDash@handleSchedule');
         Route::post('/upload-image', 'TrainingDash@imageUpload')->name('imageUpload');
-        Route::prefix('tickets')->middleware('permission:train')->group(function () {
+        Route::prefix('tickets')->middleware(['permission:train', 'no_back'])->group(function () {
             Route::get('/', 'TrainingDash@ticketsIndex');
             Route::post('/search', 'TrainingDash@searchTickets');
             Route::get('/new', 'TrainingDash@newTrainingTicket');
