@@ -445,8 +445,15 @@ View Event
                                     @if(!$your_registration1)
                                         <button type="submit" class="btn btn-success">Submit Request</button>
                                     @else
+                                        @if($delete_restricted)
+                                        <span title="Unable to unregister within 24 hours of event start - please contact the EC." style="display: inline-block;">
+                                            <a href="/dashboard/controllers/events/view/{{ $your_registration1->id }}/un-signup"
+                                               class="btn btn-danger mt-2 disabled" aria-disabled="true">Delete your Signup</a>
+                                        </span>
+                                        @else
                                         <a href="/dashboard/controllers/events/view/{{ $your_registration1->id }}/un-signup"
-                                           class="btn btn-danger mt-2">Delete your Signup</a>
+                                           class="btn btn-danger mt-2" data-bs-toggle="tooltip">Delete your Signup</a>
+                                        @endif
                                     @endif
                                     <p class="pt-2"><i>Please note that the position assignments are made according to
                                             operational necessity and not all position preferences can be met.</i></p>
