@@ -253,7 +253,7 @@ class VisitRequest extends Component {
 
         // 2. Verify token with Google's API
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => config('services.recaptcha.secret'),
+            'secret'   => Config::get('google.recaptcha'),
             'response' => $this->recaptchaToken,
             'remoteip' => request()->ip(),
         ]);
