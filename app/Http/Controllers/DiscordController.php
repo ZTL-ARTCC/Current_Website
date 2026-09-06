@@ -224,9 +224,9 @@ class DiscordController extends Controller {
         }
     }
 
-    public static function publishOtsNotification() {
-        $message = "<@&" . config('discord.instructor_role_id') . "> A new OTS nomination is ready!
-            <" . url('/') . "/dashboard/training/ots-center>";
+    public static function publishOtsNotification(string $staff_mbr_name, string $student_name) {
+        $message = "<@&" . config('discord.instructor_role_id') . "> **$staff_mbr_name** nominated **$student_name** for an OTS examination! 
+        <" . url('/') . "/dashboard/training/ots-center>";
         $guild = new Guild();
         $guild->notify(new DiscordChannelMessage($message));
     }
