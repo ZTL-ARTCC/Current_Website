@@ -65,13 +65,13 @@ class MoodleSync extends Command {
 
     private function sync_roster(): void {
         $this->info('Syncing facility roster to Moodle user table.');
-        $roster = User::all();
+        $roster = User::where('status', 1)->get(); // Status 1 = active
         foreach ($roster as $user) {
             $moodle_user_id = $this->update_moodle_user($user);
             $cohort_id = null;
-            if ($user->status == 1) {
+            if ($user->visitor == 0) {
                 $cohort_id = $this->cohorts['Home'];
-            } elseif ($user->status == 2) {
+            } elseif ($user->visitor == 1) {
                 $cohort_id = $this->cohorts['Visiting'];
             }
             $this->assign_cohort_to_user($moodle_user_id, $cohort_id);
