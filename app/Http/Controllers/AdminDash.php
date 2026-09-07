@@ -341,6 +341,9 @@ class AdminDash extends Controller {
             foreach ($attributes as $attribute) {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
+            if ($user->status != $request->input('status')) {
+                $user->forceLogout();
+            }
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
@@ -618,6 +621,8 @@ class AdminDash extends Controller {
             if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
+
+            $user->forceLogout();
 
             $client = new Client();
             $req_params = [ 'form_params' =>
