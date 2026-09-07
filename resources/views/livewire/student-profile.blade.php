@@ -37,19 +37,46 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa-solid fa-list-check me-2"></i>VATUSA Academy & ZACK Course Status
+                    <i class="fa-solid fa-list-check me-2"></i>VATUSA Academy & {{ config('moodle.lms_name') }} Course Status
+                    @if (Auth::user()->rating_id >= 3 && $this->user->rating_id <= 5 && !is_null($this->academy_eligible))
+                    <span class="float-end">
+                        <button type="button" class="btn btn-sm btn-primary" wire:click="enrollAcademyCourse"><img src="{{ Vite::image('vatusa.png') }}" class="me-1" alt="VATUSA">Enroll in <strong>{{ $this->academy_eligible }}</strong> course</button>
+                    </span>
+                    @endif
                 </div>
                 <div class="card-body text-white">
-                    @foreach ($examTypes as $examType)
-                            @isset($exams[$examType])
-                                @if($exams[$examType]['success'] == 1)
-                                    <span class="badge bg-success"><img src="{{ Vite::image('vatusa.png') }}" class="mr-2" alt="VATUSA"><strong>{{ $examType }}:</strong> {{ $exams[$examType]['date'] }} ({{ $exams[$examType]['grade'] }}%)</span>
-                                @elseif($exams[$examType]['success'] == 0)
-                                    <span class="badge bg-danger"><img src="{{ Vite::image('vatusa.png') }}" class="mr-2" alt="VATUSA"><strong>{{ $examType }}:</strong> {{ $exams[$examType]['date'] }} ({{ $exams[$examType]['grade'] }}%)</span>
+                    @foreach ($exam_types as $exam_type)
+                            @isset($exams[$exam_type])
+                                @if($exams[$exam_type]['success'] == 1)
+                                    <span class="badge bg-success"><img src="{{ Vite::image('vatusa.png') }}" class="me-2" alt="VATUSA"><strong>{{ $exam_type }}:</strong> {{ $exams[$exam_type]['date'] }} ({{ $exams[$exam_type]['grade'] }}%)</span>
+                                @elseif($exams[$exam_type]['success'] == 0)
+                                    <span class="badge bg-danger"><img src="{{ Vite::image('vatusa.png') }}" class="me-2" alt="VATUSA"><strong>{{ $exam_type }}:</strong> {{ $exams[$exam_type]['date'] }} ({{ $exams[$exam_type]['grade'] }}%)</span>
                                 @else
-                                    <span class="badge bg-secondary"><img src="{{ Vite::image('vatusa.png') }}" class="mr-2" alt="VATUSA"><strong>{{ $examType }}:</strong> No date</span>
+                                    <span class="badge bg-secondary"><img src="{{ Vite::image('vatusa.png') }}" class="me-2" alt="VATUSA"><strong>{{ $exam_type }}:</strong> No date</span>
                                 @endif
                             @endisset
+                    @endforeach
+                    <br>
+                    @foreach ($moodle_quizzes as $moodle_quiz)
+                        @php
+                            $mdl_badge_color = 'secondary';
+                            if (is_null($moodle_quiz->grade_pct)) {
+                                $mdl_badge_color = 'secondary';
+                            }
+                            elseif ($moodle_quiz->grade_pct >= config('moodle.quiz_pass_pct')) {
+                                $mdl_badge_color = 'success';
+                            }
+                            else {
+                                $mdl_badge_color = 'danger';
+                            }
+                        @endphp
+                        <a href="{{ config('moodle.base_url') }}/mod/quiz/report.php?id={{ $this->cmid_lookup[$moodle_quiz->id] }}&mode=overview" target="_blank"><span class="badge bg-{{ $mdl_badge_color }} mt-2"><img src="{{ Vite::image('moodle.png') }}" class="me-2" alt="Moodle"><strong>{{ $moodle_quiz->name }}:</strong>
+                        @if (is_null($moodle_quiz->score))
+                        No attempt
+                        @else
+                        {{ $moodle_quiz->score }}/{{ $moodle_quiz->max_score }} ({{ $moodle_quiz->grade_pct }}%)
+                        @endif
+                        </span></a>
                     @endforeach
                 </div>
             </div>
