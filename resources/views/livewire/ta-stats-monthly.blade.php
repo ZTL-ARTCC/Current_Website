@@ -172,6 +172,38 @@
             ctx.restore();
         }
     };
+    const stackedTotalsPlugin = {
+        id: 'stackedTotals',
+        afterDatasetsDraw(chart) {
+            const { ctx, scales: { x, y } } = chart;
+      
+            // Calculate totals for each index category
+            const totals = chart.data.labels.map((_, index) => {
+                return chart.data.datasets.reduce((sum, dataset) => {
+                    // Only sum data if the dataset is currently visible
+                    if (chart.isDatasetVisible(dataset._meta ? Object.keys(dataset._meta)[0] : 0)) {
+                        return sum + (dataset.data[index] || 0);
+                    }
+                    return sum;
+                }, 0);
+            });
+
+            // Draw the text on top of the bars
+            ctx.save();
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+
+            chart.data.labels.forEach((_, index) => {
+                const xPos = x.getPixelForValue(index);
+                const yPos = y.getPixelForValue(totals[index]);
+                // Offset by 5 pixels to float right above the top bar
+                ctx.fillText(totals[index], xPos, yPos - 5);
+            });
+        ctx.restore();
+        }
+    };
     const sessionsByStaffMember = new Chart(
         document.getElementById('sessions_by_staff_member'), {
             type: 'bar',
@@ -211,7 +243,7 @@
                     }
                 }
             },
-            plugins: [horizontalLinePlugin]
+            plugins: [horizontalLinePlugin, stackedTotalsPlugin]
         }
     )
     const studentsRequiringTraining = new Chart(

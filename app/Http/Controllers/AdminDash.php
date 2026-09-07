@@ -341,6 +341,9 @@ class AdminDash extends Controller {
             foreach ($attributes as $attribute) {
                 $user[$attribute] = ($request->input($attribute) == 1) ? 1 : 0;
             }
+            if ($user->status != $request->input('status')) {
+                $user->forceLogout();
+            }
             $user->status = $request->input('status');
             $user->visitor_from = $request->input('visitor_from');
             $user->save();
@@ -404,12 +407,14 @@ class AdminDash extends Controller {
                     }
                 } elseif ($request->input($position) == $user->getMagicNumber('SOLO_CERTIFICATION')) {
                     $user[$position] = $request->input($position);
-                    $expire = Carbon::now()->addDays($user->getMagicNumber('SOLO_CERT_DURATION'))->format('Y-m-d');
+                    $solo_duration = ($request->input('solo_duration') != '0') ? intval($request->input('solo_duration')) : $user->getMagicNumber('SOLO_CERT_DURATION');
+                    $expire = Carbon::now()->addDays($solo_duration)->format('Y-m-d');
                     $cert = new SoloCert;
                     $cert->cid = $id;
                     $cert->pos = $solo_id;
                     $cert->expiration = $expire;
                     $cert->status = 0;
+                    $cert->duration = $solo_duration;
                     $cert->save();
                     $solo_facility = User::$SoloFacilities[$position] . '_' . strtoupper($position);
                     (new Client())->request('POST', Config::get('vatusa.base').'/v2/solo'.'?apikey='.Config::get('vatusa.api_key').'&cid='.$id.'&position='.$solo_facility.'&expDate='.$expire, ['http_errors' => false]);
@@ -616,6 +621,8 @@ class AdminDash extends Controller {
             if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
                 Mail::to($user->email)->send(new VisitorMail('remove', $user));
             }
+
+            $user->forceLogout();
 
             $client = new Client();
             $req_params = [ 'form_params' =>

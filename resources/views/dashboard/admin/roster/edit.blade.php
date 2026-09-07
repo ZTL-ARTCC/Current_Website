@@ -220,10 +220,17 @@ Update Controller
                         <label for="twr_solo_fields">Unrestricted Solo Certifications (list facility IDs)</label>
                         {{ html()->text('twr_solo_fields', $user->twr_solo_fields)->class(['form-control'])->attributes(['maxlength' => 255, $solo_disable]) }}
                     </div>
+                    @if($user->solo_exp == '' || str_contains($user->solo_exp, 'Expired!'))
+                    <div class="col-sm-6">
+                        <label for="solo_duration" class="form-label-date">Solo Certification Duration (days)</label>
+                        {{ html()->select('solo_duration', [0 => '', 15 => '15', 30 => '30', 45=> '45'], 0)->class(['form-select'])->attributes([$solo_disable]) }}
+                    </div>
+                    @else
                     <div class="col-sm-6">
                         <label for="twr_solo_expires" class="form-label-date">Solo Expiration Date</label>
                         {{ html()->text('solo_expires', $user->solo_exp)->class(['form-control'])->attributes(['disabled']) }}
                     </div>
+                    @endif
                 </div>
                 @if(Auth::user()->isAbleTo('roster'))
                 <div class="row mt-2">
