@@ -67,7 +67,8 @@ class StudentProfile extends Component {
                 $response = $client->request('GET', "https://discord.com/api/v9/users/" . $this->user->discord, [
                     'headers' => [
                         'Authorization' => "Bot " . config('discord.token'),
-                    ]
+                    ],
+                    'http_errors' => false
                 ]);
 
                 $d_user_data = json_decode($response->getBody()->getContents());
@@ -162,7 +163,13 @@ class StudentProfile extends Component {
     public function fetchTickets() {
         $this->tickets = [];
         if ($this->ticket_select == null) {
-            $this->ticket_select = 's1';
+            $this->ticket_select = match($this->user->rating_id) {
+                1 => 's1',
+                2 => 's2',
+                3 => 's3',
+                4 => 'c1',
+                default => 's1'
+            };
         }
         $tickets_sort = TrainingTicket::where('controller_id', $this->user->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date . ' ' . $t->start_time);
@@ -209,16 +216,32 @@ class StudentProfile extends Component {
             'En Route' =>Config::get('vatusa.academy_crs_enroute'),
         };
         $client = new Client();
-        $res = $client->request(
+        $response = $client->request(
             'POST',
             Config::get('vatusa.base').'/v2/academy/enroll/' . $academy_course_id . '?apikey=' . Config::get('vatusa.api_key'),
             [
                 'form_params' => [
                     'cid' => $this->user->id, // student CID
                     'instructor' => Auth::id() // instructor CID
-                ]
+                ],
+                'http_errors' => false
             ]
         );
+        $status = 'error';
+        $message = '';
+        if ($response->getStatusCode() == 200) {
+            $status = 'ok';
+            $message = 'Student was enrolled in the VATUSA academy course!';
+        } else {
+            $res = json_decode($response->getBody());
+            $reason = '';
+            if ($res->data) {
+                $reason = '(' . $res->data->msg . ')';
+            }
+            $status = 'error';
+            $message = 'Unable to enroll student in the VATUSA academy at this time ' . $reason . ' - please try again later.';
+        }
+        $this->dispatch('academyEnrollFeedback', message: $message, status: $status);
     }
     
     private function fetchMoodleQuizGrades(): void {
