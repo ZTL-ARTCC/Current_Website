@@ -248,4 +248,36 @@
             </div>
         </div>
     </div>
+    <!-- Modals -->
+    <div class="modal fade" id="academyEnrollFeedback" tabindex="-1" aria-labelledby="academyEnrollFeedbackLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="academyEnrollFeedbackLabel"><img src="{{ Vite::image('vatusa.png') }}" class="me-2" alt="VATUSA">VATUSA Academy Course Enrollment</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="academyEnrollFeedbackMessage"></div>
+        </div>
+    </div>
+    </div>
 </div>
+@script
+<script>
+Livewire.on('academyEnrollFeedback', (event) => {
+    const modalBody = document.getElementById('academyEnrollFeedbackMessage');
+    let icon = '<i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>';
+    if (event.status == 'ok') {
+        icon = '<i class="fa-solid fa-thumbs-up text-success me-2"></i>';
+    }
+    modalBody.innerHTML = icon + event.message;
+    const modalElement = document.getElementById('academyEnrollFeedback');
+    const myModal = new bootstrap.Modal(modalElement);
+    myModal.show();
+    modalElement.addEventListener('shown.bs.modal', () => {
+        setTimeout(() => {
+            myModal.hide();
+        }, 2000);
+    });
+});
+</script>
+@endscript
