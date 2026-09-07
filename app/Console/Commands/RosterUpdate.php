@@ -116,6 +116,7 @@ class RosterUpdate extends Command {
         $users = User::where('status', 2)->get();
         foreach ($users as $u) {
             $u->removeRoles();
+            $u->forceLogout();
             $u->initials = null;
             $u->train_pwr = null;
             $u->monitor_pwr = null;
