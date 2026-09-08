@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Exports\TrainingStatsExport;
 use App\Http\Controllers\TrainingDash;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Config;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 use stdClass;
 
 class TaStatsMonthly extends Component {
@@ -109,5 +111,17 @@ class TaStatsMonthly extends Component {
         $this->graph_data->sessions_by_staff = new stdClass();
         $this->graph_data->sessions_by_staff->labels = $instructors;
         $this->graph_data->sessions_by_staff->data = $plot_array;
+    }
+
+    public function export() {
+        $date_select = $this->date_select;
+        if (is_null($date_select)) {
+            $date_select = Carbon::now()->format('m') . ' ' . Carbon::now()->format('Y');
+        }
+        return Excel::download(new TrainingStatsExport($date_select), 'ztl_training_stats_' . strtolower(str_replace(' ', '_', $date_select)) . '_' . Carbon::now()->timestamp . '.xlsx', \Maatwebsite\Excel\Excel::XLSX, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'no-cache, must-revalidate',
+            'Expires' => Carbon::now()->toRfc7231String()
+        ]);
     }
 }
