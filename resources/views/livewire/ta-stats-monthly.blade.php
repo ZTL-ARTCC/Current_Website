@@ -7,33 +7,36 @@
             <div class="card">
                 {{ html()->select('date_select', $year_of_months_lookback, implode(' ', $stats['dateSelect']))->class(['form-select'])->attributes(['wire:model.change'=>'date_select']) }}
             </div>
+            <div class="card mt-2">
+                <button class="btn btn-sm btn-primary" wire:click="export"><i class="fa-solid fa-file-excel me-2"></i>Export</button>
+            </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Sessions Per Month</div>
-                <div class="card-body">
+                <div class="card-body p-1">
                     <h2>{{ $stats['sessionsPerMonth'] }}</h2>
                 </div>
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Staff Ins/Mtr</div>
-                <div class="card-body">
+                <div class="card-body p-1">
                     <h2>{{ $stats['totalInstructors'] }} / {{ $stats['totalMentors'] }}</h2>
                 </div>
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Unique Students</div>
-                <div class="card-body">
+                <div class="card-body p-1">
                     <h2>{{ $stats['uniqueStudents'] }}</h2>
                 </div>
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">OTS Pass/Fail</div>
-                <div class="card-body">
+                <div class="card-body p-1">
                     <h2><span class="text-success">{{ $stats['otsPerMonth']['pass'] }}</span> / <span class="text-danger">{{ $stats['otsPerMonth']['fail'] }}</span></h2>
                 </div>
             </div>
             <div class="card text-center mt-2">
                 <div class="card-header">Student<br />No-Shows</div>
-                <div class="card-body">
+                <div class="card-body p-1">
                     <h2>{{ $stats['sessionsPerMonthNoShow'] }}</h2>
                 </div>
             </div>
