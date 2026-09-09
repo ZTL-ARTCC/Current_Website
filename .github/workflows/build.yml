@@ -34,7 +34,7 @@ jobs:
               /tmp/composer-cache
           key: ${{ runner.os }}-ztl-validate-cached-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/composer.lock') }}-v1
           restore-keys: |
-            ${{ runner.os }}-ztl-validate-cached-
+            ${{ runner.os }}-ztl-validate-cached-0-
 
       - name: setup php
         uses: shivammathur/setup-php@v2
