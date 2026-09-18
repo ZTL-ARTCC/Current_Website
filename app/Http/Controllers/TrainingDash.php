@@ -205,6 +205,9 @@ class TrainingDash extends Controller {
 
         if ($request->id != null) {
             $search_result = User::find($request->id);
+            if ($search_result != null) {
+                return view('dashboard.training.student');
+            }
         } else {
             $search_result = null;
         }
@@ -290,10 +293,7 @@ class TrainingDash extends Controller {
 
             return $new_tickets_by_category;
         }, []);
-
-        if (!is_null($search_result)) {
-            return view('dashboard.training.student');
-        }
+        
         return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets_by_category', 'active_category', 'exams', 'all_drafts', 'is_trainer_search', 'student_note'));
     }
     
