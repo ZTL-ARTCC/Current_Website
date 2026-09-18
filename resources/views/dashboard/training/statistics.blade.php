@@ -46,8 +46,7 @@ Training Statistics
                     <livewire:ta-stud-notes>
                 </div>
                 <div class="tab-pane fade text-center" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-                    <i class="fa-solid fa-person-digging fa-10x m-5"></i>
-                    <h3>Under Construction</h3>
+                    <livewire:ta-configuration>
                 </div>
             </div>
         </div>
