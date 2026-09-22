@@ -196,6 +196,9 @@ class TrainingDash extends Controller {
     }
 
     public function ticketsIndex(Request $request) {
+        if ($request->id != null && User::find($request->id)) {
+            return view('dashboard.training.student');
+        }
         $controllers_with_tickets = array_flip(TrainingTicket::groupBy('controller_id')->pluck('controller_id')->toArray());
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) use ($controllers_with_tickets) {
             if (array_key_exists($user->id, $controllers_with_tickets) || $user->visitor == 0) {
@@ -205,9 +208,6 @@ class TrainingDash extends Controller {
 
         if ($request->id != null) {
             $search_result = User::find($request->id);
-            if ($search_result != null) {
-                return view('dashboard.training.student');
-            }
         } else {
             $search_result = null;
         }
