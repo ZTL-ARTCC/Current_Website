@@ -244,7 +244,6 @@
                 @else
                     @include('inc.empty_state', ['header' => 'No Tickets', 'body' => 'No tickets found in the ' . ucfirst($ticket_select) . ' category.', 'icon' => 'fa-solid fa-face-frown'])
                 @endif
-                </div>
             </div>
         </div>
     </div>
