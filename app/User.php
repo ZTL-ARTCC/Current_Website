@@ -7,6 +7,7 @@ use Carbon\CarbonTimeZone;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
@@ -455,5 +456,10 @@ class User extends Authenticatable implements LaratrustUser {
         $now = Carbon::now($this->timezone);
         $tz = new CarbonTimeZone($this->timezone);
         return strtoupper($tz->getAbbr($now->isDST()));
+    }
+
+    public function forceLogout() {
+        DB::table('sessions')->where('user_id', $this->id)->delete();
+        $this->update(['remember_token' => null]);
     }
 }
