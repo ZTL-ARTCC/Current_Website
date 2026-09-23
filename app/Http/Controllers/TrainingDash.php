@@ -13,6 +13,7 @@ use App\PublicTrainingInfoPdf;
 use App\StudentNotes;
 use App\TrainerFeedback;
 use App\TrainingInfo;
+use App\TrainingLesson;
 use App\TrainingSortCategory;
 use App\TrainingTicket;
 use App\User;
@@ -848,7 +849,7 @@ class TrainingDash extends Controller {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
             $ots->recommender_id = $ticket->trainer_id;
-            $ots->position = $request->position;
+            $ots->position = $lesson->sort_category_id;
             $ots->status = 0;
             $ots->save();
             $extra .= ' and the OTS recommendation has been added';

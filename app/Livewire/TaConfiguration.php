@@ -20,25 +20,26 @@ class TaConfiguration extends Component {
     public string $course_name;
     public string $lesson_id;
     public string $lesson_name;
-    public string $instructor_qualification;
+    public null|string $instructor_qualification;
     public null|string $training_category = null;
     public bool $proficiency_advance = false;
     public bool $solo = false;
     public bool $cert = false;
     public bool $ots = false;
-    public string $moodle_prerequisite;
-    public string $soi_link;
+    public null|string $moodle_prerequisite = null;
+    public null|string $soi_link = null;
     public bool $active = false;
     public bool $course_certification;
     public null|string $course_link;
-    public null|string $course_rating;
+    public null|string $course_rating = null;
     public string $category_name;
     public null|string $scheddy_booking_map;
     public null|string $category_rating;
     public null|string $message;
     public collection $lessons;
-    private bool $edit_mode = false;
+    public bool $edit_mode = false;
     public string $last_edited = '';
+    public bool $course_rating_active = false;
     
     public function render() {
         $this->fetch_course_list();
@@ -67,15 +68,13 @@ class TaConfiguration extends Component {
             'active' => 'required|boolean'
         ]);
 
-        $course_id = TrainingCourse::where('course_id', $this->lesson_course_id)->first();
-
         $lesson = TrainingLesson::updateOrCreate(
             ['lesson_id' => $this->lesson_id],
             [
-                'course_id' => $course_id->id,
+                'course_id' => intval($this->lesson_course_id),
                 'lesson_name' => $this->lesson_name,
                 'instructor_qualification' => intval($this->instructor_qualification),
-                'training_category' => $this->training_category,
+                'sort_category_id' => $this->training_category,
                 'proficiency_advance' => $this->proficiency_advance,
                 'solo' => $this->solo,
                 'certification' => $this->cert,
@@ -99,7 +98,7 @@ class TaConfiguration extends Component {
             'course_name' => 'required|string',
             'course_certification' => 'required|boolean',
             'course_link' => 'nullable|URL',
-            'course_rating' => 'required|int',
+            'course_rating' => 'nullable|int',
         ]);
 
         $course = TrainingCourse::updateOrCreate(
@@ -108,10 +107,14 @@ class TaConfiguration extends Component {
                 'course_name' => $this->course_name,
                 'certification' => $this->course_certification,
                 'soi_link' => $this->course_link,
-                'associated_rating' => $this->course_rating,
+                'associated_rating' => intval($this->course_rating),
             ]
         );
+        $this->dispatch('hideModal', type: 'Course');
         $this->resetCourseForm();
+        if ($course->wasRecentlyCreated) {
+            $this->lesson_course_id = $course->id;
+        }
     }
 
     public function saveCategory() {
@@ -120,8 +123,10 @@ class TaConfiguration extends Component {
             'scheddy_booking_map' => 'nullable|string',
             'category_rating' => 'nullable|int',
         ]);
-
-        $this->training_category = ($this->training_category == '') ?? null;
+        
+        if ($this->training_category == '' || $this->training_category == 'null') {
+            $this->training_category = null;
+        }
         $category = TrainingSortCategory::updateOrCreate(
             ['id' => $this->training_category],
             [
@@ -130,7 +135,11 @@ class TaConfiguration extends Component {
                 'associated_rating' => $this->category_rating,
             ]
         );
+        $this->dispatch('hideModal', type: 'Category');
         $this->resetCategoryForm();
+        if ($category->wasRecentlyCreated) {
+            $this->training_category = $category->id;
+        }
     }
 
     public function resetLessonForm() {
@@ -152,6 +161,8 @@ class TaConfiguration extends Component {
         $this->active = true;
         $this->edit_mode = false;
         $this->last_edited = '';
+        $this->dispatch('updateButton', type: 'Course', action: 'add');
+        $this->dispatch('updateButton', type: 'Category', action: 'add');
     }
 
     public function resetCourseForm() {
@@ -163,6 +174,7 @@ class TaConfiguration extends Component {
             'course_rating'
         ];
         $this->reset_form($input_fields);
+        $this->course_rating_active = false;
         $this->edit_mode = false;
     }
 
@@ -185,6 +197,7 @@ class TaConfiguration extends Component {
                 $this->$field = null;
             }
         }
+        $this->resetValidation();
     }
 
     private function fetch_course_list() {
@@ -233,37 +246,47 @@ class TaConfiguration extends Component {
         $this->dispatch('updateButton', type: 'Course', action: $action);
     }
 
+    public function updatedCourseCertification() {
+        $this->course_rating_active = ($this->course_certification);
+    }
+
     #[On('edit')]
     public function edit_course_lesson(string $item, int $reference) {
         if ($item == 'course') {
+            $this->resetCourseForm();
+            $this->edit_mode = true;
             $course = TrainingCourse::find($reference);
             $this->course_id = $course->course_id;
             $this->course_name = $course->course_name;
             $this->course_certification = $course->certification;
-            $this->course_link = $course->soi_link;
+            $this->course_rating_active = $course->certification;
             $this->course_rating = $course->associated_rating;
+            $this->course_link = $course->soi_link;
             $this->dispatch('showModal', type: ucfirst($item));
         } elseif ($item == 'category') {
+            $this->resetCategoryForm();
             $category = TrainingSortCategory::find($reference);
             $this->category_name = $category->category_name;
             $this->scheddy_booking_map = $category->scheddy_booking_map;
             $this->category_rating = $category->associated_rating;
             $this->dispatch('showModal', type: ucfirst($item));
         } elseif ($item == 'lesson') {
+            $this->resetLessonForm();
+            $this->edit_mode = true;
             $lesson = TrainingLesson::find($reference);
-            $this->lesson_course_id = TrainingCourse::find($lesson->course_id)->course_id;
+            $this->lesson_course_id = $lesson->course_id;
             $this->lesson_id = $lesson->lesson_id;
             $this->lesson_name = $lesson->lesson_name;
             $this->instructor_qualification = $lesson->instructor_qualification;
-            $this->training_category = $lesson->training_category;
+            $this->training_category = $lesson->sort_category_id;
             $this->proficiency_advance = $lesson->proficiency_advance;
             $this->solo = $lesson->solo;
             $this->ots = $lesson->ots;
             $this->moodle_prerequisite = $lesson->moodle_prerequisite;
             $this->soi_link = $lesson->soi_link;
             $this->active = $lesson->active;
-            $modify_user = User::find($lesson->edited_by);
-            $this->last_edited = 'Last edited by: ' . $modify_user->full_name . ' on: ' . Carbon::parse($lesson->updated_at)->toDayDateTimeString();
+            $modified_by = User::find($lesson->edited_by)->full_name ?? 'Unknown';
+            $this->last_edited = 'Last edited by: ' . $modified_by . ' on: ' . Carbon::parse($lesson->updated_at)->toDayDateTimeString();
         }
     }
 }

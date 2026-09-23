@@ -9,7 +9,8 @@ class TrainingCourse extends Model {
         'course_id',
         'course_name',
         'certification',
-        'soi_link'
+        'soi_link',
+        'associated_rating'
     ];
     public $timestamps = false;
 }
