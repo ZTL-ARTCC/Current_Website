@@ -28,7 +28,7 @@ Edit Training Ticket
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="position" class="form-label">Session Category</label>
-                    {{ html()->select('position', $positions, $ticket->position)->placeholder('Select Position')->class(['form-select']) }}
+                    {{ html()->select('position', $positions, $ticket->position)->placeholder('Select Position')->class(['form-select'])->isReadonly() }}
                 </div>
             </div>
             <div class="col-sm-3">
