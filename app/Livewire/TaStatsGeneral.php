@@ -72,6 +72,9 @@ class TaStatsGeneral extends Component {
 
     private function generate_completion_ratios(): void {
         $this->completion_ratios = $this->session_ids = [];
+        if (count($this->courses) == 0) {
+            return;
+        }
         if ($this->position_select == '') {
             $this->position_select = $this->courses[0];
         }
