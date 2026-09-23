@@ -42,7 +42,7 @@ class TrainingTicket extends Model {
         self::$position_types_by_rating['OTHER'] = TrainingSortCategory::whereNull('associated_rating')->pluck('id')->toArray();
         $courses = TrainingCourse::all();
         foreach ($courses as $course) {
-            self::$session_ids_by_category[$course->course_id] = TrainingLesson::where('course_id', $course->course_id)->pluck('id')->toArray();
+            self::$session_ids_by_category[$course->course_id] = TrainingLesson::where('course_id', $course->id)->where('active', true)->pluck('id')->toArray();
         }
         self::$scheddy_session_id_map = TrainingSortCategory::whereNotNull('scheddy_booking_map')->pluck('id', 'scheddy_booking_map')->toArray();
         self::$scheddy_session_id_map["DEFAULT"] = 124;
