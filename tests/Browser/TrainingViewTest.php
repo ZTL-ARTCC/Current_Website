@@ -2,11 +2,15 @@
 
 namespace Tests\Browser;
 
+use Database\Seeders\TrainingSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\Authentication;
 use Tests\DuskTestCase;
 
 class TrainingViewTest extends DuskTestCase {
+
+    use RefreshDatabase;
 
     public function test_training_info(): void {
         $this->browse(function (Browser $browser) {
@@ -24,6 +28,7 @@ class TrainingViewTest extends DuskTestCase {
     }
 
     public function test_training_list_tickets(): void {
+        $this->seed(TrainingSeeder::class);
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/tickets')
                     ->assertSee('Training Tickets');
@@ -31,6 +36,7 @@ class TrainingViewTest extends DuskTestCase {
     }
 
     public function test_training_new_ticket(): void {
+        $this->seed(TrainingSeeder::class);
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/tickets/new')
                     ->assertSee('Submit New Training Ticket');
@@ -38,6 +44,7 @@ class TrainingViewTest extends DuskTestCase {
     }
 
     public function test_ots_center(): void {
+        $this->seed(TrainingSeeder::class);
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/ots-center')
                     ->assertSee('OTS Center');
@@ -45,6 +52,7 @@ class TrainingViewTest extends DuskTestCase {
     }
 
     public function test_training_statistics(): void {
+        $this->seed(TrainingSeeder::class);
         $this->browse(function (Browser $browser) {
             $browser->visit('/dashboard/training/statistics')
                     ->assertSee('Training Department Dashboard');
