@@ -172,20 +172,20 @@
                         <input type="input" class="form-control" wire:model="course_link">
                         @error('course_link')<div class="text-danger text-sm">{{ $message }}</div>@enderror
                     </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" role="switch" wire:model.live="course_certification">
+                        <label class="form-check-label" for="course_certification">Course results in new certification/rating?</label>
+                    </div>
                     <div class="mb-3">
-                        <label for="course_rating" class="form-label">Course results in a rating change?</label>
-                        <select class="form-select" aria-label="Required qualification" wire:model="course_rating">
-                            <option value ="0" selected>No rating change</option>
+                        <label for="course_rating" class="form-label">New rating at course completion:</label>
+                        <select class="form-select" aria-label="Required qualification" wire:model="course_rating" @unless($course_rating_active) disabled @endunless>
+                            <option value="0" selected>No rating change</option>
                             <option value="2">S1</option>
                             <option value="3">S2</option>
                             <option value="4">S3</option>
                             <option value="5">C1</option>
                         </select>
                         @error('course_rating')<div class="text-danger text-sm">{{ $message }}</div>@enderror                    
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" role="switch" wire:model="course_certification">
-                        <label class="form-check-label" for="course_certification">Course results in certification/rating?</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -241,8 +241,16 @@
 <script>
 Livewire.on('showModal', (event) => {
     const modalElement = document.getElementById('createEdit' + event.type);
-    const myModal = new bootstrap.Modal(modalElement);
-    myModal.show();
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+});
+
+Livewire.on('hideModal', (event) => {
+    const modalElement = document.getElementById('createEdit' + event.type);
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
 });
 
 Livewire.on('updateButton', (event) => {
