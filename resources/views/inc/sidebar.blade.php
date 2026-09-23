@@ -41,7 +41,7 @@
             <div class="accordion-body">
                 <div class="nav flex-column nav-pills pt-0">
                     @toggle($FeatureToggles::MOODLE)
-                    <a class="nav-link" href="https://learn.ztlartcc.org" target="_blank">ZTL Moodle <span class="badge bg-warning">New!</span></a>
+                    <a class="nav-link" href="{{ config('moodle.base_url') }}" target="_blank">ZTL Moodle</a>
                     @endtoggle
                     <a class="nav-link" href="/dashboard/training/schedule" target="_blank">Schedule a Training Session</a>
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/info') }}" href="/dashboard/training/info">Training Information</a>
@@ -49,7 +49,7 @@
                     <a class="nav-link {{ Nav::urlDoesContain('/dashboard/training/trainer_feedback') }}" href="/dashboard/training/trainer_feedback/new">Leave INS/MTR Feedback</a>
                     @if(Auth::user()->isAbleTo('train'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/tickets') }}" href="/dashboard/training/tickets">Training Tickets</a>
-                    <a class="nav-link" href="https://scheddy.ztlartcc.org/dash/" target="_blank">Schedule Management</a>
+                    <a class="nav-link" href="{{ config('scheddy.base') }}/dash/" target="_blank">Schedule Management</a>
                     @if(Auth::user()->hasRole('ins') || Auth::user()->isAbleTo('snrStaff'))
                     <a class="nav-link {{ Nav::urlDoesContain('dashboard/training/ots-center') }}" href="/dashboard/training/ots-center">OTS Center</a>
                     @endif
