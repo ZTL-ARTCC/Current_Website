@@ -28,7 +28,7 @@ Training Statistics
                     <a class="nav-link" data-bs-toggle="tab" data-bs-target="#studnotes" aria-controls="studnotes" aria-selected="false" href="#studnotes">Student Notes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Syllabus Configuration</a>
                 </li>
             </ul>
 
