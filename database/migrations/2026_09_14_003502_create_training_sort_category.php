@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::create('training_sort_category', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(200); // Protects legacy ZTL sort categories
             $table->string('category_name');
             $table->integer('associated_rating')->nullable()->default(null);
             $table->string('scheddy_booking_map')->nullable()->default(null);
