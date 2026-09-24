@@ -57,6 +57,7 @@
             <div class="card h-100">
                 <div class="card-header">
                     <i class="fa-solid fa-person-chalkboard me-2"></i>Create/Edit Lesson
+                    <button type="button" class="btn btn-sm btn-success float-end" wire:click="resetLessonForm" wire:loading.attr="disabled"><i class="fa-solid fa-plus me-2"></i>New lesson</button>
                 </div>
                 <div class="card-body">
                     @if ($last_edited != '')
@@ -111,7 +112,7 @@
                         <label for="training_category" class="form-label">Training category</label>
                         <div class="input-group">
                             <select class="form-select" wire:model.live="training_category">
-                                <option selected value="null">Leave unassigned, pick one, or click + button to add</option>
+                                <option selected value="null">Pick one, or click + button to add</option>
                                 @foreach($categories as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
