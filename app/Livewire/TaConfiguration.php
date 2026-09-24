@@ -28,7 +28,7 @@ class TaConfiguration extends Component {
     public bool $ots = false;
     public null|string $moodle_prerequisite = null;
     public null|string $soi_link = null;
-    public bool $active = false;
+    public bool $active = true;
     public bool $course_certification;
     public null|string $course_link;
     public null|string $course_rating = null;
