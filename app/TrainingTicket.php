@@ -8,52 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingTicket extends Model {
     protected $table = 'training_tickets';
-    // ***Null values in the arrays below denote legacy IDs that we don't want to repurpose. Will display as 'Legacy' in select menus.
     protected static $progress_types = [10=>'No Show', 12=>'Complete', 13=>'Incomplete'];
-    protected static $position_types = [100=>'ZTL On-Boarding', 101=>'Unrestricted Clearance', 105=>'Unrestricted Ground', 109=>'Unrestricted Tower',
-                                 115=>'Unrestricted Approach', 123=>null, 102=>'T1 CLT Delivery', 106=>'T1 CLT Ground', 111=>'T1 CLT Tower',
-                                 116=>'T1 CLT Approach', 104=>'T1 ATL Clearance', 108=>'T1 ATL Ground', 113=>'T1 ATL Tower',
-                                 117 => 'A80 Departure/Satellite Radar', 118 => 'A80 Terminal Arrival Radar', 119 => 'A80 Arrival Radar',
-                                 121 => 'Atlanta Center', 122 => 'Recurrent Training', 124 => 'Other', 125 => 'Mentor Training'];
-    public static $session_ids = [  200=>'DEL1', 201=>'DEL2', 202=>'DEL3', 205=>'GND1', 203=>'CC1', 204=>null, 258=>'CC2', 206=>'TWR1',
-                                207=>'TWR2', 208=>'TWR3', 209=>'TWR4', 210=>'TWR5', 211=>'TWR6', 261=>'TWR7', 212=>'CC3', 262=>'CC4',
-                                213=>'CC5', 214=>'CC6', 215=>null, 216=>'APP1', 217=>'APP2', 218=>'APP3', 219=>'APP4', 220=>'APP5',
-                                221=>'APP6', 222=>'APP7', 225=>'CT1', 226=>'CT2', 223=>'CT3', 224=>null, 263=>'CT4', 227=>'CT5', 228=>null,
-                                229=>'CTR1', 260=>'CTR2', 230=>'CTR3', 232=>'CTR4', 233=>'CTR5', 231=>'CTR6', 234=>null, 235=>'CTR7',
-                                236=>'ZTL1', 237=>'ATL1', 238=>null, 239=>'ATL2', 242=>'ATL3', 243=>'ATL4', 240=>'ATL5', 259=>'ATL6',
-                                241=>'ATL7', 244=>'ATL8', 245=>'A801', 246=>'A802', 247=>null, 248=>'A803', 249=>null, 250=>'A804',
-                                251=>null, 252=>'A805',253=>'A806',254=>'A807', 255=>'A808', 256=>null, 257=>'Other'];
-    public static $position_types_by_rating = [
-        "S1" => [100, 101, 105, 102, 106],
-        "S2" => [109, 111, 104, 108, 113],
-        "S3" => [115, 116, 117, 118, 119],
-        "C1" => [121],
-        "OTHER" => [122, 124, 125]
-    ];
-    public static $session_ids_by_category = [
-        "S1" => [200, 201, 202, 205],
-        "S2" => [206, 207, 208, 209, 210, 211, 261],
-        "S3" => [216, 217, 218, 219, 220, 221, 222],
-        "C1" => [229, 260, 230, 232, 233, 231, 235],
-        "CLT_ATCT" => [203, 258, 212, 262, 213, 214],
-        "CLT_APP" => [225, 226, 223, 263, 227],
-        "ATL_ATCT" => [237, 239, 242, 243, 240, 259, 241, 244],
-        "A80" => [245, 246, 248, 250, 252,253, 254, 255]
-    ];
-    public static $scheddy_session_id_map = [
-        "dw_zinXmuG7IonJXI1rQi" => 101,
-        "_eqqpYXbIpiwQd1OIhgAh" => 105,
-        "7wb1RrBA4QG4nFlt5uBlq" => 109,
-        "NSkB0f-OUPIVp3twQcaQE" => 115,
-        "fmu_2YuEFsh8rrjMQTLjr" => 102,
-        "BOPuWxHulkUipWKuTfmX_" => 106,
-        "z9lDf54LbkdT28qzEsYGs" => 111,
-        "8zt9Mbo7cfwObZjr-l6gI" => 116,
-        "Hu8KNso7I5pjhsGpqOcRm" => 104,
-        "DOrSeznb_40GEpBv59v3N" => 117,
-        "xM_xdSHmlCwKZ3ed_-GDx" => 121,
-        "DEFAULT" => 124
-    ];
+    protected static ?array $position_types = null;
+    public static ?array $session_ids = null;
+    public static ?array $position_types_by_rating = null;
+    public static ?array $session_ids_by_category = null;
+    public static ?array $scheddy_session_id_map = null;
 
     public static $VATUSA_UPLOAD_STATUS = [
         "PENDING" => 0,
@@ -70,6 +30,23 @@ class TrainingTicket extends Model {
                 }
             }
         });
+    }
+
+    public static function init(): void {
+        self::$position_types = TrainingSortCategory::pluck('category_name', 'id')->all();
+        self::$session_ids = TrainingLesson::where('active', true)->pluck('lesson_id', 'id')->toArray();
+        self::$position_types_by_rating['S1'] = TrainingSortCategory::where('associated_rating', 2)->pluck('id')->toArray();
+        self::$position_types_by_rating['S2'] = TrainingSortCategory::where('associated_rating', 3)->pluck('id')->toArray();
+        self::$position_types_by_rating['S3'] = TrainingSortCategory::where('associated_rating', 4)->pluck('id')->toArray();
+        self::$position_types_by_rating['C1'] = TrainingSortCategory::where('associated_rating', 5)->pluck('id')->toArray();
+        self::$position_types_by_rating['OTHER'] = TrainingSortCategory::whereNull('associated_rating')->pluck('id')->toArray();
+        $courses = TrainingCourse::all();
+        foreach ($courses as $course) {
+            self::$session_ids_by_category[$course->course_id] = TrainingLesson::where('course_id', $course->id)->where('active', true)->pluck('id')->toArray();
+        }
+        self::$scheddy_session_id_map = TrainingSortCategory::whereNotNull('scheddy_booking_map')->pluck('id', 'scheddy_booking_map')->toArray();
+        self::$scheddy_session_id_map["DEFAULT"] = 124;
+
     }
 
     public function getTrainerNameAttribute() {
@@ -162,3 +139,5 @@ class TrainingTicket extends Model {
         return $this->vatusa_upload_status == $this::$VATUSA_UPLOAD_STATUS["UPLOADED"];
     }
 }
+
+TrainingTicket::init();

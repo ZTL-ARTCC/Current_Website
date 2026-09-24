@@ -13,6 +13,8 @@ use App\PublicTrainingInfoPdf;
 use App\StudentNotes;
 use App\TrainerFeedback;
 use App\TrainingInfo;
+use App\TrainingLesson;
+use App\TrainingSortCategory;
 use App\TrainingTicket;
 use App\User;
 use Auth;
@@ -222,7 +224,7 @@ class TrainingDash extends Controller {
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
-                $t->position = $this->legacyTicketTypes($t->position);
+                $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
             }
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
@@ -239,7 +241,7 @@ class TrainingDash extends Controller {
                 $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
                 $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
                 foreach ($tickets as &$t) {
-                    $t->position = $this->legacyTicketTypes($t->position);
+                    $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
                     $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
                 }
             } else {
@@ -437,14 +439,14 @@ class TrainingDash extends Controller {
 
     public function viewTicket($id) {
         $ticket = TrainingTicket::find($id);
-        $ticket->position = $this->legacyTicketTypes($ticket->position);
+        $ticket->position = TrainingSortCategory::legacyTicketTypes($ticket->position);
         return view('dashboard.training.view_ticket')->with('ticket', $ticket);
     }
 
     public function editTicket($id) {
         $ticket = TrainingTicket::find($id);
         $student = User::find($ticket->controller_id);
-        $ticket->position = $this->legacyTicketTypes($ticket->position);
+        $ticket->position = TrainingSortCategory::legacyTicketTypes($ticket->position);
         $positions = $ticket->getPositionSelectAttribute();
         if (!key_exists($ticket->position, $positions)) {
             $positions[$ticket->position] = 'Legacy Category';
@@ -563,79 +565,15 @@ class TrainingDash extends Controller {
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position, $draft) {
-        $position_types_by_rating = TrainingTicket::$position_types_by_rating;
-        switch (true) {
-            case ($draft):
-                return 'drafts';
-                break;
-            case ($position > 6 && $position < 22): // Legacy types
-                return 's1';
-                break;
-            case (in_array($position, $position_types_by_rating['S1'])):
-                return 's1';
-                break;
-            case ($position > 21 && $position < 31): // Legacy types
-                return 's2';
-                break;
-            case (in_array($position, $position_types_by_rating['S2'])):
-                return 's2';
-                break;
-            case ($position > 30 && $position < 42): // Legacy types
-                return 's3';
-                break;
-            case (in_array($position, $position_types_by_rating['S3'])):
-                return 's3';
-                break;
-            case ($position > 41 && $position < 48): // Legacy types
-                return 'c1';
-                break;
-            case (in_array($position, $position_types_by_rating['C1'])):
-                return 'c1';
-                break;
-            default:
-                return 'other';
+    public function getTicketSortCategory(int $position, bool $draft): string {
+        if ($draft) {
+            return 'drafts';
         }
-    }
-
-    public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
-        switch ($position) {
-            case 11:
-                return 104;
-                break;
-            case 103:
-                return 104;
-                break;
-            case 18:
-                return 108;
-                break;
-            case 107:
-                return 108;
-                break;
-            case 27:
-                return 113;
-                break;
-            case 112:
-                return 113;
-                break;
-            case 31:
-                return 115;
-                break;
-            case 32:
-                return 115;
-                break;
-            case 114:
-                return 115;
-                break;
-            case 42:
-                return 121;
-                break;
-            case 120:
-                return 121;
-                break;
-            default:
-                return $position;
+        $category = TrainingSortCategory::find($position);
+        if (! $category || is_null($category->associated_rating)) {
+            return 'other';
         }
+        return strtolower(User::$RatingShort[$category->associated_rating]);
     }
 
     public function statistics() {
@@ -864,7 +802,6 @@ class TrainingDash extends Controller {
     private function saveNewTicket(Request $request, $id) {
         $request->validate([
             'controller' => 'required',
-            'position' => 'required',
             'session_id' => 'required',
             'type' => 'required',
             'date' => 'required',
@@ -881,9 +818,11 @@ class TrainingDash extends Controller {
             $ticket->scheddy_id = $request->scheddy_id;
         }
 
+        $lesson = TrainingLesson::find($request->session_id);
+        
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
-        $ticket->position = $request->position;
+        $ticket->position = $lesson->sort_category_id;
         $ticket->session_id = $request->session_id;
         $ticket->type = $request->type;
         $ticket->date = $request->date;
@@ -910,7 +849,7 @@ class TrainingDash extends Controller {
             $ots = new Ots;
             $ots->controller_id = $ticket->controller_id;
             $ots->recommender_id = $ticket->trainer_id;
-            $ots->position = $request->position;
+            $ots->position = $lesson->sort_category_id;
             $ots->status = 0;
             $ots->save();
             $extra .= ' and the OTS recommendation has been added';
@@ -957,9 +896,11 @@ class TrainingDash extends Controller {
             }
         }
 
+        $lesson = TrainingLesson::find($request->session_id);
+
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
-        $ticket->position = $request->position;
+        $ticket->position = $lesson->sort_category_id;
         $ticket->session_id = $request->session_id;
         $ticket->type = $request->type;
         $ticket->date = $request->date;
@@ -988,7 +929,6 @@ class TrainingDash extends Controller {
         if (Auth::id() == $ticket->trainer_id || Auth::user()->isAbleTo('snrStaff')) {
             $request->validate([
                 'controller' => 'required',
-                'position' => 'required',
                 'session_id' => 'required',
                 'type' => 'required',
                 'date' => 'required',
@@ -999,8 +939,10 @@ class TrainingDash extends Controller {
                 'score' => ['nullable', 'integer', 'between:1,5']
             ]);
 
+            $lesson = TrainingLesson::find($request->session_id);
+
             $ticket->controller_id = $request->controller;
-            $ticket->position = $request->position;
+            $ticket->position = $lesson->sort_category_id;
             $ticket->session_id = $request->session_id;
             $ticket->type = $request->type;
             $ticket->date = $request->date;

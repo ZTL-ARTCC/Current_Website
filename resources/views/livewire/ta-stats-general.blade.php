@@ -34,14 +34,9 @@
                 <div class="card-header">
                     Completion Ratios
                     <select class="form-select form-select-sm float-end w-25 py-0" wire:model.change='position_select'>
-                        <option value="S1" selected>S1</option>
-                        <option value="S2">S2</option>
-                        <option value="S3">S3</option>
-                        <option value="C1">C1</option>
-                        <option value="CLT_ATCT">CLT ATCT</option>
-                        <option value="CLT_APP">CLT APP</option>
-                        <option value="ATL_ATCT">ATL ATCT</option>
-                        <option value="A80">A80</option>
+                        @foreach($courses as $course_id)
+                        <option value="{{ $course_id }}">{{ str_replace('_', ' ', $course_id) }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="card-body">
