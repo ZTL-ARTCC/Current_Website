@@ -196,7 +196,7 @@ class TrainingDash extends Controller {
     }
 
     public function ticketsIndex(Request $request) {
-        if ($request->id != null && User::find($request->id)) {
+        if ($request->id != null && User::find($request->id) && $request->search_type != 'trainer') {
             return view('dashboard.training.student');
         }
         $controllers_with_tickets = array_flip(TrainingTicket::groupBy('controller_id')->pluck('controller_id')->toArray());
