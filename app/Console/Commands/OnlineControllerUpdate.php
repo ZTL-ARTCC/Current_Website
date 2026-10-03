@@ -33,7 +33,7 @@ class OnlineControllerUpdate extends Command {
         /* CHARLIE */
         'BHM','GSP','AVL','GSO','TYS','CHA','FTY','RYY','AHN',
         /* DELTA */
-        'AGS','GMU','GYH','TCL','MXF','MGM','LSF','CSG','MCN','WRB','JQF','VUJ','INT','TRI','LZU','ASN','HKY','PDK',
+        'AGS','GMU','GYH','TCL','MXF','MGM','LSF','CSG','MCN','WRB','JQF','VUJ','INT','TRI','LZU','ASN','HKY','PDK','AUO',
         /* OBSERVER */
         'ZTL'
     ];
