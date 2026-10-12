@@ -138,6 +138,8 @@ class MoodleSync extends Command {
             $query_parameters
         );
         $moodle_user = DB::connection('moodle')->table('user')->where('username', $cid)->first();
+        $this->info('Clearing Moodle user OAUTH2 orphaned links for ' . $cid);
+        DB::connection('moodle')->table('auth_oauth2_linked_login')->where('username', $cid)->whereNot('userid', $moodle_user->id)->delete();
         return $moodle_user->id;
     }
 
