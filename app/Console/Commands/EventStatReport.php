@@ -66,8 +66,8 @@ class EventStatReport extends Command {
                 $res = $client->request('GET', 'https://statsim.net/flights/airport/?icao=K' . $airport . '&period=custom&json=true&from=' . $event_start_time . '&to=' . $event_end_time);
                 $result = json_decode($res->getBody());
 
-                $data["departures"] = count($result->departed);
-                $data["arrivals"] = count($result->arrived);
+                $data["departures"] = (isset($result->departed) && is_array($result->departed)) ? count($result->departed) : 0;
+                $data["arrivals"] = (isset($result->arrived) && is_array($result->arrived)) ? count($result->arrived) : 0;
 
                 return [$airport => $data];
             });
