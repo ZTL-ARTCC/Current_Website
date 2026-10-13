@@ -628,6 +628,10 @@ class ControllerDash extends Controller {
     }
 
     public function updateInfo(Request $request) {
+        $validated = $request->validate([
+            'ts3' => ['nullable','string','max:50'],
+            'timezone' => ['string'],
+        ]);
         $user = Auth::user();
         $user->ts3 = $request->ts3;
         $user->timezone = $request->timezone;
