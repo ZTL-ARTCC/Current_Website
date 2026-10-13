@@ -28,7 +28,7 @@ Training Statistics
                     <a class="nav-link" data-bs-toggle="tab" data-bs-target="#studnotes" aria-controls="studnotes" aria-selected="false" href="#studnotes">Student Notes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Configuration</a>
+                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#configuration" aria-controls="configuration" aria-selected="false" href="#configuration">Syllabus Configuration</a>
                 </li>
             </ul>
 
@@ -46,8 +46,7 @@ Training Statistics
                     <livewire:ta-stud-notes>
                 </div>
                 <div class="tab-pane fade text-center" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-                    <i class="fa-solid fa-person-digging fa-10x m-5"></i>
-                    <h3>Under Construction</h3>
+                    <livewire:ta-configuration>
                 </div>
             </div>
         </div>
