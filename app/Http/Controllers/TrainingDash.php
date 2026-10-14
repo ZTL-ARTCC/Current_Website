@@ -222,8 +222,11 @@ class TrainingDash extends Controller {
             $tickets_sort = TrainingTicket::where('trainer_id', $search_result->id)->get()->sortByDesc(function ($t) {
                 return strtotime($t->date . ' ' . $t->start_time);
             })->pluck('id');
-            $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
-            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
+            $tickets_order = '';
+            if (is_array($tickets_sort)) {
+                $tickets_order = ',' . implode(',', array_fill(0, count($tickets_sort), '?'));
+            }
+            $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
                 $t->position = $this->legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
