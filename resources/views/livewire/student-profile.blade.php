@@ -180,7 +180,10 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-ticket-simple me-2"></i>Training Tickets
-                    <select class="form-select form-select-sm float-end w-25 py-0" wire:model.change='ticket_select'>
+                    <span class="float-end">
+                        <a href="/dashboard/training/tickets/new?id={{ $user->id }}" class="btn btn-sm btn-primary me-4">Submit new training ticket</a>
+                        <label class="me-1">Sort by:</label><select class="form-select float-end w-25 py-0" wire:model.change='ticket_select'>
+                    </span>
                         <option value="s1" selected>S1</option>
                         <option value="s2">S2</option>
                         <option value="s3">S3</option>
