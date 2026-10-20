@@ -168,7 +168,7 @@ class VisitRequest extends Component {
     }
 
     private function check_existing_visit_request(): bool {
-        $visit = Visitor::where('cid', $this->cid)->first();
+        $visit = Visitor::where('cid', $this->cid)->where('status', 0)->first();
         return (bool) $visit;
     }
 
