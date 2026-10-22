@@ -193,7 +193,7 @@
                     </select>
                 </div>
                 <div class="card-body">
-                @if ($this->tickets->count() !== 0)
+               @if (count($tickets) > 0)
                         <table class="table">
                             <thead>
                                 <tr>
@@ -212,7 +212,7 @@
                             </thead>
                             <tbody>
                             @php($transition_date = \Carbon\Carbon::parse('11/12/2021')) {{-- ticket dates eastern timezone after this date --}}
-                            @foreach($this->tickets as $t)
+                            @foreach($tickets as $t)
                                 @if($t->cert) {{-- student certified: green highlight --}}
                                     <tr class="table-success">
                                 @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
@@ -243,7 +243,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $this->tickets->links(data: ['scrollTo' => false]) }}
                 </div>
                 @else
                     @include('inc.empty_state', ['header' => 'No Tickets', 'body' => 'No tickets found in the ' . ucfirst($ticket_select) . ' category.', 'icon' => 'fa-solid fa-face-frown'])
