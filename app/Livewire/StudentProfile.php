@@ -36,14 +36,27 @@ class StudentProfile extends Component {
     public $controller_activity;
     public $last_control_str = '';
     public $ots_solo_str = '';
+    #[Url]
     public $ticket_select;
     public $tickets;
     public $moodle_quizzes;
     public array $cmid_lookup = [];
     public $academy_eligible = null;
 
-    public function render() {
+    public function mount() {
         $this->user = User::find($this->id);
+        if ($this->ticket_select == null) {
+            $this->ticket_select = match($this->user->rating_id) {
+                1 => 's1',
+                2 => 's2',
+                3 => 's3',
+                4 => 'c1',
+                default => 's1'
+            };
+        }
+    }
+
+    public function render() {
         $this->exams = $this->user->getAcademyExamTranscript();
         $this->student_note = StudentNotes::find($this->id);
         $this->cmid_lookup = Config::get('moodle.cmid_lookup');
@@ -162,15 +175,6 @@ class StudentProfile extends Component {
 
     public function fetchTickets() {
         $this->tickets = [];
-        if ($this->ticket_select == null) {
-            $this->ticket_select = match($this->user->rating_id) {
-                1 => 's1',
-                2 => 's2',
-                3 => 's3',
-                4 => 'c1',
-                default => 's1'
-            };
-        }
         $tickets_sort = TrainingTicket::where('controller_id', $this->user->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date . ' ' . $t->start_time);
         })->pluck('id');
@@ -245,6 +249,12 @@ class StudentProfile extends Component {
     }
     
     private function fetchMoodleQuizGrades(): void {
+        $this->moodle_quizzes = [];
+        try {
+            DB::connection('moodle')->select('SELECT 1');
+        } catch (Exception $e) {
+            return;
+        }
         $quiz_lookup_ids = match ($this->user->rating_id) {
             1 => Config::get('moodle.S1'),
             2 => Config::get('moodle.S2'),
@@ -255,7 +265,6 @@ class StudentProfile extends Component {
         $moodle_user_id = DB::connection('moodle')->table('user')->select(['id'])->where('username', $this->user->id)->value('id');
         $quizzes = DB::connection('moodle')->table('quiz')->select(['id', 'name', 'grade'])->whereIn('id', $quiz_lookup_ids)->get();
         $grades = DB::connection('moodle')->table('quiz_grades')->select(['quiz', 'grade'])->where('userid', $moodle_user_id)->whereIn('quiz', $quiz_lookup_ids)->pluck('grade', 'quiz')->toArray();
-        $this->moodle_quizzes = [];
         foreach ($quizzes as $quiz) {
             $quiz_obj = new stdClass;
             $quiz_obj->id = $quiz->id;
