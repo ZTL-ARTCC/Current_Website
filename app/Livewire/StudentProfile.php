@@ -16,16 +16,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithoutUrlPagination;
-use Livewire\WithPagination;
 use stdClass;
 
 class StudentProfile extends Component {
-    use WithPagination, WithoutUrlPagination;
-
     #[Url]
     public $id = '';
 
@@ -42,6 +37,7 @@ class StudentProfile extends Component {
     public $last_control_str = '';
     public $ots_solo_str = '';
     public $ticket_select;
+    public $tickets;
     public $moodle_quizzes;
     public array $cmid_lookup = [];
     public $academy_eligible = null;
@@ -164,12 +160,8 @@ class StudentProfile extends Component {
         }
     }
 
-    #[Computed]
-    public function tickets() {
-        return $this->fetchTickets()->paginate(10);
-    }
-
     public function fetchTickets() {
+        $this->tickets = [];
         if ($this->ticket_select == null) {
             $this->ticket_select = match($this->user->rating_id) {
                 1 => 's1',
@@ -190,7 +182,7 @@ class StudentProfile extends Component {
                 $t->position = TrainingDash::legacyTicketTypes($t->position);
                 $t->sort_category = TrainingDash::getTicketSortCategory($t->position, $t->draft);
             }
-            return $tickets->where('sort_category', $this->ticket_select);
+            $this->tickets = $tickets->where('sort_category', $this->ticket_select);
         }
     }
 
