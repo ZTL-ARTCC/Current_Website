@@ -196,6 +196,9 @@ class TrainingDash extends Controller {
     }
 
     public function ticketsIndex(Request $request) {
+        if ($request->id != null && User::find($request->id) && $request->search_type != 'trainer') {
+            return view('dashboard.training.student');
+        }
         $controllers_with_tickets = array_flip(TrainingTicket::groupBy('controller_id')->pluck('controller_id')->toArray());
         $controllers = User::where('status', '1')->orderBy('lname', 'ASC')->get()->filter(function ($user) use ($controllers_with_tickets) {
             if (array_key_exists($user->id, $controllers_with_tickets) || $user->visitor == 0) {
@@ -290,7 +293,7 @@ class TrainingDash extends Controller {
 
             return $new_tickets_by_category;
         }, []);
-
+        
         return view('dashboard.training.tickets', compact('controllers', 'search_result', 'tickets_by_category', 'active_category', 'exams', 'all_drafts', 'is_trainer_search', 'student_note'));
     }
     
@@ -563,7 +566,7 @@ class TrainingDash extends Controller {
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory($position, $draft) {
+    public static function getTicketSortCategory($position, $draft) {
         $position_types_by_rating = TrainingTicket::$position_types_by_rating;
         switch (true) {
             case ($draft):
@@ -598,7 +601,7 @@ class TrainingDash extends Controller {
         }
     }
 
-    public function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
+    public static function legacyTicketTypes($position) { // Returns modern ticket ids for legacy ticket types
         switch ($position) {
             case 11:
                 return 104;
