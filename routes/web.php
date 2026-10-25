@@ -11,17 +11,7 @@ use App\Http\Controllers\RealopsController;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\TrainingDash;
 use App\Http\Controllers\Auth\LoginController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use Illuminate\Support\Facades\Route;
 
 /*
 *   Front Page Stuff
