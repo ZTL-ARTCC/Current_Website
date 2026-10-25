@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AdminDash;
 use App\Http\Controllers\AtcBookingController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ControllerDash;
 use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\FrontController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\PilotPassportController;
 use App\Http\Controllers\RealopsController;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\TrainingDash;
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
