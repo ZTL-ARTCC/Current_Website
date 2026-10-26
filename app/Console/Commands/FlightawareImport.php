@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\FeatureToggles;
 use App\FeatureToggle;
 use App\RealopsFlight;
 use Carbon\Carbon;
@@ -35,7 +36,6 @@ class FlightawareImport extends Command {
         // This is, admittedly, really janky.
         // Doing it with Carbon didn't work though.
         // This does, so ¯\_(ツ)_/
-
         $current_time = $start_time->timestamp;
 
         for ($i = 0; $i < $chunk_count; $i++) {
@@ -54,7 +54,7 @@ class FlightawareImport extends Command {
         }
 
         $pbar_chunks->finish();
-        $this->info(''); // blank line after progress bar
+        $this->info('');
 
         return $chunks;
     }
@@ -64,6 +64,7 @@ class FlightawareImport extends Command {
             $flight = $flights[$i];
             $flight_number = $flight['ident'];
             $pbar->setMessage('Saving ' . $flight_number);
+            $pbar->display();
 
             $existing = RealopsFlight::where('flight_number', $flight_number)->first();
             if ($existing !== null) {
@@ -71,7 +72,6 @@ class FlightawareImport extends Command {
             }
             $new_flight = new RealopsFlight;
 
-            // parse the departure and arrival times
             $deptime = $flight['scheduled_out'];
             $arrtime = $flight['scheduled_in'];
             $deptime_parsed = Carbon::parse($deptime);
@@ -94,57 +94,66 @@ class FlightawareImport extends Command {
         }
     }
 
-    public function load_departures(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
-        // First, load as many pages of departures as is configured
+    public function load_departures(&$flights, $ratelimit_max_flights, $ratelimit_max_api_calls, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count, &$api_call_count) {
         for ($i = 0; $i < intval(Config::get('flightaware.departure_pages_per_chunk')); $i++) {
-            // If we hit the ratelimit, pause for a bit.
-            // Commenting out the ratelimit timeout logic - this needs to be rebuilt to consider a chunk returning zero flights
-            //if ($flights_count > $ratelimit_max_flights) {
-            $pbar->setMessage('Ratelimit timeout');
-            $pbar->advance();
-            $flights_count = 0;
-            sleep($ratelimit_timeout);
-            //}
+            if ($flights_count >= $ratelimit_max_flights || $api_call_count >= $ratelimit_max_api_calls) {
+                if ($api_call_count >= $ratelimit_max_api_calls) {
+                    $pbar->setMessage('Unscheduled ratelimit timeout due to empty chunks (this is normal)');
+                    $pbar->display();
+                } else {
+                    $pbar->setMessage('Scheduled ratelimit timeout');
+                    $pbar->advance();
+                }
 
-            // Generate the URL for the HTTP client.
-            // Format: %BASE/schedules/FROM/TO/?origin=KATL
+                $flights_count = 0;
+                $api_call_count = 0;
+                sleep($ratelimit_timeout);
+            }
+
             $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?origin=KATL&include_codeshares=false';
             $pbar->setMessage($url);
+            $pbar->display();
 
             if (!Config::get('flightaware.dryrun')) {
                 $res = $client->request('GET', $url);
                 $data = json_decode($res->getBody(), true);
 
-                $flights = array_merge($flights, $data['scheduled']); // add actual flights to $flights
-                $flights_count += sizeof($data['scheduled']); // then increase the counter used for ratelimit compliance
+                $flights = array_merge($flights, $data['scheduled']);
+                $flights_count += sizeof($data['scheduled']);
+                $api_call_count++;
             }
 
             $pbar->advance();
         }
     }
 
-    public function load_arrivals(&$flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count) {
-        // First, load as many pages of arrivals as is configured
+    public function load_arrivals(&$flights, $ratelimit_max_flights, $ratelimit_max_api_calls, $ratelimit_timeout, $client, $chunk, $pbar, &$flights_count, &$api_call_count) {
         for ($i = 0; $i < intval(Config::get('flightaware.arrival_pages_per_chunk')); $i++) {
-            // If we hit the ratelimit, pause for a bit.
-            if ($flights_count > $ratelimit_max_flights) {
-                $pbar->setMessage('Ratelimit timeout');
-                $pbar->advance();
+            if ($flights_count >= $ratelimit_max_flights || $api_call_count >= $ratelimit_max_api_calls) {
+                if ($api_call_count >= $ratelimit_max_api_calls) {
+                    $pbar->setMessage('Unscheduled ratelimit timeout due to empty chunks (this is normal)');
+                    $pbar->display();
+                } else {
+                    $pbar->setMessage('Scheduled ratelimit timeout');
+                    $pbar->advance();
+                }
+
                 $flights_count = 0;
+                $api_call_count = 0;
                 sleep($ratelimit_timeout);
             }
 
-            // Generate the URL for the HTTP client.
-            // Format: %BASE/schedules/FROM/TO/?destination=KATL
             $url = Config::get('flightaware.base') . '/schedules/' . $chunk[0]->format('Y-m-d\TH:i:s') . '/' . $chunk[1]->format('Y-m-d\TH:i:s') . '?destination=KATL&include_codeshares=false';
             $pbar->setMessage($url);
+            $pbar->display();
 
             if (!Config::get('flightaware.dryrun')) {
                 $res = $client->request('GET', $url);
                 $data = json_decode($res->getBody(), true);
 
-                $flights = array_merge($flights, $data['scheduled']); // add actual flights to $flights
-                $flights_count += sizeof($data['scheduled']); // then increase the counter used for ratelimit compliance
+                $flights = array_merge($flights, $data['scheduled']);
+                $flights_count += sizeof($data['scheduled']);
+                $api_call_count++;
             }
 
             $pbar->advance();
@@ -155,7 +164,7 @@ class FlightawareImport extends Command {
      * Execute the console command.
      */
     public function handle(): void {
-        if (!FeatureToggle::isEnabled("realops")) {
+        if (!FeatureToggle::isEnabled(FeatureToggles::REALOPS)) {
             $this->error("Realops is not enabled");
             return;
         }
@@ -202,6 +211,7 @@ class FlightawareImport extends Command {
         $steps_per_chunk = $pages_per_chunk + $flights_per_chunk;
 
         $ratelimit_max_flights = intval(Config::get('flightaware.ratelimit_count'));
+        $ratelimit_max_api_calls = intval(Config::get('flightaware.ratelimit_api_calls'));
         $ratelimit_timeout = intval(Config::get('flightaware.ratelimit_timeout'));
 
         $ratelimit_timeout_count = floor($flights_total / $ratelimit_max_flights);
@@ -219,36 +229,36 @@ class FlightawareImport extends Command {
         }
 
         $this->info('[LoadChunks] Ratelimit information: ' . $ratelimit_max_flights . ' flights per ' . $ratelimit_timeout . ' seconds. ' . $flights_total . ' flights will need ' . $ratelimit_timeout_count . ' timeouts.');
+        $this->info('[LoadChunks] Ratelimit information: Extra timeouts can be caused by empty chunks. This is expected and normal to prevent exceeding flightaware\'s rate limits.');
 
         ProgressBar::setFormatDefinition('custom', '%bar% %current%/%max% -- %message%');
 
         $pbar = $this->output->createProgressBar($total_steps);
         $pbar->setFormat('custom');
+        $pbar->setMessage('Loading...');
+        $pbar->start();
 
         $flights_count = 0;
+        $api_call_count = 0;
 
         for ($y = 0; $y < $chunk_count; $y++) {
             $chunk = $chunks[$y];
-
-            $pbar->setMessage('Departures, chunk #' . $y);
-
             $flights = [];
 
-            $this->load_departures($flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count);
-
-            // Rinse and repeat, for arrivals.
+            $pbar->setMessage('Departures, chunk #' . $y);
+            $pbar->display();
+            $this->load_departures($flights, $ratelimit_max_flights, $ratelimit_max_api_calls, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count, $api_call_count);
 
             $pbar->setMessage('Arrivals, chunk #' . $y);
-
-            $this->load_arrivals($flights, $ratelimit_max_flights, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count);
+            $pbar->display();
+            $this->load_arrivals($flights, $ratelimit_max_flights, $ratelimit_max_api_calls, $ratelimit_timeout, $client, $chunk, $pbar, $flights_count, $api_call_count);
 
             $pbar->setMessage('Saving flights for chunk #' . $y);
-
-            // Then, save every flight we got so far.
+            $pbar->display();
             $this->save_flights($pbar, $flights);
         }
 
-        $this->info("Import task finished. No errors.");
+        $this->info("\n[Success] Import task finished. No errors.");
     }
 
     /**
