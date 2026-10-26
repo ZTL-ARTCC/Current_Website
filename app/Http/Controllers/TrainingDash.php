@@ -568,7 +568,7 @@ class TrainingDash extends Controller {
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public function getTicketSortCategory(int $position, bool $draft): string {
+    public static function getTicketSortCategory(int $position, bool $draft): string {
         if ($draft) {
             return 'drafts';
         }
