@@ -193,7 +193,7 @@
                     </select>
                 </div>
                 <div class="card-body">
-               @if (count($tickets) > 0)
+               @if ($this->tickets->count() !== 0)
                         <table class="table">
                             <thead>
                                 <tr>
@@ -212,14 +212,8 @@
                             </thead>
                             <tbody>
                             @php($transition_date = \Carbon\Carbon::parse('11/12/2021')) {{-- ticket dates eastern timezone after this date --}}
-                            @foreach($tickets as $t)
-                                @if($t->cert) {{-- student certified: green highlight --}}
-                                    <tr class="table-success">
-                                @elseif($t->monitor) {{-- student may be monitored: blue highlight --}}
-                                    <tr class="table-primary">
-                                @else
-                                    <tr>
-                                @endif
+                            @foreach($this->tickets as $t)
+                                <tr class="{{ $t->class }}" wire:key="ticket-{{ $t->id }}">
                                 <td>
                                     <a href="/dashboard/training/tickets/view/{{ $t->id }}" class="btn btn-sm btn-primary">
                                         <i class="fa-solid fa-eye"></i>
@@ -232,7 +226,7 @@
                                 <td>{{ $t->session_name }}</td>
                                 <td>{{ $t->start_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
                                 <td>{{ $t->end_time }}@if(\Carbon\Carbon::parse($t->date)->lt($transition_date)) Z @else ET @endif</td>
-                                <td>@if($t->score) {{ $t->score }} @else N/A @endif</p>
+                                <td>@if($t->score) {{ $t->score }} @else N/A @endif</td>
                                 <td>@if($t->movements) {{ $t->movements }} @else N/A @endif</td>
                                 @if($t->controller_id == Auth::id() && Auth::user()->hasRole('mtr'))
                                     <td data-bs-toggle="tooltip" title="Not Authorized">Not Authorzized</td>
@@ -243,6 +237,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $this->tickets->links(data: ['scrollTo' => false]) }}
                 </div>
                 @else
                     @include('inc.empty_state', ['header' => 'No Tickets', 'body' => 'No tickets found in the ' . ucfirst($ticket_select) . ' category.', 'icon' => 'fa-solid fa-face-frown'])

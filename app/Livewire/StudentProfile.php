@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 use stdClass;
 
 class StudentProfile extends Component {
+    use WithPagination, WithoutUrlPagination;
+
     #[Url]
     public $id = '';
 
@@ -38,7 +43,6 @@ class StudentProfile extends Component {
     public $ots_solo_str = '';
     #[Url]
     public $ticket_select;
-    public $tickets;
     public $moodle_quizzes;
     public array $cmid_lookup = [];
     public $academy_eligible = null;
@@ -97,7 +101,7 @@ class StudentProfile extends Component {
     }
 
     private function generateRatingBadge() {
-        $color = 'btn-purple';
+        $color = 'badge-purple';
         if (in_array($this->user->rating_short, ['OBS'])) {
             $color = 'text-bg-secondary';
         }
@@ -164,7 +168,7 @@ class StudentProfile extends Component {
             $this->ots_solo_str .= 'Recommended for OTS - ' . $ots->position_name . ' on ' . $ots->created_at->format('F j, Y');
 
         }
-        if ($solo) {
+        if ($solo && Carbon::createFromFormat('Y-m-d', $solo->expiration)->isFuture()) {
             if (strlen($this->ots_solo_str) > 0) {
                 $this->ots_solo_str .= '<br>';
             }
@@ -173,8 +177,12 @@ class StudentProfile extends Component {
         }
     }
 
+    #[Computed]
+    public function tickets() {
+        return $this->fetchTickets()->paginate(10);
+    }
+
     public function fetchTickets() {
-        $this->tickets = [];
         $tickets_sort = TrainingTicket::where('controller_id', $this->user->id)->get()->sortByDesc(function ($t) {
             return strtotime($t->date . ' ' . $t->start_time);
         })->pluck('id');
@@ -185,9 +193,22 @@ class StudentProfile extends Component {
             foreach ($tickets as &$t) {
                 $t->position = TrainingDash::legacyTicketTypes($t->position);
                 $t->sort_category = TrainingDash::getTicketSortCategory($t->position, $t->draft);
+                $t->class = $this->rowHighlight($t);
+
             }
-            $this->tickets = $tickets->where('sort_category', $this->ticket_select);
+            return $tickets->where('sort_category', $this->ticket_select);
         }
+        return collect();
+    }
+
+    private function rowHighlight(TrainingTicket $ticket): string {
+        if ($ticket->cert) { //student certified: green highlight
+            return "table-success";
+        }
+        if ($ticket->monitor) { // student may be monitored: blue highlight
+            return "table-primary";
+        }
+        return "";
     }
 
     private function academyEnrollmentEligibility(): void {
