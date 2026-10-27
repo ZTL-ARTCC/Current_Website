@@ -7,6 +7,7 @@ use App\Http\Controllers\TrainingDash;
 use App\Ots;
 use App\SoloCert;
 use App\StudentNotes;
+use App\TrainingSortCategory;
 use App\TrainingTicket;
 use App\User;
 use Carbon\Carbon;
@@ -191,7 +192,7 @@ class StudentProfile extends Component {
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
-                $t->position = TrainingDash::legacyTicketTypes($t->position);
+                $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
                 $t->sort_category = TrainingDash::getTicketSortCategory($t->position, $t->draft);
                 $t->class = $this->rowHighlight($t);
 

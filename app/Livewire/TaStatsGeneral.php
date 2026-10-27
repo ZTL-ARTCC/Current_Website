@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\TrainingCourse;
 use App\TrainingTicket;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -15,8 +16,10 @@ class TaStatsGeneral extends Component {
     public \StdClass $lookback_annual;
     private $cert_types = ['S1', 'S2', 'S3', 'C1'];
     public $position_select;
+    public array $courses = [];
 
     public function render() {
+        $this->courses = TrainingCourse::reorder()->orderBy('id', 'asc')->pluck('course_id')->all();
         $this->generate_stats();
         return view('livewire.ta-stats-general');
     }
@@ -69,8 +72,11 @@ class TaStatsGeneral extends Component {
 
     private function generate_completion_ratios(): void {
         $this->completion_ratios = $this->session_ids = [];
+        if (count($this->courses) == 0) {
+            return;
+        }
         if ($this->position_select == '') {
-            $this->position_select = 'S1';
+            $this->position_select = $this->courses[0];
         }
         $sorted_session_ids = TrainingTicket::$session_ids_by_category[$this->position_select];
         foreach ($sorted_session_ids as $session_id) {
