@@ -192,7 +192,7 @@ class StudentProfile extends Component {
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
-                $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
+                $t->position = (is_null($t->position)) ? $t->position : TrainingSortCategory::legacyTicketTypes($t->position);
                 $t->sort_category = TrainingDash::getTicketSortCategory($t->position, $t->draft);
                 $t->class = $this->rowHighlight($t);
 
