@@ -13,6 +13,7 @@ return [
     'arrival_pages_per_chunk' => env('FLIGHTAWARE_ARRIVAL_PAGES_PER_CHUNK', 1),
 
     'ratelimit_count' => env('FLIGHTAWARE_RATELIMIT_COUNT', 15),
+    'ratelimit_api_calls' => env('FLIGHTAWARE_RATELIMIT_API_CALLS', 10),
     'ratelimit_timeout' => env('FLIGHTAWARE_RATELIMIT_TIMEOUT', 60),
 
     'dryrun' => env('FLIGHTAWARE_DRYRUN', true)
