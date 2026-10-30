@@ -227,7 +227,7 @@ class TrainingDash extends Controller {
             $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
             $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
             foreach ($tickets as &$t) {
-                $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
+                $t->position = (is_null($t->position)) ? $t->position : TrainingSortCategory::legacyTicketTypes($t->position);
                 $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
             }
             if ($tickets_sort->isEmpty() && ($search_result->status != 1)) {
@@ -244,7 +244,7 @@ class TrainingDash extends Controller {
                 $tickets_order = implode(',', array_fill(0, count($tickets_sort), '?'));
                 $tickets = TrainingTicket::whereIn('id', $tickets_sort)->orderByRaw("field(id,{$tickets_order})", $tickets_sort)->get();
                 foreach ($tickets as &$t) {
-                    $t->position = TrainingSortCategory::legacyTicketTypes($t->position);
+                    $t->position = (is_null($t->position)) ? $t->position : TrainingSortCategory::legacyTicketTypes($t->position);
                     $t->sort_category = $this->getTicketSortCategory($t->position, $t->draft);
                 }
             } else {
@@ -568,9 +568,12 @@ class TrainingDash extends Controller {
         return redirect()->back()->with(SessionVariables::SUCCESS->value, 'The OTS has been unassigned from you and cancelled successfully.');
     }
 
-    public static function getTicketSortCategory(int $position, bool $draft): string {
+    public static function getTicketSortCategory(int|null $position, bool $draft): string {
         if ($draft) {
             return 'drafts';
+        }
+        if (is_null($position)) {
+            return 'other';
         }
         $category = TrainingSortCategory::find($position);
         if (! $category || is_null($category->associated_rating)) {
