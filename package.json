@@ -31,6 +31,6 @@
         "@eonasdan/tempus-dominus": "^6.9.4",
         "@fortawesome/fontawesome-free": "^6.7.2",
         "chart.js": "^4.4.8",
-        "ckeditor5": "^48.3.1"
+        "ckeditor5": "^48.5.1"
     }
 }
