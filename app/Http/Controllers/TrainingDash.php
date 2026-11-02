@@ -906,7 +906,9 @@ class TrainingDash extends Controller {
 
         $ticket->controller_id = $request->controller;
         $ticket->trainer_id = Auth::id();
-        $ticket->position = $lesson->sort_category_id;
+        if (isset($lesson->sort_category_id)) {
+            $ticket->position = $lesson->sort_category_id;
+        }
         $ticket->session_id = $request->session_id;
         $ticket->type = $request->type;
         $ticket->date = $request->date;
