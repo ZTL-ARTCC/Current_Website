@@ -14,7 +14,10 @@ class TrainingSortCategory extends Model {
     ];
     public $timestamps = false;
 
-    public static function legacyTicketTypes(int $category): int {
+    public static function legacyTicketTypes(null|int $category): null|int {
+        if (is_null($category)) {
+            return $category;
+        }
         if (config('vatusa.facility') != 'ZTL') {
             return self::first()->id;
         }
